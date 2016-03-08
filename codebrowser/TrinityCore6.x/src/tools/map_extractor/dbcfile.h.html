@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+<title>dbcfile.h [TrinityCore6.x/src/tools/map_extractor/dbcfile.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/tools/map_extractor/dbcfile.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>tools</a>/<a href='./'>map_extractor</a>/dbcfile.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/DBCFILE_H">DBCFILE_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/DBCFILE_H" data-ref="_M/DBCFILE_H">DBCFILE_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../../include/c++/4.9/cassert.html">&lt;cassert&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../dep/CascLib/src/CascLib.h.html">"CascLib.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>class</b> <dfn class="type def" id="DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</dfn></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <b>public</b>:</td></tr>
+<tr><th id="28">28</th><td>        <dfn class="decl" id="_ZN7DBCFileC1EPv" title='DBCFile::DBCFile' data-ref="_ZN7DBCFileC1EPv" >DBCFile</dfn>(<a class="typedef" href="../../../dep/CascLib/src/CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col1 decl" id="1file" title='file' data-type='HANDLE' data-ref="1file" >file</dfn>);</td></tr>
+<tr><th id="29">29</th><td>        <dfn class="decl" id="_ZN7DBCFileD1Ev" title='DBCFile::~DBCFile' data-ref="_ZN7DBCFileD1Ev" >~DBCFile</dfn>();</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>        <i>// Open database. It must be openened before it can be used.</i></td></tr>
+<tr><th id="32">32</th><td>        <em>bool</em> <dfn class="decl" id="_ZN7DBCFile4openEv" title='DBCFile::open' data-ref="_ZN7DBCFile4openEv" >open</dfn>();</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>        <i>// Database exceptions</i></td></tr>
+<tr><th id="35">35</th><td>        <b>class</b> <dfn class="type def" id="DBCFile::Exception" title='DBCFile::Exception' data-ref="DBCFile::Exception" >Exception</dfn></td></tr>
+<tr><th id="36">36</th><td>        {</td></tr>
+<tr><th id="37">37</th><td>            <b>public</b>:</td></tr>
+<tr><th id="38">38</th><td>                <dfn class="decl def" id="_ZN7DBCFile9ExceptionC1ERKSs" title='DBCFile::Exception::Exception' data-ref="_ZN7DBCFile9ExceptionC1ERKSs" >Exception</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> &amp;<dfn class="local col2 decl" id="2message" title='message' data-type='const std::string &amp;' data-ref="2message" >message</dfn>) : <a class="member" href="#DBCFile::Exception::message" title='DBCFile::Exception::message' data-ref="DBCFile::Exception::message" >message</a><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" id="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" >(</a><a class="local col2 ref" href="#2message" title='message' data-ref="2message" >message</a>) { }</td></tr>
+<tr><th id="39">39</th><td>                <b>virtual</b> <dfn class="virtual decl def" id="_ZN7DBCFile9ExceptionD1Ev" title='DBCFile::Exception::~Exception' data-ref="_ZN7DBCFile9ExceptionD1Ev" >~Exception</dfn>() { }</td></tr>
+<tr><th id="40">40</th><td>                <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> &amp;<dfn class="decl def" id="_ZN7DBCFile9Exception10getMessageEv" title='DBCFile::Exception::getMessage' data-ref="_ZN7DBCFile9Exception10getMessageEv" >getMessage</dfn>() { <b>return</b> <a class="member" href="#DBCFile::Exception::message" title='DBCFile::Exception::message' data-ref="DBCFile::Exception::message" >message</a>; }</td></tr>
+<tr><th id="41">41</th><td>            <b>private</b>:</td></tr>
+<tr><th id="42">42</th><td>                <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="DBCFile::Exception::message" title='DBCFile::Exception::message' data-ref="DBCFile::Exception::message" >message</dfn>;</td></tr>
+<tr><th id="43">43</th><td>        };</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>        <b>class</b> <dfn class="type def" id="DBCFile::NotFound" title='DBCFile::NotFound' data-ref="DBCFile::NotFound" >NotFound</dfn>: <b>public</b> <a class="type" href="#DBCFile::Exception" title='DBCFile::Exception' data-ref="DBCFile::Exception" >Exception</a></td></tr>
+<tr><th id="46">46</th><td>        {</td></tr>
+<tr><th id="47">47</th><td>            <b>public</b>:</td></tr>
+<tr><th id="48">48</th><td>                <dfn class="decl def" id="_ZN7DBCFile8NotFoundC1Ev" title='DBCFile::NotFound::NotFound' data-ref="_ZN7DBCFile8NotFoundC1Ev" >NotFound</dfn>(): <a class="type" href="#DBCFile::Exception" title='DBCFile::Exception' data-ref="DBCFile::Exception" >Exception</a><a class="ref" href="#_ZN7DBCFile9ExceptionC1ERKSs" title='DBCFile::Exception::Exception' data-ref="_ZN7DBCFile9ExceptionC1ERKSs" >(</a><q>"Key was not found"</q>) { }</td></tr>
+<tr><th id="49">49</th><td>        };</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>        <i>// Iteration over database</i></td></tr>
+<tr><th id="52">52</th><td>        <b>class</b> <a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a>;</td></tr>
+<tr><th id="53">53</th><td>        <b>class</b> <dfn class="type def" id="DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</dfn></td></tr>
+<tr><th id="54">54</th><td>        {</td></tr>
+<tr><th id="55">55</th><td>            <b>public</b>:</td></tr>
+<tr><th id="56">56</th><td>                <em>float</em> <dfn class="decl def" id="_ZNK7DBCFile6Record8getFloatEm" title='DBCFile::Record::getFloat' data-ref="_ZNK7DBCFile6Record8getFloatEm" >getFloat</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="3field" title='field' data-type='size_t' data-ref="3field" >field</dfn>) <em>const</em></td></tr>
+<tr><th id="57">57</th><td>                {</td></tr>
+<tr><th id="58">58</th><td>                    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(field &lt; file._fieldCount);</td></tr>
+<tr><th id="59">59</th><td>                    <b>return</b> *<b>reinterpret_cast</b>&lt;<em>float</em>*&gt;(<a class="member" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a> + <a class="local col3 ref" href="#3field" title='field' data-ref="3field" >field</a> * <var>4</var>);</td></tr>
+<tr><th id="60">60</th><td>                }</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>                <em>unsigned</em> <em>int</em> <dfn class="decl def" id="_ZNK7DBCFile6Record7getUIntEm" title='DBCFile::Record::getUInt' data-ref="_ZNK7DBCFile6Record7getUIntEm" >getUInt</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4field" title='field' data-type='size_t' data-ref="4field" >field</dfn>) <em>const</em></td></tr>
+<tr><th id="63">63</th><td>                {</td></tr>
+<tr><th id="64">64</th><td>                    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(field &lt; file._fieldCount);</td></tr>
+<tr><th id="65">65</th><td>                    <b>return</b> *<b>reinterpret_cast</b>&lt;<em>unsigned</em> <em>int</em>*&gt;(<a class="member" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a> + <a class="local col4 ref" href="#4field" title='field' data-ref="4field" >field</a> * <var>4</var>);</td></tr>
+<tr><th id="66">66</th><td>                }</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>                <em>int</em> <dfn class="decl def" id="_ZNK7DBCFile6Record6getIntEm" title='DBCFile::Record::getInt' data-ref="_ZNK7DBCFile6Record6getIntEm" >getInt</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="5field" title='field' data-type='size_t' data-ref="5field" >field</dfn>) <em>const</em></td></tr>
+<tr><th id="69">69</th><td>                {</td></tr>
+<tr><th id="70">70</th><td>                    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(field &lt; file._fieldCount);</td></tr>
+<tr><th id="71">71</th><td>                    <b>return</b> *<b>reinterpret_cast</b>&lt;<em>int</em>*&gt;(<a class="member" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a> + <a class="local col5 ref" href="#5field" title='field' data-ref="5field" >field</a> * <var>4</var>);</td></tr>
+<tr><th id="72">72</th><td>                }</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>                <em>char</em> <em>const</em>* <dfn class="decl def" id="_ZNK7DBCFile6Record9getStringEm" title='DBCFile::Record::getString' data-ref="_ZNK7DBCFile6Record9getStringEm" >getString</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="6field" title='field' data-type='size_t' data-ref="6field" >field</dfn>) <em>const</em></td></tr>
+<tr><th id="75">75</th><td>                {</td></tr>
+<tr><th id="76">76</th><td>                    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(field &lt; file._fieldCount);</td></tr>
+<tr><th id="77">77</th><td>                    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="7stringOffset" title='stringOffset' data-type='size_t' data-ref="7stringOffset" >stringOffset</dfn> = <a class="member" href="#_ZNK7DBCFile6Record7getUIntEm" title='DBCFile::Record::getUInt' data-ref="_ZNK7DBCFile6Record7getUIntEm" >getUInt</a>(<a class="local col6 ref" href="#6field" title='field' data-ref="6field" >field</a>);</td></tr>
+<tr><th id="78">78</th><td>                    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(stringOffset &lt; file._stringSize);</td></tr>
+<tr><th id="79">79</th><td>                    <b>return</b> <b>reinterpret_cast</b>&lt;<em>char</em>*&gt;(<a class="member" href="#DBCFile::Record::file" title='DBCFile::Record::file' data-ref="DBCFile::Record::file" >file</a>.<a class="ref" href="#DBCFile::_stringTable" title='DBCFile::_stringTable' data-ref="DBCFile::_stringTable" >_stringTable</a> + <a class="local col7 ref" href="#7stringOffset" title='stringOffset' data-ref="7stringOffset" >stringOffset</a>);</td></tr>
+<tr><th id="80">80</th><td>                }</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>            <b>private</b>:</td></tr>
+<tr><th id="83">83</th><td>                <dfn class="decl def" id="_ZN7DBCFile6RecordC1ERS_Ph" title='DBCFile::Record::Record' data-ref="_ZN7DBCFile6RecordC1ERS_Ph" >Record</dfn>(<a class="type" href="#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>&amp; <dfn class="local col8 decl" id="8file" title='file' data-type='DBCFile &amp;' data-ref="8file" >file</dfn>, <em>unsigned</em> <em>char</em>* <dfn class="local col9 decl" id="9offset" title='offset' data-type='unsigned char *' data-ref="9offset" >offset</dfn>): <a class="member" href="#DBCFile::Record::file" title='DBCFile::Record::file' data-ref="DBCFile::Record::file" >file</a>(<a class="local col8 ref" href="#8file" title='file' data-ref="8file" >file</a>), <a class="member" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a>(<a class="local col9 ref" href="#9offset" title='offset' data-ref="9offset" >offset</a>) {}</td></tr>
+<tr><th id="84">84</th><td>                <a class="type" href="#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>&amp; <dfn class="decl" id="DBCFile::Record::file" title='DBCFile::Record::file' data-ref="DBCFile::Record::file" >file</dfn>;</td></tr>
+<tr><th id="85">85</th><td>                <em>unsigned</em> <em>char</em>* <dfn class="decl" id="DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</dfn>;</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>                <b>friend</b> <b>class</b> <a class="type" href="#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>;</td></tr>
+<tr><th id="88">88</th><td>                <b>friend</b> <b>class</b> <a class="type" href="#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a>;</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>                <a class="type" href="#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a>&amp; <dfn class="decl" id="_ZN7DBCFile6RecordaSERKS0_" title='DBCFile::Record::operator=' data-ref="_ZN7DBCFile6RecordaSERKS0_" ><b>operator</b>=</dfn>(<a class="type" href="#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a> <em>const</em>&amp; <dfn class="local col0 decl" id="10right" title='right' data-type='const DBCFile::Record &amp;' data-ref="10right" >right</dfn>);</td></tr>
+<tr><th id="91">91</th><td>        };</td></tr>
+<tr><th id="92">92</th><td>        <i class="doc">/** Iterator that iterates over records</i></td></tr>
+<tr><th id="93">93</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="94">94</th><td>        <b>class</b> <dfn class="type def" id="DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</dfn></td></tr>
+<tr><th id="95">95</th><td>        {</td></tr>
+<tr><th id="96">96</th><td>            <b>public</b>:</td></tr>
+<tr><th id="97">97</th><td>                <dfn class="decl def" id="_ZN7DBCFile8IteratorC1ERS_Ph" title='DBCFile::Iterator::Iterator' data-ref="_ZN7DBCFile8IteratorC1ERS_Ph" >Iterator</dfn>(<a class="type" href="#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a> &amp;<dfn class="local col1 decl" id="11file" title='file' data-type='DBCFile &amp;' data-ref="11file" >file</dfn>, <em>unsigned</em> <em>char</em>* <dfn class="local col2 decl" id="12offset" title='offset' data-type='unsigned char *' data-ref="12offset" >offset</dfn>) : <a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a><a class="ref" href="#_ZN7DBCFile6RecordC1ERS_Ph" title='DBCFile::Record::Record' data-ref="_ZN7DBCFile6RecordC1ERS_Ph" >(</a><a class="local col1 ref" href="#11file" title='file' data-ref="11file" >file</a>, <a class="local col2 ref" href="#12offset" title='offset' data-ref="12offset" >offset</a>) { }</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>                <i class="doc">/// Advance (prefix only)</i></td></tr>
+<tr><th id="100">100</th><td>                <a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a>&amp; <dfn class="decl def" id="_ZN7DBCFile8IteratorppEv" title='DBCFile::Iterator::operator++' data-ref="_ZN7DBCFile8IteratorppEv" ><b>operator</b>++</dfn>()</td></tr>
+<tr><th id="101">101</th><td>                {</td></tr>
+<tr><th id="102">102</th><td>                    <a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>.<a class="ref" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a> += <a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>.<a class="ref" href="#DBCFile::Record::file" title='DBCFile::Record::file' data-ref="DBCFile::Record::file" >file</a>.<a class="ref" href="#DBCFile::_recordSize" title='DBCFile::_recordSize' data-ref="DBCFile::_recordSize" >_recordSize</a>;</td></tr>
+<tr><th id="103">103</th><td>                    <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="104">104</th><td>                }</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>                <i class="doc">/// Return address of current instance</i></td></tr>
+<tr><th id="107">107</th><td>                <a class="type" href="#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a> <em>const</em>&amp; <dfn class="decl def" id="_ZNK7DBCFile8IteratordeEv" title='DBCFile::Iterator::operator*' data-ref="_ZNK7DBCFile8IteratordeEv" ><b>operator</b>*</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>; }</td></tr>
+<tr><th id="108">108</th><td>                <a class="type" href="#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a> <em>const</em>* <dfn class="decl def" id="_ZNK7DBCFile8IteratorptEv" title='DBCFile::Iterator::operator-&gt;' data-ref="_ZNK7DBCFile8IteratorptEv" ><b>operator</b>-&gt;</dfn>() <em>const</em> { <b>return</b> &amp;<a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>; }</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>                <i class="doc">/// Comparison</i></td></tr>
+<tr><th id="111">111</th><td>                <em>bool</em> <dfn class="decl def" id="_ZNK7DBCFile8IteratoreqERKS0_" title='DBCFile::Iterator::operator==' data-ref="_ZNK7DBCFile8IteratoreqERKS0_" ><b>operator</b>==</dfn>(<a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <em>const</em>&amp; <dfn class="local col3 decl" id="13b" title='b' data-type='const DBCFile::Iterator &amp;' data-ref="13b" >b</dfn>) <em>const</em></td></tr>
+<tr><th id="112">112</th><td>                {</td></tr>
+<tr><th id="113">113</th><td>                    <b>return</b> <a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>.<a class="ref" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a> == <a class="local col3 ref" href="#13b" title='b' data-ref="13b" >b</a>.<a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>.<a class="ref" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a>;</td></tr>
+<tr><th id="114">114</th><td>                }</td></tr>
+<tr><th id="115">115</th><td></td></tr>
+<tr><th id="116">116</th><td>                <em>bool</em> <dfn class="decl def" id="_ZNK7DBCFile8IteratorneERKS0_" title='DBCFile::Iterator::operator!=' data-ref="_ZNK7DBCFile8IteratorneERKS0_" ><b>operator</b>!=</dfn>(<a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <em>const</em>&amp; <dfn class="local col4 decl" id="14b" title='b' data-type='const DBCFile::Iterator &amp;' data-ref="14b" >b</dfn>) <em>const</em></td></tr>
+<tr><th id="117">117</th><td>                {</td></tr>
+<tr><th id="118">118</th><td>                    <b>return</b> <a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>.<a class="ref" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a> != <a class="local col4 ref" href="#14b" title='b' data-ref="14b" >b</a>.<a class="member" href="#DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</a>.<a class="ref" href="#DBCFile::Record::offset" title='DBCFile::Record::offset' data-ref="DBCFile::Record::offset" >offset</a>;</td></tr>
+<tr><th id="119">119</th><td>                }</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>            <b>private</b>:</td></tr>
+<tr><th id="122">122</th><td>                <a class="type" href="#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a> <dfn class="decl" id="DBCFile::Iterator::record" title='DBCFile::Iterator::record' data-ref="DBCFile::Iterator::record" >record</dfn>;</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>                <a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a>&amp; <dfn class="decl" id="_ZN7DBCFile8IteratoraSERKS0_" title='DBCFile::Iterator::operator=' data-ref="_ZN7DBCFile8IteratoraSERKS0_" ><b>operator</b>=</dfn>(<a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <em>const</em>&amp; <dfn class="local col5 decl" id="15right" title='right' data-type='const DBCFile::Iterator &amp;' data-ref="15right" >right</dfn>);</td></tr>
+<tr><th id="125">125</th><td>        };</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td>        <i>// Get record by id</i></td></tr>
+<tr><th id="128">128</th><td>        <a class="type" href="#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a> <dfn class="decl" id="_ZN7DBCFile9getRecordEm" title='DBCFile::getRecord' data-ref="_ZN7DBCFile9getRecordEm" >getRecord</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="16id" title='id' data-type='size_t' data-ref="16id" >id</dfn>);</td></tr>
+<tr><th id="129">129</th><td>        <i class="doc">/// Get begin iterator over records</i></td></tr>
+<tr><th id="130">130</th><td>        <a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <dfn class="decl" id="_ZN7DBCFile5beginEv" title='DBCFile::begin' data-ref="_ZN7DBCFile5beginEv" >begin</dfn>();</td></tr>
+<tr><th id="131">131</th><td>        <i class="doc">/// Get begin iterator over records</i></td></tr>
+<tr><th id="132">132</th><td>        <a class="type" href="#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <dfn class="decl" id="_ZN7DBCFile3endEv" title='DBCFile::end' data-ref="_ZN7DBCFile3endEv" >end</dfn>();</td></tr>
+<tr><th id="133">133</th><td>        <i class="doc">/// Trivial</i></td></tr>
+<tr><th id="134">134</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZNK7DBCFile14getRecordCountEv" title='DBCFile::getRecordCount' data-ref="_ZNK7DBCFile14getRecordCountEv" >getRecordCount</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#DBCFile::_recordCount" title='DBCFile::_recordCount' data-ref="DBCFile::_recordCount" >_recordCount</a>; }</td></tr>
+<tr><th id="135">135</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZNK7DBCFile13getFieldCountEv" title='DBCFile::getFieldCount' data-ref="_ZNK7DBCFile13getFieldCountEv" >getFieldCount</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#DBCFile::_fieldCount" title='DBCFile::_fieldCount' data-ref="DBCFile::_fieldCount" >_fieldCount</a>; }</td></tr>
+<tr><th id="136">136</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="_ZN7DBCFile8getMaxIdEv" title='DBCFile::getMaxId' data-ref="_ZN7DBCFile8getMaxIdEv" >getMaxId</dfn>();</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>    <b>private</b>:</td></tr>
+<tr><th id="139">139</th><td>        <a class="typedef" href="../../../dep/CascLib/src/CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="decl" id="DBCFile::_file" title='DBCFile::_file' data-ref="DBCFile::_file" >_file</dfn>;</td></tr>
+<tr><th id="140">140</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="DBCFile::_recordSize" title='DBCFile::_recordSize' data-ref="DBCFile::_recordSize" >_recordSize</dfn>;</td></tr>
+<tr><th id="141">141</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="DBCFile::_recordCount" title='DBCFile::_recordCount' data-ref="DBCFile::_recordCount" >_recordCount</dfn>;</td></tr>
+<tr><th id="142">142</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="DBCFile::_fieldCount" title='DBCFile::_fieldCount' data-ref="DBCFile::_fieldCount" >_fieldCount</dfn>;</td></tr>
+<tr><th id="143">143</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="DBCFile::_stringSize" title='DBCFile::_stringSize' data-ref="DBCFile::_stringSize" >_stringSize</dfn>;</td></tr>
+<tr><th id="144">144</th><td>        <em>unsigned</em> <em>char</em>* <dfn class="decl" id="DBCFile::_data" title='DBCFile::_data' data-ref="DBCFile::_data" >_data</dfn>;</td></tr>
+<tr><th id="145">145</th><td>        <em>unsigned</em> <em>char</em>* <dfn class="decl" id="DBCFile::_stringTable" title='DBCFile::_stringTable' data-ref="DBCFile::_stringTable" >_stringTable</dfn>;</td></tr>
+<tr><th id="146">146</th><td>};</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="149">149</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='System.cpp.html'>TrinityCore6.x/src/tools/map_extractor/System.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

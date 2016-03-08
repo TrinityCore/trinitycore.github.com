@@ -1,0 +1,569 @@
+<!doctype html>
+<html>
+<head>
+<title>System.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/System.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/System.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/System.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> <span class="command"> \file</span> System.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> <span class="command"> \maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> <span class="command"> \cite</span> Rob Wyatt <a href="http://www.gamasutra.com/features/wyatts_world/">http://www.gamasutra.com/features/wyatts_world/</a>19990709/processor_detection_01.htm</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> <span class="command"> \cite</span> Benjamin Jurke <a href="http://www.flipcode.com/cgi-bin/msg.cgi?showThread=COTD-ProcessorDetectionClass&forum=cotd&id=-">http://www.flipcode.com/cgi-bin/msg.cgi?showThread=COTD-ProcessorDetectionClass&amp;forum=cotd&amp;id=-</a>1</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"> <span class="command"> \cite</span> Michael Herf <a href="http://www.stereopsis.com/memcpy.html">http://www.stereopsis.com/memcpy.html</a></i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"></i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"> <span class="command"> \created</span> 2003-01-25</i></td></tr>
+<tr><th id="11">11</th><td><i class="doc"> <span class="command"> \edited</span>  2012-10-02</i></td></tr>
+<tr><th id="12">12</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">ifndef</span> <span class="macro" data-ref="_M/G3D_System_h">G3D_System_h</span></u></td></tr>
+<tr><th id="15">15</th><td><u>#define <dfn class="macro" id="_M/G3D_System_h" data-ref="_M/G3D_System_h">G3D_System_h</dfn></u></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="G3DGameUnits.h.html">"G3D/G3DGameUnits.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="BinaryFormat.h.html">"G3D/BinaryFormat.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="FileNotFound.h.html">"G3D/FileNotFound.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="24">ifdef</span> <span class="macro" data-ref="_M/G3D_OSX">G3D_OSX</span></u></td></tr>
+<tr><th id="25">25</th><td><u>#define Zone OSX_Zone</u></td></tr>
+<tr><th id="26">26</th><td><u>#   include &lt;CoreServices/CoreServices.h&gt;</u></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="24">endif</span></u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="30">30</th><td>    </td></tr>
+<tr><th id="31">31</th><td><i class="doc">/** G3D, SDL, and IJG libraries require license documentation</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">    to be distributed with your program.  This generates the</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">    string that must appear in your documentation. </i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">    &lt;B&gt;Your program can be commercial, closed-source&lt;/B&gt; under</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc">    any license you want.</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc">    <span class="command">@deprecated</span> Use System::license</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="38">38</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D7licenseEv" title='G3D::license' data-ref="_ZN3G3D7licenseEv" >license</dfn>();</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"><span class="command">@brief</span> The order in which the bytes of an integer are stored on a</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc">machine. </i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"></i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">Intel/AMD chips tend to be G3D_LITTLE_ENDIAN, Mac PPC's and Suns are</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">G3D_BIG_ENDIAN. However, this is primarily used to specify the byte</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">order of file formats, which are fixed.</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="48">48</th><td><b>enum</b> <dfn class="type def" id="G3D::G3DEndian" title='G3D::G3DEndian' data-ref="G3D::G3DEndian" >G3DEndian</dfn> {</td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="G3D::G3DEndian::G3D_BIG_ENDIAN" title='G3D::G3DEndian::G3D_BIG_ENDIAN' data-ref="G3D::G3DEndian::G3D_BIG_ENDIAN" >G3D_BIG_ENDIAN</dfn>, </td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="G3D::G3DEndian::G3D_LITTLE_ENDIAN" title='G3D::G3DEndian::G3D_LITTLE_ENDIAN' data-ref="G3D::G3DEndian::G3D_LITTLE_ENDIAN" >G3D_LITTLE_ENDIAN</dfn></td></tr>
+<tr><th id="51">51</th><td>};</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="54">54</th><td><i class="doc"> <span class="command">@brief</span> OS and processor abstraction.  </i></td></tr>
+<tr><th id="55">55</th><td><i class="doc"></i></td></tr>
+<tr><th id="56">56</th><td><i class="doc"> The first time any method is called the processor will be analyzed.</i></td></tr>
+<tr><th id="57">57</th><td><i class="doc"> Future calls are then fast.</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc"></i></td></tr>
+<tr><th id="59">59</th><td><i class="doc"> Timing function overview:</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">    System::getCycleCount</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">      - actual cycle count</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc"></i></td></tr>
+<tr><th id="63">63</th><td><i class="doc">    System::getTick</i></td></tr>
+<tr><th id="64">64</th><td><i class="doc">      - High-resolution time in seconds since program started</i></td></tr>
+<tr><th id="65">65</th><td><i class="doc"></i></td></tr>
+<tr><th id="66">66</th><td><i class="doc">    System::getLocalTime</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc">      - High-resolution time in seconds since Jan 1, 1970</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">        (because it is stored in a double, this may be less</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">         accurate than getTick)</i></td></tr>
+<tr><th id="70">70</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="71">71</th><td><b>class</b> <dfn class="type def" id="G3D::System" title='G3D::System' data-ref="G3D::System" >System</dfn> {</td></tr>
+<tr><th id="72">72</th><td><b>public</b>:</td></tr>
+<tr><th id="73">73</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="74">74</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">size</span> Size of memory that the system was trying to allocate</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc"></i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">recoverable</span> If true, the system will attempt to allocate again</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">       if the callback returns true.  If false, malloc is going to return </i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">       NULL and this invocation is just to notify the application.</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc"></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">       <span class="command">@return</span> Return true to force malloc to attempt allocation again if the</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">       error was recoverable.</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="83">83</th><td>    <b>typedef</b> <em>bool</em> (*<dfn class="typedef" id="G3D::System::OutOfMemoryCallback" title='G3D::System::OutOfMemoryCallback' data-type='bool (*)(size_t, bool)' data-ref="G3D::System::OutOfMemoryCallback" >OutOfMemoryCallback</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="407size" title='size' data-type='size_t' data-ref="407size" >size</dfn>, <em>bool</em> <dfn class="local col8 decl" id="408recoverable" title='recoverable' data-type='bool' data-ref="408recoverable" >recoverable</dfn>);</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><b>private</b>:</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_initialized" title='G3D::System::m_initialized' data-ref="G3D::System::m_initialized" >m_initialized</dfn>;</td></tr>
+<tr><th id="88">88</th><td>    <em>int</em>            <dfn class="decl" id="G3D::System::m_cpuSpeed" title='G3D::System::m_cpuSpeed' data-ref="G3D::System::m_cpuSpeed" >m_cpuSpeed</dfn>;</td></tr>
+<tr><th id="89">89</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_hasCPUID" title='G3D::System::m_hasCPUID' data-ref="G3D::System::m_hasCPUID" >m_hasCPUID</dfn>;</td></tr>
+<tr><th id="90">90</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_hasRDTSC" title='G3D::System::m_hasRDTSC' data-ref="G3D::System::m_hasRDTSC" >m_hasRDTSC</dfn>;</td></tr>
+<tr><th id="91">91</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_hasMMX" title='G3D::System::m_hasMMX' data-ref="G3D::System::m_hasMMX" >m_hasMMX</dfn>;</td></tr>
+<tr><th id="92">92</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_hasSSE" title='G3D::System::m_hasSSE' data-ref="G3D::System::m_hasSSE" >m_hasSSE</dfn>;</td></tr>
+<tr><th id="93">93</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_hasSSE2" title='G3D::System::m_hasSSE2' data-ref="G3D::System::m_hasSSE2" >m_hasSSE2</dfn>;</td></tr>
+<tr><th id="94">94</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_hasSSE3" title='G3D::System::m_hasSSE3' data-ref="G3D::System::m_hasSSE3" >m_hasSSE3</dfn>;</td></tr>
+<tr><th id="95">95</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_has3DNOW" title='G3D::System::m_has3DNOW' data-ref="G3D::System::m_has3DNOW" >m_has3DNOW</dfn>;</td></tr>
+<tr><th id="96">96</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_has3DNOW2" title='G3D::System::m_has3DNOW2' data-ref="G3D::System::m_has3DNOW2" >m_has3DNOW2</dfn>;</td></tr>
+<tr><th id="97">97</th><td>    <em>bool</em>           <dfn class="decl" id="G3D::System::m_hasAMDMMX" title='G3D::System::m_hasAMDMMX' data-ref="G3D::System::m_hasAMDMMX" >m_hasAMDMMX</dfn>;</td></tr>
+<tr><th id="98">98</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>    <dfn class="decl" id="G3D::System::m_cpuVendor" title='G3D::System::m_cpuVendor' data-ref="G3D::System::m_cpuVendor" >m_cpuVendor</dfn>;</td></tr>
+<tr><th id="99">99</th><td>    <em>int</em>            <dfn class="decl" id="G3D::System::m_numCores" title='G3D::System::m_numCores' data-ref="G3D::System::m_numCores" >m_numCores</dfn>;</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>    <i class="doc">/** this holds the data directory set by the application (currently</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc">        GApp) for use by findDataFile */</i></td></tr>
+<tr><th id="103">103</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>    <dfn class="decl" id="G3D::System::m_appDataDir" title='G3D::System::m_appDataDir' data-ref="G3D::System::m_appDataDir" >m_appDataDir</dfn>;</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td>    <a class="type" href="#G3D::G3DEndian" title='G3D::G3DEndian' data-ref="G3D::G3DEndian" >G3DEndian</a>      <dfn class="decl" id="G3D::System::m_machineEndian" title='G3D::System::m_machineEndian' data-ref="G3D::System::m_machineEndian" >m_machineEndian</dfn>;</td></tr>
+<tr><th id="106">106</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>    <dfn class="decl" id="G3D::System::m_cpuArch" title='G3D::System::m_cpuArch' data-ref="G3D::System::m_cpuArch" >m_cpuArch</dfn>;</td></tr>
+<tr><th id="107">107</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>    <dfn class="decl" id="G3D::System::m_operatingSystem" title='G3D::System::m_operatingSystem' data-ref="G3D::System::m_operatingSystem" >m_operatingSystem</dfn>;</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><u>#   <span data-ppcond="109">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="110">110</th><td>    <i class="doc">/** Used by getTick() for timing */</i></td></tr>
+<tr><th id="111">111</th><td>    LARGE_INTEGER  m_start;</td></tr>
+<tr><th id="112">112</th><td>    LARGE_INTEGER  m_counterFrequency;</td></tr>
+<tr><th id="113">113</th><td><u>#<span data-ppcond="109">else</span></u></td></tr>
+<tr><th id="114">114</th><td>    <b>struct</b> <a class="type" href="../../../../../include/x86_64-linux-gnu/bits/time.h.html#timeval" title='timeval' data-ref="timeval" >timeval</a> <dfn class="decl" id="G3D::System::m_start" title='G3D::System::m_start' data-ref="G3D::System::m_start" >m_start</dfn>;</td></tr>
+<tr><th id="115">115</th><td><u>#<span data-ppcond="109">endif</span></u></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>    <dfn class="decl" id="G3D::System::m_version" title='G3D::System::m_version' data-ref="G3D::System::m_version" >m_version</dfn>;</td></tr>
+<tr><th id="118">118</th><td>    <a class="typedef" href="#G3D::System::OutOfMemoryCallback" title='G3D::System::OutOfMemoryCallback' data-type='bool (*)(size_t, bool)' data-ref="G3D::System::OutOfMemoryCallback" >OutOfMemoryCallback</a> <dfn class="decl" id="G3D::System::m_outOfMemoryCallback" title='G3D::System::m_outOfMemoryCallback' data-ref="G3D::System::m_outOfMemoryCallback" >m_outOfMemoryCallback</dfn>;</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><u>#<span data-ppcond="120">ifdef</span> <span class="macro" data-ref="_M/G3D_OSX">G3D_OSX</span></u></td></tr>
+<tr><th id="121">121</th><td>    <i class="doc">/** In Cycles/Second */</i></td></tr>
+<tr><th id="122">122</th><td>    SInt32         m_OSXCPUSpeed;</td></tr>
+<tr><th id="123">123</th><td>    <em>double</em>         m_secondsPerNS;</td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="120">endif</span></u></td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td>    <i class="doc">/** The Real-World time of System::getTick() time 0.  Set by initTime */</i></td></tr>
+<tr><th id="127">127</th><td>    <a class="typedef" href="G3DGameUnits.h.html#G3D::RealTime" title='G3D::RealTime' data-type='double' data-ref="G3D::RealTime" >RealTime</a>       <dfn class="decl" id="G3D::System::m_realWorldGetTickTime0" title='G3D::System::m_realWorldGetTickTime0' data-ref="G3D::System::m_realWorldGetTickTime0" >m_realWorldGetTickTime0</dfn>;</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>         <dfn class="decl" id="G3D::System::m_highestCPUIDFunction" title='G3D::System::m_highestCPUIDFunction' data-ref="G3D::System::m_highestCPUIDFunction" >m_highestCPUIDFunction</dfn>;</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>    <i class="doc">/** <span class="command">@brief</span> Used for the singleton instance only. */</i></td></tr>
+<tr><th id="132">132</th><td>    <dfn class="decl" id="_ZN3G3D6SystemC1Ev" title='G3D::System::System' data-ref="_ZN3G3D6SystemC1Ev" >System</dfn>();</td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td>    <i class="doc">/** <span class="command">@brief</span> The singleton instance. </i></td></tr>
+<tr><th id="135">135</th><td><i class="doc"></i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">        Used instead of a global variable to ensure that the order of</i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">        intialization is correct, which is critical because other</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc">        globals may allocate memory using System::malloc.</i></td></tr>
+<tr><th id="139">139</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="140">140</th><td>    <em>static</em> <a class="type" href="#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>&amp; <dfn class="decl" id="_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</dfn>();</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td>    <b>enum</b> <dfn class="type def" id="G3D::System::CPUIDFunction" title='G3D::System::CPUIDFunction' data-ref="G3D::System::CPUIDFunction" >CPUIDFunction</dfn> {</td></tr>
+<tr><th id="143">143</th><td>        <dfn class="enum" id="G3D::System::CPUIDFunction::CPUID_VENDOR_ID" title='G3D::System::CPUIDFunction::CPUID_VENDOR_ID' data-ref="G3D::System::CPUIDFunction::CPUID_VENDOR_ID" >CPUID_VENDOR_ID</dfn>              = <var>0x00000000</var>,</td></tr>
+<tr><th id="144">144</th><td>        <dfn class="enum" id="G3D::System::CPUIDFunction::CPUID_PROCESSOR_FEATURES" title='G3D::System::CPUIDFunction::CPUID_PROCESSOR_FEATURES' data-ref="G3D::System::CPUIDFunction::CPUID_PROCESSOR_FEATURES" >CPUID_PROCESSOR_FEATURES</dfn>     = <var>0x00000001</var>,</td></tr>
+<tr><th id="145">145</th><td>        <dfn class="enum" id="G3D::System::CPUIDFunction::CPUID_NUM_CORES" title='G3D::System::CPUIDFunction::CPUID_NUM_CORES' data-ref="G3D::System::CPUIDFunction::CPUID_NUM_CORES" >CPUID_NUM_CORES</dfn>              = <var>0x00000004</var>,</td></tr>
+<tr><th id="146">146</th><td>        <dfn class="enum" id="G3D::System::CPUIDFunction::CPUID_GET_HIGHEST_FUNCTION" title='G3D::System::CPUIDFunction::CPUID_GET_HIGHEST_FUNCTION' data-ref="G3D::System::CPUIDFunction::CPUID_GET_HIGHEST_FUNCTION" >CPUID_GET_HIGHEST_FUNCTION</dfn>   = <var>0x80000000</var>,</td></tr>
+<tr><th id="147">147</th><td>        <dfn class="enum" id="G3D::System::CPUIDFunction::CPUID_EXTENDED_FEATURES" title='G3D::System::CPUIDFunction::CPUID_EXTENDED_FEATURES' data-ref="G3D::System::CPUIDFunction::CPUID_EXTENDED_FEATURES" >CPUID_EXTENDED_FEATURES</dfn>      = <var>0x80000001</var>};</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td>    <i class="doc">/** Helper macro to call cpuid functions and return all values </i></td></tr>
+<tr><th id="150">150</th><td><i class="doc"></i></td></tr>
+<tr><th id="151">151</th><td><i class="doc">       See <a href="http://software.intel.com/en-us/articles/intel-">http://software.intel.com/en-us/articles/intel-</a>64-architecture-processor-topology-enumeration/</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">       or  <a href="http://www.amd.com/us-en/assets/content_type/white_papers_and_tech_docs/">http://www.amd.com/us-en/assets/content_type/white_papers_and_tech_docs/</a>25481.pdf</i></td></tr>
+<tr><th id="153">153</th><td><i class="doc"></i></td></tr>
+<tr><th id="154">154</th><td><i class="doc">       for description of the arguments.</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="156">156</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System5cpuidENS0_13CPUIDFunctionERjS2_S2_S2_" title='G3D::System::cpuid' data-ref="_ZN3G3D6System5cpuidENS0_13CPUIDFunctionERjS2_S2_S2_" >cpuid</dfn>(<a class="type" href="#G3D::System::CPUIDFunction" title='G3D::System::CPUIDFunction' data-ref="G3D::System::CPUIDFunction" >CPUIDFunction</a> <dfn class="local col9 decl" id="409func" title='func' data-type='G3D::System::CPUIDFunction' data-ref="409func" >func</dfn>, <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>&amp; <dfn class="local col0 decl" id="410areg" title='areg' data-type='uint32 &amp;' data-ref="410areg" >areg</dfn>, <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>&amp; <dfn class="local col1 decl" id="411breg" title='breg' data-type='uint32 &amp;' data-ref="411breg" >breg</dfn>, <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>&amp; <dfn class="local col2 decl" id="412creg" title='creg' data-type='uint32 &amp;' data-ref="412creg" >creg</dfn>, <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>&amp; <dfn class="local col3 decl" id="413dreg" title='dreg' data-type='uint32 &amp;' data-ref="413dreg" >dreg</dfn>);</td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>    <i class="doc">/** Called from init() */</i></td></tr>
+<tr><th id="160">160</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D6System30getStandardProcessorExtensionsEv" title='G3D::System::getStandardProcessorExtensions' data-ref="_ZN3G3D6System30getStandardProcessorExtensionsEv" >getStandardProcessorExtensions</dfn>();</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>    <i class="doc">/** Called from init() */</i></td></tr>
+<tr><th id="163">163</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D6System8initTimeEv" title='G3D::System::initTime' data-ref="_ZN3G3D6System8initTimeEv" >initTime</dfn>();</td></tr>
+<tr><th id="164">164</th><td>    </td></tr>
+<tr><th id="165">165</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D6System4initEv" title='G3D::System::init' data-ref="_ZN3G3D6System4initEv" >init</dfn>();</td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td><b>public</b>:</td></tr>
+<tr><th id="168">168</th><td>    </td></tr>
+<tr><th id="169">169</th><td>    <i class="doc">/** atexit handling code invoked from G3DCleanupHook. */</i></td></tr>
+<tr><th id="170">170</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System7cleanupEv" title='G3D::System::cleanup' data-ref="_ZN3G3D6System7cleanupEv" >cleanup</dfn>();</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>    <i class="doc">/** Returns the speed of processor 0 in MHz. </i></td></tr>
+<tr><th id="173">173</th><td><i class="doc">        Always returns 0 on linux.*/</i></td></tr>
+<tr><th id="174">174</th><td>    <b>inline</b> <em>static</em> <em>int</em> <dfn class="decl def" id="_ZN3G3D6System11cpuSpeedMHzEv" title='G3D::System::cpuSpeedMHz' data-ref="_ZN3G3D6System11cpuSpeedMHzEv" >cpuSpeedMHz</dfn>() {</td></tr>
+<tr><th id="175">175</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_cpuSpeed" title='G3D::System::m_cpuSpeed' data-ref="G3D::System::m_cpuSpeed" >m_cpuSpeed</a>;</td></tr>
+<tr><th id="176">176</th><td>    }</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td>    <i class="doc">/** Returns the number of logical processor cores (i.e., the</i></td></tr>
+<tr><th id="179">179</th><td><i class="doc">        number of execution units for threads) */</i></td></tr>
+<tr><th id="180">180</th><td>    <b>inline</b> <em>static</em> <em>int</em> <dfn class="decl def" id="_ZN3G3D6System8numCoresEv" title='G3D::System::numCores' data-ref="_ZN3G3D6System8numCoresEv" >numCores</dfn>() {</td></tr>
+<tr><th id="181">181</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_numCores" title='G3D::System::m_numCores' data-ref="G3D::System::m_numCores" >m_numCores</a>;</td></tr>
+<tr><th id="182">182</th><td>    }</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td>    <b>inline</b> <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6System8hasCPUIDEv" title='G3D::System::hasCPUID' data-ref="_ZN3G3D6System8hasCPUIDEv" >hasCPUID</dfn>() {</td></tr>
+<tr><th id="185">185</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_hasCPUID" title='G3D::System::m_hasCPUID' data-ref="G3D::System::m_hasCPUID" >m_hasCPUID</a>;</td></tr>
+<tr><th id="186">186</th><td>    }</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>    <b>inline</b> <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6System8hasRDTSCEv" title='G3D::System::hasRDTSC' data-ref="_ZN3G3D6System8hasRDTSCEv" >hasRDTSC</dfn>() {</td></tr>
+<tr><th id="189">189</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_hasRDTSC" title='G3D::System::m_hasRDTSC' data-ref="G3D::System::m_hasRDTSC" >m_hasRDTSC</a>;</td></tr>
+<tr><th id="190">190</th><td>    }</td></tr>
+<tr><th id="191">191</th><td></td></tr>
+<tr><th id="192">192</th><td>    <b>inline</b> <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6System6hasSSEEv" title='G3D::System::hasSSE' data-ref="_ZN3G3D6System6hasSSEEv" >hasSSE</dfn>() {</td></tr>
+<tr><th id="193">193</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_hasSSE" title='G3D::System::m_hasSSE' data-ref="G3D::System::m_hasSSE" >m_hasSSE</a>;</td></tr>
+<tr><th id="194">194</th><td>    }</td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td>    <b>inline</b> <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6System7hasSSE2Ev" title='G3D::System::hasSSE2' data-ref="_ZN3G3D6System7hasSSE2Ev" >hasSSE2</dfn>() {</td></tr>
+<tr><th id="197">197</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_hasSSE2" title='G3D::System::m_hasSSE2' data-ref="G3D::System::m_hasSSE2" >m_hasSSE2</a>;</td></tr>
+<tr><th id="198">198</th><td>    }</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>    <b>inline</b> <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6System7hasSSE3Ev" title='G3D::System::hasSSE3' data-ref="_ZN3G3D6System7hasSSE3Ev" >hasSSE3</dfn>() {</td></tr>
+<tr><th id="201">201</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_hasSSE3" title='G3D::System::m_hasSSE3' data-ref="G3D::System::m_hasSSE3" >m_hasSSE3</a>;</td></tr>
+<tr><th id="202">202</th><td>    }</td></tr>
+<tr><th id="203">203</th><td></td></tr>
+<tr><th id="204">204</th><td>    <b>inline</b> <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6System6hasMMXEv" title='G3D::System::hasMMX' data-ref="_ZN3G3D6System6hasMMXEv" >hasMMX</dfn>() {</td></tr>
+<tr><th id="205">205</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_hasMMX" title='G3D::System::m_hasMMX' data-ref="G3D::System::m_hasMMX" >m_hasMMX</a>;</td></tr>
+<tr><th id="206">206</th><td>    }</td></tr>
+<tr><th id="207">207</th><td></td></tr>
+<tr><th id="208">208</th><td>    <b>inline</b> <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6System8has3DNowEv" title='G3D::System::has3DNow' data-ref="_ZN3G3D6System8has3DNowEv" >has3DNow</dfn>() {</td></tr>
+<tr><th id="209">209</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_has3DNOW" title='G3D::System::m_has3DNOW' data-ref="G3D::System::m_has3DNOW" >m_has3DNOW</a>;</td></tr>
+<tr><th id="210">210</th><td>    }</td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td>    <b>inline</b> <em>static</em> <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="decl def" id="_ZN3G3D6System9cpuVendorEv" title='G3D::System::cpuVendor' data-ref="_ZN3G3D6System9cpuVendorEv" >cpuVendor</dfn>() {</td></tr>
+<tr><th id="213">213</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_cpuVendor" title='G3D::System::m_cpuVendor' data-ref="G3D::System::m_cpuVendor" >m_cpuVendor</a>;</td></tr>
+<tr><th id="214">214</th><td>    }</td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="217">217</th><td><i class="doc">     Returns the endianness of this machine.</i></td></tr>
+<tr><th id="218">218</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="219">219</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::G3DEndian" title='G3D::G3DEndian' data-ref="G3D::G3DEndian" >G3DEndian</a> <dfn class="decl def" id="_ZN3G3D6System13machineEndianEv" title='G3D::System::machineEndian' data-ref="_ZN3G3D6System13machineEndianEv" >machineEndian</dfn>() {</td></tr>
+<tr><th id="220">220</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_machineEndian" title='G3D::System::m_machineEndian' data-ref="G3D::System::m_machineEndian" >m_machineEndian</a>;</td></tr>
+<tr><th id="221">221</th><td>    }</td></tr>
+<tr><th id="222">222</th><td></td></tr>
+<tr><th id="223">223</th><td>    <i class="doc">/** e.g., "Windows", "GNU/Linux" */</i></td></tr>
+<tr><th id="224">224</th><td>    <b>inline</b> <em>static</em> <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="decl def" id="_ZN3G3D6System15operatingSystemEv" title='G3D::System::operatingSystem' data-ref="_ZN3G3D6System15operatingSystemEv" >operatingSystem</dfn>() {</td></tr>
+<tr><th id="225">225</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_operatingSystem" title='G3D::System::m_operatingSystem' data-ref="G3D::System::m_operatingSystem" >m_operatingSystem</a>;</td></tr>
+<tr><th id="226">226</th><td>    }</td></tr>
+<tr><th id="227">227</th><td>    </td></tr>
+<tr><th id="228">228</th><td>    <i class="doc">/** e.g., 80686 */</i></td></tr>
+<tr><th id="229">229</th><td>    <b>inline</b> <em>static</em> <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="decl def" id="_ZN3G3D6System15cpuArchitectureEv" title='G3D::System::cpuArchitecture' data-ref="_ZN3G3D6System15cpuArchitectureEv" >cpuArchitecture</dfn>() {</td></tr>
+<tr><th id="230">230</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_cpuArch" title='G3D::System::m_cpuArch' data-ref="G3D::System::m_cpuArch" >m_cpuArch</a>;</td></tr>
+<tr><th id="231">231</th><td>    }</td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="234">234</th><td><i class="doc">       Returns the current date as a string in the form YYYY-MM-DD</i></td></tr>
+<tr><th id="235">235</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="236">236</th><td>    <em>static</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D6System17currentDateStringEv" title='G3D::System::currentDateString' data-ref="_ZN3G3D6System17currentDateStringEv" >currentDateString</dfn>();</td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td>    <i class="doc">/** Returns the current 24-hour local time as a string in the form HH:MM:SS */</i></td></tr>
+<tr><th id="239">239</th><td>    <em>static</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D6System17currentTimeStringEv" title='G3D::System::currentTimeString' data-ref="_ZN3G3D6System17currentTimeStringEv" >currentTimeString</dfn>();</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="242">242</th><td><i class="doc">       Uses pooled storage to optimize small allocations (1 byte to 5</i></td></tr>
+<tr><th id="243">243</th><td><i class="doc">       kilobytes).  Can be 10x to 100x faster than calling<span class="command"> \c</span> <span class="arg">malloc</span> or</i></td></tr>
+<tr><th id="244">244</th><td><i class="doc">      <span class="command"> \c</span> <span class="arg">new.</span></i></td></tr>
+<tr><th id="245">245</th><td><i class="doc">       </i></td></tr>
+<tr><th id="246">246</th><td><i class="doc">       The result must be freed with free.</i></td></tr>
+<tr><th id="247">247</th><td><i class="doc">       </i></td></tr>
+<tr><th id="248">248</th><td><i class="doc">       Threadsafe on Win32.</i></td></tr>
+<tr><th id="249">249</th><td><i class="doc">       </i></td></tr>
+<tr><th id="250">250</th><td><i class="doc">       <span class="command">@sa</span> calloc realloc OutOfMemoryCallback free</i></td></tr>
+<tr><th id="251">251</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="252">252</th><td>    <em>static</em> <em>void</em>* <dfn class="decl" id="_ZN3G3D6System6mallocEm" title='G3D::System::malloc' data-ref="_ZN3G3D6System6mallocEm" >malloc</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="414bytes" title='bytes' data-type='size_t' data-ref="414bytes" >bytes</dfn>);</td></tr>
+<tr><th id="253">253</th><td>    </td></tr>
+<tr><th id="254">254</th><td>    <em>static</em> <em>void</em>* <dfn class="decl" id="_ZN3G3D6System6callocEmm" title='G3D::System::calloc' data-ref="_ZN3G3D6System6callocEmm" >calloc</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="415n" title='n' data-type='size_t' data-ref="415n" >n</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="416x" title='x' data-type='size_t' data-ref="416x" >x</dfn>);</td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="257">257</th><td><i class="doc">     Version of realloc that works with System::malloc.</i></td></tr>
+<tr><th id="258">258</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="259">259</th><td>    <em>static</em> <em>void</em>* <dfn class="decl" id="_ZN3G3D6System7reallocEPvm" title='G3D::System::realloc' data-ref="_ZN3G3D6System7reallocEPvm" >realloc</dfn>(<em>void</em>* <dfn class="local col7 decl" id="417block" title='block' data-type='void *' data-ref="417block" >block</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="418bytes" title='bytes' data-type='size_t' data-ref="418bytes" >bytes</dfn>);</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>    <i class="doc">/** Returns a string describing how well System::malloc is using</i></td></tr>
+<tr><th id="262">262</th><td><i class="doc">        its internal pooled storage.  "heap" memory was slow to</i></td></tr>
+<tr><th id="263">263</th><td><i class="doc">        allocate; the other data sizes are comparatively fast.*/</i></td></tr>
+<tr><th id="264">264</th><td>    <em>static</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D6System17mallocPerformanceEv" title='G3D::System::mallocPerformance' data-ref="_ZN3G3D6System17mallocPerformanceEv" >mallocPerformance</dfn>();</td></tr>
+<tr><th id="265">265</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System30resetMallocPerformanceCountersEv" title='G3D::System::resetMallocPerformanceCounters' data-ref="_ZN3G3D6System30resetMallocPerformanceCountersEv" >resetMallocPerformanceCounters</dfn>();</td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td>    <i class="doc">/** </i></td></tr>
+<tr><th id="268">268</th><td><i class="doc">       Returns a string describing the current usage of the buffer pools used for</i></td></tr>
+<tr><th id="269">269</th><td><i class="doc">       optimizing System::malloc.</i></td></tr>
+<tr><th id="270">270</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="271">271</th><td>    <em>static</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D6System12mallocStatusEv" title='G3D::System::mallocStatus' data-ref="_ZN3G3D6System12mallocStatusEv" >mallocStatus</dfn>();</td></tr>
+<tr><th id="272">272</th><td></td></tr>
+<tr><th id="273">273</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="274">274</th><td><i class="doc">     Free data allocated with System::malloc.</i></td></tr>
+<tr><th id="275">275</th><td><i class="doc"></i></td></tr>
+<tr><th id="276">276</th><td><i class="doc">     Threadsafe on Win32.</i></td></tr>
+<tr><th id="277">277</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="278">278</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System4freeEPv" title='G3D::System::free' data-ref="_ZN3G3D6System4freeEPv" >free</dfn>(<em>void</em>* <dfn class="local col9 decl" id="419p" title='p' data-type='void *' data-ref="419p" >p</dfn>);</td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="281">281</th><td><i class="doc">       Guarantees that the start of the array is aligned to the </i></td></tr>
+<tr><th id="282">282</th><td><i class="doc">       specified number of bytes.</i></td></tr>
+<tr><th id="283">283</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="284">284</th><td>    <em>static</em> <em>void</em>* <dfn class="decl" id="_ZN3G3D6System13alignedMallocEmm" title='G3D::System::alignedMalloc' data-ref="_ZN3G3D6System13alignedMallocEmm" >alignedMalloc</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="420bytes" title='bytes' data-type='size_t' data-ref="420bytes" >bytes</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="421alignment" title='alignment' data-type='size_t' data-ref="421alignment" >alignment</dfn>);</td></tr>
+<tr><th id="285">285</th><td>    </td></tr>
+<tr><th id="286">286</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="287">287</th><td><i class="doc">     Frees memory allocated with alignedMalloc.</i></td></tr>
+<tr><th id="288">288</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="289">289</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System11alignedFreeEPv" title='G3D::System::alignedFree' data-ref="_ZN3G3D6System11alignedFreeEPv" >alignedFree</dfn>(<em>void</em>* <dfn class="local col2 decl" id="422ptr" title='ptr' data-type='void *' data-ref="422ptr" >ptr</dfn>);</td></tr>
+<tr><th id="290">290</th><td></td></tr>
+<tr><th id="291">291</th><td>    <i class="doc">/** An implementation of memcpy that may be up to 2x as fast as the C library</i></td></tr>
+<tr><th id="292">292</th><td><i class="doc">        one on some processors.  Guaranteed to have the same behavior as memcpy</i></td></tr>
+<tr><th id="293">293</th><td><i class="doc">        in all cases. */</i></td></tr>
+<tr><th id="294">294</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System6memcpyEPvPKvm" title='G3D::System::memcpy' data-ref="_ZN3G3D6System6memcpyEPvPKvm" >memcpy</dfn>(<em>void</em>* <dfn class="local col3 decl" id="423dst" title='dst' data-type='void *' data-ref="423dst" >dst</dfn>, <em>const</em> <em>void</em>* <dfn class="local col4 decl" id="424src" title='src' data-type='const void *' data-ref="424src" >src</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="425numBytes" title='numBytes' data-type='size_t' data-ref="425numBytes" >numBytes</dfn>);</td></tr>
+<tr><th id="295">295</th><td>    </td></tr>
+<tr><th id="296">296</th><td>    <i class="doc">/** An implementation of memset that may be up to 2x as fast as the C library</i></td></tr>
+<tr><th id="297">297</th><td><i class="doc">        one on some processors.  Guaranteed to have the same behavior as memset</i></td></tr>
+<tr><th id="298">298</th><td><i class="doc">        in all cases. */</i></td></tr>
+<tr><th id="299">299</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System6memsetEPvhm" title='G3D::System::memset' data-ref="_ZN3G3D6System6memsetEPvhm" >memset</dfn>(<em>void</em>* <dfn class="local col6 decl" id="426dst" title='dst' data-type='void *' data-ref="426dst" >dst</dfn>, <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a> <dfn class="local col7 decl" id="427value" title='value' data-type='uint8' data-ref="427value" >value</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="428numBytes" title='numBytes' data-type='size_t' data-ref="428numBytes" >numBytes</dfn>);</td></tr>
+<tr><th id="300">300</th><td>    </td></tr>
+<tr><th id="301">301</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="302">302</th><td><i class="doc">     Returns the fully qualified filename for the currently running executable.</i></td></tr>
+<tr><th id="303">303</th><td><i class="doc"></i></td></tr>
+<tr><th id="304">304</th><td><i class="doc">     This is more reliable than arg[0], which may be intentionally set</i></td></tr>
+<tr><th id="305">305</th><td><i class="doc">     to an incorrect value by a calling program, relative to a now</i></td></tr>
+<tr><th id="306">306</th><td><i class="doc">     non-current directory, or obfuscated by sym-links.</i></td></tr>
+<tr><th id="307">307</th><td><i class="doc"></i></td></tr>
+<tr><th id="308">308</th><td><i class="doc">    <span class="command"> @cite</span> Linux version written by Nicolai Haehnle &lt;prefect<span class="command">_@gmx</span>.net&gt;, <a href="http://www.flipcode.com/cgi-bin/msg.cgi?showThread=COTD-getexename&forum=cotd&id=-">http://www.flipcode.com/cgi-bin/msg.cgi?showThread=COTD-getexename&amp;forum=cotd&amp;id=-</a>1</i></td></tr>
+<tr><th id="309">309</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="310">310</th><td>    <em>static</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D6System22currentProgramFilenameEv" title='G3D::System::currentProgramFilename' data-ref="_ZN3G3D6System22currentProgramFilenameEv" >currentProgramFilename</dfn>();</td></tr>
+<tr><th id="311">311</th><td></td></tr>
+<tr><th id="312">312</th><td>    <i class="doc">/** Name of this program. Note that you can mutate this string to</i></td></tr>
+<tr><th id="313">313</th><td><i class="doc">        set your app name explicitly.*/</i></td></tr>
+<tr><th id="314">314</th><td>    <em>static</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="decl" id="_ZN3G3D6System7appNameEv" title='G3D::System::appName' data-ref="_ZN3G3D6System7appNameEv" >appName</dfn>();</td></tr>
+<tr><th id="315">315</th><td></td></tr>
+<tr><th id="316">316</th><td>    <i class="doc">/** G3D Version string */</i></td></tr>
+<tr><th id="317">317</th><td>    <b>inline</b> <em>static</em> <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="decl def" id="_ZN3G3D6System7versionEv" title='G3D::System::version' data-ref="_ZN3G3D6System7versionEv" >version</dfn>() {</td></tr>
+<tr><th id="318">318</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_version" title='G3D::System::m_version' data-ref="G3D::System::m_version" >m_version</a>;</td></tr>
+<tr><th id="319">319</th><td>    }</td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="322">322</th><td><i class="doc">       <span class="command">@brief</span> The optimization status of the G3D library (not the program compiled against it)</i></td></tr>
+<tr><th id="323">323</th><td><i class="doc"></i></td></tr>
+<tr><th id="324">324</th><td><i class="doc">       Either "Debug" or "Release", depending on whether _DEBUG was</i></td></tr>
+<tr><th id="325">325</th><td><i class="doc">       defined at compile-time for the library.</i></td></tr>
+<tr><th id="326">326</th><td><i class="doc">      */</i></td></tr>
+<tr><th id="327">327</th><td>    <em>static</em> <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="decl" id="_ZN3G3D6System5buildEv" title='G3D::System::build' data-ref="_ZN3G3D6System5buildEv" >build</dfn>();</td></tr>
+<tr><th id="328">328</th><td></td></tr>
+<tr><th id="329">329</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="330">330</th><td><i class="doc">     Causes the current thread to yield for the specified duration</i></td></tr>
+<tr><th id="331">331</th><td><i class="doc">     and consume almost no CPU.</i></td></tr>
+<tr><th id="332">332</th><td><i class="doc">     The sleep will be extremely precise; it uses System::time() </i></td></tr>
+<tr><th id="333">333</th><td><i class="doc">     to calibrate the exact yeild time.</i></td></tr>
+<tr><th id="334">334</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="335">335</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System5sleepEd" title='G3D::System::sleep' data-ref="_ZN3G3D6System5sleepEd" >sleep</dfn>(<a class="typedef" href="G3DGameUnits.h.html#G3D::RealTime" title='G3D::RealTime' data-type='double' data-ref="G3D::RealTime" >RealTime</a> <dfn class="local col9 decl" id="429t" title='t' data-type='RealTime' data-ref="429t" >t</dfn>);</td></tr>
+<tr><th id="336">336</th><td></td></tr>
+<tr><th id="337">337</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="338">338</th><td><i class="doc">     Clears the console.</i></td></tr>
+<tr><th id="339">339</th><td><i class="doc">     Console programs only.</i></td></tr>
+<tr><th id="340">340</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="341">341</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System18consoleClearScreenEv" title='G3D::System::consoleClearScreen' data-ref="_ZN3G3D6System18consoleClearScreenEv" >consoleClearScreen</dfn>();</td></tr>
+<tr><th id="342">342</th><td></td></tr>
+<tr><th id="343">343</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="344">344</th><td><i class="doc">     Returns true if a key is waiting.</i></td></tr>
+<tr><th id="345">345</th><td><i class="doc">     Console programs only.</i></td></tr>
+<tr><th id="346">346</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="347">347</th><td>    <em>static</em> <em>bool</em> <dfn class="decl" id="_ZN3G3D6System17consoleKeyPressedEv" title='G3D::System::consoleKeyPressed' data-ref="_ZN3G3D6System17consoleKeyPressedEv" >consoleKeyPressed</dfn>();</td></tr>
+<tr><th id="348">348</th><td>    </td></tr>
+<tr><th id="349">349</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="350">350</th><td><i class="doc">     Blocks until a key is read (use consoleKeyPressed to determine if</i></td></tr>
+<tr><th id="351">351</th><td><i class="doc">     a key is waiting to be read) then returns the character code for</i></td></tr>
+<tr><th id="352">352</th><td><i class="doc">     that key.</i></td></tr>
+<tr><th id="353">353</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="354">354</th><td>    <em>static</em> <em>int</em> <dfn class="decl" id="_ZN3G3D6System14consoleReadKeyEv" title='G3D::System::consoleReadKey' data-ref="_ZN3G3D6System14consoleReadKeyEv" >consoleReadKey</dfn>();</td></tr>
+<tr><th id="355">355</th><td></td></tr>
+<tr><th id="356">356</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="357">357</th><td><i class="doc">     The actual time (measured in seconds since</i></td></tr>
+<tr><th id="358">358</th><td><i class="doc">     Jan 1 1970 midnight).</i></td></tr>
+<tr><th id="359">359</th><td><i class="doc">     </i></td></tr>
+<tr><th id="360">360</th><td><i class="doc">     Adjusted for local timezone and daylight savings</i></td></tr>
+<tr><th id="361">361</th><td><i class="doc">     time.   This is as accurate and fast as getCycleCount().</i></td></tr>
+<tr><th id="362">362</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="363">363</th><td>    <em>static</em> <a class="typedef" href="G3DGameUnits.h.html#G3D::RealTime" title='G3D::RealTime' data-type='double' data-ref="G3D::RealTime" >RealTime</a> <dfn class="decl" id="_ZN3G3D6System4timeEv" title='G3D::System::time' data-ref="_ZN3G3D6System4timeEv" >time</dfn>();</td></tr>
+<tr><th id="364">364</th><td></td></tr>
+<tr><th id="365">365</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="366">366</th><td><i class="doc">     To count the number of cycles a given operation takes:</i></td></tr>
+<tr><th id="367">367</th><td><i class="doc"></i></td></tr>
+<tr><th id="368">368</th><td><i class="doc">     <span class="command">\htmlonly</span></i></td></tr>
+<tr><th id="369">369</th><td><i class="doc"><span class="verb">     &lt;PRE&gt;</span></i></td></tr>
+<tr><th id="370">370</th><td><i class="doc"><span class="verb"></span><span class="verb">     unsigned long count;</span></i></td></tr>
+<tr><th id="371">371</th><td><i class="doc"><span class="verb"></span><span class="verb">     System::beginCycleCount(count);</span></i></td></tr>
+<tr><th id="372">372</th><td><i class="doc"><span class="verb"></span><span class="verb">     ...</span></i></td></tr>
+<tr><th id="373">373</th><td><i class="doc"><span class="verb"></span><span class="verb">     System::endCycleCount(count);</span></i></td></tr>
+<tr><th id="374">374</th><td><i class="doc"><span class="verb"></span><span class="verb">     // count now contains the cycle count for the intervening operation.</span></i></td></tr>
+<tr><th id="375">375</th><td><i class="doc"><span class="verb"></span><span class="verb">     &lt;/PRE&gt;</span></i></td></tr>
+<tr><th id="376">376</th><td><i class="doc"><span class="verb"></span>     \endhtmlonly</i></td></tr>
+<tr><th id="377">377</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="378">378</th><td>    <em>static</em> <em>void</em> <a class="decl" href="#_ZN3G3D6System15beginCycleCountERm" title='G3D::System::beginCycleCount' data-ref="_ZN3G3D6System15beginCycleCountERm" >beginCycleCount</a>(<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a>&amp; <dfn class="local col0 decl" id="430cycleCount" title='cycleCount' data-type='uint64 &amp;' data-ref="430cycleCount" >cycleCount</dfn>);</td></tr>
+<tr><th id="379">379</th><td>    <em>static</em> <em>void</em> <a class="decl" href="#_ZN3G3D6System13endCycleCountERm" title='G3D::System::endCycleCount' data-ref="_ZN3G3D6System13endCycleCountERm" >endCycleCount</a>(<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a>&amp; <dfn class="local col1 decl" id="431cycleCount" title='cycleCount' data-type='uint64 &amp;' data-ref="431cycleCount" >cycleCount</dfn>);</td></tr>
+<tr><th id="380">380</th><td></td></tr>
+<tr><th id="381">381</th><td>    <em>static</em> <a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a> <a class="decl" href="#_ZN3G3D6System13getCycleCountEv" title='G3D::System::getCycleCount' data-ref="_ZN3G3D6System13getCycleCountEv" >getCycleCount</a>();</td></tr>
+<tr><th id="382">382</th><td></td></tr>
+<tr><th id="383">383</th><td>    <b>inline</b> <em>static</em> <em>void</em> <dfn class="decl def" id="_ZN3G3D6System22setOutOfMemoryCallbackEPFbmbE" title='G3D::System::setOutOfMemoryCallback' data-ref="_ZN3G3D6System22setOutOfMemoryCallbackEPFbmbE" >setOutOfMemoryCallback</dfn>(<a class="typedef" href="#G3D::System::OutOfMemoryCallback" title='G3D::System::OutOfMemoryCallback' data-type='bool (*)(size_t, bool)' data-ref="G3D::System::OutOfMemoryCallback" >OutOfMemoryCallback</a> <dfn class="local col2 decl" id="432c" title='c' data-type='OutOfMemoryCallback' data-ref="432c" >c</dfn>) {</td></tr>
+<tr><th id="384">384</th><td>        <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_outOfMemoryCallback" title='G3D::System::m_outOfMemoryCallback' data-ref="G3D::System::m_outOfMemoryCallback" >m_outOfMemoryCallback</a> = <a class="local col2 ref" href="#432c" title='c' data-ref="432c" >c</a>;</td></tr>
+<tr><th id="385">385</th><td>    }</td></tr>
+<tr><th id="386">386</th><td></td></tr>
+<tr><th id="387">387</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="388">388</th><td><i class="doc">     When System::malloc fails to allocate memory because the system is</i></td></tr>
+<tr><th id="389">389</th><td><i class="doc">     out of memory, it invokes this handler (if it is not NULL).</i></td></tr>
+<tr><th id="390">390</th><td><i class="doc">     The argument to the callback is the amount of memory that malloc</i></td></tr>
+<tr><th id="391">391</th><td><i class="doc">     was trying to allocate when it ran out.  If the callback returns</i></td></tr>
+<tr><th id="392">392</th><td><i class="doc">     true, System::malloc will attempt to allocate the memory again.</i></td></tr>
+<tr><th id="393">393</th><td><i class="doc">     If the callback returns false, then System::malloc will return NULL.</i></td></tr>
+<tr><th id="394">394</th><td><i class="doc"></i></td></tr>
+<tr><th id="395">395</th><td><i class="doc">     You can use outOfMemoryCallback to free data structures or to </i></td></tr>
+<tr><th id="396">396</th><td><i class="doc">     register the failure.</i></td></tr>
+<tr><th id="397">397</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="398">398</th><td>    <b>inline</b> <em>static</em> <a class="typedef" href="#G3D::System::OutOfMemoryCallback" title='G3D::System::OutOfMemoryCallback' data-type='bool (*)(size_t, bool)' data-ref="G3D::System::OutOfMemoryCallback" >OutOfMemoryCallback</a> <dfn class="decl def" id="_ZN3G3D6System19outOfMemoryCallbackEv" title='G3D::System::outOfMemoryCallback' data-ref="_ZN3G3D6System19outOfMemoryCallbackEv" >outOfMemoryCallback</dfn>() {</td></tr>
+<tr><th id="399">399</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D6System8instanceEv" title='G3D::System::instance' data-ref="_ZN3G3D6System8instanceEv" >instance</a>().<a class="member" href="#G3D::System::m_outOfMemoryCallback" title='G3D::System::m_outOfMemoryCallback' data-ref="G3D::System::m_outOfMemoryCallback" >m_outOfMemoryCallback</a>;</td></tr>
+<tr><th id="400">400</th><td>    }</td></tr>
+<tr><th id="401">401</th><td></td></tr>
+<tr><th id="402">402</th><td>    <i class="doc">/** Set an environment variable for the current process */</i></td></tr>
+<tr><th id="403">403</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System6setEnvERKSsS2_" title='G3D::System::setEnv' data-ref="_ZN3G3D6System6setEnvERKSsS2_" >setEnv</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col3 decl" id="433name" title='name' data-type='const std::string &amp;' data-ref="433name" >name</dfn>, <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col4 decl" id="434value" title='value' data-type='const std::string &amp;' data-ref="434value" >value</dfn>);</td></tr>
+<tr><th id="404">404</th><td>    </td></tr>
+<tr><th id="405">405</th><td>    <i class="doc">/** Get an environment variable for the current process.  Returns NULL if the variable doesn't exist. */</i></td></tr>
+<tr><th id="406">406</th><td>    <em>static</em> <em>const</em> <em>char</em>* <dfn class="decl" id="_ZN3G3D6System6getEnvERKSs" title='G3D::System::getEnv' data-ref="_ZN3G3D6System6getEnvERKSs" >getEnv</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col5 decl" id="435name" title='name' data-type='const std::string &amp;' data-ref="435name" >name</dfn>);</td></tr>
+<tr><th id="407">407</th><td></td></tr>
+<tr><th id="408">408</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="409">409</th><td><i class="doc">     Prints a human-readable description of this machine</i></td></tr>
+<tr><th id="410">410</th><td><i class="doc">     to the text output stream.  Either argument may be NULL.</i></td></tr>
+<tr><th id="411">411</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="412">412</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System14describeSystemERNS_10TextOutputE" title='G3D::System::describeSystem' data-ref="_ZN3G3D6System14describeSystemERNS_10TextOutputE" >describeSystem</dfn></td></tr>
+<tr><th id="413">413</th><td>       (<b>class</b> <a class="type" href="TextOutput.h.html#G3D::TextOutput" title='G3D::TextOutput' data-ref="G3D::TextOutput" id="G3D::TextOutput" ><a class="type" href="TextOutput.h.html#G3D::TextOutput" title='G3D::TextOutput' data-ref="G3D::TextOutput" >TextOutput</a></a>&amp; <dfn class="local col6 decl" id="436t" title='t' data-type='class TextOutput &amp;' data-ref="436t" >t</dfn>);</td></tr>
+<tr><th id="414">414</th><td></td></tr>
+<tr><th id="415">415</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System14describeSystemERSs" title='G3D::System::describeSystem' data-ref="_ZN3G3D6System14describeSystemERSs" >describeSystem</dfn></td></tr>
+<tr><th id="416">416</th><td>       (<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;        <dfn class="local col7 decl" id="437s" title='s' data-type='std::string &amp;' data-ref="437s" >s</dfn>);</td></tr>
+<tr><th id="417">417</th><td></td></tr>
+<tr><th id="418">418</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="419">419</th><td><i class="doc">     Tries to locate the resource by looking in related directories.</i></td></tr>
+<tr><th id="420">420</th><td><i class="doc">     If found, returns the full path to the resource, otherwise</i></td></tr>
+<tr><th id="421">421</th><td><i class="doc">     returns the empty string.</i></td></tr>
+<tr><th id="422">422</th><td><i class="doc"></i></td></tr>
+<tr><th id="423">423</th><td><i class="doc">     Looks in:</i></td></tr>
+<tr><th id="424">424</th><td><i class="doc"></i></td></tr>
+<tr><th id="425">425</th><td><i class="doc">         - Literal interpretation of full (i.e., if it contains a fully-qualified name)</i></td></tr>
+<tr><th id="426">426</th><td><i class="doc">         - Last directory in which a file was found</i></td></tr>
+<tr><th id="427">427</th><td><i class="doc">         - Current directory</i></td></tr>
+<tr><th id="428">428</th><td><i class="doc">         - System::appDataDir (which is usually GApp::Settings.dataDir, which defaults to the directory containing the program binary)</i></td></tr>
+<tr><th id="429">429</th><td><i class="doc">         - $G3D9DATA directory</i></td></tr>
+<tr><th id="430">430</th><td><i class="doc">         - System::appDataDir() + "data/"  (note that this may be a zipfile named "data" with no extension)</i></td></tr>
+<tr><th id="431">431</th><td><i class="doc">         - System::appDataDir() + "data.zip/"</i></td></tr>
+<tr><th id="432">432</th><td><i class="doc">         - ../data-files/  (windows)</i></td></tr>
+<tr><th id="433">433</th><td><i class="doc">         - ../../data-files/ (windows)</i></td></tr>
+<tr><th id="434">434</th><td><i class="doc">         - ../../../data-files/ (windows)</i></td></tr>
+<tr><th id="435">435</th><td><i class="doc"></i></td></tr>
+<tr><th id="436">436</th><td><i class="doc">       Plus the following subdirectories of those:</i></td></tr>
+<tr><th id="437">437</th><td><i class="doc"></i></td></tr>
+<tr><th id="438">438</th><td><i class="doc">         - cubemap</i></td></tr>
+<tr><th id="439">439</th><td><i class="doc">         - gui</i></td></tr>
+<tr><th id="440">440</th><td><i class="doc">         - font</i></td></tr>
+<tr><th id="441">441</th><td><i class="doc">         - icon</i></td></tr>
+<tr><th id="442">442</th><td><i class="doc">         - models</i></td></tr>
+<tr><th id="443">443</th><td><i class="doc">         - image</i></td></tr>
+<tr><th id="444">444</th><td><i class="doc">         - sky</i></td></tr>
+<tr><th id="445">445</th><td><i class="doc">         - md2</i></td></tr>
+<tr><th id="446">446</th><td><i class="doc">         - md3</i></td></tr>
+<tr><th id="447">447</th><td><i class="doc">         - ifs</i></td></tr>
+<tr><th id="448">448</th><td><i class="doc">         - 3ds</i></td></tr>
+<tr><th id="449">449</th><td><i class="doc"></i></td></tr>
+<tr><th id="450">450</th><td><i class="doc">        <span class="command">\param</span> <span class="arg">exceptionIfNotFound</span> If true and the file is not found, throws G3D::FileNotFound.</i></td></tr>
+<tr><th id="451">451</th><td><i class="doc">     */</i>    </td></tr>
+<tr><th id="452">452</th><td>    <em>static</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D6System12findDataFileERKSsbb" title='G3D::System::findDataFile' data-ref="_ZN3G3D6System12findDataFileERKSsbb" >findDataFile</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col8 decl" id="438full" title='full' data-type='const std::string &amp;' data-ref="438full" >full</dfn>, <em>bool</em> <dfn class="local col9 decl" id="439exceptionIfNotFound" title='exceptionIfNotFound' data-type='bool' data-ref="439exceptionIfNotFound" >exceptionIfNotFound</dfn> = <b>true</b>, <em>bool</em> <dfn class="local col0 decl" id="440caseSensitive" title='caseSensitive' data-type='bool' data-ref="440caseSensitive" >caseSensitive</dfn> =</td></tr>
+<tr><th id="453">453</th><td><u>#<span data-ppcond="453">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="454">454</th><td>        <b>false</b></td></tr>
+<tr><th id="455">455</th><td><u>#<span data-ppcond="453">else</span></u></td></tr>
+<tr><th id="456">456</th><td>        <b>true</b></td></tr>
+<tr><th id="457">457</th><td><u>#<span data-ppcond="453">endif</span></u></td></tr>
+<tr><th id="458">458</th><td>        );</td></tr>
+<tr><th id="459">459</th><td></td></tr>
+<tr><th id="460">460</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="461">461</th><td><i class="doc">        Sets the path that the application is using as its data directory.</i></td></tr>
+<tr><th id="462">462</th><td><i class="doc">        Used by findDataDir as an initial search location.  GApp sets this</i></td></tr>
+<tr><th id="463">463</th><td><i class="doc">        upon constrution.</i></td></tr>
+<tr><th id="464">464</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="465">465</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D6System13setAppDataDirERKSs" title='G3D::System::setAppDataDir' data-ref="_ZN3G3D6System13setAppDataDirERKSs" >setAppDataDir</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col1 decl" id="441path" title='path' data-type='const std::string &amp;' data-ref="441path" >path</dfn>);</td></tr>
+<tr><th id="466">466</th><td></td></tr>
+<tr><th id="467">467</th><td>};</td></tr>
+<tr><th id="468">468</th><td></td></tr>
+<tr><th id="469">469</th><td></td></tr>
+<tr><th id="470">470</th><td><u>#<span data-ppcond="470">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="471">471</th><td><u>#   ifdef _M_IX86</u></td></tr>
+<tr><th id="472">472</th><td>        <i>// 32-bit</i></td></tr>
+<tr><th id="473">473</th><td>        <b>inline</b> uint64 System::getCycleCount() {</td></tr>
+<tr><th id="474">474</th><td>            uint32 timehi, timelo;</td></tr>
+<tr><th id="475">475</th><td></td></tr>
+<tr><th id="476">476</th><td>            <i>// Use the assembly instruction rdtsc, which gets the current</i></td></tr>
+<tr><th id="477">477</th><td><i>            // cycle count (since the process started) and puts it in edx:eax.</i></td></tr>
+<tr><th id="478">478</th><td>            <b>__asm</b></td></tr>
+<tr><th id="479">479</th><td>                {</td></tr>
+<tr><th id="480">480</th><td>                    rdtsc;</td></tr>
+<tr><th id="481">481</th><td>                    mov timehi, edx;</td></tr>
+<tr><th id="482">482</th><td>                    mov timelo, eax;</td></tr>
+<tr><th id="483">483</th><td>                }</td></tr>
+<tr><th id="484">484</th><td></td></tr>
+<tr><th id="485">485</th><td>            <b>return</b> ((uint64)timehi &lt;&lt; <var>32</var>) + (uint64)timelo;</td></tr>
+<tr><th id="486">486</th><td>        }</td></tr>
+<tr><th id="487">487</th><td><u>#   else</u></td></tr>
+<tr><th id="488">488</th><td>        <i>// 64-bit</i></td></tr>
+<tr><th id="489">489</th><td>        <b>inline</b> uint64 System::getCycleCount() {</td></tr>
+<tr><th id="490">490</th><td>            LARGE_INTEGER now;</td></tr>
+<tr><th id="491">491</th><td>            QueryPerformanceCounter(&amp;now);</td></tr>
+<tr><th id="492">492</th><td>            <b>return</b> now.QuadPart;</td></tr>
+<tr><th id="493">493</th><td>        }</td></tr>
+<tr><th id="494">494</th><td></td></tr>
+<tr><th id="495">495</th><td><u>#   endif</u></td></tr>
+<tr><th id="496">496</th><td></td></tr>
+<tr><th id="497">497</th><td><u>#<span data-ppcond="470">elif</span> defined(<a class="macro" href="platform.h.html#74" data-ref="_M/G3D_LINUX">G3D_LINUX</a>)</u></td></tr>
+<tr><th id="498">498</th><td></td></tr>
+<tr><th id="499">499</th><td>    <b>inline</b> <a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a> <a class="type" href="#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<dfn class="decl def" id="_ZN3G3D6System13getCycleCountEv" title='G3D::System::getCycleCount' data-ref="_ZN3G3D6System13getCycleCountEv" >getCycleCount</dfn>() {</td></tr>
+<tr><th id="500">500</th><td>        <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" ><a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a></a> <dfn class="local col2 decl" id="442timehi" title='timehi' data-type='uint32' data-ref="442timehi" >timehi</dfn>, <dfn class="local col3 decl" id="443timelo" title='timelo' data-type='uint32' data-ref="443timelo" >timelo</dfn>;</td></tr>
+<tr><th id="501">501</th><td></td></tr>
+<tr><th id="502">502</th><td>        <b>__asm__</b> <em>__volatile__</em> (</td></tr>
+<tr><th id="503">503</th><td>            <q>"rdtsc            "</q></td></tr>
+<tr><th id="504">504</th><td>            : <q>"=a"</q> (<a class="local col3 ref" href="#443timelo" title='timelo' data-ref="443timelo" >timelo</a>),</td></tr>
+<tr><th id="505">505</th><td>              <q>"=d"</q> (<a class="local col2 ref" href="#442timehi" title='timehi' data-ref="442timehi" >timehi</a>)</td></tr>
+<tr><th id="506">506</th><td>            : );</td></tr>
+<tr><th id="507">507</th><td></td></tr>
+<tr><th id="508">508</th><td>        <b>return</b> ((<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a>)<a class="local col2 ref" href="#442timehi" title='timehi' data-ref="442timehi" >timehi</a> &lt;&lt; <var>32</var>) + (<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a>)<a class="local col3 ref" href="#443timelo" title='timelo' data-ref="443timelo" >timelo</a>;</td></tr>
+<tr><th id="509">509</th><td>    }</td></tr>
+<tr><th id="510">510</th><td></td></tr>
+<tr><th id="511">511</th><td><u>#<span data-ppcond="470">elif</span> defined(G3D_OSX)</u></td></tr>
+<tr><th id="512">512</th><td></td></tr>
+<tr><th id="513">513</th><td>    <b>inline</b> uint64 System::getCycleCount() {</td></tr>
+<tr><th id="514">514</th><td>        <i>//Note:  To put off extra processing until the end, this does not </i></td></tr>
+<tr><th id="515">515</th><td><i>        //return the actual clock cycle count.  It is a bus cycle count.</i></td></tr>
+<tr><th id="516">516</th><td><i>        //When endCycleCount() is called, it converts the two into a difference</i></td></tr>
+<tr><th id="517">517</th><td><i>        //of clock cycles</i></td></tr>
+<tr><th id="518">518</th><td>        </td></tr>
+<tr><th id="519">519</th><td>        <b>return</b> (uint64) UnsignedWideToUInt64(UpTime());</td></tr>
+<tr><th id="520">520</th><td>        <i>//return (uint64) mach_absolute_time();</i></td></tr>
+<tr><th id="521">521</th><td>    }</td></tr>
+<tr><th id="522">522</th><td></td></tr>
+<tr><th id="523">523</th><td><u>#<span data-ppcond="470">endif</span></u></td></tr>
+<tr><th id="524">524</th><td></td></tr>
+<tr><th id="525">525</th><td><b>inline</b> <em>void</em> <a class="type" href="#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<dfn class="decl def" id="_ZN3G3D6System15beginCycleCountERm" title='G3D::System::beginCycleCount' data-ref="_ZN3G3D6System15beginCycleCountERm" >beginCycleCount</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a>&amp; <dfn class="local col4 decl" id="444cycleCount" title='cycleCount' data-type='uint64 &amp;' data-ref="444cycleCount" >cycleCount</dfn>) {</td></tr>
+<tr><th id="526">526</th><td>    <a class="local col4 ref" href="#444cycleCount" title='cycleCount' data-ref="444cycleCount" >cycleCount</a> = <a class="member" href="#_ZN3G3D6System13getCycleCountEv" title='G3D::System::getCycleCount' data-ref="_ZN3G3D6System13getCycleCountEv" >getCycleCount</a>();</td></tr>
+<tr><th id="527">527</th><td>}</td></tr>
+<tr><th id="528">528</th><td></td></tr>
+<tr><th id="529">529</th><td></td></tr>
+<tr><th id="530">530</th><td><b>inline</b> <em>void</em> <a class="type" href="#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<dfn class="decl def" id="_ZN3G3D6System13endCycleCountERm" title='G3D::System::endCycleCount' data-ref="_ZN3G3D6System13endCycleCountERm" >endCycleCount</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a>&amp; <dfn class="local col5 decl" id="445cycleCount" title='cycleCount' data-type='uint64 &amp;' data-ref="445cycleCount" >cycleCount</dfn>) {</td></tr>
+<tr><th id="531">531</th><td><u>#<span data-ppcond="531">ifndef</span> <span class="macro" data-ref="_M/G3D_OSX">G3D_OSX</span></u></td></tr>
+<tr><th id="532">532</th><td>    <a class="local col5 ref" href="#445cycleCount" title='cycleCount' data-ref="445cycleCount" >cycleCount</a> = <a class="member" href="#_ZN3G3D6System13getCycleCountEv" title='G3D::System::getCycleCount' data-ref="_ZN3G3D6System13getCycleCountEv" >getCycleCount</a>() - <a class="local col5 ref" href="#445cycleCount" title='cycleCount' data-ref="445cycleCount" >cycleCount</a>;</td></tr>
+<tr><th id="533">533</th><td><u>#<span data-ppcond="531">else</span></u></td></tr>
+<tr><th id="534">534</th><td>    AbsoluteTime end = UpTime();</td></tr>
+<tr><th id="535">535</th><td>    Nanoseconds diffNS = </td></tr>
+<tr><th id="536">536</th><td>        AbsoluteDeltaToNanoseconds(end, UInt64ToUnsignedWide(cycleCount));</td></tr>
+<tr><th id="537">537</th><td>    cycleCount = </td></tr>
+<tr><th id="538">538</th><td>        (uint64) ((<em>double</em>) (instance().m_OSXCPUSpeed) * </td></tr>
+<tr><th id="539">539</th><td>                  (<em>double</em>) UnsignedWideToUInt64(diffNS) * instance().m_secondsPerNS);</td></tr>
+<tr><th id="540">540</th><td><u>#<span data-ppcond="531">endif</span></u></td></tr>
+<tr><th id="541">541</th><td>}</td></tr>
+<tr><th id="542">542</th><td></td></tr>
+<tr><th id="543">543</th><td></td></tr>
+<tr><th id="544">544</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="545">545</th><td></td></tr>
+<tr><th id="546">546</th><td></td></tr>
+<tr><th id="547">547</th><td><u>#<span data-ppcond="547">ifdef</span> <span class="macro" data-ref="_M/G3D_OSX">G3D_OSX</span></u></td></tr>
+<tr><th id="548">548</th><td><u>#undef Zone</u></td></tr>
+<tr><th id="549">549</th><td><u>#<span data-ppcond="547">endif</span></u></td></tr>
+<tr><th id="550">550</th><td></td></tr>
+<tr><th id="551">551</th><td><u>#<span data-ppcond="14">endif</span></u></td></tr>
+<tr><th id="552">552</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

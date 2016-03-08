@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<title>aligned_buffer.h [include/c++/4.9/ext/aligned_buffer.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/c++/4.9/ext/aligned_buffer.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>c++</a>/<a href='..'>4.9</a>/<a href='./'>ext</a>/aligned_buffer.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// Aligned memory buffer -*- C++ -*-</i></td></tr>
+<tr><th id="2">2</th><td><i></i></td></tr>
+<tr><th id="3">3</th><td><i>// Copyright (C) 2013-2014 Free Software Foundation, Inc.</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// This file is part of the GNU ISO C++ Library.  This library is free</i></td></tr>
+<tr><th id="6">6</th><td><i>// software; you can redistribute it and/or modify it under the</i></td></tr>
+<tr><th id="7">7</th><td><i>// terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="8">8</th><td><i>// Free Software Foundation; either version 3, or (at your option)</i></td></tr>
+<tr><th id="9">9</th><td><i>// any later version.</i></td></tr>
+<tr><th id="10">10</th><td><i></i></td></tr>
+<tr><th id="11">11</th><td><i>// This library is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="12">12</th><td><i>// but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="13">13</th><td><i>// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="14">14</th><td><i>// GNU General Public License for more details.</i></td></tr>
+<tr><th id="15">15</th><td><i></i></td></tr>
+<tr><th id="16">16</th><td><i>// Under Section 7 of GPL version 3, you are granted additional</i></td></tr>
+<tr><th id="17">17</th><td><i>// permissions described in the GCC Runtime Library Exception, version</i></td></tr>
+<tr><th id="18">18</th><td><i>// 3.1, as published by the Free Software Foundation.</i></td></tr>
+<tr><th id="19">19</th><td><i></i></td></tr>
+<tr><th id="20">20</th><td><i>// You should have received a copy of the GNU General Public License and</i></td></tr>
+<tr><th id="21">21</th><td><i>// a copy of the GCC Runtime Library Exception along with this program;</i></td></tr>
+<tr><th id="22">22</th><td><i>// see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see</i></td></tr>
+<tr><th id="23">23</th><td><i>// &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><i class="doc">/**<span class="command"> @file</span> ext/aligned_buffer.h</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc"> *  This file is a GNU extension to the Standard C++ Library.</i></td></tr>
+<tr><th id="27">27</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="29">ifndef</span> <span class="macro" data-ref="_M/_ALIGNED_BUFFER_H">_ALIGNED_BUFFER_H</span></u></td></tr>
+<tr><th id="30">30</th><td><u>#define <dfn class="macro" id="_M/_ALIGNED_BUFFER_H" data-ref="_M/_ALIGNED_BUFFER_H">_ALIGNED_BUFFER_H</dfn> 1</u></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#pragma GCC system_header</u></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="34">if</span> <span class="macro" title="201103L" data-ref="_M/__cplusplus">__cplusplus</span> &gt;= 201103L</u></td></tr>
+<tr><th id="35">35</th><td><u># include <a href="../type_traits.html">&lt;type_traits&gt;</a></u></td></tr>
+<tr><th id="36">36</th><td><u>#<span data-ppcond="34">else</span></u></td></tr>
+<tr><th id="37">37</th><td><u># include &lt;bits/c++0x_warning.h&gt;</u></td></tr>
+<tr><th id="38">38</th><td><u>#<span data-ppcond="34">endif</span></u></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><b>namespace</b> <span class="namespace">__gnu_cxx</span></td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>  <b>template</b>&lt;<b>typename</b> _Tp&gt;</td></tr>
+<tr><th id="43">43</th><td>    <b>struct</b> <dfn class="type def" id="__gnu_cxx::__aligned_buffer" title='__gnu_cxx::__aligned_buffer' data-ref="__gnu_cxx::__aligned_buffer" >__aligned_buffer</dfn></td></tr>
+<tr><th id="44">44</th><td>    : <span class="namespace">std::</span><a class="type" href="../type_traits.html#std::aligned_storage" title='std::aligned_storage' data-ref="std::aligned_storage" >aligned_storage</a>&lt;<b>sizeof</b>(_Tp), <span class="namespace">std::</span><a class="type" href="../type_traits.html#std::alignment_of" title='std::alignment_of' data-ref="std::alignment_of" >alignment_of</a>&lt;_Tp&gt;::value&gt;</td></tr>
+<tr><th id="45">45</th><td>    {</td></tr>
+<tr><th id="46">46</th><td>      <b>typename</b></td></tr>
+<tr><th id="47">47</th><td>	<span class="namespace">std::</span><a class="type" href="../type_traits.html#std::aligned_storage" title='std::aligned_storage' data-ref="std::aligned_storage" >aligned_storage</a>&lt;<b>sizeof</b>(_Tp), <span class="namespace">std::</span><a class="type" href="../type_traits.html#std::alignment_of" title='std::alignment_of' data-ref="std::alignment_of" >alignment_of</a>&lt;_Tp&gt;::value&gt;::type</td></tr>
+<tr><th id="48">48</th><td>	<dfn class="decl" id="__gnu_cxx::__aligned_buffer::_M_storage" title='__gnu_cxx::__aligned_buffer::_M_storage' data-ref="__gnu_cxx::__aligned_buffer::_M_storage" >_M_storage</dfn>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>      <em>void</em>*</td></tr>
+<tr><th id="51">51</th><td>      <dfn class="decl def" id="__gnu_cxx::__aligned_buffer::_M_addr" title='__gnu_cxx::__aligned_buffer::_M_addr' data-ref="__gnu_cxx::__aligned_buffer::_M_addr" >_M_addr</dfn>() <b>noexcept</b></td></tr>
+<tr><th id="52">52</th><td>      {</td></tr>
+<tr><th id="53">53</th><td>        <b>return</b> <b>static_cast</b>&lt;<em>void</em>*&gt;(&amp;<a class="member" href="#__gnu_cxx::__aligned_buffer::_M_storage" title='__gnu_cxx::__aligned_buffer::_M_storage' data-ref="__gnu_cxx::__aligned_buffer::_M_storage" >_M_storage</a>);</td></tr>
+<tr><th id="54">54</th><td>      }</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>      <em>const</em> <em>void</em>*</td></tr>
+<tr><th id="57">57</th><td>      <dfn class="decl def" id="__gnu_cxx::__aligned_buffer::_M_addr" title='__gnu_cxx::__aligned_buffer::_M_addr' data-ref="__gnu_cxx::__aligned_buffer::_M_addr" >_M_addr</dfn>() <em>const</em> <b>noexcept</b></td></tr>
+<tr><th id="58">58</th><td>      {</td></tr>
+<tr><th id="59">59</th><td>        <b>return</b> <b>static_cast</b>&lt;<em>const</em> <em>void</em>*&gt;(&amp;<a class="member" href="#__gnu_cxx::__aligned_buffer::_M_storage" title='__gnu_cxx::__aligned_buffer::_M_storage' data-ref="__gnu_cxx::__aligned_buffer::_M_storage" >_M_storage</a>);</td></tr>
+<tr><th id="60">60</th><td>      }</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>      _Tp*</td></tr>
+<tr><th id="63">63</th><td>      <dfn class="decl def" id="__gnu_cxx::__aligned_buffer::_M_ptr" title='__gnu_cxx::__aligned_buffer::_M_ptr' data-ref="__gnu_cxx::__aligned_buffer::_M_ptr" >_M_ptr</dfn>() <b>noexcept</b></td></tr>
+<tr><th id="64">64</th><td>      { <b>return</b> <b>static_cast</b>&lt;_Tp*&gt;(_M_addr()); }</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>      <em>const</em> _Tp*</td></tr>
+<tr><th id="67">67</th><td>      <dfn class="decl def" id="__gnu_cxx::__aligned_buffer::_M_ptr" title='__gnu_cxx::__aligned_buffer::_M_ptr' data-ref="__gnu_cxx::__aligned_buffer::_M_ptr" >_M_ptr</dfn>() <em>const</em> <b>noexcept</b></td></tr>
+<tr><th id="68">68</th><td>      { <b>return</b> <b>static_cast</b>&lt;<em>const</em> _Tp*&gt;(_M_addr()); }</td></tr>
+<tr><th id="69">69</th><td>    };</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="29">endif</span> /* _ALIGNED_BUFFER_H */</u></td></tr>
+<tr><th id="74">74</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/dep/cppformat/format.cc.html'>TrinityCore3.3.5/dep/cppformat/format.cc</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

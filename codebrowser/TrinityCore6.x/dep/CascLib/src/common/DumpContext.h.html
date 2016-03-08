@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<title>DumpContext.h [TrinityCore6.x/dep/CascLib/src/common/DumpContext.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/common/DumpContext.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>CascLib</a>/<a href='..'>src</a>/<a href='./'>common</a>/DumpContext.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><i>/* DumpContext.h                          Copyright (c) Ladislav Zezula 2015 */</i></td></tr>
+<tr><th id="3">3</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="4">4</th><td><i>/* Interface for TDumpContext                                                */</i></td></tr>
+<tr><th id="5">5</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="6">6</th><td><i>/*   Date    Ver   Who  Comment                                              */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* --------  ----  ---  -------                                              */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* 16.03.15  1.00  Lad  Created                                              */</i></td></tr>
+<tr><th id="9">9</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/__DUMP_CONTEXT_H__">__DUMP_CONTEXT_H__</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/__DUMP_CONTEXT_H__" data-ref="_M/__DUMP_CONTEXT_H__">__DUMP_CONTEXT_H__</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="15">15</th><td><i>// Defines</i></td></tr>
+<tr><th id="16">16</th><td><i></i></td></tr>
+<tr><th id="17">17</th><td><i>// Size of the buffer for the dump context</i></td></tr>
+<tr><th id="18">18</th><td><u>#define <dfn class="macro" id="_M/CASC_DUMP_BUFFER_SIZE" data-ref="_M/CASC_DUMP_BUFFER_SIZE">CASC_DUMP_BUFFER_SIZE</dfn>   0x10000</u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><i>// Structure for dump context</i></td></tr>
+<tr><th id="21">21</th><td><b>struct</b> <dfn class="type def" id="TDumpContext" title='TDumpContext' data-ref="TDumpContext" >TDumpContext</dfn></td></tr>
+<tr><th id="22">22</th><td>{</td></tr>
+<tr><th id="23">23</th><td>    <a class="type" href="FileStream.h.html#TFileStream" title='TFileStream' data-ref="TFileStream" >TFileStream</a> * <dfn class="decl" id="TDumpContext::pStream" title='TDumpContext::pStream' data-ref="TDumpContext::pStream" >pStream</dfn>;                      <i>// Pointer to the open stream</i></td></tr>
+<tr><th id="24">24</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="decl" id="TDumpContext::pbBufferBegin" title='TDumpContext::pbBufferBegin' data-ref="TDumpContext::pbBufferBegin" >pbBufferBegin</dfn>;                       <i>// Begin of the dump buffer</i></td></tr>
+<tr><th id="25">25</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="decl" id="TDumpContext::pbBufferPtr" title='TDumpContext::pbBufferPtr' data-ref="TDumpContext::pbBufferPtr" >pbBufferPtr</dfn>;                         <i>// Current dump buffer pointer</i></td></tr>
+<tr><th id="26">26</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="decl" id="TDumpContext::pbBufferEnd" title='TDumpContext::pbBufferEnd' data-ref="TDumpContext::pbBufferEnd" >pbBufferEnd</dfn>;                         <i>// End of the dump buffer</i></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="decl" id="TDumpContext::DumpBuffer" title='TDumpContext::DumpBuffer' data-ref="TDumpContext::DumpBuffer" >DumpBuffer</dfn>[<a class="macro" href="#18" title="0x10000" data-ref="_M/CASC_DUMP_BUFFER_SIZE">CASC_DUMP_BUFFER_SIZE</a>];     <i>// Dump buffer</i></td></tr>
+<tr><th id="29">29</th><td>};</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="32">32</th><td><i>// Dump context functions</i></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><a class="type" href="#TDumpContext" title='TDumpContext' data-ref="TDumpContext" >TDumpContext</a> * <dfn class="decl" id="_Z17CreateDumpContextP13_TCascStoragePKc" title='CreateDumpContext' data-ref="_Z17CreateDumpContextP13_TCascStoragePKc" >CreateDumpContext</dfn>(<b>struct</b> <a class="type" href="../CascCommon.h.html#_TCascStorage" title='_TCascStorage' data-ref="_TCascStorage" id="_TCascStorage" ><a class="type" href="../CascCommon.h.html#_TCascStorage" title='_TCascStorage' data-ref="_TCascStorage" >_TCascStorage</a></a> * <dfn class="local col5 decl" id="425hs" title='hs' data-type='struct _TCascStorage *' data-ref="425hs" >hs</dfn>, <em>const</em> <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col6 decl" id="426szNameFormat" title='szNameFormat' data-type='const TCHAR *' data-ref="426szNameFormat" >szNameFormat</dfn>);</td></tr>
+<tr><th id="35">35</th><td><em>int</em> <dfn class="decl" id="_Z10dump_printP12TDumpContextPKcz" title='dump_print' data-ref="_Z10dump_printP12TDumpContextPKcz" >dump_print</dfn>(<a class="type" href="#TDumpContext" title='TDumpContext' data-ref="TDumpContext" >TDumpContext</a> * <dfn class="local col7 decl" id="427dc" title='dc' data-type='TDumpContext *' data-ref="427dc" >dc</dfn>, <em>const</em> <em>char</em> * <dfn class="local col8 decl" id="428szFormat" title='szFormat' data-type='const char *' data-ref="428szFormat" >szFormat</dfn>, ...);</td></tr>
+<tr><th id="36">36</th><td><em>int</em> <dfn class="decl" id="_Z10dump_closeP12TDumpContext" title='dump_close' data-ref="_Z10dump_closeP12TDumpContext" >dump_close</dfn>(<a class="type" href="#TDumpContext" title='TDumpContext' data-ref="TDumpContext" >TDumpContext</a> * <dfn class="local col9 decl" id="429dc" title='dc' data-type='TDumpContext *' data-ref="429dc" >dc</dfn>);</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><u>#<span data-ppcond="11">endif</span>  // __DUMP_CONTEXT_H__</u></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

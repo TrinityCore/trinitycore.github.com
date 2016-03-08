@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+<head>
+<title>GThread.h [TrinityCore6.x/dep/g3dlite/include/G3D/GThread.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/GThread.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/GThread.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> <span class="command"> @file</span> GThread.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> <span class="command"> @created</span> 2005-09-22</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> <span class="command"> @edited</span>  2010-09-10</i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"></i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#<span data-ppcond="9">ifndef</span> <span class="macro" data-ref="_M/G3D_GThread_h">G3D_GThread_h</span></u></td></tr>
+<tr><th id="10">10</th><td><u>#define <dfn class="macro" id="_M/G3D_GThread_h" data-ref="_M/G3D_GThread_h">G3D_GThread_h</dfn></u></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="ReferenceCount.h.html">"G3D/ReferenceCount.h"</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="ThreadSet.h.html">"G3D/ThreadSet.h"</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="Vector2int32.h.html">"G3D/Vector2int32.h"</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="SpawnBehavior.h.html">"G3D/SpawnBehavior.h"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#   include <a href="../../../../../include/pthread.h.html">&lt;pthread.h&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#   include <a href="../../../../../include/signal.h.html">&lt;signal.h&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="26">26</th><td>        </td></tr>
+<tr><th id="27">27</th><td><b>typedef</b> <a class="type" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#std::tr1::shared_ptr" title='std::tr1::shared_ptr' data-ref="std::tr1::shared_ptr" >shared_ptr</a>&lt;<b>class</b> <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>&gt; <dfn class="typedef" id="G3D::GThreadRef" title='G3D::GThreadRef' data-type='shared_ptr&lt;class GThread&gt;' data-ref="G3D::GThreadRef" >GThreadRef</dfn>;</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc"> Platform independent thread implementation.  You can either subclass and </i></td></tr>
+<tr><th id="33">33</th><td><i class="doc"> override GThread::threadMain or call the create method with a method.</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc"></i></td></tr>
+<tr><th id="35">35</th><td><i class="doc"> Beware of reference counting and threads.  If circular references exist between</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc"> GThread subclasses then neither class will ever be deallocated.  Also, </i></td></tr>
+<tr><th id="37">37</th><td><i class="doc"> dropping all pointers (and causing deallocation) of a GThread does NOT </i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"> stop the underlying process.</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc"></i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"> <span class="command">\sa</span> G3D::GMutex, G3D::Spinlock, G3D::AtomicInt32, G3D::ThreadSet</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="42">42</th><td><b>class</b> <dfn class="type def" id="G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</dfn> : <b>public</b> <a class="type" href="ReferenceCount.h.html#G3D::ReferenceCountedObject" title='G3D::ReferenceCountedObject' data-ref="G3D::ReferenceCountedObject" >ReferenceCountedObject</a> {</td></tr>
+<tr><th id="43">43</th><td><b>private</b>:</td></tr>
+<tr><th id="44">44</th><td>    <i>// "Status" is a reserved word on FreeBSD</i></td></tr>
+<tr><th id="45">45</th><td>    <b>enum</b> <dfn class="type def" id="G3D::GThread::GStatus" title='G3D::GThread::GStatus' data-ref="G3D::GThread::GStatus" >GStatus</dfn> {<dfn class="enum" id="G3D::GThread::GStatus::STATUS_CREATED" title='G3D::GThread::GStatus::STATUS_CREATED' data-ref="G3D::GThread::GStatus::STATUS_CREATED" >STATUS_CREATED</dfn>, <dfn class="enum" id="G3D::GThread::GStatus::STATUS_STARTED" title='G3D::GThread::GStatus::STATUS_STARTED' data-ref="G3D::GThread::GStatus::STATUS_STARTED" >STATUS_STARTED</dfn>, <dfn class="enum" id="G3D::GThread::GStatus::STATUS_RUNNING" title='G3D::GThread::GStatus::STATUS_RUNNING' data-ref="G3D::GThread::GStatus::STATUS_RUNNING" >STATUS_RUNNING</dfn>, <dfn class="enum" id="G3D::GThread::GStatus::STATUS_COMPLETED" title='G3D::GThread::GStatus::STATUS_COMPLETED' data-ref="G3D::GThread::GStatus::STATUS_COMPLETED" >STATUS_COMPLETED</dfn>};</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <i>// Not implemented on purpose, don't use</i></td></tr>
+<tr><th id="48">48</th><td>    <dfn class="decl" id="_ZN3G3D7GThreadC1ERKS0_" title='G3D::GThread::GThread' data-ref="_ZN3G3D7GThreadC1ERKS0_" >GThread</dfn>(<em>const</em> <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a> &amp;);</td></tr>
+<tr><th id="49">49</th><td>    <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>&amp; <dfn class="decl" id="_ZN3G3D7GThreadaSERKS0_" title='G3D::GThread::operator=' data-ref="_ZN3G3D7GThreadaSERKS0_" ><b>operator</b>=</dfn>(<em>const</em> <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>&amp;);</td></tr>
+<tr><th id="50">50</th><td>    <em>bool</em> <dfn class="decl" id="_ZN3G3D7GThreadeqERKS0_" title='G3D::GThread::operator==' data-ref="_ZN3G3D7GThreadeqERKS0_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>&amp;);</td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td><u>#<span data-ppcond="52">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="53">53</th><td>    <em>static</em> DWORD WINAPI internalThreadProc(LPVOID param);</td></tr>
+<tr><th id="54">54</th><td><u>#<span data-ppcond="52">else</span></u></td></tr>
+<tr><th id="55">55</th><td>    <em>static</em> <em>void</em>* <a class="decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThread18internalThreadProcEPv" title='G3D::GThread::internalThreadProc' data-ref="_ZN3G3D7GThread18internalThreadProcEPv" id="_ZN3G3D7GThread18internalThreadProcEPv" >internalThreadProc</a>(<em>void</em>* <dfn class="local col0 decl" id="30param" title='param' data-type='void *' data-ref="30param" >param</dfn>);</td></tr>
+<tr><th id="56">56</th><td><u>#<span data-ppcond="52">endif</span> //G3D_WINDOWS</u></td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <em>volatile</em> <a class="type" href="#G3D::GThread::GStatus" title='G3D::GThread::GStatus' data-ref="G3D::GThread::GStatus" >GStatus</a>     <dfn class="decl" id="G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" >m_status</dfn>;</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>    <i>// Thread handle to hold HANDLE and pthread_t</i></td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="61">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="62">62</th><td>    HANDLE              m_handle;</td></tr>
+<tr><th id="63">63</th><td>    HANDLE              m_event;</td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="61">else</span></u></td></tr>
+<tr><th id="65">65</th><td>    <a class="typedef" href="../../../../../include/x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_t" title='pthread_t' data-type='unsigned long' data-ref="pthread_t" >pthread_t</a>           <dfn class="decl" id="G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" >m_handle</dfn>;</td></tr>
+<tr><th id="66">66</th><td><u>#<span data-ppcond="61">endif</span> //G3D_WINDOWS</u></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>         <dfn class="decl" id="G3D::GThread::m_name" title='G3D::GThread::m_name' data-ref="G3D::GThread::m_name" >m_name</dfn>;</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><b>protected</b>:</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>    <i class="doc">/** Overriden by the thread implementor */</i></td></tr>
+<tr><th id="73">73</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D7GThread10threadMainEv" title='G3D::GThread::threadMain' data-ref="_ZN3G3D7GThread10threadMainEv" >threadMain</dfn>() = <var>0</var>;</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><b>public</b>:</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <i class="doc">/** Returns System::numCores(); put here to break a dependence on System.h */</i></td></tr>
+<tr><th id="78">78</th><td>    <em>static</em> <em>int</em> <a class="decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThread8numCoresEv" title='G3D::GThread::numCores' data-ref="_ZN3G3D7GThread8numCoresEv" id="_ZN3G3D7GThread8numCoresEv" >numCores</a>();</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <b>typedef</b> <a class="type" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#std::tr1::shared_ptr" title='std::tr1::shared_ptr' data-ref="std::tr1::shared_ptr" >shared_ptr</a>&lt;<b>class</b> <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>&gt; <dfn class="typedef" id="G3D::GThread::Ref" title='G3D::GThread::Ref' data-type='shared_ptr&lt;class GThread&gt;' data-ref="G3D::GThread::Ref" >Ref</dfn>;</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>    <a class="decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThreadC1ERKSs" title='G3D::GThread::GThread' data-ref="_ZN3G3D7GThreadC1ERKSs" id="_ZN3G3D7GThreadC1ERKSs" >GThread</a>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col1 decl" id="31name" title='name' data-type='const std::string &amp;' data-ref="31name" >name</dfn>);</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>    <b>virtual</b> <a class="virtual decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThreadD1Ev" title='G3D::GThread::~GThread' data-ref="_ZN3G3D7GThreadD1Ev" id="_ZN3G3D7GThreadD1Ev" >~GThread</a>();</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>    <i class="doc">/** Constructs a basic GThread without requiring a subclass.</i></td></tr>
+<tr><th id="87">87</th><td><i class="doc"></i></td></tr>
+<tr><th id="88">88</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">proc</span> The global or static function for the threadMain() */</i></td></tr>
+<tr><th id="89">89</th><td>    <em>static</em> <a class="typedef" href="#G3D::GThreadRef" title='G3D::GThreadRef' data-type='shared_ptr&lt;class GThread&gt;' data-ref="G3D::GThreadRef" >GThreadRef</a> <a class="decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThread6createERKSsPFvPvES3_" title='G3D::GThread::create' data-ref="_ZN3G3D7GThread6createERKSsPFvPvES3_" id="_ZN3G3D7GThread6createERKSsPFvPvES3_" >create</a>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col2 decl" id="32name" title='name' data-type='const std::string &amp;' data-ref="32name" >name</dfn>, <em>void</em> (*<dfn class="local col3 decl" id="33proc" title='proc' data-type='void (*)(void *)' data-ref="33proc" >proc</dfn>)(<em>void</em>*), <em>void</em>* <dfn class="local col4 decl" id="34param" title='param' data-type='void *' data-ref="34param" >param</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>    <i class="doc">/** Starts the thread and executes threadMain().  Returns false if</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">       the thread failed to start (either because it was already started</i></td></tr>
+<tr><th id="93">93</th><td><i class="doc">       or because the OS refused).</i></td></tr>
+<tr><th id="94">94</th><td><i class="doc">       </i></td></tr>
+<tr><th id="95">95</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">behavior</span> If USE_CURRENT_THREAD, rather than spawning a new thread, this routine</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">       runs threadMain on the current thread.</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">       */</i></td></tr>
+<tr><th id="98">98</th><td>    <em>bool</em> <a class="decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThread5startENS_13SpawnBehaviorE" title='G3D::GThread::start' data-ref="_ZN3G3D7GThread5startENS_13SpawnBehaviorE" id="_ZN3G3D7GThread5startENS_13SpawnBehaviorE" >start</a>(<a class="type" href="SpawnBehavior.h.html#G3D::SpawnBehavior" title='G3D::SpawnBehavior' data-ref="G3D::SpawnBehavior" >SpawnBehavior</a> <dfn class="local col5 decl" id="35behavior" title='behavior' data-type='G3D::SpawnBehavior' data-ref="35behavior" >behavior</dfn> = <a class="member" href="#_ZN3G3D7GThread14USE_NEW_THREADE" title='G3D::GThread::USE_NEW_THREAD' data-ref="_ZN3G3D7GThread14USE_NEW_THREADE" ><a class="member" href="#_ZN3G3D7GThread14USE_NEW_THREADE" title='G3D::GThread::USE_NEW_THREAD' data-ref="_ZN3G3D7GThread14USE_NEW_THREADE" >USE_NEW_THREAD</a></a>);</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>    <i class="doc">/** Terminates the thread without notifying or</i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">        waiting for a cancelation point. */</i></td></tr>
+<tr><th id="102">102</th><td>    <em>void</em> <a class="decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThread9terminateEv" title='G3D::GThread::terminate' data-ref="_ZN3G3D7GThread9terminateEv" id="_ZN3G3D7GThread9terminateEv" >terminate</a>();</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">        Returns true if threadMain is currently executing.  This will</i></td></tr>
+<tr><th id="106">106</th><td><i class="doc">        only be set when the thread is actually running and might not</i></td></tr>
+<tr><th id="107">107</th><td><i class="doc">        be set when start() returns. */</i></td></tr>
+<tr><th id="108">108</th><td>    <em>bool</em> <a class="decl" href="../../source/GThread.cpp.html#_ZNK3G3D7GThread7runningEv" title='G3D::GThread::running' data-ref="_ZNK3G3D7GThread7runningEv" id="_ZNK3G3D7GThread7runningEv" >running</a>() <em>const</em>;</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>    <i class="doc">/** True after start() has been called, even through the thread</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">        may have already completed(), or be currently running().*/</i></td></tr>
+<tr><th id="112">112</th><td>    <em>bool</em> <a class="decl" href="../../source/GThread.cpp.html#_ZNK3G3D7GThread7startedEv" title='G3D::GThread::started' data-ref="_ZNK3G3D7GThread7startedEv" id="_ZNK3G3D7GThread7startedEv" >started</a>() <em>const</em>;</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>    <i class="doc">/** Returns true if the thread has exited. */</i></td></tr>
+<tr><th id="115">115</th><td>    <em>bool</em> <a class="decl" href="../../source/GThread.cpp.html#_ZNK3G3D7GThread9completedEv" title='G3D::GThread::completed' data-ref="_ZNK3G3D7GThread9completedEv" id="_ZNK3G3D7GThread9completedEv" >completed</a>() <em>const</em>;</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td>    <i class="doc">/** Waits for the thread to finish executing. */</i></td></tr>
+<tr><th id="118">118</th><td>    <em>void</em> <a class="decl" href="../../source/GThread.cpp.html#_ZN3G3D7GThread17waitForCompletionEv" title='G3D::GThread::waitForCompletion' data-ref="_ZN3G3D7GThread17waitForCompletionEv" id="_ZN3G3D7GThread17waitForCompletionEv" >waitForCompletion</a>();</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>    <i class="doc">/** Returns thread name */</i></td></tr>
+<tr><th id="121">121</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="decl def" id="_ZN3G3D7GThread4nameEv" title='G3D::GThread::name' data-ref="_ZN3G3D7GThread4nameEv" >name</dfn>() {</td></tr>
+<tr><th id="122">122</th><td>        <b>return</b> <a class="member" href="#G3D::GThread::m_name" title='G3D::GThread::m_name' data-ref="G3D::GThread::m_name" >m_name</a>;</td></tr>
+<tr><th id="123">123</th><td>    }</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td>    <i class="doc">/** For backwards compatibility to G3D 8.xx */</i></td></tr>
+<tr><th id="126">126</th><td>    <em>static</em> <em>const</em> <a class="type" href="SpawnBehavior.h.html#G3D::SpawnBehavior" title='G3D::SpawnBehavior' data-ref="G3D::SpawnBehavior" >SpawnBehavior</a> <dfn class="decl" id="_ZN3G3D7GThread18USE_CURRENT_THREADE" title='G3D::GThread::USE_CURRENT_THREAD' data-ref="_ZN3G3D7GThread18USE_CURRENT_THREADE" >USE_CURRENT_THREAD</dfn> = <span class="namespace">G3D::</span><a class="enum" href="SpawnBehavior.h.html#G3D::SpawnBehavior::USE_CURRENT_THREAD" title='G3D::SpawnBehavior::USE_CURRENT_THREAD' data-ref="G3D::SpawnBehavior::USE_CURRENT_THREAD" >USE_CURRENT_THREAD</a>;</td></tr>
+<tr><th id="127">127</th><td>    <i class="doc">/** For backwards compatibility to G3D 8.xx */</i></td></tr>
+<tr><th id="128">128</th><td>    <em>static</em> <em>const</em> <a class="type" href="SpawnBehavior.h.html#G3D::SpawnBehavior" title='G3D::SpawnBehavior' data-ref="G3D::SpawnBehavior" >SpawnBehavior</a> <dfn class="decl" id="_ZN3G3D7GThread14USE_NEW_THREADE" title='G3D::GThread::USE_NEW_THREAD' data-ref="_ZN3G3D7GThread14USE_NEW_THREADE" >USE_NEW_THREAD</dfn> = <span class="namespace">G3D::</span><a class="enum" href="SpawnBehavior.h.html#G3D::SpawnBehavior::USE_NEW_THREAD" title='G3D::SpawnBehavior::USE_NEW_THREAD' data-ref="G3D::SpawnBehavior::USE_NEW_THREAD" >USE_NEW_THREAD</a>;</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>    <b>enum</b> {</td></tr>
+<tr><th id="131">131</th><td>        <i class="doc">/** Tells GThread::runConcurrently() and GThread::runConcurrently2D() to</i></td></tr>
+<tr><th id="132">132</th><td><i class="doc">            use System::numCores() threads.*/</i></td></tr>
+<tr><th id="133">133</th><td>        <dfn class="enum" id="G3D::GThread::::NUM_CORES" title='G3D::GThread::::NUM_CORES' data-ref="G3D::GThread::::NUM_CORES" >NUM_CORES</dfn> = -<var>100</var></td></tr>
+<tr><th id="134">134</th><td>    };</td></tr>
+<tr><th id="135">135</th><td>    </td></tr>
+<tr><th id="136">136</th><td>    <i class="doc">/** </i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">        <span class="command">\brief</span> Iterates over a 2D region using multiple threads and</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc">        blocks until all threads have completed. <span class="tag">&lt;p&gt;</span> Evaluates<span class="command"> \a</span></i></td></tr>
+<tr><th id="139">139</th><td><i class="doc">        <span class="arg">object-<span class="command">&gt;\a</span></span> <span class="arg">method<span class="command">(\a</span></span> <span class="arg">x,</span><span class="command"> \a</span> <span class="arg">y)</span> for every <span class="tag">&lt;code&gt;</span>start.x &lt;= x &lt;</i></td></tr>
+<tr><th id="140">140</th><td><i class="doc">        upTo.x<span class="tag">&lt;/code&gt;</span> and <span class="tag">&lt;code&gt;</span>start.y &lt;= y &lt; upTo.y<span class="tag">&lt;/code&gt;</span>.</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">        Iteration is row major, so each thread can expect to see</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">        successive x values.  <span class="tag">&lt;/p&gt;</span> </i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">        <span class="command">\param</span> <span class="arg">maxThreads</span></i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">        Maximum number of threads to use.  By default at most one</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc">        thread per processor core will be used.</i></td></tr>
+<tr><th id="146">146</th><td><i class="doc"></i></td></tr>
+<tr><th id="147">147</th><td><i class="doc">        Example:</i></td></tr>
+<tr><th id="148">148</th><td><i class="doc"></i></td></tr>
+<tr><th id="149">149</th><td><i class="doc">        <span class="command">\code</span></i></td></tr>
+<tr><th id="150">150</th><td><i class="doc"><span class="verb">        class RayTracer {</span></i></td></tr>
+<tr><th id="151">151</th><td><i class="doc"><span class="verb"></span><span class="verb">        public:</span></i></td></tr>
+<tr><th id="152">152</th><td><i class="doc"><span class="verb"></span><span class="verb">            void trace(const Vector2int32&amp; pixel) {</span></i></td></tr>
+<tr><th id="153">153</th><td><i class="doc"><span class="verb"></span><span class="verb">               ...</span></i></td></tr>
+<tr><th id="154">154</th><td><i class="doc"><span class="verb"></span><span class="verb">            }</span></i></td></tr>
+<tr><th id="155">155</th><td><i class="doc"><span class="verb"></span><span class="verb"></span></i></td></tr>
+<tr><th id="156">156</th><td><i class="doc"><span class="verb"></span><span class="verb">            void traceAll() {</span></i></td></tr>
+<tr><th id="157">157</th><td><i class="doc"><span class="verb"></span><span class="verb">               GThread::runConcurrently2D(Point2int32(0,0), Point2int32(w,h), this, &amp;RayTracer::trace);</span></i></td></tr>
+<tr><th id="158">158</th><td><i class="doc"><span class="verb"></span><span class="verb">            }</span></i></td></tr>
+<tr><th id="159">159</th><td><i class="doc"><span class="verb"></span><span class="verb">        };</span></i></td></tr>
+<tr><th id="160">160</th><td><i class="doc"><span class="verb"></span>        \endcode</i></td></tr>
+<tr><th id="161">161</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="162">162</th><td>    <b>template</b>&lt;<b>class</b> Class&gt;</td></tr>
+<tr><th id="163">163</th><td>    <em>static</em> <em>void</em> <dfn class="decl def" id="_ZN3G3D7GThread17runConcurrently2DERKNS_12Vector2int32ES3_PT_MS4_FviiEi" title='G3D::GThread::runConcurrently2D' data-ref="_ZN3G3D7GThread17runConcurrently2DERKNS_12Vector2int32ES3_PT_MS4_FviiEi" >runConcurrently2D</dfn></td></tr>
+<tr><th id="164">164</th><td>    (<em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col6 decl" id="36start" title='start' data-type='const G3D::Vector2int32 &amp;' data-ref="36start" >start</dfn>, </td></tr>
+<tr><th id="165">165</th><td>     <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col7 decl" id="37upTo" title='upTo' data-type='const G3D::Vector2int32 &amp;' data-ref="37upTo" >upTo</dfn>, </td></tr>
+<tr><th id="166">166</th><td>     Class*              <dfn class="local col8 decl" id="38object" title='object' data-type='Class *' data-ref="38object" >object</dfn>,</td></tr>
+<tr><th id="167">167</th><td>     <em>void</em> (Class::*<dfn class="local col9 decl" id="39method" title='method' data-type='void (Class::*)(int, int)' data-ref="39method" >method</dfn>)(<em>int</em> <dfn class="local col0 decl" id="40x" title='x' data-type='int' data-ref="40x" >x</dfn>, <em>int</em> <dfn class="local col1 decl" id="41y" title='y' data-type='int' data-ref="41y" >y</dfn>),</td></tr>
+<tr><th id="168">168</th><td>     <em>int</em>                 <dfn class="local col2 decl" id="42maxThreads" title='maxThreads' data-type='int' data-ref="42maxThreads" >maxThreads</dfn> = <a class="enum" href="#G3D::GThread::::NUM_CORES" title='G3D::GThread::::NUM_CORES' data-ref="G3D::GThread::::NUM_CORES" >NUM_CORES</a>) {</td></tr>
+<tr><th id="169">169</th><td>        _internal_runConcurrently2DHelper(<a class="local col6 ref" href="#36start" title='start' data-ref="36start" >start</a>, <a class="local col7 ref" href="#37upTo" title='upTo' data-ref="37upTo" >upTo</a>, <a class="local col8 ref" href="#38object" title='object' data-ref="38object" >object</a>, <a class="local col9 ref" href="#39method" title='method' data-ref="39method" >method</a>, <b>static_cast</b>&lt;<em>void</em> (Class::*)(<em>int</em>, <em>int</em>, <em>int</em>)&gt;(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>), <a class="local col2 ref" href="#42maxThreads" title='maxThreads' data-ref="42maxThreads" >maxThreads</a>);</td></tr>
+<tr><th id="170">170</th><td>    }</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>    <i class="doc">/** Like the other version of runConcurrently2D, but tells the</i></td></tr>
+<tr><th id="173">173</th><td><i class="doc">        method the thread index that it is running on.  That enables</i></td></tr>
+<tr><th id="174">174</th><td><i class="doc">        the caller to manage per-thread state.</i></td></tr>
+<tr><th id="175">175</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="176">176</th><td>    <b>template</b>&lt;<b>class</b> Class&gt;</td></tr>
+<tr><th id="177">177</th><td>    <em>static</em> <em>void</em> <dfn class="decl def" id="_ZN3G3D7GThread17runConcurrently2DERKNS_12Vector2int32ES3_PT_MS4_FviiiEi" title='G3D::GThread::runConcurrently2D' data-ref="_ZN3G3D7GThread17runConcurrently2DERKNS_12Vector2int32ES3_PT_MS4_FviiiEi" >runConcurrently2D</dfn></td></tr>
+<tr><th id="178">178</th><td>    (<em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col3 decl" id="43start" title='start' data-type='const G3D::Vector2int32 &amp;' data-ref="43start" >start</dfn>, </td></tr>
+<tr><th id="179">179</th><td>     <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col4 decl" id="44upTo" title='upTo' data-type='const G3D::Vector2int32 &amp;' data-ref="44upTo" >upTo</dfn>, </td></tr>
+<tr><th id="180">180</th><td>     Class*              <dfn class="local col5 decl" id="45object" title='object' data-type='Class *' data-ref="45object" >object</dfn>,</td></tr>
+<tr><th id="181">181</th><td>     <em>void</em> (Class::*<dfn class="local col6 decl" id="46method" title='method' data-type='void (Class::*)(int, int, int)' data-ref="46method" >method</dfn>)(<em>int</em> <dfn class="local col7 decl" id="47x" title='x' data-type='int' data-ref="47x" >x</dfn>, <em>int</em> <dfn class="local col8 decl" id="48y" title='y' data-type='int' data-ref="48y" >y</dfn>, <em>int</em> <dfn class="local col9 decl" id="49threadID" title='threadID' data-type='int' data-ref="49threadID" >threadID</dfn>),</td></tr>
+<tr><th id="182">182</th><td>     <em>int</em>                 <dfn class="local col0 decl" id="50maxThreads" title='maxThreads' data-type='int' data-ref="50maxThreads" >maxThreads</dfn> = <a class="enum" href="#G3D::GThread::::NUM_CORES" title='G3D::GThread::::NUM_CORES' data-ref="G3D::GThread::::NUM_CORES" >NUM_CORES</a>) {</td></tr>
+<tr><th id="183">183</th><td>        _internal_runConcurrently2DHelper(<a class="local col3 ref" href="#43start" title='start' data-ref="43start" >start</a>, <a class="local col4 ref" href="#44upTo" title='upTo' data-ref="44upTo" >upTo</a>, <a class="local col5 ref" href="#45object" title='object' data-ref="45object" >object</a>, <b>static_cast</b>&lt;<em>void</em> (Class::*)(<em>int</em>, <em>int</em>)&gt;(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>), <a class="local col6 ref" href="#46method" title='method' data-ref="46method" >method</a>, <a class="local col0 ref" href="#50maxThreads" title='maxThreads' data-ref="50maxThreads" >maxThreads</a>);</td></tr>
+<tr><th id="184">184</th><td>    }</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>};</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td>    <i>// Can't use an inherited class inside of its parent on g++ 4.2.1 if it is later a template parameter</i></td></tr>
+<tr><th id="191">191</th><td></td></tr>
+<tr><th id="192">192</th><td>    <i class="doc">/** For use by runConcurrently2D. Designed for arbitrary iteration, although only used for</i></td></tr>
+<tr><th id="193">193</th><td><i class="doc">        interlaced rows in the current implementation. */</i></td></tr>
+<tr><th id="194">194</th><td>    <b>template</b>&lt;<b>class</b> Class&gt;</td></tr>
+<tr><th id="195">195</th><td>    <b>class</b> <dfn class="type def" id="G3D::_internalGThreadWorker" title='G3D::_internalGThreadWorker' data-ref="G3D::_internalGThreadWorker" >_internalGThreadWorker</dfn> : <b>public</b> <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a> {</td></tr>
+<tr><th id="196">196</th><td>    <b>public</b>:</td></tr>
+<tr><th id="197">197</th><td>        <i class="doc">/** Start for this thread, which differs from the others */</i></td></tr>
+<tr><th id="198">198</th><td>        <em>const</em> <em>int</em>                 <dfn class="decl" id="G3D::_internalGThreadWorker::threadID" title='G3D::_internalGThreadWorker::threadID' data-ref="G3D::_internalGThreadWorker::threadID" >threadID</dfn>;</td></tr>
+<tr><th id="199">199</th><td>        <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>        <dfn class="decl" id="G3D::_internalGThreadWorker::start" title='G3D::_internalGThreadWorker::start' data-ref="G3D::_internalGThreadWorker::start" >start</dfn>;</td></tr>
+<tr><th id="200">200</th><td>        <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>        <dfn class="decl" id="G3D::_internalGThreadWorker::upTo" title='G3D::_internalGThreadWorker::upTo' data-ref="G3D::_internalGThreadWorker::upTo" >upTo</dfn>;</td></tr>
+<tr><th id="201">201</th><td>        <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>        <dfn class="decl" id="G3D::_internalGThreadWorker::stride" title='G3D::_internalGThreadWorker::stride' data-ref="G3D::_internalGThreadWorker::stride" >stride</dfn>;</td></tr>
+<tr><th id="202">202</th><td>        Class*                    <dfn class="decl" id="G3D::_internalGThreadWorker::object" title='G3D::_internalGThreadWorker::object' data-ref="G3D::_internalGThreadWorker::object" >object</dfn>;</td></tr>
+<tr><th id="203">203</th><td>        <em>void</em>             (Class::*<dfn class="decl" id="G3D::_internalGThreadWorker::method1" title='G3D::_internalGThreadWorker::method1' data-ref="G3D::_internalGThreadWorker::method1" >method1</dfn>)(<em>int</em> <dfn class="local col1 decl" id="51x" title='x' data-type='int' data-ref="51x" >x</dfn>, <em>int</em> <dfn class="local col2 decl" id="52y" title='y' data-type='int' data-ref="52y" >y</dfn>);</td></tr>
+<tr><th id="204">204</th><td>        <em>void</em>             (Class::*<dfn class="decl" id="G3D::_internalGThreadWorker::method2" title='G3D::_internalGThreadWorker::method2' data-ref="G3D::_internalGThreadWorker::method2" >method2</dfn>)(<em>int</em> <dfn class="local col3 decl" id="53x" title='x' data-type='int' data-ref="53x" >x</dfn>, <em>int</em> <dfn class="local col4 decl" id="54y" title='y' data-type='int' data-ref="54y" >y</dfn>, <em>int</em> <dfn class="local col5 decl" id="55threadID" title='threadID' data-type='int' data-ref="55threadID" >threadID</dfn>);</td></tr>
+<tr><th id="205">205</th><td>        </td></tr>
+<tr><th id="206">206</th><td>        <dfn class="decl def" id="_ZN3G3D22_internalGThreadWorkerC1EiRKNS_12Vector2int32ES3_PT_MS4_FviiEMS4_FviiiES3_" title='G3D::_internalGThreadWorker::_internalGThreadWorker&lt;Class&gt;' data-ref="_ZN3G3D22_internalGThreadWorkerC1EiRKNS_12Vector2int32ES3_PT_MS4_FviiEMS4_FviiiES3_" >_internalGThreadWorker</dfn>(<em>int</em>                 <dfn class="local col6 decl" id="56threadID" title='threadID' data-type='int' data-ref="56threadID" >threadID</dfn>,</td></tr>
+<tr><th id="207">207</th><td>               <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col7 decl" id="57start" title='start' data-type='const G3D::Vector2int32 &amp;' data-ref="57start" >start</dfn>, </td></tr>
+<tr><th id="208">208</th><td>               <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col8 decl" id="58upTo" title='upTo' data-type='const G3D::Vector2int32 &amp;' data-ref="58upTo" >upTo</dfn>, </td></tr>
+<tr><th id="209">209</th><td>               Class*              <dfn class="local col9 decl" id="59object" title='object' data-type='Class *' data-ref="59object" >object</dfn>,</td></tr>
+<tr><th id="210">210</th><td>               <em>void</em> (Class::*<dfn class="local col0 decl" id="60method1" title='method1' data-type='void (Class::*)(int, int)' data-ref="60method1" >method1</dfn>)(<em>int</em> <dfn class="local col1 decl" id="61x" title='x' data-type='int' data-ref="61x" >x</dfn>, <em>int</em> <dfn class="local col2 decl" id="62y" title='y' data-type='int' data-ref="62y" >y</dfn>),</td></tr>
+<tr><th id="211">211</th><td>               <em>void</em> (Class::*<dfn class="local col3 decl" id="63method2" title='method2' data-type='void (Class::*)(int, int, int)' data-ref="63method2" >method2</dfn>)(<em>int</em> <dfn class="local col4 decl" id="64x" title='x' data-type='int' data-ref="64x" >x</dfn>, <em>int</em> <dfn class="local col5 decl" id="65y" title='y' data-type='int' data-ref="65y" >y</dfn>, <em>int</em> <dfn class="local col6 decl" id="66threadID" title='threadID' data-type='int' data-ref="66threadID" >threadID</dfn>),</td></tr>
+<tr><th id="212">212</th><td>               <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col7 decl" id="67stride" title='stride' data-type='const G3D::Vector2int32 &amp;' data-ref="67stride" >stride</dfn>) : </td></tr>
+<tr><th id="213">213</th><td>            <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>(<q>"runConcurrently2D worker"</q>),</td></tr>
+<tr><th id="214">214</th><td>            <a class="member" href="#G3D::_internalGThreadWorker::threadID" title='G3D::_internalGThreadWorker::threadID' data-ref="G3D::_internalGThreadWorker::threadID" >threadID</a>(<a class="local col6 ref" href="#56threadID" title='threadID' data-ref="56threadID" >threadID</a>),</td></tr>
+<tr><th id="215">215</th><td>            <a class="member" href="#G3D::_internalGThreadWorker::start" title='G3D::_internalGThreadWorker::start' data-ref="G3D::_internalGThreadWorker::start" >start</a><a class="ref" href="Vector2int32.h.html#_ZN3G3D12Vector2int32C1ERKS0_" title='G3D::Vector2int32::Vector2int32' data-ref="_ZN3G3D12Vector2int32C1ERKS0_" id="_ZN3G3D12Vector2int32C1ERKS0_" >(</a><a class="local col7 ref" href="#57start" title='start' data-ref="57start" >start</a>),</td></tr>
+<tr><th id="216">216</th><td>            <a class="member" href="#G3D::_internalGThreadWorker::upTo" title='G3D::_internalGThreadWorker::upTo' data-ref="G3D::_internalGThreadWorker::upTo" >upTo</a><a class="ref" href="Vector2int32.h.html#_ZN3G3D12Vector2int32C1ERKS0_" title='G3D::Vector2int32::Vector2int32' data-ref="_ZN3G3D12Vector2int32C1ERKS0_" id="_ZN3G3D12Vector2int32C1ERKS0_" >(</a><a class="local col8 ref" href="#58upTo" title='upTo' data-ref="58upTo" >upTo</a>), </td></tr>
+<tr><th id="217">217</th><td>            <a class="member" href="#G3D::_internalGThreadWorker::stride" title='G3D::_internalGThreadWorker::stride' data-ref="G3D::_internalGThreadWorker::stride" >stride</a><a class="ref" href="Vector2int32.h.html#_ZN3G3D12Vector2int32C1ERKS0_" title='G3D::Vector2int32::Vector2int32' data-ref="_ZN3G3D12Vector2int32C1ERKS0_" id="_ZN3G3D12Vector2int32C1ERKS0_" >(</a><a class="local col7 ref" href="#67stride" title='stride' data-ref="67stride" >stride</a>),</td></tr>
+<tr><th id="218">218</th><td>            <a class="member" href="#G3D::_internalGThreadWorker::object" title='G3D::_internalGThreadWorker::object' data-ref="G3D::_internalGThreadWorker::object" >object</a>(<a class="local col9 ref" href="#59object" title='object' data-ref="59object" >object</a>), </td></tr>
+<tr><th id="219">219</th><td>            <a class="member" href="#G3D::_internalGThreadWorker::method1" title='G3D::_internalGThreadWorker::method1' data-ref="G3D::_internalGThreadWorker::method1" >method1</a>(<a class="local col0 ref" href="#60method1" title='method1' data-ref="60method1" >method1</a>),</td></tr>
+<tr><th id="220">220</th><td>            <a class="member" href="#G3D::_internalGThreadWorker::method2" title='G3D::_internalGThreadWorker::method2' data-ref="G3D::_internalGThreadWorker::method2" >method2</a>(<a class="local col3 ref" href="#63method2" title='method2' data-ref="63method2" >method2</a>) {}</td></tr>
+<tr><th id="221">221</th><td>        </td></tr>
+<tr><th id="222">222</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN3G3D22_internalGThreadWorker10threadMainEv" title='G3D::_internalGThreadWorker::threadMain' data-ref="_ZN3G3D22_internalGThreadWorker10threadMainEv" >threadMain</dfn>() {</td></tr>
+<tr><th id="223">223</th><td>            <b>for</b> (<em>int</em> <dfn class="local col8 decl" id="68y" title='y' data-type='int' data-ref="68y" >y</dfn> = <a class="member" href="#G3D::_internalGThreadWorker::start" title='G3D::_internalGThreadWorker::start' data-ref="G3D::_internalGThreadWorker::start" >start</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::y" title='G3D::Vector2int32::y' data-ref="G3D::Vector2int32::y" id="G3D::Vector2int32::y" >y</a>; <a class="local col8 ref" href="#68y" title='y' data-ref="68y" >y</a> &lt; <a class="member" href="#G3D::_internalGThreadWorker::upTo" title='G3D::_internalGThreadWorker::upTo' data-ref="G3D::_internalGThreadWorker::upTo" >upTo</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::y" title='G3D::Vector2int32::y' data-ref="G3D::Vector2int32::y" id="G3D::Vector2int32::y" >y</a>; <a class="local col8 ref" href="#68y" title='y' data-ref="68y" >y</a> += <a class="member" href="#G3D::_internalGThreadWorker::stride" title='G3D::_internalGThreadWorker::stride' data-ref="G3D::_internalGThreadWorker::stride" >stride</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::y" title='G3D::Vector2int32::y' data-ref="G3D::Vector2int32::y" id="G3D::Vector2int32::y" >y</a>) {</td></tr>
+<tr><th id="224">224</th><td>                <i>// Run whichever method was provided</i></td></tr>
+<tr><th id="225">225</th><td>                <b>if</b> (<a class="member" href="#G3D::_internalGThreadWorker::method1" title='G3D::_internalGThreadWorker::method1' data-ref="G3D::_internalGThreadWorker::method1" >method1</a>) {</td></tr>
+<tr><th id="226">226</th><td>                    <b>for</b> (<em>int</em> <dfn class="local col9 decl" id="69x" title='x' data-type='int' data-ref="69x" >x</dfn> = <a class="member" href="#G3D::_internalGThreadWorker::start" title='G3D::_internalGThreadWorker::start' data-ref="G3D::_internalGThreadWorker::start" >start</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::x" title='G3D::Vector2int32::x' data-ref="G3D::Vector2int32::x" id="G3D::Vector2int32::x" >x</a>; <a class="local col9 ref" href="#69x" title='x' data-ref="69x" >x</a> &lt; <a class="member" href="#G3D::_internalGThreadWorker::upTo" title='G3D::_internalGThreadWorker::upTo' data-ref="G3D::_internalGThreadWorker::upTo" >upTo</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::x" title='G3D::Vector2int32::x' data-ref="G3D::Vector2int32::x" id="G3D::Vector2int32::x" >x</a>; <a class="local col9 ref" href="#69x" title='x' data-ref="69x" >x</a> += <a class="member" href="#G3D::_internalGThreadWorker::stride" title='G3D::_internalGThreadWorker::stride' data-ref="G3D::_internalGThreadWorker::stride" >stride</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::x" title='G3D::Vector2int32::x' data-ref="G3D::Vector2int32::x" id="G3D::Vector2int32::x" >x</a>) {</td></tr>
+<tr><th id="227">227</th><td>                        (<a class="member" href="#G3D::_internalGThreadWorker::object" title='G3D::_internalGThreadWorker::object' data-ref="G3D::_internalGThreadWorker::object" >object</a>-&gt;*<a class="member" href="#G3D::_internalGThreadWorker::method1" title='G3D::_internalGThreadWorker::method1' data-ref="G3D::_internalGThreadWorker::method1" >method1</a>)(<a class="local col9 ref" href="#69x" title='x' data-ref="69x" >x</a>, <a class="local col8 ref" href="#68y" title='y' data-ref="68y" >y</a>);</td></tr>
+<tr><th id="228">228</th><td>                    }</td></tr>
+<tr><th id="229">229</th><td>                } <b>else</b> {</td></tr>
+<tr><th id="230">230</th><td>                    <b>for</b> (<em>int</em> <dfn class="local col0 decl" id="70x" title='x' data-type='int' data-ref="70x" >x</dfn> = <a class="member" href="#G3D::_internalGThreadWorker::start" title='G3D::_internalGThreadWorker::start' data-ref="G3D::_internalGThreadWorker::start" >start</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::x" title='G3D::Vector2int32::x' data-ref="G3D::Vector2int32::x" id="G3D::Vector2int32::x" >x</a>; <a class="local col0 ref" href="#70x" title='x' data-ref="70x" >x</a> &lt; <a class="member" href="#G3D::_internalGThreadWorker::upTo" title='G3D::_internalGThreadWorker::upTo' data-ref="G3D::_internalGThreadWorker::upTo" >upTo</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::x" title='G3D::Vector2int32::x' data-ref="G3D::Vector2int32::x" id="G3D::Vector2int32::x" >x</a>; <a class="local col0 ref" href="#70x" title='x' data-ref="70x" >x</a> += <a class="member" href="#G3D::_internalGThreadWorker::stride" title='G3D::_internalGThreadWorker::stride' data-ref="G3D::_internalGThreadWorker::stride" >stride</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::x" title='G3D::Vector2int32::x' data-ref="G3D::Vector2int32::x" id="G3D::Vector2int32::x" >x</a>) {</td></tr>
+<tr><th id="231">231</th><td>                        (<a class="member" href="#G3D::_internalGThreadWorker::object" title='G3D::_internalGThreadWorker::object' data-ref="G3D::_internalGThreadWorker::object" >object</a>-&gt;*<a class="member" href="#G3D::_internalGThreadWorker::method2" title='G3D::_internalGThreadWorker::method2' data-ref="G3D::_internalGThreadWorker::method2" >method2</a>)(<a class="local col0 ref" href="#70x" title='x' data-ref="70x" >x</a>, <a class="local col8 ref" href="#68y" title='y' data-ref="68y" >y</a>, <a class="member" href="#G3D::_internalGThreadWorker::threadID" title='G3D::_internalGThreadWorker::threadID' data-ref="G3D::_internalGThreadWorker::threadID" >threadID</a>);</td></tr>
+<tr><th id="232">232</th><td>                    }</td></tr>
+<tr><th id="233">233</th><td>                }</td></tr>
+<tr><th id="234">234</th><td>            }</td></tr>
+<tr><th id="235">235</th><td>        }</td></tr>
+<tr><th id="236">236</th><td>    };</td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td></td></tr>
+<tr><th id="239">239</th><td>    <b>template</b>&lt;<b>class</b> Class&gt;</td></tr>
+<tr><th id="240">240</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D33_internal_runConcurrently2DHelperERKNS_12Vector2int32ES2_PT_MS3_FviiEMS3_FviiiEi" title='G3D::_internal_runConcurrently2DHelper' data-ref="_ZN3G3D33_internal_runConcurrently2DHelperERKNS_12Vector2int32ES2_PT_MS3_FviiEMS3_FviiiEi" >_internal_runConcurrently2DHelper</dfn></td></tr>
+<tr><th id="241">241</th><td>    (<em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col1 decl" id="71start" title='start' data-type='const G3D::Vector2int32 &amp;' data-ref="71start" >start</dfn>, </td></tr>
+<tr><th id="242">242</th><td>     <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a>&amp; <dfn class="local col2 decl" id="72upTo" title='upTo' data-type='const G3D::Vector2int32 &amp;' data-ref="72upTo" >upTo</dfn>, </td></tr>
+<tr><th id="243">243</th><td>     Class*              <dfn class="local col3 decl" id="73object" title='object' data-type='Class *' data-ref="73object" >object</dfn>,</td></tr>
+<tr><th id="244">244</th><td>     <em>void</em> (Class::*<dfn class="local col4 decl" id="74method1" title='method1' data-type='void (Class::*)(int, int)' data-ref="74method1" >method1</dfn>)(<em>int</em> <dfn class="local col5 decl" id="75x" title='x' data-type='int' data-ref="75x" >x</dfn>, <em>int</em> <dfn class="local col6 decl" id="76y" title='y' data-type='int' data-ref="76y" >y</dfn>),</td></tr>
+<tr><th id="245">245</th><td>     <em>void</em> (Class::*<dfn class="local col7 decl" id="77method2" title='method2' data-type='void (Class::*)(int, int, int)' data-ref="77method2" >method2</dfn>)(<em>int</em> <dfn class="local col8 decl" id="78x" title='x' data-type='int' data-ref="78x" >x</dfn>, <em>int</em> <dfn class="local col9 decl" id="79y" title='y' data-type='int' data-ref="79y" >y</dfn>, <em>int</em> <dfn class="local col0 decl" id="80threadID" title='threadID' data-type='int' data-ref="80threadID" >threadID</dfn>),</td></tr>
+<tr><th id="246">246</th><td>     <em>int</em>                 <dfn class="local col1 decl" id="81maxThreads" title='maxThreads' data-type='int' data-ref="81maxThreads" >maxThreads</dfn>) {</td></tr>
+<tr><th id="247">247</th><td>        </td></tr>
+<tr><th id="248">248</th><td>        <i>// Create a group of threads</i></td></tr>
+<tr><th id="249">249</th><td>        <b>if</b> (<a class="local col1 ref" href="#81maxThreads" title='maxThreads' data-ref="81maxThreads" >maxThreads</a> == <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<a class="enum" href="#G3D::GThread::::NUM_CORES" title='G3D::GThread::::NUM_CORES' data-ref="G3D::GThread::::NUM_CORES" >NUM_CORES</a>) {</td></tr>
+<tr><th id="250">250</th><td>            <a class="local col1 ref" href="#81maxThreads" title='maxThreads' data-ref="81maxThreads" >maxThreads</a> = <a class="type" href="#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<a class="ref" href="../../source/GThread.cpp.html#_ZN3G3D7GThread8numCoresEv" title='G3D::GThread::numCores' data-ref="_ZN3G3D7GThread8numCoresEv" id="_ZN3G3D7GThread8numCoresEv" >numCores</a>();</td></tr>
+<tr><th id="251">251</th><td>        }</td></tr>
+<tr><th id="252">252</th><td></td></tr>
+<tr><th id="253">253</th><td>        <em>const</em> <em>int</em> <dfn class="local col2 decl" id="82numRows" title='numRows' data-type='const int' data-ref="82numRows" >numRows</dfn> = <a class="local col2 ref" href="#72upTo" title='upTo' data-ref="72upTo" >upTo</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::y" title='G3D::Vector2int32::y' data-ref="G3D::Vector2int32::y" id="G3D::Vector2int32::y" >y</a> - <a class="local col1 ref" href="#71start" title='start' data-ref="71start" >start</a>.<a class="ref" href="Vector2int32.h.html#G3D::Vector2int32::y" title='G3D::Vector2int32::y' data-ref="G3D::Vector2int32::y" id="G3D::Vector2int32::y" >y</a>;</td></tr>
+<tr><th id="254">254</th><td>        <em>const</em> <em>int</em> <dfn class="local col3 decl" id="83numThreads" title='numThreads' data-type='const int' data-ref="83numThreads" >numThreads</dfn> = <a class="ref" href="g3dmath.h.html#_ZN3G3D3minERKT_S2_" title='G3D::min' data-ref="_ZN3G3D3minERKT_S2_" id="_ZN3G3D3minERKT_S2_" >min</a>(<a class="local col1 ref" href="#81maxThreads" title='maxThreads' data-ref="81maxThreads" >maxThreads</a>, <a class="local col2 ref" href="#82numRows" title='numRows' data-ref="82numRows" >numRows</a>);</td></tr>
+<tr><th id="255">255</th><td>        <em>const</em> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a> <dfn class="local col4 decl" id="84stride" title='stride' data-type='const G3D::Vector2int32' data-ref="84stride" >stride</dfn><a class="ref" href="Vector2int32.h.html#_ZN3G3D12Vector2int32C1Eii" title='G3D::Vector2int32::Vector2int32' data-ref="_ZN3G3D12Vector2int32C1Eii" id="_ZN3G3D12Vector2int32C1Eii" >(</a><var>1</var>, <a class="local col3 ref" href="#83numThreads" title='numThreads' data-ref="83numThreads" >numThreads</a>);</td></tr>
+<tr><th id="256">256</th><td>        <a class="type" href="ThreadSet.h.html#G3D::ThreadSet" title='G3D::ThreadSet' data-ref="G3D::ThreadSet" >ThreadSet</a> <dfn class="local col5 decl" id="85threadSet" title='threadSet' data-type='G3D::ThreadSet' data-ref="85threadSet" >threadSet</dfn>;</td></tr>
+<tr><th id="257">257</th><td>        <b>for</b> (<em>int</em> <dfn class="local col6 decl" id="86t" title='t' data-type='int' data-ref="86t" >t</dfn> = <var>0</var>; <a class="local col6 ref" href="#86t" title='t' data-ref="86t" >t</a> &lt; <a class="local col3 ref" href="#83numThreads" title='numThreads' data-ref="83numThreads" >numThreads</a>; ++<a class="local col6 ref" href="#86t" title='t' data-ref="86t" >t</a>) {</td></tr>
+<tr><th id="258">258</th><td>            <a class="local col5 ref" href="#85threadSet" title='threadSet' data-ref="85threadSet" >threadSet</a>.<a class="ref" href="ThreadSet.h.html#_ZN3G3D9ThreadSet6insertERKNSt3tr110shared_ptrINS_7GThreadEEE" title='G3D::ThreadSet::insert' data-ref="_ZN3G3D9ThreadSet6insertERKNSt3tr110shared_ptrINS_7GThreadEEE" id="_ZN3G3D9ThreadSet6insertERKNSt3tr110shared_ptrINS_7GThreadEEE" >insert</a>(<a class="type" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#std::tr1::shared_ptr" title='std::tr1::shared_ptr' data-ref="std::tr1::shared_ptr" >shared_ptr</a>&lt;<a class="type" href="#G3D::_internalGThreadWorker" title='G3D::_internalGThreadWorker' data-ref="G3D::_internalGThreadWorker" >_internalGThreadWorker</a>&lt;Class&gt; &gt;(<b>new</b> <a class="type" href="#G3D::_internalGThreadWorker" title='G3D::_internalGThreadWorker' data-ref="G3D::_internalGThreadWorker" >_internalGThreadWorker</a>&lt;Class&gt;(<a class="local col6 ref" href="#86t" title='t' data-ref="86t" >t</a>, <a class="local col1 ref" href="#71start" title='start' data-ref="71start" >start</a> <a class="ref" href="Vector2int32.h.html#_ZNK3G3D12Vector2int32plERKS0_" title='G3D::Vector2int32::operator+' data-ref="_ZNK3G3D12Vector2int32plERKS0_" id="_ZNK3G3D12Vector2int32plERKS0_" >+</a> <a class="type" href="Vector2int32.h.html#G3D::Vector2int32" title='G3D::Vector2int32' data-ref="G3D::Vector2int32" >Vector2int32</a><a class="ref" href="Vector2int32.h.html#_ZN3G3D12Vector2int32C1Eii" title='G3D::Vector2int32::Vector2int32' data-ref="_ZN3G3D12Vector2int32C1Eii" id="_ZN3G3D12Vector2int32C1Eii" >(</a><var>0</var>, <a class="local col6 ref" href="#86t" title='t' data-ref="86t" >t</a>), <a class="local col2 ref" href="#72upTo" title='upTo' data-ref="72upTo" >upTo</a>, <a class="local col3 ref" href="#73object" title='object' data-ref="73object" >object</a>, <a class="local col4 ref" href="#74method1" title='method1' data-ref="74method1" >method1</a>, <a class="local col7 ref" href="#77method2" title='method2' data-ref="77method2" >method2</a>, <a class="local col4 ref" href="#84stride" title='stride' data-ref="84stride" >stride</a>)));</td></tr>
+<tr><th id="259">259</th><td>        }</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>        <i>// Run the threads, reusing the current thread and blocking until</i></td></tr>
+<tr><th id="262">262</th><td><i>        // all complete</i></td></tr>
+<tr><th id="263">263</th><td>        <a class="local col5 ref" href="#85threadSet" title='threadSet' data-ref="85threadSet" >threadSet</a>.<a class="ref" href="ThreadSet.h.html#_ZNK3G3D9ThreadSet5startENS_13SpawnBehaviorE" title='G3D::ThreadSet::start' data-ref="_ZNK3G3D9ThreadSet5startENS_13SpawnBehaviorE" id="_ZNK3G3D9ThreadSet5startENS_13SpawnBehaviorE" >start</a>(<a class="enum" href="SpawnBehavior.h.html#G3D::SpawnBehavior::USE_CURRENT_THREAD" title='G3D::SpawnBehavior::USE_CURRENT_THREAD' data-ref="G3D::SpawnBehavior::USE_CURRENT_THREAD" id="G3D::SpawnBehavior::USE_CURRENT_THREAD" >USE_CURRENT_THREAD</a>);</td></tr>
+<tr><th id="264">264</th><td>        <a class="local col5 ref" href="#85threadSet" title='threadSet' data-ref="85threadSet" >threadSet</a>.<a class="ref" href="ThreadSet.h.html#_ZNK3G3D9ThreadSet17waitForCompletionEv" title='G3D::ThreadSet::waitForCompletion' data-ref="_ZNK3G3D9ThreadSet17waitForCompletionEv" id="_ZNK3G3D9ThreadSet17waitForCompletionEv" >waitForCompletion</a>();</td></tr>
+<tr><th id="265">265</th><td>    }</td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td>} <i>// namespace G3D</i></td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td><u>#<span data-ppcond="9">endif</span> //G3D_GTHREAD_H</u></td></tr>
+<tr><th id="271">271</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/GThread.cpp.html'>TrinityCore6.x/dep/g3dlite/source/GThread.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

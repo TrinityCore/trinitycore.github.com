@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+<head>
+<title>basic_streambuf.hpp [include/boost/asio/basic_streambuf.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/basic_streambuf.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>asio</a>/basic_streambuf.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// basic_streambuf.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_BASIC_STREAMBUF_HPP">BOOST_ASIO_BASIC_STREAMBUF_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_BASIC_STREAMBUF_HPP" data-ref="_M/BOOST_ASIO_BASIC_STREAMBUF_HPP">BOOST_ASIO_BASIC_STREAMBUF_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="detail/config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">if</span> !defined(<span class="macro" data-ref="_M/BOOST_ASIO_NO_IOSTREAM">BOOST_ASIO_NO_IOSTREAM</span>)</u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../c++/4.9/algorithm.html">&lt;algorithm&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../c++/4.9/cstring.html">&lt;cstring&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../c++/4.9/stdexcept.html">&lt;stdexcept&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../c++/4.9/streambuf.html">&lt;streambuf&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../c++/4.9/vector.html">&lt;vector&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="basic_streambuf_fwd.hpp.html">&lt;boost/asio/basic_streambuf_fwd.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="buffer.hpp.html">&lt;boost/asio/buffer.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="detail/limits.hpp.html">&lt;boost/asio/detail/limits.hpp&gt;</a></u></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="detail/noncopyable.hpp.html">&lt;boost/asio/detail/noncopyable.hpp&gt;</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="detail/throw_exception.hpp.html">&lt;boost/asio/detail/throw_exception.hpp&gt;</a></u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><u>#include <a href="detail/push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="36">36</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><i class="doc">/// Automatically resizable buffer class based on std::streambuf.</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"> * The<span class="command"> @c</span> <span class="arg">basic_streambuf</span> class is derived from<span class="command"> @c</span> <span class="arg">std::streambuf</span> to associate</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> * the streambuf's input and output sequences with one or more character</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"> * arrays. These character arrays are internal to the<span class="command"> @c</span> <span class="arg">basic_streambuf</span></i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> * object, but direct access to the array elements is provided to permit them</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc"> * to be used efficiently with I/O operations. Characters written to the output</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"> * sequence of a<span class="command"> @c</span> <span class="arg">basic_streambuf</span> object are appended to the input sequence</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc"> * of the same object.</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"> * The<span class="command"> @c</span> <span class="arg">basic_streambuf</span> class's public interface is intended to permit the</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc"> * following implementation strategies:</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc"> * <span class="command">@li</span> A single contiguous character array, which is reallocated as necessary</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc"> * to accommodate changes in the size of the character sequence. This is the</i></td></tr>
+<tr><th id="53">53</th><td><i class="doc"> * implementation approach currently used in Asio.</i></td></tr>
+<tr><th id="54">54</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="55">55</th><td><i class="doc"> * <span class="command">@li</span> A sequence of one or more character arrays, where each array is of the</i></td></tr>
+<tr><th id="56">56</th><td><i class="doc"> * same size. Additional character array objects are appended to the sequence</i></td></tr>
+<tr><th id="57">57</th><td><i class="doc"> * to accommodate changes in the size of the character sequence.</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc"> * <span class="command">@li</span> A sequence of one or more character arrays of varying sizes. Additional</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc"> * character array objects are appended to the sequence to accommodate changes</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc"> * in the size of the character sequence.</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc"> * The constructor for basic_streambuf accepts a<span class="command"> @c</span> <span class="arg">size_t</span> argument specifying</i></td></tr>
+<tr><th id="64">64</th><td><i class="doc"> * the maximum of the sum of the sizes of the input sequence and output</i></td></tr>
+<tr><th id="65">65</th><td><i class="doc"> * sequence. During the lifetime of the<span class="command"> @c</span> <span class="arg">basic_streambuf</span> object, the following</i></td></tr>
+<tr><th id="66">66</th><td><i class="doc"> * invariant holds:</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc"> * <span class="command">@code</span><span class="verb"> size() &lt;= max_size()@</span>endcode</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc"> * Any member function that would, if successful, cause the invariant to be</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc"> * violated shall throw an exception of class<span class="command"> @c</span> <span class="arg">std::length_error.</span></i></td></tr>
+<tr><th id="70">70</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="71">71</th><td><i class="doc"> * The constructor for<span class="command"> @c</span> <span class="arg">basic_streambuf</span> takes an Allocator argument. A copy</i></td></tr>
+<tr><th id="72">72</th><td><i class="doc"> * of this argument is used for any memory allocation performed, by the</i></td></tr>
+<tr><th id="73">73</th><td><i class="doc"> * constructor and by all member functions, during the lifetime of each<span class="command"> @c</span></i></td></tr>
+<tr><th id="74">74</th><td><i class="doc"> * <span class="arg">basic_streambuf</span> object.</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc"> * <span class="command">@par</span> Examples</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc"> * Writing directly from an streambuf to a socket:</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"> * <span class="command">@code</span></i></td></tr>
+<tr><th id="79">79</th><td><i class="doc"> *<span class="verb"> boost::asio::streambuf b;</span></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> std::ostream os(&amp;b);</span></i></td></tr>
+<tr><th id="81">81</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> os &lt;&lt; "Hello, World!\n";</span></i></td></tr>
+<tr><th id="82">82</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="83">83</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> // try sending some data in input sequence</span></i></td></tr>
+<tr><th id="84">84</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> size_t n = sock.send(b.data());</span></i></td></tr>
+<tr><th id="85">85</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="86">86</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> b.consume(n); // sent data is removed from input sequence</span></i></td></tr>
+<tr><th id="87">87</th><td><i class="doc"><span class="verb"></span> * @endcode</i></td></tr>
+<tr><th id="88">88</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc"> * Reading from a socket directly into a streambuf:</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc"> * <span class="command">@code</span></i></td></tr>
+<tr><th id="91">91</th><td><i class="doc"> *<span class="verb"> boost::asio::streambuf b;</span></i></td></tr>
+<tr><th id="92">92</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="93">93</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> // reserve 512 bytes in output sequence</span></i></td></tr>
+<tr><th id="94">94</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> boost::asio::streambuf::mutable_buffers_type bufs = b.prepare(512);</span></i></td></tr>
+<tr><th id="95">95</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="96">96</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> size_t n = sock.receive(bufs);</span></i></td></tr>
+<tr><th id="97">97</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="98">98</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> // received data is "committed" from output sequence to input sequence</span></i></td></tr>
+<tr><th id="99">99</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> b.commit(n);</span></i></td></tr>
+<tr><th id="100">100</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="101">101</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> std::istream is(&amp;b);</span></i></td></tr>
+<tr><th id="102">102</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> std::string s;</span></i></td></tr>
+<tr><th id="103">103</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> is &gt;&gt; s;</span></i></td></tr>
+<tr><th id="104">104</th><td><i class="doc"><span class="verb"></span> * @endcode</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="106">106</th><td><u>#<span data-ppcond="106">if</span> defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="107">107</th><td><b>template</b> &lt;<b>typename</b> Allocator = std::allocator&lt;<em>char</em>&gt; &gt;</td></tr>
+<tr><th id="108">108</th><td><u>#<span data-ppcond="106">else</span></u></td></tr>
+<tr><th id="109">109</th><td><b>template</b> &lt;<b>typename</b> Allocator&gt;</td></tr>
+<tr><th id="110">110</th><td><u>#<span data-ppcond="106">endif</span></u></td></tr>
+<tr><th id="111">111</th><td><b>class</b> <dfn class="type def" id="boost::asio::basic_streambuf" title='boost::asio::basic_streambuf' data-ref="boost::asio::basic_streambuf" >basic_streambuf</dfn></td></tr>
+<tr><th id="112">112</th><td>  : <b>public</b> <span class="namespace">std::</span><a class="typedef" href="../../c++/4.9/iosfwd.html#std::streambuf" title='std::streambuf' data-type='basic_streambuf&lt;char&gt;' data-ref="std::streambuf" >streambuf</a>,</td></tr>
+<tr><th id="113">113</th><td>    <b>private</b> <a class="type" href="detail/noncopyable.hpp.html#boost::asio::detail::noncopyable" title='boost::asio::detail::noncopyable' data-ref="boost::asio::detail::noncopyable" >noncopyable</a></td></tr>
+<tr><th id="114">114</th><td>{</td></tr>
+<tr><th id="115">115</th><td><b>public</b>:</td></tr>
+<tr><th id="116">116</th><td><u>#<span data-ppcond="116">if</span> defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="117">117</th><td>  <i class="doc">/// The type used to represent the input sequence as a list of buffers.</i></td></tr>
+<tr><th id="118">118</th><td>  <b>typedef</b> implementation_defined const_buffers_type;</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>  <i class="doc">/// The type used to represent the output sequence as a list of buffers.</i></td></tr>
+<tr><th id="121">121</th><td>  <b>typedef</b> implementation_defined mutable_buffers_type;</td></tr>
+<tr><th id="122">122</th><td><u>#<span data-ppcond="116">else</span></u></td></tr>
+<tr><th id="123">123</th><td>  <b>typedef</b> <span class="namespace">boost::asio::</span><a class="type" href="buffer.hpp.html#boost::asio::const_buffers_1" title='boost::asio::const_buffers_1' data-ref="boost::asio::const_buffers_1" >const_buffers_1</a> <dfn class="typedef" id="boost::asio::basic_streambuf::const_buffers_type" title='boost::asio::basic_streambuf::const_buffers_type' data-type='boost::asio::const_buffers_1' data-ref="boost::asio::basic_streambuf::const_buffers_type" >const_buffers_type</dfn>;</td></tr>
+<tr><th id="124">124</th><td>  <b>typedef</b> <span class="namespace">boost::asio::</span><a class="type" href="buffer.hpp.html#boost::asio::mutable_buffers_1" title='boost::asio::mutable_buffers_1' data-ref="boost::asio::mutable_buffers_1" >mutable_buffers_1</a> <dfn class="typedef" id="boost::asio::basic_streambuf::mutable_buffers_type" title='boost::asio::basic_streambuf::mutable_buffers_type' data-type='boost::asio::mutable_buffers_1' data-ref="boost::asio::basic_streambuf::mutable_buffers_type" >mutable_buffers_type</dfn>;</td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="116">endif</span></u></td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td>  <i class="doc">/// Construct a basic_streambuf object.</i></td></tr>
+<tr><th id="128">128</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="129">129</th><td><i class="doc">   * Constructs a streambuf with the specified maximum size. The initial size</i></td></tr>
+<tr><th id="130">130</th><td><i class="doc">   * of the streambuf's input sequence is 0.</i></td></tr>
+<tr><th id="131">131</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="132">132</th><td>  <b>explicit</b> <dfn class="decl def" id="_ZN5boost4asio15basic_streambufC1EmRKT_" title='boost::asio::basic_streambuf::basic_streambuf&lt;Allocator&gt;' data-ref="_ZN5boost4asio15basic_streambufC1EmRKT_" >basic_streambuf</dfn>(</td></tr>
+<tr><th id="133">133</th><td>      <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col1 decl" id="3651maximum_size" title='maximum_size' data-type='std::size_t' data-ref="3651maximum_size" >maximum_size</dfn> = (<span class="namespace">std::</span><a class="type" href="../../c++/4.9/limits.html#std::numeric_limits" title='std::numeric_limits' data-ref="std::numeric_limits" >numeric_limits</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;::<a class="ref" href="../../c++/4.9/limits.html#_ZNSt14numeric_limitsImE3maxEv" title='std::numeric_limits&lt;unsigned long&gt;::max' data-ref="_ZNSt14numeric_limitsImE3maxEv" id="_ZNSt14numeric_limitsImE3maxEv" >max</a>)(),</td></tr>
+<tr><th id="134">134</th><td>      <em>const</em> Allocator&amp; <dfn class="local col2 decl" id="3652allocator" title='allocator' data-type='const Allocator &amp;' data-ref="3652allocator" >allocator</dfn> = Allocator())</td></tr>
+<tr><th id="135">135</th><td>    : <a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a>(<a class="local col1 ref" href="#3651maximum_size" title='maximum_size' data-ref="3651maximum_size" >maximum_size</a>),</td></tr>
+<tr><th id="136">136</th><td>      <a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>(<a class="local col2 ref" href="#3652allocator" title='allocator' data-ref="3652allocator" >allocator</a>)</td></tr>
+<tr><th id="137">137</th><td>  {</td></tr>
+<tr><th id="138">138</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col3 decl" id="3653pend" title='pend' data-type='std::size_t' data-ref="3653pend" >pend</dfn> = (<span class="namespace">std::</span>min&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;)(<a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a>, <a class="enum" href="#boost::asio::basic_streambuf::::buffer_delta" title='boost::asio::basic_streambuf::::buffer_delta' data-ref="boost::asio::basic_streambuf::::buffer_delta" >buffer_delta</a>);</td></tr>
+<tr><th id="139">139</th><td>    <a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>.resize((<span class="namespace">std::</span><a class="ref" href="../../c++/4.9/bits/algorithmfwd.h.html#_ZSt3maxRKT_S1_" title='std::max' data-ref="_ZSt3maxRKT_S1_" id="_ZSt3maxRKT_S1_" >max</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;)(<a class="local col3 ref" href="#3653pend" title='pend' data-ref="3653pend" >pend</a>, <var>1</var>));</td></tr>
+<tr><th id="140">140</th><td>    <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf4setgEPT_S1_S1_" title='std::basic_streambuf::setg' data-ref="_ZNSt15basic_streambuf4setgEPT_S1_S1_" id="_ZNSt15basic_streambuf4setgEPT_S1_S1_" >setg</a>(&amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>]);</td></tr>
+<tr><th id="141">141</th><td>    <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf4setpEPT_S1_" title='std::basic_streambuf::setp' data-ref="_ZNSt15basic_streambuf4setpEPT_S1_" id="_ZNSt15basic_streambuf4setpEPT_S1_" >setp</a>(&amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>] + <a class="local col3 ref" href="#3653pend" title='pend' data-ref="3653pend" >pend</a>);</td></tr>
+<tr><th id="142">142</th><td>  }</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td>  <i class="doc">/// Get the size of the input sequence.</i></td></tr>
+<tr><th id="145">145</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="146">146</th><td><i class="doc">   * <span class="command">@returns</span> The size of the input sequence. The value is equal to that</i></td></tr>
+<tr><th id="147">147</th><td><i class="doc">   * calculated for<span class="command"> @c</span> <span class="arg">s</span> in the following code:</i></td></tr>
+<tr><th id="148">148</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="149">149</th><td><i class="doc">   *<span class="verb"> size_t s = 0;</span></i></td></tr>
+<tr><th id="150">150</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> const_buffers_type bufs = data();</span></i></td></tr>
+<tr><th id="151">151</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> const_buffers_type::const_iterator i = bufs.begin();</span></i></td></tr>
+<tr><th id="152">152</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> while (i != bufs.end())</span></i></td></tr>
+<tr><th id="153">153</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="154">154</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   const_buffer buf(*i++);</span></i></td></tr>
+<tr><th id="155">155</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   s += buffer_size(buf);</span></i></td></tr>
+<tr><th id="156">156</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="157">157</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="159">159</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZNK5boost4asio15basic_streambuf4sizeEv" title='boost::asio::basic_streambuf::size' data-ref="_ZNK5boost4asio15basic_streambuf4sizeEv" >size</dfn>() <em>const</em></td></tr>
+<tr><th id="160">160</th><td>  {</td></tr>
+<tr><th id="161">161</th><td>    <b>return</b> <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() - <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>();</td></tr>
+<tr><th id="162">162</th><td>  }</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>  <i class="doc">/// Get the maximum size of the basic_streambuf.</i></td></tr>
+<tr><th id="165">165</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">   * <span class="command">@returns</span> The allowed maximum of the sum of the sizes of the input sequence</i></td></tr>
+<tr><th id="167">167</th><td><i class="doc">   * and output sequence.</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="169">169</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZNK5boost4asio15basic_streambuf8max_sizeEv" title='boost::asio::basic_streambuf::max_size' data-ref="_ZNK5boost4asio15basic_streambuf8max_sizeEv" >max_size</dfn>() <em>const</em></td></tr>
+<tr><th id="170">170</th><td>  {</td></tr>
+<tr><th id="171">171</th><td>    <b>return</b> <a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a>;</td></tr>
+<tr><th id="172">172</th><td>  }</td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td>  <i class="doc">/// Get a list of buffers that represents the input sequence.</i></td></tr>
+<tr><th id="175">175</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="176">176</th><td><i class="doc">   * <span class="command">@returns</span> An object of type<span class="command"> @c</span> <span class="arg">const_buffers_type</span> that satisfies</i></td></tr>
+<tr><th id="177">177</th><td><i class="doc">   * ConstBufferSequence requirements, representing all character arrays in the</i></td></tr>
+<tr><th id="178">178</th><td><i class="doc">   * input sequence.</i></td></tr>
+<tr><th id="179">179</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="180">180</th><td><i class="doc">   * <span class="command">@note</span> The returned object is invalidated by any<span class="command"> @c</span> <span class="arg">basic_streambuf</span> member</i></td></tr>
+<tr><th id="181">181</th><td><i class="doc">   * function that modifies the input sequence or output sequence.</i></td></tr>
+<tr><th id="182">182</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="183">183</th><td>  <a class="typedef" href="#boost::asio::basic_streambuf::const_buffers_type" title='boost::asio::basic_streambuf::const_buffers_type' data-type='boost::asio::const_buffers_1' data-ref="boost::asio::basic_streambuf::const_buffers_type" >const_buffers_type</a> <dfn class="decl def" id="_ZNK5boost4asio15basic_streambuf4dataEv" title='boost::asio::basic_streambuf::data' data-ref="_ZNK5boost4asio15basic_streambuf4dataEv" >data</dfn>() <em>const</em></td></tr>
+<tr><th id="184">184</th><td>  {</td></tr>
+<tr><th id="185">185</th><td>    <b>return</b> <span class="namespace">boost::asio::</span><a class="ref" href="buffer.hpp.html#_ZN5boost4asio6bufferERKNS0_12const_bufferE" title='boost::asio::buffer' data-ref="_ZN5boost4asio6bufferERKNS0_12const_bufferE" id="_ZN5boost4asio6bufferERKNS0_12const_bufferE" >buffer</a>(<span class="namespace">boost::asio::</span><a class="type" href="buffer.hpp.html#boost::asio::const_buffer" title='boost::asio::const_buffer' data-ref="boost::asio::const_buffer" >const_buffer</a>(<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>(),</td></tr>
+<tr><th id="186">186</th><td>          (<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() - <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>()) * <b>sizeof</b>(<a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::char_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::char_type' data-type='char' data-ref="std::basic_streambuf{char,std::char_traits{char}}::char_type" >char_type</a>)));</td></tr>
+<tr><th id="187">187</th><td>  }</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td>  <i class="doc">/// Get a list of buffers that represents the output sequence, with the given</i></td></tr>
+<tr><th id="190">190</th><td><i class="doc">  /// size.</i></td></tr>
+<tr><th id="191">191</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="192">192</th><td><i class="doc">   * Ensures that the output sequence can accommodate<span class="command"> @c</span> <span class="arg">n</span> characters,</i></td></tr>
+<tr><th id="193">193</th><td><i class="doc">   * reallocating character array objects as necessary.</i></td></tr>
+<tr><th id="194">194</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="195">195</th><td><i class="doc">   * <span class="command">@returns</span> An object of type<span class="command"> @c</span> <span class="arg">mutable_buffers_type</span> that satisfies</i></td></tr>
+<tr><th id="196">196</th><td><i class="doc">   * MutableBufferSequence requirements, representing character array objects</i></td></tr>
+<tr><th id="197">197</th><td><i class="doc">   * at the start of the output sequence such that the sum of the buffer sizes</i></td></tr>
+<tr><th id="198">198</th><td><i class="doc">   * is<span class="command"> @c</span> <span class="arg">n.</span></i></td></tr>
+<tr><th id="199">199</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="200">200</th><td><i class="doc">   * <span class="command">@throws</span> std::length_error If <span class="tag">&lt;tt&gt;</span>size() + n &gt; max_size()<span class="tag">&lt;/tt&gt;</span>.</i></td></tr>
+<tr><th id="201">201</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="202">202</th><td><i class="doc">   * <span class="command">@note</span> The returned object is invalidated by any<span class="command"> @c</span> <span class="arg">basic_streambuf</span> member</i></td></tr>
+<tr><th id="203">203</th><td><i class="doc">   * function that modifies the input sequence or output sequence.</i></td></tr>
+<tr><th id="204">204</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="205">205</th><td>  <a class="typedef" href="#boost::asio::basic_streambuf::mutable_buffers_type" title='boost::asio::basic_streambuf::mutable_buffers_type' data-type='boost::asio::mutable_buffers_1' data-ref="boost::asio::basic_streambuf::mutable_buffers_type" >mutable_buffers_type</a> <dfn class="decl def" id="_ZN5boost4asio15basic_streambuf7prepareEm" title='boost::asio::basic_streambuf::prepare' data-ref="_ZN5boost4asio15basic_streambuf7prepareEm" >prepare</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col4 decl" id="3654n" title='n' data-type='std::size_t' data-ref="3654n" >n</dfn>)</td></tr>
+<tr><th id="206">206</th><td>  {</td></tr>
+<tr><th id="207">207</th><td>    <a class="member" href="#_ZN5boost4asio15basic_streambuf7reserveEm" title='boost::asio::basic_streambuf::reserve' data-ref="_ZN5boost4asio15basic_streambuf7reserveEm" >reserve</a>(<a class="local col4 ref" href="#3654n" title='n' data-ref="3654n" >n</a>);</td></tr>
+<tr><th id="208">208</th><td>    <b>return</b> <span class="namespace">boost::asio::</span><a class="ref" href="buffer.hpp.html#_ZN5boost4asio6bufferERKNS0_14mutable_bufferE" title='boost::asio::buffer' data-ref="_ZN5boost4asio6bufferERKNS0_14mutable_bufferE" id="_ZN5boost4asio6bufferERKNS0_14mutable_bufferE" >buffer</a>(<span class="namespace">boost::asio::</span><a class="type" href="buffer.hpp.html#boost::asio::mutable_buffer" title='boost::asio::mutable_buffer' data-ref="boost::asio::mutable_buffer" >mutable_buffer</a>(</td></tr>
+<tr><th id="209">209</th><td>          <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>(), <a class="local col4 ref" href="#3654n" title='n' data-ref="3654n" >n</a> * <b>sizeof</b>(<a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::char_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::char_type' data-type='char' data-ref="std::basic_streambuf{char,std::char_traits{char}}::char_type" >char_type</a>)));</td></tr>
+<tr><th id="210">210</th><td>  }</td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td>  <i class="doc">/// Move characters from the output sequence to the input sequence.</i></td></tr>
+<tr><th id="213">213</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="214">214</th><td><i class="doc">   * Appends<span class="command"> @c</span> <span class="arg">n</span> characters from the start of the output sequence to the input</i></td></tr>
+<tr><th id="215">215</th><td><i class="doc">   * sequence. The beginning of the output sequence is advanced by<span class="command"> @c</span> <span class="arg">n</span></i></td></tr>
+<tr><th id="216">216</th><td><i class="doc">   * characters.</i></td></tr>
+<tr><th id="217">217</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="218">218</th><td><i class="doc">   * Requires a preceding call <span class="tag">&lt;tt&gt;</span>prepare(x)<span class="tag">&lt;/tt&gt;</span> where <span class="tag">&lt;tt&gt;</span>x &gt;= n<span class="tag">&lt;/tt&gt;</span>, and</i></td></tr>
+<tr><th id="219">219</th><td><i class="doc">   * no intervening operations that modify the input or output sequence.</i></td></tr>
+<tr><th id="220">220</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="221">221</th><td><i class="doc">   * <span class="command">@throws</span> std::length_error If<span class="command"> @c</span> <span class="arg">n</span> is greater than the size of the output</i></td></tr>
+<tr><th id="222">222</th><td><i class="doc">   * sequence.</i></td></tr>
+<tr><th id="223">223</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="224">224</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio15basic_streambuf6commitEm" title='boost::asio::basic_streambuf::commit' data-ref="_ZN5boost4asio15basic_streambuf6commitEm" >commit</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col5 decl" id="3655n" title='n' data-type='std::size_t' data-ref="3655n" >n</dfn>)</td></tr>
+<tr><th id="225">225</th><td>  {</td></tr>
+<tr><th id="226">226</th><td>    <b>if</b> (<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() + <a class="local col5 ref" href="#3655n" title='n' data-ref="3655n" >n</a> &gt; <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf5epptrEv" title='std::basic_streambuf::epptr' data-ref="_ZNKSt15basic_streambuf5epptrEv" id="_ZNKSt15basic_streambuf5epptrEv" >epptr</a>())</td></tr>
+<tr><th id="227">227</th><td>      <a class="local col5 ref" href="#3655n" title='n' data-ref="3655n" >n</a> = <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf5epptrEv" title='std::basic_streambuf::epptr' data-ref="_ZNKSt15basic_streambuf5epptrEv" id="_ZNKSt15basic_streambuf5epptrEv" >epptr</a>() - <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>();</td></tr>
+<tr><th id="228">228</th><td>    <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf5pbumpEi" title='std::basic_streambuf::pbump' data-ref="_ZNSt15basic_streambuf5pbumpEi" id="_ZNSt15basic_streambuf5pbumpEi" >pbump</a>(<b>static_cast</b>&lt;<em>int</em>&gt;(<a class="local col5 ref" href="#3655n" title='n' data-ref="3655n" >n</a>));</td></tr>
+<tr><th id="229">229</th><td>    <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf4setgEPT_S1_S1_" title='std::basic_streambuf::setg' data-ref="_ZNSt15basic_streambuf4setgEPT_S1_S1_" id="_ZNSt15basic_streambuf4setgEPT_S1_S1_" >setg</a>(<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf5ebackEv" title='std::basic_streambuf::eback' data-ref="_ZNKSt15basic_streambuf5ebackEv" id="_ZNKSt15basic_streambuf5ebackEv" >eback</a>(), <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>(), <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>());</td></tr>
+<tr><th id="230">230</th><td>  }</td></tr>
+<tr><th id="231">231</th><td></td></tr>
+<tr><th id="232">232</th><td>  <i class="doc">/// Remove characters from the input sequence.</i></td></tr>
+<tr><th id="233">233</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="234">234</th><td><i class="doc">   * Removes<span class="command"> @c</span> <span class="arg">n</span> characters from the beginning of the input sequence.</i></td></tr>
+<tr><th id="235">235</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="236">236</th><td><i class="doc">   * <span class="command">@throws</span> std::length_error If <span class="tag">&lt;tt&gt;</span>n &gt; size()<span class="tag">&lt;/tt&gt;</span>.</i></td></tr>
+<tr><th id="237">237</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="238">238</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio15basic_streambuf7consumeEm" title='boost::asio::basic_streambuf::consume' data-ref="_ZN5boost4asio15basic_streambuf7consumeEm" >consume</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col6 decl" id="3656n" title='n' data-type='std::size_t' data-ref="3656n" >n</dfn>)</td></tr>
+<tr><th id="239">239</th><td>  {</td></tr>
+<tr><th id="240">240</th><td>    <b>if</b> (<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf5egptrEv" title='std::basic_streambuf::egptr' data-ref="_ZNKSt15basic_streambuf5egptrEv" id="_ZNKSt15basic_streambuf5egptrEv" >egptr</a>() &lt; <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>())</td></tr>
+<tr><th id="241">241</th><td>      <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf4setgEPT_S1_S1_" title='std::basic_streambuf::setg' data-ref="_ZNSt15basic_streambuf4setgEPT_S1_S1_" id="_ZNSt15basic_streambuf4setgEPT_S1_S1_" >setg</a>(&amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>(), <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>());</td></tr>
+<tr><th id="242">242</th><td>    <b>if</b> (<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>() + <a class="local col6 ref" href="#3656n" title='n' data-ref="3656n" >n</a> &gt; <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>())</td></tr>
+<tr><th id="243">243</th><td>      <a class="local col6 ref" href="#3656n" title='n' data-ref="3656n" >n</a> = <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() - <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>();</td></tr>
+<tr><th id="244">244</th><td>    <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf5gbumpEi" title='std::basic_streambuf::gbump' data-ref="_ZNSt15basic_streambuf5gbumpEi" id="_ZNSt15basic_streambuf5gbumpEi" >gbump</a>(<b>static_cast</b>&lt;<em>int</em>&gt;(<a class="local col6 ref" href="#3656n" title='n' data-ref="3656n" >n</a>));</td></tr>
+<tr><th id="245">245</th><td>  }</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td><b>protected</b>:</td></tr>
+<tr><th id="248">248</th><td>  <b>enum</b> { <dfn class="enum" id="boost::asio::basic_streambuf::::buffer_delta" title='boost::asio::basic_streambuf::::buffer_delta' data-ref="boost::asio::basic_streambuf::::buffer_delta" >buffer_delta</dfn> = <var>128</var> };</td></tr>
+<tr><th id="249">249</th><td></td></tr>
+<tr><th id="250">250</th><td>  <i class="doc">/// Override std::streambuf behaviour.</i></td></tr>
+<tr><th id="251">251</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="252">252</th><td><i class="doc">   * Behaves according to the specification of<span class="command"> @c</span> <span class="arg">std::streambuf::underflow().</span></i></td></tr>
+<tr><th id="253">253</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="254">254</th><td>  <a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::int_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::int_type' data-type='typename traits_type::int_type' data-ref="std::basic_streambuf{char,std::char_traits{char}}::int_type" >int_type</a> <dfn class="virtual decl def" id="_ZN5boost4asio15basic_streambuf9underflowEv" title='boost::asio::basic_streambuf::underflow' data-ref="_ZN5boost4asio15basic_streambuf9underflowEv" >underflow</dfn>()</td></tr>
+<tr><th id="255">255</th><td>  {</td></tr>
+<tr><th id="256">256</th><td>    <b>if</b> (<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>() &lt; <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>())</td></tr>
+<tr><th id="257">257</th><td>    {</td></tr>
+<tr><th id="258">258</th><td>      <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf4setgEPT_S1_S1_" title='std::basic_streambuf::setg' data-ref="_ZNSt15basic_streambuf4setgEPT_S1_S1_" id="_ZNSt15basic_streambuf4setgEPT_S1_S1_" >setg</a>(&amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>(), <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>());</td></tr>
+<tr><th id="259">259</th><td>      <b>return</b> <a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::traits_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::traits_type' data-type='std::char_traits&lt;char&gt;' data-ref="std::basic_streambuf{char,std::char_traits{char}}::traits_type" >traits_type</a>::<a class="ref" href="../../c++/4.9/bits/char_traits.h.html#_ZNSt11char_traitsIcE11to_int_typeERKc" title='std::char_traits&lt;char&gt;::to_int_type' data-ref="_ZNSt11char_traitsIcE11to_int_typeERKc" id="_ZNSt11char_traitsIcE11to_int_typeERKc" >to_int_type</a>(*<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>());</td></tr>
+<tr><th id="260">260</th><td>    }</td></tr>
+<tr><th id="261">261</th><td>    <b>else</b></td></tr>
+<tr><th id="262">262</th><td>    {</td></tr>
+<tr><th id="263">263</th><td>      <b>return</b> <a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::traits_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::traits_type' data-type='std::char_traits&lt;char&gt;' data-ref="std::basic_streambuf{char,std::char_traits{char}}::traits_type" >traits_type</a>::<a class="ref" href="../../c++/4.9/bits/char_traits.h.html#_ZNSt11char_traitsIcE3eofEv" title='std::char_traits&lt;char&gt;::eof' data-ref="_ZNSt11char_traitsIcE3eofEv" id="_ZNSt11char_traitsIcE3eofEv" >eof</a>();</td></tr>
+<tr><th id="264">264</th><td>    }</td></tr>
+<tr><th id="265">265</th><td>  }</td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td>  <i class="doc">/// Override std::streambuf behaviour.</i></td></tr>
+<tr><th id="268">268</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="269">269</th><td><i class="doc">   * Behaves according to the specification of<span class="command"> @c</span> <span class="arg">std::streambuf::overflow(),</span></i></td></tr>
+<tr><th id="270">270</th><td><i class="doc">   * with the specialisation that<span class="command"> @c</span> <span class="arg">std::length_error</span> is thrown if appending</i></td></tr>
+<tr><th id="271">271</th><td><i class="doc">   * the character to the input sequence would require the condition</i></td></tr>
+<tr><th id="272">272</th><td><i class="doc">   * <span class="tag">&lt;tt&gt;</span>size() &gt; max_size()<span class="tag">&lt;/tt&gt;</span> to be true.</i></td></tr>
+<tr><th id="273">273</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="274">274</th><td>  <a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::int_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::int_type' data-type='typename traits_type::int_type' data-ref="std::basic_streambuf{char,std::char_traits{char}}::int_type" >int_type</a> <dfn class="virtual decl def" id="_ZN5boost4asio15basic_streambuf8overflowEi" title='boost::asio::basic_streambuf::overflow' data-ref="_ZN5boost4asio15basic_streambuf8overflowEi" >overflow</dfn>(<a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::int_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::int_type' data-type='typename traits_type::int_type' data-ref="std::basic_streambuf{char,std::char_traits{char}}::int_type" >int_type</a> <dfn class="local col7 decl" id="3657c" title='c' data-type='int_type' data-ref="3657c" >c</dfn>)</td></tr>
+<tr><th id="275">275</th><td>  {</td></tr>
+<tr><th id="276">276</th><td>    <b>if</b> (!<a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::traits_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::traits_type' data-type='std::char_traits&lt;char&gt;' data-ref="std::basic_streambuf{char,std::char_traits{char}}::traits_type" >traits_type</a>::<a class="ref" href="../../c++/4.9/bits/char_traits.h.html#_ZNSt11char_traitsIcE11eq_int_typeERKiS2_" title='std::char_traits&lt;char&gt;::eq_int_type' data-ref="_ZNSt11char_traitsIcE11eq_int_typeERKiS2_" id="_ZNSt11char_traitsIcE11eq_int_typeERKiS2_" >eq_int_type</a>(<a class="local col7 ref" href="#3657c" title='c' data-ref="3657c" >c</a>, <a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::traits_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::traits_type' data-type='std::char_traits&lt;char&gt;' data-ref="std::basic_streambuf{char,std::char_traits{char}}::traits_type" >traits_type</a>::<a class="ref" href="../../c++/4.9/bits/char_traits.h.html#_ZNSt11char_traitsIcE3eofEv" title='std::char_traits&lt;char&gt;::eof' data-ref="_ZNSt11char_traitsIcE3eofEv" id="_ZNSt11char_traitsIcE3eofEv" >eof</a>()))</td></tr>
+<tr><th id="277">277</th><td>    {</td></tr>
+<tr><th id="278">278</th><td>      <b>if</b> (<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() == <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf5epptrEv" title='std::basic_streambuf::epptr' data-ref="_ZNKSt15basic_streambuf5epptrEv" id="_ZNKSt15basic_streambuf5epptrEv" >epptr</a>())</td></tr>
+<tr><th id="279">279</th><td>      {</td></tr>
+<tr><th id="280">280</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col8 decl" id="3658buffer_size" title='buffer_size' data-type='std::size_t' data-ref="3658buffer_size" >buffer_size</dfn> = <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() - <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>();</td></tr>
+<tr><th id="281">281</th><td>        <b>if</b> (<a class="local col8 ref" href="#3658buffer_size" title='buffer_size' data-ref="3658buffer_size" >buffer_size</a> &lt; <a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a> &amp;&amp; <a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a> - <a class="local col8 ref" href="#3658buffer_size" title='buffer_size' data-ref="3658buffer_size" >buffer_size</a> &lt; <a class="enum" href="#boost::asio::basic_streambuf::::buffer_delta" title='boost::asio::basic_streambuf::::buffer_delta' data-ref="boost::asio::basic_streambuf::::buffer_delta" >buffer_delta</a>)</td></tr>
+<tr><th id="282">282</th><td>        {</td></tr>
+<tr><th id="283">283</th><td>          <a class="member" href="#_ZN5boost4asio15basic_streambuf7reserveEm" title='boost::asio::basic_streambuf::reserve' data-ref="_ZN5boost4asio15basic_streambuf7reserveEm" >reserve</a>(<a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a> - <a class="local col8 ref" href="#3658buffer_size" title='buffer_size' data-ref="3658buffer_size" >buffer_size</a>);</td></tr>
+<tr><th id="284">284</th><td>        }</td></tr>
+<tr><th id="285">285</th><td>        <b>else</b></td></tr>
+<tr><th id="286">286</th><td>        {</td></tr>
+<tr><th id="287">287</th><td>          <a class="member" href="#_ZN5boost4asio15basic_streambuf7reserveEm" title='boost::asio::basic_streambuf::reserve' data-ref="_ZN5boost4asio15basic_streambuf7reserveEm" >reserve</a>(<a class="enum" href="#boost::asio::basic_streambuf::::buffer_delta" title='boost::asio::basic_streambuf::::buffer_delta' data-ref="boost::asio::basic_streambuf::::buffer_delta" >buffer_delta</a>);</td></tr>
+<tr><th id="288">288</th><td>        }</td></tr>
+<tr><th id="289">289</th><td>      }</td></tr>
+<tr><th id="290">290</th><td></td></tr>
+<tr><th id="291">291</th><td>      *<a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() = <a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::traits_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::traits_type' data-type='std::char_traits&lt;char&gt;' data-ref="std::basic_streambuf{char,std::char_traits{char}}::traits_type" >traits_type</a>::<a class="ref" href="../../c++/4.9/bits/char_traits.h.html#_ZNSt11char_traitsIcE12to_char_typeERKi" title='std::char_traits&lt;char&gt;::to_char_type' data-ref="_ZNSt11char_traitsIcE12to_char_typeERKi" id="_ZNSt11char_traitsIcE12to_char_typeERKi" >to_char_type</a>(<a class="local col7 ref" href="#3657c" title='c' data-ref="3657c" >c</a>);</td></tr>
+<tr><th id="292">292</th><td>      <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf5pbumpEi" title='std::basic_streambuf::pbump' data-ref="_ZNSt15basic_streambuf5pbumpEi" id="_ZNSt15basic_streambuf5pbumpEi" >pbump</a>(<var>1</var>);</td></tr>
+<tr><th id="293">293</th><td>      <b>return</b> <a class="local col7 ref" href="#3657c" title='c' data-ref="3657c" >c</a>;</td></tr>
+<tr><th id="294">294</th><td>    }</td></tr>
+<tr><th id="295">295</th><td></td></tr>
+<tr><th id="296">296</th><td>    <b>return</b> <a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::traits_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::traits_type' data-type='std::char_traits&lt;char&gt;' data-ref="std::basic_streambuf{char,std::char_traits{char}}::traits_type" >traits_type</a>::<a class="ref" href="../../c++/4.9/bits/char_traits.h.html#_ZNSt11char_traitsIcE7not_eofERKi" title='std::char_traits&lt;char&gt;::not_eof' data-ref="_ZNSt11char_traitsIcE7not_eofERKi" id="_ZNSt11char_traitsIcE7not_eofERKi" >not_eof</a>(<a class="local col7 ref" href="#3657c" title='c' data-ref="3657c" >c</a>);</td></tr>
+<tr><th id="297">297</th><td>  }</td></tr>
+<tr><th id="298">298</th><td></td></tr>
+<tr><th id="299">299</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio15basic_streambuf7reserveEm" title='boost::asio::basic_streambuf::reserve' data-ref="_ZN5boost4asio15basic_streambuf7reserveEm" >reserve</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col9 decl" id="3659n" title='n' data-type='std::size_t' data-ref="3659n" >n</dfn>)</td></tr>
+<tr><th id="300">300</th><td>  {</td></tr>
+<tr><th id="301">301</th><td>    <i>// Get current stream positions as offsets.</i></td></tr>
+<tr><th id="302">302</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col0 decl" id="3660gnext" title='gnext' data-type='std::size_t' data-ref="3660gnext" >gnext</dfn> = <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4gptrEv" title='std::basic_streambuf::gptr' data-ref="_ZNKSt15basic_streambuf4gptrEv" id="_ZNKSt15basic_streambuf4gptrEv" >gptr</a>() - &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>];</td></tr>
+<tr><th id="303">303</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col1 decl" id="3661pnext" title='pnext' data-type='std::size_t' data-ref="3661pnext" >pnext</dfn> = <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf4pptrEv" title='std::basic_streambuf::pptr' data-ref="_ZNKSt15basic_streambuf4pptrEv" id="_ZNKSt15basic_streambuf4pptrEv" >pptr</a>() - &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>];</td></tr>
+<tr><th id="304">304</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col2 decl" id="3662pend" title='pend' data-type='std::size_t' data-ref="3662pend" >pend</dfn> = <a class="member" href="../../c++/4.9/streambuf.html#_ZNKSt15basic_streambuf5epptrEv" title='std::basic_streambuf::epptr' data-ref="_ZNKSt15basic_streambuf5epptrEv" id="_ZNKSt15basic_streambuf5epptrEv" >epptr</a>() - &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>];</td></tr>
+<tr><th id="305">305</th><td></td></tr>
+<tr><th id="306">306</th><td>    <i>// Check if there is already enough space in the put area.</i></td></tr>
+<tr><th id="307">307</th><td>    <b>if</b> (<a class="local col9 ref" href="#3659n" title='n' data-ref="3659n" >n</a> &lt;= <a class="local col2 ref" href="#3662pend" title='pend' data-ref="3662pend" >pend</a> - <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a>)</td></tr>
+<tr><th id="308">308</th><td>    {</td></tr>
+<tr><th id="309">309</th><td>      <b>return</b>;</td></tr>
+<tr><th id="310">310</th><td>    }</td></tr>
+<tr><th id="311">311</th><td></td></tr>
+<tr><th id="312">312</th><td>    <i>// Shift existing contents of get area to start of buffer.</i></td></tr>
+<tr><th id="313">313</th><td>    <b>if</b> (<a class="local col0 ref" href="#3660gnext" title='gnext' data-ref="3660gnext" >gnext</a> &gt; <var>0</var>)</td></tr>
+<tr><th id="314">314</th><td>    {</td></tr>
+<tr><th id="315">315</th><td>      <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a> -= <a class="local col0 ref" href="#3660gnext" title='gnext' data-ref="3660gnext" >gnext</a>;</td></tr>
+<tr><th id="316">316</th><td>      <span class="namespace">std::</span><a class="ref" href="../../string.h.html#memmove" title='memmove' data-ref="memmove" id="memmove" >memmove</a>(&amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>] + <a class="local col0 ref" href="#3660gnext" title='gnext' data-ref="3660gnext" >gnext</a>, <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a>);</td></tr>
+<tr><th id="317">317</th><td>    }</td></tr>
+<tr><th id="318">318</th><td></td></tr>
+<tr><th id="319">319</th><td>    <i>// Ensure buffer is large enough to hold at least the specified size.</i></td></tr>
+<tr><th id="320">320</th><td>    <b>if</b> (<a class="local col9 ref" href="#3659n" title='n' data-ref="3659n" >n</a> &gt; <a class="local col2 ref" href="#3662pend" title='pend' data-ref="3662pend" >pend</a> - <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a>)</td></tr>
+<tr><th id="321">321</th><td>    {</td></tr>
+<tr><th id="322">322</th><td>      <b>if</b> (<a class="local col9 ref" href="#3659n" title='n' data-ref="3659n" >n</a> &lt;= <a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a> &amp;&amp; <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a> &lt;= <a class="member" href="#boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</a> - <a class="local col9 ref" href="#3659n" title='n' data-ref="3659n" >n</a>)</td></tr>
+<tr><th id="323">323</th><td>      {</td></tr>
+<tr><th id="324">324</th><td>        <a class="local col2 ref" href="#3662pend" title='pend' data-ref="3662pend" >pend</a> = <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a> + <a class="local col9 ref" href="#3659n" title='n' data-ref="3659n" >n</a>;</td></tr>
+<tr><th id="325">325</th><td>        <a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>.resize((<span class="namespace">std::</span><a class="ref" href="../../c++/4.9/bits/algorithmfwd.h.html#_ZSt3maxRKT_S1_" title='std::max' data-ref="_ZSt3maxRKT_S1_" id="_ZSt3maxRKT_S1_" >max</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;)(<a class="local col2 ref" href="#3662pend" title='pend' data-ref="3662pend" >pend</a>, <var>1</var>));</td></tr>
+<tr><th id="326">326</th><td>      }</td></tr>
+<tr><th id="327">327</th><td>      <b>else</b></td></tr>
+<tr><th id="328">328</th><td>      {</td></tr>
+<tr><th id="329">329</th><td>        <span class="namespace">std::</span><a class="type" href="../../c++/4.9/stdexcept.html#std::length_error" title='std::length_error' data-ref="std::length_error" >length_error</a> <dfn class="local col3 decl" id="3663ex" title='ex' data-type='std::length_error' data-ref="3663ex" >ex</dfn><a class="ref" href="../../c++/4.9/stdexcept.html#_ZNSt12length_errorC1ERKSs" title='std::length_error::length_error' data-ref="_ZNSt12length_errorC1ERKSs" id="_ZNSt12length_errorC1ERKSs" >(</a><q>"boost::asio::streambuf too long"</q>);</td></tr>
+<tr><th id="330">330</th><td>        <span class="namespace">boost::asio::detail::</span><a class="ref" href="../throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="local col3 ref" href="#3663ex" title='ex' data-ref="3663ex" >ex</a>);</td></tr>
+<tr><th id="331">331</th><td>      }</td></tr>
+<tr><th id="332">332</th><td>    }</td></tr>
+<tr><th id="333">333</th><td></td></tr>
+<tr><th id="334">334</th><td>    <i>// Update stream positions.</i></td></tr>
+<tr><th id="335">335</th><td>    <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf4setgEPT_S1_S1_" title='std::basic_streambuf::setg' data-ref="_ZNSt15basic_streambuf4setgEPT_S1_S1_" id="_ZNSt15basic_streambuf4setgEPT_S1_S1_" >setg</a>(&amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>], &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>] + <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a>);</td></tr>
+<tr><th id="336">336</th><td>    <a class="member" href="../../c++/4.9/streambuf.html#_ZNSt15basic_streambuf4setpEPT_S1_" title='std::basic_streambuf::setp' data-ref="_ZNSt15basic_streambuf4setpEPT_S1_" id="_ZNSt15basic_streambuf4setpEPT_S1_" >setp</a>(&amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>] + <a class="local col1 ref" href="#3661pnext" title='pnext' data-ref="3661pnext" >pnext</a>, &amp;<a class="member" href="#boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</a>[<var>0</var>] + <a class="local col2 ref" href="#3662pend" title='pend' data-ref="3662pend" >pend</a>);</td></tr>
+<tr><th id="337">337</th><td>  }</td></tr>
+<tr><th id="338">338</th><td></td></tr>
+<tr><th id="339">339</th><td><b>private</b>:</td></tr>
+<tr><th id="340">340</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl" id="boost::asio::basic_streambuf::max_size_" title='boost::asio::basic_streambuf::max_size_' data-ref="boost::asio::basic_streambuf::max_size_" >max_size_</dfn>;</td></tr>
+<tr><th id="341">341</th><td>  <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;<a class="typedef" href="../../c++/4.9/streambuf.html#std::basic_streambuf{char,std::char_traits{char}}::char_type" title='std::basic_streambuf&lt;char, std::char_traits&lt;char&gt; &gt;::char_type' data-type='char' data-ref="std::basic_streambuf{char,std::char_traits{char}}::char_type" >char_type</a>, Allocator&gt; <dfn class="decl" id="boost::asio::basic_streambuf::buffer_" title='boost::asio::basic_streambuf::buffer_' data-ref="boost::asio::basic_streambuf::buffer_" >buffer_</dfn>;</td></tr>
+<tr><th id="342">342</th><td></td></tr>
+<tr><th id="343">343</th><td>  <i>// Helper function to get the preferred size for reading data.</i></td></tr>
+<tr><th id="344">344</th><td>  <b>friend</b> <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio16read_size_helperERNS0_15basic_streambufIT_EEm" title='boost::asio::read_size_helper' data-ref="_ZN5boost4asio16read_size_helperERNS0_15basic_streambufIT_EEm" >read_size_helper</dfn>(</td></tr>
+<tr><th id="345">345</th><td>      basic_streambuf&amp; <dfn class="local col4 decl" id="3664sb" title='sb' data-type='basic_streambuf&lt;Allocator&gt; &amp;' data-ref="3664sb" >sb</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col5 decl" id="3665max_size" title='max_size' data-type='std::size_t' data-ref="3665max_size" >max_size</dfn>)</td></tr>
+<tr><th id="346">346</th><td>  {</td></tr>
+<tr><th id="347">347</th><td>    <b>return</b> <span class="namespace">std::</span>min&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;(</td></tr>
+<tr><th id="348">348</th><td>        <span class="namespace">std::</span>max&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;(<var>512</var>, <a class="local col4 ref" href="#3664sb" title='sb' data-ref="3664sb" >sb</a>.buffer_.capacity() - <a class="local col4 ref" href="#3664sb" title='sb' data-ref="3664sb" >sb</a>.size()),</td></tr>
+<tr><th id="349">349</th><td>        <span class="namespace">std::</span>min&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;(<a class="local col5 ref" href="#3665max_size" title='max_size' data-ref="3665max_size" >max_size</a>, <a class="local col4 ref" href="#3664sb" title='sb' data-ref="3664sb" >sb</a>.max_size() - <a class="local col4 ref" href="#3664sb" title='sb' data-ref="3664sb" >sb</a>.size()));</td></tr>
+<tr><th id="350">350</th><td>  }</td></tr>
+<tr><th id="351">351</th><td>};</td></tr>
+<tr><th id="352">352</th><td></td></tr>
+<tr><th id="353">353</th><td><i>// Helper function to get the preferred size for reading data. Used for any</i></td></tr>
+<tr><th id="354">354</th><td><i>// user-provided specialisations of basic_streambuf.</i></td></tr>
+<tr><th id="355">355</th><td><b>template</b> &lt;<b>typename</b> Allocator&gt;</td></tr>
+<tr><th id="356">356</th><td><b>inline</b> <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio16read_size_helperERNS0_15basic_streambufIT_EEm" title='boost::asio::read_size_helper' data-ref="_ZN5boost4asio16read_size_helperERNS0_15basic_streambufIT_EEm" >read_size_helper</dfn>(</td></tr>
+<tr><th id="357">357</th><td>    <a class="type" href="basic_streambuf_fwd.hpp.html#boost::asio::basic_streambuf" title='boost::asio::basic_streambuf' data-ref="boost::asio::basic_streambuf" >basic_streambuf</a>&lt;Allocator&gt;&amp; <dfn class="local col6 decl" id="3666sb" title='sb' data-type='basic_streambuf&lt;Allocator&gt; &amp;' data-ref="3666sb" >sb</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col7 decl" id="3667max_size" title='max_size' data-type='std::size_t' data-ref="3667max_size" >max_size</dfn>)</td></tr>
+<tr><th id="358">358</th><td>{</td></tr>
+<tr><th id="359">359</th><td>  <b>return</b> <span class="namespace">std::</span>min&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;(<var>512</var>,</td></tr>
+<tr><th id="360">360</th><td>      <span class="namespace">std::</span>min&lt;<span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;(<a class="local col7 ref" href="#3667max_size" title='max_size' data-ref="3667max_size" >max_size</a>, <a class="local col6 ref" href="#3666sb" title='sb' data-ref="3666sb" >sb</a>.max_size() - <a class="local col6 ref" href="#3666sb" title='sb' data-ref="3666sb" >sb</a>.size()));</td></tr>
+<tr><th id="361">361</th><td>}</td></tr>
+<tr><th id="362">362</th><td></td></tr>
+<tr><th id="363">363</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="364">364</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="365">365</th><td></td></tr>
+<tr><th id="366">366</th><td><u>#include <a href="detail/pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="367">367</th><td></td></tr>
+<tr><th id="368">368</th><td><u>#<span data-ppcond="20">endif</span> // !defined(BOOST_ASIO_NO_IOSTREAM)</u></td></tr>
+<tr><th id="369">369</th><td></td></tr>
+<tr><th id="370">370</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_BASIC_STREAMBUF_HPP</u></td></tr>
+<tr><th id="371">371</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

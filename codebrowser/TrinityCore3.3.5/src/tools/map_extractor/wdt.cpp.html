@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<title>wdt.cpp [TrinityCore3.3.5/src/tools/map_extractor/wdt.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/tools/map_extractor/wdt.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>tools</a>/<a href='./'>map_extractor</a>/wdt.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/_CRT_SECURE_NO_DEPRECATE" data-ref="_M/_CRT_SECURE_NO_DEPRECATE">_CRT_SECURE_NO_DEPRECATE</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="wdt.h.html">"wdt.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><a class="type" href="loadlib/loadlib.h.html#u_map_fcc" title='u_map_fcc' data-ref="u_map_fcc" >u_map_fcc</a> <dfn class="decl def" id="MWMOMagic" title='MWMOMagic' data-ref="MWMOMagic" >MWMOMagic</dfn> = { {<kdb>'O'</kdb>, <kdb>'M'</kdb>, <kdb>'W'</kdb>, <kdb>'M'</kdb>} };</td></tr>
+<tr><th id="24">24</th><td><a class="type" href="loadlib/loadlib.h.html#u_map_fcc" title='u_map_fcc' data-ref="u_map_fcc" >u_map_fcc</a> <dfn class="decl def" id="MPHDMagic" title='MPHDMagic' data-ref="MPHDMagic" >MPHDMagic</dfn> = { {<kdb>'D'</kdb>, <kdb>'H'</kdb>, <kdb>'P'</kdb>, <kdb>'M'</kdb>} };</td></tr>
+<tr><th id="25">25</th><td><a class="type" href="loadlib/loadlib.h.html#u_map_fcc" title='u_map_fcc' data-ref="u_map_fcc" >u_map_fcc</a> <dfn class="decl def" id="MAINMagic" title='MAINMagic' data-ref="MAINMagic" >MAINMagic</dfn> = { {<kdb>'N'</kdb>, <kdb>'I'</kdb>, <kdb>'A'</kdb>, <kdb>'M'</kdb>} };</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><em>bool</em> <a class="type" href="wdt.h.html#wdt_MWMO" title='wdt_MWMO' data-ref="wdt_MWMO" >wdt_MWMO</a>::<dfn class="decl def" id="_ZN8wdt_MWMO17prepareLoadedDataEv" title='wdt_MWMO::prepareLoadedData' data-ref="_ZN8wdt_MWMO17prepareLoadedDataEv" >prepareLoadedData</dfn>()</td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td>    <b>if</b> (<a class="ref" href="wdt.h.html#wdt_MWMO::(anonymous)::fcc" title='wdt_MWMO::(anonymous union)::fcc' data-ref="wdt_MWMO::(anonymous)::fcc" id="wdt_MWMO::(anonymous)::fcc" >fcc</a> != <a class="ref" href="#MWMOMagic" title='MWMOMagic' data-ref="MWMOMagic" >MWMOMagic</a>.<a class="ref" href="loadlib/loadlib.h.html#u_map_fcc::fcc" title='u_map_fcc::fcc' data-ref="u_map_fcc::fcc" id="u_map_fcc::fcc" >fcc</a>)</td></tr>
+<tr><th id="30">30</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="31">31</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="32">32</th><td>}</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><em>bool</em> <a class="type" href="wdt.h.html#wdt_MPHD" title='wdt_MPHD' data-ref="wdt_MPHD" >wdt_MPHD</a>::<dfn class="decl def" id="_ZN8wdt_MPHD17prepareLoadedDataEv" title='wdt_MPHD::prepareLoadedData' data-ref="_ZN8wdt_MPHD17prepareLoadedDataEv" >prepareLoadedData</dfn>()</td></tr>
+<tr><th id="35">35</th><td>{</td></tr>
+<tr><th id="36">36</th><td>    <b>if</b> (<a class="ref" href="wdt.h.html#wdt_MPHD::(anonymous)::fcc" title='wdt_MPHD::(anonymous union)::fcc' data-ref="wdt_MPHD::(anonymous)::fcc" id="wdt_MPHD::(anonymous)::fcc" >fcc</a> != <a class="ref" href="#MPHDMagic" title='MPHDMagic' data-ref="MPHDMagic" >MPHDMagic</a>.<a class="ref" href="loadlib/loadlib.h.html#u_map_fcc::fcc" title='u_map_fcc::fcc' data-ref="u_map_fcc::fcc" id="u_map_fcc::fcc" >fcc</a>)</td></tr>
+<tr><th id="37">37</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="38">38</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="39">39</th><td>}</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><em>bool</em> <a class="type" href="wdt.h.html#wdt_MAIN" title='wdt_MAIN' data-ref="wdt_MAIN" >wdt_MAIN</a>::<dfn class="decl def" id="_ZN8wdt_MAIN17prepareLoadedDataEv" title='wdt_MAIN::prepareLoadedData' data-ref="_ZN8wdt_MAIN17prepareLoadedDataEv" >prepareLoadedData</dfn>()</td></tr>
+<tr><th id="42">42</th><td>{</td></tr>
+<tr><th id="43">43</th><td>    <b>if</b> (<a class="ref" href="wdt.h.html#wdt_MAIN::(anonymous)::fcc" title='wdt_MAIN::(anonymous union)::fcc' data-ref="wdt_MAIN::(anonymous)::fcc" id="wdt_MAIN::(anonymous)::fcc" >fcc</a> != <a class="ref" href="#MAINMagic" title='MAINMagic' data-ref="MAINMagic" >MAINMagic</a>.<a class="ref" href="loadlib/loadlib.h.html#u_map_fcc::fcc" title='u_map_fcc::fcc' data-ref="u_map_fcc::fcc" id="u_map_fcc::fcc" >fcc</a>)</td></tr>
+<tr><th id="44">44</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="45">45</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="46">46</th><td>}</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><a class="type" href="wdt.h.html#WDT_file" title='WDT_file' data-ref="WDT_file" >WDT_file</a>::<dfn class="decl def" id="_ZN8WDT_fileC1Ev" title='WDT_file::WDT_file' data-ref="_ZN8WDT_fileC1Ev" >WDT_file</dfn>()</td></tr>
+<tr><th id="49">49</th><td>{</td></tr>
+<tr><th id="50">50</th><td>    <a class="member" href="wdt.h.html#WDT_file::mphd" title='WDT_file::mphd' data-ref="WDT_file::mphd" id="WDT_file::mphd" >mphd</a> = <var>0</var>;</td></tr>
+<tr><th id="51">51</th><td>    <a class="member" href="wdt.h.html#WDT_file::main" title='WDT_file::main' data-ref="WDT_file::main" id="WDT_file::main" >main</a> = <var>0</var>;</td></tr>
+<tr><th id="52">52</th><td>    <a class="member" href="wdt.h.html#WDT_file::wmo" title='WDT_file::wmo' data-ref="WDT_file::wmo" id="WDT_file::wmo" >wmo</a>  = <var>0</var>;</td></tr>
+<tr><th id="53">53</th><td>}</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><a class="type" href="wdt.h.html#WDT_file" title='WDT_file' data-ref="WDT_file" >WDT_file</a>::<dfn class="decl def" id="_ZN8WDT_fileD1Ev" title='WDT_file::~WDT_file' data-ref="_ZN8WDT_fileD1Ev" >~WDT_file</dfn>()</td></tr>
+<tr><th id="56">56</th><td>{</td></tr>
+<tr><th id="57">57</th><td>    <a class="virtual member" href="#_ZN8WDT_file4freeEv" title='WDT_file::free' data-ref="_ZN8WDT_file4freeEv" >free</a>();</td></tr>
+<tr><th id="58">58</th><td>}</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><em>void</em> <a class="type" href="wdt.h.html#WDT_file" title='WDT_file' data-ref="WDT_file" >WDT_file</a>::<dfn class="virtual decl def" id="_ZN8WDT_file4freeEv" title='WDT_file::free' data-ref="_ZN8WDT_file4freeEv" >free</dfn>()</td></tr>
+<tr><th id="61">61</th><td>{</td></tr>
+<tr><th id="62">62</th><td>    <a class="member" href="wdt.h.html#WDT_file::mphd" title='WDT_file::mphd' data-ref="WDT_file::mphd" id="WDT_file::mphd" >mphd</a> = <var>0</var>;</td></tr>
+<tr><th id="63">63</th><td>    <a class="member" href="wdt.h.html#WDT_file::main" title='WDT_file::main' data-ref="WDT_file::main" id="WDT_file::main" >main</a> = <var>0</var>;</td></tr>
+<tr><th id="64">64</th><td>    <a class="member" href="wdt.h.html#WDT_file::wmo" title='WDT_file::wmo' data-ref="WDT_file::wmo" id="WDT_file::wmo" >wmo</a>  = <var>0</var>;</td></tr>
+<tr><th id="65">65</th><td>    <a class="type" href="loadlib/loadlib.h.html#FileLoader" title='FileLoader' data-ref="FileLoader" >FileLoader</a>::<a class="virtual member" href="loadlib/loadlib.h.html#_ZN10FileLoader4freeEv" title='FileLoader::free' data-ref="_ZN10FileLoader4freeEv" id="_ZN10FileLoader4freeEv" >free</a>();</td></tr>
+<tr><th id="66">66</th><td>}</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><em>bool</em> <a class="type" href="wdt.h.html#WDT_file" title='WDT_file' data-ref="WDT_file" >WDT_file</a>::<dfn class="virtual decl def" id="_ZN8WDT_file17prepareLoadedDataEv" title='WDT_file::prepareLoadedData' data-ref="_ZN8WDT_file17prepareLoadedDataEv" >prepareLoadedData</dfn>()</td></tr>
+<tr><th id="69">69</th><td>{</td></tr>
+<tr><th id="70">70</th><td>    <i>// Check parent</i></td></tr>
+<tr><th id="71">71</th><td>    <b>if</b> (!<a class="type" href="loadlib/loadlib.h.html#FileLoader" title='FileLoader' data-ref="FileLoader" >FileLoader</a>::<a class="virtual member" href="loadlib/loadlib.h.html#_ZN10FileLoader17prepareLoadedDataEv" title='FileLoader::prepareLoadedData' data-ref="_ZN10FileLoader17prepareLoadedDataEv" id="_ZN10FileLoader17prepareLoadedDataEv" >prepareLoadedData</a>())</td></tr>
+<tr><th id="72">72</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>    <a class="member" href="wdt.h.html#WDT_file::mphd" title='WDT_file::mphd' data-ref="WDT_file::mphd" id="WDT_file::mphd" >mphd</a> = (<a class="type" href="wdt.h.html#wdt_MPHD" title='wdt_MPHD' data-ref="wdt_MPHD" >wdt_MPHD</a> *)((<a class="typedef" href="../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>*)<a class="member" href="loadlib/loadlib.h.html#FileLoader::version" title='FileLoader::version' data-ref="FileLoader::version" id="FileLoader::version" >version</a>+<a class="member" href="loadlib/loadlib.h.html#FileLoader::version" title='FileLoader::version' data-ref="FileLoader::version" id="FileLoader::version" >version</a>-&gt;<a class="ref" href="loadlib/loadlib.h.html#file_MVER::size" title='file_MVER::size' data-ref="file_MVER::size" id="file_MVER::size" >size</a>+<var>8</var>);</td></tr>
+<tr><th id="75">75</th><td>    <b>if</b> (!<a class="member" href="wdt.h.html#WDT_file::mphd" title='WDT_file::mphd' data-ref="WDT_file::mphd" id="WDT_file::mphd" >mphd</a>-&gt;<a class="ref" href="#_ZN8wdt_MPHD17prepareLoadedDataEv" title='wdt_MPHD::prepareLoadedData' data-ref="_ZN8wdt_MPHD17prepareLoadedDataEv" >prepareLoadedData</a>())</td></tr>
+<tr><th id="76">76</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="77">77</th><td>    <a class="member" href="wdt.h.html#WDT_file::main" title='WDT_file::main' data-ref="WDT_file::main" id="WDT_file::main" >main</a> = (<a class="type" href="wdt.h.html#wdt_MAIN" title='wdt_MAIN' data-ref="wdt_MAIN" >wdt_MAIN</a> *)((<a class="typedef" href="../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>*)<a class="member" href="wdt.h.html#WDT_file::mphd" title='WDT_file::mphd' data-ref="WDT_file::mphd" id="WDT_file::mphd" >mphd</a> + <a class="member" href="wdt.h.html#WDT_file::mphd" title='WDT_file::mphd' data-ref="WDT_file::mphd" id="WDT_file::mphd" >mphd</a>-&gt;<a class="ref" href="wdt.h.html#wdt_MPHD::size" title='wdt_MPHD::size' data-ref="wdt_MPHD::size" id="wdt_MPHD::size" >size</a>+<var>8</var>);</td></tr>
+<tr><th id="78">78</th><td>    <b>if</b> (!<a class="member" href="wdt.h.html#WDT_file::main" title='WDT_file::main' data-ref="WDT_file::main" id="WDT_file::main" >main</a>-&gt;<a class="ref" href="#_ZN8wdt_MAIN17prepareLoadedDataEv" title='wdt_MAIN::prepareLoadedData' data-ref="_ZN8wdt_MAIN17prepareLoadedDataEv" >prepareLoadedData</a>())</td></tr>
+<tr><th id="79">79</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="80">80</th><td>    <a class="member" href="wdt.h.html#WDT_file::wmo" title='WDT_file::wmo' data-ref="WDT_file::wmo" id="WDT_file::wmo" >wmo</a> = (<a class="type" href="wdt.h.html#wdt_MWMO" title='wdt_MWMO' data-ref="wdt_MWMO" >wdt_MWMO</a> *)((<a class="typedef" href="../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>*)<a class="member" href="wdt.h.html#WDT_file::main" title='WDT_file::main' data-ref="WDT_file::main" id="WDT_file::main" >main</a>+ <a class="member" href="wdt.h.html#WDT_file::main" title='WDT_file::main' data-ref="WDT_file::main" id="WDT_file::main" >main</a>-&gt;<a class="ref" href="wdt.h.html#wdt_MAIN::size" title='wdt_MAIN::size' data-ref="wdt_MAIN::size" id="wdt_MAIN::size" >size</a>+<var>8</var>);</td></tr>
+<tr><th id="81">81</th><td>    <b>if</b> (!<a class="member" href="wdt.h.html#WDT_file::wmo" title='WDT_file::wmo' data-ref="WDT_file::wmo" id="WDT_file::wmo" >wmo</a>-&gt;<a class="ref" href="#_ZN8wdt_MWMO17prepareLoadedDataEv" title='wdt_MWMO::prepareLoadedData' data-ref="_ZN8wdt_MWMO17prepareLoadedDataEv" >prepareLoadedData</a>())</td></tr>
+<tr><th id="82">82</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="83">83</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="84">84</th><td>}</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

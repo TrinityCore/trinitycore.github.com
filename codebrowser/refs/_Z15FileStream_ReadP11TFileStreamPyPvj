@@ -1,0 +1,29 @@
+<dec f='TrinityCore6.x/dep/CascLib/src/common/FileStream.h' l='227' type='bool FileStream_Read(TFileStream * pStream, ULONGLONG * pByteOffset, void * pvBuffer, DWORD dwBytesToRead)'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascOpenStorage.cpp' l='520' u='c' c='_ZL14LoadKeyMappingP19_CASC_MAPPING_TABLEj'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascReadFile.cpp' l='79' u='c' c='_ZL14LoadFileFramesP10_TCascFile'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascReadFile.cpp' l='144' u='c' c='_ZL24EnsureHeaderAreaIsLoadedP10_TCascFile'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascReadFile.cpp' l='155' u='c' c='_ZL24EnsureHeaderAreaIsLoadedP10_TCascFile'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascReadFile.cpp' l='548' u='c' c='CascReadFile'/>
+<use f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='1209' u='c' c='_ZL20FlatStream_BlockReadP12TBlockStreamyyPhjb'/>
+<use f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='1592' u='c' c='_ZL20PartStream_BlockReadP12TBlockStreamyyPhjb'/>
+<def f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='2551' type='bool FileStream_Read(TFileStream * pStream, ULONGLONG * pByteOffset, void * pvBuffer, DWORD dwBytesToRead)'/>
+<doc f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='2532'>/**
+ * Reads data from the stream
+ *
+ * - Returns true if the read operation succeeded and all bytes have been read
+ * - Returns false if either read failed or not all bytes have been read
+ * - If the pByteOffset is NULL, the function must read the data from the current file position
+ * - The function can be called with dwBytesToRead = 0. In that case, pvBuffer is ignored
+ *   and the function just adjusts file pointer.
+ *
+ * \a pStream Pointer to an open stream
+ * \a pByteOffset Pointer to file byte offset. If NULL, it reads from the current position
+ * \a pvBuffer Pointer to data to be read
+ * \a dwBytesToRead Number of bytes to read from the file
+ *
+ * \returns
+ * - If the function reads the required amount of bytes, it returns true.
+ * - If the function reads less than required bytes, it returns false and GetLastError() returns ERROR_HANDLE_EOF
+ * - If the function fails, it reads false and GetLastError() returns an error code different from ERROR_HANDLE_EOF
+ */</doc>
+<use f='TrinityCore6.x/dep/CascLib/src/common/ListFile.cpp' l='71' u='c' c='_Z21ListFile_OpenExternalPKc'/>

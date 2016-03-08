@@ -1,0 +1,21 @@
+<dec f='TrinityCore6.x/dep/CascLib/src/common/FileStream.h' l='220' type='TFileStream * FileStream_CreateFile(const TCHAR * szFileName, DWORD dwStreamFlags)'/>
+<doc f='TrinityCore6.x/dep/CascLib/src/common/FileStream.h' l='217'>//-----------------------------------------------------------------------------
+// Public functions for file stream</doc>
+<use f='TrinityCore6.x/dep/CascLib/src/common/DumpContext.cpp' l='76' u='c' c='_Z17CreateDumpContextP13_TCascStoragePKc'/>
+<def f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='2328' type='TFileStream * FileStream_CreateFile(const TCHAR * szFileName, DWORD dwStreamFlags)'/>
+<doc f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='2311'>/**
+ * This function creates a new file for read-write access
+ *
+ * - If the current platform supports file sharing,
+ *   the file must be created for read sharing (i.e. another application
+ *   can open the file for read, but not for write)
+ * - If the file does not exist, the function must create new one
+ * - If the file exists, the function must rewrite it and set to zero size
+ * - The parameters of the function must be validate by the caller
+ * - The function must initialize all stream function pointers in TFileStream
+ * - If the function fails from any reason, it must close all handles
+ *   and free all memory that has been allocated in the process of stream creation,
+ *   including the TFileStream structure itself
+ *
+ * \a szFileName Name of the file to create
+ */</doc>

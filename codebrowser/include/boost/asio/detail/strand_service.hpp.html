@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<title>strand_service.hpp [include/boost/asio/detail/strand_service.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/detail/strand_service.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>asio</a>/<a href='./'>detail</a>/strand_service.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// detail/strand_service.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_DETAIL_STRAND_SERVICE_HPP">BOOST_ASIO_DETAIL_STRAND_SERVICE_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_DETAIL_STRAND_SERVICE_HPP" data-ref="_M/BOOST_ASIO_DETAIL_STRAND_SERVICE_HPP">BOOST_ASIO_DETAIL_STRAND_SERVICE_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../io_service.hpp.html">&lt;boost/asio/io_service.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="mutex.hpp.html">&lt;boost/asio/detail/mutex.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="op_queue.hpp.html">&lt;boost/asio/detail/op_queue.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="operation.hpp.html">&lt;boost/asio/detail/operation.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="scoped_ptr.hpp.html">&lt;boost/asio/detail/scoped_ptr.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="28">28</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="29">29</th><td><b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><i>// Default service implementation for a strand.</i></td></tr>
+<tr><th id="32">32</th><td><b>class</b> <dfn class="type def" id="boost::asio::detail::strand_service" title='boost::asio::detail::strand_service' data-ref="boost::asio::detail::strand_service" >strand_service</dfn></td></tr>
+<tr><th id="33">33</th><td>  : <b>public</b> <span class="namespace">boost::asio::detail::</span><a class="type" href="../io_service.hpp.html#boost::asio::detail::service_base" title='boost::asio::detail::service_base' data-ref="boost::asio::detail::service_base" >service_base</a>&lt;<a class="type" href="#boost::asio::detail::strand_service" title='boost::asio::detail::strand_service' data-ref="boost::asio::detail::strand_service" >strand_service</a>&gt;</td></tr>
+<tr><th id="34">34</th><td>{</td></tr>
+<tr><th id="35">35</th><td><b>private</b>:</td></tr>
+<tr><th id="36">36</th><td>  <i>// Helper class to re-post the strand on exit.</i></td></tr>
+<tr><th id="37">37</th><td>  <b>struct</b> <a class="type" href="impl/strand_service.ipp.html#boost::asio::detail::strand_service::on_do_complete_exit" title='boost::asio::detail::strand_service::on_do_complete_exit' data-ref="boost::asio::detail::strand_service::on_do_complete_exit" id="boost::asio::detail::strand_service::on_do_complete_exit" >on_do_complete_exit</a>;</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>  <i>// Helper class to re-post the strand on exit.</i></td></tr>
+<tr><th id="40">40</th><td>  <b>struct</b> <a class="type" href="impl/strand_service.hpp.html#boost::asio::detail::strand_service::on_dispatch_exit" title='boost::asio::detail::strand_service::on_dispatch_exit' data-ref="boost::asio::detail::strand_service::on_dispatch_exit" id="boost::asio::detail::strand_service::on_dispatch_exit" >on_dispatch_exit</a>;</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>public</b>:</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>  <i>// The underlying implementation of a strand.</i></td></tr>
+<tr><th id="45">45</th><td>  <b>class</b> <dfn class="type def" id="boost::asio::detail::strand_service::strand_impl" title='boost::asio::detail::strand_service::strand_impl' data-ref="boost::asio::detail::strand_service::strand_impl" >strand_impl</dfn></td></tr>
+<tr><th id="46">46</th><td>    : <b>public</b> <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a></td></tr>
+<tr><th id="47">47</th><td>  {</td></tr>
+<tr><th id="48">48</th><td>  <b>public</b>:</td></tr>
+<tr><th id="49">49</th><td>    <a class="decl" href="impl/strand_service.hpp.html#_ZN5boost4asio6detail14strand_service11strand_implC1Ev" title='boost::asio::detail::strand_service::strand_impl::strand_impl' data-ref="_ZN5boost4asio6detail14strand_service11strand_implC1Ev" id="_ZN5boost4asio6detail14strand_service11strand_implC1Ev" >strand_impl</a>();</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>  <b>private</b>:</td></tr>
+<tr><th id="52">52</th><td>    <i>// Only this service will have access to the internal values.</i></td></tr>
+<tr><th id="53">53</th><td>    <b>friend</b> <b>class</b> <a class="type" href="#boost::asio::detail::strand_service" title='boost::asio::detail::strand_service' data-ref="boost::asio::detail::strand_service" >strand_service</a>;</td></tr>
+<tr><th id="54">54</th><td>    <b>friend</b> <b>struct</b> <a class="type" href="impl/strand_service.ipp.html#boost::asio::detail::strand_service::on_do_complete_exit" title='boost::asio::detail::strand_service::on_do_complete_exit' data-ref="boost::asio::detail::strand_service::on_do_complete_exit" >on_do_complete_exit</a>;</td></tr>
+<tr><th id="55">55</th><td>    <b>friend</b> <b>struct</b> <a class="type" href="impl/strand_service.hpp.html#boost::asio::detail::strand_service::on_dispatch_exit" title='boost::asio::detail::strand_service::on_dispatch_exit' data-ref="boost::asio::detail::strand_service::on_dispatch_exit" >on_dispatch_exit</a>;</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>    <i>// Mutex to protect access to internal data.</i></td></tr>
+<tr><th id="58">58</th><td>    <span class="namespace">boost::asio::detail::</span><a class="typedef" href="mutex.hpp.html#boost::asio::detail::mutex" title='boost::asio::detail::mutex' data-type='boost::asio::detail::posix_mutex' data-ref="boost::asio::detail::mutex" >mutex</a> <dfn class="decl" id="boost::asio::detail::strand_service::strand_impl::mutex_" title='boost::asio::detail::strand_service::strand_impl::mutex_' data-ref="boost::asio::detail::strand_service::strand_impl::mutex_" >mutex_</dfn>;</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>    <i>// Indicates whether the strand is currently "locked" by a handler. This</i></td></tr>
+<tr><th id="61">61</th><td><i>    // means that there is a handler upcall in progress, or that the strand</i></td></tr>
+<tr><th id="62">62</th><td><i>    // itself has been scheduled in order to invoke some pending handlers.</i></td></tr>
+<tr><th id="63">63</th><td>    <em>bool</em> <dfn class="decl" id="boost::asio::detail::strand_service::strand_impl::locked_" title='boost::asio::detail::strand_service::strand_impl::locked_' data-ref="boost::asio::detail::strand_service::strand_impl::locked_" >locked_</dfn>;</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <i>// The handlers that are waiting on the strand but should not be run until</i></td></tr>
+<tr><th id="66">66</th><td><i>    // after the next time the strand is scheduled. This queue must only be</i></td></tr>
+<tr><th id="67">67</th><td><i>    // modified while the mutex is locked.</i></td></tr>
+<tr><th id="68">68</th><td>    <a class="type" href="op_queue.hpp.html#boost::asio::detail::op_queue" title='boost::asio::detail::op_queue' data-ref="boost::asio::detail::op_queue" >op_queue</a>&lt;<a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>&gt; <dfn class="decl" id="boost::asio::detail::strand_service::strand_impl::waiting_queue_" title='boost::asio::detail::strand_service::strand_impl::waiting_queue_' data-ref="boost::asio::detail::strand_service::strand_impl::waiting_queue_" >waiting_queue_</dfn>;</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>    <i>// The handlers that are ready to be run. Logically speaking, these are the</i></td></tr>
+<tr><th id="71">71</th><td><i>    // handlers that hold the strand's lock. The ready queue is only modified</i></td></tr>
+<tr><th id="72">72</th><td><i>    // from within the strand and so may be accessed without locking the mutex.</i></td></tr>
+<tr><th id="73">73</th><td>    <a class="type" href="op_queue.hpp.html#boost::asio::detail::op_queue" title='boost::asio::detail::op_queue' data-ref="boost::asio::detail::op_queue" >op_queue</a>&lt;<a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>&gt; <dfn class="decl" id="boost::asio::detail::strand_service::strand_impl::ready_queue_" title='boost::asio::detail::strand_service::strand_impl::ready_queue_' data-ref="boost::asio::detail::strand_service::strand_impl::ready_queue_" >ready_queue_</dfn>;</td></tr>
+<tr><th id="74">74</th><td>  };</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>  <b>typedef</b> <a class="type" href="#boost::asio::detail::strand_service::strand_impl" title='boost::asio::detail::strand_service::strand_impl' data-ref="boost::asio::detail::strand_service::strand_impl" >strand_impl</a>* <dfn class="typedef" id="boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</dfn>;</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>  <i>// Construct a new strand service for the specified io_service.</i></td></tr>
+<tr><th id="79">79</th><td>  <a class="macro" href="config.hpp.html#43" title="inline" data-ref="_M/BOOST_ASIO_DECL">BOOST_ASIO_DECL</a> <b>explicit</b> <a class="decl" href="impl/strand_service.ipp.html#_ZN5boost4asio6detail14strand_serviceC1ERNS0_10io_serviceE" title='boost::asio::detail::strand_service::strand_service' data-ref="_ZN5boost4asio6detail14strand_serviceC1ERNS0_10io_serviceE" id="_ZN5boost4asio6detail14strand_serviceC1ERNS0_10io_serviceE" >strand_service</a>(<span class="namespace">boost::asio::</span><a class="type" href="../io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col1 decl" id="3521io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="3521io_service" >io_service</dfn>);</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>  <i>// Destroy all user-defined handler objects owned by the service.</i></td></tr>
+<tr><th id="82">82</th><td>  <a class="macro" href="config.hpp.html#43" title="inline" data-ref="_M/BOOST_ASIO_DECL">BOOST_ASIO_DECL</a> <em>void</em> <a class="virtual decl" href="impl/strand_service.ipp.html#_ZN5boost4asio6detail14strand_service16shutdown_serviceEv" title='boost::asio::detail::strand_service::shutdown_service' data-ref="_ZN5boost4asio6detail14strand_service16shutdown_serviceEv" id="_ZN5boost4asio6detail14strand_service16shutdown_serviceEv" >shutdown_service</a>();</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>  <i>// Construct a new strand implementation.</i></td></tr>
+<tr><th id="85">85</th><td>  <a class="macro" href="config.hpp.html#43" title="inline" data-ref="_M/BOOST_ASIO_DECL">BOOST_ASIO_DECL</a> <em>void</em> <a class="decl" href="impl/strand_service.ipp.html#_ZN5boost4asio6detail14strand_service9constructERPNS2_11strand_implE" title='boost::asio::detail::strand_service::construct' data-ref="_ZN5boost4asio6detail14strand_service9constructERPNS2_11strand_implE" id="_ZN5boost4asio6detail14strand_service9constructERPNS2_11strand_implE" >construct</a>(<a class="typedef" href="#boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col2 decl" id="3522impl" title='impl' data-type='implementation_type &amp;' data-ref="3522impl" >impl</dfn>);</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>  <i>// Request the io_service to invoke the given handler.</i></td></tr>
+<tr><th id="88">88</th><td>  <b>template</b> &lt;<b>typename</b> Handler&gt;</td></tr>
+<tr><th id="89">89</th><td>  <em>void</em> <a class="decl" href="impl/strand_service.hpp.html#_ZN5boost4asio6detail14strand_service8dispatchERPNS2_11strand_implERT_" title='boost::asio::detail::strand_service::dispatch' data-ref="_ZN5boost4asio6detail14strand_service8dispatchERPNS2_11strand_implERT_" id="_ZN5boost4asio6detail14strand_service8dispatchERPNS2_11strand_implERT_" >dispatch</a>(<a class="typedef" href="#boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col3 decl" id="3523impl" title='impl' data-type='implementation_type &amp;' data-ref="3523impl" >impl</dfn>, Handler&amp; <dfn class="local col4 decl" id="3524handler" title='handler' data-type='Handler &amp;' data-ref="3524handler" >handler</dfn>);</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>  <i>// Request the io_service to invoke the given handler and return immediately.</i></td></tr>
+<tr><th id="92">92</th><td>  <b>template</b> &lt;<b>typename</b> Handler&gt;</td></tr>
+<tr><th id="93">93</th><td>  <em>void</em> <a class="decl" href="impl/strand_service.hpp.html#_ZN5boost4asio6detail14strand_service4postERPNS2_11strand_implERT_" title='boost::asio::detail::strand_service::post' data-ref="_ZN5boost4asio6detail14strand_service4postERPNS2_11strand_implERT_" id="_ZN5boost4asio6detail14strand_service4postERPNS2_11strand_implERT_" >post</a>(<a class="typedef" href="#boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col5 decl" id="3525impl" title='impl' data-type='implementation_type &amp;' data-ref="3525impl" >impl</dfn>, Handler&amp; <dfn class="local col6 decl" id="3526handler" title='handler' data-type='Handler &amp;' data-ref="3526handler" >handler</dfn>);</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>  <i>// Determine whether the strand is running in the current thread.</i></td></tr>
+<tr><th id="96">96</th><td>  <a class="macro" href="config.hpp.html#43" title="inline" data-ref="_M/BOOST_ASIO_DECL">BOOST_ASIO_DECL</a> <em>bool</em> <a class="decl" href="impl/strand_service.ipp.html#_ZNK5boost4asio6detail14strand_service22running_in_this_threadERKPNS2_11strand_implE" title='boost::asio::detail::strand_service::running_in_this_thread' data-ref="_ZNK5boost4asio6detail14strand_service22running_in_this_threadERKPNS2_11strand_implE" id="_ZNK5boost4asio6detail14strand_service22running_in_this_threadERKPNS2_11strand_implE" >running_in_this_thread</a>(</td></tr>
+<tr><th id="97">97</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col7 decl" id="3527impl" title='impl' data-type='const implementation_type &amp;' data-ref="3527impl" >impl</dfn>) <em>const</em>;</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td><b>private</b>:</td></tr>
+<tr><th id="100">100</th><td>  <i>// Helper function to dispatch a handler. Returns true if the handler should</i></td></tr>
+<tr><th id="101">101</th><td><i>  // be dispatched immediately.</i></td></tr>
+<tr><th id="102">102</th><td>  <a class="macro" href="config.hpp.html#43" title="inline" data-ref="_M/BOOST_ASIO_DECL">BOOST_ASIO_DECL</a> <em>bool</em> <a class="decl" href="impl/strand_service.ipp.html#_ZN5boost4asio6detail14strand_service11do_dispatchERPNS2_11strand_implEPNS1_25task_io_service_operationE" title='boost::asio::detail::strand_service::do_dispatch' data-ref="_ZN5boost4asio6detail14strand_service11do_dispatchERPNS2_11strand_implEPNS1_25task_io_service_operationE" id="_ZN5boost4asio6detail14strand_service11do_dispatchERPNS2_11strand_implEPNS1_25task_io_service_operationE" >do_dispatch</a>(<a class="typedef" href="#boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col8 decl" id="3528impl" title='impl' data-type='implementation_type &amp;' data-ref="3528impl" >impl</dfn>, <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>* <dfn class="local col9 decl" id="3529op" title='op' data-type='operation *' data-ref="3529op" >op</dfn>);</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>  <i>// Helper fiunction to post a handler.</i></td></tr>
+<tr><th id="105">105</th><td>  <a class="macro" href="config.hpp.html#43" title="inline" data-ref="_M/BOOST_ASIO_DECL">BOOST_ASIO_DECL</a> <em>void</em> <a class="decl" href="impl/strand_service.ipp.html#_ZN5boost4asio6detail14strand_service7do_postERPNS2_11strand_implEPNS1_25task_io_service_operationEb" title='boost::asio::detail::strand_service::do_post' data-ref="_ZN5boost4asio6detail14strand_service7do_postERPNS2_11strand_implEPNS1_25task_io_service_operationEb" id="_ZN5boost4asio6detail14strand_service7do_postERPNS2_11strand_implEPNS1_25task_io_service_operationEb" >do_post</a>(<a class="typedef" href="#boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col0 decl" id="3530impl" title='impl' data-type='implementation_type &amp;' data-ref="3530impl" >impl</dfn>,</td></tr>
+<tr><th id="106">106</th><td>      <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>* <dfn class="local col1 decl" id="3531op" title='op' data-type='operation *' data-ref="3531op" >op</dfn>, <em>bool</em> <dfn class="local col2 decl" id="3532is_continuation" title='is_continuation' data-type='bool' data-ref="3532is_continuation" >is_continuation</dfn>);</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>  <a class="macro" href="config.hpp.html#43" title="inline" data-ref="_M/BOOST_ASIO_DECL">BOOST_ASIO_DECL</a> <em>static</em> <em>void</em> <a class="decl" href="impl/strand_service.ipp.html#_ZN5boost4asio6detail14strand_service11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" title='boost::asio::detail::strand_service::do_complete' data-ref="_ZN5boost4asio6detail14strand_service11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" id="_ZN5boost4asio6detail14strand_service11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" >do_complete</a>(<a class="typedef" href="../io_service.hpp.html#boost::asio::detail::io_service_impl" title='boost::asio::detail::io_service_impl' data-type='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::io_service_impl" >io_service_impl</a>* <dfn class="local col3 decl" id="3533owner" title='owner' data-type='io_service_impl *' data-ref="3533owner" >owner</dfn>,</td></tr>
+<tr><th id="109">109</th><td>      <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>* <dfn class="local col4 decl" id="3534base" title='base' data-type='operation *' data-ref="3534base" >base</dfn>, <em>const</em> <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col5 decl" id="3535ec" title='ec' data-type='const boost::system::error_code &amp;' data-ref="3535ec" >ec</dfn>,</td></tr>
+<tr><th id="110">110</th><td>      <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col6 decl" id="3536bytes_transferred" title='bytes_transferred' data-type='std::size_t' data-ref="3536bytes_transferred" >bytes_transferred</dfn>);</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>  <i>// The io_service implementation used to post completions.</i></td></tr>
+<tr><th id="113">113</th><td>  <a class="typedef" href="../io_service.hpp.html#boost::asio::detail::io_service_impl" title='boost::asio::detail::io_service_impl' data-type='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::io_service_impl" >io_service_impl</a>&amp; <dfn class="decl" id="boost::asio::detail::strand_service::io_service_" title='boost::asio::detail::strand_service::io_service_' data-ref="boost::asio::detail::strand_service::io_service_" >io_service_</dfn>;</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>  <i>// Mutex to protect access to the array of implementations.</i></td></tr>
+<tr><th id="116">116</th><td>  <span class="namespace">boost::asio::detail::</span><a class="typedef" href="mutex.hpp.html#boost::asio::detail::mutex" title='boost::asio::detail::mutex' data-type='boost::asio::detail::posix_mutex' data-ref="boost::asio::detail::mutex" >mutex</a> <dfn class="decl" id="boost::asio::detail::strand_service::mutex_" title='boost::asio::detail::strand_service::mutex_' data-ref="boost::asio::detail::strand_service::mutex_" >mutex_</dfn>;</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>  <i>// Number of implementations shared between all strand objects.</i></td></tr>
+<tr><th id="119">119</th><td><u>#<span data-ppcond="119">if</span> defined(<span class="macro" data-ref="_M/BOOST_ASIO_STRAND_IMPLEMENTATIONS">BOOST_ASIO_STRAND_IMPLEMENTATIONS</span>)</u></td></tr>
+<tr><th id="120">120</th><td>  <b>enum</b> { num_implementations = BOOST_ASIO_STRAND_IMPLEMENTATIONS };</td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="119">else</span> // defined(BOOST_ASIO_STRAND_IMPLEMENTATIONS)</u></td></tr>
+<tr><th id="122">122</th><td>  <b>enum</b> { <dfn class="enum" id="boost::asio::detail::strand_service::::num_implementations" title='boost::asio::detail::strand_service::::num_implementations' data-ref="boost::asio::detail::strand_service::::num_implementations" >num_implementations</dfn> = <var>193</var> };</td></tr>
+<tr><th id="123">123</th><td><u>#<span data-ppcond="119">endif</span> // defined(BOOST_ASIO_STRAND_IMPLEMENTATIONS)</u></td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td>  <i>// Pool of implementations.</i></td></tr>
+<tr><th id="126">126</th><td>  <a class="type" href="scoped_ptr.hpp.html#boost::asio::detail::scoped_ptr" title='boost::asio::detail::scoped_ptr' data-ref="boost::asio::detail::scoped_ptr" >scoped_ptr</a>&lt;<a class="type" href="#boost::asio::detail::strand_service::strand_impl" title='boost::asio::detail::strand_service::strand_impl' data-ref="boost::asio::detail::strand_service::strand_impl" >strand_impl</a>&gt; <dfn class="decl" id="boost::asio::detail::strand_service::implementations_" title='boost::asio::detail::strand_service::implementations_' data-ref="boost::asio::detail::strand_service::implementations_" >implementations_</dfn>[<a class="enum" href="#boost::asio::detail::strand_service::::num_implementations" title='boost::asio::detail::strand_service::::num_implementations' data-ref="boost::asio::detail::strand_service::::num_implementations" >num_implementations</a>];</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>  <i>// Extra value used when hashing to prevent recycled memory locations from</i></td></tr>
+<tr><th id="129">129</th><td><i>  // getting the same strand implementation.</i></td></tr>
+<tr><th id="130">130</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl" id="boost::asio::detail::strand_service::salt_" title='boost::asio::detail::strand_service::salt_' data-ref="boost::asio::detail::strand_service::salt_" >salt_</dfn>;</td></tr>
+<tr><th id="131">131</th><td>};</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>} <i>// namespace detail</i></td></tr>
+<tr><th id="134">134</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="135">135</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><u>#include <a href="pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><u>#include <a href="impl/strand_service.hpp.html">&lt;boost/asio/detail/impl/strand_service.hpp&gt;</a></u></td></tr>
+<tr><th id="140">140</th><td><u>#<span data-ppcond="140">if</span> defined(<a class="macro" href="config.hpp.html#37" data-ref="_M/BOOST_ASIO_HEADER_ONLY">BOOST_ASIO_HEADER_ONLY</a>)</u></td></tr>
+<tr><th id="141">141</th><td><u># include <a href="impl/strand_service.ipp.html">&lt;boost/asio/detail/impl/strand_service.ipp&gt;</a></u></td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="140">endif</span> // defined(BOOST_ASIO_HEADER_ONLY)</u></td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DETAIL_STRAND_SERVICE_HPP</u></td></tr>
+<tr><th id="145">145</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

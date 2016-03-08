@@ -1,0 +1,750 @@
+<!doctype html>
+<html>
+<head>
+<title>DetourNavMesh.h [TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMesh.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMesh.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>recastnavigation</a>/<a href='..'>Detour</a>/<a href='./'>Include</a>/DetourNavMesh.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// Copyright (c) 2009-2010 Mikko Mononen memon@inside.org</i></td></tr>
+<tr><th id="3">3</th><td><i>//</i></td></tr>
+<tr><th id="4">4</th><td><i>// This software is provided 'as-is', without any express or implied</i></td></tr>
+<tr><th id="5">5</th><td><i>// warranty.  In no event will the authors be held liable for any damages</i></td></tr>
+<tr><th id="6">6</th><td><i>// arising from the use of this software.</i></td></tr>
+<tr><th id="7">7</th><td><i>// Permission is granted to anyone to use this software for any purpose,</i></td></tr>
+<tr><th id="8">8</th><td><i>// including commercial applications, and to alter it and redistribute it</i></td></tr>
+<tr><th id="9">9</th><td><i>// freely, subject to the following restrictions:</i></td></tr>
+<tr><th id="10">10</th><td><i>// 1. The origin of this software must not be misrepresented; you must not</i></td></tr>
+<tr><th id="11">11</th><td><i>//    claim that you wrote the original software. If you use this software</i></td></tr>
+<tr><th id="12">12</th><td><i>//    in a product, an acknowledgment in the product documentation would be</i></td></tr>
+<tr><th id="13">13</th><td><i>//    appreciated but is not required.</i></td></tr>
+<tr><th id="14">14</th><td><i>// 2. Altered source versions must be plainly marked as such, and must not be</i></td></tr>
+<tr><th id="15">15</th><td><i>//    misrepresented as being the original software.</i></td></tr>
+<tr><th id="16">16</th><td><i>// 3. This notice may not be removed or altered from any source distribution.</i></td></tr>
+<tr><th id="17">17</th><td><i>//</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/DETOURNAVMESH_H">DETOURNAVMESH_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/DETOURNAVMESH_H" data-ref="_M/DETOURNAVMESH_H">DETOURNAVMESH_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="DetourAlloc.h.html">"DetourAlloc.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="DetourStatus.h.html">"DetourStatus.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>// Edited by TC</i></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="27">if</span> defined(<span class="macro" data-ref="_M/WIN32">WIN32</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/__MINGW32__">__MINGW32__</span>)</u></td></tr>
+<tr><th id="28">28</th><td><i class="doc">/// Do not rename back to uint64. Otherwise mac complains about typedef redefinition</i></td></tr>
+<tr><th id="29">29</th><td><b>typedef</b> <em>unsigned</em> __int64    uint64_d;</td></tr>
+<tr><th id="30">30</th><td><u>#<span data-ppcond="27">else</span></u></td></tr>
+<tr><th id="31">31</th><td><u>#include &lt;stdint.h&gt;</u></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="32">ifndef</span> <span class="macro" data-ref="_M/uint64_t">uint64_t</span></u></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="33">ifdef</span> <span class="macro" data-ref="_M/__linux__">__linux__</span></u></td></tr>
+<tr><th id="34">34</th><td><u>#include <a href="../../../../../include/linux/types.h.html">&lt;linux/types.h&gt;</a></u></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="33">endif</span></u></td></tr>
+<tr><th id="36">36</th><td><u>#<span data-ppcond="32">endif</span></u></td></tr>
+<tr><th id="37">37</th><td><i class="doc">/// Do not rename back to uint64. Otherwise mac complains about typedef redefinition</i></td></tr>
+<tr><th id="38">38</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a>            <dfn class="typedef" id="uint64_d" title='uint64_d' data-type='uint64_t' data-ref="uint64_d" >uint64_d</dfn>;</td></tr>
+<tr><th id="39">39</th><td><u>#<span data-ppcond="27">endif</span></u> </td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><i>// Note: If you want to use 64-bit refs, change the types of both dtPolyRef &amp; dtTileRef.</i></td></tr>
+<tr><th id="42">42</th><td><i>// It is also recommended that you change dtHashRef() to a proper 64-bit hash.</i></td></tr>
+<tr><th id="43">43</th><td><i></i></td></tr>
+<tr><th id="44">44</th><td><i>// Edited by TC</i></td></tr>
+<tr><th id="45">45</th><td><i>// We cannot have over 31 bits for either tile nor poly</i></td></tr>
+<tr><th id="46">46</th><td><i>// without changing polyCount to use 64bits too.</i></td></tr>
+<tr><th id="47">47</th><td><i>/// A handle to a polygon within a navigation mesh tile.</i></td></tr>
+<tr><th id="48">48</th><td><i>/// @ingroup detour</i></td></tr>
+<tr><th id="49">49</th><td><b>typedef</b> <a class="typedef" href="#uint64_d" title='uint64_d' data-type='uint64_t' data-ref="uint64_d" >uint64_d</a> <dfn class="typedef" id="dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</dfn>; <i>// Edited by TC</i></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><i class="doc">/// A handle to a tile within a navigation mesh.</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="53">53</th><td><b>typedef</b> <a class="typedef" href="#uint64_d" title='uint64_d' data-type='uint64_t' data-ref="uint64_d" >uint64_d</a> <dfn class="typedef" id="dtTileRef" title='dtTileRef' data-type='uint64_d' data-ref="dtTileRef" >dtTileRef</dfn>; <i>// Edited by TC</i></td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><i class="doc">/// The maximum number of vertices per navigation polygon.</i></td></tr>
+<tr><th id="56">56</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="57">57</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL20DT_VERTS_PER_POLYGON" title='DT_VERTS_PER_POLYGON' data-ref="_ZL20DT_VERTS_PER_POLYGON" >DT_VERTS_PER_POLYGON</dfn> = <var>6</var>;</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><i class="doc">/// @{</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">/// <span class="command">@name</span> <span class="verb">Tile Serialization Constants</span></i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">/// These constants are used to detect whether a navigation tile's data</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc">/// and state format is compatible with the current build.</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc">///</i></td></tr>
+<tr><th id="64">64</th><td><i class="doc"></i></td></tr>
+<tr><th id="65">65</th><td><i class="doc">/// A magic number used to detect compatibility of navigation tile data.</i></td></tr>
+<tr><th id="66">66</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL16DT_NAVMESH_MAGIC" title='DT_NAVMESH_MAGIC' data-ref="_ZL16DT_NAVMESH_MAGIC" >DT_NAVMESH_MAGIC</dfn> = <kdb>'D'</kdb>&lt;&lt;<var>24</var> | <kdb>'N'</kdb>&lt;&lt;<var>16</var> | <kdb>'A'</kdb>&lt;&lt;<var>8</var> | <kdb>'V'</kdb>;</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><i class="doc">/// A version number used to detect compatibility of navigation tile data.</i></td></tr>
+<tr><th id="69">69</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL18DT_NAVMESH_VERSION" title='DT_NAVMESH_VERSION' data-ref="_ZL18DT_NAVMESH_VERSION" >DT_NAVMESH_VERSION</dfn> = <var>7</var>;</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><i class="doc">/// A magic number used to detect the compatibility of navigation tile states.</i></td></tr>
+<tr><th id="72">72</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL22DT_NAVMESH_STATE_MAGIC" title='DT_NAVMESH_STATE_MAGIC' data-ref="_ZL22DT_NAVMESH_STATE_MAGIC" >DT_NAVMESH_STATE_MAGIC</dfn> = <kdb>'D'</kdb>&lt;&lt;<var>24</var> | <kdb>'N'</kdb>&lt;&lt;<var>16</var> | <kdb>'M'</kdb>&lt;&lt;<var>8</var> | <kdb>'S'</kdb>;</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td><i class="doc">/// A version number used to detect compatibility of navigation tile states.</i></td></tr>
+<tr><th id="75">75</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL24DT_NAVMESH_STATE_VERSION" title='DT_NAVMESH_STATE_VERSION' data-ref="_ZL24DT_NAVMESH_STATE_VERSION" >DT_NAVMESH_STATE_VERSION</dfn> = <var>1</var>;</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><i class="doc">/// @}</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"></i></td></tr>
+<tr><th id="79">79</th><td><i class="doc">/// A flag that indicates that an entity links to an external entity.</i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">/// (E.g. A polygon edge is a portal that links to another polygon.)</i></td></tr>
+<tr><th id="81">81</th><td><em>static</em> <em>const</em> <em>unsigned</em> <em>short</em> <dfn class="decl def" id="_ZL11DT_EXT_LINK" title='DT_EXT_LINK' data-ref="_ZL11DT_EXT_LINK" >DT_EXT_LINK</dfn> = <var>0x8000</var>;</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td><i class="doc">/// A value that indicates the entity does not link to anything.</i></td></tr>
+<tr><th id="84">84</th><td><em>static</em> <em>const</em> <em>unsigned</em> <em>int</em> <dfn class="decl def" id="_ZL12DT_NULL_LINK" title='DT_NULL_LINK' data-ref="_ZL12DT_NULL_LINK" >DT_NULL_LINK</dfn> = <var>0xffffffff</var>;</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><i class="doc">/// A flag that indicates that an off-mesh connection can be traversed in both directions. (Is bidirectional.)</i></td></tr>
+<tr><th id="87">87</th><td><em>static</em> <em>const</em> <em>unsigned</em> <em>int</em> <dfn class="decl def" id="_ZL20DT_OFFMESH_CON_BIDIR" title='DT_OFFMESH_CON_BIDIR' data-ref="_ZL20DT_OFFMESH_CON_BIDIR" >DT_OFFMESH_CON_BIDIR</dfn> = <var>1</var>;</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td><i class="doc">/// The maximum number of user defined area ids.</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="91">91</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL12DT_MAX_AREAS" title='DT_MAX_AREAS' data-ref="_ZL12DT_MAX_AREAS" >DT_MAX_AREAS</dfn> = <var>64</var>;</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL16STATIC_SALT_BITS" title='STATIC_SALT_BITS' data-ref="_ZL16STATIC_SALT_BITS" >STATIC_SALT_BITS</dfn> = <var>12</var>;</td></tr>
+<tr><th id="94">94</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL16STATIC_TILE_BITS" title='STATIC_TILE_BITS' data-ref="_ZL16STATIC_TILE_BITS" >STATIC_TILE_BITS</dfn> = <var>21</var>;</td></tr>
+<tr><th id="95">95</th><td><em>static</em> <em>const</em> <em>int</em> <dfn class="decl def" id="_ZL16STATIC_POLY_BITS" title='STATIC_POLY_BITS' data-ref="_ZL16STATIC_POLY_BITS" >STATIC_POLY_BITS</dfn> = <var>31</var>;</td></tr>
+<tr><th id="96">96</th><td><i>// we cannot have over 31 bits for either tile nor poly</i></td></tr>
+<tr><th id="97">97</th><td><i>// without changing polyCount to use 64bits too.</i></td></tr>
+<tr><th id="98">98</th><td><i></i></td></tr>
+<tr><th id="99">99</th><td><i>/// Tile flags used for various functions and fields.</i></td></tr>
+<tr><th id="100">100</th><td><i>/// For an example, see dtNavMesh::addTile().</i></td></tr>
+<tr><th id="101">101</th><td><b>enum</b> <dfn class="type def" id="dtTileFlags" title='dtTileFlags' data-ref="dtTileFlags" >dtTileFlags</dfn></td></tr>
+<tr><th id="102">102</th><td>{</td></tr>
+<tr><th id="103">103</th><td>	<i class="doc">/// The navigation mesh owns the tile memory and is responsible for freeing it.</i></td></tr>
+<tr><th id="104">104</th><td>	<dfn class="enum" id="dtTileFlags::DT_TILE_FREE_DATA" title='dtTileFlags::DT_TILE_FREE_DATA' data-ref="dtTileFlags::DT_TILE_FREE_DATA" >DT_TILE_FREE_DATA</dfn> = <var>0x01</var>,</td></tr>
+<tr><th id="105">105</th><td>};</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td><i class="doc">/// Vertex flags returned by dtNavMeshQuery::findStraightPath.</i></td></tr>
+<tr><th id="108">108</th><td><b>enum</b> <dfn class="type def" id="dtStraightPathFlags" title='dtStraightPathFlags' data-ref="dtStraightPathFlags" >dtStraightPathFlags</dfn></td></tr>
+<tr><th id="109">109</th><td>{</td></tr>
+<tr><th id="110">110</th><td>	<dfn class="enum" id="dtStraightPathFlags::DT_STRAIGHTPATH_START" title='dtStraightPathFlags::DT_STRAIGHTPATH_START' data-ref="dtStraightPathFlags::DT_STRAIGHTPATH_START" >DT_STRAIGHTPATH_START</dfn> = <var>0x01</var>,				<i class="doc">///&lt; The vertex is the start position in the path.</i></td></tr>
+<tr><th id="111">111</th><td>	<dfn class="enum" id="dtStraightPathFlags::DT_STRAIGHTPATH_END" title='dtStraightPathFlags::DT_STRAIGHTPATH_END' data-ref="dtStraightPathFlags::DT_STRAIGHTPATH_END" >DT_STRAIGHTPATH_END</dfn> = <var>0x02</var>,					<i class="doc">///&lt; The vertex is the end position in the path.</i></td></tr>
+<tr><th id="112">112</th><td>	<dfn class="enum" id="dtStraightPathFlags::DT_STRAIGHTPATH_OFFMESH_CONNECTION" title='dtStraightPathFlags::DT_STRAIGHTPATH_OFFMESH_CONNECTION' data-ref="dtStraightPathFlags::DT_STRAIGHTPATH_OFFMESH_CONNECTION" >DT_STRAIGHTPATH_OFFMESH_CONNECTION</dfn> = <var>0x04</var>,	<i class="doc">///&lt; The vertex is the start of an off-mesh connection.</i></td></tr>
+<tr><th id="113">113</th><td>};</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td><i class="doc">/// Options for dtNavMeshQuery::findStraightPath.</i></td></tr>
+<tr><th id="116">116</th><td><b>enum</b> <dfn class="type def" id="dtStraightPathOptions" title='dtStraightPathOptions' data-ref="dtStraightPathOptions" >dtStraightPathOptions</dfn></td></tr>
+<tr><th id="117">117</th><td>{</td></tr>
+<tr><th id="118">118</th><td>	<dfn class="enum" id="dtStraightPathOptions::DT_STRAIGHTPATH_AREA_CROSSINGS" title='dtStraightPathOptions::DT_STRAIGHTPATH_AREA_CROSSINGS' data-ref="dtStraightPathOptions::DT_STRAIGHTPATH_AREA_CROSSINGS" >DT_STRAIGHTPATH_AREA_CROSSINGS</dfn> = <var>0x01</var>,	<i class="doc">///&lt; Add a vertex at every polygon edge crossing where area changes.</i></td></tr>
+<tr><th id="119">119</th><td>	<dfn class="enum" id="dtStraightPathOptions::DT_STRAIGHTPATH_ALL_CROSSINGS" title='dtStraightPathOptions::DT_STRAIGHTPATH_ALL_CROSSINGS' data-ref="dtStraightPathOptions::DT_STRAIGHTPATH_ALL_CROSSINGS" >DT_STRAIGHTPATH_ALL_CROSSINGS</dfn> = <var>0x02</var>,	<i class="doc">///&lt; Add a vertex at every polygon edge crossing.</i></td></tr>
+<tr><th id="120">120</th><td>};</td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><i class="doc">/// Options for dtNavMeshQuery::findPath</i></td></tr>
+<tr><th id="124">124</th><td><b>enum</b> <dfn class="type def" id="dtFindPathOptions" title='dtFindPathOptions' data-ref="dtFindPathOptions" >dtFindPathOptions</dfn></td></tr>
+<tr><th id="125">125</th><td>{</td></tr>
+<tr><th id="126">126</th><td>	<dfn class="enum" id="dtFindPathOptions::DT_FINDPATH_LOW_QUALITY_FAR" title='dtFindPathOptions::DT_FINDPATH_LOW_QUALITY_FAR' data-ref="dtFindPathOptions::DT_FINDPATH_LOW_QUALITY_FAR" >DT_FINDPATH_LOW_QUALITY_FAR</dfn> = <var>0x01</var>,		<i class="doc">///&lt; [provisional] trade quality for performance far from the origin. The idea is that by then a new query will be issued</i></td></tr>
+<tr><th id="127">127</th><td>	<dfn class="enum" id="dtFindPathOptions::DT_FINDPATH_ANY_ANGLE" title='dtFindPathOptions::DT_FINDPATH_ANY_ANGLE' data-ref="dtFindPathOptions::DT_FINDPATH_ANY_ANGLE" >DT_FINDPATH_ANY_ANGLE</dfn>	= <var>0x02</var>,			<i class="doc">///&lt; use raycasts during pathfind to "shortcut" (raycast still consider costs)</i></td></tr>
+<tr><th id="128">128</th><td>};</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td><i class="doc">/// Options for dtNavMeshQuery::raycast</i></td></tr>
+<tr><th id="131">131</th><td><b>enum</b> <dfn class="type def" id="dtRaycastOptions" title='dtRaycastOptions' data-ref="dtRaycastOptions" >dtRaycastOptions</dfn></td></tr>
+<tr><th id="132">132</th><td>{</td></tr>
+<tr><th id="133">133</th><td>	<dfn class="enum" id="dtRaycastOptions::DT_RAYCAST_USE_COSTS" title='dtRaycastOptions::DT_RAYCAST_USE_COSTS' data-ref="dtRaycastOptions::DT_RAYCAST_USE_COSTS" >DT_RAYCAST_USE_COSTS</dfn> = <var>0x01</var>,		<i class="doc">///&lt; Raycast should calculate movement cost along the ray and fill RaycastHit::cost</i></td></tr>
+<tr><th id="134">134</th><td>};</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><i class="doc">/// Limit raycasting during any angle pahfinding</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc">/// The limit is given as a multiple of the character radius</i></td></tr>
+<tr><th id="139">139</th><td><em>static</em> <em>const</em> <em>float</em> <dfn class="decl def" id="_ZL29DT_RAY_CAST_LIMIT_PROPORTIONS" title='DT_RAY_CAST_LIMIT_PROPORTIONS' data-ref="_ZL29DT_RAY_CAST_LIMIT_PROPORTIONS" >DT_RAY_CAST_LIMIT_PROPORTIONS</dfn> = <var>50.0f</var>;</td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><i class="doc">/// Flags representing the type of a navigation mesh polygon.</i></td></tr>
+<tr><th id="142">142</th><td><b>enum</b> <dfn class="type def" id="dtPolyTypes" title='dtPolyTypes' data-ref="dtPolyTypes" >dtPolyTypes</dfn></td></tr>
+<tr><th id="143">143</th><td>{</td></tr>
+<tr><th id="144">144</th><td>	<i class="doc">/// The polygon is a standard convex polygon that is part of the surface of the mesh.</i></td></tr>
+<tr><th id="145">145</th><td>	<dfn class="enum" id="dtPolyTypes::DT_POLYTYPE_GROUND" title='dtPolyTypes::DT_POLYTYPE_GROUND' data-ref="dtPolyTypes::DT_POLYTYPE_GROUND" >DT_POLYTYPE_GROUND</dfn> = <var>0</var>,</td></tr>
+<tr><th id="146">146</th><td>	<i class="doc">/// The polygon is an off-mesh connection consisting of two vertices.</i></td></tr>
+<tr><th id="147">147</th><td>	<dfn class="enum" id="dtPolyTypes::DT_POLYTYPE_OFFMESH_CONNECTION" title='dtPolyTypes::DT_POLYTYPE_OFFMESH_CONNECTION' data-ref="dtPolyTypes::DT_POLYTYPE_OFFMESH_CONNECTION" >DT_POLYTYPE_OFFMESH_CONNECTION</dfn> = <var>1</var>,</td></tr>
+<tr><th id="148">148</th><td>};</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><i class="doc">/// Defines a polyogn within a dtMeshTile object.</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="153">153</th><td><b>struct</b> <dfn class="type def" id="dtPoly" title='dtPoly' data-ref="dtPoly" >dtPoly</dfn></td></tr>
+<tr><th id="154">154</th><td>{</td></tr>
+<tr><th id="155">155</th><td>	<i class="doc">/// Index to first link in linked list. (Or #DT_NULL_LINK if there is no link.)</i></td></tr>
+<tr><th id="156">156</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtPoly::firstLink" title='dtPoly::firstLink' data-ref="dtPoly::firstLink" >firstLink</dfn>;</td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td>	<i class="doc">/// The indices of the polygon's vertices.</i></td></tr>
+<tr><th id="159">159</th><td><i class="doc">	/// The actual vertices are located in dtMeshTile::verts.</i></td></tr>
+<tr><th id="160">160</th><td>	<em>unsigned</em> <em>short</em> <dfn class="decl" id="dtPoly::verts" title='dtPoly::verts' data-ref="dtPoly::verts" >verts</dfn>[<a class="ref" href="#_ZL20DT_VERTS_PER_POLYGON" title='DT_VERTS_PER_POLYGON' data-ref="_ZL20DT_VERTS_PER_POLYGON" >DT_VERTS_PER_POLYGON</a>];</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>	<i class="doc">/// Packed data representing neighbor polygons references and flags for each edge.</i></td></tr>
+<tr><th id="163">163</th><td>	<em>unsigned</em> <em>short</em> <dfn class="decl" id="dtPoly::neis" title='dtPoly::neis' data-ref="dtPoly::neis" >neis</dfn>[<a class="ref" href="#_ZL20DT_VERTS_PER_POLYGON" title='DT_VERTS_PER_POLYGON' data-ref="_ZL20DT_VERTS_PER_POLYGON" >DT_VERTS_PER_POLYGON</a>];</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>	<i class="doc">/// The user defined polygon flags.</i></td></tr>
+<tr><th id="166">166</th><td>	<em>unsigned</em> <em>short</em> <dfn class="decl" id="dtPoly::flags" title='dtPoly::flags' data-ref="dtPoly::flags" >flags</dfn>;</td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td>	<i class="doc">/// The number of vertices in the polygon.</i></td></tr>
+<tr><th id="169">169</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtPoly::vertCount" title='dtPoly::vertCount' data-ref="dtPoly::vertCount" >vertCount</dfn>;</td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td>	<i class="doc">/// The bit packed area id and polygon type.</i></td></tr>
+<tr><th id="172">172</th><td><i class="doc">	/// <span class="command">@note</span> Use the structure's set and get methods to acess this value.</i></td></tr>
+<tr><th id="173">173</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtPoly::areaAndtype" title='dtPoly::areaAndtype' data-ref="dtPoly::areaAndtype" >areaAndtype</dfn>;</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td>	<i class="doc">/// Sets the user defined area id. [Limit: &lt; #DT_MAX_AREAS]</i></td></tr>
+<tr><th id="176">176</th><td>	<b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN6dtPoly7setAreaEh" title='dtPoly::setArea' data-ref="_ZN6dtPoly7setAreaEh" >setArea</dfn>(<em>unsigned</em> <em>char</em> <dfn class="local col6 decl" id="6a" title='a' data-type='unsigned char' data-ref="6a" >a</dfn>) { <a class="member" href="#dtPoly::areaAndtype" title='dtPoly::areaAndtype' data-ref="dtPoly::areaAndtype" >areaAndtype</a> = (<a class="member" href="#dtPoly::areaAndtype" title='dtPoly::areaAndtype' data-ref="dtPoly::areaAndtype" >areaAndtype</a> &amp; <var>0xc0</var>) | (<a class="local col6 ref" href="#6a" title='a' data-ref="6a" >a</a> &amp; <var>0x3f</var>); }</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td>	<i class="doc">/// Sets the polygon type. (See: #dtPolyTypes.)</i></td></tr>
+<tr><th id="179">179</th><td>	<b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN6dtPoly7setTypeEh" title='dtPoly::setType' data-ref="_ZN6dtPoly7setTypeEh" >setType</dfn>(<em>unsigned</em> <em>char</em> <dfn class="local col7 decl" id="7t" title='t' data-type='unsigned char' data-ref="7t" >t</dfn>) { <a class="member" href="#dtPoly::areaAndtype" title='dtPoly::areaAndtype' data-ref="dtPoly::areaAndtype" >areaAndtype</a> = (<a class="member" href="#dtPoly::areaAndtype" title='dtPoly::areaAndtype' data-ref="dtPoly::areaAndtype" >areaAndtype</a> &amp; <var>0x3f</var>) | (<a class="local col7 ref" href="#7t" title='t' data-ref="7t" >t</a> &lt;&lt; <var>6</var>); }</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>	<i class="doc">/// Gets the user defined area id.</i></td></tr>
+<tr><th id="182">182</th><td>	<b>inline</b> <em>unsigned</em> <em>char</em> <dfn class="decl def" id="_ZNK6dtPoly7getAreaEv" title='dtPoly::getArea' data-ref="_ZNK6dtPoly7getAreaEv" >getArea</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#dtPoly::areaAndtype" title='dtPoly::areaAndtype' data-ref="dtPoly::areaAndtype" >areaAndtype</a> &amp; <var>0x3f</var>; }</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td>	<i class="doc">/// Gets the polygon type. (See: #dtPolyTypes)</i></td></tr>
+<tr><th id="185">185</th><td>	<b>inline</b> <em>unsigned</em> <em>char</em> <dfn class="decl def" id="_ZNK6dtPoly7getTypeEv" title='dtPoly::getType' data-ref="_ZNK6dtPoly7getTypeEv" >getType</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#dtPoly::areaAndtype" title='dtPoly::areaAndtype' data-ref="dtPoly::areaAndtype" >areaAndtype</a> &gt;&gt; <var>6</var>; }</td></tr>
+<tr><th id="186">186</th><td>};</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td><i class="doc">/// Defines the location of detail sub-mesh data within a dtMeshTile.</i></td></tr>
+<tr><th id="189">189</th><td><b>struct</b> <dfn class="type def" id="dtPolyDetail" title='dtPolyDetail' data-ref="dtPolyDetail" >dtPolyDetail</dfn></td></tr>
+<tr><th id="190">190</th><td>{</td></tr>
+<tr><th id="191">191</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtPolyDetail::vertBase" title='dtPolyDetail::vertBase' data-ref="dtPolyDetail::vertBase" >vertBase</dfn>;			<i class="doc">///&lt; The offset of the vertices in the dtMeshTile::detailVerts array.</i></td></tr>
+<tr><th id="192">192</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtPolyDetail::triBase" title='dtPolyDetail::triBase' data-ref="dtPolyDetail::triBase" >triBase</dfn>;			<i class="doc">///&lt; The offset of the triangles in the dtMeshTile::detailTris array.</i></td></tr>
+<tr><th id="193">193</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtPolyDetail::vertCount" title='dtPolyDetail::vertCount' data-ref="dtPolyDetail::vertCount" >vertCount</dfn>;		<i class="doc">///&lt; The number of vertices in the sub-mesh.</i></td></tr>
+<tr><th id="194">194</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtPolyDetail::triCount" title='dtPolyDetail::triCount' data-ref="dtPolyDetail::triCount" >triCount</dfn>;			<i class="doc">///&lt; The number of triangles in the sub-mesh.</i></td></tr>
+<tr><th id="195">195</th><td>};</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td><i class="doc">/// Defines a link between polygons.</i></td></tr>
+<tr><th id="198">198</th><td><i class="doc">/// <span class="command">@note</span> This structure is rarely if ever used by the end user.</i></td></tr>
+<tr><th id="199">199</th><td><i class="doc">/// <span class="command">@see</span> dtMeshTile</i></td></tr>
+<tr><th id="200">200</th><td><b>struct</b> <dfn class="type def" id="dtLink" title='dtLink' data-ref="dtLink" >dtLink</dfn></td></tr>
+<tr><th id="201">201</th><td>{</td></tr>
+<tr><th id="202">202</th><td>	<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="decl" id="dtLink::ref" title='dtLink::ref' data-ref="dtLink::ref" >ref</dfn>;					<i class="doc">///&lt; Neighbour reference. (The neighbor that is linked to.)</i></td></tr>
+<tr><th id="203">203</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtLink::next" title='dtLink::next' data-ref="dtLink::next" >next</dfn>;				<i class="doc">///&lt; Index of the next link.</i></td></tr>
+<tr><th id="204">204</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtLink::edge" title='dtLink::edge' data-ref="dtLink::edge" >edge</dfn>;				<i class="doc">///&lt; Index of the polygon edge that owns this link.</i></td></tr>
+<tr><th id="205">205</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtLink::side" title='dtLink::side' data-ref="dtLink::side" >side</dfn>;				<i class="doc">///&lt; If a boundary link, defines on which side the link is.</i></td></tr>
+<tr><th id="206">206</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtLink::bmin" title='dtLink::bmin' data-ref="dtLink::bmin" >bmin</dfn>;				<i class="doc">///&lt; If a boundary link, defines the minimum sub-edge area.</i></td></tr>
+<tr><th id="207">207</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtLink::bmax" title='dtLink::bmax' data-ref="dtLink::bmax" >bmax</dfn>;				<i class="doc">///&lt; If a boundary link, defines the maximum sub-edge area.</i></td></tr>
+<tr><th id="208">208</th><td>};</td></tr>
+<tr><th id="209">209</th><td></td></tr>
+<tr><th id="210">210</th><td><i class="doc">/// Bounding volume node.</i></td></tr>
+<tr><th id="211">211</th><td><i class="doc">/// <span class="command">@note</span> This structure is rarely if ever used by the end user.</i></td></tr>
+<tr><th id="212">212</th><td><i class="doc">/// <span class="command">@see</span> dtMeshTile</i></td></tr>
+<tr><th id="213">213</th><td><b>struct</b> <dfn class="type def" id="dtBVNode" title='dtBVNode' data-ref="dtBVNode" >dtBVNode</dfn></td></tr>
+<tr><th id="214">214</th><td>{</td></tr>
+<tr><th id="215">215</th><td>	<em>unsigned</em> <em>short</em> <dfn class="decl" id="dtBVNode::bmin" title='dtBVNode::bmin' data-ref="dtBVNode::bmin" >bmin</dfn>[<var>3</var>];			<i class="doc">///&lt; Minimum bounds of the node's AABB. [(x, y, z)]</i></td></tr>
+<tr><th id="216">216</th><td>	<em>unsigned</em> <em>short</em> <dfn class="decl" id="dtBVNode::bmax" title='dtBVNode::bmax' data-ref="dtBVNode::bmax" >bmax</dfn>[<var>3</var>];			<i class="doc">///&lt; Maximum bounds of the node's AABB. [(x, y, z)]</i></td></tr>
+<tr><th id="217">217</th><td>	<em>int</em> <dfn class="decl" id="dtBVNode::i" title='dtBVNode::i' data-ref="dtBVNode::i" >i</dfn>;							<i class="doc">///&lt; The node's index. (Negative for escape sequence.)</i></td></tr>
+<tr><th id="218">218</th><td>};</td></tr>
+<tr><th id="219">219</th><td></td></tr>
+<tr><th id="220">220</th><td><i class="doc">/// Defines an navigation mesh off-mesh connection within a dtMeshTile object.</i></td></tr>
+<tr><th id="221">221</th><td><i class="doc">/// An off-mesh connection is a user defined traversable connection made up to two vertices.</i></td></tr>
+<tr><th id="222">222</th><td><b>struct</b> <dfn class="type def" id="dtOffMeshConnection" title='dtOffMeshConnection' data-ref="dtOffMeshConnection" >dtOffMeshConnection</dfn></td></tr>
+<tr><th id="223">223</th><td>{</td></tr>
+<tr><th id="224">224</th><td>	<i class="doc">/// The endpoints of the connection. [(ax, ay, az, bx, by, bz)]</i></td></tr>
+<tr><th id="225">225</th><td>	<em>float</em> <dfn class="decl" id="dtOffMeshConnection::pos" title='dtOffMeshConnection::pos' data-ref="dtOffMeshConnection::pos" >pos</dfn>[<var>6</var>];</td></tr>
+<tr><th id="226">226</th><td></td></tr>
+<tr><th id="227">227</th><td>	<i class="doc">/// The radius of the endpoints. [Limit: &gt;= 0]</i></td></tr>
+<tr><th id="228">228</th><td>	<em>float</em> <dfn class="decl" id="dtOffMeshConnection::rad" title='dtOffMeshConnection::rad' data-ref="dtOffMeshConnection::rad" >rad</dfn>;		</td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td>	<i class="doc">/// The polygon reference of the connection within the tile.</i></td></tr>
+<tr><th id="231">231</th><td>	<em>unsigned</em> <em>short</em> <dfn class="decl" id="dtOffMeshConnection::poly" title='dtOffMeshConnection::poly' data-ref="dtOffMeshConnection::poly" >poly</dfn>;</td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td>	<i class="doc">/// Link flags. </i></td></tr>
+<tr><th id="234">234</th><td><i class="doc">	/// <span class="command">@note</span> These are not the connection's user defined flags. Those are assigned via the </i></td></tr>
+<tr><th id="235">235</th><td><i class="doc">	/// connection's dtPoly definition. These are link flags used for internal purposes.</i></td></tr>
+<tr><th id="236">236</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtOffMeshConnection::flags" title='dtOffMeshConnection::flags' data-ref="dtOffMeshConnection::flags" >flags</dfn>;</td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td>	<i class="doc">/// End point side.</i></td></tr>
+<tr><th id="239">239</th><td>	<em>unsigned</em> <em>char</em> <dfn class="decl" id="dtOffMeshConnection::side" title='dtOffMeshConnection::side' data-ref="dtOffMeshConnection::side" >side</dfn>;</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>	<i class="doc">/// The id of the offmesh connection. (User assigned when the navigation mesh is built.)</i></td></tr>
+<tr><th id="242">242</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtOffMeshConnection::userId" title='dtOffMeshConnection::userId' data-ref="dtOffMeshConnection::userId" >userId</dfn>;</td></tr>
+<tr><th id="243">243</th><td>};</td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td><i class="doc">/// Provides high level information related to a dtMeshTile object.</i></td></tr>
+<tr><th id="246">246</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="247">247</th><td><b>struct</b> <dfn class="type def" id="dtMeshHeader" title='dtMeshHeader' data-ref="dtMeshHeader" >dtMeshHeader</dfn></td></tr>
+<tr><th id="248">248</th><td>{</td></tr>
+<tr><th id="249">249</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::magic" title='dtMeshHeader::magic' data-ref="dtMeshHeader::magic" >magic</dfn>;				<i class="doc">///&lt; Tile magic number. (Used to identify the data format.)</i></td></tr>
+<tr><th id="250">250</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::version" title='dtMeshHeader::version' data-ref="dtMeshHeader::version" >version</dfn>;			<i class="doc">///&lt; Tile data format version number.</i></td></tr>
+<tr><th id="251">251</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::x" title='dtMeshHeader::x' data-ref="dtMeshHeader::x" >x</dfn>;					<i class="doc">///&lt; The x-position of the tile within the dtNavMesh tile grid. (x, y, layer)</i></td></tr>
+<tr><th id="252">252</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::y" title='dtMeshHeader::y' data-ref="dtMeshHeader::y" >y</dfn>;					<i class="doc">///&lt; The y-position of the tile within the dtNavMesh tile grid. (x, y, layer)</i></td></tr>
+<tr><th id="253">253</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::layer" title='dtMeshHeader::layer' data-ref="dtMeshHeader::layer" >layer</dfn>;				<i class="doc">///&lt; The layer of the tile within the dtNavMesh tile grid. (x, y, layer)</i></td></tr>
+<tr><th id="254">254</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtMeshHeader::userId" title='dtMeshHeader::userId' data-ref="dtMeshHeader::userId" >userId</dfn>;	<i class="doc">///&lt; The user defined id of the tile.</i></td></tr>
+<tr><th id="255">255</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::polyCount" title='dtMeshHeader::polyCount' data-ref="dtMeshHeader::polyCount" >polyCount</dfn>;			<i class="doc">///&lt; The number of polygons in the tile.</i></td></tr>
+<tr><th id="256">256</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::vertCount" title='dtMeshHeader::vertCount' data-ref="dtMeshHeader::vertCount" >vertCount</dfn>;			<i class="doc">///&lt; The number of vertices in the tile.</i></td></tr>
+<tr><th id="257">257</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::maxLinkCount" title='dtMeshHeader::maxLinkCount' data-ref="dtMeshHeader::maxLinkCount" >maxLinkCount</dfn>;		<i class="doc">///&lt; The number of allocated links.</i></td></tr>
+<tr><th id="258">258</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::detailMeshCount" title='dtMeshHeader::detailMeshCount' data-ref="dtMeshHeader::detailMeshCount" >detailMeshCount</dfn>;	<i class="doc">///&lt; The number of sub-meshes in the detail mesh.</i></td></tr>
+<tr><th id="259">259</th><td>	</td></tr>
+<tr><th id="260">260</th><td>	<i class="doc">/// The number of unique vertices in the detail mesh. (In addition to the polygon vertices.)</i></td></tr>
+<tr><th id="261">261</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::detailVertCount" title='dtMeshHeader::detailVertCount' data-ref="dtMeshHeader::detailVertCount" >detailVertCount</dfn>;</td></tr>
+<tr><th id="262">262</th><td>	</td></tr>
+<tr><th id="263">263</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::detailTriCount" title='dtMeshHeader::detailTriCount' data-ref="dtMeshHeader::detailTriCount" >detailTriCount</dfn>;			<i class="doc">///&lt; The number of triangles in the detail mesh.</i></td></tr>
+<tr><th id="264">264</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::bvNodeCount" title='dtMeshHeader::bvNodeCount' data-ref="dtMeshHeader::bvNodeCount" >bvNodeCount</dfn>;			<i class="doc">///&lt; The number of bounding volume nodes. (Zero if bounding volumes are disabled.)</i></td></tr>
+<tr><th id="265">265</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::offMeshConCount" title='dtMeshHeader::offMeshConCount' data-ref="dtMeshHeader::offMeshConCount" >offMeshConCount</dfn>;		<i class="doc">///&lt; The number of off-mesh connections.</i></td></tr>
+<tr><th id="266">266</th><td>	<em>int</em> <dfn class="decl" id="dtMeshHeader::offMeshBase" title='dtMeshHeader::offMeshBase' data-ref="dtMeshHeader::offMeshBase" >offMeshBase</dfn>;			<i class="doc">///&lt; The index of the first polygon which is an off-mesh connection.</i></td></tr>
+<tr><th id="267">267</th><td>	<em>float</em> <dfn class="decl" id="dtMeshHeader::walkableHeight" title='dtMeshHeader::walkableHeight' data-ref="dtMeshHeader::walkableHeight" >walkableHeight</dfn>;		<i class="doc">///&lt; The height of the agents using the tile.</i></td></tr>
+<tr><th id="268">268</th><td>	<em>float</em> <dfn class="decl" id="dtMeshHeader::walkableRadius" title='dtMeshHeader::walkableRadius' data-ref="dtMeshHeader::walkableRadius" >walkableRadius</dfn>;		<i class="doc">///&lt; The radius of the agents using the tile.</i></td></tr>
+<tr><th id="269">269</th><td>	<em>float</em> <dfn class="decl" id="dtMeshHeader::walkableClimb" title='dtMeshHeader::walkableClimb' data-ref="dtMeshHeader::walkableClimb" >walkableClimb</dfn>;		<i class="doc">///&lt; The maximum climb height of the agents using the tile.</i></td></tr>
+<tr><th id="270">270</th><td>	<em>float</em> <dfn class="decl" id="dtMeshHeader::bmin" title='dtMeshHeader::bmin' data-ref="dtMeshHeader::bmin" >bmin</dfn>[<var>3</var>];				<i class="doc">///&lt; The minimum bounds of the tile's AABB. [(x, y, z)]</i></td></tr>
+<tr><th id="271">271</th><td>	<em>float</em> <dfn class="decl" id="dtMeshHeader::bmax" title='dtMeshHeader::bmax' data-ref="dtMeshHeader::bmax" >bmax</dfn>[<var>3</var>];				<i class="doc">///&lt; The maximum bounds of the tile's AABB. [(x, y, z)]</i></td></tr>
+<tr><th id="272">272</th><td>	</td></tr>
+<tr><th id="273">273</th><td>	<i class="doc">/// The bounding volume quantization factor. </i></td></tr>
+<tr><th id="274">274</th><td>	<em>float</em> <dfn class="decl" id="dtMeshHeader::bvQuantFactor" title='dtMeshHeader::bvQuantFactor' data-ref="dtMeshHeader::bvQuantFactor" >bvQuantFactor</dfn>;</td></tr>
+<tr><th id="275">275</th><td>};</td></tr>
+<tr><th id="276">276</th><td></td></tr>
+<tr><th id="277">277</th><td><i class="doc">/// Defines a navigation mesh tile.</i></td></tr>
+<tr><th id="278">278</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="279">279</th><td><b>struct</b> <dfn class="type def" id="dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</dfn></td></tr>
+<tr><th id="280">280</th><td>{</td></tr>
+<tr><th id="281">281</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtMeshTile::salt" title='dtMeshTile::salt' data-ref="dtMeshTile::salt" >salt</dfn>;					<i class="doc">///&lt; Counter describing modifications to the tile.</i></td></tr>
+<tr><th id="282">282</th><td></td></tr>
+<tr><th id="283">283</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtMeshTile::linksFreeList" title='dtMeshTile::linksFreeList' data-ref="dtMeshTile::linksFreeList" >linksFreeList</dfn>;			<i class="doc">///&lt; Index to the next free link.</i></td></tr>
+<tr><th id="284">284</th><td>	<a class="type" href="#dtMeshHeader" title='dtMeshHeader' data-ref="dtMeshHeader" >dtMeshHeader</a>* <dfn class="decl" id="dtMeshTile::header" title='dtMeshTile::header' data-ref="dtMeshTile::header" >header</dfn>;				<i class="doc">///&lt; The tile header.</i></td></tr>
+<tr><th id="285">285</th><td>	<a class="type" href="#dtPoly" title='dtPoly' data-ref="dtPoly" >dtPoly</a>* <dfn class="decl" id="dtMeshTile::polys" title='dtMeshTile::polys' data-ref="dtMeshTile::polys" >polys</dfn>;						<i class="doc">///&lt; The tile polygons. [Size: dtMeshHeader::polyCount]</i></td></tr>
+<tr><th id="286">286</th><td>	<em>float</em>* <dfn class="decl" id="dtMeshTile::verts" title='dtMeshTile::verts' data-ref="dtMeshTile::verts" >verts</dfn>;						<i class="doc">///&lt; The tile vertices. [Size: dtMeshHeader::vertCount]</i></td></tr>
+<tr><th id="287">287</th><td>	<a class="type" href="#dtLink" title='dtLink' data-ref="dtLink" >dtLink</a>* <dfn class="decl" id="dtMeshTile::links" title='dtMeshTile::links' data-ref="dtMeshTile::links" >links</dfn>;						<i class="doc">///&lt; The tile links. [Size: dtMeshHeader::maxLinkCount]</i></td></tr>
+<tr><th id="288">288</th><td>	<a class="type" href="#dtPolyDetail" title='dtPolyDetail' data-ref="dtPolyDetail" >dtPolyDetail</a>* <dfn class="decl" id="dtMeshTile::detailMeshes" title='dtMeshTile::detailMeshes' data-ref="dtMeshTile::detailMeshes" >detailMeshes</dfn>;			<i class="doc">///&lt; The tile's detail sub-meshes. [Size: dtMeshHeader::detailMeshCount]</i></td></tr>
+<tr><th id="289">289</th><td>	</td></tr>
+<tr><th id="290">290</th><td>	<i class="doc">/// The detail mesh's unique vertices. [(x, y, z) * dtMeshHeader::detailVertCount]</i></td></tr>
+<tr><th id="291">291</th><td>	<em>float</em>* <dfn class="decl" id="dtMeshTile::detailVerts" title='dtMeshTile::detailVerts' data-ref="dtMeshTile::detailVerts" >detailVerts</dfn>;	</td></tr>
+<tr><th id="292">292</th><td></td></tr>
+<tr><th id="293">293</th><td>	<i class="doc">/// The detail mesh's triangles. [(vertA, vertB, vertC) * dtMeshHeader::detailTriCount]</i></td></tr>
+<tr><th id="294">294</th><td>	<em>unsigned</em> <em>char</em>* <dfn class="decl" id="dtMeshTile::detailTris" title='dtMeshTile::detailTris' data-ref="dtMeshTile::detailTris" >detailTris</dfn>;	</td></tr>
+<tr><th id="295">295</th><td></td></tr>
+<tr><th id="296">296</th><td>	<i class="doc">/// The tile bounding volume nodes. [Size: dtMeshHeader::bvNodeCount]</i></td></tr>
+<tr><th id="297">297</th><td><i class="doc">	/// (Will be null if bounding volumes are disabled.)</i></td></tr>
+<tr><th id="298">298</th><td>	<a class="type" href="#dtBVNode" title='dtBVNode' data-ref="dtBVNode" >dtBVNode</a>* <dfn class="decl" id="dtMeshTile::bvTree" title='dtMeshTile::bvTree' data-ref="dtMeshTile::bvTree" >bvTree</dfn>;</td></tr>
+<tr><th id="299">299</th><td></td></tr>
+<tr><th id="300">300</th><td>	<a class="type" href="#dtOffMeshConnection" title='dtOffMeshConnection' data-ref="dtOffMeshConnection" >dtOffMeshConnection</a>* <dfn class="decl" id="dtMeshTile::offMeshCons" title='dtMeshTile::offMeshCons' data-ref="dtMeshTile::offMeshCons" >offMeshCons</dfn>;		<i class="doc">///&lt; The tile off-mesh connections. [Size: dtMeshHeader::offMeshConCount]</i></td></tr>
+<tr><th id="301">301</th><td>		</td></tr>
+<tr><th id="302">302</th><td>	<em>unsigned</em> <em>char</em>* <dfn class="decl" id="dtMeshTile::data" title='dtMeshTile::data' data-ref="dtMeshTile::data" >data</dfn>;					<i class="doc">///&lt; The tile data. (Not directly accessed under normal situations.)</i></td></tr>
+<tr><th id="303">303</th><td>	<em>int</em> <dfn class="decl" id="dtMeshTile::dataSize" title='dtMeshTile::dataSize' data-ref="dtMeshTile::dataSize" >dataSize</dfn>;							<i class="doc">///&lt; Size of the tile data.</i></td></tr>
+<tr><th id="304">304</th><td>	<em>int</em> <dfn class="decl" id="dtMeshTile::flags" title='dtMeshTile::flags' data-ref="dtMeshTile::flags" >flags</dfn>;								<i class="doc">///&lt; Tile flags. (See: #dtTileFlags)</i></td></tr>
+<tr><th id="305">305</th><td>	<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="decl" id="dtMeshTile::next" title='dtMeshTile::next' data-ref="dtMeshTile::next" >next</dfn>;						<i class="doc">///&lt; The next free tile, or the next tile in the spatial grid.</i></td></tr>
+<tr><th id="306">306</th><td>};</td></tr>
+<tr><th id="307">307</th><td></td></tr>
+<tr><th id="308">308</th><td><i class="doc">/// Configuration parameters used to define multi-tile navigation meshes.</i></td></tr>
+<tr><th id="309">309</th><td><i class="doc">/// The values are used to allocate space during the initialization of a navigation mesh.</i></td></tr>
+<tr><th id="310">310</th><td><i class="doc">/// <span class="command">@see</span> dtNavMesh::init()</i></td></tr>
+<tr><th id="311">311</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="312">312</th><td><b>struct</b> <dfn class="type def" id="dtNavMeshParams" title='dtNavMeshParams' data-ref="dtNavMeshParams" >dtNavMeshParams</dfn></td></tr>
+<tr><th id="313">313</th><td>{</td></tr>
+<tr><th id="314">314</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshParams::orig" title='dtNavMeshParams::orig' data-ref="dtNavMeshParams::orig" >orig</dfn>[<var>3</var>];					<i class="doc">///&lt; The world space origin of the navigation mesh's tile space. [(x, y, z)]</i></td></tr>
+<tr><th id="315">315</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshParams::tileWidth" title='dtNavMeshParams::tileWidth' data-ref="dtNavMeshParams::tileWidth" >tileWidth</dfn>;				<i class="doc">///&lt; The width of each tile. (Along the x-axis.)</i></td></tr>
+<tr><th id="316">316</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshParams::tileHeight" title='dtNavMeshParams::tileHeight' data-ref="dtNavMeshParams::tileHeight" >tileHeight</dfn>;				<i class="doc">///&lt; The height of each tile. (Along the z-axis.)</i></td></tr>
+<tr><th id="317">317</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshParams::maxTiles" title='dtNavMeshParams::maxTiles' data-ref="dtNavMeshParams::maxTiles" >maxTiles</dfn>;					<i class="doc">///&lt; The maximum number of tiles the navigation mesh can contain.</i></td></tr>
+<tr><th id="318">318</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshParams::maxPolys" title='dtNavMeshParams::maxPolys' data-ref="dtNavMeshParams::maxPolys" >maxPolys</dfn>;					<i class="doc">///&lt; The maximum number of polygons each tile can contain.</i></td></tr>
+<tr><th id="319">319</th><td>};</td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td><i class="doc">/// A navigation mesh based on tiles of convex polygons.</i></td></tr>
+<tr><th id="322">322</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="323">323</th><td><b>class</b> <dfn class="type def" id="dtNavMesh" title='dtNavMesh' data-ref="dtNavMesh" >dtNavMesh</dfn></td></tr>
+<tr><th id="324">324</th><td>{</td></tr>
+<tr><th id="325">325</th><td><b>public</b>:</td></tr>
+<tr><th id="326">326</th><td>	<a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMeshC1Ev" title='dtNavMesh::dtNavMesh' data-ref="_ZN9dtNavMeshC1Ev" id="_ZN9dtNavMeshC1Ev" >dtNavMesh</a>();</td></tr>
+<tr><th id="327">327</th><td>	<a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMeshD1Ev" title='dtNavMesh::~dtNavMesh' data-ref="_ZN9dtNavMeshD1Ev" id="_ZN9dtNavMeshD1Ev" >~dtNavMesh</a>();</td></tr>
+<tr><th id="328">328</th><td></td></tr>
+<tr><th id="329">329</th><td>	<i class="doc">/// @{</i></td></tr>
+<tr><th id="330">330</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">Initialization and Tile Management</span></i></td></tr>
+<tr><th id="331">331</th><td><i class="doc"></i></td></tr>
+<tr><th id="332">332</th><td><i class="doc">	/// Initializes the navigation mesh for tiled use.</i></td></tr>
+<tr><th id="333">333</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">params</span>		Initialization parameters.</i></td></tr>
+<tr><th id="334">334</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="335">335</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh4initEPK15dtNavMeshParams" title='dtNavMesh::init' data-ref="_ZN9dtNavMesh4initEPK15dtNavMeshParams" id="_ZN9dtNavMesh4initEPK15dtNavMeshParams" >init</a>(<em>const</em> <a class="type" href="#dtNavMeshParams" title='dtNavMeshParams' data-ref="dtNavMeshParams" >dtNavMeshParams</a>* <dfn class="local col8 decl" id="8params" title='params' data-type='const dtNavMeshParams *' data-ref="8params" >params</dfn>);</td></tr>
+<tr><th id="336">336</th><td></td></tr>
+<tr><th id="337">337</th><td>	<i class="doc">/// Initializes the navigation mesh for single tile use.</i></td></tr>
+<tr><th id="338">338</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">data</span>		Data of the new tile. (See: #dtCreateNavMeshData)</i></td></tr>
+<tr><th id="339">339</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">dataSize</span>	The data size of the new tile.</i></td></tr>
+<tr><th id="340">340</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">flags</span>		The tile flags. (See: #dtTileFlags)</i></td></tr>
+<tr><th id="341">341</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="342">342</th><td><i class="doc">	///  <span class="command">@see</span> dtCreateNavMeshData</i></td></tr>
+<tr><th id="343">343</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh4initEPhii" title='dtNavMesh::init' data-ref="_ZN9dtNavMesh4initEPhii" id="_ZN9dtNavMesh4initEPhii" >init</a>(<em>unsigned</em> <em>char</em>* <dfn class="local col9 decl" id="9data" title='data' data-type='unsigned char *' data-ref="9data" >data</dfn>, <em>const</em> <em>int</em> <dfn class="local col0 decl" id="10dataSize" title='dataSize' data-type='const int' data-ref="10dataSize" >dataSize</dfn>, <em>const</em> <em>int</em> <dfn class="local col1 decl" id="11flags" title='flags' data-type='const int' data-ref="11flags" >flags</dfn>);</td></tr>
+<tr><th id="344">344</th><td>	</td></tr>
+<tr><th id="345">345</th><td>	<i class="doc">/// The navigation mesh initialization params.</i></td></tr>
+<tr><th id="346">346</th><td>	<em>const</em> <a class="type" href="#dtNavMeshParams" title='dtNavMeshParams' data-ref="dtNavMeshParams" >dtNavMeshParams</a>* <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh9getParamsEv" title='dtNavMesh::getParams' data-ref="_ZNK9dtNavMesh9getParamsEv" id="_ZNK9dtNavMesh9getParamsEv" >getParams</a>() <em>const</em>;</td></tr>
+<tr><th id="347">347</th><td></td></tr>
+<tr><th id="348">348</th><td>	<i class="doc">/// Adds a tile to the navigation mesh.</i></td></tr>
+<tr><th id="349">349</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">data</span>		Data for the new tile mesh. (See: #dtCreateNavMeshData)</i></td></tr>
+<tr><th id="350">350</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">dataSize</span>	Data size of the new tile mesh.</i></td></tr>
+<tr><th id="351">351</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">flags</span>		Tile flags. (See: #dtTileFlags)</i></td></tr>
+<tr><th id="352">352</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">lastRef</span>		The desired reference for the tile. (When reloading a tile.) [opt] [Default: 0]</i></td></tr>
+<tr><th id="353">353</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">result</span>		The tile reference. (If the tile was succesfully added.) [opt]</i></td></tr>
+<tr><th id="354">354</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="355">355</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh7addTileEPhiimPm" title='dtNavMesh::addTile' data-ref="_ZN9dtNavMesh7addTileEPhiimPm" id="_ZN9dtNavMesh7addTileEPhiimPm" >addTile</a>(<em>unsigned</em> <em>char</em>* <dfn class="local col2 decl" id="12data" title='data' data-type='unsigned char *' data-ref="12data" >data</dfn>, <em>int</em> <dfn class="local col3 decl" id="13dataSize" title='dataSize' data-type='int' data-ref="13dataSize" >dataSize</dfn>, <em>int</em> <dfn class="local col4 decl" id="14flags" title='flags' data-type='int' data-ref="14flags" >flags</dfn>, <a class="typedef" href="#dtTileRef" title='dtTileRef' data-type='uint64_d' data-ref="dtTileRef" >dtTileRef</a> <dfn class="local col5 decl" id="15lastRef" title='lastRef' data-type='dtTileRef' data-ref="15lastRef" >lastRef</dfn>, <a class="typedef" href="#dtTileRef" title='dtTileRef' data-type='uint64_d' data-ref="dtTileRef" >dtTileRef</a>* <dfn class="local col6 decl" id="16result" title='result' data-type='dtTileRef *' data-ref="16result" >result</dfn>);</td></tr>
+<tr><th id="356">356</th><td>	</td></tr>
+<tr><th id="357">357</th><td>	<i class="doc">/// Removes the specified tile from the navigation mesh.</i></td></tr>
+<tr><th id="358">358</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">ref</span>			The reference of the tile to remove.</i></td></tr>
+<tr><th id="359">359</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">data</span>		Data associated with deleted tile.</i></td></tr>
+<tr><th id="360">360</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">dataSize</span>	Size of the data associated with deleted tile.</i></td></tr>
+<tr><th id="361">361</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="362">362</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh10removeTileEmPPhPi" title='dtNavMesh::removeTile' data-ref="_ZN9dtNavMesh10removeTileEmPPhPi" id="_ZN9dtNavMesh10removeTileEmPPhPi" >removeTile</a>(<a class="typedef" href="#dtTileRef" title='dtTileRef' data-type='uint64_d' data-ref="dtTileRef" >dtTileRef</a> <dfn class="local col7 decl" id="17ref" title='ref' data-type='dtTileRef' data-ref="17ref" >ref</dfn>, <em>unsigned</em> <em>char</em>** <dfn class="local col8 decl" id="18data" title='data' data-type='unsigned char **' data-ref="18data" >data</dfn>, <em>int</em>* <dfn class="local col9 decl" id="19dataSize" title='dataSize' data-type='int *' data-ref="19dataSize" >dataSize</dfn>);</td></tr>
+<tr><th id="363">363</th><td></td></tr>
+<tr><th id="364">364</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="365">365</th><td><i class="doc"></i></td></tr>
+<tr><th id="366">366</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="367">367</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">Query Functions</span></i></td></tr>
+<tr><th id="368">368</th><td><i class="doc"></i></td></tr>
+<tr><th id="369">369</th><td><i class="doc">	/// Calculates the tile grid location for the specified world position.</i></td></tr>
+<tr><th id="370">370</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">pos</span>  The world position for the query. [(x, y, z)]</i></td></tr>
+<tr><th id="371">371</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">tx</span>		The tile's x-location. (x, y)</i></td></tr>
+<tr><th id="372">372</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">ty</span>		The tile's y-location. (x, y)</i></td></tr>
+<tr><th id="373">373</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh11calcTileLocEPKfPiS2_" title='dtNavMesh::calcTileLoc' data-ref="_ZNK9dtNavMesh11calcTileLocEPKfPiS2_" id="_ZNK9dtNavMesh11calcTileLocEPKfPiS2_" >calcTileLoc</a>(<em>const</em> <em>float</em>* <dfn class="local col0 decl" id="20pos" title='pos' data-type='const float *' data-ref="20pos" >pos</dfn>, <em>int</em>* <dfn class="local col1 decl" id="21tx" title='tx' data-type='int *' data-ref="21tx" >tx</dfn>, <em>int</em>* <dfn class="local col2 decl" id="22ty" title='ty' data-type='int *' data-ref="22ty" >ty</dfn>) <em>const</em>;</td></tr>
+<tr><th id="374">374</th><td></td></tr>
+<tr><th id="375">375</th><td>	<i class="doc">/// Gets the tile at the specified grid location.</i></td></tr>
+<tr><th id="376">376</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">x</span>		The tile's x-location. (x, y, layer)</i></td></tr>
+<tr><th id="377">377</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">y</span>		The tile's y-location. (x, y, layer)</i></td></tr>
+<tr><th id="378">378</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">layer</span>	The tile's layer. (x, y, layer)</i></td></tr>
+<tr><th id="379">379</th><td><i class="doc">	/// <span class="command">@return</span> The tile, or null if the tile does not exist.</i></td></tr>
+<tr><th id="380">380</th><td>	<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh9getTileAtEiii" title='dtNavMesh::getTileAt' data-ref="_ZNK9dtNavMesh9getTileAtEiii" id="_ZNK9dtNavMesh9getTileAtEiii" >getTileAt</a>(<em>const</em> <em>int</em> <dfn class="local col3 decl" id="23x" title='x' data-type='const int' data-ref="23x" >x</dfn>, <em>const</em> <em>int</em> <dfn class="local col4 decl" id="24y" title='y' data-type='const int' data-ref="24y" >y</dfn>, <em>const</em> <em>int</em> <dfn class="local col5 decl" id="25layer" title='layer' data-type='const int' data-ref="25layer" >layer</dfn>) <em>const</em>;</td></tr>
+<tr><th id="381">381</th><td></td></tr>
+<tr><th id="382">382</th><td>	<i class="doc">/// Gets all tiles at the specified grid location. (All layers.)</i></td></tr>
+<tr><th id="383">383</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">x</span>			The tile's x-location. (x, y)</i></td></tr>
+<tr><th id="384">384</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">y</span>			The tile's y-location. (x, y)</i></td></tr>
+<tr><th id="385">385</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">tiles</span>		A pointer to an array of tiles that will hold the result.</i></td></tr>
+<tr><th id="386">386</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">maxTiles</span>	The maximum tiles the tiles parameter can hold.</i></td></tr>
+<tr><th id="387">387</th><td><i class="doc">	/// <span class="command">@return</span> The number of tiles returned in the tiles array.</i></td></tr>
+<tr><th id="388">388</th><td>	<em>int</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh10getTilesAtEiiPPK10dtMeshTilei" title='dtNavMesh::getTilesAt' data-ref="_ZNK9dtNavMesh10getTilesAtEiiPPK10dtMeshTilei" id="_ZNK9dtNavMesh10getTilesAtEiiPPK10dtMeshTilei" >getTilesAt</a>(<em>const</em> <em>int</em> <dfn class="local col6 decl" id="26x" title='x' data-type='const int' data-ref="26x" >x</dfn>, <em>const</em> <em>int</em> <dfn class="local col7 decl" id="27y" title='y' data-type='const int' data-ref="27y" >y</dfn>,</td></tr>
+<tr><th id="389">389</th><td>				   <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a> <em>const</em>** <dfn class="local col8 decl" id="28tiles" title='tiles' data-type='const dtMeshTile **' data-ref="28tiles" >tiles</dfn>, <em>const</em> <em>int</em> <dfn class="local col9 decl" id="29maxTiles" title='maxTiles' data-type='const int' data-ref="29maxTiles" >maxTiles</dfn>) <em>const</em>;</td></tr>
+<tr><th id="390">390</th><td>	</td></tr>
+<tr><th id="391">391</th><td>	<i class="doc">/// Gets the tile reference for the tile at specified grid location.</i></td></tr>
+<tr><th id="392">392</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">x</span>		The tile's x-location. (x, y, layer)</i></td></tr>
+<tr><th id="393">393</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">y</span>		The tile's y-location. (x, y, layer)</i></td></tr>
+<tr><th id="394">394</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">layer</span>	The tile's layer. (x, y, layer)</i></td></tr>
+<tr><th id="395">395</th><td><i class="doc">	/// <span class="command">@return</span> The tile reference of the tile, or 0 if there is none.</i></td></tr>
+<tr><th id="396">396</th><td>	<a class="typedef" href="#dtTileRef" title='dtTileRef' data-type='uint64_d' data-ref="dtTileRef" >dtTileRef</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh12getTileRefAtEiii" title='dtNavMesh::getTileRefAt' data-ref="_ZNK9dtNavMesh12getTileRefAtEiii" id="_ZNK9dtNavMesh12getTileRefAtEiii" >getTileRefAt</a>(<em>int</em> <dfn class="local col0 decl" id="30x" title='x' data-type='int' data-ref="30x" >x</dfn>, <em>int</em> <dfn class="local col1 decl" id="31y" title='y' data-type='int' data-ref="31y" >y</dfn>, <em>int</em> <dfn class="local col2 decl" id="32layer" title='layer' data-type='int' data-ref="32layer" >layer</dfn>) <em>const</em>;</td></tr>
+<tr><th id="397">397</th><td></td></tr>
+<tr><th id="398">398</th><td>	<i class="doc">/// Gets the tile reference for the specified tile.</i></td></tr>
+<tr><th id="399">399</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">tile</span>	The tile.</i></td></tr>
+<tr><th id="400">400</th><td><i class="doc">	/// <span class="command">@return</span> The tile reference of the tile.</i></td></tr>
+<tr><th id="401">401</th><td>	<a class="typedef" href="#dtTileRef" title='dtTileRef' data-type='uint64_d' data-ref="dtTileRef" >dtTileRef</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh10getTileRefEPK10dtMeshTile" title='dtNavMesh::getTileRef' data-ref="_ZNK9dtNavMesh10getTileRefEPK10dtMeshTile" id="_ZNK9dtNavMesh10getTileRefEPK10dtMeshTile" >getTileRef</a>(<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col3 decl" id="33tile" title='tile' data-type='const dtMeshTile *' data-ref="33tile" >tile</dfn>) <em>const</em>;</td></tr>
+<tr><th id="402">402</th><td></td></tr>
+<tr><th id="403">403</th><td>	<i class="doc">/// Gets the tile for the specified tile reference.</i></td></tr>
+<tr><th id="404">404</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The tile reference of the tile to retrieve.</i></td></tr>
+<tr><th id="405">405</th><td><i class="doc">	/// <span class="command">@return</span> The tile for the specified reference, or null if the </i></td></tr>
+<tr><th id="406">406</th><td><i class="doc">	///		reference is invalid.</i></td></tr>
+<tr><th id="407">407</th><td>	<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh12getTileByRefEm" title='dtNavMesh::getTileByRef' data-ref="_ZNK9dtNavMesh12getTileByRefEm" id="_ZNK9dtNavMesh12getTileByRefEm" >getTileByRef</a>(<a class="typedef" href="#dtTileRef" title='dtTileRef' data-type='uint64_d' data-ref="dtTileRef" >dtTileRef</a> <dfn class="local col4 decl" id="34ref" title='ref' data-type='dtTileRef' data-ref="34ref" >ref</dfn>) <em>const</em>;</td></tr>
+<tr><th id="408">408</th><td>	</td></tr>
+<tr><th id="409">409</th><td>	<i class="doc">/// The maximum number of tiles supported by the navigation mesh.</i></td></tr>
+<tr><th id="410">410</th><td><i class="doc">	/// <span class="command">@return</span> The maximum number of tiles supported by the navigation mesh.</i></td></tr>
+<tr><th id="411">411</th><td>	<em>int</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh11getMaxTilesEv" title='dtNavMesh::getMaxTiles' data-ref="_ZNK9dtNavMesh11getMaxTilesEv" id="_ZNK9dtNavMesh11getMaxTilesEv" >getMaxTiles</a>() <em>const</em>;</td></tr>
+<tr><th id="412">412</th><td>	</td></tr>
+<tr><th id="413">413</th><td>	<i class="doc">/// Gets the tile at the specified index.</i></td></tr>
+<tr><th id="414">414</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">i</span>		The tile index. [Limit: 0 &gt;= index &lt; #getMaxTiles()]</i></td></tr>
+<tr><th id="415">415</th><td><i class="doc">	/// <span class="command">@return</span> The tile at the specified index.</i></td></tr>
+<tr><th id="416">416</th><td>	<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh7getTileEi" title='dtNavMesh::getTile' data-ref="_ZNK9dtNavMesh7getTileEi" id="_ZNK9dtNavMesh7getTileEi" >getTile</a>(<em>int</em> <dfn class="local col5 decl" id="35i" title='i' data-type='int' data-ref="35i" >i</dfn>) <em>const</em>;</td></tr>
+<tr><th id="417">417</th><td></td></tr>
+<tr><th id="418">418</th><td>	<i class="doc">/// Gets the tile and polygon for the specified polygon reference.</i></td></tr>
+<tr><th id="419">419</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">ref</span>		The reference for the a polygon.</i></td></tr>
+<tr><th id="420">420</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">tile</span>	The tile containing the polygon.</i></td></tr>
+<tr><th id="421">421</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">poly</span>	The polygon.</i></td></tr>
+<tr><th id="422">422</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="423">423</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh19getTileAndPolyByRefEmPPK10dtMeshTilePPK6dtPoly" title='dtNavMesh::getTileAndPolyByRef' data-ref="_ZNK9dtNavMesh19getTileAndPolyByRefEmPPK10dtMeshTilePPK6dtPoly" id="_ZNK9dtNavMesh19getTileAndPolyByRefEmPPK10dtMeshTilePPK6dtPoly" >getTileAndPolyByRef</a>(<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col6 decl" id="36ref" title='ref' data-type='const dtPolyRef' data-ref="36ref" >ref</dfn>, <em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>** <dfn class="local col7 decl" id="37tile" title='tile' data-type='const dtMeshTile **' data-ref="37tile" >tile</dfn>, <em>const</em> <a class="type" href="#dtPoly" title='dtPoly' data-ref="dtPoly" >dtPoly</a>** <dfn class="local col8 decl" id="38poly" title='poly' data-type='const dtPoly **' data-ref="38poly" >poly</dfn>) <em>const</em>;</td></tr>
+<tr><th id="424">424</th><td>	</td></tr>
+<tr><th id="425">425</th><td>	<i class="doc">/// Returns the tile and polygon for the specified polygon reference.</i></td></tr>
+<tr><th id="426">426</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">ref</span>		A known valid reference for a polygon.</i></td></tr>
+<tr><th id="427">427</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">tile</span>	The tile containing the polygon.</i></td></tr>
+<tr><th id="428">428</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">poly</span>	The polygon.</i></td></tr>
+<tr><th id="429">429</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh25getTileAndPolyByRefUnsafeEmPPK10dtMeshTilePPK6dtPoly" title='dtNavMesh::getTileAndPolyByRefUnsafe' data-ref="_ZNK9dtNavMesh25getTileAndPolyByRefUnsafeEmPPK10dtMeshTilePPK6dtPoly" id="_ZNK9dtNavMesh25getTileAndPolyByRefUnsafeEmPPK10dtMeshTilePPK6dtPoly" >getTileAndPolyByRefUnsafe</a>(<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col9 decl" id="39ref" title='ref' data-type='const dtPolyRef' data-ref="39ref" >ref</dfn>, <em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>** <dfn class="local col0 decl" id="40tile" title='tile' data-type='const dtMeshTile **' data-ref="40tile" >tile</dfn>, <em>const</em> <a class="type" href="#dtPoly" title='dtPoly' data-ref="dtPoly" >dtPoly</a>** <dfn class="local col1 decl" id="41poly" title='poly' data-type='const dtPoly **' data-ref="41poly" >poly</dfn>) <em>const</em>;</td></tr>
+<tr><th id="430">430</th><td></td></tr>
+<tr><th id="431">431</th><td>	<i class="doc">/// Checks the validity of a polygon reference.</i></td></tr>
+<tr><th id="432">432</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The polygon reference to check.</i></td></tr>
+<tr><th id="433">433</th><td><i class="doc">	/// <span class="command">@return</span> True if polygon reference is valid for the navigation mesh.</i></td></tr>
+<tr><th id="434">434</th><td>	<em>bool</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh14isValidPolyRefEm" title='dtNavMesh::isValidPolyRef' data-ref="_ZNK9dtNavMesh14isValidPolyRefEm" id="_ZNK9dtNavMesh14isValidPolyRefEm" >isValidPolyRef</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col2 decl" id="42ref" title='ref' data-type='dtPolyRef' data-ref="42ref" >ref</dfn>) <em>const</em>;</td></tr>
+<tr><th id="435">435</th><td>	</td></tr>
+<tr><th id="436">436</th><td>	<i class="doc">/// Gets the polygon reference for the tile's base polygon.</i></td></tr>
+<tr><th id="437">437</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">tile</span>		The tile.</i></td></tr>
+<tr><th id="438">438</th><td><i class="doc">	/// <span class="command">@return</span> The polygon reference for the base polygon in the specified tile.</i></td></tr>
+<tr><th id="439">439</th><td>	<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh14getPolyRefBaseEPK10dtMeshTile" title='dtNavMesh::getPolyRefBase' data-ref="_ZNK9dtNavMesh14getPolyRefBaseEPK10dtMeshTile" id="_ZNK9dtNavMesh14getPolyRefBaseEPK10dtMeshTile" >getPolyRefBase</a>(<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col3 decl" id="43tile" title='tile' data-type='const dtMeshTile *' data-ref="43tile" >tile</dfn>) <em>const</em>;</td></tr>
+<tr><th id="440">440</th><td>	</td></tr>
+<tr><th id="441">441</th><td>	<i class="doc">/// Gets the endpoints for an off-mesh connection, ordered by "direction of travel".</i></td></tr>
+<tr><th id="442">442</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">prevRef</span>		The reference of the polygon before the connection.</i></td></tr>
+<tr><th id="443">443</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">polyRef</span>		The reference of the off-mesh connection polygon.</i></td></tr>
+<tr><th id="444">444</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">startPos</span>	The start position of the off-mesh connection. [(x, y, z)]</i></td></tr>
+<tr><th id="445">445</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">endPos</span>		The end position of the off-mesh connection. [(x, y, z)]</i></td></tr>
+<tr><th id="446">446</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="447">447</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh33getOffMeshConnectionPolyEndPointsEmmPfS0_" title='dtNavMesh::getOffMeshConnectionPolyEndPoints' data-ref="_ZNK9dtNavMesh33getOffMeshConnectionPolyEndPointsEmmPfS0_" id="_ZNK9dtNavMesh33getOffMeshConnectionPolyEndPointsEmmPfS0_" >getOffMeshConnectionPolyEndPoints</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col4 decl" id="44prevRef" title='prevRef' data-type='dtPolyRef' data-ref="44prevRef" >prevRef</dfn>, <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col5 decl" id="45polyRef" title='polyRef' data-type='dtPolyRef' data-ref="45polyRef" >polyRef</dfn>, <em>float</em>* <dfn class="local col6 decl" id="46startPos" title='startPos' data-type='float *' data-ref="46startPos" >startPos</dfn>, <em>float</em>* <dfn class="local col7 decl" id="47endPos" title='endPos' data-type='float *' data-ref="47endPos" >endPos</dfn>) <em>const</em>;</td></tr>
+<tr><th id="448">448</th><td></td></tr>
+<tr><th id="449">449</th><td>	<i class="doc">/// Gets the specified off-mesh connection.</i></td></tr>
+<tr><th id="450">450</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The polygon reference of the off-mesh connection.</i></td></tr>
+<tr><th id="451">451</th><td><i class="doc">	/// <span class="command">@return</span> The specified off-mesh connection, or null if the polygon reference is not valid.</i></td></tr>
+<tr><th id="452">452</th><td>	<em>const</em> <a class="type" href="#dtOffMeshConnection" title='dtOffMeshConnection' data-ref="dtOffMeshConnection" >dtOffMeshConnection</a>* <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh25getOffMeshConnectionByRefEm" title='dtNavMesh::getOffMeshConnectionByRef' data-ref="_ZNK9dtNavMesh25getOffMeshConnectionByRefEm" id="_ZNK9dtNavMesh25getOffMeshConnectionByRefEm" >getOffMeshConnectionByRef</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col8 decl" id="48ref" title='ref' data-type='dtPolyRef' data-ref="48ref" >ref</dfn>) <em>const</em>;</td></tr>
+<tr><th id="453">453</th><td>	</td></tr>
+<tr><th id="454">454</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="455">455</th><td><i class="doc"></i></td></tr>
+<tr><th id="456">456</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="457">457</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">State Management</span></i></td></tr>
+<tr><th id="458">458</th><td><i class="doc">	/// These functions do not effect #dtTileRef or #dtPolyRef's. </i></td></tr>
+<tr><th id="459">459</th><td><i class="doc"></i></td></tr>
+<tr><th id="460">460</th><td><i class="doc">	/// Sets the user defined flags for the specified polygon.</i></td></tr>
+<tr><th id="461">461</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The polygon reference.</i></td></tr>
+<tr><th id="462">462</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">flags</span>	The new flags for the polygon.</i></td></tr>
+<tr><th id="463">463</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="464">464</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh12setPolyFlagsEmt" title='dtNavMesh::setPolyFlags' data-ref="_ZN9dtNavMesh12setPolyFlagsEmt" id="_ZN9dtNavMesh12setPolyFlagsEmt" >setPolyFlags</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col9 decl" id="49ref" title='ref' data-type='dtPolyRef' data-ref="49ref" >ref</dfn>, <em>unsigned</em> <em>short</em> <dfn class="local col0 decl" id="50flags" title='flags' data-type='unsigned short' data-ref="50flags" >flags</dfn>);</td></tr>
+<tr><th id="465">465</th><td></td></tr>
+<tr><th id="466">466</th><td>	<i class="doc">/// Gets the user defined flags for the specified polygon.</i></td></tr>
+<tr><th id="467">467</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">ref</span>				The polygon reference.</i></td></tr>
+<tr><th id="468">468</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">resultFlags</span>		The polygon flags.</i></td></tr>
+<tr><th id="469">469</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="470">470</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh12getPolyFlagsEmPt" title='dtNavMesh::getPolyFlags' data-ref="_ZNK9dtNavMesh12getPolyFlagsEmPt" id="_ZNK9dtNavMesh12getPolyFlagsEmPt" >getPolyFlags</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col1 decl" id="51ref" title='ref' data-type='dtPolyRef' data-ref="51ref" >ref</dfn>, <em>unsigned</em> <em>short</em>* <dfn class="local col2 decl" id="52resultFlags" title='resultFlags' data-type='unsigned short *' data-ref="52resultFlags" >resultFlags</dfn>) <em>const</em>;</td></tr>
+<tr><th id="471">471</th><td></td></tr>
+<tr><th id="472">472</th><td>	<i class="doc">/// Sets the user defined area for the specified polygon.</i></td></tr>
+<tr><th id="473">473</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The polygon reference.</i></td></tr>
+<tr><th id="474">474</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">area</span>	The new area id for the polygon. [Limit: &lt; #DT_MAX_AREAS]</i></td></tr>
+<tr><th id="475">475</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="476">476</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh11setPolyAreaEmh" title='dtNavMesh::setPolyArea' data-ref="_ZN9dtNavMesh11setPolyAreaEmh" id="_ZN9dtNavMesh11setPolyAreaEmh" >setPolyArea</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col3 decl" id="53ref" title='ref' data-type='dtPolyRef' data-ref="53ref" >ref</dfn>, <em>unsigned</em> <em>char</em> <dfn class="local col4 decl" id="54area" title='area' data-type='unsigned char' data-ref="54area" >area</dfn>);</td></tr>
+<tr><th id="477">477</th><td></td></tr>
+<tr><th id="478">478</th><td>	<i class="doc">/// Gets the user defined area for the specified polygon.</i></td></tr>
+<tr><th id="479">479</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">ref</span>			The polygon reference.</i></td></tr>
+<tr><th id="480">480</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">resultArea</span>	The area id for the polygon.</i></td></tr>
+<tr><th id="481">481</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="482">482</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh11getPolyAreaEmPh" title='dtNavMesh::getPolyArea' data-ref="_ZNK9dtNavMesh11getPolyAreaEmPh" id="_ZNK9dtNavMesh11getPolyAreaEmPh" >getPolyArea</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col5 decl" id="55ref" title='ref' data-type='dtPolyRef' data-ref="55ref" >ref</dfn>, <em>unsigned</em> <em>char</em>* <dfn class="local col6 decl" id="56resultArea" title='resultArea' data-type='unsigned char *' data-ref="56resultArea" >resultArea</dfn>) <em>const</em>;</td></tr>
+<tr><th id="483">483</th><td></td></tr>
+<tr><th id="484">484</th><td>	<i class="doc">/// Gets the size of the buffer required by #storeTileState to store the specified tile's state.</i></td></tr>
+<tr><th id="485">485</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">tile</span>	The tile.</i></td></tr>
+<tr><th id="486">486</th><td><i class="doc">	/// <span class="command">@return</span> The size of the buffer required to store the state.</i></td></tr>
+<tr><th id="487">487</th><td>	<em>int</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh16getTileStateSizeEPK10dtMeshTile" title='dtNavMesh::getTileStateSize' data-ref="_ZNK9dtNavMesh16getTileStateSizeEPK10dtMeshTile" id="_ZNK9dtNavMesh16getTileStateSizeEPK10dtMeshTile" >getTileStateSize</a>(<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col7 decl" id="57tile" title='tile' data-type='const dtMeshTile *' data-ref="57tile" >tile</dfn>) <em>const</em>;</td></tr>
+<tr><th id="488">488</th><td>	</td></tr>
+<tr><th id="489">489</th><td>	<i class="doc">/// Stores the non-structural state of the tile in the specified buffer. (Flags, area ids, etc.)</i></td></tr>
+<tr><th id="490">490</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">tile</span>			The tile.</i></td></tr>
+<tr><th id="491">491</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">data</span>			The buffer to store the tile's state in.</i></td></tr>
+<tr><th id="492">492</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">maxDataSize</span>		The size of the data buffer. [Limit: &gt;= #getTileStateSize]</i></td></tr>
+<tr><th id="493">493</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="494">494</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh14storeTileStateEPK10dtMeshTilePhi" title='dtNavMesh::storeTileState' data-ref="_ZNK9dtNavMesh14storeTileStateEPK10dtMeshTilePhi" id="_ZNK9dtNavMesh14storeTileStateEPK10dtMeshTilePhi" >storeTileState</a>(<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col8 decl" id="58tile" title='tile' data-type='const dtMeshTile *' data-ref="58tile" >tile</dfn>, <em>unsigned</em> <em>char</em>* <dfn class="local col9 decl" id="59data" title='data' data-type='unsigned char *' data-ref="59data" >data</dfn>, <em>const</em> <em>int</em> <dfn class="local col0 decl" id="60maxDataSize" title='maxDataSize' data-type='const int' data-ref="60maxDataSize" >maxDataSize</dfn>) <em>const</em>;</td></tr>
+<tr><th id="495">495</th><td>	</td></tr>
+<tr><th id="496">496</th><td>	<i class="doc">/// Restores the state of the tile.</i></td></tr>
+<tr><th id="497">497</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">tile</span>			The tile.</i></td></tr>
+<tr><th id="498">498</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">data</span>			The new state. (Obtained from #storeTileState.)</i></td></tr>
+<tr><th id="499">499</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">maxDataSize</span>		The size of the state within the data buffer.</i></td></tr>
+<tr><th id="500">500</th><td><i class="doc">	/// <span class="command">@return</span> The status flags for the operation.</i></td></tr>
+<tr><th id="501">501</th><td>	<a class="typedef" href="DetourStatus.h.html#dtStatus" title='dtStatus' data-type='unsigned int' data-ref="dtStatus" >dtStatus</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh16restoreTileStateEP10dtMeshTilePKhi" title='dtNavMesh::restoreTileState' data-ref="_ZN9dtNavMesh16restoreTileStateEP10dtMeshTilePKhi" id="_ZN9dtNavMesh16restoreTileStateEP10dtMeshTilePKhi" >restoreTileState</a>(<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col1 decl" id="61tile" title='tile' data-type='dtMeshTile *' data-ref="61tile" >tile</dfn>, <em>const</em> <em>unsigned</em> <em>char</em>* <dfn class="local col2 decl" id="62data" title='data' data-type='const unsigned char *' data-ref="62data" >data</dfn>, <em>const</em> <em>int</em> <dfn class="local col3 decl" id="63maxDataSize" title='maxDataSize' data-type='const int' data-ref="63maxDataSize" >maxDataSize</dfn>);</td></tr>
+<tr><th id="502">502</th><td>	</td></tr>
+<tr><th id="503">503</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="504">504</th><td><i class="doc"></i></td></tr>
+<tr><th id="505">505</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="506">506</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">Encoding and Decoding</span></i></td></tr>
+<tr><th id="507">507</th><td><i class="doc">	/// These functions are generally meant for internal use only.</i></td></tr>
+<tr><th id="508">508</th><td><i class="doc"></i></td></tr>
+<tr><th id="509">509</th><td><i class="doc">	/// Derives a standard polygon reference.</i></td></tr>
+<tr><th id="510">510</th><td><i class="doc">	///  <span class="command">@note</span> This function is generally meant for internal use only.</i></td></tr>
+<tr><th id="511">511</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">salt</span>	The tile's salt value.</i></td></tr>
+<tr><th id="512">512</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">it</span>		The index of the tile.</i></td></tr>
+<tr><th id="513">513</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ip</span>		The index of the polygon within the tile.</i></td></tr>
+<tr><th id="514">514</th><td>	<b>inline</b> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="decl def" id="_ZNK9dtNavMesh12encodePolyIdEjjj" title='dtNavMesh::encodePolyId' data-ref="_ZNK9dtNavMesh12encodePolyIdEjjj" >encodePolyId</dfn>(<em>unsigned</em> <em>int</em> <dfn class="local col4 decl" id="64salt" title='salt' data-type='unsigned int' data-ref="64salt" >salt</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col5 decl" id="65it" title='it' data-type='unsigned int' data-ref="65it" >it</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col6 decl" id="66ip" title='ip' data-type='unsigned int' data-ref="66ip" >ip</dfn>) <em>const</em></td></tr>
+<tr><th id="515">515</th><td>	{</td></tr>
+<tr><th id="516">516</th><td>		<b>return</b> ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<a class="local col4 ref" href="#64salt" title='salt' data-ref="64salt" >salt</a> &lt;&lt; (<a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>+<a class="member" href="#dtNavMesh::m_tileBits" title='dtNavMesh::m_tileBits' data-ref="dtNavMesh::m_tileBits" >m_tileBits</a>)) | ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<a class="local col5 ref" href="#65it" title='it' data-ref="65it" >it</a> &lt;&lt; <a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>) | (<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<a class="local col6 ref" href="#66ip" title='ip' data-ref="66ip" >ip</a>;</td></tr>
+<tr><th id="517">517</th><td>	}</td></tr>
+<tr><th id="518">518</th><td>	</td></tr>
+<tr><th id="519">519</th><td>	<i class="doc">/// Decodes a standard polygon reference.</i></td></tr>
+<tr><th id="520">520</th><td><i class="doc">	///  <span class="command">@note</span> This function is generally meant for internal use only.</i></td></tr>
+<tr><th id="521">521</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>   The polygon reference to decode.</i></td></tr>
+<tr><th id="522">522</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">salt</span>	The tile's salt value.</i></td></tr>
+<tr><th id="523">523</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">it</span>		The index of the tile.</i></td></tr>
+<tr><th id="524">524</th><td><i class="doc">	///  <span class="command">@param</span>[out]	<span class="arg">ip</span>		The index of the polygon within the tile.</i></td></tr>
+<tr><th id="525">525</th><td><i class="doc">	///  <span class="command">@see</span> #encodePolyId</i></td></tr>
+<tr><th id="526">526</th><td>	<b>inline</b> <em>void</em> <dfn class="decl def" id="_ZNK9dtNavMesh12decodePolyIdEmRjS0_S0_" title='dtNavMesh::decodePolyId' data-ref="_ZNK9dtNavMesh12decodePolyIdEmRjS0_S0_" >decodePolyId</dfn>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col7 decl" id="67ref" title='ref' data-type='dtPolyRef' data-ref="67ref" >ref</dfn>, <em>unsigned</em> <em>int</em>&amp; <dfn class="local col8 decl" id="68salt" title='salt' data-type='unsigned int &amp;' data-ref="68salt" >salt</dfn>, <em>unsigned</em> <em>int</em>&amp; <dfn class="local col9 decl" id="69it" title='it' data-type='unsigned int &amp;' data-ref="69it" >it</dfn>, <em>unsigned</em> <em>int</em>&amp; <dfn class="local col0 decl" id="70ip" title='ip' data-type='unsigned int &amp;' data-ref="70ip" >ip</dfn>) <em>const</em></td></tr>
+<tr><th id="527">527</th><td>	{</td></tr>
+<tr><th id="528">528</th><td>		<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col1 decl" id="71saltMask" title='saltMask' data-type='const dtPolyRef' data-ref="71saltMask" >saltMask</dfn> = ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<var>1</var>&lt;&lt;<a class="member" href="#dtNavMesh::m_saltBits" title='dtNavMesh::m_saltBits' data-ref="dtNavMesh::m_saltBits" >m_saltBits</a>)-<var>1</var>;</td></tr>
+<tr><th id="529">529</th><td>		<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col2 decl" id="72tileMask" title='tileMask' data-type='const dtPolyRef' data-ref="72tileMask" >tileMask</dfn> = ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<var>1</var>&lt;&lt;<a class="member" href="#dtNavMesh::m_tileBits" title='dtNavMesh::m_tileBits' data-ref="dtNavMesh::m_tileBits" >m_tileBits</a>)-<var>1</var>;</td></tr>
+<tr><th id="530">530</th><td>		<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col3 decl" id="73polyMask" title='polyMask' data-type='const dtPolyRef' data-ref="73polyMask" >polyMask</dfn> = ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<var>1</var>&lt;&lt;<a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>)-<var>1</var>;</td></tr>
+<tr><th id="531">531</th><td>		<a class="local col8 ref" href="#68salt" title='salt' data-ref="68salt" >salt</a> = (<em>unsigned</em> <em>int</em>)((<a class="local col7 ref" href="#67ref" title='ref' data-ref="67ref" >ref</a> &gt;&gt; (<a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>+<a class="member" href="#dtNavMesh::m_tileBits" title='dtNavMesh::m_tileBits' data-ref="dtNavMesh::m_tileBits" >m_tileBits</a>)) &amp; <a class="local col1 ref" href="#71saltMask" title='saltMask' data-ref="71saltMask" >saltMask</a>);</td></tr>
+<tr><th id="532">532</th><td>		<a class="local col9 ref" href="#69it" title='it' data-ref="69it" >it</a> = (<em>unsigned</em> <em>int</em>)((<a class="local col7 ref" href="#67ref" title='ref' data-ref="67ref" >ref</a> &gt;&gt; <a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>) &amp; <a class="local col2 ref" href="#72tileMask" title='tileMask' data-ref="72tileMask" >tileMask</a>);</td></tr>
+<tr><th id="533">533</th><td>		<a class="local col0 ref" href="#70ip" title='ip' data-ref="70ip" >ip</a> = (<em>unsigned</em> <em>int</em>)(<a class="local col7 ref" href="#67ref" title='ref' data-ref="67ref" >ref</a> &amp; <a class="local col3 ref" href="#73polyMask" title='polyMask' data-ref="73polyMask" >polyMask</a>);</td></tr>
+<tr><th id="534">534</th><td>	}</td></tr>
+<tr><th id="535">535</th><td></td></tr>
+<tr><th id="536">536</th><td>	<i class="doc">/// Extracts a tile's salt value from the specified polygon reference.</i></td></tr>
+<tr><th id="537">537</th><td><i class="doc">	///  <span class="command">@note</span> This function is generally meant for internal use only.</i></td></tr>
+<tr><th id="538">538</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The polygon reference.</i></td></tr>
+<tr><th id="539">539</th><td><i class="doc">	///  <span class="command">@see</span> #encodePolyId</i></td></tr>
+<tr><th id="540">540</th><td>	<b>inline</b> <em>unsigned</em> <em>int</em> <dfn class="decl def" id="_ZNK9dtNavMesh16decodePolyIdSaltEm" title='dtNavMesh::decodePolyIdSalt' data-ref="_ZNK9dtNavMesh16decodePolyIdSaltEm" >decodePolyIdSalt</dfn>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col4 decl" id="74ref" title='ref' data-type='dtPolyRef' data-ref="74ref" >ref</dfn>) <em>const</em></td></tr>
+<tr><th id="541">541</th><td>	{</td></tr>
+<tr><th id="542">542</th><td>		<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col5 decl" id="75saltMask" title='saltMask' data-type='const dtPolyRef' data-ref="75saltMask" >saltMask</dfn> = ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<var>1</var>&lt;&lt;<a class="member" href="#dtNavMesh::m_saltBits" title='dtNavMesh::m_saltBits' data-ref="dtNavMesh::m_saltBits" >m_saltBits</a>)-<var>1</var>;</td></tr>
+<tr><th id="543">543</th><td>		<b>return</b> (<em>unsigned</em> <em>int</em>)((<a class="local col4 ref" href="#74ref" title='ref' data-ref="74ref" >ref</a> &gt;&gt; (<a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>+<a class="member" href="#dtNavMesh::m_tileBits" title='dtNavMesh::m_tileBits' data-ref="dtNavMesh::m_tileBits" >m_tileBits</a>)) &amp; <a class="local col5 ref" href="#75saltMask" title='saltMask' data-ref="75saltMask" >saltMask</a>);</td></tr>
+<tr><th id="544">544</th><td>	}</td></tr>
+<tr><th id="545">545</th><td>	</td></tr>
+<tr><th id="546">546</th><td>	<i class="doc">/// Extracts the tile's index from the specified polygon reference.</i></td></tr>
+<tr><th id="547">547</th><td><i class="doc">	///  <span class="command">@note</span> This function is generally meant for internal use only.</i></td></tr>
+<tr><th id="548">548</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The polygon reference.</i></td></tr>
+<tr><th id="549">549</th><td><i class="doc">	///  <span class="command">@see</span> #encodePolyId</i></td></tr>
+<tr><th id="550">550</th><td>	<b>inline</b> <em>unsigned</em> <em>int</em> <dfn class="decl def" id="_ZNK9dtNavMesh16decodePolyIdTileEm" title='dtNavMesh::decodePolyIdTile' data-ref="_ZNK9dtNavMesh16decodePolyIdTileEm" >decodePolyIdTile</dfn>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col6 decl" id="76ref" title='ref' data-type='dtPolyRef' data-ref="76ref" >ref</dfn>) <em>const</em></td></tr>
+<tr><th id="551">551</th><td>	{</td></tr>
+<tr><th id="552">552</th><td>		<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col7 decl" id="77tileMask" title='tileMask' data-type='const dtPolyRef' data-ref="77tileMask" >tileMask</dfn> = ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<var>1</var>&lt;&lt;<a class="member" href="#dtNavMesh::m_tileBits" title='dtNavMesh::m_tileBits' data-ref="dtNavMesh::m_tileBits" >m_tileBits</a>)-<var>1</var>;</td></tr>
+<tr><th id="553">553</th><td>		<b>return</b> (<em>unsigned</em> <em>int</em>)((<a class="local col6 ref" href="#76ref" title='ref' data-ref="76ref" >ref</a> &gt;&gt; <a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>) &amp; <a class="local col7 ref" href="#77tileMask" title='tileMask' data-ref="77tileMask" >tileMask</a>);</td></tr>
+<tr><th id="554">554</th><td>	}</td></tr>
+<tr><th id="555">555</th><td>	</td></tr>
+<tr><th id="556">556</th><td>	<i class="doc">/// Extracts the polygon's index (within its tile) from the specified polygon reference.</i></td></tr>
+<tr><th id="557">557</th><td><i class="doc">	///  <span class="command">@note</span> This function is generally meant for internal use only.</i></td></tr>
+<tr><th id="558">558</th><td><i class="doc">	///  <span class="command">@param</span>[in]	<span class="arg">ref</span>		The polygon reference.</i></td></tr>
+<tr><th id="559">559</th><td><i class="doc">	///  <span class="command">@see</span> #encodePolyId</i></td></tr>
+<tr><th id="560">560</th><td>	<b>inline</b> <em>unsigned</em> <em>int</em> <dfn class="decl def" id="_ZNK9dtNavMesh16decodePolyIdPolyEm" title='dtNavMesh::decodePolyIdPoly' data-ref="_ZNK9dtNavMesh16decodePolyIdPolyEm" >decodePolyIdPoly</dfn>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col8 decl" id="78ref" title='ref' data-type='dtPolyRef' data-ref="78ref" >ref</dfn>) <em>const</em></td></tr>
+<tr><th id="561">561</th><td>	{</td></tr>
+<tr><th id="562">562</th><td>		<em>const</em> <a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col9 decl" id="79polyMask" title='polyMask' data-type='const dtPolyRef' data-ref="79polyMask" >polyMask</dfn> = ((<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>)<var>1</var>&lt;&lt;<a class="member" href="#dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</a>)-<var>1</var>;</td></tr>
+<tr><th id="563">563</th><td>		<b>return</b> (<em>unsigned</em> <em>int</em>)(<a class="local col8 ref" href="#78ref" title='ref' data-ref="78ref" >ref</a> &amp; <a class="local col9 ref" href="#79polyMask" title='polyMask' data-ref="79polyMask" >polyMask</a>);</td></tr>
+<tr><th id="564">564</th><td>	}</td></tr>
+<tr><th id="565">565</th><td></td></tr>
+<tr><th id="566">566</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="567">567</th><td>	</td></tr>
+<tr><th id="568">568</th><td><b>private</b>:</td></tr>
+<tr><th id="569">569</th><td></td></tr>
+<tr><th id="570">570</th><td>	<i class="doc">/// Returns pointer to tile in the tile array.</i></td></tr>
+<tr><th id="571">571</th><td>	<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh7getTileEi" title='dtNavMesh::getTile' data-ref="_ZN9dtNavMesh7getTileEi" id="_ZN9dtNavMesh7getTileEi" >getTile</a>(<em>int</em> <dfn class="local col0 decl" id="80i" title='i' data-type='int' data-ref="80i" >i</dfn>);</td></tr>
+<tr><th id="572">572</th><td></td></tr>
+<tr><th id="573">573</th><td>	<i class="doc">/// Returns neighbour tile based on side.</i></td></tr>
+<tr><th id="574">574</th><td>	<em>int</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh10getTilesAtEiiPP10dtMeshTilei" title='dtNavMesh::getTilesAt' data-ref="_ZNK9dtNavMesh10getTilesAtEiiPP10dtMeshTilei" id="_ZNK9dtNavMesh10getTilesAtEiiPP10dtMeshTilei" >getTilesAt</a>(<em>const</em> <em>int</em> <dfn class="local col1 decl" id="81x" title='x' data-type='const int' data-ref="81x" >x</dfn>, <em>const</em> <em>int</em> <dfn class="local col2 decl" id="82y" title='y' data-type='const int' data-ref="82y" >y</dfn>,</td></tr>
+<tr><th id="575">575</th><td>				   <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>** <dfn class="local col3 decl" id="83tiles" title='tiles' data-type='dtMeshTile **' data-ref="83tiles" >tiles</dfn>, <em>const</em> <em>int</em> <dfn class="local col4 decl" id="84maxTiles" title='maxTiles' data-type='const int' data-ref="84maxTiles" >maxTiles</dfn>) <em>const</em>;</td></tr>
+<tr><th id="576">576</th><td></td></tr>
+<tr><th id="577">577</th><td>	<i class="doc">/// Returns neighbour tile based on side.</i></td></tr>
+<tr><th id="578">578</th><td>	<em>int</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh19getNeighbourTilesAtEiiiPP10dtMeshTilei" title='dtNavMesh::getNeighbourTilesAt' data-ref="_ZNK9dtNavMesh19getNeighbourTilesAtEiiiPP10dtMeshTilei" id="_ZNK9dtNavMesh19getNeighbourTilesAtEiiiPP10dtMeshTilei" >getNeighbourTilesAt</a>(<em>const</em> <em>int</em> <dfn class="local col5 decl" id="85x" title='x' data-type='const int' data-ref="85x" >x</dfn>, <em>const</em> <em>int</em> <dfn class="local col6 decl" id="86y" title='y' data-type='const int' data-ref="86y" >y</dfn>, <em>const</em> <em>int</em> <dfn class="local col7 decl" id="87side" title='side' data-type='const int' data-ref="87side" >side</dfn>,</td></tr>
+<tr><th id="579">579</th><td>							<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>** <dfn class="local col8 decl" id="88tiles" title='tiles' data-type='dtMeshTile **' data-ref="88tiles" >tiles</dfn>, <em>const</em> <em>int</em> <dfn class="local col9 decl" id="89maxTiles" title='maxTiles' data-type='const int' data-ref="89maxTiles" >maxTiles</dfn>) <em>const</em>;</td></tr>
+<tr><th id="580">580</th><td>	</td></tr>
+<tr><th id="581">581</th><td>	<i class="doc">/// Returns all polygons in neighbour tile based on portal defined by the segment.</i></td></tr>
+<tr><th id="582">582</th><td>	<em>int</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh19findConnectingPolysEPKfS1_PK10dtMeshTileiPmPfi" title='dtNavMesh::findConnectingPolys' data-ref="_ZNK9dtNavMesh19findConnectingPolysEPKfS1_PK10dtMeshTileiPmPfi" id="_ZNK9dtNavMesh19findConnectingPolysEPKfS1_PK10dtMeshTileiPmPfi" >findConnectingPolys</a>(<em>const</em> <em>float</em>* <dfn class="local col0 decl" id="90va" title='va' data-type='const float *' data-ref="90va" >va</dfn>, <em>const</em> <em>float</em>* <dfn class="local col1 decl" id="91vb" title='vb' data-type='const float *' data-ref="91vb" >vb</dfn>,</td></tr>
+<tr><th id="583">583</th><td>							<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col2 decl" id="92tile" title='tile' data-type='const dtMeshTile *' data-ref="92tile" >tile</dfn>, <em>int</em> <dfn class="local col3 decl" id="93side" title='side' data-type='int' data-ref="93side" >side</dfn>,</td></tr>
+<tr><th id="584">584</th><td>							<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>* <dfn class="local col4 decl" id="94con" title='con' data-type='dtPolyRef *' data-ref="94con" >con</dfn>, <em>float</em>* <dfn class="local col5 decl" id="95conarea" title='conarea' data-type='float *' data-ref="95conarea" >conarea</dfn>, <em>int</em> <dfn class="local col6 decl" id="96maxcon" title='maxcon' data-type='int' data-ref="96maxcon" >maxcon</dfn>) <em>const</em>;</td></tr>
+<tr><th id="585">585</th><td>	</td></tr>
+<tr><th id="586">586</th><td>	<i class="doc">/// Builds internal polygons links for a tile.</i></td></tr>
+<tr><th id="587">587</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh15connectIntLinksEP10dtMeshTile" title='dtNavMesh::connectIntLinks' data-ref="_ZN9dtNavMesh15connectIntLinksEP10dtMeshTile" id="_ZN9dtNavMesh15connectIntLinksEP10dtMeshTile" >connectIntLinks</a>(<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col7 decl" id="97tile" title='tile' data-type='dtMeshTile *' data-ref="97tile" >tile</dfn>);</td></tr>
+<tr><th id="588">588</th><td>	<i class="doc">/// Builds internal polygons links for a tile.</i></td></tr>
+<tr><th id="589">589</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh16baseOffMeshLinksEP10dtMeshTile" title='dtNavMesh::baseOffMeshLinks' data-ref="_ZN9dtNavMesh16baseOffMeshLinksEP10dtMeshTile" id="_ZN9dtNavMesh16baseOffMeshLinksEP10dtMeshTile" >baseOffMeshLinks</a>(<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col8 decl" id="98tile" title='tile' data-type='dtMeshTile *' data-ref="98tile" >tile</dfn>);</td></tr>
+<tr><th id="590">590</th><td></td></tr>
+<tr><th id="591">591</th><td>	<i class="doc">/// Builds external polygon links for a tile.</i></td></tr>
+<tr><th id="592">592</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh15connectExtLinksEP10dtMeshTileS1_i" title='dtNavMesh::connectExtLinks' data-ref="_ZN9dtNavMesh15connectExtLinksEP10dtMeshTileS1_i" id="_ZN9dtNavMesh15connectExtLinksEP10dtMeshTileS1_i" >connectExtLinks</a>(<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col9 decl" id="99tile" title='tile' data-type='dtMeshTile *' data-ref="99tile" >tile</dfn>, <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col0 decl" id="100target" title='target' data-type='dtMeshTile *' data-ref="100target" >target</dfn>, <em>int</em> <dfn class="local col1 decl" id="101side" title='side' data-type='int' data-ref="101side" >side</dfn>);</td></tr>
+<tr><th id="593">593</th><td>	<i class="doc">/// Builds external polygon links for a tile.</i></td></tr>
+<tr><th id="594">594</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh22connectExtOffMeshLinksEP10dtMeshTileS1_i" title='dtNavMesh::connectExtOffMeshLinks' data-ref="_ZN9dtNavMesh22connectExtOffMeshLinksEP10dtMeshTileS1_i" id="_ZN9dtNavMesh22connectExtOffMeshLinksEP10dtMeshTileS1_i" >connectExtOffMeshLinks</a>(<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col2 decl" id="102tile" title='tile' data-type='dtMeshTile *' data-ref="102tile" >tile</dfn>, <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col3 decl" id="103target" title='target' data-type='dtMeshTile *' data-ref="103target" >target</dfn>, <em>int</em> <dfn class="local col4 decl" id="104side" title='side' data-type='int' data-ref="104side" >side</dfn>);</td></tr>
+<tr><th id="595">595</th><td>	</td></tr>
+<tr><th id="596">596</th><td>	<i class="doc">/// Removes external links at specified side.</i></td></tr>
+<tr><th id="597">597</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZN9dtNavMesh17unconnectExtLinksEP10dtMeshTileS1_" title='dtNavMesh::unconnectExtLinks' data-ref="_ZN9dtNavMesh17unconnectExtLinksEP10dtMeshTileS1_" id="_ZN9dtNavMesh17unconnectExtLinksEP10dtMeshTileS1_" >unconnectExtLinks</a>(<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col5 decl" id="105tile" title='tile' data-type='dtMeshTile *' data-ref="105tile" >tile</dfn>, <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col6 decl" id="106target" title='target' data-type='dtMeshTile *' data-ref="106target" >target</dfn>);</td></tr>
+<tr><th id="598">598</th><td>	</td></tr>
+<tr><th id="599">599</th><td></td></tr>
+<tr><th id="600">600</th><td>	<i>// TODO: These methods are duplicates from dtNavMeshQuery, but are needed for off-mesh connection finding.</i></td></tr>
+<tr><th id="601">601</th><td><i>	</i></td></tr>
+<tr><th id="602">602</th><td><i>	/// Queries polygons within a tile.</i></td></tr>
+<tr><th id="603">603</th><td>	<em>int</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh19queryPolygonsInTileEPK10dtMeshTilePKfS4_Pmi" title='dtNavMesh::queryPolygonsInTile' data-ref="_ZNK9dtNavMesh19queryPolygonsInTileEPK10dtMeshTilePKfS4_Pmi" id="_ZNK9dtNavMesh19queryPolygonsInTileEPK10dtMeshTilePKfS4_Pmi" >queryPolygonsInTile</a>(<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col7 decl" id="107tile" title='tile' data-type='const dtMeshTile *' data-ref="107tile" >tile</dfn>, <em>const</em> <em>float</em>* <dfn class="local col8 decl" id="108qmin" title='qmin' data-type='const float *' data-ref="108qmin" >qmin</dfn>, <em>const</em> <em>float</em>* <dfn class="local col9 decl" id="109qmax" title='qmax' data-type='const float *' data-ref="109qmax" >qmax</dfn>,</td></tr>
+<tr><th id="604">604</th><td>							<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a>* <dfn class="local col0 decl" id="110polys" title='polys' data-type='dtPolyRef *' data-ref="110polys" >polys</dfn>, <em>const</em> <em>int</em> <dfn class="local col1 decl" id="111maxPolys" title='maxPolys' data-type='const int' data-ref="111maxPolys" >maxPolys</dfn>) <em>const</em>;</td></tr>
+<tr><th id="605">605</th><td>	<i class="doc">/// Find nearest polygon within a tile.</i></td></tr>
+<tr><th id="606">606</th><td>	<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh21findNearestPolyInTileEPK10dtMeshTilePKfS4_Pf" title='dtNavMesh::findNearestPolyInTile' data-ref="_ZNK9dtNavMesh21findNearestPolyInTileEPK10dtMeshTilePKfS4_Pf" id="_ZNK9dtNavMesh21findNearestPolyInTileEPK10dtMeshTilePKfS4_Pf" >findNearestPolyInTile</a>(<em>const</em> <a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="local col2 decl" id="112tile" title='tile' data-type='const dtMeshTile *' data-ref="112tile" >tile</dfn>, <em>const</em> <em>float</em>* <dfn class="local col3 decl" id="113center" title='center' data-type='const float *' data-ref="113center" >center</dfn>,</td></tr>
+<tr><th id="607">607</th><td>									<em>const</em> <em>float</em>* <dfn class="local col4 decl" id="114extents" title='extents' data-type='const float *' data-ref="114extents" >extents</dfn>, <em>float</em>* <dfn class="local col5 decl" id="115nearestPt" title='nearestPt' data-type='float *' data-ref="115nearestPt" >nearestPt</dfn>) <em>const</em>;</td></tr>
+<tr><th id="608">608</th><td>	<i class="doc">/// Returns closest point on polygon.</i></td></tr>
+<tr><th id="609">609</th><td>	<em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_ZNK9dtNavMesh18closestPointOnPolyEmPKfPfPb" title='dtNavMesh::closestPointOnPoly' data-ref="_ZNK9dtNavMesh18closestPointOnPolyEmPKfPfPb" id="_ZNK9dtNavMesh18closestPointOnPolyEmPKfPfPb" >closestPointOnPoly</a>(<a class="typedef" href="#dtPolyRef" title='dtPolyRef' data-type='uint64_d' data-ref="dtPolyRef" >dtPolyRef</a> <dfn class="local col6 decl" id="116ref" title='ref' data-type='dtPolyRef' data-ref="116ref" >ref</dfn>, <em>const</em> <em>float</em>* <dfn class="local col7 decl" id="117pos" title='pos' data-type='const float *' data-ref="117pos" >pos</dfn>, <em>float</em>* <dfn class="local col8 decl" id="118closest" title='closest' data-type='float *' data-ref="118closest" >closest</dfn>, <em>bool</em>* <dfn class="local col9 decl" id="119posOverPoly" title='posOverPoly' data-type='bool *' data-ref="119posOverPoly" >posOverPoly</dfn>) <em>const</em>;</td></tr>
+<tr><th id="610">610</th><td>	</td></tr>
+<tr><th id="611">611</th><td>	<a class="type" href="#dtNavMeshParams" title='dtNavMeshParams' data-ref="dtNavMeshParams" >dtNavMeshParams</a> <dfn class="decl" id="dtNavMesh::m_params" title='dtNavMesh::m_params' data-ref="dtNavMesh::m_params" >m_params</dfn>;			<i class="doc">///&lt; Current initialization params. TODO: do not store this info twice.</i></td></tr>
+<tr><th id="612">612</th><td>	<em>float</em> <dfn class="decl" id="dtNavMesh::m_orig" title='dtNavMesh::m_orig' data-ref="dtNavMesh::m_orig" >m_orig</dfn>[<var>3</var>];					<i class="doc">///&lt; Origin of the tile (0,0)</i></td></tr>
+<tr><th id="613">613</th><td>	<em>float</em> <dfn class="decl" id="dtNavMesh::m_tileWidth" title='dtNavMesh::m_tileWidth' data-ref="dtNavMesh::m_tileWidth" >m_tileWidth</dfn>, <dfn class="decl" id="dtNavMesh::m_tileHeight" title='dtNavMesh::m_tileHeight' data-ref="dtNavMesh::m_tileHeight" >m_tileHeight</dfn>;	<i class="doc">///&lt; Dimensions of each tile.</i></td></tr>
+<tr><th id="614">614</th><td>	<em>int</em> <dfn class="decl" id="dtNavMesh::m_maxTiles" title='dtNavMesh::m_maxTiles' data-ref="dtNavMesh::m_maxTiles" >m_maxTiles</dfn>;						<i class="doc">///&lt; Max number of tiles.</i></td></tr>
+<tr><th id="615">615</th><td>	<em>int</em> <dfn class="decl" id="dtNavMesh::m_tileLutSize" title='dtNavMesh::m_tileLutSize' data-ref="dtNavMesh::m_tileLutSize" >m_tileLutSize</dfn>;					<i class="doc">///&lt; Tile hash lookup size (must be pot).</i></td></tr>
+<tr><th id="616">616</th><td>	<em>int</em> <dfn class="decl" id="dtNavMesh::m_tileLutMask" title='dtNavMesh::m_tileLutMask' data-ref="dtNavMesh::m_tileLutMask" >m_tileLutMask</dfn>;					<i class="doc">///&lt; Tile hash lookup mask.</i></td></tr>
+<tr><th id="617">617</th><td></td></tr>
+<tr><th id="618">618</th><td>	<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>** <dfn class="decl" id="dtNavMesh::m_posLookup" title='dtNavMesh::m_posLookup' data-ref="dtNavMesh::m_posLookup" >m_posLookup</dfn>;			<i class="doc">///&lt; Tile hash lookup.</i></td></tr>
+<tr><th id="619">619</th><td>	<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="decl" id="dtNavMesh::m_nextFree" title='dtNavMesh::m_nextFree' data-ref="dtNavMesh::m_nextFree" >m_nextFree</dfn>;				<i class="doc">///&lt; Freelist of tiles.</i></td></tr>
+<tr><th id="620">620</th><td>	<a class="type" href="#dtMeshTile" title='dtMeshTile' data-ref="dtMeshTile" >dtMeshTile</a>* <dfn class="decl" id="dtNavMesh::m_tiles" title='dtNavMesh::m_tiles' data-ref="dtNavMesh::m_tiles" >m_tiles</dfn>;				<i class="doc">///&lt; List of tiles.</i></td></tr>
+<tr><th id="621">621</th><td>		</td></tr>
+<tr><th id="622">622</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtNavMesh::m_saltBits" title='dtNavMesh::m_saltBits' data-ref="dtNavMesh::m_saltBits" >m_saltBits</dfn>;			<i class="doc">///&lt; Number of salt bits in the tile ID.</i></td></tr>
+<tr><th id="623">623</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtNavMesh::m_tileBits" title='dtNavMesh::m_tileBits' data-ref="dtNavMesh::m_tileBits" >m_tileBits</dfn>;			<i class="doc">///&lt; Number of tile bits in the tile ID.</i></td></tr>
+<tr><th id="624">624</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtNavMesh::m_polyBits" title='dtNavMesh::m_polyBits' data-ref="dtNavMesh::m_polyBits" >m_polyBits</dfn>;			<i class="doc">///&lt; Number of poly bits in the tile ID.</i></td></tr>
+<tr><th id="625">625</th><td>};</td></tr>
+<tr><th id="626">626</th><td></td></tr>
+<tr><th id="627">627</th><td><i class="doc">/// Allocates a navigation mesh object using the Detour allocator.</i></td></tr>
+<tr><th id="628">628</th><td><i class="doc">/// <span class="command">@return</span> A navigation mesh that is ready for initialization, or null on failure.</i></td></tr>
+<tr><th id="629">629</th><td><i class="doc">///  <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="630">630</th><td><a class="type" href="#dtNavMesh" title='dtNavMesh' data-ref="dtNavMesh" >dtNavMesh</a>* <a class="decl" href="../Source/DetourNavMesh.cpp.html#_Z14dtAllocNavMeshv" title='dtAllocNavMesh' data-ref="_Z14dtAllocNavMeshv" id="_Z14dtAllocNavMeshv" >dtAllocNavMesh</a>();</td></tr>
+<tr><th id="631">631</th><td></td></tr>
+<tr><th id="632">632</th><td><i class="doc">/// Frees the specified navigation mesh object using the Detour allocator.</i></td></tr>
+<tr><th id="633">633</th><td><i class="doc">///  <span class="command">@param</span>[in]	<span class="arg">navmesh</span>		A navigation mesh allocated using #dtAllocNavMesh</i></td></tr>
+<tr><th id="634">634</th><td><i class="doc">///  <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="635">635</th><td><em>void</em> <a class="decl" href="../Source/DetourNavMesh.cpp.html#_Z13dtFreeNavMeshP9dtNavMesh" title='dtFreeNavMesh' data-ref="_Z13dtFreeNavMeshP9dtNavMesh" id="_Z13dtFreeNavMeshP9dtNavMesh" >dtFreeNavMesh</a>(<a class="type" href="#dtNavMesh" title='dtNavMesh' data-ref="dtNavMesh" >dtNavMesh</a>* <dfn class="local col0 decl" id="120navmesh" title='navmesh' data-type='dtNavMesh *' data-ref="120navmesh" >navmesh</dfn>);</td></tr>
+<tr><th id="636">636</th><td></td></tr>
+<tr><th id="637">637</th><td><u>#<span data-ppcond="19">endif</span> // DETOURNAVMESH_H</u></td></tr>
+<tr><th id="638">638</th><td></td></tr>
+<tr><th id="639">639</th><td><i>///////////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="640">640</th><td><i></i></td></tr>
+<tr><th id="641">641</th><td><i>// This section contains detailed documentation for members that don't have</i></td></tr>
+<tr><th id="642">642</th><td><i>// a source file. It reduces clutter in the main section of the header.</i></td></tr>
+<tr><th id="643">643</th><td></td></tr>
+<tr><th id="644">644</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="645">645</th><td><i class="doc"></i></td></tr>
+<tr><th id="646">646</th><td><i class="doc"><span class="command">@typedef</span> <span class="verb" data-ref="dtPolyRef">dtPolyRef</span></i></td></tr>
+<tr><th id="647">647</th><td><i class="doc"><span class="command">@par</span></i></td></tr>
+<tr><th id="648">648</th><td><i class="doc"></i></td></tr>
+<tr><th id="649">649</th><td><i class="doc">Polygon references are subject to the same invalidate/preserve/restore </i></td></tr>
+<tr><th id="650">650</th><td><i class="doc">rules that apply to #dtTileRef's.  If the #dtTileRef for the polygon's</i></td></tr>
+<tr><th id="651">651</th><td><i class="doc">tile changes, the polygon reference becomes invalid.</i></td></tr>
+<tr><th id="652">652</th><td><i class="doc"></i></td></tr>
+<tr><th id="653">653</th><td><i class="doc">Changing a polygon's flags, area id, etc. does not impact its polygon</i></td></tr>
+<tr><th id="654">654</th><td><i class="doc">reference.</i></td></tr>
+<tr><th id="655">655</th><td><i class="doc"></i></td></tr>
+<tr><th id="656">656</th><td><i class="doc"><span class="command">@typedef</span> <span class="verb" data-ref="dtTileRef">dtTileRef</span></i></td></tr>
+<tr><th id="657">657</th><td><i class="doc"><span class="command">@par</span></i></td></tr>
+<tr><th id="658">658</th><td><i class="doc"></i></td></tr>
+<tr><th id="659">659</th><td><i class="doc">The following changes will invalidate a tile reference:</i></td></tr>
+<tr><th id="660">660</th><td><i class="doc"></i></td></tr>
+<tr><th id="661">661</th><td><i class="doc">- The referenced tile has been removed from the navigation mesh.</i></td></tr>
+<tr><th id="662">662</th><td><i class="doc">- The navigation mesh has been initialized using a different set</i></td></tr>
+<tr><th id="663">663</th><td><i class="doc">  of #dtNavMeshParams.</i></td></tr>
+<tr><th id="664">664</th><td><i class="doc"></i></td></tr>
+<tr><th id="665">665</th><td><i class="doc">A tile reference is preserved/restored if the tile is added to a navigation </i></td></tr>
+<tr><th id="666">666</th><td><i class="doc">mesh initialized with the original #dtNavMeshParams and is added at the</i></td></tr>
+<tr><th id="667">667</th><td><i class="doc">original reference location. (E.g. The lastRef parameter is used with</i></td></tr>
+<tr><th id="668">668</th><td><i class="doc">dtNavMesh::addTile.)</i></td></tr>
+<tr><th id="669">669</th><td><i class="doc"></i></td></tr>
+<tr><th id="670">670</th><td><i class="doc">Basically, if the storage structure of a tile changes, its associated</i></td></tr>
+<tr><th id="671">671</th><td><i class="doc">tile reference changes.</i></td></tr>
+<tr><th id="672">672</th><td><i class="doc"></i></td></tr>
+<tr><th id="673">673</th><td><i class="doc"></i></td></tr>
+<tr><th id="674">674</th><td><i class="doc"><span class="command">@var</span> <span class="verb">unsigned short dtPoly::neis[DT_VERTS_PER_POLYGON]</span></i></td></tr>
+<tr><th id="675">675</th><td><i class="doc"><span class="command">@par</span></i></td></tr>
+<tr><th id="676">676</th><td><i class="doc"></i></td></tr>
+<tr><th id="677">677</th><td><i class="doc">Each entry represents data for the edge starting at the vertex of the same index. </i></td></tr>
+<tr><th id="678">678</th><td><i class="doc">E.g. The entry at index n represents the edge data for vertex[n] to vertex[n+1].</i></td></tr>
+<tr><th id="679">679</th><td><i class="doc"></i></td></tr>
+<tr><th id="680">680</th><td><i class="doc">A value of zero indicates the edge has no polygon connection. (It makes up the </i></td></tr>
+<tr><th id="681">681</th><td><i class="doc">border of the navigation mesh.)</i></td></tr>
+<tr><th id="682">682</th><td><i class="doc"></i></td></tr>
+<tr><th id="683">683</th><td><i class="doc">The information can be extracted as follows: </i></td></tr>
+<tr><th id="684">684</th><td><i class="doc"><span class="command">@code</span><span class="verb"> </span></i></td></tr>
+<tr><th id="685">685</th><td><i class="doc"><span class="verb"></span><span class="verb">neighborRef = neis[n] &amp; 0xff; // Get the neighbor polygon reference.</span></i></td></tr>
+<tr><th id="686">686</th><td><i class="doc"><span class="verb"></span><span class="verb"></span></i></td></tr>
+<tr><th id="687">687</th><td><i class="doc"><span class="verb"></span><span class="verb">if (neis[n] &amp; #DT_EX_LINK)</span></i></td></tr>
+<tr><th id="688">688</th><td><i class="doc"><span class="verb"></span><span class="verb">{</span></i></td></tr>
+<tr><th id="689">689</th><td><i class="doc"><span class="verb"></span><span class="verb">    // The edge is an external (portal) edge.</span></i></td></tr>
+<tr><th id="690">690</th><td><i class="doc"><span class="verb"></span><span class="verb">}</span></i></td></tr>
+<tr><th id="691">691</th><td><i class="doc"><span class="verb"></span>@endcode</i></td></tr>
+<tr><th id="692">692</th><td><i class="doc"></i></td></tr>
+<tr><th id="693">693</th><td><i class="doc"><span class="command">@var</span> <span class="verb">float dtMeshHeader::bvQuantFactor</span></i></td></tr>
+<tr><th id="694">694</th><td><i class="doc"><span class="command">@par</span></i></td></tr>
+<tr><th id="695">695</th><td><i class="doc"></i></td></tr>
+<tr><th id="696">696</th><td><i class="doc">This value is used for converting between world and bounding volume coordinates.</i></td></tr>
+<tr><th id="697">697</th><td><i class="doc">For example:</i></td></tr>
+<tr><th id="698">698</th><td><i class="doc"><span class="command">@code</span></i></td></tr>
+<tr><th id="699">699</th><td><i class="doc"><span class="verb">const float cs = 1.0f / tile-&gt;header-&gt;bvQuantFactor;</span></i></td></tr>
+<tr><th id="700">700</th><td><i class="doc"><span class="verb"></span><span class="verb">const dtBVNode* n = &amp;tile-&gt;bvTree[i];</span></i></td></tr>
+<tr><th id="701">701</th><td><i class="doc"><span class="verb"></span><span class="verb">if (n-&gt;i &gt;= 0)</span></i></td></tr>
+<tr><th id="702">702</th><td><i class="doc"><span class="verb"></span><span class="verb">{</span></i></td></tr>
+<tr><th id="703">703</th><td><i class="doc"><span class="verb"></span><span class="verb">    // This is a leaf node.</span></i></td></tr>
+<tr><th id="704">704</th><td><i class="doc"><span class="verb"></span><span class="verb">    float worldMinX = tile-&gt;header-&gt;bmin[0] + n-&gt;bmin[0]*cs;</span></i></td></tr>
+<tr><th id="705">705</th><td><i class="doc"><span class="verb"></span><span class="verb">    float worldMinY = tile-&gt;header-&gt;bmin[0] + n-&gt;bmin[1]*cs;</span></i></td></tr>
+<tr><th id="706">706</th><td><i class="doc"><span class="verb"></span><span class="verb">    // Etc...</span></i></td></tr>
+<tr><th id="707">707</th><td><i class="doc"><span class="verb"></span><span class="verb">}</span></i></td></tr>
+<tr><th id="708">708</th><td><i class="doc"><span class="verb"></span>@endcode</i></td></tr>
+<tr><th id="709">709</th><td><i class="doc"></i></td></tr>
+<tr><th id="710">710</th><td><i class="doc"><span class="command">@struct</span> <span class="verb" data-ref="dtMeshTile">dtMeshTile</span></i></td></tr>
+<tr><th id="711">711</th><td><i class="doc"><span class="command">@par</span></i></td></tr>
+<tr><th id="712">712</th><td><i class="doc"></i></td></tr>
+<tr><th id="713">713</th><td><i class="doc">Tiles generally only exist within the context of a dtNavMesh object.</i></td></tr>
+<tr><th id="714">714</th><td><i class="doc"></i></td></tr>
+<tr><th id="715">715</th><td><i class="doc">Some tile content is optional.  For example, a tile may not contain any</i></td></tr>
+<tr><th id="716">716</th><td><i class="doc">off-mesh connections.  In this case the associated pointer will be null.</i></td></tr>
+<tr><th id="717">717</th><td><i class="doc"></i></td></tr>
+<tr><th id="718">718</th><td><i class="doc">If a detail mesh exists it will share vertices with the base polygon mesh.  </i></td></tr>
+<tr><th id="719">719</th><td><i class="doc">Only the vertices unique to the detail mesh will be stored in #detailVerts.</i></td></tr>
+<tr><th id="720">720</th><td><i class="doc"></i></td></tr>
+<tr><th id="721">721</th><td><i class="doc"><span class="command">@warning</span> Tiles returned by a dtNavMesh object are not guarenteed to be populated.</i></td></tr>
+<tr><th id="722">722</th><td><i class="doc">For example: The tile at a location might not have been loaded yet, or may have been removed.</i></td></tr>
+<tr><th id="723">723</th><td><i class="doc">In this case, pointers will be null.  So if in doubt, check the polygon count in the </i></td></tr>
+<tr><th id="724">724</th><td><i class="doc">tile's header to determine if a tile has polygons defined.</i></td></tr>
+<tr><th id="725">725</th><td><i class="doc"></i></td></tr>
+<tr><th id="726">726</th><td><i class="doc"><span class="command">@var</span> <span class="verb">float dtOffMeshConnection::pos[6]</span></i></td></tr>
+<tr><th id="727">727</th><td><i class="doc"><span class="command">@par</span></i></td></tr>
+<tr><th id="728">728</th><td><i class="doc"></i></td></tr>
+<tr><th id="729">729</th><td><i class="doc">For a properly built navigation mesh, vertex A will always be within the bounds of the mesh. </i></td></tr>
+<tr><th id="730">730</th><td><i class="doc">Vertex B is not required to be within the bounds of the mesh.</i></td></tr>
+<tr><th id="731">731</th><td><i class="doc"></i></td></tr>
+<tr><th id="732">732</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="733">733</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Source/DetourNavMesh.cpp.html'>TrinityCore3.3.5/dep/recastnavigation/Detour/Source/DetourNavMesh.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

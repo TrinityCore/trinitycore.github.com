@@ -1,0 +1,409 @@
+<!doctype html>
+<html>
+<head>
+<title>debugAssert.cpp [TrinityCore6.x/dep/g3dlite/source/debugAssert.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/source/debugAssert.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>g3dlite</a>/<a href='./'>source</a>/debugAssert.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> @file</span> debugAssert.cpp</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> Windows implementation of assertion routines.</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"></i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> @maintainer</span> Morgan McGuire, graphics3d.com</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> </i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"><span class="command"> @created</span> 2001-08-26</i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"><span class="command"> @edited</span>  2009-06-02</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../include/G3D/debugAssert.h.html">"G3D/debugAssert.h"</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../include/G3D/platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="15">15</th><td>    <u>#include &lt;tchar.h&gt;</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../include/G3D/format.h.html">"G3D/format.h"</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../include/G3D/prompt.h.html">"G3D/prompt.h"</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../include/G3D/debugPrintf.h.html">"G3D/debugPrintf.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../include/G3D/Log.h.html">"G3D/Log.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../include/c++/4.9/cstdlib.html">&lt;cstdlib&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#<span data-ppcond="25">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="26">26</th><td>    <i>// disable: "C++ exception handler used"</i></td></tr>
+<tr><th id="27">27</th><td><u>#   pragma warning (push)</u></td></tr>
+<tr><th id="28">28</th><td><u>#   pragma warning (disable : 4530)</u></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="25">endif</span></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>using</b> <b>namespace</b> std;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><b>namespace</b> <span class="namespace">G3D</span> { <b>namespace</b> <span class="namespace">_internal</span> {</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><a class="typedef" href="../include/G3D/debugPrintf.h.html#G3D::ConsolePrintHook" title='G3D::ConsolePrintHook' data-type='void (*)(const std::string &amp;)' data-ref="G3D::ConsolePrintHook" >ConsolePrintHook</a> <dfn class="decl def" id="_ZN3G3D9_internal17_consolePrintHookE" title='G3D::_internal::_consolePrintHook' data-ref="_ZN3G3D9_internal17_consolePrintHookE" >_consolePrintHook</dfn>;</td></tr>
+<tr><th id="36">36</th><td><a class="typedef" href="../include/G3D/debugAssert.h.html#G3D::AssertionHook" title='G3D::AssertionHook' data-type='bool (*)(const char *, const std::string &amp;, const char *, int, bool)' data-ref="G3D::AssertionHook" >AssertionHook</a> <dfn class="decl def" id="_ZN3G3D9_internal10_debugHookE" title='G3D::_internal::_debugHook' data-ref="_ZN3G3D9_internal10_debugHookE" >_debugHook</dfn> = <a class="ref" href="#_ZN3G3D9_internal19_handleDebugAssert_EPKcRKSsS2_ib" title='G3D::_internal::_handleDebugAssert_' data-ref="_ZN3G3D9_internal19_handleDebugAssert_EPKcRKSsS2_ib" >_handleDebugAssert_</a>;</td></tr>
+<tr><th id="37">37</th><td><a class="typedef" href="../include/G3D/debugAssert.h.html#G3D::AssertionHook" title='G3D::AssertionHook' data-type='bool (*)(const char *, const std::string &amp;, const char *, int, bool)' data-ref="G3D::AssertionHook" >AssertionHook</a> <dfn class="decl def" id="_ZN3G3D9_internal12_failureHookE" title='G3D::_internal::_failureHook' data-ref="_ZN3G3D9_internal12_failureHookE" >_failureHook</dfn> = <a class="ref" href="#_ZN3G3D9_internal18_handleErrorCheck_EPKcRKSsS2_ib" title='G3D::_internal::_handleErrorCheck_' data-ref="_ZN3G3D9_internal18_handleErrorCheck_EPKcRKSsS2_ib" >_handleErrorCheck_</a>;</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><u>#<span data-ppcond="39">ifdef</span> <a class="macro" href="../include/G3D/platform.h.html#74" data-ref="_M/G3D_LINUX">G3D_LINUX</a></u></td></tr>
+<tr><th id="40">40</th><td><u>#<span data-ppcond="40">if</span> 0 /* G3DFIX: Disabled to avoid requirement for X11 libraries */</u></td></tr>
+<tr><th id="41">41</th><td>    Display*      x11Display = NULL;</td></tr>
+<tr><th id="42">42</th><td>    Window        x11Window  = <var>0</var>;</td></tr>
+<tr><th id="43">43</th><td><u>#<span data-ppcond="40">endif</span></u></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="39">endif</span></u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><u>#<span data-ppcond="47">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="48">48</th><td><em>static</em> <em>void</em> postToClipboard(<em>const</em> <em>char</em> *text) {</td></tr>
+<tr><th id="49">49</th><td>    <b>if</b> (OpenClipboard(NULL)) {</td></tr>
+<tr><th id="50">50</th><td>        HGLOBAL hMem = GlobalAlloc(GHND | GMEM_DDESHARE, strlen(text) + <var>1</var>);</td></tr>
+<tr><th id="51">51</th><td>        <b>if</b> (hMem) {</td></tr>
+<tr><th id="52">52</th><td>            <em>char</em> *pMem = (<em>char</em>*)GlobalLock(hMem);</td></tr>
+<tr><th id="53">53</th><td>            strcpy(pMem, text);</td></tr>
+<tr><th id="54">54</th><td>            GlobalUnlock(hMem);</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>            EmptyClipboard();</td></tr>
+<tr><th id="57">57</th><td>            SetClipboardData(CF_TEXT, hMem);</td></tr>
+<tr><th id="58">58</th><td>        }</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>        CloseClipboard();</td></tr>
+<tr><th id="61">61</th><td>        GlobalFree(hMem);</td></tr>
+<tr><th id="62">62</th><td>    }</td></tr>
+<tr><th id="63">63</th><td>}</td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="47">endif</span></u></td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><i class="doc" data-doc="_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_">/**</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc" data-doc="_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_"> outTitle should be set before the call</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc" data-doc="_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_"> */</i></td></tr>
+<tr><th id="69">69</th><td><em>static</em> <em>void</em> <dfn class="tu decl def" id="_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_" title='G3D::_internal::createErrorMessage' data-type='void G3D::_internal::createErrorMessage(const char * expression, const std::string &amp; message, const char * filename, int lineNumber, std::string &amp; outTitle, std::string &amp; outMessage)' data-ref="_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_" >createErrorMessage</dfn>(</td></tr>
+<tr><th id="70">70</th><td>    <em>const</em> <em>char</em>*         <dfn class="local col1 decl" id="1expression" title='expression' data-type='const char *' data-ref="1expression" >expression</dfn>,</td></tr>
+<tr><th id="71">71</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;  <dfn class="local col2 decl" id="2message" title='message' data-type='const std::string &amp;' data-ref="2message" >message</dfn>,</td></tr>
+<tr><th id="72">72</th><td>    <em>const</em> <em>char</em>*         <dfn class="local col3 decl" id="3filename" title='filename' data-type='const char *' data-ref="3filename" >filename</dfn>,</td></tr>
+<tr><th id="73">73</th><td>    <em>int</em>                 <dfn class="local col4 decl" id="4lineNumber" title='lineNumber' data-type='int' data-ref="4lineNumber" >lineNumber</dfn>,</td></tr>
+<tr><th id="74">74</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;        <dfn class="local col5 decl" id="5outTitle" title='outTitle' data-type='std::string &amp;' data-ref="5outTitle" >outTitle</dfn>,</td></tr>
+<tr><th id="75">75</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;        <dfn class="local col6 decl" id="6outMessage" title='outMessage' data-type='std::string &amp;' data-ref="6outMessage" >outMessage</dfn>) {</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col7 decl" id="7le" title='le' data-type='std::string' data-ref="7le" >le</dfn> = <q>""</q>;</td></tr>
+<tr><th id="78">78</th><td>    <em>const</em> <em>char</em>* <dfn class="local col8 decl" id="8newline" title='newline' data-type='const char *' data-ref="8newline" >newline</dfn> = <q>"\n"</q>;</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <u>#<span data-ppcond="80">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="81">81</th><td>        newline = <q>"\r\n"</q>;</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>        <i>// The last error value.  (Which is preserved across the call).</i></td></tr>
+<tr><th id="84">84</th><td>        DWORD lastErr = GetLastError();</td></tr>
+<tr><th id="85">85</th><td>    </td></tr>
+<tr><th id="86">86</th><td>        <i>// The decoded message from FormatMessage</i></td></tr>
+<tr><th id="87">87</th><td>        LPTSTR formatMsg = NULL;</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td>        <b>if</b> (NULL == formatMsg) {</td></tr>
+<tr><th id="90">90</th><td>            FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |</td></tr>
+<tr><th id="91">91</th><td>                          FORMAT_MESSAGE_IGNORE_INSERTS |</td></tr>
+<tr><th id="92">92</th><td>                          FORMAT_MESSAGE_FROM_SYSTEM,</td></tr>
+<tr><th id="93">93</th><td>                            NULL,</td></tr>
+<tr><th id="94">94</th><td>                            lastErr,</td></tr>
+<tr><th id="95">95</th><td>                            <var>0</var>,</td></tr>
+<tr><th id="96">96</th><td>                            (LPTSTR)&amp;formatMsg,</td></tr>
+<tr><th id="97">97</th><td>                            <var>0</var>,</td></tr>
+<tr><th id="98">98</th><td>                            NULL);</td></tr>
+<tr><th id="99">99</th><td>        }</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>        <i>// Make sure the message got translated into something.</i></td></tr>
+<tr><th id="102">102</th><td>        LPTSTR realLastErr;</td></tr>
+<tr><th id="103">103</th><td>        <b>if</b> (NULL != formatMsg) {</td></tr>
+<tr><th id="104">104</th><td>            realLastErr = formatMsg;</td></tr>
+<tr><th id="105">105</th><td>        } <b>else</b> {</td></tr>
+<tr><th id="106">106</th><td>            realLastErr = _T(<q>"Last error code does not exist."</q>);</td></tr>
+<tr><th id="107">107</th><td>        }</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>        <b>if</b> (lastErr != <var>0</var>) {</td></tr>
+<tr><th id="110">110</th><td>            le = G3D::format(<q>"Last Error (0x%08X): %s\r\n\r\n"</q>, lastErr, (LPCSTR)realLastErr);</td></tr>
+<tr><th id="111">111</th><td>        }</td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td>        <i>// Get rid of the allocated memory from FormatMessage.</i></td></tr>
+<tr><th id="114">114</th><td>        <b>if</b> (NULL != formatMsg) {</td></tr>
+<tr><th id="115">115</th><td>            LocalFree((LPVOID)formatMsg);</td></tr>
+<tr><th id="116">116</th><td>        }</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>        <em>char</em> modulePath[MAX_PATH];</td></tr>
+<tr><th id="119">119</th><td>        GetModuleFileNameA(NULL, modulePath, MAX_PATH);</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>        <em>const</em> <em>char</em>* moduleName = strrchr(modulePath, <kdb>'\\'</kdb>);</td></tr>
+<tr><th id="122">122</th><td>        outTitle = outTitle + string(<q>" - "</q>) + string(moduleName ? (moduleName + <var>1</var>) : modulePath);</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>    <u>#<span data-ppcond="80">else</span></u></td></tr>
+<tr><th id="125">125</th><td>        (<em>void</em>)<a class="local col5 ref" href="#5outTitle" title='outTitle' data-ref="5outTitle" >outTitle</a>;</td></tr>
+<tr><th id="126">126</th><td>    <u>#<span data-ppcond="80">endif</span></u></td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>    <i>// Build the message.</i></td></tr>
+<tr><th id="129">129</th><td>    <a class="local col6 ref" href="#6outMessage" title='outMessage' data-ref="6outMessage" >outMessage</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringaSEOSbIT_T0_T1_E" title='std::basic_string::operator=' data-ref="_ZNSt12basic_stringaSEOSbIT_T0_T1_E" id="_ZNSt12basic_stringaSEOSbIT_T0_T1_E" >=</a></td></tr>
+<tr><th id="130">130</th><td>        <span class="namespace">G3D::</span><a class="ref" href="../include/G3D/format.h.html#_ZN3G3D6formatEPKcz" title='G3D::format' data-ref="_ZN3G3D6formatEPKcz" id="_ZN3G3D6formatEPKcz" >format</a>(<q>"%s%s%sExpression: %s%s%s:%d%s%s%s"</q>, </td></tr>
+<tr><th id="131">131</th><td>                 <a class="local col2 ref" href="#2message" title='message' data-ref="2message" >message</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col8 ref" href="#8newline" title='newline' data-ref="8newline" >newline</a>, <a class="local col8 ref" href="#8newline" title='newline' data-ref="8newline" >newline</a>, <a class="local col1 ref" href="#1expression" title='expression' data-ref="1expression" >expression</a>, <a class="local col8 ref" href="#8newline" title='newline' data-ref="8newline" >newline</a>, </td></tr>
+<tr><th id="132">132</th><td>                 <a class="local col3 ref" href="#3filename" title='filename' data-ref="3filename" >filename</a>, <a class="local col4 ref" href="#4lineNumber" title='lineNumber' data-ref="4lineNumber" >lineNumber</a>, <a class="local col8 ref" href="#8newline" title='newline' data-ref="8newline" >newline</a>, <a class="local col8 ref" href="#8newline" title='newline' data-ref="8newline" >newline</a>, <a class="local col7 ref" href="#7le" title='le' data-ref="7le" >le</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="133">133</th><td>}</td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td><em>bool</em> <dfn class="decl def" id="_ZN3G3D9_internal19_handleDebugAssert_EPKcRKSsS2_ib" title='G3D::_internal::_handleDebugAssert_' data-ref="_ZN3G3D9_internal19_handleDebugAssert_EPKcRKSsS2_ib" >_handleDebugAssert_</dfn>(</td></tr>
+<tr><th id="137">137</th><td>    <em>const</em> <em>char</em>*         <dfn class="local col9 decl" id="9expression" title='expression' data-type='const char *' data-ref="9expression" >expression</dfn>,</td></tr>
+<tr><th id="138">138</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;  <dfn class="local col0 decl" id="10message" title='message' data-type='const std::string &amp;' data-ref="10message" >message</dfn>,</td></tr>
+<tr><th id="139">139</th><td>    <em>const</em> <em>char</em>*         <dfn class="local col1 decl" id="11filename" title='filename' data-type='const char *' data-ref="11filename" >filename</dfn>,</td></tr>
+<tr><th id="140">140</th><td>    <em>int</em>                 <dfn class="local col2 decl" id="12lineNumber" title='lineNumber' data-type='int' data-ref="12lineNumber" >lineNumber</dfn>,</td></tr>
+<tr><th id="141">141</th><td>    <em>bool</em>                <dfn class="local col3 decl" id="13useGuiPrompt" title='useGuiPrompt' data-type='bool' data-ref="13useGuiPrompt" >useGuiPrompt</dfn>) {</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col4 decl" id="14dialogTitle" title='dialogTitle' data-type='std::string' data-ref="14dialogTitle" >dialogTitle</dfn> = <q>"Assertion Failure"</q>;</td></tr>
+<tr><th id="144">144</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col5 decl" id="15dialogText" title='dialogText' data-type='std::string' data-ref="15dialogText" >dialogText</dfn> = <q>""</q>;</td></tr>
+<tr><th id="145">145</th><td>    <a class="tu ref" href="#_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_" title='G3D::_internal::createErrorMessage' data-use='c' data-ref="_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_" >createErrorMessage</a>(<a class="local col9 ref" href="#9expression" title='expression' data-ref="9expression" >expression</a>, <a class="local col0 ref" href="#10message" title='message' data-ref="10message" >message</a>, <a class="local col1 ref" href="#11filename" title='filename' data-ref="11filename" >filename</a>, <a class="local col2 ref" href="#12lineNumber" title='lineNumber' data-ref="12lineNumber" >lineNumber</a>, <a class="local col4 ref" href="#14dialogTitle" title='dialogTitle' data-ref="14dialogTitle" >dialogTitle</a>, <a class="local col5 ref" href="#15dialogText" title='dialogText' data-ref="15dialogText" >dialogText</a>);</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td>    <u>#<span data-ppcond="147">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="148">148</th><td>        DWORD lastErr = GetLastError();</td></tr>
+<tr><th id="149">149</th><td>        postToClipboard(dialogText.c_str());</td></tr>
+<tr><th id="150">150</th><td>        debugPrintf(<q>"\n%s\n"</q>, dialogText.c_str());</td></tr>
+<tr><th id="151">151</th><td>    <u>#<span data-ppcond="147">endif</span></u></td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>    <em>const</em> <em>int</em> <dfn class="local col6 decl" id="16cBreak" title='cBreak' data-type='const int' data-ref="16cBreak" >cBreak</dfn>        = <var>0</var>;</td></tr>
+<tr><th id="154">154</th><td>    <em>const</em> <em>int</em> <dfn class="local col7 decl" id="17cIgnore" title='cIgnore' data-type='const int' data-ref="17cIgnore" >cIgnore</dfn>       = <var>1</var>;</td></tr>
+<tr><th id="155">155</th><td>    <em>const</em> <em>int</em> <dfn class="local col8 decl" id="18cAbort" title='cAbort' data-type='const int' data-ref="18cAbort" >cAbort</dfn>        = <var>2</var>;</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>    <em>static</em> <em>const</em> <em>char</em>* <dfn class="local col9 decl" id="19choices" title='choices' data-type='const char *[3]' data-ref="19choices" >choices</dfn>[] = {<q>"Debug"</q>, <q>"Ignore"</q>, <q>"Exit"</q>};</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>    <i>// Log the error</i></td></tr>
+<tr><th id="160">160</th><td>    <a class="type" href="../include/G3D/Log.h.html#G3D::Log" title='G3D::Log' data-ref="G3D::Log" >Log</a>::<a class="ref" href="../include/G3D/Log.h.html#_ZN3G3D3Log6commonEv" title='G3D::Log::common' data-ref="_ZN3G3D3Log6commonEv" id="_ZN3G3D3Log6commonEv" >common</a>()-&gt;<a class="ref" href="../include/G3D/Log.h.html#_ZN3G3D3Log5printERKSs" title='G3D::Log::print' data-ref="_ZN3G3D3Log5printERKSs" id="_ZN3G3D3Log5printERKSs" >print</a>(<span class="namespace"><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1EPKT_RKT1_" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1EPKT_RKT1_" id="_ZNSt12basic_stringC1EPKT_RKT1_" >std</a>::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>(<q>"\n**************************\n\n"</q>) <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_ERKS2_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_ERKS2_" id="_ZStplOSbIT_T0_T1_ERKS2_" >+</a> <a class="local col4 ref" href="#14dialogTitle" title='dialogTitle' data-ref="14dialogTitle" >dialogTitle</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_EPKS_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_EPKS_" id="_ZStplOSbIT_T0_T1_EPKS_" >+</a> <q>"\n"</q> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_ERKS2_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_ERKS2_" id="_ZStplOSbIT_T0_T1_ERKS2_" >+</a> <a class="local col5 ref" href="#15dialogText" title='dialogText' data-ref="15dialogText" >dialogText</a>);</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>    <em>int</em> <dfn class="local col0 decl" id="20result" title='result' data-type='int' data-ref="20result" >result</dfn> = <span class="namespace">G3D::</span><a class="ref" href="../include/G3D/prompt.h.html#_ZN3G3D6promptEPKcS1_PS1_ib" title='G3D::prompt' data-ref="_ZN3G3D6promptEPKcS1_PS1_ib" id="_ZN3G3D6promptEPKcS1_PS1_ib" >prompt</a>(<a class="local col4 ref" href="#14dialogTitle" title='dialogTitle' data-ref="14dialogTitle" >dialogTitle</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col5 ref" href="#15dialogText" title='dialogText' data-ref="15dialogText" >dialogText</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), (<em>const</em> <em>char</em>**)<a class="local col9 ref" href="#19choices" title='choices' data-ref="19choices" >choices</a>, <var>3</var>, <a class="local col3 ref" href="#13useGuiPrompt" title='useGuiPrompt' data-ref="13useGuiPrompt" >useGuiPrompt</a>);</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td><u>#    <span data-ppcond="164">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="165">165</th><td>        <i>// Put the incoming last error back.</i></td></tr>
+<tr><th id="166">166</th><td>        SetLastError(lastErr);</td></tr>
+<tr><th id="167">167</th><td><u>#    <span data-ppcond="164">endif</span></u></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td>    <b>switch</b> (<a class="local col0 ref" href="#20result" title='result' data-ref="20result" >result</a>) {</td></tr>
+<tr><th id="170">170</th><td>    <i>// -1 shouldn't actually occur because it means </i></td></tr>
+<tr><th id="171">171</th><td><i>    // that we're in release mode.</i></td></tr>
+<tr><th id="172">172</th><td>    <b>case</b> -<var>1</var>:</td></tr>
+<tr><th id="173">173</th><td>    <b>case</b> <a class="local col6 ref" href="#16cBreak" title='cBreak' data-ref="16cBreak" >cBreak</a>:</td></tr>
+<tr><th id="174">174</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="175">175</th><td>        <b>break</b>;</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td>    <b>case</b> <a class="local col7 ref" href="#17cIgnore" title='cIgnore' data-ref="17cIgnore" >cIgnore</a>:</td></tr>
+<tr><th id="178">178</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="179">179</th><td>        <b>break</b>;</td></tr>
+<tr><th id="180">180</th><td>   </td></tr>
+<tr><th id="181">181</th><td>    <b>case</b> <a class="local col8 ref" href="#18cAbort" title='cAbort' data-ref="18cAbort" >cAbort</a>:</td></tr>
+<tr><th id="182">182</th><td>        <a class="ref" href="../../../../include/stdlib.h.html#exit" title='exit' data-ref="exit" id="exit" >exit</a>(-<var>1</var>);</td></tr>
+<tr><th id="183">183</th><td>        <b>break</b>;</td></tr>
+<tr><th id="184">184</th><td>    }</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>    <i>// Should never get here</i></td></tr>
+<tr><th id="187">187</th><td>    <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="188">188</th><td>}</td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td><em>bool</em> <dfn class="decl def" id="_ZN3G3D9_internal18_handleErrorCheck_EPKcRKSsS2_ib" title='G3D::_internal::_handleErrorCheck_' data-ref="_ZN3G3D9_internal18_handleErrorCheck_EPKcRKSsS2_ib" >_handleErrorCheck_</dfn>(</td></tr>
+<tr><th id="192">192</th><td>    <em>const</em> <em>char</em>*         <dfn class="local col1 decl" id="21expression" title='expression' data-type='const char *' data-ref="21expression" >expression</dfn>,</td></tr>
+<tr><th id="193">193</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;  <dfn class="local col2 decl" id="22message" title='message' data-type='const std::string &amp;' data-ref="22message" >message</dfn>,</td></tr>
+<tr><th id="194">194</th><td>    <em>const</em> <em>char</em>*         <dfn class="local col3 decl" id="23filename" title='filename' data-type='const char *' data-ref="23filename" >filename</dfn>,</td></tr>
+<tr><th id="195">195</th><td>    <em>int</em>                 <dfn class="local col4 decl" id="24lineNumber" title='lineNumber' data-type='int' data-ref="24lineNumber" >lineNumber</dfn>,</td></tr>
+<tr><th id="196">196</th><td>    <em>bool</em>                <dfn class="local col5 decl" id="25useGuiPrompt" title='useGuiPrompt' data-type='bool' data-ref="25useGuiPrompt" >useGuiPrompt</dfn>) {</td></tr>
+<tr><th id="197">197</th><td></td></tr>
+<tr><th id="198">198</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col6 decl" id="26dialogTitle" title='dialogTitle' data-type='std::string' data-ref="26dialogTitle" >dialogTitle</dfn> = <q>"Critical Error"</q>;</td></tr>
+<tr><th id="199">199</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col7 decl" id="27dialogText" title='dialogText' data-type='std::string' data-ref="27dialogText" >dialogText</dfn> = <q>""</q>;</td></tr>
+<tr><th id="200">200</th><td></td></tr>
+<tr><th id="201">201</th><td>    <a class="tu ref" href="#_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_" title='G3D::_internal::createErrorMessage' data-use='c' data-ref="_ZN3G3D9_internalL18createErrorMessageEPKcRKSsS2_iRSsS5_" >createErrorMessage</a>(<a class="local col1 ref" href="#21expression" title='expression' data-ref="21expression" >expression</a>, <a class="local col2 ref" href="#22message" title='message' data-ref="22message" >message</a>, <a class="local col3 ref" href="#23filename" title='filename' data-ref="23filename" >filename</a>, <a class="local col4 ref" href="#24lineNumber" title='lineNumber' data-ref="24lineNumber" >lineNumber</a>, <a class="local col6 ref" href="#26dialogTitle" title='dialogTitle' data-ref="26dialogTitle" >dialogTitle</a>, <a class="local col7 ref" href="#27dialogText" title='dialogText' data-ref="27dialogText" >dialogText</a>);</td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td>    <i>// Log the error</i></td></tr>
+<tr><th id="204">204</th><td>    <a class="type" href="../include/G3D/Log.h.html#G3D::Log" title='G3D::Log' data-ref="G3D::Log" >Log</a>::<a class="ref" href="../include/G3D/Log.h.html#_ZN3G3D3Log6commonEv" title='G3D::Log::common' data-ref="_ZN3G3D3Log6commonEv" id="_ZN3G3D3Log6commonEv" >common</a>()-&gt;<a class="ref" href="../include/G3D/Log.h.html#_ZN3G3D3Log5printERKSs" title='G3D::Log::print' data-ref="_ZN3G3D3Log5printERKSs" id="_ZN3G3D3Log5printERKSs" >print</a>(<span class="namespace"><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1EPKT_RKT1_" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1EPKT_RKT1_" id="_ZNSt12basic_stringC1EPKT_RKT1_" >std</a>::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>(<q>"\n**************************\n\n"</q>) <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_ERKS2_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_ERKS2_" id="_ZStplOSbIT_T0_T1_ERKS2_" >+</a> <a class="local col6 ref" href="#26dialogTitle" title='dialogTitle' data-ref="26dialogTitle" >dialogTitle</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_EPKS_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_EPKS_" id="_ZStplOSbIT_T0_T1_EPKS_" >+</a> <q>"\n"</q> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_ERKS2_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_ERKS2_" id="_ZStplOSbIT_T0_T1_ERKS2_" >+</a> <a class="local col7 ref" href="#27dialogText" title='dialogText' data-ref="27dialogText" >dialogText</a>);</td></tr>
+<tr><th id="205">205</th><td>    <u>#<span data-ppcond="205">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="206">206</th><td>        DWORD lastErr = GetLastError();</td></tr>
+<tr><th id="207">207</th><td>        (<em>void</em>)lastErr;</td></tr>
+<tr><th id="208">208</th><td>        postToClipboard(dialogText.c_str());</td></tr>
+<tr><th id="209">209</th><td>        debugPrintf(<q>"\n%s\n"</q>, dialogText.c_str());</td></tr>
+<tr><th id="210">210</th><td>    <u>#<span data-ppcond="205">endif</span></u></td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td>    <em>static</em> <em>const</em> <em>char</em>* <dfn class="local col8 decl" id="28choices" title='choices' data-type='const char *[1]' data-ref="28choices" >choices</dfn>[] = {<q>"Ok"</q>};</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col9 decl" id="29m" title='m' data-type='const std::string &amp;' data-ref="29m" >m</dfn> = </td></tr>
+<tr><th id="215">215</th><td>        <span class="namespace"><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1EPKT_RKT1_" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1EPKT_RKT1_" id="_ZNSt12basic_stringC1EPKT_RKT1_" >std</a>::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>(<q>"An internal error has occured in this program and it will now close.  "</q></td></tr>
+<tr><th id="216">216</th><td>        <q>"The specific error is below. More information has been saved in \""</q>) <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_ES3_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_ES3_" id="_ZStplOSbIT_T0_T1_ES3_" >+</a></td></tr>
+<tr><th id="217">217</th><td>            <a class="type" href="../include/G3D/Log.h.html#G3D::Log" title='G3D::Log' data-ref="G3D::Log" >Log</a>::<a class="ref" href="../include/G3D/Log.h.html#_ZN3G3D3Log20getCommonLogFilenameEv" title='G3D::Log::getCommonLogFilename' data-ref="_ZN3G3D3Log20getCommonLogFilenameEv" id="_ZN3G3D3Log20getCommonLogFilenameEv" >getCommonLogFilename</a>() <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_EPKS_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_EPKS_" id="_ZStplOSbIT_T0_T1_EPKS_" >+</a> <q>"\".\n\n"</q> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_ERKS2_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_ERKS2_" id="_ZStplOSbIT_T0_T1_ERKS2_" >+</a> <a class="local col7 ref" href="#27dialogText" title='dialogText' data-ref="27dialogText" >dialogText</a>;</td></tr>
+<tr><th id="218">218</th><td></td></tr>
+<tr><th id="219">219</th><td>    <em>int</em> <dfn class="local col0 decl" id="30result" title='result' data-type='int' data-ref="30result" >result</dfn> = <span class="namespace">G3D::</span><a class="ref" href="../include/G3D/prompt.h.html#_ZN3G3D6promptEPKcS1_PS1_ib" title='G3D::prompt' data-ref="_ZN3G3D6promptEPKcS1_PS1_ib" id="_ZN3G3D6promptEPKcS1_PS1_ib" >prompt</a>(<q>"Error"</q>, <a class="local col9 ref" href="#29m" title='m' data-ref="29m" >m</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), (<em>const</em> <em>char</em>**)<a class="local col8 ref" href="#28choices" title='choices' data-ref="28choices" >choices</a>, <var>1</var>, <a class="local col5 ref" href="#25useGuiPrompt" title='useGuiPrompt' data-ref="25useGuiPrompt" >useGuiPrompt</a>);</td></tr>
+<tr><th id="220">220</th><td>    (<em>void</em>)<a class="local col0 ref" href="#30result" title='result' data-ref="30result" >result</a>;</td></tr>
+<tr><th id="221">221</th><td></td></tr>
+<tr><th id="222">222</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="223">223</th><td>}</td></tr>
+<tr><th id="224">224</th><td></td></tr>
+<tr><th id="225">225</th><td></td></tr>
+<tr><th id="226">226</th><td><u>#<span data-ppcond="226">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="227">227</th><td><em>static</em> HCURSOR oldCursor;</td></tr>
+<tr><th id="228">228</th><td><em>static</em> RECT    oldCursorRect;</td></tr>
+<tr><th id="229">229</th><td><em>static</em> POINT   oldCursorPos;</td></tr>
+<tr><th id="230">230</th><td><em>static</em> <em>int</em>     oldShowCursorCount;</td></tr>
+<tr><th id="231">231</th><td><u>#<span data-ppcond="226">endif</span></u></td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td><em>void</em> <dfn class="decl def" id="_ZN3G3D9_internal18_releaseInputGrab_Ev" title='G3D::_internal::_releaseInputGrab_' data-ref="_ZN3G3D9_internal18_releaseInputGrab_Ev" >_releaseInputGrab_</dfn>() {</td></tr>
+<tr><th id="234">234</th><td>    <u>#<span data-ppcond="234">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td>        GetCursorPos(&amp;oldCursorPos);</td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td>        <i>// Stop hiding the cursor if the application hid it.</i></td></tr>
+<tr><th id="239">239</th><td>        oldShowCursorCount = ShowCursor(<b>true</b>) - <var>1</var>;</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>        <b>if</b> (oldShowCursorCount &lt; -<var>1</var>) {</td></tr>
+<tr><th id="242">242</th><td>            <b>for</b> (<em>int</em> c = oldShowCursorCount; c &lt; -<var>1</var>; ++c) {</td></tr>
+<tr><th id="243">243</th><td>                ShowCursor(<b>true</b>);</td></tr>
+<tr><th id="244">244</th><td>            }</td></tr>
+<tr><th id="245">245</th><td>        }</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td>        <i>// Set the default cursor in case the application</i></td></tr>
+<tr><th id="248">248</th><td><i>        // set the cursor to NULL.</i></td></tr>
+<tr><th id="249">249</th><td>        oldCursor = GetCursor();</td></tr>
+<tr><th id="250">250</th><td>        SetCursor(LoadCursor(NULL, IDC_ARROW));</td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td>        <i>// Allow the cursor full access to the screen</i></td></tr>
+<tr><th id="253">253</th><td>        GetClipCursor(&amp;oldCursorRect);</td></tr>
+<tr><th id="254">254</th><td>        ClipCursor(NULL);</td></tr>
+<tr><th id="255">255</th><td>        </td></tr>
+<tr><th id="256">256</th><td>    <u>#<span data-ppcond="234">elif</span> defined(<a class="macro" href="../include/G3D/platform.h.html#74" data-ref="_M/G3D_LINUX">G3D_LINUX</a>)</u></td></tr>
+<tr><th id="257">257</th><td><u>#<span data-ppcond="257">if</span> 0 /* G3DFIX: Disabled to avoid requirement for X11 libraries */</u></td></tr>
+<tr><th id="258">258</th><td>        <b>if</b> (x11Display != NULL) {</td></tr>
+<tr><th id="259">259</th><td>            XUngrabPointer(x11Display, CurrentTime);</td></tr>
+<tr><th id="260">260</th><td>            XUngrabKeyboard(x11Display, CurrentTime);</td></tr>
+<tr><th id="261">261</th><td>            <b>if</b> (x11Window != <var>0</var>) {</td></tr>
+<tr><th id="262">262</th><td>                <i>//XUndefineCursor(x11Display, x11Window);</i></td></tr>
+<tr><th id="263">263</th><td><i>                // TODO: Note that we leak this cursor; it should be</i></td></tr>
+<tr><th id="264">264</th><td><i>                // freed in the restore code.</i></td></tr>
+<tr><th id="265">265</th><td>                Cursor c = XCreateFontCursor(x11Display, <var>68</var>);</td></tr>
+<tr><th id="266">266</th><td>                XDefineCursor(x11Display, x11Window, c);</td></tr>
+<tr><th id="267">267</th><td>            }</td></tr>
+<tr><th id="268">268</th><td>            XSync(x11Display, <b>false</b>);           </td></tr>
+<tr><th id="269">269</th><td>            XAllowEvents(x11Display, AsyncPointer, CurrentTime);</td></tr>
+<tr><th id="270">270</th><td>            XFlush(x11Display);</td></tr>
+<tr><th id="271">271</th><td>        }</td></tr>
+<tr><th id="272">272</th><td><u>#<span data-ppcond="257">endif</span></u></td></tr>
+<tr><th id="273">273</th><td>    <u>#<span data-ppcond="234">elif</span> defined(G3D_OSX)</u></td></tr>
+<tr><th id="274">274</th><td>        <i>// TODO: OS X</i></td></tr>
+<tr><th id="275">275</th><td>    <u>#<span data-ppcond="234">endif</span></u></td></tr>
+<tr><th id="276">276</th><td>}</td></tr>
+<tr><th id="277">277</th><td></td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td><em>void</em> <dfn class="decl def" id="_ZN3G3D9_internal18_restoreInputGrab_Ev" title='G3D::_internal::_restoreInputGrab_' data-ref="_ZN3G3D9_internal18_restoreInputGrab_Ev" >_restoreInputGrab_</dfn>() {</td></tr>
+<tr><th id="280">280</th><td>    <u>#<span data-ppcond="280">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="281">281</th><td></td></tr>
+<tr><th id="282">282</th><td>        <i>// Restore the old clipping region</i></td></tr>
+<tr><th id="283">283</th><td>        ClipCursor(&amp;oldCursorRect);</td></tr>
+<tr><th id="284">284</th><td></td></tr>
+<tr><th id="285">285</th><td>        SetCursorPos(oldCursorPos.x, oldCursorPos.y);</td></tr>
+<tr><th id="286">286</th><td></td></tr>
+<tr><th id="287">287</th><td>        <i>// Restore the old cursor</i></td></tr>
+<tr><th id="288">288</th><td>        SetCursor(oldCursor);</td></tr>
+<tr><th id="289">289</th><td></td></tr>
+<tr><th id="290">290</th><td>        <i>// Restore old visibility count</i></td></tr>
+<tr><th id="291">291</th><td>        <b>if</b> (oldShowCursorCount &lt; <var>0</var>) {</td></tr>
+<tr><th id="292">292</th><td>            <b>for</b> (<em>int</em> c = <var>0</var>; c &gt; oldShowCursorCount; --c) {</td></tr>
+<tr><th id="293">293</th><td>                ShowCursor(<b>false</b>);</td></tr>
+<tr><th id="294">294</th><td>            }</td></tr>
+<tr><th id="295">295</th><td>        }</td></tr>
+<tr><th id="296">296</th><td>        </td></tr>
+<tr><th id="297">297</th><td>    <u>#<span data-ppcond="280">elif</span> defined(<a class="macro" href="../include/G3D/platform.h.html#74" data-ref="_M/G3D_LINUX">G3D_LINUX</a>)</u></td></tr>
+<tr><th id="298">298</th><td>        <i>// TODO: Linux</i></td></tr>
+<tr><th id="299">299</th><td>    <u>#<span data-ppcond="280">elif</span> defined(G3D_OSX)</u></td></tr>
+<tr><th id="300">300</th><td>        <i>// TODO: OS X</i></td></tr>
+<tr><th id="301">301</th><td>    <u>#<span data-ppcond="280">endif</span></u></td></tr>
+<tr><th id="302">302</th><td>}</td></tr>
+<tr><th id="303">303</th><td></td></tr>
+<tr><th id="304">304</th><td></td></tr>
+<tr><th id="305">305</th><td>}; <i>// internal namespace</i></td></tr>
+<tr><th id="306">306</th><td> </td></tr>
+<tr><th id="307">307</th><td><em>void</em> <dfn class="decl def" id="_ZN3G3D16setAssertionHookEPFbPKcRKSsS1_ibE" title='G3D::setAssertionHook' data-ref="_ZN3G3D16setAssertionHookEPFbPKcRKSsS1_ibE" >setAssertionHook</dfn>(<a class="typedef" href="../include/G3D/debugAssert.h.html#G3D::AssertionHook" title='G3D::AssertionHook' data-type='bool (*)(const char *, const std::string &amp;, const char *, int, bool)' data-ref="G3D::AssertionHook" >AssertionHook</a> <dfn class="local col1 decl" id="31hook" title='hook' data-type='AssertionHook' data-ref="31hook" >hook</dfn>) {</td></tr>
+<tr><th id="308">308</th><td>    <span class="namespace">G3D::_internal::</span><a class="ref" href="../include/G3D/debugAssert.h.html#_ZN3G3D9_internal10_debugHookE" title='G3D::_internal::_debugHook' data-ref="_ZN3G3D9_internal10_debugHookE" id="_ZN3G3D9_internal10_debugHookE" >_debugHook</a> = <a class="local col1 ref" href="#31hook" title='hook' data-ref="31hook" >hook</a>;</td></tr>
+<tr><th id="309">309</th><td>}</td></tr>
+<tr><th id="310">310</th><td></td></tr>
+<tr><th id="311">311</th><td><a class="typedef" href="../include/G3D/debugAssert.h.html#G3D::AssertionHook" title='G3D::AssertionHook' data-type='bool (*)(const char *, const std::string &amp;, const char *, int, bool)' data-ref="G3D::AssertionHook" >AssertionHook</a> <dfn class="decl def" id="_ZN3G3D13assertionHookEv" title='G3D::assertionHook' data-ref="_ZN3G3D13assertionHookEv" >assertionHook</dfn>() {</td></tr>
+<tr><th id="312">312</th><td>    <b>return</b>     <span class="namespace">G3D::_internal::</span><a class="ref" href="../include/G3D/debugAssert.h.html#_ZN3G3D9_internal10_debugHookE" title='G3D::_internal::_debugHook' data-ref="_ZN3G3D9_internal10_debugHookE" id="_ZN3G3D9_internal10_debugHookE" >_debugHook</a>;</td></tr>
+<tr><th id="313">313</th><td>}</td></tr>
+<tr><th id="314">314</th><td></td></tr>
+<tr><th id="315">315</th><td><em>void</em> <dfn class="decl def" id="_ZN3G3D14setFailureHookEPFbPKcRKSsS1_ibE" title='G3D::setFailureHook' data-ref="_ZN3G3D14setFailureHookEPFbPKcRKSsS1_ibE" >setFailureHook</dfn>(<a class="typedef" href="../include/G3D/debugAssert.h.html#G3D::AssertionHook" title='G3D::AssertionHook' data-type='bool (*)(const char *, const std::string &amp;, const char *, int, bool)' data-ref="G3D::AssertionHook" >AssertionHook</a> <dfn class="local col2 decl" id="32hook" title='hook' data-type='AssertionHook' data-ref="32hook" >hook</dfn>) {</td></tr>
+<tr><th id="316">316</th><td>    <span class="namespace">G3D::_internal::</span><a class="ref" href="../include/G3D/debugAssert.h.html#_ZN3G3D9_internal12_failureHookE" title='G3D::_internal::_failureHook' data-ref="_ZN3G3D9_internal12_failureHookE" id="_ZN3G3D9_internal12_failureHookE" >_failureHook</a> = <a class="local col2 ref" href="#32hook" title='hook' data-ref="32hook" >hook</a>;</td></tr>
+<tr><th id="317">317</th><td>}</td></tr>
+<tr><th id="318">318</th><td></td></tr>
+<tr><th id="319">319</th><td><a class="typedef" href="../include/G3D/debugAssert.h.html#G3D::AssertionHook" title='G3D::AssertionHook' data-type='bool (*)(const char *, const std::string &amp;, const char *, int, bool)' data-ref="G3D::AssertionHook" >AssertionHook</a> <dfn class="decl def" id="_ZN3G3D11failureHookEv" title='G3D::failureHook' data-ref="_ZN3G3D11failureHookEv" >failureHook</dfn>() {</td></tr>
+<tr><th id="320">320</th><td>    <b>return</b> <span class="namespace">G3D::_internal::</span><a class="ref" href="../include/G3D/debugAssert.h.html#_ZN3G3D9_internal12_failureHookE" title='G3D::_internal::_failureHook' data-ref="_ZN3G3D9_internal12_failureHookE" id="_ZN3G3D9_internal12_failureHookE" >_failureHook</a>;</td></tr>
+<tr><th id="321">321</th><td>}</td></tr>
+<tr><th id="322">322</th><td></td></tr>
+<tr><th id="323">323</th><td></td></tr>
+<tr><th id="324">324</th><td><em>void</em> <dfn class="decl def" id="_ZN3G3D19setConsolePrintHookEPFvRKSsE" title='G3D::setConsolePrintHook' data-ref="_ZN3G3D19setConsolePrintHookEPFvRKSsE" >setConsolePrintHook</dfn>(<a class="typedef" href="../include/G3D/debugPrintf.h.html#G3D::ConsolePrintHook" title='G3D::ConsolePrintHook' data-type='void (*)(const std::string &amp;)' data-ref="G3D::ConsolePrintHook" >ConsolePrintHook</a> <dfn class="local col3 decl" id="33h" title='h' data-type='ConsolePrintHook' data-ref="33h" >h</dfn>) {</td></tr>
+<tr><th id="325">325</th><td>    <span class="namespace">G3D::_internal::</span><a class="ref" href="../include/G3D/debugPrintf.h.html#_ZN3G3D9_internal17_consolePrintHookE" title='G3D::_internal::_consolePrintHook' data-ref="_ZN3G3D9_internal17_consolePrintHookE" id="_ZN3G3D9_internal17_consolePrintHookE" >_consolePrintHook</a> = <a class="local col3 ref" href="#33h" title='h' data-ref="33h" >h</a>;</td></tr>
+<tr><th id="326">326</th><td>}</td></tr>
+<tr><th id="327">327</th><td></td></tr>
+<tr><th id="328">328</th><td><a class="typedef" href="../include/G3D/debugPrintf.h.html#G3D::ConsolePrintHook" title='G3D::ConsolePrintHook' data-type='void (*)(const std::string &amp;)' data-ref="G3D::ConsolePrintHook" >ConsolePrintHook</a> <dfn class="decl def" id="_ZN3G3D16consolePrintHookEv" title='G3D::consolePrintHook' data-ref="_ZN3G3D16consolePrintHookEv" >consolePrintHook</dfn>() {</td></tr>
+<tr><th id="329">329</th><td>    <b>return</b> <span class="namespace">G3D::_internal::</span><a class="ref" href="../include/G3D/debugPrintf.h.html#_ZN3G3D9_internal17_consolePrintHookE" title='G3D::_internal::_consolePrintHook' data-ref="_ZN3G3D9_internal17_consolePrintHookE" id="_ZN3G3D9_internal17_consolePrintHookE" >_consolePrintHook</a>;</td></tr>
+<tr><th id="330">330</th><td>}</td></tr>
+<tr><th id="331">331</th><td></td></tr>
+<tr><th id="332">332</th><td></td></tr>
+<tr><th id="333">333</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <a class="macro" href="../include/G3D/platform.h.html#279" title="" data-ref="_M/__cdecl"><b>__cdecl</b></a> <dfn class="decl def" id="_ZN3G3D10debugPrintERKSs" title='G3D::debugPrint' data-ref="_ZN3G3D10debugPrintERKSs" >debugPrint</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col4 decl" id="34s" title='s' data-type='const std::string &amp;' data-ref="34s" >s</dfn>) {</td></tr>
+<tr><th id="334">334</th><td><u>#   <span data-ppcond="334">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="335">335</th><td>        <em>const</em> <em>int</em> MAX_STRING_LEN = <var>1024</var>;</td></tr>
+<tr><th id="336">336</th><td>    </td></tr>
+<tr><th id="337">337</th><td>        <i>// Windows can't handle really long strings sent to</i></td></tr>
+<tr><th id="338">338</th><td><i>        // the console, so we break the string.</i></td></tr>
+<tr><th id="339">339</th><td>        <b>if</b> (s.size() &lt; MAX_STRING_LEN) {</td></tr>
+<tr><th id="340">340</th><td>            OutputDebugStringA(s.c_str());</td></tr>
+<tr><th id="341">341</th><td>        } <b>else</b> {</td></tr>
+<tr><th id="342">342</th><td>            <b>for</b> (<em>unsigned</em> <em>int</em> i = <var>0</var>; i &lt; s.size(); i += MAX_STRING_LEN) {</td></tr>
+<tr><th id="343">343</th><td>                std::string sub = s.substr(i, MAX_STRING_LEN);</td></tr>
+<tr><th id="344">344</th><td>                OutputDebugStringA(sub.c_str());</td></tr>
+<tr><th id="345">345</th><td>            }</td></tr>
+<tr><th id="346">346</th><td>        }</td></tr>
+<tr><th id="347">347</th><td><u>#    <span data-ppcond="334">else</span></u></td></tr>
+<tr><th id="348">348</th><td>        <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>(<a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"%s"</q>, <a class="local col4 ref" href="#34s" title='s' data-ref="34s" >s</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="349">349</th><td>        <a class="ref" href="../../../../include/stdio.h.html#fflush" title='fflush' data-ref="fflush" id="fflush" >fflush</a>(<a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>);</td></tr>
+<tr><th id="350">350</th><td><u>#    <span data-ppcond="334">endif</span></u></td></tr>
+<tr><th id="351">351</th><td></td></tr>
+<tr><th id="352">352</th><td>     <b>return</b> <a class="local col4 ref" href="#34s" title='s' data-ref="34s" >s</a>;</td></tr>
+<tr><th id="353">353</th><td>}</td></tr>
+<tr><th id="354">354</th><td></td></tr>
+<tr><th id="355">355</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <a class="macro" href="../include/G3D/platform.h.html#279" title="" data-ref="_M/__cdecl"><b>__cdecl</b></a> <dfn class="decl def" id="_ZN3G3D11debugPrintfEPKcz" title='G3D::debugPrintf' data-ref="_ZN3G3D11debugPrintfEPKcz" >debugPrintf</dfn>(<em>const</em> <em>char</em>* <dfn class="local col5 decl" id="35fmt" title='fmt' data-type='const char *' data-ref="35fmt" >fmt</dfn> ...) {</td></tr>
+<tr><th id="356">356</th><td>    <span class='typedef' title='va_list' data-type='__gnuc_va_list' data-ref="va_list" >va_list</span> <dfn class="local col6 decl" id="36argList" title='argList' data-type='va_list' data-ref="36argList" >argList</dfn>;</td></tr>
+<tr><th id="357">357</th><td>    <span class="macro" title="__builtin_va_start(argList, fmt)" data-ref="_M/va_start">va_start</span>(<a class="local col6 ref" href="#36argList" title='argList' data-ref="36argList" >argList</a>, <a class="local col5 ref" href="#35fmt" title='fmt' data-ref="35fmt" >fmt</a>);</td></tr>
+<tr><th id="358">358</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col7 decl" id="37s" title='s' data-type='std::string' data-ref="37s" >s</dfn> = <span class="namespace">G3D::</span><a class="ref" href="../include/G3D/format.h.html#_ZN3G3D7vformatEPKcP13__va_list_tag" title='G3D::vformat' data-ref="_ZN3G3D7vformatEPKcP13__va_list_tag" id="_ZN3G3D7vformatEPKcP13__va_list_tag" >vformat</a>(<a class="local col5 ref" href="#35fmt" title='fmt' data-ref="35fmt" >fmt</a>, <a class="local col6 ref" href="#36argList" title='argList' data-ref="36argList" >argList</a>);</td></tr>
+<tr><th id="359">359</th><td>    <span class="macro" title="__builtin_va_end(argList)" data-ref="_M/va_end">va_end</span>(<a class="local col6 ref" href="#36argList" title='argList' data-ref="36argList" >argList</a>);</td></tr>
+<tr><th id="360">360</th><td></td></tr>
+<tr><th id="361">361</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D10debugPrintERKSs" title='G3D::debugPrint' data-ref="_ZN3G3D10debugPrintERKSs" >debugPrint</a>(<a class="local col7 ref" href="#37s" title='s' data-ref="37s" >s</a>);</td></tr>
+<tr><th id="362">362</th><td><i>//    return debugPrint(consolePrint(s));</i></td></tr>
+<tr><th id="363">363</th><td>}</td></tr>
+<tr><th id="364">364</th><td></td></tr>
+<tr><th id="365">365</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl def" id="_ZN3G3D12consolePrintERKSs" title='G3D::consolePrint' data-ref="_ZN3G3D12consolePrintERKSs" >consolePrint</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col8 decl" id="38s" title='s' data-type='const std::string &amp;' data-ref="38s" >s</dfn>) {</td></tr>
+<tr><th id="366">366</th><td>    <a class="typedef" href="../../../../include/stdio.h.html#FILE" title='FILE' data-type='struct _IO_FILE' data-ref="FILE" >FILE</a>* <dfn class="local col9 decl" id="39L" title='L' data-type='FILE *' data-ref="39L" >L</dfn> = <a class="type" href="../include/G3D/Log.h.html#G3D::Log" title='G3D::Log' data-ref="G3D::Log" >Log</a>::<a class="ref" href="../include/G3D/Log.h.html#_ZN3G3D3Log6commonEv" title='G3D::Log::common' data-ref="_ZN3G3D3Log6commonEv" id="_ZN3G3D3Log6commonEv" >common</a>()-&gt;<a class="ref" href="../include/G3D/Log.h.html#_ZNK3G3D3Log7getFileEv" title='G3D::Log::getFile' data-ref="_ZNK3G3D3Log7getFileEv" id="_ZNK3G3D3Log7getFileEv" >getFile</a>();</td></tr>
+<tr><th id="367">367</th><td>    <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>(<a class="local col9 ref" href="#39L" title='L' data-ref="39L" >L</a>, <q>"%s"</q>, <a class="local col8 ref" href="#38s" title='s' data-ref="38s" >s</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="368">368</th><td></td></tr>
+<tr><th id="369">369</th><td>    <b>if</b> (<a class="ref" href="#_ZN3G3D16consolePrintHookEv" title='G3D::consolePrintHook' data-ref="_ZN3G3D16consolePrintHookEv" >consolePrintHook</a>()) {</td></tr>
+<tr><th id="370">370</th><td>        <a class="ref" href="#_ZN3G3D16consolePrintHookEv" title='G3D::consolePrintHook' data-ref="_ZN3G3D16consolePrintHookEv" >consolePrintHook</a>()(<a class="local col8 ref" href="#38s" title='s' data-ref="38s" >s</a>);</td></tr>
+<tr><th id="371">371</th><td>    }</td></tr>
+<tr><th id="372">372</th><td></td></tr>
+<tr><th id="373">373</th><td>    <a class="ref" href="../../../../include/stdio.h.html#fflush" title='fflush' data-ref="fflush" id="fflush" >fflush</a>(<a class="local col9 ref" href="#39L" title='L' data-ref="39L" >L</a>);</td></tr>
+<tr><th id="374">374</th><td>    <b>return</b> <a class="local col8 ref" href="#38s" title='s' data-ref="38s" >s</a>;</td></tr>
+<tr><th id="375">375</th><td>}</td></tr>
+<tr><th id="376">376</th><td></td></tr>
+<tr><th id="377">377</th><td></td></tr>
+<tr><th id="378">378</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <a class="macro" href="../include/G3D/platform.h.html#279" title="" data-ref="_M/__cdecl"><b>__cdecl</b></a> <dfn class="decl def" id="_ZN3G3D13consolePrintfEPKcz" title='G3D::consolePrintf' data-ref="_ZN3G3D13consolePrintfEPKcz" >consolePrintf</dfn>(<em>const</em> <em>char</em>* <dfn class="local col0 decl" id="40fmt" title='fmt' data-type='const char *' data-ref="40fmt" >fmt</dfn> ...) {</td></tr>
+<tr><th id="379">379</th><td>    <span class='typedef' title='va_list' data-type='__gnuc_va_list' data-ref="va_list" >va_list</span> <dfn class="local col1 decl" id="41argList" title='argList' data-type='va_list' data-ref="41argList" >argList</dfn>;</td></tr>
+<tr><th id="380">380</th><td>    <span class="macro" title="__builtin_va_start(argList, fmt)" data-ref="_M/va_start">va_start</span>(<a class="local col1 ref" href="#41argList" title='argList' data-ref="41argList" >argList</a>, <a class="local col0 ref" href="#40fmt" title='fmt' data-ref="40fmt" >fmt</a>);</td></tr>
+<tr><th id="381">381</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col2 decl" id="42s" title='s' data-type='std::string' data-ref="42s" >s</dfn> = <span class="namespace">G3D::</span><a class="ref" href="../include/G3D/format.h.html#_ZN3G3D7vformatEPKcP13__va_list_tag" title='G3D::vformat' data-ref="_ZN3G3D7vformatEPKcP13__va_list_tag" id="_ZN3G3D7vformatEPKcP13__va_list_tag" >vformat</a>(<a class="local col0 ref" href="#40fmt" title='fmt' data-ref="40fmt" >fmt</a>, <a class="local col1 ref" href="#41argList" title='argList' data-ref="41argList" >argList</a>);</td></tr>
+<tr><th id="382">382</th><td>    <span class="macro" title="__builtin_va_end(argList)" data-ref="_M/va_end">va_end</span>(<a class="local col1 ref" href="#41argList" title='argList' data-ref="41argList" >argList</a>);</td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D12consolePrintERKSs" title='G3D::consolePrint' data-ref="_ZN3G3D12consolePrintERKSs" >consolePrint</a>(<a class="local col2 ref" href="#42s" title='s' data-ref="42s" >s</a>);</td></tr>
+<tr><th id="385">385</th><td>}</td></tr>
+<tr><th id="386">386</th><td></td></tr>
+<tr><th id="387">387</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="388">388</th><td></td></tr>
+<tr><th id="389">389</th><td><u>#<span data-ppcond="389">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="390">390</th><td><u>#   pragma warning (pop)</u></td></tr>
+<tr><th id="391">391</th><td><u>#<span data-ppcond="389">endif</span></u></td></tr>
+<tr><th id="392">392</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

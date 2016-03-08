@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<title>hash_memory.c [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/hashes/hash_memory.c] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/hashes/hash_memory.c'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>hashes</a>/hash_memory.c</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* LibTomCrypt, modular cryptographic library -- Tom St Denis</i></td></tr>
+<tr><th id="2">2</th><td><i> *</i></td></tr>
+<tr><th id="3">3</th><td><i> * LibTomCrypt is a library that provides various cryptographic</i></td></tr>
+<tr><th id="4">4</th><td><i> * algorithms in a highly modular and flexible manner.</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * The library is free for all purposes without any express</i></td></tr>
+<tr><th id="7">7</th><td><i> * guarantee it works.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * Tom St Denis, tomstdenis@gmail.com, <a href="http://libtom.org">http://libtom.org</a></i></td></tr>
+<tr><th id="10">10</th><td><i> */</i></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../headers/tomcrypt.h.html">"../headers/tomcrypt.h"</a></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="14">14</th><td><i class="doc"> <span class="command"> @file</span> hash_memory.c</i></td></tr>
+<tr><th id="15">15</th><td><i class="doc">  Hash memory helper, Tom St Denis</i></td></tr>
+<tr><th id="16">16</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="19">19</th><td><i class="doc">  Hash a block of memory and store the digest.</i></td></tr>
+<tr><th id="20">20</th><td><i class="doc">  <span class="command">@param</span> <span class="arg">hash</span>   The index of the hash you wish to use</i></td></tr>
+<tr><th id="21">21</th><td><i class="doc">  <span class="command">@param</span> <span class="arg">in</span>     The data you wish to hash</i></td></tr>
+<tr><th id="22">22</th><td><i class="doc">  <span class="command">@param</span> <span class="arg">inlen</span>  The length of the data to hash (octets)</i></td></tr>
+<tr><th id="23">23</th><td><i class="doc">  <span class="command">@param</span> <span class="arg">out</span>    [out] Where to store the digest</i></td></tr>
+<tr><th id="24">24</th><td><i class="doc">  <span class="command">@param</span> <span class="arg">outlen</span> [in/out] Max size and resulting size of the digest</i></td></tr>
+<tr><th id="25">25</th><td><i class="doc">  <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="27">27</th><td><em>int</em> <dfn class="decl def" id="hash_memory" title='hash_memory' data-ref="hash_memory" >hash_memory</dfn>(<em>int</em> <dfn class="local col1 decl" id="1hash" title='hash' data-type='int' data-ref="1hash" >hash</dfn>, <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="2in" title='in' data-type='const unsigned char *' data-ref="2in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="3inlen" title='inlen' data-type='unsigned long' data-ref="3inlen" >inlen</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="4out" title='out' data-type='unsigned char *' data-ref="4out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col5 decl" id="5outlen" title='outlen' data-type='unsigned long *' data-ref="5outlen" >outlen</dfn>)</td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td>    <a class="typedef" href="../headers/tomcrypt_hash.h.html#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> *<dfn class="local col6 decl" id="6md" title='md' data-type='hash_state *' data-ref="6md" >md</dfn>;</td></tr>
+<tr><th id="30">30</th><td>    <em>int</em> <dfn class="local col7 decl" id="7err" title='err' data-type='int' data-ref="7err" >err</dfn>;</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>    <a class="macro" href="../headers/tomcrypt_argchk.h.html#9" title="if (!(in != ((void*)0))) { crypt_argchk(&quot;in != NULL&quot;, &quot;/home/nayd/TrinityCore6x/dep/CascLib/src/libtomcrypt/src/hashes/hash_memory.c&quot;, 32); }" data-ref="_M/LTC_ARGCHK">LTC_ARGCHK</a>(<a class="local col2 ref" href="#2in" title='in' data-ref="2in" >in</a>     != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="33">33</th><td>    <a class="macro" href="../headers/tomcrypt_argchk.h.html#9" title="if (!(out != ((void*)0))) { crypt_argchk(&quot;out != NULL&quot;, &quot;/home/nayd/TrinityCore6x/dep/CascLib/src/libtomcrypt/src/hashes/hash_memory.c&quot;, 33); }" data-ref="_M/LTC_ARGCHK">LTC_ARGCHK</a>(<a class="local col4 ref" href="#4out" title='out' data-ref="4out" >out</a>    != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="34">34</th><td>    <a class="macro" href="../headers/tomcrypt_argchk.h.html#9" title="if (!(outlen != ((void*)0))) { crypt_argchk(&quot;outlen != NULL&quot;, &quot;/home/nayd/TrinityCore6x/dep/CascLib/src/libtomcrypt/src/hashes/hash_memory.c&quot;, 34); }" data-ref="_M/LTC_ARGCHK">LTC_ARGCHK</a>(<a class="local col5 ref" href="#5outlen" title='outlen' data-ref="5outlen" >outlen</a> != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>    <b>if</b> ((<a class="local col7 ref" href="#7err" title='err' data-ref="7err" >err</a> = <a class="ref" href="../headers/tomcrypt_hash.h.html#hash_is_valid" title='hash_is_valid' data-ref="hash_is_valid" id="hash_is_valid" >hash_is_valid</a>(<a class="local col1 ref" href="#1hash" title='hash' data-ref="1hash" >hash</a>)) != <a class="enum" href="../headers/tomcrypt.h.html#::CRYPT_OK" title='::CRYPT_OK' data-ref="::CRYPT_OK" id="::CRYPT_OK" >CRYPT_OK</a>) {</td></tr>
+<tr><th id="37">37</th><td>        <b>return</b> <a class="local col7 ref" href="#7err" title='err' data-ref="7err" >err</a>;</td></tr>
+<tr><th id="38">38</th><td>    }</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <b>if</b> (*<a class="local col5 ref" href="#5outlen" title='outlen' data-ref="5outlen" >outlen</a> &lt; <a class="ref" href="../headers/tomcrypt_hash.h.html#hash_descriptor" title='hash_descriptor' data-ref="hash_descriptor" id="hash_descriptor" >hash_descriptor</a>[<a class="local col1 ref" href="#1hash" title='hash' data-ref="1hash" >hash</a>].<a class="ref" href="../headers/tomcrypt_hash.h.html#ltc_hash_descriptor::hashsize" title='ltc_hash_descriptor::hashsize' data-ref="ltc_hash_descriptor::hashsize" id="ltc_hash_descriptor::hashsize" >hashsize</a>) {</td></tr>
+<tr><th id="41">41</th><td>       *<a class="local col5 ref" href="#5outlen" title='outlen' data-ref="5outlen" >outlen</a> = <a class="ref" href="../headers/tomcrypt_hash.h.html#hash_descriptor" title='hash_descriptor' data-ref="hash_descriptor" id="hash_descriptor" >hash_descriptor</a>[<a class="local col1 ref" href="#1hash" title='hash' data-ref="1hash" >hash</a>].<a class="ref" href="../headers/tomcrypt_hash.h.html#ltc_hash_descriptor::hashsize" title='ltc_hash_descriptor::hashsize' data-ref="ltc_hash_descriptor::hashsize" id="ltc_hash_descriptor::hashsize" >hashsize</a>;</td></tr>
+<tr><th id="42">42</th><td>       <b>return</b> <a class="enum" href="../headers/tomcrypt.h.html#::CRYPT_BUFFER_OVERFLOW" title='::CRYPT_BUFFER_OVERFLOW' data-ref="::CRYPT_BUFFER_OVERFLOW" id="::CRYPT_BUFFER_OVERFLOW" >CRYPT_BUFFER_OVERFLOW</a>;</td></tr>
+<tr><th id="43">43</th><td>    }</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>    <a class="local col6 ref" href="#6md" title='md' data-ref="6md" >md</a> = <a class="macro" href="../headers/tomcrypt_custom.h.html#27" title="LibTomMalloc" data-ref="_M/XMALLOC">XMALLOC</a>(<b>sizeof</b>(<a class="typedef" href="../headers/tomcrypt_hash.h.html#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a>));</td></tr>
+<tr><th id="46">46</th><td>    <b>if</b> (<a class="local col6 ref" href="#6md" title='md' data-ref="6md" >md</a> == <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="47">47</th><td>       <b>return</b> <a class="enum" href="../headers/tomcrypt.h.html#::CRYPT_MEM" title='::CRYPT_MEM' data-ref="::CRYPT_MEM" id="::CRYPT_MEM" >CRYPT_MEM</a>;</td></tr>
+<tr><th id="48">48</th><td>    }</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <b>if</b> ((<a class="local col7 ref" href="#7err" title='err' data-ref="7err" >err</a> = <a class="ref" href="../headers/tomcrypt_hash.h.html#hash_descriptor" title='hash_descriptor' data-ref="hash_descriptor" id="hash_descriptor" >hash_descriptor</a>[<a class="local col1 ref" href="#1hash" title='hash' data-ref="1hash" >hash</a>].<a class="ref" href="../headers/tomcrypt_hash.h.html#ltc_hash_descriptor::init" title='ltc_hash_descriptor::init' data-ref="ltc_hash_descriptor::init" id="ltc_hash_descriptor::init" >init</a>(<a class="local col6 ref" href="#6md" title='md' data-ref="6md" >md</a>)) != <a class="enum" href="../headers/tomcrypt.h.html#::CRYPT_OK" title='::CRYPT_OK' data-ref="::CRYPT_OK" id="::CRYPT_OK" >CRYPT_OK</a>) {</td></tr>
+<tr><th id="51">51</th><td>       <b>goto</b> <a class="lbl" href="#8LBL_ERR" data-ref="8LBL_ERR" >LBL_ERR</a>;</td></tr>
+<tr><th id="52">52</th><td>    }</td></tr>
+<tr><th id="53">53</th><td>    <b>if</b> ((<a class="local col7 ref" href="#7err" title='err' data-ref="7err" >err</a> = <a class="ref" href="../headers/tomcrypt_hash.h.html#hash_descriptor" title='hash_descriptor' data-ref="hash_descriptor" id="hash_descriptor" >hash_descriptor</a>[<a class="local col1 ref" href="#1hash" title='hash' data-ref="1hash" >hash</a>].<a class="ref" href="../headers/tomcrypt_hash.h.html#ltc_hash_descriptor::process" title='ltc_hash_descriptor::process' data-ref="ltc_hash_descriptor::process" id="ltc_hash_descriptor::process" >process</a>(<a class="local col6 ref" href="#6md" title='md' data-ref="6md" >md</a>, <a class="local col2 ref" href="#2in" title='in' data-ref="2in" >in</a>, <a class="local col3 ref" href="#3inlen" title='inlen' data-ref="3inlen" >inlen</a>)) != <a class="enum" href="../headers/tomcrypt.h.html#::CRYPT_OK" title='::CRYPT_OK' data-ref="::CRYPT_OK" id="::CRYPT_OK" >CRYPT_OK</a>) {</td></tr>
+<tr><th id="54">54</th><td>       <b>goto</b> <a class="lbl" href="#8LBL_ERR" data-ref="8LBL_ERR" >LBL_ERR</a>;</td></tr>
+<tr><th id="55">55</th><td>    }</td></tr>
+<tr><th id="56">56</th><td>    <a class="local col7 ref" href="#7err" title='err' data-ref="7err" >err</a> = <a class="ref" href="../headers/tomcrypt_hash.h.html#hash_descriptor" title='hash_descriptor' data-ref="hash_descriptor" id="hash_descriptor" >hash_descriptor</a>[<a class="local col1 ref" href="#1hash" title='hash' data-ref="1hash" >hash</a>].<a class="ref" href="../headers/tomcrypt_hash.h.html#ltc_hash_descriptor::done" title='ltc_hash_descriptor::done' data-ref="ltc_hash_descriptor::done" id="ltc_hash_descriptor::done" >done</a>(<a class="local col6 ref" href="#6md" title='md' data-ref="6md" >md</a>, <a class="local col4 ref" href="#4out" title='out' data-ref="4out" >out</a>);</td></tr>
+<tr><th id="57">57</th><td>    *<a class="local col5 ref" href="#5outlen" title='outlen' data-ref="5outlen" >outlen</a> = <a class="ref" href="../headers/tomcrypt_hash.h.html#hash_descriptor" title='hash_descriptor' data-ref="hash_descriptor" id="hash_descriptor" >hash_descriptor</a>[<a class="local col1 ref" href="#1hash" title='hash' data-ref="1hash" >hash</a>].<a class="ref" href="../headers/tomcrypt_hash.h.html#ltc_hash_descriptor::hashsize" title='ltc_hash_descriptor::hashsize' data-ref="ltc_hash_descriptor::hashsize" id="ltc_hash_descriptor::hashsize" >hashsize</a>;</td></tr>
+<tr><th id="58">58</th><td><dfn class="lbl" id="8LBL_ERR" data-ref="8LBL_ERR" >LBL_ERR</dfn>:</td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="59">ifdef</span> <span class="macro" data-ref="_M/LTC_CLEAN_STACK">LTC_CLEAN_STACK</span></u></td></tr>
+<tr><th id="60">60</th><td>    zeromem(md, <b>sizeof</b>(hash_state));</td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="59">endif</span></u></td></tr>
+<tr><th id="62">62</th><td>    <a class="macro" href="../headers/tomcrypt_custom.h.html#45" title="LibTomFree" data-ref="_M/XFREE">XFREE</a>(<a class="local col6 ref" href="#6md" title='md' data-ref="6md" >md</a>);</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>    <b>return</b> <a class="local col7 ref" href="#7err" title='err' data-ref="7err" >err</a>;</td></tr>
+<tr><th id="65">65</th><td>}</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/hashes/helper/hash_memory.c,v $ */</i></td></tr>
+<tr><th id="68">68</th><td><i>/* $Revision: 1.6 $ */</i></td></tr>
+<tr><th id="69">69</th><td><i>/* $Date: 2006/12/28 01:27:23 $ */</i></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

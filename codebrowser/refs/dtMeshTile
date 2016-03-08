@@ -1,0 +1,186 @@
+<def f='TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMesh.h' l='279'/>
+<size>104</size>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMesh.h' l='277'>/// Defines a navigation mesh tile.
+/// @ingroup detour</doc>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMesh.h' l='644'>/**
+
+@typedef dtPolyRef
+@par
+
+Polygon references are subject to the same invalidate/preserve/restore 
+rules that apply to #dtTileRef&apos;s.  If the #dtTileRef for the polygon&apos;s
+tile changes, the polygon reference becomes invalid.
+
+Changing a polygon&apos;s flags, area id, etc. does not impact its polygon
+reference.
+
+@typedef dtTileRef
+@par
+
+The following changes will invalidate a tile reference:
+
+- The referenced tile has been removed from the navigation mesh.
+- The navigation mesh has been initialized using a different set
+  of #dtNavMeshParams.
+
+A tile reference is preserved/restored if the tile is added to a navigation 
+mesh initialized with the original #dtNavMeshParams and is added at the
+original reference location. (E.g. The lastRef parameter is used with
+dtNavMesh::addTile.)
+
+Basically, if the storage structure of a tile changes, its associated
+tile reference changes.
+
+
+@var unsigned short dtPoly::neis[DT_VERTS_PER_POLYGON]
+@par
+
+Each entry represents data for the edge starting at the vertex of the same index. 
+E.g. The entry at index n represents the edge data for vertex[n] to vertex[n+1].
+
+A value of zero indicates the edge has no polygon connection. (It makes up the 
+border of the navigation mesh.)
+
+The information can be extracted as follows: 
+@code 
+neighborRef = neis[n] &amp; 0xff; // Get the neighbor polygon reference.
+
+if (neis[n] &amp; #DT_EX_LINK)
+{
+    // The edge is an external (portal) edge.
+}
+@endcode
+
+@var float dtMeshHeader::bvQuantFactor
+@par
+
+This value is used for converting between world and bounding volume coordinates.
+For example:
+@code
+const float cs = 1.0f / tile-&gt;header-&gt;bvQuantFactor;
+const dtBVNode* n = &amp;tile-&gt;bvTree[i];
+if (n-&gt;i &gt;= 0)
+{
+    // This is a leaf node.
+    float worldMinX = tile-&gt;header-&gt;bmin[0] + n-&gt;bmin[0]*cs;
+    float worldMinY = tile-&gt;header-&gt;bmin[0] + n-&gt;bmin[1]*cs;
+    // Etc...
+}
+@endcode
+
+@struct dtMeshTile
+@par
+
+Tiles generally only exist within the context of a dtNavMesh object.
+
+Some tile content is optional.  For example, a tile may not contain any
+off-mesh connections.  In this case the associated pointer will be null.
+
+If a detail mesh exists it will share vertices with the base polygon mesh.  
+Only the vertices unique to the detail mesh will be stored in #detailVerts.
+
+@warning Tiles returned by a dtNavMesh object are not guarenteed to be populated.
+For example: The tile at a location might not have been loaded yet, or may have been removed.
+In this case, pointers will be null.  So if in doubt, check the polygon count in the 
+tile&apos;s header to determine if a tile has polygons defined.
+
+@var float dtOffMeshConnection::pos[6]
+@par
+
+For a properly built navigation mesh, vertex A will always be within the bounds of the mesh. 
+Vertex B is not required to be within the bounds of the mesh.
+
+*/</doc>
+<def f='TrinityCore6.x/dep/recastnavigation/Detour/Include/DetourNavMesh.h' l='279'/>
+<size>104</size>
+<doc f='TrinityCore6.x/dep/recastnavigation/Detour/Include/DetourNavMesh.h' l='277'>/// Defines a navigation mesh tile.
+/// @ingroup detour</doc>
+<doc f='TrinityCore6.x/dep/recastnavigation/Detour/Include/DetourNavMesh.h' l='644'>/**
+
+@typedef dtPolyRef
+@par
+
+Polygon references are subject to the same invalidate/preserve/restore 
+rules that apply to #dtTileRef&apos;s.  If the #dtTileRef for the polygon&apos;s
+tile changes, the polygon reference becomes invalid.
+
+Changing a polygon&apos;s flags, area id, etc. does not impact its polygon
+reference.
+
+@typedef dtTileRef
+@par
+
+The following changes will invalidate a tile reference:
+
+- The referenced tile has been removed from the navigation mesh.
+- The navigation mesh has been initialized using a different set
+  of #dtNavMeshParams.
+
+A tile reference is preserved/restored if the tile is added to a navigation 
+mesh initialized with the original #dtNavMeshParams and is added at the
+original reference location. (E.g. The lastRef parameter is used with
+dtNavMesh::addTile.)
+
+Basically, if the storage structure of a tile changes, its associated
+tile reference changes.
+
+
+@var unsigned short dtPoly::neis[DT_VERTS_PER_POLYGON]
+@par
+
+Each entry represents data for the edge starting at the vertex of the same index. 
+E.g. The entry at index n represents the edge data for vertex[n] to vertex[n+1].
+
+A value of zero indicates the edge has no polygon connection. (It makes up the 
+border of the navigation mesh.)
+
+The information can be extracted as follows: 
+@code 
+neighborRef = neis[n] &amp; 0xff; // Get the neighbor polygon reference.
+
+if (neis[n] &amp; #DT_EX_LINK)
+{
+    // The edge is an external (portal) edge.
+}
+@endcode
+
+@var float dtMeshHeader::bvQuantFactor
+@par
+
+This value is used for converting between world and bounding volume coordinates.
+For example:
+@code
+const float cs = 1.0f / tile-&gt;header-&gt;bvQuantFactor;
+const dtBVNode* n = &amp;tile-&gt;bvTree[i];
+if (n-&gt;i &gt;= 0)
+{
+    // This is a leaf node.
+    float worldMinX = tile-&gt;header-&gt;bmin[0] + n-&gt;bmin[0]*cs;
+    float worldMinY = tile-&gt;header-&gt;bmin[0] + n-&gt;bmin[1]*cs;
+    // Etc...
+}
+@endcode
+
+@struct dtMeshTile
+@par
+
+Tiles generally only exist within the context of a dtNavMesh object.
+
+Some tile content is optional.  For example, a tile may not contain any
+off-mesh connections.  In this case the associated pointer will be null.
+
+If a detail mesh exists it will share vertices with the base polygon mesh.  
+Only the vertices unique to the detail mesh will be stored in #detailVerts.
+
+@warning Tiles returned by a dtNavMesh object are not guarenteed to be populated.
+For example: The tile at a location might not have been loaded yet, or may have been removed.
+In this case, pointers will be null.  So if in doubt, check the polygon count in the 
+tile&apos;s header to determine if a tile has polygons defined.
+
+@var float dtOffMeshConnection::pos[6]
+@par
+
+For a properly built navigation mesh, vertex A will always be within the bounds of the mesh. 
+Vertex B is not required to be within the bounds of the mesh.
+
+*/</doc>

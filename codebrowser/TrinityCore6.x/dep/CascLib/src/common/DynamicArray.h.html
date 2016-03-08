@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<title>DynamicArray.h [TrinityCore6.x/dep/CascLib/src/common/DynamicArray.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/common/DynamicArray.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>CascLib</a>/<a href='..'>src</a>/<a href='./'>common</a>/DynamicArray.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><i>/* DynamicArray.h                         Copyright (c) Ladislav Zezula 2015 */</i></td></tr>
+<tr><th id="3">3</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="4">4</th><td><i>/* Common array implementation                                               */</i></td></tr>
+<tr><th id="5">5</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="6">6</th><td><i>/*   Date    Ver   Who  Comment                                              */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* --------  ----  ---  -------                                              */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* 30.10.15  1.00  Lad  The first version of DynamicArray.h                  */</i></td></tr>
+<tr><th id="9">9</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/__DYNAMIC_ARRAY_H__">__DYNAMIC_ARRAY_H__</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/__DYNAMIC_ARRAY_H__" data-ref="_M/__DYNAMIC_ARRAY_H__">__DYNAMIC_ARRAY_H__</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="15">15</th><td><i>// Structures</i></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="_DYNAMIC_ARRAY" title='_DYNAMIC_ARRAY' data-ref="_DYNAMIC_ARRAY" ><a class="type" href="#_DYNAMIC_ARRAY" title='_DYNAMIC_ARRAY' data-ref="_DYNAMIC_ARRAY" ><a class="type" href="#_DYNAMIC_ARRAY" title='_DYNAMIC_ARRAY' data-ref="_DYNAMIC_ARRAY" >_DYNAMIC_ARRAY</a></a></dfn></td></tr>
+<tr><th id="18">18</th><td>{</td></tr>
+<tr><th id="19">19</th><td>    <em>char</em> * <dfn class="decl" id="_DYNAMIC_ARRAY::ItemArray" title='_DYNAMIC_ARRAY::ItemArray' data-ref="_DYNAMIC_ARRAY::ItemArray" >ItemArray</dfn>;                               <i>// Pointer to items</i></td></tr>
+<tr><th id="20">20</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="_DYNAMIC_ARRAY::ItemCountMax" title='_DYNAMIC_ARRAY::ItemCountMax' data-ref="_DYNAMIC_ARRAY::ItemCountMax" >ItemCountMax</dfn>;                            <i>// Current number of items</i></td></tr>
+<tr><th id="21">21</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="_DYNAMIC_ARRAY::ItemCount" title='_DYNAMIC_ARRAY::ItemCount' data-ref="_DYNAMIC_ARRAY::ItemCount" >ItemCount</dfn>;                               <i>// Total size of the buffer</i></td></tr>
+<tr><th id="22">22</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="_DYNAMIC_ARRAY::ItemSize" title='_DYNAMIC_ARRAY::ItemSize' data-ref="_DYNAMIC_ARRAY::ItemSize" >ItemSize</dfn>;                                <i>// Size of the single item</i></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td>} <dfn class="typedef" id="DYNAMIC_ARRAY" title='DYNAMIC_ARRAY' data-type='struct _DYNAMIC_ARRAY' data-ref="DYNAMIC_ARRAY" >DYNAMIC_ARRAY</dfn>, *<dfn class="typedef" id="PDYNAMIC_ARRAY" title='PDYNAMIC_ARRAY' data-type='struct _DYNAMIC_ARRAY *' data-ref="PDYNAMIC_ARRAY" >PDYNAMIC_ARRAY</dfn>;</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="27">27</th><td><i>// Functions for managing the array</i></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><em>int</em> <dfn class="decl" id="_Z13Array_Create_P14_DYNAMIC_ARRAYmm" title='Array_Create_' data-ref="_Z13Array_Create_P14_DYNAMIC_ARRAYmm" >Array_Create_</dfn>(<a class="typedef" href="#PDYNAMIC_ARRAY" title='PDYNAMIC_ARRAY' data-type='struct _DYNAMIC_ARRAY *' data-ref="PDYNAMIC_ARRAY" >PDYNAMIC_ARRAY</a> <dfn class="local col3 decl" id="303pArray" title='pArray' data-type='PDYNAMIC_ARRAY' data-ref="303pArray" >pArray</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="304ItemSize" title='ItemSize' data-type='size_t' data-ref="304ItemSize" >ItemSize</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="305ItemCountMax" title='ItemCountMax' data-type='size_t' data-ref="305ItemCountMax" >ItemCountMax</dfn>);</td></tr>
+<tr><th id="30">30</th><td><em>void</em> * <dfn class="decl" id="_Z12Array_InsertP14_DYNAMIC_ARRAYPKvm" title='Array_Insert' data-ref="_Z12Array_InsertP14_DYNAMIC_ARRAYPKvm" >Array_Insert</dfn>(<a class="typedef" href="#PDYNAMIC_ARRAY" title='PDYNAMIC_ARRAY' data-type='struct _DYNAMIC_ARRAY *' data-ref="PDYNAMIC_ARRAY" >PDYNAMIC_ARRAY</a> <dfn class="local col6 decl" id="306pArray" title='pArray' data-type='PDYNAMIC_ARRAY' data-ref="306pArray" >pArray</dfn>, <em>const</em> <em>void</em> * <dfn class="local col7 decl" id="307NewItems" title='NewItems' data-type='const void *' data-ref="307NewItems" >NewItems</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="308NewItemCount" title='NewItemCount' data-type='size_t' data-ref="308NewItemCount" >NewItemCount</dfn>);</td></tr>
+<tr><th id="31">31</th><td><em>void</em> * <dfn class="decl" id="_Z12Array_ItemAtP14_DYNAMIC_ARRAYm" title='Array_ItemAt' data-ref="_Z12Array_ItemAtP14_DYNAMIC_ARRAYm" >Array_ItemAt</dfn>(<a class="typedef" href="#PDYNAMIC_ARRAY" title='PDYNAMIC_ARRAY' data-type='struct _DYNAMIC_ARRAY *' data-ref="PDYNAMIC_ARRAY" >PDYNAMIC_ARRAY</a> <dfn class="local col9 decl" id="309pArray" title='pArray' data-type='PDYNAMIC_ARRAY' data-ref="309pArray" >pArray</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="310ItemIndex" title='ItemIndex' data-type='size_t' data-ref="310ItemIndex" >ItemIndex</dfn>);</td></tr>
+<tr><th id="32">32</th><td><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="_Z13Array_IndexOfP14_DYNAMIC_ARRAYPKv" title='Array_IndexOf' data-ref="_Z13Array_IndexOfP14_DYNAMIC_ARRAYPKv" >Array_IndexOf</dfn>(<a class="typedef" href="#PDYNAMIC_ARRAY" title='PDYNAMIC_ARRAY' data-type='struct _DYNAMIC_ARRAY *' data-ref="PDYNAMIC_ARRAY" >PDYNAMIC_ARRAY</a> <dfn class="local col1 decl" id="311pArray" title='pArray' data-type='PDYNAMIC_ARRAY' data-ref="311pArray" >pArray</dfn>, <em>const</em> <em>void</em> * <dfn class="local col2 decl" id="312ArrayPtr" title='ArrayPtr' data-type='const void *' data-ref="312ArrayPtr" >ArrayPtr</dfn>);</td></tr>
+<tr><th id="33">33</th><td><em>void</em> <dfn class="decl" id="_Z10Array_FreeP14_DYNAMIC_ARRAY" title='Array_Free' data-ref="_Z10Array_FreeP14_DYNAMIC_ARRAY" >Array_Free</dfn>(<a class="typedef" href="#PDYNAMIC_ARRAY" title='PDYNAMIC_ARRAY' data-type='struct _DYNAMIC_ARRAY *' data-ref="PDYNAMIC_ARRAY" >PDYNAMIC_ARRAY</a> <dfn class="local col3 decl" id="313pArray" title='pArray' data-type='PDYNAMIC_ARRAY' data-ref="313pArray" >pArray</dfn>);</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><u>#define <dfn class="macro" id="_M/Array_Create" data-ref="_M/Array_Create">Array_Create</dfn>(pArray, type, ItemCountMax)    Array_Create_(pArray, sizeof(type), ItemCountMax)</u></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="11">endif</span> // __DYNAMIC_ARRAY__</u></td></tr>
+<tr><th id="38">38</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

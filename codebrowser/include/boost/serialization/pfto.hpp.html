@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<title>pfto.hpp [include/boost/serialization/pfto.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/serialization/pfto.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>serialization</a>/pfto.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/BOOST_SERIALIZATION_PFTO_HPP">BOOST_SERIALIZATION_PFTO_HPP</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/BOOST_SERIALIZATION_PFTO_HPP" data-ref="_M/BOOST_SERIALIZATION_PFTO_HPP">BOOST_SERIALIZATION_PFTO_HPP</dfn></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>// MS compatible compilers support #pragma once</i></td></tr>
+<tr><th id="5">5</th><td><u>#<span data-ppcond="5">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1020)</u></td></tr>
+<tr><th id="6">6</th><td><u># pragma once</u></td></tr>
+<tr><th id="7">7</th><td><u>#<span data-ppcond="5">endif</span></u></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><i>/////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8</i></td></tr>
+<tr><th id="10">10</th><td><i>// pfto.hpp: workarounds for compilers which have problems supporting</i></td></tr>
+<tr><th id="11">11</th><td><i>// Partial Function Template Ordering (PFTO).</i></td></tr>
+<tr><th id="12">12</th><td><i></i></td></tr>
+<tr><th id="13">13</th><td><i>// (C) Copyright 2002 Robert Ramey - <a href="http://www.rrsd.com">http://www.rrsd.com</a> . </i></td></tr>
+<tr><th id="14">14</th><td><i>// Use, modification and distribution is subject to the Boost Software</i></td></tr>
+<tr><th id="15">15</th><td><i>// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at</i></td></tr>
+<tr><th id="16">16</th><td><i>// <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="17">17</th><td><i></i></td></tr>
+<tr><th id="18">18</th><td><i>//  See <a href="http://www.boost.org/libs/serialization">http://www.boost.org/libs/serialization</a> for updates, documentation, and revision history.</i></td></tr>
+<tr><th id="19">19</th><td><i>// PFTO version is used to specify the last argument of certain functions</i></td></tr>
+<tr><th id="20">20</th><td><i>// Function it is used to support  compilers that fail to support correct Partial </i></td></tr>
+<tr><th id="21">21</th><td><i>// Template Ordering</i></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../config.hpp.html">&lt;boost/config.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><i>// some compilers can use an exta argument and use function overloading</i></td></tr>
+<tr><th id="25">25</th><td><i>// to choose desired function.  This extra argument is long in the default</i></td></tr>
+<tr><th id="26">26</th><td><i>// function implementation and int for the rest.  The function is called</i></td></tr>
+<tr><th id="27">27</th><td><i>// with an int argument.  This first attempts to match functions with an</i></td></tr>
+<tr><th id="28">28</th><td><i>// int argument before the default one (with a long argument).  This is</i></td></tr>
+<tr><th id="29">29</th><td><i>// known to function with VC 6.0. On other compilers this fails (Borland)</i></td></tr>
+<tr><th id="30">30</th><td><i>// or causes other problems (GCC).  note: this </i></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="32">if</span> defined(<span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span>)</u></td></tr>
+<tr><th id="33">33</th><td>    <u>#define BOOST_PFTO long</u></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="32">else</span></u></td></tr>
+<tr><th id="35">35</th><td>    <u>#define <dfn class="macro" id="_M/BOOST_PFTO" data-ref="_M/BOOST_PFTO">BOOST_PFTO</dfn></u></td></tr>
+<tr><th id="36">36</th><td><u>#<span data-ppcond="32">endif</span></u></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><i>// here's another approach.  Rather than use a default function - make sure</i></td></tr>
+<tr><th id="39">39</th><td><i>// there is no default at all by requiring that all function invocations</i></td></tr>
+<tr><th id="40">40</th><td><i>// have a "wrapped" argument type.  This solves a problem with VC 6.0</i></td></tr>
+<tr><th id="41">41</th><td><i>// (and perhaps others) while implementing templated constructors.</i></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="44">44</th><td><b>namespace</b> <span class="namespace">serialization</span> {</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><b>template</b>&lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="47">47</th><td><b>struct</b> <dfn class="type def" id="boost::serialization::pfto_wrapper" title='boost::serialization::pfto_wrapper' data-ref="boost::serialization::pfto_wrapper" >pfto_wrapper</dfn> {</td></tr>
+<tr><th id="48">48</th><td>    <em>const</em> T &amp; <dfn class="decl" id="boost::serialization::pfto_wrapper::t" title='boost::serialization::pfto_wrapper::t' data-ref="boost::serialization::pfto_wrapper::t" >t</dfn>;</td></tr>
+<tr><th id="49">49</th><td>    <dfn class="decl def" id="_ZN5boost13serialization12pfto_wrappercvRKT_Ev" title='boost::serialization::pfto_wrapper::operator const type-parameter-0-0 &amp;' data-ref="_ZN5boost13serialization12pfto_wrappercvRKT_Ev" ><b>operator</b> <em>const</em> T &amp;</dfn> (){</td></tr>
+<tr><th id="50">50</th><td>        <b>return</b> <a class="member" href="#boost::serialization::pfto_wrapper::t" title='boost::serialization::pfto_wrapper::t' data-ref="boost::serialization::pfto_wrapper::t" >t</a>;</td></tr>
+<tr><th id="51">51</th><td>    }</td></tr>
+<tr><th id="52">52</th><td>    <dfn class="decl def" id="_ZN5boost13serialization12pfto_wrapperC1ERKT_" title='boost::serialization::pfto_wrapper::pfto_wrapper&lt;T&gt;' data-ref="_ZN5boost13serialization12pfto_wrapperC1ERKT_" >pfto_wrapper</dfn> (<em>const</em> T &amp; <dfn class="local col6 decl" id="1056rhs" title='rhs' data-type='const T &amp;' data-ref="1056rhs" >rhs</dfn>) : <a class="member" href="#boost::serialization::pfto_wrapper::t" title='boost::serialization::pfto_wrapper::t' data-ref="boost::serialization::pfto_wrapper::t" >t</a>(<a class="local col6 ref" href="#1056rhs" title='rhs' data-ref="1056rhs" >rhs</a>) {}</td></tr>
+<tr><th id="53">53</th><td>};</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><b>template</b>&lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="56">56</th><td><a class="type" href="#boost::serialization::pfto_wrapper" title='boost::serialization::pfto_wrapper' data-ref="boost::serialization::pfto_wrapper" >pfto_wrapper</a>&lt; T &gt; <dfn class="decl def" id="_ZN5boost13serialization17make_pfto_wrapperERKT_i" title='boost::serialization::make_pfto_wrapper' data-ref="_ZN5boost13serialization17make_pfto_wrapperERKT_i" >make_pfto_wrapper</dfn>(<em>const</em> T &amp; <dfn class="local col7 decl" id="1057t" title='t' data-type='const T &amp;' data-ref="1057t" >t</dfn>, <a class="macro" href="#35" title="" data-ref="_M/BOOST_PFTO">BOOST_PFTO</a> <em>int</em>){</td></tr>
+<tr><th id="57">57</th><td>    <b>return</b> <a class="type" href="#boost::serialization::pfto_wrapper" title='boost::serialization::pfto_wrapper' data-ref="boost::serialization::pfto_wrapper" >pfto_wrapper</a>&lt; T &gt;(<a class="local col7 ref" href="#1057t" title='t' data-ref="1057t" >t</a>);</td></tr>
+<tr><th id="58">58</th><td>}</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><b>template</b>&lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="61">61</th><td><a class="type" href="#boost::serialization::pfto_wrapper" title='boost::serialization::pfto_wrapper' data-ref="boost::serialization::pfto_wrapper" >pfto_wrapper</a>&lt; T &gt; <dfn class="decl def" id="_ZN5boost13serialization17make_pfto_wrapperERKNS0_12pfto_wrapperIT_EEi" title='boost::serialization::make_pfto_wrapper' data-ref="_ZN5boost13serialization17make_pfto_wrapperERKNS0_12pfto_wrapperIT_EEi" >make_pfto_wrapper</dfn>(<em>const</em> <a class="type" href="#boost::serialization::pfto_wrapper" title='boost::serialization::pfto_wrapper' data-ref="boost::serialization::pfto_wrapper" >pfto_wrapper</a>&lt; T &gt; &amp; <dfn class="local col8 decl" id="1058t" title='t' data-type='const pfto_wrapper&lt;T&gt; &amp;' data-ref="1058t" >t</dfn>, <em>int</em>){</td></tr>
+<tr><th id="62">62</th><td>    <b>return</b> <a class="local col8 ref" href="#1058t" title='t' data-ref="1058t" >t</a>;</td></tr>
+<tr><th id="63">63</th><td>}</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>} <i>// namespace serialization</i></td></tr>
+<tr><th id="66">66</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="68">ifdef</span> <span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span></u></td></tr>
+<tr><th id="69">69</th><td>    <u>#define BOOST_PFTO_WRAPPER(T) \</u></td></tr>
+<tr><th id="70">70</th><td><u>        boost::serialization::pfto_wrapper&lt; T &gt;</u></td></tr>
+<tr><th id="71">71</th><td>    <u>#define BOOST_MAKE_PFTO_WRAPPER(t) \</u></td></tr>
+<tr><th id="72">72</th><td><u>        boost::serialization::make_pfto_wrapper(t, 0)</u></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="68">else</span></u></td></tr>
+<tr><th id="74">74</th><td>    <u>#define <dfn class="macro" id="_M/BOOST_PFTO_WRAPPER" data-ref="_M/BOOST_PFTO_WRAPPER">BOOST_PFTO_WRAPPER</dfn>(T) T</u></td></tr>
+<tr><th id="75">75</th><td>    <u>#define <dfn class="macro" id="_M/BOOST_MAKE_PFTO_WRAPPER" data-ref="_M/BOOST_MAKE_PFTO_WRAPPER">BOOST_MAKE_PFTO_WRAPPER</dfn>(t) t</u></td></tr>
+<tr><th id="76">76</th><td><u>#<span data-ppcond="68">endif</span></u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><u>#<span data-ppcond="1">endif</span> // BOOST_SERIALIZATION_PFTO_HPP</u></td></tr>
+<tr><th id="79">79</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore3.3.5/src/common/Collision/Management/MMapFactory.cpp.html'>TrinityCore3.3.5/src/common/Collision/Management/MMapFactory.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

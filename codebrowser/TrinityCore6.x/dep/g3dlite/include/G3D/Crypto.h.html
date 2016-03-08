@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<title>Crypto.h [TrinityCore6.x/dep/g3dlite/include/G3D/Crypto.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/Crypto.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/Crypto.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> <span class="command"> \file</span> G3D/Crypto.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> <span class="command"> \maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"></i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> <span class="command"> \created</span> 2006-03-29</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"> <span class="command"> \edited</span>  2011-06-21</i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/G3D_Crypto_h">G3D_Crypto_h</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/G3D_Crypto_h" data-ref="_M/G3D_Crypto_h">G3D_Crypto_h</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="System.h.html">"G3D/System.h"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><i class="doc">/** See G3D::Crypto::md5 */</i></td></tr>
+<tr><th id="22">22</th><td><b>class</b> <dfn class="type def" id="G3D::MD5Hash" title='G3D::MD5Hash' data-ref="G3D::MD5Hash" >MD5Hash</dfn> {</td></tr>
+<tr><th id="23">23</th><td><b>private</b>:</td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a>   <dfn class="decl" id="G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</dfn>[<var>16</var>];</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>public</b>:</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>    <dfn class="decl def" id="_ZN3G3D7MD5HashC1Ev" title='G3D::MD5Hash::MD5Hash' data-ref="_ZN3G3D7MD5HashC1Ev" >MD5Hash</dfn>() {</td></tr>
+<tr><th id="30">30</th><td>        <b>for</b> (<em>int</em> <dfn class="local col5 decl" id="575i" title='i' data-type='int' data-ref="575i" >i</dfn> = <var>0</var>; <a class="local col5 ref" href="#575i" title='i' data-ref="575i" >i</a> &lt; <var>16</var>; ++<a class="local col5 ref" href="#575i" title='i' data-ref="575i" >i</a>) {</td></tr>
+<tr><th id="31">31</th><td>            <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col5 ref" href="#575i" title='i' data-ref="575i" >i</a>] = <var>0</var>;</td></tr>
+<tr><th id="32">32</th><td>        }</td></tr>
+<tr><th id="33">33</th><td>    }</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>    <b>explicit</b> <dfn class="decl" id="_ZN3G3D7MD5HashC1ERNS_11BinaryInputE" title='G3D::MD5Hash::MD5Hash' data-ref="_ZN3G3D7MD5HashC1ERNS_11BinaryInputE" >MD5Hash</dfn>(<b>class</b> <a class="type" href="BinaryInput.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" id="G3D::BinaryInput" ><a class="type" href="BinaryInput.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a></a>&amp; <dfn class="local col6 decl" id="576b" title='b' data-type='class BinaryInput &amp;' data-ref="576b" >b</dfn>);</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <i class="doc">/** Rotates the bytes once */</i></td></tr>
+<tr><th id="38">38</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D7MD5Hash11rotateBytesEv" title='G3D::MD5Hash::rotateBytes' data-ref="_ZN3G3D7MD5Hash11rotateBytesEv" >rotateBytes</dfn>() {</td></tr>
+<tr><th id="39">39</th><td>        <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a> <dfn class="local col7 decl" id="577temp" title='temp' data-type='uint8' data-ref="577temp" >temp</dfn> = <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<var>0</var>];</td></tr>
+<tr><th id="40">40</th><td>        <b>for</b> (<em>int</em> <dfn class="local col8 decl" id="578i" title='i' data-type='int' data-ref="578i" >i</dfn> = <var>0</var>; <a class="local col8 ref" href="#578i" title='i' data-ref="578i" >i</a> &lt; <var>15</var>; ++<a class="local col8 ref" href="#578i" title='i' data-ref="578i" >i</a>) {</td></tr>
+<tr><th id="41">41</th><td>            <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col8 ref" href="#578i" title='i' data-ref="578i" >i</a>] = <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col8 ref" href="#578i" title='i' data-ref="578i" >i</a> + <var>1</var>];</td></tr>
+<tr><th id="42">42</th><td>        }</td></tr>
+<tr><th id="43">43</th><td>        <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<var>15</var>] = <a class="local col7 ref" href="#577temp" title='temp' data-ref="577temp" >temp</a>;</td></tr>
+<tr><th id="44">44</th><td>    }</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <i class="doc">/** Rotates by n bytes */</i></td></tr>
+<tr><th id="47">47</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D7MD5Hash11rotateBytesEi" title='G3D::MD5Hash::rotateBytes' data-ref="_ZN3G3D7MD5Hash11rotateBytesEi" >rotateBytes</dfn>(<em>int</em> <dfn class="local col9 decl" id="579n" title='n' data-type='int' data-ref="579n" >n</dfn>) {</td></tr>
+<tr><th id="48">48</th><td>        <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a> <dfn class="local col0 decl" id="580temp" title='temp' data-type='uint8 [16]' data-ref="580temp" >temp</dfn>[<var>16</var>];</td></tr>
+<tr><th id="49">49</th><td>        <a class="type" href="System.h.html#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<a class="ref" href="System.h.html#_ZN3G3D6System6memcpyEPvPKvm" title='G3D::System::memcpy' data-ref="_ZN3G3D6System6memcpyEPvPKvm" id="_ZN3G3D6System6memcpyEPvPKvm" >memcpy</a>(<a class="local col0 ref" href="#580temp" title='temp' data-ref="580temp" >temp</a>, <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>, <var>16</var>);</td></tr>
+<tr><th id="50">50</th><td>        <b>for</b> (<em>int</em> <dfn class="local col1 decl" id="581i" title='i' data-type='int' data-ref="581i" >i</dfn> = <var>0</var>; <a class="local col1 ref" href="#581i" title='i' data-ref="581i" >i</a> &lt; <var>16</var>; ++<a class="local col1 ref" href="#581i" title='i' data-ref="581i" >i</a>) {</td></tr>
+<tr><th id="51">51</th><td>            <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col1 ref" href="#581i" title='i' data-ref="581i" >i</a>] = <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[(<a class="local col1 ref" href="#581i" title='i' data-ref="581i" >i</a> + <a class="local col9 ref" href="#579n" title='n' data-ref="579n" >n</a>) &amp; <var>15</var>];</td></tr>
+<tr><th id="52">52</th><td>        }</td></tr>
+<tr><th id="53">53</th><td>    }</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a>&amp; <dfn class="decl def" id="_ZN3G3D7MD5HashixEi" title='G3D::MD5Hash::operator[]' data-ref="_ZN3G3D7MD5HashixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col2 decl" id="582i" title='i' data-type='int' data-ref="582i" >i</dfn>) {</td></tr>
+<tr><th id="56">56</th><td>        <b>return</b> <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col2 ref" href="#582i" title='i' data-ref="582i" >i</a>];</td></tr>
+<tr><th id="57">57</th><td>    }</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <em>const</em> <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a>&amp; <dfn class="decl def" id="_ZNK3G3D7MD5HashixEi" title='G3D::MD5Hash::operator[]' data-ref="_ZNK3G3D7MD5HashixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col3 decl" id="583i" title='i' data-type='int' data-ref="583i" >i</dfn>) <em>const</em> {</td></tr>
+<tr><th id="60">60</th><td>        <b>return</b> <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col3 ref" href="#583i" title='i' data-ref="583i" >i</a>];</td></tr>
+<tr><th id="61">61</th><td>    }</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK3G3D7MD5HasheqERKS0_" title='G3D::MD5Hash::operator==' data-ref="_ZNK3G3D7MD5HasheqERKS0_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::MD5Hash" title='G3D::MD5Hash' data-ref="G3D::MD5Hash" >MD5Hash</a>&amp; <dfn class="local col4 decl" id="584other" title='other' data-type='const G3D::MD5Hash &amp;' data-ref="584other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="64">64</th><td>        <em>bool</em> <dfn class="local col5 decl" id="585match" title='match' data-type='bool' data-ref="585match" >match</dfn> = <b>true</b>;</td></tr>
+<tr><th id="65">65</th><td>        <b>for</b> (<em>int</em> <dfn class="local col6 decl" id="586i" title='i' data-type='int' data-ref="586i" >i</dfn> = <var>0</var>; <a class="local col6 ref" href="#586i" title='i' data-ref="586i" >i</a> &lt; <var>16</var>; ++<a class="local col6 ref" href="#586i" title='i' data-ref="586i" >i</a>) {</td></tr>
+<tr><th id="66">66</th><td>            <a class="local col5 ref" href="#585match" title='match' data-ref="585match" >match</a> = <a class="local col5 ref" href="#585match" title='match' data-ref="585match" >match</a> &amp;&amp; (<a class="local col4 ref" href="#584other" title='other' data-ref="584other" >other</a>.<a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col6 ref" href="#586i" title='i' data-ref="586i" >i</a>] == <a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col6 ref" href="#586i" title='i' data-ref="586i" >i</a>]);</td></tr>
+<tr><th id="67">67</th><td>        }</td></tr>
+<tr><th id="68">68</th><td>        <b>return</b> <a class="local col5 ref" href="#585match" title='match' data-ref="585match" >match</a>;</td></tr>
+<tr><th id="69">69</th><td>    }</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>    <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK3G3D7MD5HashneERKS0_" title='G3D::MD5Hash::operator!=' data-ref="_ZNK3G3D7MD5HashneERKS0_" ><b>operator</b>!=</dfn>(<em>const</em> <a class="type" href="#G3D::MD5Hash" title='G3D::MD5Hash' data-ref="G3D::MD5Hash" >MD5Hash</a>&amp; <dfn class="local col7 decl" id="587other" title='other' data-type='const G3D::MD5Hash &amp;' data-ref="587other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="72">72</th><td>        <b>return</b> !(*<b>this</b> <a class="member" href="#_ZNK3G3D7MD5HasheqERKS0_" title='G3D::MD5Hash::operator==' data-ref="_ZNK3G3D7MD5HasheqERKS0_" >==</a> <a class="local col7 ref" href="#587other" title='other' data-ref="587other" >other</a>);</td></tr>
+<tr><th id="73">73</th><td>    }</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D7MD5Hash11deserializeERNS_11BinaryInputE" title='G3D::MD5Hash::deserialize' data-ref="_ZN3G3D7MD5Hash11deserializeERNS_11BinaryInputE" >deserialize</dfn>(<b>class</b> <a class="type" href="BinaryInput.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col8 decl" id="588b" title='b' data-type='class BinaryInput &amp;' data-ref="588b" >b</dfn>);</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D7MD5Hash9serializeERNS_12BinaryOutputE" title='G3D::MD5Hash::serialize' data-ref="_ZNK3G3D7MD5Hash9serializeERNS_12BinaryOutputE" >serialize</dfn>(<b>class</b> <a class="type" href="BinaryOutput.h.html#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" id="G3D::BinaryOutput" ><a class="type" href="BinaryOutput.h.html#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a></a>&amp; <dfn class="local col9 decl" id="589b" title='b' data-type='class BinaryOutput &amp;' data-ref="589b" >b</dfn>) <em>const</em>;</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>    <em>static</em> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZN3G3D7MD5Hash8hashCodeERKS0_" title='G3D::MD5Hash::hashCode' data-ref="_ZN3G3D7MD5Hash8hashCodeERKS0_" >hashCode</dfn>(<em>const</em> <a class="type" href="#G3D::MD5Hash" title='G3D::MD5Hash' data-ref="G3D::MD5Hash" >MD5Hash</a>&amp; <dfn class="local col0 decl" id="590key" title='key' data-type='const G3D::MD5Hash &amp;' data-ref="590key" >key</dfn>) {</td></tr>
+<tr><th id="80">80</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="591h" title='h' data-type='size_t' data-ref="591h" >h</dfn> = <var>0</var>;</td></tr>
+<tr><th id="81">81</th><td>        <b>for</b> (<em>int</em> <dfn class="local col2 decl" id="592i" title='i' data-type='int' data-ref="592i" >i</dfn> = <var>0</var>; <a class="local col2 ref" href="#592i" title='i' data-ref="592i" >i</a> &lt; <var>4</var>; ++<a class="local col2 ref" href="#592i" title='i' data-ref="592i" >i</a>) {</td></tr>
+<tr><th id="82">82</th><td>            <em>const</em> <em>int</em> <dfn class="local col3 decl" id="593x" title='x' data-type='const int' data-ref="593x" >x</dfn> = <a class="local col2 ref" href="#592i" title='i' data-ref="592i" >i</a> * <var>4</var>;</td></tr>
+<tr><th id="83">83</th><td>            <a class="local col1 ref" href="#591h" title='h' data-ref="591h" >h</a> ^= (((<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>)<a class="local col0 ref" href="#590key" title='key' data-ref="590key" >key</a>.<a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col3 ref" href="#593x" title='x' data-ref="593x" >x</a> + <var>0</var>]) &lt;&lt; <var>24</var>) |</td></tr>
+<tr><th id="84">84</th><td>                (((<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>)<a class="local col0 ref" href="#590key" title='key' data-ref="590key" >key</a>.<a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col3 ref" href="#593x" title='x' data-ref="593x" >x</a> + <var>1</var>]) &lt;&lt; <var>16</var>) |</td></tr>
+<tr><th id="85">85</th><td>                (((<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>)<a class="local col0 ref" href="#590key" title='key' data-ref="590key" >key</a>.<a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col3 ref" href="#593x" title='x' data-ref="593x" >x</a> + <var>2</var>]) &lt;&lt; <var>8</var>) |</td></tr>
+<tr><th id="86">86</th><td>                ((<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>)<a class="local col0 ref" href="#590key" title='key' data-ref="590key" >key</a>.<a class="member" href="#G3D::MD5Hash::value" title='G3D::MD5Hash::value' data-ref="G3D::MD5Hash::value" >value</a>[<a class="local col3 ref" href="#593x" title='x' data-ref="593x" >x</a> + <var>3</var>]);</td></tr>
+<tr><th id="87">87</th><td>        }</td></tr>
+<tr><th id="88">88</th><td>        <b>return</b> <a class="local col1 ref" href="#591h" title='h' data-ref="591h" >h</a>;</td></tr>
+<tr><th id="89">89</th><td>    }</td></tr>
+<tr><th id="90">90</th><td>};</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><i class="doc">/** Cryptography and hashing helper functions */</i></td></tr>
+<tr><th id="94">94</th><td><b>class</b> <dfn class="type def" id="G3D::Crypto" title='G3D::Crypto' data-ref="G3D::Crypto" >Crypto</dfn> {</td></tr>
+<tr><th id="95">95</th><td><b>public</b>:</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">     Computes the CRC32 value of a byte array.  CRC32 is designed to be a hash</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">     function that produces different values for similar strings.</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc"></i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">     This implementation is compatible with PKZIP and GZIP.</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc"></i></td></tr>
+<tr><th id="103">103</th><td><i class="doc">     Based on <a href="http://www.gamedev.net/reference/programming/features/crc">http://www.gamedev.net/reference/programming/features/crc</a>32/</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="105">105</th><td>    <em>static</em> <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="decl" id="_ZN3G3D6Crypto5crc32EPKvm" title='G3D::Crypto::crc32' data-ref="_ZN3G3D6Crypto5crc32EPKvm" >crc32</dfn>(<em>const</em> <em>void</em>* <dfn class="local col4 decl" id="594bytes" title='bytes' data-type='const void *' data-ref="594bytes" >bytes</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="595numBytes" title='numBytes' data-type='size_t' data-ref="595numBytes" >numBytes</dfn>);</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="108">108</th><td><i class="doc">     Computes the MD5 hash (message digest) of a byte stream, as defined by</i></td></tr>
+<tr><th id="109">109</th><td><i class="doc">     <a href="http://www.ietf.org/rfc/rfc">http://www.ietf.org/rfc/rfc</a>1321.txt.</i></td></tr>
+<tr><th id="110">110</th><td><i class="doc"></i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">    <span class="command"> @cite</span> Based on implementation by L. Peter Deutsch, ghos<span class="command">t@aladdin</span>.com</i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="113">113</th><td>    <em>static</em> <a class="type" href="#G3D::MD5Hash" title='G3D::MD5Hash' data-ref="G3D::MD5Hash" >MD5Hash</a> <dfn class="decl" id="_ZN3G3D6Crypto3md5EPKvm" title='G3D::Crypto::md5' data-ref="_ZN3G3D6Crypto3md5EPKvm" >md5</dfn>(<em>const</em> <em>void</em>* <dfn class="local col6 decl" id="596bytes" title='bytes' data-type='const void *' data-ref="596bytes" >bytes</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="597numBytes" title='numBytes' data-type='size_t' data-ref="597numBytes" >numBytes</dfn>);</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">     Returns the nth prime less than 2000 in constant time.  The first prime has index</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">     0 and is the number 2.</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="119">119</th><td>    <em>static</em> <em>int</em> <dfn class="decl" id="_ZN3G3D6Crypto10smallPrimeEi" title='G3D::Crypto::smallPrime' data-ref="_ZN3G3D6Crypto10smallPrimeEi" >smallPrime</dfn>(<em>int</em> <dfn class="local col8 decl" id="598n" title='n' data-type='int' data-ref="598n" >n</dfn>);</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>    <i class="doc">/** Returns 1 + the largest value that can be passed to smallPrime. */</i></td></tr>
+<tr><th id="122">122</th><td>    <em>static</em> <em>int</em> <dfn class="decl" id="_ZN3G3D6Crypto14numSmallPrimesEv" title='G3D::Crypto::numSmallPrimes' data-ref="_ZN3G3D6Crypto14numSmallPrimesEv" >numSmallPrimes</dfn>();</td></tr>
+<tr><th id="123">123</th><td>};</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td>}</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><u>#<span data-ppcond="11">endif</span></u></td></tr>
+<tr><th id="128">128</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore6.x/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

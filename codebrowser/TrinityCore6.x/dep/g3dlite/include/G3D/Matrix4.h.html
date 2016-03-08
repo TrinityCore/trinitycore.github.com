@@ -1,0 +1,366 @@
+<!doctype html>
+<html>
+<head>
+<title>Matrix4.h [TrinityCore6.x/dep/g3dlite/include/G3D/Matrix4.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/Matrix4.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/Matrix4.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> <span class="command"> @file</span> Matrix4.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc">  4x4 matrix class</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> <span class="command"> @maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> </i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"> <span class="command"> \created</span> 2003-10-02</i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"> <span class="command"> \edited</span>  2012-12-25</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#<span data-ppcond="12">ifndef</span> <span class="macro" data-ref="_M/G3D_Matrix4_h">G3D_Matrix4_h</span></u></td></tr>
+<tr><th id="13">13</th><td><u>#define <dfn class="macro" id="_M/G3D_Matrix4_h" data-ref="_M/G3D_Matrix4_h">G3D_Matrix4_h</dfn></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="15">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="16">16</th><td><i>// Disable conditional expression is constant, which occurs incorrectly on inlined functions</i></td></tr>
+<tr><th id="17">17</th><td><u>#   pragma warning (push)</u></td></tr>
+<tr><th id="18">18</th><td><u>#   pragma warning( disable : 4127 )</u></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="15">endif</span></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="debugAssert.h.html">"G3D/debugAssert.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="Matrix3.h.html">"G3D/Matrix3.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="Vector3.h.html">"G3D/Vector3.h"</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>class</b> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" id="G3D::Any" >Any</a>;</td></tr>
+<tr><th id="29">29</th><td><b>class</b> <dfn class="type" id="G3D::Matrix2" title='G3D::Matrix2' data-ref="G3D::Matrix2" >Matrix2</dfn>;</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">  A 4x4 matrix.  Do not subclass.  Data is initialized to 0 when default constructed.</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc"></i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">  <span class="command">\sa</span> G3D::CoordinateFrame, G3D::Matrix3, G3D::Quat</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="36">36</th><td><b>class</b> <dfn class="type def" id="G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</dfn> {</td></tr>
+<tr><th id="37">37</th><td><b>private</b>:</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>    <em>float</em> <dfn class="decl" id="G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</dfn>[<var>4</var>][<var>4</var>];</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc">      Computes the determinant of the 3x3 matrix that lacks excludeRow</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc">      and excludeCol. </i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="45">45</th><td>    <em>float</em> <dfn class="decl" id="_ZNK3G3D7Matrix414subDeterminantEii" title='G3D::Matrix4::subDeterminant' data-ref="_ZNK3G3D7Matrix414subDeterminantEii" >subDeterminant</dfn>(<em>int</em> <dfn class="local col9 decl" id="249excludeRow" title='excludeRow' data-type='int' data-ref="249excludeRow" >excludeRow</dfn>, <em>int</em> <dfn class="local col0 decl" id="250excludeCol" title='excludeCol' data-type='int' data-ref="250excludeCol" >excludeCol</dfn>) <em>const</em>;</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <i>// Hidden operators</i></td></tr>
+<tr><th id="48">48</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D7Matrix4ltERKS0_" title='G3D::Matrix4::operator&lt;' data-ref="_ZNK3G3D7Matrix4ltERKS0_" ><b>operator</b>&lt;</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp;) <em>const</em>;</td></tr>
+<tr><th id="49">49</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D7Matrix4gtERKS0_" title='G3D::Matrix4::operator&gt;' data-ref="_ZNK3G3D7Matrix4gtERKS0_" ><b>operator</b>&gt;</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp;) <em>const</em>;</td></tr>
+<tr><th id="50">50</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D7Matrix4leERKS0_" title='G3D::Matrix4::operator&lt;=' data-ref="_ZNK3G3D7Matrix4leERKS0_" ><b>operator</b>&lt;=</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp;) <em>const</em>;</td></tr>
+<tr><th id="51">51</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D7Matrix4geERKS0_" title='G3D::Matrix4::operator&gt;=' data-ref="_ZNK3G3D7Matrix4geERKS0_" ><b>operator</b>&gt;=</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp;) <em>const</em>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><b>public</b>:</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <i class="doc">/** Must be in one of the following forms:</i></td></tr>
+<tr><th id="56">56</th><td><i class="doc">        - Matrix4(#, #, # .... #)</i></td></tr>
+<tr><th id="57">57</th><td><i class="doc">        - Matrix4::scale(#)</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc">        - Matrix4::scale(#, #, #)</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc">        - Matrix4::translation(#, #, #)</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">        - Matrix4::identity()</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">        - Matrix4::rollDegrees(#)</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc">        - Matrix4::pitchDegrees(#)</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc">        - Matrix4::yawDegrees(#)</i></td></tr>
+<tr><th id="64">64</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="65">65</th><td>    <b>explicit</b> <dfn class="decl" id="_ZN3G3D7Matrix4C1ERKNS_3AnyE" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_3AnyE" >Matrix4</dfn>(<em>const</em> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a>&amp; <dfn class="local col1 decl" id="251any" title='any' data-type='const G3D::Any &amp;' data-ref="251any" >any</dfn>);</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>    <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a> <dfn class="decl" id="_ZNK3G3D7Matrix45toAnyEv" title='G3D::Matrix4::toAny' data-ref="_ZNK3G3D7Matrix45toAnyEv" >toAny</dfn>() <em>const</em>;</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>    <dfn class="decl" id="_ZN3G3D7Matrix4C1Effffffffffffffff" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1Effffffffffffffff" >Matrix4</dfn>(</td></tr>
+<tr><th id="70">70</th><td>        <em>float</em> <dfn class="local col2 decl" id="252r1c1" title='r1c1' data-type='float' data-ref="252r1c1" >r1c1</dfn>, <em>float</em> <dfn class="local col3 decl" id="253r1c2" title='r1c2' data-type='float' data-ref="253r1c2" >r1c2</dfn>, <em>float</em> <dfn class="local col4 decl" id="254r1c3" title='r1c3' data-type='float' data-ref="254r1c3" >r1c3</dfn>, <em>float</em> <dfn class="local col5 decl" id="255r1c4" title='r1c4' data-type='float' data-ref="255r1c4" >r1c4</dfn>,</td></tr>
+<tr><th id="71">71</th><td>        <em>float</em> <dfn class="local col6 decl" id="256r2c1" title='r2c1' data-type='float' data-ref="256r2c1" >r2c1</dfn>, <em>float</em> <dfn class="local col7 decl" id="257r2c2" title='r2c2' data-type='float' data-ref="257r2c2" >r2c2</dfn>, <em>float</em> <dfn class="local col8 decl" id="258r2c3" title='r2c3' data-type='float' data-ref="258r2c3" >r2c3</dfn>, <em>float</em> <dfn class="local col9 decl" id="259r2c4" title='r2c4' data-type='float' data-ref="259r2c4" >r2c4</dfn>,</td></tr>
+<tr><th id="72">72</th><td>        <em>float</em> <dfn class="local col0 decl" id="260r3c1" title='r3c1' data-type='float' data-ref="260r3c1" >r3c1</dfn>, <em>float</em> <dfn class="local col1 decl" id="261r3c2" title='r3c2' data-type='float' data-ref="261r3c2" >r3c2</dfn>, <em>float</em> <dfn class="local col2 decl" id="262r3c3" title='r3c3' data-type='float' data-ref="262r3c3" >r3c3</dfn>, <em>float</em> <dfn class="local col3 decl" id="263r3c4" title='r3c4' data-type='float' data-ref="263r3c4" >r3c4</dfn>,</td></tr>
+<tr><th id="73">73</th><td>        <em>float</em> <dfn class="local col4 decl" id="264r4c1" title='r4c1' data-type='float' data-ref="264r4c1" >r4c1</dfn>, <em>float</em> <dfn class="local col5 decl" id="265r4c2" title='r4c2' data-type='float' data-ref="265r4c2" >r4c2</dfn>, <em>float</em> <dfn class="local col6 decl" id="266r4c3" title='r4c3' data-type='float' data-ref="266r4c3" >r4c3</dfn>, <em>float</em> <dfn class="local col7 decl" id="267r4c4" title='r4c4' data-type='float' data-ref="267r4c4" >r4c4</dfn>);</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">     init should be &lt;B&gt;row major&lt;/B&gt;.</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="78">78</th><td>    <dfn class="decl" id="_ZN3G3D7Matrix4C1EPKf" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1EPKf" >Matrix4</dfn>(<em>const</em> <em>float</em>* <dfn class="local col8 decl" id="268init" title='init' data-type='const float *' data-ref="268init" >init</dfn>);</td></tr>
+<tr><th id="79">79</th><td>    </td></tr>
+<tr><th id="80">80</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">        a is the upper left 3x3 submatrix and b is the upper right 3x1 submatrix. The last row of the created matrix is (0,0,0,1).</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="83">83</th><td>    <dfn class="decl" id="_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" >Matrix4</dfn>(<em>const</em> <b>class</b> <a class="type" href="Matrix3.h.html#G3D::Matrix3" title='G3D::Matrix3' data-ref="G3D::Matrix3" >Matrix3</a>&amp; <dfn class="local col9 decl" id="269upper3x3" title='upper3x3' data-type='const class Matrix3 &amp;' data-ref="269upper3x3" >upper3x3</dfn>, <em>const</em> <b>class</b> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col0 decl" id="270lastCol" title='lastCol' data-type='const class Vector3 &amp;' data-ref="270lastCol" >lastCol</dfn> = <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector34zeroEv" title='G3D::Vector3::zero' data-ref="_ZN3G3D7Vector34zeroEv" id="_ZN3G3D7Vector34zeroEv" >zero</a>());</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>    <dfn class="decl" id="_ZN3G3D7Matrix4C1ERKNS_15CoordinateFrameE" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_15CoordinateFrameE" >Matrix4</dfn>(<em>const</em> <b>class</b> <a class="type" href="CoordinateFrame.h.html#G3D::CoordinateFrame" title='G3D::CoordinateFrame' data-ref="G3D::CoordinateFrame" >CoordinateFrame</a>&amp; <dfn class="local col1 decl" id="271c" title='c' data-type='const class CoordinateFrame &amp;' data-ref="271c" >c</dfn>);</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>    <dfn class="decl" id="_ZN3G3D7Matrix4C1EPKd" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1EPKd" >Matrix4</dfn>(<em>const</em> <em>double</em>* <dfn class="local col2 decl" id="272init" title='init' data-type='const double *' data-ref="272init" >init</dfn>);</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td>    <i class="doc">/** Matrix4::zero() */</i></td></tr>
+<tr><th id="90">90</th><td>    <dfn class="decl" id="_ZN3G3D7Matrix4C1Ev" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1Ev" >Matrix4</dfn>();</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>    <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix48diagonalEffff" title='G3D::Matrix4::diagonal' data-ref="_ZN3G3D7Matrix48diagonalEffff" >diagonal</dfn>(<em>float</em> <dfn class="local col3 decl" id="273e00" title='e00' data-type='float' data-ref="273e00" >e00</dfn>, <em>float</em> <dfn class="local col4 decl" id="274e11" title='e11' data-type='float' data-ref="274e11" >e11</dfn>, <em>float</em> <dfn class="local col5 decl" id="275e22" title='e22' data-type='float' data-ref="275e22" >e22</dfn>, <em>float</em> <dfn class="local col6 decl" id="276e33" title='e33' data-type='float' data-ref="276e33" >e33</dfn>) {</td></tr>
+<tr><th id="93">93</th><td>        <b>return</b> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a><a class="ref" href="#_ZN3G3D7Matrix4C1Effffffffffffffff" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1Effffffffffffffff" >(</a><a class="local col3 ref" href="#273e00" title='e00' data-ref="273e00" >e00</a>, <var>0</var>, <var>0</var>, <var>0</var>,</td></tr>
+<tr><th id="94">94</th><td>                       <var>0</var>, <a class="local col4 ref" href="#274e11" title='e11' data-ref="274e11" >e11</a>, <var>0</var>, <var>0</var>,</td></tr>
+<tr><th id="95">95</th><td>                       <var>0</var>, <var>0</var>, <a class="local col5 ref" href="#275e22" title='e22' data-ref="275e22" >e22</a>, <var>0</var>,</td></tr>
+<tr><th id="96">96</th><td>                       <var>0</var>, <var>0</var>, <var>0</var>, <a class="local col6 ref" href="#276e33" title='e33' data-ref="276e33" >e33</a>);</td></tr>
+<tr><th id="97">97</th><td>    }</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>    <i class="doc">/** Produces an RT transformation that nearly matches this Matrix4.</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc">        Because a Matrix4 may not be precisely a rotation and translation,</i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">        this may introduce error. */</i></td></tr>
+<tr><th id="102">102</th><td>    <b>class</b> <a class="type" href="CoordinateFrame.h.html#G3D::CoordinateFrame" title='G3D::CoordinateFrame' data-ref="G3D::CoordinateFrame" >CoordinateFrame</a> <dfn class="decl" id="_ZNK3G3D7Matrix421approxCoordinateFrameEv" title='G3D::Matrix4::approxCoordinateFrame' data-ref="_ZNK3G3D7Matrix421approxCoordinateFrameEv" >approxCoordinateFrame</dfn>() <em>const</em>;</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>    <i>// Special values.</i></td></tr>
+<tr><th id="105">105</th><td><i>    // Intentionally not inlined: see Matrix3::identity() for details.</i></td></tr>
+<tr><th id="106">106</th><td>    <em>static</em> <em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp; <dfn class="decl" id="_ZN3G3D7Matrix48identityEv" title='G3D::Matrix4::identity' data-ref="_ZN3G3D7Matrix48identityEv" >identity</dfn>();</td></tr>
+<tr><th id="107">107</th><td>    <em>static</em> <em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp; <dfn class="decl" id="_ZN3G3D7Matrix44zeroEv" title='G3D::Matrix4::zero' data-ref="_ZN3G3D7Matrix44zeroEv" >zero</dfn>();</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>    <i class="doc">/** If this is a perspective projection matrix created by</i></td></tr>
+<tr><th id="110">110</th><td><i class="doc">        Matrix4::perspectiveProjection, extract its parameters.</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">        </i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">        Uses double precision because the operations involved in</i></td></tr>
+<tr><th id="113">113</th><td><i class="doc">        projection involve divisions that can significantly impact</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc">        precision.</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="116">116</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D7Matrix434getPerspectiveProjectionParametersERdS1_S1_S1_S1_S1_f" title='G3D::Matrix4::getPerspectiveProjectionParameters' data-ref="_ZNK3G3D7Matrix434getPerspectiveProjectionParametersERdS1_S1_S1_S1_S1_f" >getPerspectiveProjectionParameters</dfn></td></tr>
+<tr><th id="117">117</th><td>    (<em>double</em>&amp; <dfn class="local col7 decl" id="277left" title='left' data-type='double &amp;' data-ref="277left" >left</dfn>,</td></tr>
+<tr><th id="118">118</th><td>     <em>double</em>&amp; <dfn class="local col8 decl" id="278right" title='right' data-type='double &amp;' data-ref="278right" >right</dfn>,</td></tr>
+<tr><th id="119">119</th><td>     <em>double</em>&amp; <dfn class="local col9 decl" id="279bottom" title='bottom' data-type='double &amp;' data-ref="279bottom" >bottom</dfn>,  </td></tr>
+<tr><th id="120">120</th><td>     <em>double</em>&amp; <dfn class="local col0 decl" id="280top" title='top' data-type='double &amp;' data-ref="280top" >top</dfn>,</td></tr>
+<tr><th id="121">121</th><td>     <em>double</em>&amp; <dfn class="local col1 decl" id="281nearval" title='nearval' data-type='double &amp;' data-ref="281nearval" >nearval</dfn>, </td></tr>
+<tr><th id="122">122</th><td>     <em>double</em>&amp; <dfn class="local col2 decl" id="282farval" title='farval' data-type='double &amp;' data-ref="282farval" >farval</dfn>,</td></tr>
+<tr><th id="123">123</th><td>     <em>float</em> <dfn class="local col3 decl" id="283updirection" title='updirection' data-type='float' data-ref="283updirection" >updirection</dfn> = -<var>1.0f</var>) <em>const</em>;</td></tr>
+<tr><th id="124">124</th><td>        </td></tr>
+<tr><th id="125">125</th><td>    <b>inline</b> <em>float</em>* <dfn class="decl def" id="_ZN3G3D7Matrix4ixEi" title='G3D::Matrix4::operator[]' data-ref="_ZN3G3D7Matrix4ixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col4 decl" id="284r" title='r' data-type='int' data-ref="284r" >r</dfn>) {</td></tr>
+<tr><th id="126">126</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &gt;= <var>0</var>);</td></tr>
+<tr><th id="127">127</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &lt; <var>4</var>);</td></tr>
+<tr><th id="128">128</th><td>        <b>return</b> (<em>float</em>*)&amp;<a class="member" href="#G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</a>[<a class="local col4 ref" href="#284r" title='r' data-ref="284r" >r</a>];</td></tr>
+<tr><th id="129">129</th><td>    }</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>    <b>inline</b> <em>const</em> <em>float</em>* <dfn class="decl def" id="_ZNK3G3D7Matrix4ixEi" title='G3D::Matrix4::operator[]' data-ref="_ZNK3G3D7Matrix4ixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col5 decl" id="285r" title='r' data-type='int' data-ref="285r" >r</dfn>) <em>const</em> {</td></tr>
+<tr><th id="132">132</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &gt;= <var>0</var>);</td></tr>
+<tr><th id="133">133</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &lt; <var>4</var>);</td></tr>
+<tr><th id="134">134</th><td>        <b>return</b> (<em>const</em> <em>float</em>*)&amp;<a class="member" href="#G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</a>[<a class="local col5 ref" href="#285r" title='r' data-ref="285r" >r</a>];</td></tr>
+<tr><th id="135">135</th><td>    } </td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td>    <i class="doc">/** Returns a row-major pointer. */</i></td></tr>
+<tr><th id="138">138</th><td>    <b>inline</b> <dfn class="decl def" id="_ZN3G3D7Matrix4cvPfEv" title='G3D::Matrix4::operator float *' data-ref="_ZN3G3D7Matrix4cvPfEv" ><b>operator</b> <em>float</em>*</dfn> () {</td></tr>
+<tr><th id="139">139</th><td>        <b>return</b> (<em>float</em>*)&amp;<a class="member" href="#G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</a>[<var>0</var>][<var>0</var>];</td></tr>
+<tr><th id="140">140</th><td>    }</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td>    <b>inline</b> <dfn class="decl def" id="_ZNK3G3D7Matrix4cvPKfEv" title='G3D::Matrix4::operator const float *' data-ref="_ZNK3G3D7Matrix4cvPKfEv" ><b>operator</b> <em>const</em> <em>float</em>*</dfn> () <em>const</em> {</td></tr>
+<tr><th id="143">143</th><td>        <b>return</b> (<em>const</em> <em>float</em>*)&amp;<a class="member" href="#G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</a>[<var>0</var>][<var>0</var>];</td></tr>
+<tr><th id="144">144</th><td>    }</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td>    <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZNK3G3D7Matrix4mlERKS0_" title='G3D::Matrix4::operator*' data-ref="_ZNK3G3D7Matrix4mlERKS0_" ><b>operator</b>*</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp; <dfn class="local col6 decl" id="286other" title='other' data-type='const G3D::Matrix4 &amp;' data-ref="286other" >other</dfn>) <em>const</em>;</td></tr>
+<tr><th id="147">147</th><td>    <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZNK3G3D7Matrix4plERKS0_" title='G3D::Matrix4::operator+' data-ref="_ZNK3G3D7Matrix4plERKS0_" ><b>operator</b>+</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp; <dfn class="local col7 decl" id="287other" title='other' data-type='const G3D::Matrix4 &amp;' data-ref="287other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="148">148</th><td>        <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="local col8 decl" id="288result" title='result' data-type='G3D::Matrix4' data-ref="288result" >result</dfn>;</td></tr>
+<tr><th id="149">149</th><td>        <b>for</b> (<em>int</em> <dfn class="local col9 decl" id="289r" title='r' data-type='int' data-ref="289r" >r</dfn> = <var>0</var>; <a class="local col9 ref" href="#289r" title='r' data-ref="289r" >r</a> &lt; <var>4</var>; ++<a class="local col9 ref" href="#289r" title='r' data-ref="289r" >r</a>) {</td></tr>
+<tr><th id="150">150</th><td>            <b>for</b> (<em>int</em> <dfn class="local col0 decl" id="290c" title='c' data-type='int' data-ref="290c" >c</dfn> = <var>0</var>; <a class="local col0 ref" href="#290c" title='c' data-ref="290c" >c</a> &lt; <var>4</var>; ++<a class="local col0 ref" href="#290c" title='c' data-ref="290c" >c</a>) {</td></tr>
+<tr><th id="151">151</th><td>                <a class="local col8 ref" href="#288result" title='result' data-ref="288result" >result</a>.<a class="member" href="#G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</a>[<a class="local col9 ref" href="#289r" title='r' data-ref="289r" >r</a>][<a class="local col0 ref" href="#290c" title='c' data-ref="290c" >c</a>] = <a class="member" href="#G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</a>[<a class="local col9 ref" href="#289r" title='r' data-ref="289r" >r</a>][<a class="local col0 ref" href="#290c" title='c' data-ref="290c" >c</a>] + <a class="local col7 ref" href="#287other" title='other' data-ref="287other" >other</a>.<a class="member" href="#G3D::Matrix4::elt" title='G3D::Matrix4::elt' data-ref="G3D::Matrix4::elt" >elt</a>[<a class="local col9 ref" href="#289r" title='r' data-ref="289r" >r</a>][<a class="local col0 ref" href="#290c" title='c' data-ref="290c" >c</a>];</td></tr>
+<tr><th id="152">152</th><td>            }</td></tr>
+<tr><th id="153">153</th><td>        }</td></tr>
+<tr><th id="154">154</th><td>        <b>return</b> <a class="local col8 ref" href="#288result" title='result' data-ref="288result" >result</a>;</td></tr>
+<tr><th id="155">155</th><td>    }</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>    <b>class</b> <a class="type" href="Matrix3.h.html#G3D::Matrix3" title='G3D::Matrix3' data-ref="G3D::Matrix3" >Matrix3</a> <dfn class="decl" id="_ZNK3G3D7Matrix48upper3x3Ev" title='G3D::Matrix4::upper3x3' data-ref="_ZNK3G3D7Matrix48upper3x3Ev" >upper3x3</dfn>() <em>const</em>;</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>    <b>class</b> <a class="type" href="#G3D::Matrix2" title='G3D::Matrix2' data-ref="G3D::Matrix2" >Matrix2</a> <dfn class="decl" id="_ZNK3G3D7Matrix48upper2x2Ev" title='G3D::Matrix4::upper2x2' data-ref="_ZNK3G3D7Matrix48upper2x2Ev" >upper2x2</dfn>() <em>const</em>;</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>    <i class="doc">/** Homogeneous multiplication. Let k = M * [v w]^T.  result = k.xyz() / k.w */</i></td></tr>
+<tr><th id="162">162</th><td>    <b>class</b> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a> <dfn class="decl" id="_ZNK3G3D7Matrix47homoMulERKNS_7Vector3Ef" title='G3D::Matrix4::homoMul' data-ref="_ZNK3G3D7Matrix47homoMulERKNS_7Vector3Ef" >homoMul</dfn>(<em>const</em> <b>class</b> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col1 decl" id="291v" title='v' data-type='const class Vector3 &amp;' data-ref="291v" >v</dfn>, <em>float</em> <dfn class="local col2 decl" id="292w" title='w' data-type='float' data-ref="292w" >w</dfn>) <em>const</em>;</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="165">165</th><td><i class="doc">     Constructs an orthogonal projection matrix from the given parameters.</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">     Near and far are the <span class="tag">&lt;b&gt;</span>NEGATIVE<span class="tag">&lt;/b&gt;</span> of the near and far plane Z values</i></td></tr>
+<tr><th id="167">167</th><td><i class="doc">     (to follow OpenGL conventions).</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc"></i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">    <span class="command">\param</span> <span class="arg">upDirection</span> Use -1.0 for 2D Y increasing downwards (the G3D 8.x default convention), </i></td></tr>
+<tr><th id="170">170</th><td><i class="doc">    1.0 for 2D Y increasing upwards (the G3D 7.x default and OpenGL convention)</i></td></tr>
+<tr><th id="171">171</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="172">172</th><td>    <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZN3G3D7Matrix420orthogonalProjectionEfffffff" title='G3D::Matrix4::orthogonalProjection' data-ref="_ZN3G3D7Matrix420orthogonalProjectionEfffffff" >orthogonalProjection</dfn>(</td></tr>
+<tr><th id="173">173</th><td>        <em>float</em>            <dfn class="local col3 decl" id="293left" title='left' data-type='float' data-ref="293left" >left</dfn>,</td></tr>
+<tr><th id="174">174</th><td>        <em>float</em>            <dfn class="local col4 decl" id="294right" title='right' data-type='float' data-ref="294right" >right</dfn>,</td></tr>
+<tr><th id="175">175</th><td>        <em>float</em>            <dfn class="local col5 decl" id="295bottom" title='bottom' data-type='float' data-ref="295bottom" >bottom</dfn>,</td></tr>
+<tr><th id="176">176</th><td>        <em>float</em>            <dfn class="local col6 decl" id="296top" title='top' data-type='float' data-ref="296top" >top</dfn>,</td></tr>
+<tr><th id="177">177</th><td>        <em>float</em>            <dfn class="local col7 decl" id="297nearval" title='nearval' data-type='float' data-ref="297nearval" >nearval</dfn>,</td></tr>
+<tr><th id="178">178</th><td>        <em>float</em>            <dfn class="local col8 decl" id="298farval" title='farval' data-type='float' data-ref="298farval" >farval</dfn>,</td></tr>
+<tr><th id="179">179</th><td>        <em>float</em>            <dfn class="local col9 decl" id="299upDirection" title='upDirection' data-type='float' data-ref="299upDirection" >upDirection</dfn> = -<var>1.0f</var>);</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>    <i class="doc">/** <span class="command">\param</span> <span class="arg">upDirection</span> Use -1.0 for 2D Y increasing downwards (the G3D 8.x default convention), </i></td></tr>
+<tr><th id="182">182</th><td><i class="doc">    1.0 for 2D Y increasing upwards (the G3D 7.x default and OpenGL convention)</i></td></tr>
+<tr><th id="183">183</th><td><i class="doc">      */</i></td></tr>
+<tr><th id="184">184</th><td>    <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZN3G3D7Matrix420orthogonalProjectionERKNS_6Rect2DEfff" title='G3D::Matrix4::orthogonalProjection' data-ref="_ZN3G3D7Matrix420orthogonalProjectionERKNS_6Rect2DEfff" >orthogonalProjection</dfn>(</td></tr>
+<tr><th id="185">185</th><td>        <em>const</em> <b>class</b> <dfn class="type" id="G3D::Rect2D" title='G3D::Rect2D' data-ref="G3D::Rect2D" ><a class="type" href="#G3D::Rect2D" title='G3D::Rect2D' data-ref="G3D::Rect2D" >Rect2D</a></dfn>&amp; <dfn class="local col0 decl" id="300rect" title='rect' data-type='const class Rect2D &amp;' data-ref="300rect" >rect</dfn>,</td></tr>
+<tr><th id="186">186</th><td>        <em>float</em>            <dfn class="local col1 decl" id="301nearval" title='nearval' data-type='float' data-ref="301nearval" >nearval</dfn>,</td></tr>
+<tr><th id="187">187</th><td>        <em>float</em>            <dfn class="local col2 decl" id="302farval" title='farval' data-type='float' data-ref="302farval" >farval</dfn>,</td></tr>
+<tr><th id="188">188</th><td>        <em>float</em>            <dfn class="local col3 decl" id="303upDirection" title='upDirection' data-type='float' data-ref="303upDirection" >upDirection</dfn> = -<var>1.0f</var>);</td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td>    <i class="doc">/** <span class="command">\param</span> <span class="arg">upDirection</span> Use -1.0 for 2D Y increasing downwards (the G3D 8.x default convention), </i></td></tr>
+<tr><th id="191">191</th><td><i class="doc">    1.0 for 2D Y increasing upwards (the G3D 7.x default and OpenGL convention)</i></td></tr>
+<tr><th id="192">192</th><td><i class="doc"></i></td></tr>
+<tr><th id="193">193</th><td><i class="doc">        Uses double precision because the operations involved in</i></td></tr>
+<tr><th id="194">194</th><td><i class="doc">        projection involve divisions that can significantly impact</i></td></tr>
+<tr><th id="195">195</th><td><i class="doc">        precision.    */</i></td></tr>
+<tr><th id="196">196</th><td>    <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZN3G3D7Matrix421perspectiveProjectionEddddddf" title='G3D::Matrix4::perspectiveProjection' data-ref="_ZN3G3D7Matrix421perspectiveProjectionEddddddf" >perspectiveProjection</dfn>(</td></tr>
+<tr><th id="197">197</th><td>        <em>double</em>            <dfn class="local col4 decl" id="304left" title='left' data-type='double' data-ref="304left" >left</dfn>,</td></tr>
+<tr><th id="198">198</th><td>        <em>double</em>            <dfn class="local col5 decl" id="305right" title='right' data-type='double' data-ref="305right" >right</dfn>,</td></tr>
+<tr><th id="199">199</th><td>        <em>double</em>            <dfn class="local col6 decl" id="306bottom" title='bottom' data-type='double' data-ref="306bottom" >bottom</dfn>,</td></tr>
+<tr><th id="200">200</th><td>        <em>double</em>            <dfn class="local col7 decl" id="307top" title='top' data-type='double' data-ref="307top" >top</dfn>,</td></tr>
+<tr><th id="201">201</th><td>        <em>double</em>            <dfn class="local col8 decl" id="308nearval" title='nearval' data-type='double' data-ref="308nearval" >nearval</dfn>,</td></tr>
+<tr><th id="202">202</th><td>        <em>double</em>            <dfn class="local col9 decl" id="309farval" title='farval' data-type='double' data-ref="309farval" >farval</dfn>,</td></tr>
+<tr><th id="203">203</th><td>        <em>float</em>             <dfn class="local col0 decl" id="310upDirection" title='upDirection' data-type='float' data-ref="310upDirection" >upDirection</dfn> = -<var>1.0f</var>);</td></tr>
+<tr><th id="204">204</th><td></td></tr>
+<tr><th id="205">205</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D7Matrix46setRowEiRKNS_7Vector4E" title='G3D::Matrix4::setRow' data-ref="_ZN3G3D7Matrix46setRowEiRKNS_7Vector4E" >setRow</dfn>(<em>int</em> <dfn class="local col1 decl" id="311r" title='r' data-type='int' data-ref="311r" >r</dfn>, <em>const</em> <b>class</b> <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>&amp; <dfn class="local col2 decl" id="312v" title='v' data-type='const class Vector4 &amp;' data-ref="312v" >v</dfn>);</td></tr>
+<tr><th id="206">206</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D7Matrix49setColumnEiRKNS_7Vector4E" title='G3D::Matrix4::setColumn' data-ref="_ZN3G3D7Matrix49setColumnEiRKNS_7Vector4E" >setColumn</dfn>(<em>int</em> <dfn class="local col3 decl" id="313c" title='c' data-type='int' data-ref="313c" >c</dfn>, <em>const</em> <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>&amp; <dfn class="local col4 decl" id="314v" title='v' data-type='const G3D::Vector4 &amp;' data-ref="314v" >v</dfn>);</td></tr>
+<tr><th id="207">207</th><td></td></tr>
+<tr><th id="208">208</th><td>    <em>const</em> <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>&amp; <dfn class="decl" id="_ZNK3G3D7Matrix43rowEi" title='G3D::Matrix4::row' data-ref="_ZNK3G3D7Matrix43rowEi" >row</dfn>(<em>int</em> <dfn class="local col5 decl" id="315r" title='r' data-type='int' data-ref="315r" >r</dfn>) <em>const</em>;</td></tr>
+<tr><th id="209">209</th><td>    <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a> <dfn class="decl" id="_ZNK3G3D7Matrix46columnEi" title='G3D::Matrix4::column' data-ref="_ZNK3G3D7Matrix46columnEi" >column</dfn>(<em>int</em> <dfn class="local col6 decl" id="316c" title='c' data-type='int' data-ref="316c" >c</dfn>) <em>const</em>;</td></tr>
+<tr><th id="210">210</th><td></td></tr>
+<tr><th id="211">211</th><td>    <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZNK3G3D7Matrix4mlEf" title='G3D::Matrix4::operator*' data-ref="_ZNK3G3D7Matrix4mlEf" ><b>operator</b>*</dfn>(<em>const</em> <em>float</em> <dfn class="local col7 decl" id="317s" title='s' data-type='const float' data-ref="317s" >s</dfn>) <em>const</em>;</td></tr>
+<tr><th id="212">212</th><td>    <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a> <dfn class="decl" id="_ZNK3G3D7Matrix4mlERKNS_7Vector4E" title='G3D::Matrix4::operator*' data-ref="_ZNK3G3D7Matrix4mlERKNS_7Vector4E" ><b>operator</b>*</dfn>(<em>const</em> <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>&amp; <dfn class="local col8 decl" id="318vector" title='vector' data-type='const G3D::Vector4 &amp;' data-ref="318vector" >vector</dfn>) <em>const</em>;</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td>    <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZNK3G3D7Matrix49transposeEv" title='G3D::Matrix4::transpose' data-ref="_ZNK3G3D7Matrix49transposeEv" >transpose</dfn>() <em>const</em>;</td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D7Matrix4neERKS0_" title='G3D::Matrix4::operator!=' data-ref="_ZNK3G3D7Matrix4neERKS0_" ><b>operator</b>!=</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp; <dfn class="local col9 decl" id="319other" title='other' data-type='const G3D::Matrix4 &amp;' data-ref="319other" >other</dfn>) <em>const</em>;</td></tr>
+<tr><th id="217">217</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D7Matrix4eqERKS0_" title='G3D::Matrix4::operator==' data-ref="_ZNK3G3D7Matrix4eqERKS0_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp; <dfn class="local col0 decl" id="320other" title='other' data-type='const G3D::Matrix4 &amp;' data-ref="320other" >other</dfn>) <em>const</em>;</td></tr>
+<tr><th id="218">218</th><td></td></tr>
+<tr><th id="219">219</th><td>    <em>float</em> <dfn class="decl" id="_ZNK3G3D7Matrix411determinantEv" title='G3D::Matrix4::determinant' data-ref="_ZNK3G3D7Matrix411determinantEv" >determinant</dfn>() <em>const</em>;</td></tr>
+<tr><th id="220">220</th><td>    <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZNK3G3D7Matrix47inverseEv" title='G3D::Matrix4::inverse' data-ref="_ZNK3G3D7Matrix47inverseEv" >inverse</dfn>() <em>const</em>;</td></tr>
+<tr><th id="221">221</th><td></td></tr>
+<tr><th id="222">222</th><td>    <i class="doc">/** </i></td></tr>
+<tr><th id="223">223</th><td><i class="doc">     Transpose of the cofactor matrix (used in computing the inverse).</i></td></tr>
+<tr><th id="224">224</th><td><i class="doc">     Note: This is in fact only one type of adjoint. More generally,</i></td></tr>
+<tr><th id="225">225</th><td><i class="doc">     an adjoint of a matrix is any mapping of a matrix which possesses </i></td></tr>
+<tr><th id="226">226</th><td><i class="doc">     certain properties.  This returns the so-called adjugate</i></td></tr>
+<tr><th id="227">227</th><td><i class="doc">     or classical adjoint.</i></td></tr>
+<tr><th id="228">228</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="229">229</th><td>    <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZNK3G3D7Matrix47adjointEv" title='G3D::Matrix4::adjoint' data-ref="_ZNK3G3D7Matrix47adjointEv" >adjoint</dfn>() <em>const</em>;</td></tr>
+<tr><th id="230">230</th><td>    <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl" id="_ZNK3G3D7Matrix48cofactorEv" title='G3D::Matrix4::cofactor' data-ref="_ZNK3G3D7Matrix48cofactorEv" >cofactor</dfn>() <em>const</em>;</td></tr>
+<tr><th id="231">231</th><td></td></tr>
+<tr><th id="232">232</th><td>    <i class="doc">/** Serializes row-major */</i></td></tr>
+<tr><th id="233">233</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D7Matrix49serializeERNS_12BinaryOutputE" title='G3D::Matrix4::serialize' data-ref="_ZNK3G3D7Matrix49serializeERNS_12BinaryOutputE" >serialize</dfn>(<b>class</b> <a class="type" href="Crypto.h.html#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp; <dfn class="local col1 decl" id="321b" title='b' data-type='class BinaryOutput &amp;' data-ref="321b" >b</dfn>) <em>const</em>;</td></tr>
+<tr><th id="234">234</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D7Matrix411deserializeERNS_11BinaryInputE" title='G3D::Matrix4::deserialize' data-ref="_ZN3G3D7Matrix411deserializeERNS_11BinaryInputE" >deserialize</dfn>(<b>class</b> <a class="type" href="Crypto.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col2 decl" id="322b" title='b' data-type='class BinaryInput &amp;' data-ref="322b" >b</dfn>);</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZNK3G3D7Matrix48toStringEv" title='G3D::Matrix4::toString' data-ref="_ZNK3G3D7Matrix48toStringEv" >toString</dfn>() <em>const</em>;</td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td>    <i class="doc">/** 3D scale matrix */</i></td></tr>
+<tr><th id="239">239</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix45scaleERKNS_7Vector3E" title='G3D::Matrix4::scale' data-ref="_ZN3G3D7Matrix45scaleERKNS_7Vector3E" >scale</dfn>(<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col3 decl" id="323v" title='v' data-type='const G3D::Vector3 &amp;' data-ref="323v" >v</dfn>) {</td></tr>
+<tr><th id="240">240</th><td>        <b>return</b> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a><a class="ref" href="#_ZN3G3D7Matrix4C1Effffffffffffffff" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1Effffffffffffffff" >(</a><a class="local col3 ref" href="#323v" title='v' data-ref="323v" >v</a>.<a class="ref" href="Vector3.h.html#G3D::Vector3::x" title='G3D::Vector3::x' data-ref="G3D::Vector3::x" id="G3D::Vector3::x" >x</a>, <var>0</var>, <var>0</var>, <var>0</var>,</td></tr>
+<tr><th id="241">241</th><td>                       <var>0</var>, <a class="local col3 ref" href="#323v" title='v' data-ref="323v" >v</a>.<a class="ref" href="Vector3.h.html#G3D::Vector3::y" title='G3D::Vector3::y' data-ref="G3D::Vector3::y" id="G3D::Vector3::y" >y</a>, <var>0</var>, <var>0</var>,</td></tr>
+<tr><th id="242">242</th><td>                       <var>0</var>, <var>0</var>, <a class="local col3 ref" href="#323v" title='v' data-ref="323v" >v</a>.<a class="ref" href="Vector3.h.html#G3D::Vector3::z" title='G3D::Vector3::z' data-ref="G3D::Vector3::z" id="G3D::Vector3::z" >z</a>, <var>0</var>,</td></tr>
+<tr><th id="243">243</th><td>                       <var>0</var>, <var>0</var>, <var>0</var>, <var>1</var>);</td></tr>
+<tr><th id="244">244</th><td>    }</td></tr>
+<tr><th id="245">245</th><td>    </td></tr>
+<tr><th id="246">246</th><td>    <i class="doc">/** 3D scale matrix */</i></td></tr>
+<tr><th id="247">247</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix45scaleEfff" title='G3D::Matrix4::scale' data-ref="_ZN3G3D7Matrix45scaleEfff" >scale</dfn>(<em>float</em> <dfn class="local col4 decl" id="324x" title='x' data-type='float' data-ref="324x" >x</dfn>, <em>float</em> <dfn class="local col5 decl" id="325y" title='y' data-type='float' data-ref="325y" >y</dfn>, <em>float</em> <dfn class="local col6 decl" id="326z" title='z' data-type='float' data-ref="326z" >z</dfn>) {</td></tr>
+<tr><th id="248">248</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D7Matrix45scaleERKNS_7Vector3E" title='G3D::Matrix4::scale' data-ref="_ZN3G3D7Matrix45scaleERKNS_7Vector3E" >scale</a>(<a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a><a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3C1Efff" title='G3D::Vector3::Vector3' data-ref="_ZN3G3D7Vector3C1Efff" id="_ZN3G3D7Vector3C1Efff" >(</a><a class="local col4 ref" href="#324x" title='x' data-ref="324x" >x</a>, <a class="local col5 ref" href="#325y" title='y' data-ref="325y" >y</a>, <a class="local col6 ref" href="#326z" title='z' data-ref="326z" >z</a>));</td></tr>
+<tr><th id="249">249</th><td>    }</td></tr>
+<tr><th id="250">250</th><td></td></tr>
+<tr><th id="251">251</th><td>    <i class="doc">/** 3D scale matrix */</i></td></tr>
+<tr><th id="252">252</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix45scaleEf" title='G3D::Matrix4::scale' data-ref="_ZN3G3D7Matrix45scaleEf" >scale</dfn>(<em>float</em> <dfn class="local col7 decl" id="327s" title='s' data-type='float' data-ref="327s" >s</dfn>) {</td></tr>
+<tr><th id="253">253</th><td>        <b>return</b> <a class="member" href="#_ZN3G3D7Matrix45scaleEfff" title='G3D::Matrix4::scale' data-ref="_ZN3G3D7Matrix45scaleEfff" >scale</a>(<a class="local col7 ref" href="#327s" title='s' data-ref="327s" >s</a>,<a class="local col7 ref" href="#327s" title='s' data-ref="327s" >s</a>,<a class="local col7 ref" href="#327s" title='s' data-ref="327s" >s</a>);</td></tr>
+<tr><th id="254">254</th><td>    }</td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td>    <i class="doc">/** 3D translation matrix */</i></td></tr>
+<tr><th id="257">257</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix411translationERKNS_7Vector3E" title='G3D::Matrix4::translation' data-ref="_ZN3G3D7Matrix411translationERKNS_7Vector3E" >translation</dfn>(<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col8 decl" id="328v" title='v' data-type='const G3D::Vector3 &amp;' data-ref="328v" >v</dfn>) {</td></tr>
+<tr><th id="258">258</th><td>        <b>return</b> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a><a class="ref" href="#_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" >(</a><a class="type" href="Matrix3.h.html#G3D::Matrix3" title='G3D::Matrix3' data-ref="G3D::Matrix3" >Matrix3</a>::<a class="ref" href="Matrix3.h.html#_ZN3G3D7Matrix38identityEv" title='G3D::Matrix3::identity' data-ref="_ZN3G3D7Matrix38identityEv" id="_ZN3G3D7Matrix38identityEv" >identity</a>(), <a class="local col8 ref" href="#328v" title='v' data-ref="328v" >v</a>);</td></tr>
+<tr><th id="259">259</th><td>    }</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix411translationEfff" title='G3D::Matrix4::translation' data-ref="_ZN3G3D7Matrix411translationEfff" >translation</dfn>(<em>float</em> <dfn class="local col9 decl" id="329x" title='x' data-type='float' data-ref="329x" >x</dfn>, <em>float</em> <dfn class="local col0 decl" id="330y" title='y' data-type='float' data-ref="330y" >y</dfn>, <em>float</em> <dfn class="local col1 decl" id="331z" title='z' data-type='float' data-ref="331z" >z</dfn>) {</td></tr>
+<tr><th id="262">262</th><td>        <b>return</b> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a><a class="ref" href="#_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" >(</a><a class="type" href="Matrix3.h.html#G3D::Matrix3" title='G3D::Matrix3' data-ref="G3D::Matrix3" >Matrix3</a>::<a class="ref" href="Matrix3.h.html#_ZN3G3D7Matrix38identityEv" title='G3D::Matrix3::identity' data-ref="_ZN3G3D7Matrix38identityEv" id="_ZN3G3D7Matrix38identityEv" >identity</a>(), <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a><a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3C1Efff" title='G3D::Vector3::Vector3' data-ref="_ZN3G3D7Vector3C1Efff" id="_ZN3G3D7Vector3C1Efff" >(</a><a class="local col9 ref" href="#329x" title='x' data-ref="329x" >x</a>, <a class="local col0 ref" href="#330y" title='y' data-ref="330y" >y</a>, <a class="local col1 ref" href="#331z" title='z' data-ref="331z" >z</a>));</td></tr>
+<tr><th id="263">263</th><td>    }</td></tr>
+<tr><th id="264">264</th><td></td></tr>
+<tr><th id="265">265</th><td>    <i class="doc">/** Create a rotation matrix that rotates<span class="command"> \a</span> <span class="arg">deg</span> degrees around the Y axis */</i> </td></tr>
+<tr><th id="266">266</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix410yawDegreesEf" title='G3D::Matrix4::yawDegrees' data-ref="_ZN3G3D7Matrix410yawDegreesEf" >yawDegrees</dfn>(<em>float</em> <dfn class="local col2 decl" id="332deg" title='deg' data-type='float' data-ref="332deg" >deg</dfn>) {</td></tr>
+<tr><th id="267">267</th><td>        <b>return</b> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a><a class="ref" href="#_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" >(</a><a class="type" href="Matrix3.h.html#G3D::Matrix3" title='G3D::Matrix3' data-ref="G3D::Matrix3" >Matrix3</a>::<a class="ref" href="Matrix3.h.html#_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" title='G3D::Matrix3::fromAxisAngle' data-ref="_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" id="_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" >fromAxisAngle</a>(<a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector35unitYEv" title='G3D::Vector3::unitY' data-ref="_ZN3G3D7Vector35unitYEv" id="_ZN3G3D7Vector35unitYEv" >unitY</a>(), <a class="ref" href="g3dmath.h.html#_ZN3G3D9toRadiansEf" title='G3D::toRadians' data-ref="_ZN3G3D9toRadiansEf" id="_ZN3G3D9toRadiansEf" >toRadians</a>(<a class="local col2 ref" href="#332deg" title='deg' data-ref="332deg" >deg</a>)));</td></tr>
+<tr><th id="268">268</th><td>    }</td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix412pitchDegreesEf" title='G3D::Matrix4::pitchDegrees' data-ref="_ZN3G3D7Matrix412pitchDegreesEf" >pitchDegrees</dfn>(<em>float</em> <dfn class="local col3 decl" id="333deg" title='deg' data-type='float' data-ref="333deg" >deg</dfn>) {</td></tr>
+<tr><th id="271">271</th><td>        <b>return</b> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a><a class="ref" href="#_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" >(</a><a class="type" href="Matrix3.h.html#G3D::Matrix3" title='G3D::Matrix3' data-ref="G3D::Matrix3" >Matrix3</a>::<a class="ref" href="Matrix3.h.html#_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" title='G3D::Matrix3::fromAxisAngle' data-ref="_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" id="_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" >fromAxisAngle</a>(<a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector35unitXEv" title='G3D::Vector3::unitX' data-ref="_ZN3G3D7Vector35unitXEv" id="_ZN3G3D7Vector35unitXEv" >unitX</a>(), <a class="ref" href="g3dmath.h.html#_ZN3G3D9toRadiansEf" title='G3D::toRadians' data-ref="_ZN3G3D9toRadiansEf" id="_ZN3G3D9toRadiansEf" >toRadians</a>(<a class="local col3 ref" href="#333deg" title='deg' data-ref="333deg" >deg</a>)));</td></tr>
+<tr><th id="272">272</th><td>    }</td></tr>
+<tr><th id="273">273</th><td></td></tr>
+<tr><th id="274">274</th><td>    <b>inline</b> <em>static</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a> <dfn class="decl def" id="_ZN3G3D7Matrix411rollDegreesEf" title='G3D::Matrix4::rollDegrees' data-ref="_ZN3G3D7Matrix411rollDegreesEf" >rollDegrees</dfn>(<em>float</em> <dfn class="local col4 decl" id="334deg" title='deg' data-type='float' data-ref="334deg" >deg</dfn>) {</td></tr>
+<tr><th id="275">275</th><td>        <b>return</b> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a><a class="ref" href="#_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" title='G3D::Matrix4::Matrix4' data-ref="_ZN3G3D7Matrix4C1ERKNS_7Matrix3ERKNS_7Vector3E" >(</a><a class="type" href="Matrix3.h.html#G3D::Matrix3" title='G3D::Matrix3' data-ref="G3D::Matrix3" >Matrix3</a>::<a class="ref" href="Matrix3.h.html#_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" title='G3D::Matrix3::fromAxisAngle' data-ref="_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" id="_ZN3G3D7Matrix313fromAxisAngleERKNS_7Vector3Ef" >fromAxisAngle</a>(<a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector35unitZEv" title='G3D::Vector3::unitZ' data-ref="_ZN3G3D7Vector35unitZEv" id="_ZN3G3D7Vector35unitZEv" >unitZ</a>(), <a class="ref" href="g3dmath.h.html#_ZN3G3D9toRadiansEf" title='G3D::toRadians' data-ref="_ZN3G3D9toRadiansEf" id="_ZN3G3D9toRadiansEf" >toRadians</a>(<a class="local col4 ref" href="#334deg" title='deg' data-ref="334deg" >deg</a>)));</td></tr>
+<tr><th id="276">276</th><td>    }</td></tr>
+<tr><th id="277">277</th><td>};</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td><i class="doc">/** Double-precision 4x4 matrix */</i></td></tr>
+<tr><th id="281">281</th><td><b>class</b> <dfn class="type def" id="G3D::Matrix4float64" title='G3D::Matrix4float64' data-ref="G3D::Matrix4float64" >Matrix4float64</dfn> {</td></tr>
+<tr><th id="282">282</th><td><b>private</b>:</td></tr>
+<tr><th id="283">283</th><td></td></tr>
+<tr><th id="284">284</th><td>    <em>double</em> <dfn class="decl" id="G3D::Matrix4float64::elt" title='G3D::Matrix4float64::elt' data-ref="G3D::Matrix4float64::elt" >elt</dfn>[<var>4</var>][<var>4</var>];</td></tr>
+<tr><th id="285">285</th><td></td></tr>
+<tr><th id="286">286</th><td><b>public</b>:</td></tr>
+<tr><th id="287">287</th><td></td></tr>
+<tr><th id="288">288</th><td>    <b>explicit</b> <dfn class="decl" id="_ZN3G3D14Matrix4float64C1ERKNS_7Matrix4E" title='G3D::Matrix4float64::Matrix4float64' data-ref="_ZN3G3D14Matrix4float64C1ERKNS_7Matrix4E" >Matrix4float64</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4" title='G3D::Matrix4' data-ref="G3D::Matrix4" >Matrix4</a>&amp; <dfn class="local col5 decl" id="335m" title='m' data-type='const G3D::Matrix4 &amp;' data-ref="335m" >m</dfn>);</td></tr>
+<tr><th id="289">289</th><td></td></tr>
+<tr><th id="290">290</th><td>    <i class="doc">/** all zeros */</i></td></tr>
+<tr><th id="291">291</th><td>    <dfn class="decl" id="_ZN3G3D14Matrix4float64C1Ev" title='G3D::Matrix4float64::Matrix4float64' data-ref="_ZN3G3D14Matrix4float64C1Ev" >Matrix4float64</dfn>();</td></tr>
+<tr><th id="292">292</th><td></td></tr>
+<tr><th id="293">293</th><td>    <dfn class="decl" id="_ZN3G3D14Matrix4float64C1Edddddddddddddddd" title='G3D::Matrix4float64::Matrix4float64' data-ref="_ZN3G3D14Matrix4float64C1Edddddddddddddddd" >Matrix4float64</dfn>(</td></tr>
+<tr><th id="294">294</th><td>        <em>double</em> <dfn class="local col6 decl" id="336r1c1" title='r1c1' data-type='double' data-ref="336r1c1" >r1c1</dfn>, <em>double</em> <dfn class="local col7 decl" id="337r1c2" title='r1c2' data-type='double' data-ref="337r1c2" >r1c2</dfn>, <em>double</em> <dfn class="local col8 decl" id="338r1c3" title='r1c3' data-type='double' data-ref="338r1c3" >r1c3</dfn>, <em>double</em> <dfn class="local col9 decl" id="339r1c4" title='r1c4' data-type='double' data-ref="339r1c4" >r1c4</dfn>,</td></tr>
+<tr><th id="295">295</th><td>        <em>double</em> <dfn class="local col0 decl" id="340r2c1" title='r2c1' data-type='double' data-ref="340r2c1" >r2c1</dfn>, <em>double</em> <dfn class="local col1 decl" id="341r2c2" title='r2c2' data-type='double' data-ref="341r2c2" >r2c2</dfn>, <em>double</em> <dfn class="local col2 decl" id="342r2c3" title='r2c3' data-type='double' data-ref="342r2c3" >r2c3</dfn>, <em>double</em> <dfn class="local col3 decl" id="343r2c4" title='r2c4' data-type='double' data-ref="343r2c4" >r2c4</dfn>,</td></tr>
+<tr><th id="296">296</th><td>        <em>double</em> <dfn class="local col4 decl" id="344r3c1" title='r3c1' data-type='double' data-ref="344r3c1" >r3c1</dfn>, <em>double</em> <dfn class="local col5 decl" id="345r3c2" title='r3c2' data-type='double' data-ref="345r3c2" >r3c2</dfn>, <em>double</em> <dfn class="local col6 decl" id="346r3c3" title='r3c3' data-type='double' data-ref="346r3c3" >r3c3</dfn>, <em>double</em> <dfn class="local col7 decl" id="347r3c4" title='r3c4' data-type='double' data-ref="347r3c4" >r3c4</dfn>,</td></tr>
+<tr><th id="297">297</th><td>        <em>double</em> <dfn class="local col8 decl" id="348r4c1" title='r4c1' data-type='double' data-ref="348r4c1" >r4c1</dfn>, <em>double</em> <dfn class="local col9 decl" id="349r4c2" title='r4c2' data-type='double' data-ref="349r4c2" >r4c2</dfn>, <em>double</em> <dfn class="local col0 decl" id="350r4c3" title='r4c3' data-type='double' data-ref="350r4c3" >r4c3</dfn>, <em>double</em> <dfn class="local col1 decl" id="351r4c4" title='r4c4' data-type='double' data-ref="351r4c4" >r4c4</dfn>);</td></tr>
+<tr><th id="298">298</th><td>        </td></tr>
+<tr><th id="299">299</th><td>    <i>// Special values.</i></td></tr>
+<tr><th id="300">300</th><td><i>    // Intentionally not inlined: see Matrix3::identity() for details.</i></td></tr>
+<tr><th id="301">301</th><td>    <em>static</em> <em>const</em> <a class="type" href="#G3D::Matrix4float64" title='G3D::Matrix4float64' data-ref="G3D::Matrix4float64" >Matrix4float64</a>&amp; <dfn class="decl" id="_ZN3G3D14Matrix4float648identityEv" title='G3D::Matrix4float64::identity' data-ref="_ZN3G3D14Matrix4float648identityEv" >identity</dfn>();</td></tr>
+<tr><th id="302">302</th><td>    </td></tr>
+<tr><th id="303">303</th><td>    <em>static</em> <em>const</em> <a class="type" href="#G3D::Matrix4float64" title='G3D::Matrix4float64' data-ref="G3D::Matrix4float64" >Matrix4float64</a>&amp; <dfn class="decl" id="_ZN3G3D14Matrix4float644zeroEv" title='G3D::Matrix4float64::zero' data-ref="_ZN3G3D14Matrix4float644zeroEv" >zero</dfn>();</td></tr>
+<tr><th id="304">304</th><td></td></tr>
+<tr><th id="305">305</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D14Matrix4float64neERKS0_" title='G3D::Matrix4float64::operator!=' data-ref="_ZNK3G3D14Matrix4float64neERKS0_" ><b>operator</b>!=</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4float64" title='G3D::Matrix4float64' data-ref="G3D::Matrix4float64" >Matrix4float64</a>&amp; <dfn class="local col2 decl" id="352other" title='other' data-type='const G3D::Matrix4float64 &amp;' data-ref="352other" >other</dfn>) <em>const</em>;</td></tr>
+<tr><th id="306">306</th><td>    </td></tr>
+<tr><th id="307">307</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D14Matrix4float64eqERKS0_" title='G3D::Matrix4float64::operator==' data-ref="_ZNK3G3D14Matrix4float64eqERKS0_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::Matrix4float64" title='G3D::Matrix4float64' data-ref="G3D::Matrix4float64" >Matrix4float64</a>&amp; <dfn class="local col3 decl" id="353other" title='other' data-type='const G3D::Matrix4float64 &amp;' data-ref="353other" >other</dfn>) <em>const</em>;</td></tr>
+<tr><th id="308">308</th><td></td></tr>
+<tr><th id="309">309</th><td>    <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a> <dfn class="decl" id="_ZNK3G3D14Matrix4float64mlERKNS_7Vector4E" title='G3D::Matrix4float64::operator*' data-ref="_ZNK3G3D14Matrix4float64mlERKNS_7Vector4E" ><b>operator</b>*</dfn>(<em>const</em> <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>&amp; <dfn class="local col4 decl" id="354vector" title='vector' data-type='const G3D::Vector4 &amp;' data-ref="354vector" >vector</dfn>) <em>const</em>;</td></tr>
+<tr><th id="310">310</th><td></td></tr>
+<tr><th id="311">311</th><td>    <em>static</em> <a class="type" href="#G3D::Matrix4float64" title='G3D::Matrix4float64' data-ref="G3D::Matrix4float64" >Matrix4float64</a> <dfn class="decl" id="_ZN3G3D14Matrix4float6421perspectiveProjectionEddddddf" title='G3D::Matrix4float64::perspectiveProjection' data-ref="_ZN3G3D14Matrix4float6421perspectiveProjectionEddddddf" >perspectiveProjection</dfn>(</td></tr>
+<tr><th id="312">312</th><td>        <em>double</em>            <dfn class="local col5 decl" id="355left" title='left' data-type='double' data-ref="355left" >left</dfn>,</td></tr>
+<tr><th id="313">313</th><td>        <em>double</em>            <dfn class="local col6 decl" id="356right" title='right' data-type='double' data-ref="356right" >right</dfn>,</td></tr>
+<tr><th id="314">314</th><td>        <em>double</em>            <dfn class="local col7 decl" id="357bottom" title='bottom' data-type='double' data-ref="357bottom" >bottom</dfn>,</td></tr>
+<tr><th id="315">315</th><td>        <em>double</em>            <dfn class="local col8 decl" id="358top" title='top' data-type='double' data-ref="358top" >top</dfn>,</td></tr>
+<tr><th id="316">316</th><td>        <em>double</em>            <dfn class="local col9 decl" id="359nearval" title='nearval' data-type='double' data-ref="359nearval" >nearval</dfn>,</td></tr>
+<tr><th id="317">317</th><td>        <em>double</em>            <dfn class="local col0 decl" id="360farval" title='farval' data-type='double' data-ref="360farval" >farval</dfn>,</td></tr>
+<tr><th id="318">318</th><td>        <em>float</em>             <dfn class="local col1 decl" id="361upDirection" title='upDirection' data-type='float' data-ref="361upDirection" >upDirection</dfn> = -<var>1.0f</var>);</td></tr>
+<tr><th id="319">319</th><td></td></tr>
+<tr><th id="320">320</th><td>    <b>inline</b> <em>double</em>* <dfn class="decl def" id="_ZN3G3D14Matrix4float64ixEi" title='G3D::Matrix4float64::operator[]' data-ref="_ZN3G3D14Matrix4float64ixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col2 decl" id="362r" title='r' data-type='int' data-ref="362r" >r</dfn>) {</td></tr>
+<tr><th id="321">321</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &gt;= <var>0</var>);</td></tr>
+<tr><th id="322">322</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &lt; <var>4</var>);</td></tr>
+<tr><th id="323">323</th><td>        <b>return</b> (<em>double</em>*)&amp;<a class="member" href="#G3D::Matrix4float64::elt" title='G3D::Matrix4float64::elt' data-ref="G3D::Matrix4float64::elt" >elt</a>[<a class="local col2 ref" href="#362r" title='r' data-ref="362r" >r</a>];</td></tr>
+<tr><th id="324">324</th><td>    }</td></tr>
+<tr><th id="325">325</th><td></td></tr>
+<tr><th id="326">326</th><td>    <b>inline</b> <em>const</em> <em>double</em>* <dfn class="decl def" id="_ZNK3G3D14Matrix4float64ixEi" title='G3D::Matrix4float64::operator[]' data-ref="_ZNK3G3D14Matrix4float64ixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col3 decl" id="363r" title='r' data-type='int' data-ref="363r" >r</dfn>) <em>const</em> {</td></tr>
+<tr><th id="327">327</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &gt;= <var>0</var>);</td></tr>
+<tr><th id="328">328</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(r &lt; <var>4</var>);</td></tr>
+<tr><th id="329">329</th><td>        <b>return</b> (<em>const</em> <em>double</em>*)&amp;<a class="member" href="#G3D::Matrix4float64::elt" title='G3D::Matrix4float64::elt' data-ref="G3D::Matrix4float64::elt" >elt</a>[<a class="local col3 ref" href="#363r" title='r' data-ref="363r" >r</a>];</td></tr>
+<tr><th id="330">330</th><td>    } </td></tr>
+<tr><th id="331">331</th><td></td></tr>
+<tr><th id="332">332</th><td>    <b>inline</b> <dfn class="decl def" id="_ZN3G3D14Matrix4float64cvPdEv" title='G3D::Matrix4float64::operator double *' data-ref="_ZN3G3D14Matrix4float64cvPdEv" ><b>operator</b> <em>double</em>*</dfn> () {</td></tr>
+<tr><th id="333">333</th><td>        <b>return</b> (<em>double</em>*)&amp;<a class="member" href="#G3D::Matrix4float64::elt" title='G3D::Matrix4float64::elt' data-ref="G3D::Matrix4float64::elt" >elt</a>[<var>0</var>][<var>0</var>];</td></tr>
+<tr><th id="334">334</th><td>    }</td></tr>
+<tr><th id="335">335</th><td></td></tr>
+<tr><th id="336">336</th><td>    <b>inline</b> <dfn class="decl def" id="_ZNK3G3D14Matrix4float64cvPKdEv" title='G3D::Matrix4float64::operator const double *' data-ref="_ZNK3G3D14Matrix4float64cvPKdEv" ><b>operator</b> <em>const</em> <em>double</em>*</dfn> () <em>const</em> {</td></tr>
+<tr><th id="337">337</th><td>        <b>return</b> (<em>const</em> <em>double</em>*)&amp;<a class="member" href="#G3D::Matrix4float64::elt" title='G3D::Matrix4float64::elt' data-ref="G3D::Matrix4float64::elt" >elt</a>[<var>0</var>][<var>0</var>];</td></tr>
+<tr><th id="338">338</th><td>    }</td></tr>
+<tr><th id="339">339</th><td>};</td></tr>
+<tr><th id="340">340</th><td></td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="343">343</th><td></td></tr>
+<tr><th id="344">344</th><td><u>#<span data-ppcond="344">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="345">345</th><td><u>#   pragma warning (pop)</u></td></tr>
+<tr><th id="346">346</th><td><u>#<span data-ppcond="344">endif</span></u></td></tr>
+<tr><th id="347">347</th><td></td></tr>
+<tr><th id="348">348</th><td><u>#<span data-ppcond="12">endif</span></u></td></tr>
+<tr><th id="349">349</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/Box.cpp.html'>TrinityCore6.x/dep/g3dlite/source/Box.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

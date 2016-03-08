@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<title>BoundingIntervalHierarchyWrapper.h [TrinityCore6.x/src/common/Collision/BoundingIntervalHierarchyWrapper.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/common/Collision/BoundingIntervalHierarchyWrapper.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Collision</a>/BoundingIntervalHierarchyWrapper.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2010 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/_BIH_WRAP">_BIH_WRAP</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/_BIH_WRAP" data-ref="_M/_BIH_WRAP">_BIH_WRAP</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../dep/g3dlite/include/G3D/Table.h.html">"G3D/Table.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../dep/g3dlite/include/G3D/Array.h.html">"G3D/Array.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../dep/g3dlite/include/G3D/Set.h.html">"G3D/Set.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="BoundingIntervalHierarchy.h.html">"BoundingIntervalHierarchy.h"</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>template</b>&lt;<b>class</b> T, <b>class</b> BoundsFunc = <a class="type" href="../../../dep/g3dlite/include/G3D/BoundsTrait.h.html#BoundsTrait" title='BoundsTrait' data-ref="BoundsTrait" >BoundsTrait</a>&lt;T&gt; &gt;</td></tr>
+<tr><th id="29">29</th><td><b>class</b> <dfn class="type def" id="BIHWrap" title='BIHWrap' data-ref="BIHWrap" >BIHWrap</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <b>template</b>&lt;<b>class</b> RayCallback&gt;</td></tr>
+<tr><th id="32">32</th><td>    <b>struct</b> <dfn class="type def" id="BIHWrap::MDLCallback" title='BIHWrap::MDLCallback' data-ref="BIHWrap::MDLCallback" >MDLCallback</dfn></td></tr>
+<tr><th id="33">33</th><td>    {</td></tr>
+<tr><th id="34">34</th><td>        <em>const</em> T* <em>const</em>* <dfn class="decl" id="BIHWrap::MDLCallback::objects" title='BIHWrap::MDLCallback::objects' data-ref="BIHWrap::MDLCallback::objects" >objects</dfn>;</td></tr>
+<tr><th id="35">35</th><td>        RayCallback&amp; <dfn class="decl" id="BIHWrap::MDLCallback::_callback" title='BIHWrap::MDLCallback::_callback' data-ref="BIHWrap::MDLCallback::_callback" >_callback</dfn>;</td></tr>
+<tr><th id="36">36</th><td>        <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BIHWrap::MDLCallback::objects_size" title='BIHWrap::MDLCallback::objects_size' data-ref="BIHWrap::MDLCallback::objects_size" >objects_size</dfn>;</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>        <dfn class="decl def" id="_ZN7BIHWrap11MDLCallbackC1ERT_PKPKT_j" title='BIHWrap::MDLCallback::MDLCallback&lt;RayCallback&gt;' data-ref="_ZN7BIHWrap11MDLCallbackC1ERT_PKPKT_j" >MDLCallback</dfn>(RayCallback&amp; <dfn class="local col3 decl" id="23callback" title='callback' data-type='RayCallback &amp;' data-ref="23callback" >callback</dfn>, <em>const</em> T* <em>const</em>* <dfn class="local col4 decl" id="24objects_array" title='objects_array' data-type='const T *const *' data-ref="24objects_array" >objects_array</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="25objects_size" title='objects_size' data-type='uint32' data-ref="25objects_size" >objects_size</dfn> ) : <a class="member" href="#BIHWrap::MDLCallback::objects" title='BIHWrap::MDLCallback::objects' data-ref="BIHWrap::MDLCallback::objects" >objects</a>(<a class="local col4 ref" href="#24objects_array" title='objects_array' data-ref="24objects_array" >objects_array</a>), <a class="member" href="#BIHWrap::MDLCallback::_callback" title='BIHWrap::MDLCallback::_callback' data-ref="BIHWrap::MDLCallback::_callback" >_callback</a>(<a class="local col3 ref" href="#23callback" title='callback' data-ref="23callback" >callback</a>), <a class="member" href="#BIHWrap::MDLCallback::objects_size" title='BIHWrap::MDLCallback::objects_size' data-ref="BIHWrap::MDLCallback::objects_size" >objects_size</a>(<a class="local col5 ref" href="#25objects_size" title='objects_size' data-ref="25objects_size" >objects_size</a>) { }</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>        <i class="doc">/// Intersect ray</i></td></tr>
+<tr><th id="41">41</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN7BIHWrap11MDLCallbackclERKN3G3D3RayEjRfb" title='BIHWrap::MDLCallback::operator()' data-ref="_ZN7BIHWrap11MDLCallbackclERKN3G3D3RayEjRfb" ><b>operator</b>()</dfn> (<em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Ray.h.html#G3D::Ray" title='G3D::Ray' data-ref="G3D::Ray" >Ray</a>&amp; <dfn class="local col6 decl" id="26ray" title='ray' data-type='const G3D::Ray &amp;' data-ref="26ray" >ray</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="27idx" title='idx' data-type='uint32' data-ref="27idx" >idx</dfn>, <em>float</em>&amp; <dfn class="local col8 decl" id="28maxDist" title='maxDist' data-type='float &amp;' data-ref="28maxDist" >maxDist</dfn>, <em>bool</em> <i>/*stopAtFirst*/</i>)</td></tr>
+<tr><th id="42">42</th><td>        {</td></tr>
+<tr><th id="43">43</th><td>            <b>if</b> (<a class="local col7 ref" href="#27idx" title='idx' data-ref="27idx" >idx</a> &gt;= <a class="member" href="#BIHWrap::MDLCallback::objects_size" title='BIHWrap::MDLCallback::objects_size' data-ref="BIHWrap::MDLCallback::objects_size" >objects_size</a>)</td></tr>
+<tr><th id="44">44</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="45">45</th><td>            <b>if</b> (<em>const</em> T* <dfn class="local col9 decl" id="29obj" title='obj' data-type='const T *' data-ref="29obj" ><a class="local col9 ref" href="#29obj" title='obj' data-ref="29obj" >obj</a></dfn> = <a class="member" href="#BIHWrap::MDLCallback::objects" title='BIHWrap::MDLCallback::objects' data-ref="BIHWrap::MDLCallback::objects" >objects</a>[<a class="local col7 ref" href="#27idx" title='idx' data-ref="27idx" >idx</a>])</td></tr>
+<tr><th id="46">46</th><td>                <b>return</b> <a class="member" href="#BIHWrap::MDLCallback::_callback" title='BIHWrap::MDLCallback::_callback' data-ref="BIHWrap::MDLCallback::_callback" >_callback</a>(<a class="local col6 ref" href="#26ray" title='ray' data-ref="26ray" >ray</a>, *<a class="local col9 ref" href="#29obj" title='obj' data-ref="29obj" >obj</a>, <a class="local col8 ref" href="#28maxDist" title='maxDist' data-ref="28maxDist" >maxDist</a><i>/*, stopAtFirst*/</i>);</td></tr>
+<tr><th id="47">47</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="48">48</th><td>        }</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>        <i class="doc">/// Intersect point</i></td></tr>
+<tr><th id="51">51</th><td>        <em>void</em> <dfn class="decl def" id="_ZN7BIHWrap11MDLCallbackclERKN3G3D7Vector3Ej" title='BIHWrap::MDLCallback::operator()' data-ref="_ZN7BIHWrap11MDLCallbackclERKN3G3D7Vector3Ej" ><b>operator</b>()</dfn> (<em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col0 decl" id="30p" title='p' data-type='const G3D::Vector3 &amp;' data-ref="30p" >p</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="31idx" title='idx' data-type='uint32' data-ref="31idx" >idx</dfn>)</td></tr>
+<tr><th id="52">52</th><td>        {</td></tr>
+<tr><th id="53">53</th><td>            <b>if</b> (<a class="local col1 ref" href="#31idx" title='idx' data-ref="31idx" >idx</a> &gt;= <a class="member" href="#BIHWrap::MDLCallback::objects_size" title='BIHWrap::MDLCallback::objects_size' data-ref="BIHWrap::MDLCallback::objects_size" >objects_size</a>)</td></tr>
+<tr><th id="54">54</th><td>                <b>return</b>;</td></tr>
+<tr><th id="55">55</th><td>            <b>if</b> (<em>const</em> T* <dfn class="local col2 decl" id="32obj" title='obj' data-type='const T *' data-ref="32obj" ><a class="local col2 ref" href="#32obj" title='obj' data-ref="32obj" >obj</a></dfn> = <a class="member" href="#BIHWrap::MDLCallback::objects" title='BIHWrap::MDLCallback::objects' data-ref="BIHWrap::MDLCallback::objects" >objects</a>[<a class="local col1 ref" href="#31idx" title='idx' data-ref="31idx" >idx</a>])</td></tr>
+<tr><th id="56">56</th><td>                <a class="member" href="#BIHWrap::MDLCallback::_callback" title='BIHWrap::MDLCallback::_callback' data-ref="BIHWrap::MDLCallback::_callback" >_callback</a>(<a class="local col0 ref" href="#30p" title='p' data-ref="30p" >p</a>, *<a class="local col2 ref" href="#32obj" title='obj' data-ref="32obj" >obj</a>);</td></tr>
+<tr><th id="57">57</th><td>        }</td></tr>
+<tr><th id="58">58</th><td>    };</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>    <b>typedef</b> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<em>const</em> T*&gt; <dfn class="typedef" id="BIHWrap::ObjArray" title='BIHWrap::ObjArray' data-type='G3D::Array&lt;const T *&gt;' data-ref="BIHWrap::ObjArray" >ObjArray</dfn>;</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>    <a class="type" href="BoundingIntervalHierarchy.h.html#BIH" title='BIH' data-ref="BIH" >BIH</a> <dfn class="decl" id="BIHWrap::m_tree" title='BIHWrap::m_tree' data-ref="BIHWrap::m_tree" >m_tree</dfn>;</td></tr>
+<tr><th id="63">63</th><td>    <a class="typedef" href="#BIHWrap::ObjArray" title='BIHWrap::ObjArray' data-type='G3D::Array&lt;const T *&gt;' data-ref="BIHWrap::ObjArray" >ObjArray</a> <dfn class="decl" id="BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</dfn>;</td></tr>
+<tr><th id="64">64</th><td>    <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Table.h.html#G3D::Table" title='G3D::Table' data-ref="G3D::Table" >Table</a>&lt;<em>const</em> T*, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&gt; <dfn class="decl" id="BIHWrap::m_obj2Idx" title='BIHWrap::m_obj2Idx' data-ref="BIHWrap::m_obj2Idx" >m_obj2Idx</dfn>;</td></tr>
+<tr><th id="65">65</th><td>    <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Set.h.html#G3D::Set" title='G3D::Set' data-ref="G3D::Set" >Set</a>&lt;<em>const</em> T*&gt; <dfn class="decl" id="BIHWrap::m_objects_to_push" title='BIHWrap::m_objects_to_push' data-ref="BIHWrap::m_objects_to_push" >m_objects_to_push</dfn>;</td></tr>
+<tr><th id="66">66</th><td>    <em>int</em> <dfn class="decl" id="BIHWrap::unbalanced_times" title='BIHWrap::unbalanced_times' data-ref="BIHWrap::unbalanced_times" >unbalanced_times</dfn>;</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><b>public</b>:</td></tr>
+<tr><th id="69">69</th><td>    <dfn class="decl def" id="_ZN7BIHWrapC1Ev" title='BIHWrap::BIHWrap&lt;T, BoundsFunc&gt;' data-ref="_ZN7BIHWrapC1Ev" >BIHWrap</dfn>() : <a class="member" href="#BIHWrap::unbalanced_times" title='BIHWrap::unbalanced_times' data-ref="BIHWrap::unbalanced_times" >unbalanced_times</a>(<var>0</var>) { }</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>    <em>void</em> <dfn class="decl def" id="_ZN7BIHWrap6insertERKT_" title='BIHWrap::insert' data-ref="_ZN7BIHWrap6insertERKT_" >insert</dfn>(<em>const</em> T&amp; <dfn class="local col3 decl" id="33obj" title='obj' data-type='const T &amp;' data-ref="33obj" >obj</dfn>)</td></tr>
+<tr><th id="72">72</th><td>    {</td></tr>
+<tr><th id="73">73</th><td>        ++<a class="member" href="#BIHWrap::unbalanced_times" title='BIHWrap::unbalanced_times' data-ref="BIHWrap::unbalanced_times" >unbalanced_times</a>;</td></tr>
+<tr><th id="74">74</th><td>        <a class="member" href="#BIHWrap::m_objects_to_push" title='BIHWrap::m_objects_to_push' data-ref="BIHWrap::m_objects_to_push" >m_objects_to_push</a>.insert(&amp;<a class="local col3 ref" href="#33obj" title='obj' data-ref="33obj" >obj</a>);</td></tr>
+<tr><th id="75">75</th><td>    }</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <em>void</em> <dfn class="decl def" id="_ZN7BIHWrap6removeERKT_" title='BIHWrap::remove' data-ref="_ZN7BIHWrap6removeERKT_" >remove</dfn>(<em>const</em> T&amp; <dfn class="local col4 decl" id="34obj" title='obj' data-type='const T &amp;' data-ref="34obj" >obj</dfn>)</td></tr>
+<tr><th id="78">78</th><td>    {</td></tr>
+<tr><th id="79">79</th><td>        ++<a class="member" href="#BIHWrap::unbalanced_times" title='BIHWrap::unbalanced_times' data-ref="BIHWrap::unbalanced_times" >unbalanced_times</a>;</td></tr>
+<tr><th id="80">80</th><td>        <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="35Idx" title='Idx' data-type='uint32' data-ref="35Idx" >Idx</dfn> = <var>0</var>;</td></tr>
+<tr><th id="81">81</th><td>        <em>const</em> T * <dfn class="local col6 decl" id="36temp" title='temp' data-type='const T *' data-ref="36temp" >temp</dfn>;</td></tr>
+<tr><th id="82">82</th><td>        <b>if</b> (<a class="member" href="#BIHWrap::m_obj2Idx" title='BIHWrap::m_obj2Idx' data-ref="BIHWrap::m_obj2Idx" >m_obj2Idx</a>.getRemove(&amp;<a class="local col4 ref" href="#34obj" title='obj' data-ref="34obj" >obj</a>, <a class="local col6 ref" href="#36temp" title='temp' data-ref="36temp" >temp</a>, <a class="local col5 ref" href="#35Idx" title='Idx' data-ref="35Idx" >Idx</a>))</td></tr>
+<tr><th id="83">83</th><td>            <a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>[<a class="local col5 ref" href="#35Idx" title='Idx' data-ref="35Idx" >Idx</a>] = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="84">84</th><td>        <b>else</b></td></tr>
+<tr><th id="85">85</th><td>            <a class="member" href="#BIHWrap::m_objects_to_push" title='BIHWrap::m_objects_to_push' data-ref="BIHWrap::m_objects_to_push" >m_objects_to_push</a>.remove(&amp;<a class="local col4 ref" href="#34obj" title='obj' data-ref="34obj" >obj</a>);</td></tr>
+<tr><th id="86">86</th><td>    }</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>    <em>void</em> <dfn class="decl def" id="_ZN7BIHWrap7balanceEv" title='BIHWrap::balance' data-ref="_ZN7BIHWrap7balanceEv" >balance</dfn>()</td></tr>
+<tr><th id="89">89</th><td>    {</td></tr>
+<tr><th id="90">90</th><td>        <b>if</b> (<a class="member" href="#BIHWrap::unbalanced_times" title='BIHWrap::unbalanced_times' data-ref="BIHWrap::unbalanced_times" >unbalanced_times</a> == <var>0</var>)</td></tr>
+<tr><th id="91">91</th><td>            <b>return</b>;</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>        <a class="member" href="#BIHWrap::unbalanced_times" title='BIHWrap::unbalanced_times' data-ref="BIHWrap::unbalanced_times" >unbalanced_times</a> = <var>0</var>;</td></tr>
+<tr><th id="94">94</th><td>        <a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>.fastClear();</td></tr>
+<tr><th id="95">95</th><td>        <a class="member" href="#BIHWrap::m_obj2Idx" title='BIHWrap::m_obj2Idx' data-ref="BIHWrap::m_obj2Idx" >m_obj2Idx</a>.getKeys(<a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>);</td></tr>
+<tr><th id="96">96</th><td>        <a class="member" href="#BIHWrap::m_objects_to_push" title='BIHWrap::m_objects_to_push' data-ref="BIHWrap::m_objects_to_push" >m_objects_to_push</a>.getMembers(<a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>);</td></tr>
+<tr><th id="97">97</th><td>        <i>//assert that m_obj2Idx has all the keys</i></td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>        <a class="member" href="#BIHWrap::m_tree" title='BIHWrap::m_tree' data-ref="BIHWrap::m_tree" >m_tree</a>.build(<a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>, BoundsFunc::getBounds2);</td></tr>
+<tr><th id="100">100</th><td>    }</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td>    <b>template</b>&lt;<b>typename</b> RayCallback&gt;</td></tr>
+<tr><th id="103">103</th><td>    <em>void</em> <dfn class="decl def" id="_ZN7BIHWrap12intersectRayERKN3G3D3RayERT_Rf" title='BIHWrap::intersectRay' data-ref="_ZN7BIHWrap12intersectRayERKN3G3D3RayERT_Rf" >intersectRay</dfn>(<em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Ray.h.html#G3D::Ray" title='G3D::Ray' data-ref="G3D::Ray" >Ray</a>&amp; <dfn class="local col7 decl" id="37ray" title='ray' data-type='const G3D::Ray &amp;' data-ref="37ray" >ray</dfn>, RayCallback&amp; <dfn class="local col8 decl" id="38intersectCallback" title='intersectCallback' data-type='RayCallback &amp;' data-ref="38intersectCallback" >intersectCallback</dfn>, <em>float</em>&amp; <dfn class="local col9 decl" id="39maxDist" title='maxDist' data-type='float &amp;' data-ref="39maxDist" >maxDist</dfn>)</td></tr>
+<tr><th id="104">104</th><td>    {</td></tr>
+<tr><th id="105">105</th><td>        <a class="member" href="#_ZN7BIHWrap7balanceEv" title='BIHWrap::balance' data-ref="_ZN7BIHWrap7balanceEv" >balance</a>();</td></tr>
+<tr><th id="106">106</th><td>        <a class="type" href="#BIHWrap::MDLCallback" title='BIHWrap::MDLCallback' data-ref="BIHWrap::MDLCallback" >MDLCallback</a>&lt;RayCallback&gt; <dfn class="local col0 decl" id="40temp_cb" title='temp_cb' data-type='MDLCallback&lt;RayCallback&gt;' data-ref="40temp_cb" >temp_cb</dfn>(<a class="local col8 ref" href="#38intersectCallback" title='intersectCallback' data-ref="38intersectCallback" >intersectCallback</a>, <a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>.getCArray(), <a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>.size());</td></tr>
+<tr><th id="107">107</th><td>        <a class="member" href="#BIHWrap::m_tree" title='BIHWrap::m_tree' data-ref="BIHWrap::m_tree" >m_tree</a>.intersectRay(<a class="local col7 ref" href="#37ray" title='ray' data-ref="37ray" >ray</a>, <a class="local col0 ref" href="#40temp_cb" title='temp_cb' data-ref="40temp_cb" >temp_cb</a>, <a class="local col9 ref" href="#39maxDist" title='maxDist' data-ref="39maxDist" >maxDist</a>, <b>true</b>);</td></tr>
+<tr><th id="108">108</th><td>    }</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>    <b>template</b>&lt;<b>typename</b> IsectCallback&gt;</td></tr>
+<tr><th id="111">111</th><td>    <em>void</em> <dfn class="decl def" id="_ZN7BIHWrap14intersectPointERKN3G3D7Vector3ERT_" title='BIHWrap::intersectPoint' data-ref="_ZN7BIHWrap14intersectPointERKN3G3D7Vector3ERT_" >intersectPoint</dfn>(<em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col1 decl" id="41point" title='point' data-type='const G3D::Vector3 &amp;' data-ref="41point" >point</dfn>, IsectCallback&amp; <dfn class="local col2 decl" id="42intersectCallback" title='intersectCallback' data-type='IsectCallback &amp;' data-ref="42intersectCallback" >intersectCallback</dfn>)</td></tr>
+<tr><th id="112">112</th><td>    {</td></tr>
+<tr><th id="113">113</th><td>        <a class="member" href="#_ZN7BIHWrap7balanceEv" title='BIHWrap::balance' data-ref="_ZN7BIHWrap7balanceEv" >balance</a>();</td></tr>
+<tr><th id="114">114</th><td>        <a class="type" href="#BIHWrap::MDLCallback" title='BIHWrap::MDLCallback' data-ref="BIHWrap::MDLCallback" >MDLCallback</a>&lt;IsectCallback&gt; <dfn class="local col3 decl" id="43callback" title='callback' data-type='MDLCallback&lt;IsectCallback&gt;' data-ref="43callback" >callback</dfn>(<a class="local col2 ref" href="#42intersectCallback" title='intersectCallback' data-ref="42intersectCallback" >intersectCallback</a>, <a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>.getCArray(), <a class="member" href="#BIHWrap::m_objects" title='BIHWrap::m_objects' data-ref="BIHWrap::m_objects" >m_objects</a>.size());</td></tr>
+<tr><th id="115">115</th><td>        <a class="member" href="#BIHWrap::m_tree" title='BIHWrap::m_tree' data-ref="BIHWrap::m_tree" >m_tree</a>.intersectPoint(<a class="local col1 ref" href="#41point" title='point' data-ref="41point" >point</a>, <a class="local col3 ref" href="#43callback" title='callback' data-ref="43callback" >callback</a>);</td></tr>
+<tr><th id="116">116</th><td>    }</td></tr>
+<tr><th id="117">117</th><td>};</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td><u>#<span data-ppcond="19">endif</span> // _BIH_WRAP</u></td></tr>
+<tr><th id="120">120</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='DynamicTree.cpp.html'>TrinityCore6.x/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

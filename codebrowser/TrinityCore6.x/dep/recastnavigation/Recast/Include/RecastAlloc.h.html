@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<title>RecastAlloc.h [TrinityCore6.x/dep/recastnavigation/Recast/Include/RecastAlloc.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/recastnavigation/Recast/Include/RecastAlloc.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>recastnavigation</a>/<a href='..'>Recast</a>/<a href='./'>Include</a>/RecastAlloc.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// Copyright (c) 2009-2010 Mikko Mononen memon@inside.org</i></td></tr>
+<tr><th id="3">3</th><td><i>//</i></td></tr>
+<tr><th id="4">4</th><td><i>// This software is provided 'as-is', without any express or implied</i></td></tr>
+<tr><th id="5">5</th><td><i>// warranty.  In no event will the authors be held liable for any damages</i></td></tr>
+<tr><th id="6">6</th><td><i>// arising from the use of this software.</i></td></tr>
+<tr><th id="7">7</th><td><i>// Permission is granted to anyone to use this software for any purpose,</i></td></tr>
+<tr><th id="8">8</th><td><i>// including commercial applications, and to alter it and redistribute it</i></td></tr>
+<tr><th id="9">9</th><td><i>// freely, subject to the following restrictions:</i></td></tr>
+<tr><th id="10">10</th><td><i>// 1. The origin of this software must not be misrepresented; you must not</i></td></tr>
+<tr><th id="11">11</th><td><i>//    claim that you wrote the original software. If you use this software</i></td></tr>
+<tr><th id="12">12</th><td><i>//    in a product, an acknowledgment in the product documentation would be</i></td></tr>
+<tr><th id="13">13</th><td><i>//    appreciated but is not required.</i></td></tr>
+<tr><th id="14">14</th><td><i>// 2. Altered source versions must be plainly marked as such, and must not be</i></td></tr>
+<tr><th id="15">15</th><td><i>//    misrepresented as being the original software.</i></td></tr>
+<tr><th id="16">16</th><td><i>// 3. This notice may not be removed or altered from any source distribution.</i></td></tr>
+<tr><th id="17">17</th><td><i>//</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/RECASTALLOC_H">RECASTALLOC_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/RECASTALLOC_H" data-ref="_M/RECASTALLOC_H">RECASTALLOC_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i class="doc">/// Provides hint values to the memory allocator on how long the</i></td></tr>
+<tr><th id="23">23</th><td><i class="doc">/// memory is expected to be used.</i></td></tr>
+<tr><th id="24">24</th><td><b>enum</b> <dfn class="type def" id="rcAllocHint" title='rcAllocHint' data-ref="rcAllocHint" >rcAllocHint</dfn></td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td>	<dfn class="enum" id="rcAllocHint::RC_ALLOC_PERM" title='rcAllocHint::RC_ALLOC_PERM' data-ref="rcAllocHint::RC_ALLOC_PERM" >RC_ALLOC_PERM</dfn>,		<i class="doc">///&lt; Memory will persist after a function call.</i></td></tr>
+<tr><th id="27">27</th><td>	<dfn class="enum" id="rcAllocHint::RC_ALLOC_TEMP" title='rcAllocHint::RC_ALLOC_TEMP' data-ref="rcAllocHint::RC_ALLOC_TEMP" >RC_ALLOC_TEMP</dfn>		<i class="doc">///&lt; Memory used temporarily within a function.</i></td></tr>
+<tr><th id="28">28</th><td>};</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i class="doc">/// A memory allocation function.</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc">//  <span class="command">@param</span>[in]		<span class="arg">size</span>			The size, in bytes of memory, to allocate.</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">//  <span class="command">@param</span>[in]		<span class="arg">rcAllocHint</span>	A hint to the allocator on how long the memory is expected to be in use.</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">//  <span class="command">@return</span> A pointer to the beginning of the allocated memory block, or null if the allocation failed.</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">///  <span class="command">@see</span> rcAllocSetCustom</i></td></tr>
+<tr><th id="35">35</th><td><b>typedef</b> <em>void</em>* (<dfn class="typedef" id="rcAllocFunc" title='rcAllocFunc' data-type='void *(int, rcAllocHint)' data-ref="rcAllocFunc" >rcAllocFunc</dfn>)(<em>int</em> <dfn class="local col4 decl" id="234size" title='size' data-type='int' data-ref="234size" >size</dfn>, <a class="type" href="#rcAllocHint" title='rcAllocHint' data-ref="rcAllocHint" >rcAllocHint</a> <dfn class="local col5 decl" id="235hint" title='hint' data-type='rcAllocHint' data-ref="235hint" >hint</dfn>);</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><i class="doc">/// A memory deallocation function.</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">ptr</span>		A pointer to a memory block previously allocated using #rcAllocFunc.</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc">/// <span class="command">@see</span> rcAllocSetCustom</i></td></tr>
+<tr><th id="40">40</th><td><b>typedef</b> <em>void</em> (<dfn class="typedef" id="rcFreeFunc" title='rcFreeFunc' data-type='void (void *)' data-ref="rcFreeFunc" >rcFreeFunc</dfn>)(<em>void</em>* <dfn class="local col6 decl" id="236ptr" title='ptr' data-type='void *' data-ref="236ptr" >ptr</dfn>);</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><i class="doc">/// Sets the base custom allocation functions to be used by Recast.</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">allocFunc</span>	The memory allocation function to be used by #rcAlloc</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">freeFunc</span>	The memory de-allocation function to be used by #rcFree</i></td></tr>
+<tr><th id="45">45</th><td><em>void</em> <dfn class="decl" id="_Z16rcAllocSetCustomPFPvi11rcAllocHintEPFvS_E" title='rcAllocSetCustom' data-ref="_Z16rcAllocSetCustomPFPvi11rcAllocHintEPFvS_E" >rcAllocSetCustom</dfn>(<a class="typedef" href="#rcAllocFunc" title='rcAllocFunc' data-type='void *(int, rcAllocHint)' data-ref="rcAllocFunc" >rcAllocFunc</a> *<dfn class="local col7 decl" id="237allocFunc" title='allocFunc' data-type='rcAllocFunc *' data-ref="237allocFunc" >allocFunc</dfn>, <a class="typedef" href="#rcFreeFunc" title='rcFreeFunc' data-type='void (void *)' data-ref="rcFreeFunc" >rcFreeFunc</a> *<dfn class="local col8 decl" id="238freeFunc" title='freeFunc' data-type='rcFreeFunc *' data-ref="238freeFunc" >freeFunc</dfn>);</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><i class="doc">/// Allocates a memory block.</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">size</span>	The size, in bytes of memory, to allocate.</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">hint</span>	A hint to the allocator on how long the memory is expected to be in use.</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc">///  <span class="command">@return</span> A pointer to the beginning of the allocated memory block, or null if the allocation failed.</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">/// <span class="command">@see</span> rcFree</i></td></tr>
+<tr><th id="52">52</th><td><em>void</em>* <dfn class="decl" id="_Z7rcAlloci11rcAllocHint" title='rcAlloc' data-ref="_Z7rcAlloci11rcAllocHint" >rcAlloc</dfn>(<em>int</em> <dfn class="local col9 decl" id="239size" title='size' data-type='int' data-ref="239size" >size</dfn>, <a class="type" href="#rcAllocHint" title='rcAllocHint' data-ref="rcAllocHint" >rcAllocHint</a> <dfn class="local col0 decl" id="240hint" title='hint' data-type='rcAllocHint' data-ref="240hint" >hint</dfn>);</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><i class="doc">/// Deallocates a memory block.</i></td></tr>
+<tr><th id="55">55</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">ptr</span>		A pointer to a memory block previously allocated using #rcAlloc.</i></td></tr>
+<tr><th id="56">56</th><td><i class="doc">/// <span class="command">@see</span> rcAlloc</i></td></tr>
+<tr><th id="57">57</th><td><em>void</em> <dfn class="decl" id="_Z6rcFreePv" title='rcFree' data-ref="_Z6rcFreePv" >rcFree</dfn>(<em>void</em>* <dfn class="local col1 decl" id="241ptr" title='ptr' data-type='void *' data-ref="241ptr" >ptr</dfn>);</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><i class="doc">/// A simple dynamic array of integers.</i></td></tr>
+<tr><th id="61">61</th><td><b>class</b> <dfn class="type def" id="rcIntArray" title='rcIntArray' data-ref="rcIntArray" >rcIntArray</dfn></td></tr>
+<tr><th id="62">62</th><td>{</td></tr>
+<tr><th id="63">63</th><td>	<em>int</em>* <dfn class="decl" id="rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</dfn>;</td></tr>
+<tr><th id="64">64</th><td>	<em>int</em> <dfn class="decl" id="rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</dfn>, <dfn class="decl" id="rcIntArray::m_cap" title='rcIntArray::m_cap' data-ref="rcIntArray::m_cap" >m_cap</dfn>;</td></tr>
+<tr><th id="65">65</th><td>	<b>inline</b> <dfn class="decl" id="_ZN10rcIntArrayC1ERKS_" title='rcIntArray::rcIntArray' data-ref="_ZN10rcIntArrayC1ERKS_" >rcIntArray</dfn>(<em>const</em> <a class="type" href="#rcIntArray" title='rcIntArray' data-ref="rcIntArray" >rcIntArray</a>&amp;);</td></tr>
+<tr><th id="66">66</th><td>	<b>inline</b> <a class="type" href="#rcIntArray" title='rcIntArray' data-ref="rcIntArray" >rcIntArray</a>&amp; <dfn class="decl" id="_ZN10rcIntArrayaSERKS_" title='rcIntArray::operator=' data-ref="_ZN10rcIntArrayaSERKS_" ><b>operator</b>=</dfn>(<em>const</em> <a class="type" href="#rcIntArray" title='rcIntArray' data-ref="rcIntArray" >rcIntArray</a>&amp;);</td></tr>
+<tr><th id="67">67</th><td><b>public</b>:</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>	<i class="doc">/// Constructs an instance with an initial array size of zero.</i></td></tr>
+<tr><th id="70">70</th><td>	<b>inline</b> <dfn class="decl def" id="_ZN10rcIntArrayC1Ev" title='rcIntArray::rcIntArray' data-ref="_ZN10rcIntArrayC1Ev" >rcIntArray</dfn>() : <a class="member" href="#rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</a>(<var>0</var>), <a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a>(<var>0</var>), <a class="member" href="#rcIntArray::m_cap" title='rcIntArray::m_cap' data-ref="rcIntArray::m_cap" >m_cap</a>(<var>0</var>) {}</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>	<i class="doc">/// Constructs an instance initialized to the specified size.</i></td></tr>
+<tr><th id="73">73</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">n</span>	The initial size of the integer array.</i></td></tr>
+<tr><th id="74">74</th><td>	<b>inline</b> <dfn class="decl def" id="_ZN10rcIntArrayC1Ei" title='rcIntArray::rcIntArray' data-ref="_ZN10rcIntArrayC1Ei" >rcIntArray</dfn>(<em>int</em> <dfn class="local col2 decl" id="242n" title='n' data-type='int' data-ref="242n" >n</dfn>) : <a class="member" href="#rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</a>(<var>0</var>), <a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a>(<var>0</var>), <a class="member" href="#rcIntArray::m_cap" title='rcIntArray::m_cap' data-ref="rcIntArray::m_cap" >m_cap</a>(<var>0</var>) { <a class="member" href="#_ZN10rcIntArray6resizeEi" title='rcIntArray::resize' data-ref="_ZN10rcIntArray6resizeEi" >resize</a>(<a class="local col2 ref" href="#242n" title='n' data-ref="242n" >n</a>); }</td></tr>
+<tr><th id="75">75</th><td>	<b>inline</b> <dfn class="decl def" id="_ZN10rcIntArrayD1Ev" title='rcIntArray::~rcIntArray' data-ref="_ZN10rcIntArrayD1Ev" >~rcIntArray</dfn>() { <a class="ref" href="#_Z6rcFreePv" title='rcFree' data-ref="_Z6rcFreePv" >rcFree</a>(<a class="member" href="#rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</a>); }</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>	<i class="doc">/// Specifies the new size of the integer array.</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">n</span>	The new size of the integer array.</i></td></tr>
+<tr><th id="79">79</th><td>	<em>void</em> <dfn class="decl" id="_ZN10rcIntArray6resizeEi" title='rcIntArray::resize' data-ref="_ZN10rcIntArray6resizeEi" >resize</dfn>(<em>int</em> <dfn class="local col3 decl" id="243n" title='n' data-type='int' data-ref="243n" >n</dfn>);</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>	<i class="doc">/// Push the specified integer onto the end of the array and increases the size by one.</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">item</span>	The new value.</i></td></tr>
+<tr><th id="83">83</th><td>	<b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN10rcIntArray4pushEi" title='rcIntArray::push' data-ref="_ZN10rcIntArray4pushEi" >push</dfn>(<em>int</em> <dfn class="local col4 decl" id="244item" title='item' data-type='int' data-ref="244item" >item</dfn>) { <a class="member" href="#_ZN10rcIntArray6resizeEi" title='rcIntArray::resize' data-ref="_ZN10rcIntArray6resizeEi" >resize</a>(<a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a>+<var>1</var>); <a class="member" href="#rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</a>[<a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a>-<var>1</var>] = <a class="local col4 ref" href="#244item" title='item' data-ref="244item" >item</a>; }</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>	<i class="doc">/// Returns the value at the end of the array and reduces the size by one.</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc">	///  <span class="command">@return</span> The value at the end of the array.</i></td></tr>
+<tr><th id="87">87</th><td>	<b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN10rcIntArray3popEv" title='rcIntArray::pop' data-ref="_ZN10rcIntArray3popEv" >pop</dfn>() { <b>if</b> (<a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a> &gt; <var>0</var>) <a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a>--; <b>return</b> <a class="member" href="#rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</a>[<a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a>]; }</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td>	<i class="doc">/// The value at the specified array index.</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">	/// <span class="command">@warning</span> Does not provide overflow protection.</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">i</span>	The index of the value.</i></td></tr>
+<tr><th id="92">92</th><td>	<b>inline</b> <em>const</em> <em>int</em>&amp; <dfn class="decl def" id="_ZNK10rcIntArrayixEi" title='rcIntArray::operator[]' data-ref="_ZNK10rcIntArrayixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col5 decl" id="245i" title='i' data-type='int' data-ref="245i" >i</dfn>) <em>const</em> { <b>return</b> <a class="member" href="#rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</a>[<a class="local col5 ref" href="#245i" title='i' data-ref="245i" >i</a>]; }</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td>	<i class="doc">/// The value at the specified array index.</i></td></tr>
+<tr><th id="95">95</th><td><i class="doc">	/// <span class="command">@warning</span> Does not provide overflow protection.</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">i</span>	The index of the value.</i></td></tr>
+<tr><th id="97">97</th><td>	<b>inline</b> <em>int</em>&amp; <dfn class="decl def" id="_ZN10rcIntArrayixEi" title='rcIntArray::operator[]' data-ref="_ZN10rcIntArrayixEi" ><b>operator</b>[]</dfn>(<em>int</em> <dfn class="local col6 decl" id="246i" title='i' data-type='int' data-ref="246i" >i</dfn>) { <b>return</b> <a class="member" href="#rcIntArray::m_data" title='rcIntArray::m_data' data-ref="rcIntArray::m_data" >m_data</a>[<a class="local col6 ref" href="#246i" title='i' data-ref="246i" >i</a>]; }</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>	<i class="doc">/// The current size of the integer array.</i></td></tr>
+<tr><th id="100">100</th><td>	<b>inline</b> <em>int</em> <dfn class="decl def" id="_ZNK10rcIntArray4sizeEv" title='rcIntArray::size' data-ref="_ZNK10rcIntArray4sizeEv" >size</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#rcIntArray::m_size" title='rcIntArray::m_size' data-ref="rcIntArray::m_size" >m_size</a>; }</td></tr>
+<tr><th id="101">101</th><td>};</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td><i class="doc">/// A simple helper class used to delete an array when it goes out of scope.</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc">/// <span class="command">@note</span> This class is rarely if ever used by the end user.</i></td></tr>
+<tr><th id="105">105</th><td><b>template</b>&lt;<b>class</b> T&gt; <b>class</b> <dfn class="type def" id="rcScopedDelete" title='rcScopedDelete' data-ref="rcScopedDelete" >rcScopedDelete</dfn></td></tr>
+<tr><th id="106">106</th><td>{</td></tr>
+<tr><th id="107">107</th><td>	T* <dfn class="decl" id="rcScopedDelete::ptr" title='rcScopedDelete::ptr' data-ref="rcScopedDelete::ptr" >ptr</dfn>;</td></tr>
+<tr><th id="108">108</th><td>	<b>inline</b> T* <dfn class="decl" id="_ZN14rcScopedDeleteaSEPT_" title='rcScopedDelete::operator=' data-ref="_ZN14rcScopedDeleteaSEPT_" ><b>operator</b>=</dfn>(T* <dfn class="local col7 decl" id="247p" title='p' data-type='T *' data-ref="247p" >p</dfn>);</td></tr>
+<tr><th id="109">109</th><td><b>public</b>:</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>	<i class="doc">/// Constructs an instance with a null pointer.</i></td></tr>
+<tr><th id="112">112</th><td>	<b>inline</b> <dfn class="decl def" id="_ZN14rcScopedDeleteC1Ev" title='rcScopedDelete::rcScopedDelete&lt;T&gt;' data-ref="_ZN14rcScopedDeleteC1Ev" >rcScopedDelete</dfn>() : <a class="member" href="#rcScopedDelete::ptr" title='rcScopedDelete::ptr' data-ref="rcScopedDelete::ptr" >ptr</a>(<var>0</var>) {}</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>	<i class="doc">/// Constructs an instance with the specified pointer.</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc">	///  <span class="command">@param</span>[in]		<span class="arg">p</span>	An pointer to an allocated array.</i></td></tr>
+<tr><th id="116">116</th><td>	<b>inline</b> <dfn class="decl def" id="_ZN14rcScopedDeleteC1EPT_" title='rcScopedDelete::rcScopedDelete&lt;T&gt;' data-ref="_ZN14rcScopedDeleteC1EPT_" >rcScopedDelete</dfn>(T* <dfn class="local col8 decl" id="248p" title='p' data-type='T *' data-ref="248p" >p</dfn>) : <a class="member" href="#rcScopedDelete::ptr" title='rcScopedDelete::ptr' data-ref="rcScopedDelete::ptr" >ptr</a>(<a class="local col8 ref" href="#248p" title='p' data-ref="248p" >p</a>) {}</td></tr>
+<tr><th id="117">117</th><td>	<b>inline</b> <dfn class="decl def" id="_ZN14rcScopedDeleteD1Ev" title='rcScopedDelete::~rcScopedDelete&lt;T&gt;' data-ref="_ZN14rcScopedDeleteD1Ev" >~rcScopedDelete</dfn>() { rcFree(<a class="member" href="#rcScopedDelete::ptr" title='rcScopedDelete::ptr' data-ref="rcScopedDelete::ptr" >ptr</a>); }</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>	<i class="doc">/// The root array pointer.</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc">	///  <span class="command">@return</span> The root array pointer.</i></td></tr>
+<tr><th id="121">121</th><td>	<b>inline</b> <dfn class="decl def" id="_ZN14rcScopedDeletecvPT_Ev" title='rcScopedDelete::operator type-parameter-0-0 *' data-ref="_ZN14rcScopedDeletecvPT_Ev" ><b>operator</b> T*</dfn>() { <b>return</b> <a class="member" href="#rcScopedDelete::ptr" title='rcScopedDelete::ptr' data-ref="rcScopedDelete::ptr" >ptr</a>; }</td></tr>
+<tr><th id="122">122</th><td>};</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="125">125</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Source/Recast.cpp.html'>TrinityCore6.x/dep/recastnavigation/Recast/Source/Recast.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

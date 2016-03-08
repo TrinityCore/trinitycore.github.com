@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<title>resolve_op.hpp [include/boost/asio/detail/resolve_op.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/detail/resolve_op.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>asio</a>/<a href='./'>detail</a>/resolve_op.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// detail/resolve_op.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_DETAIL_RESOLVE_OP_HPP">BOOST_ASIO_DETAIL_RESOLVE_OP_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_DETAIL_RESOLVE_OP_HPP" data-ref="_M/BOOST_ASIO_DETAIL_RESOLVE_OP_HPP">BOOST_ASIO_DETAIL_RESOLVE_OP_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../error.hpp.html">&lt;boost/asio/error.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../io_service.hpp.html">&lt;boost/asio/io_service.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../ip/basic_resolver_iterator.hpp.html">&lt;boost/asio/ip/basic_resolver_iterator.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../ip/basic_resolver_query.hpp.html">&lt;boost/asio/ip/basic_resolver_query.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="addressof.hpp.html">&lt;boost/asio/detail/addressof.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="bind_handler.hpp.html">&lt;boost/asio/detail/bind_handler.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="fenced_block.hpp.html">&lt;boost/asio/detail/fenced_block.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="handler_alloc_helpers.hpp.html">&lt;boost/asio/detail/handler_alloc_helpers.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="handler_invoke_helpers.hpp.html">&lt;boost/asio/detail/handler_invoke_helpers.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="operation.hpp.html">&lt;boost/asio/detail/operation.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="socket_ops.hpp.html">&lt;boost/asio/detail/socket_ops.hpp&gt;</a></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="34">34</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="35">35</th><td><b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>template</b> &lt;<b>typename</b> Protocol, <b>typename</b> Handler&gt;</td></tr>
+<tr><th id="38">38</th><td><b>class</b> <dfn class="type def" id="boost::asio::detail::resolve_op" title='boost::asio::detail::resolve_op' data-ref="boost::asio::detail::resolve_op" >resolve_op</dfn> : <b>public</b> <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a></td></tr>
+<tr><th id="39">39</th><td>{</td></tr>
+<tr><th id="40">40</th><td><b>public</b>:</td></tr>
+<tr><th id="41">41</th><td>  <a class="macro" href="handler_alloc_helpers.hpp.html#54" title="struct ptr { Handler* h; void* v; resolve_op* p; ~ptr() { reset(); } void reset() { if (p) { p-&gt;~resolve_op(); p = 0; } if (v) { boost_asio_handler_alloc_helpers::deallocate(v, sizeof(resolve_op), *h); v = 0; } } }" data-ref="_M/BOOST_ASIO_DEFINE_HANDLER_PTR">BOOST_ASIO_DEFINE_HANDLER_PTR</a>(resolve_op);</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>  <b>typedef</b> <span class="namespace">boost::asio::ip::</span><a class="type" href="../ip/basic_resolver_query.hpp.html#boost::asio::ip::basic_resolver_query" title='boost::asio::ip::basic_resolver_query' data-ref="boost::asio::ip::basic_resolver_query" >basic_resolver_query</a>&lt;Protocol&gt; <dfn class="typedef" id="boost::asio::detail::resolve_op::query_type" title='boost::asio::detail::resolve_op::query_type' data-type='boost::asio::ip::basic_resolver_query&lt;Protocol&gt;' data-ref="boost::asio::detail::resolve_op::query_type" >query_type</dfn>;</td></tr>
+<tr><th id="44">44</th><td>  <b>typedef</b> <span class="namespace">boost::asio::ip::</span><a class="type" href="../ip/basic_resolver_iterator.hpp.html#boost::asio::ip::basic_resolver_iterator" title='boost::asio::ip::basic_resolver_iterator' data-ref="boost::asio::ip::basic_resolver_iterator" >basic_resolver_iterator</a>&lt;Protocol&gt; <dfn class="typedef" id="boost::asio::detail::resolve_op::iterator_type" title='boost::asio::detail::resolve_op::iterator_type' data-type='boost::asio::ip::basic_resolver_iterator&lt;Protocol&gt;' data-ref="boost::asio::detail::resolve_op::iterator_type" >iterator_type</dfn>;</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>  <dfn class="decl def" id="_ZN5boost4asio6detail10resolve_opC1ENS_8weak_ptrIvEERKNS0_2ip20basic_resolver_queryIT_EERNS1_15task_io_serviceERT0_" title='boost::asio::detail::resolve_op::resolve_op&lt;Protocol, Handler&gt;' data-ref="_ZN5boost4asio6detail10resolve_opC1ENS_8weak_ptrIvEERKNS0_2ip20basic_resolver_queryIT_EERNS1_15task_io_serviceERT0_" >resolve_op</dfn>(<span class="namespace">socket_ops::</span><a class="typedef" href="socket_ops.hpp.html#boost::asio::detail::socket_ops::weak_cancel_token_type" title='boost::asio::detail::socket_ops::weak_cancel_token_type' data-type='weak_ptr&lt;void&gt;' data-ref="boost::asio::detail::socket_ops::weak_cancel_token_type" >weak_cancel_token_type</a> <dfn class="local col0 decl" id="4610cancel_token" title='cancel_token' data-type='socket_ops::weak_cancel_token_type' data-ref="4610cancel_token" >cancel_token</dfn>,</td></tr>
+<tr><th id="47">47</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::detail::resolve_op::query_type" title='boost::asio::detail::resolve_op::query_type' data-type='boost::asio::ip::basic_resolver_query&lt;Protocol&gt;' data-ref="boost::asio::detail::resolve_op::query_type" >query_type</a>&amp; <dfn class="local col1 decl" id="4611query" title='query' data-type='const query_type &amp;' data-ref="4611query" >query</dfn>, <a class="typedef" href="../io_service.hpp.html#boost::asio::detail::io_service_impl" title='boost::asio::detail::io_service_impl' data-type='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::io_service_impl" >io_service_impl</a>&amp; <dfn class="local col2 decl" id="4612ios" title='ios' data-type='io_service_impl &amp;' data-ref="4612ios" >ios</dfn>, Handler&amp; <dfn class="local col3 decl" id="4613handler" title='handler' data-type='Handler &amp;' data-ref="4613handler" >handler</dfn>)</td></tr>
+<tr><th id="48">48</th><td>    : <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>(&amp;resolve_op::<a class="member" href="#_ZN5boost4asio6detail10resolve_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" title='boost::asio::detail::resolve_op::do_complete' data-ref="_ZN5boost4asio6detail10resolve_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" >do_complete</a>),</td></tr>
+<tr><th id="49">49</th><td>      <a class="member" href="#boost::asio::detail::resolve_op::cancel_token_" title='boost::asio::detail::resolve_op::cancel_token_' data-ref="boost::asio::detail::resolve_op::cancel_token_" >cancel_token_</a><a class="ref" href="../../smart_ptr/weak_ptr.hpp.html#_ZN5boost8weak_ptrC1ERKNS_8weak_ptrIT_EE" title='boost::weak_ptr::weak_ptr&lt;T&gt;' data-ref="_ZN5boost8weak_ptrC1ERKNS_8weak_ptrIT_EE" id="_ZN5boost8weak_ptrC1ERKNS_8weak_ptrIT_EE" >(</a><a class="local col0 ref" href="#4610cancel_token" title='cancel_token' data-ref="4610cancel_token" >cancel_token</a>),</td></tr>
+<tr><th id="50">50</th><td>      <a class="member" href="#boost::asio::detail::resolve_op::query_" title='boost::asio::detail::resolve_op::query_' data-ref="boost::asio::detail::resolve_op::query_" >query_</a>(<a class="local col1 ref" href="#4611query" title='query' data-ref="4611query" >query</a>),</td></tr>
+<tr><th id="51">51</th><td>      <a class="member" href="#boost::asio::detail::resolve_op::io_service_impl_" title='boost::asio::detail::resolve_op::io_service_impl_' data-ref="boost::asio::detail::resolve_op::io_service_impl_" >io_service_impl_</a>(<a class="local col2 ref" href="#4612ios" title='ios' data-ref="4612ios" >ios</a>),</td></tr>
+<tr><th id="52">52</th><td>      <a class="member" href="#boost::asio::detail::resolve_op::handler_" title='boost::asio::detail::resolve_op::handler_' data-ref="boost::asio::detail::resolve_op::handler_" >handler_</a>(<a class="macro" href="config.hpp.html#108" title="static_cast&lt;Handler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(Handler)(<a class="local col3 ref" href="#4613handler" title='handler' data-ref="4613handler" >handler</a>)),</td></tr>
+<tr><th id="53">53</th><td>      <a class="member" href="#boost::asio::detail::resolve_op::addrinfo_" title='boost::asio::detail::resolve_op::addrinfo_' data-ref="boost::asio::detail::resolve_op::addrinfo_" >addrinfo_</a>(<var>0</var>)</td></tr>
+<tr><th id="54">54</th><td>  {</td></tr>
+<tr><th id="55">55</th><td>  }</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>  <dfn class="decl def" id="_ZN5boost4asio6detail10resolve_opD1Ev" title='boost::asio::detail::resolve_op::~resolve_op&lt;Protocol, Handler&gt;' data-ref="_ZN5boost4asio6detail10resolve_opD1Ev" >~resolve_op</dfn>()</td></tr>
+<tr><th id="58">58</th><td>  {</td></tr>
+<tr><th id="59">59</th><td>    <b>if</b> (<a class="member" href="#boost::asio::detail::resolve_op::addrinfo_" title='boost::asio::detail::resolve_op::addrinfo_' data-ref="boost::asio::detail::resolve_op::addrinfo_" >addrinfo_</a>)</td></tr>
+<tr><th id="60">60</th><td>      <span class="namespace">socket_ops::</span><a class="ref" href="impl/socket_ops.ipp.html#_ZN5boost4asio6detail10socket_ops12freeaddrinfoEP8addrinfo" title='boost::asio::detail::socket_ops::freeaddrinfo' data-ref="_ZN5boost4asio6detail10socket_ops12freeaddrinfoEP8addrinfo" id="_ZN5boost4asio6detail10socket_ops12freeaddrinfoEP8addrinfo" >freeaddrinfo</a>(<a class="member" href="#boost::asio::detail::resolve_op::addrinfo_" title='boost::asio::detail::resolve_op::addrinfo_' data-ref="boost::asio::detail::resolve_op::addrinfo_" >addrinfo_</a>);</td></tr>
+<tr><th id="61">61</th><td>  }</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>  <em>static</em> <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail10resolve_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" title='boost::asio::detail::resolve_op::do_complete' data-ref="_ZN5boost4asio6detail10resolve_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" >do_complete</dfn>(<a class="typedef" href="../io_service.hpp.html#boost::asio::detail::io_service_impl" title='boost::asio::detail::io_service_impl' data-type='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::io_service_impl" >io_service_impl</a>* <dfn class="local col4 decl" id="4614owner" title='owner' data-type='io_service_impl *' data-ref="4614owner" >owner</dfn>, <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>* <dfn class="local col5 decl" id="4615base" title='base' data-type='operation *' data-ref="4615base" >base</dfn>,</td></tr>
+<tr><th id="64">64</th><td>      <em>const</em> <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <i>/*ec*/</i>,</td></tr>
+<tr><th id="65">65</th><td>      <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <i>/*bytes_transferred*/</i>)</td></tr>
+<tr><th id="66">66</th><td>  {</td></tr>
+<tr><th id="67">67</th><td>    <i>// Take ownership of the operation object.</i></td></tr>
+<tr><th id="68">68</th><td>    resolve_op* <dfn class="local col6 decl" id="4616o" title='o' data-type='resolve_op&lt;Protocol, Handler&gt; *' data-ref="4616o" >o</dfn>(<b>static_cast</b>&lt;resolve_op*&gt;(<a class="local col5 ref" href="#4615base" title='base' data-ref="4615base" >base</a>));</td></tr>
+<tr><th id="69">69</th><td>    <a class="type" href="#41" title='boost::asio::detail::resolve_op::ptr' data-ref="boost::asio::detail::resolve_op::ptr" >ptr</a> <dfn class="local col7 decl" id="4617p" title='p' data-type='boost::asio::detail::resolve_op::ptr' data-ref="4617p" >p</dfn> = { <span class="namespace">boost::asio::detail::</span>addressof(<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;handler_), <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>, <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a> };</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>    <b>if</b> (<a class="local col4 ref" href="#4614owner" title='owner' data-ref="4614owner" >owner</a> &amp;&amp; <a class="local col4 ref" href="#4614owner" title='owner' data-ref="4614owner" >owner</a> != &amp;<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;io_service_impl_)</td></tr>
+<tr><th id="72">72</th><td>    {</td></tr>
+<tr><th id="73">73</th><td>      <i>// The operation is being run on the worker io_service. Time to perform</i></td></tr>
+<tr><th id="74">74</th><td><i>      // the resolver operation.</i></td></tr>
+<tr><th id="75">75</th><td><i>    </i></td></tr>
+<tr><th id="76">76</th><td><i>      // Perform the blocking host resolution operation.</i></td></tr>
+<tr><th id="77">77</th><td>      <span class="namespace">socket_ops::</span><a class="ref" href="impl/socket_ops.ipp.html#_ZN5boost4asio6detail10socket_ops22background_getaddrinfoERKNS_8weak_ptrIvEEPKcS8_RK8addrinfoPPS9_RNS_6system10error_codeE" title='boost::asio::detail::socket_ops::background_getaddrinfo' data-ref="_ZN5boost4asio6detail10socket_ops22background_getaddrinfoERKNS_8weak_ptrIvEEPKcS8_RK8addrinfoPPS9_RNS_6system10error_codeE" id="_ZN5boost4asio6detail10socket_ops22background_getaddrinfoERKNS_8weak_ptrIvEEPKcS8_RK8addrinfoPPS9_RNS_6system10error_codeE" >background_getaddrinfo</a>(<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;cancel_token_,</td></tr>
+<tr><th id="78">78</th><td>          <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;query_.host_name().c_str(), <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;query_.service_name().c_str(),</td></tr>
+<tr><th id="79">79</th><td>          <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;query_.hints(), &amp;<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;addrinfo_, <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;ec_);</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>      <i>// Pass operation back to main io_service for completion.</i></td></tr>
+<tr><th id="82">82</th><td>      <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;io_service_impl_.post_deferred_completion(<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>);</td></tr>
+<tr><th id="83">83</th><td>      <a class="local col7 ref" href="#4617p" title='p' data-ref="4617p" >p</a>.v = <a class="local col7 ref" href="#4617p" title='p' data-ref="4617p" >p</a>.p = <var>0</var>;</td></tr>
+<tr><th id="84">84</th><td>    }</td></tr>
+<tr><th id="85">85</th><td>    <b>else</b></td></tr>
+<tr><th id="86">86</th><td>    {</td></tr>
+<tr><th id="87">87</th><td>      <i>// The operation has been returned to the main io_service. The completion</i></td></tr>
+<tr><th id="88">88</th><td><i>      // handler is ready to be delivered.</i></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>      <a class="macro" href="handler_tracking.hpp.html#144" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_COMPLETION">BOOST_ASIO_HANDLER_COMPLETION</a>((o));</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>      <i>// Make a copy of the handler so that the memory can be deallocated</i></td></tr>
+<tr><th id="93">93</th><td><i>      // before the upcall is made. Even if we're not about to make an upcall,</i></td></tr>
+<tr><th id="94">94</th><td><i>      // a sub-object of the handler may be the true owner of the memory</i></td></tr>
+<tr><th id="95">95</th><td><i>      // associated with the handler. Consequently, a local copy of the handler</i></td></tr>
+<tr><th id="96">96</th><td><i>      // is required to ensure that any owning sub-object remains valid until</i></td></tr>
+<tr><th id="97">97</th><td><i>      // after we have deallocated the memory here.</i></td></tr>
+<tr><th id="98">98</th><td>      <span class="namespace">detail::</span><a class="type" href="bind_handler.hpp.html#boost::asio::detail::binder2" title='boost::asio::detail::binder2' data-ref="boost::asio::detail::binder2" >binder2</a>&lt;Handler, <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>, <a class="typedef" href="#boost::asio::detail::resolve_op::iterator_type" title='boost::asio::detail::resolve_op::iterator_type' data-type='boost::asio::ip::basic_resolver_iterator&lt;Protocol&gt;' data-ref="boost::asio::detail::resolve_op::iterator_type" >iterator_type</a>&gt;</td></tr>
+<tr><th id="99">99</th><td>        <dfn class="local col8 decl" id="4618handler" title='handler' data-type='detail::binder2&lt;Handler, boost::system::error_code, iterator_type&gt;' data-ref="4618handler" >handler</dfn>(<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;handler_, <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;ec_, <a class="typedef" href="#boost::asio::detail::resolve_op::iterator_type" title='boost::asio::detail::resolve_op::iterator_type' data-type='boost::asio::ip::basic_resolver_iterator&lt;Protocol&gt;' data-ref="boost::asio::detail::resolve_op::iterator_type" >iterator_type</a>());</td></tr>
+<tr><th id="100">100</th><td>      <a class="local col7 ref" href="#4617p" title='p' data-ref="4617p" >p</a>.h = <span class="namespace">boost::asio::detail::</span>addressof(<a class="local col8 ref" href="#4618handler" title='handler' data-ref="4618handler" >handler</a>.handler_);</td></tr>
+<tr><th id="101">101</th><td>      <b>if</b> (<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;addrinfo_)</td></tr>
+<tr><th id="102">102</th><td>      {</td></tr>
+<tr><th id="103">103</th><td>        <a class="local col8 ref" href="#4618handler" title='handler' data-ref="4618handler" >handler</a>.arg2_ = <a class="typedef" href="#boost::asio::detail::resolve_op::iterator_type" title='boost::asio::detail::resolve_op::iterator_type' data-type='boost::asio::ip::basic_resolver_iterator&lt;Protocol&gt;' data-ref="boost::asio::detail::resolve_op::iterator_type" >iterator_type</a>::create(<a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;addrinfo_,</td></tr>
+<tr><th id="104">104</th><td>            <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;query_.host_name(), <a class="local col6 ref" href="#4616o" title='o' data-ref="4616o" >o</a>-&gt;query_.service_name());</td></tr>
+<tr><th id="105">105</th><td>      }</td></tr>
+<tr><th id="106">106</th><td>      <a class="local col7 ref" href="#4617p" title='p' data-ref="4617p" >p</a>.reset();</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>      <b>if</b> (<a class="local col4 ref" href="#4614owner" title='owner' data-ref="4614owner" >owner</a>)</td></tr>
+<tr><th id="109">109</th><td>      {</td></tr>
+<tr><th id="110">110</th><td>        <a class="typedef" href="fenced_block.hpp.html#boost::asio::detail::fenced_block" title='boost::asio::detail::fenced_block' data-type='boost::asio::detail::gcc_x86_fenced_block' data-ref="boost::asio::detail::fenced_block" >fenced_block</a> <dfn class="local col9 decl" id="4619b" title='b' data-type='fenced_block' data-ref="4619b" >b</dfn><a class="ref" href="gcc_x86_fenced_block.hpp.html#_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6half_tE" title='boost::asio::detail::gcc_x86_fenced_block::gcc_x86_fenced_block' data-ref="_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6half_tE" id="_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6half_tE" >(</a><a class="typedef" href="fenced_block.hpp.html#boost::asio::detail::fenced_block" title='boost::asio::detail::fenced_block' data-type='boost::asio::detail::gcc_x86_fenced_block' data-ref="boost::asio::detail::fenced_block" >fenced_block</a>::<a class="enum" href="gcc_x86_fenced_block.hpp.html#boost::asio::detail::gcc_x86_fenced_block::half_t::half" title='boost::asio::detail::gcc_x86_fenced_block::half_t::half' data-ref="boost::asio::detail::gcc_x86_fenced_block::half_t::half" id="boost::asio::detail::gcc_x86_fenced_block::half_t::half" >half</a>);</td></tr>
+<tr><th id="111">111</th><td>        <a class="macro" href="handler_tracking.hpp.html#145" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_INVOCATION_BEGIN">BOOST_ASIO_HANDLER_INVOCATION_BEGIN</a>((handler.arg1_, <q>"..."</q>));</td></tr>
+<tr><th id="112">112</th><td>        <span class="namespace">boost_asio_handler_invoke_helpers::</span>invoke(<a class="local col8 ref" href="#4618handler" title='handler' data-ref="4618handler" >handler</a>, <a class="local col8 ref" href="#4618handler" title='handler' data-ref="4618handler" >handler</a>.handler_);</td></tr>
+<tr><th id="113">113</th><td>        <a class="macro" href="handler_tracking.hpp.html#146" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_INVOCATION_END">BOOST_ASIO_HANDLER_INVOCATION_END</a>;</td></tr>
+<tr><th id="114">114</th><td>      }</td></tr>
+<tr><th id="115">115</th><td>    }</td></tr>
+<tr><th id="116">116</th><td>  }</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><b>private</b>:</td></tr>
+<tr><th id="119">119</th><td>  <span class="namespace">socket_ops::</span><a class="typedef" href="socket_ops.hpp.html#boost::asio::detail::socket_ops::weak_cancel_token_type" title='boost::asio::detail::socket_ops::weak_cancel_token_type' data-type='weak_ptr&lt;void&gt;' data-ref="boost::asio::detail::socket_ops::weak_cancel_token_type" >weak_cancel_token_type</a> <dfn class="decl" id="boost::asio::detail::resolve_op::cancel_token_" title='boost::asio::detail::resolve_op::cancel_token_' data-ref="boost::asio::detail::resolve_op::cancel_token_" >cancel_token_</dfn>;</td></tr>
+<tr><th id="120">120</th><td>  <a class="typedef" href="#boost::asio::detail::resolve_op::query_type" title='boost::asio::detail::resolve_op::query_type' data-type='boost::asio::ip::basic_resolver_query&lt;Protocol&gt;' data-ref="boost::asio::detail::resolve_op::query_type" >query_type</a> <dfn class="decl" id="boost::asio::detail::resolve_op::query_" title='boost::asio::detail::resolve_op::query_' data-ref="boost::asio::detail::resolve_op::query_" >query_</dfn>;</td></tr>
+<tr><th id="121">121</th><td>  <a class="typedef" href="../io_service.hpp.html#boost::asio::detail::io_service_impl" title='boost::asio::detail::io_service_impl' data-type='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::io_service_impl" >io_service_impl</a>&amp; <dfn class="decl" id="boost::asio::detail::resolve_op::io_service_impl_" title='boost::asio::detail::resolve_op::io_service_impl_' data-ref="boost::asio::detail::resolve_op::io_service_impl_" >io_service_impl_</dfn>;</td></tr>
+<tr><th id="122">122</th><td>  Handler <dfn class="decl" id="boost::asio::detail::resolve_op::handler_" title='boost::asio::detail::resolve_op::handler_' data-ref="boost::asio::detail::resolve_op::handler_" >handler_</dfn>;</td></tr>
+<tr><th id="123">123</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl" id="boost::asio::detail::resolve_op::ec_" title='boost::asio::detail::resolve_op::ec_' data-ref="boost::asio::detail::resolve_op::ec_" >ec_</dfn>;</td></tr>
+<tr><th id="124">124</th><td>  <span class="namespace">boost::asio::detail::</span><a class="typedef" href="socket_types.hpp.html#boost::asio::detail::addrinfo_type" title='boost::asio::detail::addrinfo_type' data-type='addrinfo' data-ref="boost::asio::detail::addrinfo_type" >addrinfo_type</a>* <dfn class="decl" id="boost::asio::detail::resolve_op::addrinfo_" title='boost::asio::detail::resolve_op::addrinfo_' data-ref="boost::asio::detail::resolve_op::addrinfo_" >addrinfo_</dfn>;</td></tr>
+<tr><th id="125">125</th><td>};</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td>} <i>// namespace detail</i></td></tr>
+<tr><th id="128">128</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="129">129</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><u>#include <a href="pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DETAIL_RESOLVE_OP_HPP</u></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

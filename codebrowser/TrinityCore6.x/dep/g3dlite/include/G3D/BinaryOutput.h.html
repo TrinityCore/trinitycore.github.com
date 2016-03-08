@@ -1,0 +1,459 @@
+<!doctype html>
+<html>
+<head>
+<title>BinaryOutput.h [TrinityCore6.x/dep/g3dlite/include/G3D/BinaryOutput.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/BinaryOutput.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/BinaryOutput.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> \file</span> G3D/BinaryOutput.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"><span class="command"> \maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> \created</span> 2001-08-09</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> \edited</span>  2011-08-24</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"></i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"> Copyright 2000-2012, Morgan McGuire.</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"> All rights reserved.</i></td></tr>
+<tr><th id="11">11</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">ifndef</span> <span class="macro" data-ref="_M/G3D_BinaryOutput_h">G3D_BinaryOutput_h</span></u></td></tr>
+<tr><th id="14">14</th><td><u>#define <dfn class="macro" id="_M/G3D_BinaryOutput_h" data-ref="_M/G3D_BinaryOutput_h">G3D_BinaryOutput_h</dfn></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../../../../../include/assert.h.html">&lt;assert.h&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../../../include/x86_64-linux-gnu/sys/stat.h.html">&lt;sys/stat.h&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../../../../include/x86_64-linux-gnu/sys/types.h.html">&lt;sys/types.h&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../../../include/stdio.h.html">&lt;stdio.h&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="unorm8.h.html">"G3D/unorm8.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="Color4.h.html">"G3D/Color4.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="Color3.h.html">"G3D/Color3.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="Vector4.h.html">"G3D/Vector4.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="Vector3.h.html">"G3D/Vector3.h"</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="Vector2.h.html">"G3D/Vector2.h"</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="debug.h.html">"G3D/debug.h"</a></u></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="BinaryInput.h.html">"G3D/BinaryInput.h"</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="System.h.html">"G3D/System.h"</a></u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="33">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="34">34</th><td><u>#   pragma warning (push)</u></td></tr>
+<tr><th id="35">35</th><td><i>// Conditional is constant (wrong in inline)</i></td></tr>
+<tr><th id="36">36</th><td><u>#   pragma warning (disable : 4127)</u></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="33">endif</span></u></td></tr>
+<tr><th id="38">38</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> Sequential or random access byte-order independent binary file access.</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"></i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> The compress() call can be used to compress with zlib.</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc"></i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"> Any method call can trigger an out of memory error (thrown as char*) </i></td></tr>
+<tr><th id="46">46</th><td><i class="doc"> when writing to "&lt;memory&gt;" instead of a file.</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc"></i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"> Compressed writing and seeking backwards is not supported for huge files</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc"> (i.e., BinaryOutput may have to dump the contents to disk if they </i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"> exceed available RAM).</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="52">52</th><td><b>class</b> <dfn class="type def" id="G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</dfn> {</td></tr>
+<tr><th id="53">53</th><td><b>private</b>:</td></tr>
+<tr><th id="54">54</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>     <dfn class="decl" id="G3D::BinaryOutput::m_filename" title='G3D::BinaryOutput::m_filename' data-ref="G3D::BinaryOutput::m_filename" >m_filename</dfn>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <em>bool</em>            <dfn class="decl" id="G3D::BinaryOutput::m_committed" title='G3D::BinaryOutput::m_committed' data-ref="G3D::BinaryOutput::m_committed" >m_committed</dfn>;</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <i class="doc">/** 0 outside of beginBits...endBits, 1 inside */</i></td></tr>
+<tr><th id="59">59</th><td>    <em>int</em>             <dfn class="decl" id="G3D::BinaryOutput::m_beginEndBits" title='G3D::BinaryOutput::m_beginEndBits' data-ref="G3D::BinaryOutput::m_beginEndBits" >m_beginEndBits</dfn>;</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <i class="doc">/** The current string of bits being built up by beginBits...endBits.</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc">        This string is treated semantically, as if the lowest bit was</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc">        on the left and the highest was on the right.*/</i></td></tr>
+<tr><th id="64">64</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::int8" title='G3D::int8' data-type='int8_t' data-ref="G3D::int8" >int8</a>            <dfn class="decl" id="G3D::BinaryOutput::m_bitString" title='G3D::BinaryOutput::m_bitString' data-ref="G3D::BinaryOutput::m_bitString" >m_bitString</dfn>;</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <i class="doc">/** Position (from the lowest bit) currently used in bitString.*/</i></td></tr>
+<tr><th id="67">67</th><td>    <em>int</em>             <dfn class="decl" id="G3D::BinaryOutput::m_bitPos" title='G3D::BinaryOutput::m_bitPos' data-ref="G3D::BinaryOutput::m_bitPos" >m_bitPos</dfn>;</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>    <i>// True if the file endianess does not match the machine endian</i></td></tr>
+<tr><th id="70">70</th><td>    <em>bool</em>            <dfn class="decl" id="G3D::BinaryOutput::m_swapBytes" title='G3D::BinaryOutput::m_swapBytes' data-ref="G3D::BinaryOutput::m_swapBytes" >m_swapBytes</dfn>;</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>    <a class="type" href="System.h.html#G3D::G3DEndian" title='G3D::G3DEndian' data-ref="G3D::G3DEndian" >G3DEndian</a>       <dfn class="decl" id="G3D::BinaryOutput::m_fileEndian" title='G3D::BinaryOutput::m_fileEndian' data-ref="G3D::BinaryOutput::m_fileEndian" >m_fileEndian</dfn>;</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a>*          <dfn class="decl" id="G3D::BinaryOutput::m_buffer" title='G3D::BinaryOutput::m_buffer' data-ref="G3D::BinaryOutput::m_buffer" >m_buffer</dfn>;</td></tr>
+<tr><th id="75">75</th><td>    </td></tr>
+<tr><th id="76">76</th><td>    <i class="doc">/** Size of the elements used */</i></td></tr>
+<tr><th id="77">77</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>          <dfn class="decl" id="G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</dfn>;</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>    <i class="doc">/** Underlying size of memory allocaded */</i></td></tr>
+<tr><th id="80">80</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>          <dfn class="decl" id="G3D::BinaryOutput::m_maxBufferLen" title='G3D::BinaryOutput::m_maxBufferLen' data-ref="G3D::BinaryOutput::m_maxBufferLen" >m_maxBufferLen</dfn>;</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>    <i class="doc">/** Next byte in file */</i></td></tr>
+<tr><th id="83">83</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a>           <dfn class="decl" id="G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</dfn>;</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>    <i class="doc">/** is this initialized? */</i></td></tr>
+<tr><th id="86">86</th><td>    <em>bool</em>            <dfn class="decl" id="G3D::BinaryOutput::m_init" title='G3D::BinaryOutput::m_init' data-ref="G3D::BinaryOutput::m_init" >m_init</dfn>;</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>    <i class="doc">/** Number of bytes already written to the file.  Even on 32-bit OS, this can be 64-bits*/</i></td></tr>
+<tr><th id="89">89</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a>           <dfn class="decl" id="G3D::BinaryOutput::m_alreadyWritten" title='G3D::BinaryOutput::m_alreadyWritten' data-ref="G3D::BinaryOutput::m_alreadyWritten" >m_alreadyWritten</dfn>;             </td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>    <em>bool</em>            <dfn class="decl" id="G3D::BinaryOutput::m_ok" title='G3D::BinaryOutput::m_ok' data-ref="G3D::BinaryOutput::m_ok" >m_ok</dfn>;</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput27reserveBytesWhenOutOfMemoryEm" title='G3D::BinaryOutput::reserveBytesWhenOutOfMemory' data-ref="_ZN3G3D12BinaryOutput27reserveBytesWhenOutOfMemoryEm" >reserveBytesWhenOutOfMemory</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="1555bytes" title='bytes' data-type='size_t' data-ref="1555bytes" >bytes</dfn>);</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput13reallocBufferEmm" title='G3D::BinaryOutput::reallocBuffer' data-ref="_ZN3G3D12BinaryOutput13reallocBufferEmm" >reallocBuffer</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="1556bytes" title='bytes' data-type='size_t' data-ref="1556bytes" >bytes</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="1557oldBufferLen" title='oldBufferLen' data-type='size_t' data-ref="1557oldBufferLen" >oldBufferLen</dfn>);</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">     Make sure at least bytes can be written, resizing if</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">     necessary.</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="101">101</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput12reserveBytesEm" title='G3D::BinaryOutput::reserveBytes' data-ref="_ZN3G3D12BinaryOutput12reserveBytesEm" >reserveBytes</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="1558bytes" title='bytes' data-type='size_t' data-ref="1558bytes" >bytes</dfn>) {</td></tr>
+<tr><th id="102">102</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(bytes &gt; <var>0</var>);</td></tr>
+<tr><th id="103">103</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="1559oldBufferLen" title='oldBufferLen' data-type='size_t' data-ref="1559oldBufferLen" >oldBufferLen</dfn> = <a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a>;</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td>        <a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a> = <a class="ref" href="g3dmath.h.html#_ZN3G3D3maxERKT_S2_" title='G3D::max' data-ref="_ZN3G3D3maxERKT_S2_" id="_ZN3G3D3maxERKT_S2_" >max</a>(<a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a>, (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>)(<a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> + <a class="local col8 ref" href="#1558bytes" title='bytes' data-ref="1558bytes" >bytes</a>));</td></tr>
+<tr><th id="106">106</th><td>        <b>if</b> (<a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a> &gt; <a class="member" href="#G3D::BinaryOutput::m_maxBufferLen" title='G3D::BinaryOutput::m_maxBufferLen' data-ref="G3D::BinaryOutput::m_maxBufferLen" >m_maxBufferLen</a>) {</td></tr>
+<tr><th id="107">107</th><td>            <a class="member" href="#_ZN3G3D12BinaryOutput13reallocBufferEmm" title='G3D::BinaryOutput::reallocBuffer' data-ref="_ZN3G3D12BinaryOutput13reallocBufferEmm" >reallocBuffer</a>(<a class="local col8 ref" href="#1558bytes" title='bytes' data-ref="1558bytes" >bytes</a>, <a class="local col9 ref" href="#1559oldBufferLen" title='oldBufferLen' data-ref="1559oldBufferLen" >oldBufferLen</a>);</td></tr>
+<tr><th id="108">108</th><td>        }</td></tr>
+<tr><th id="109">109</th><td>    }</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>    <i>// Not implemented on purpose, don't use</i></td></tr>
+<tr><th id="112">112</th><td>    <dfn class="decl" id="_ZN3G3D12BinaryOutputC1ERKS0_" title='G3D::BinaryOutput::BinaryOutput' data-ref="_ZN3G3D12BinaryOutputC1ERKS0_" >BinaryOutput</dfn>(<em>const</em> <a class="type" href="#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp;);</td></tr>
+<tr><th id="113">113</th><td>    <a class="type" href="#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp; <dfn class="decl" id="_ZN3G3D12BinaryOutputaSERKS0_" title='G3D::BinaryOutput::operator=' data-ref="_ZN3G3D12BinaryOutputaSERKS0_" ><b>operator</b>=</dfn>(<em>const</em> <a class="type" href="#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp;);</td></tr>
+<tr><th id="114">114</th><td>    <em>bool</em> <dfn class="decl" id="_ZN3G3D12BinaryOutputeqERKS0_" title='G3D::BinaryOutput::operator==' data-ref="_ZN3G3D12BinaryOutputeqERKS0_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp;);</td></tr>
+<tr><th id="115">115</th><td></td></tr>
+<tr><th id="116">116</th><td><b>public</b>:</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc">     You must call setEndian() if you use this (memory) constructor.</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="121">121</th><td>    <dfn class="decl" id="_ZN3G3D12BinaryOutputC1Ev" title='G3D::BinaryOutput::BinaryOutput' data-ref="_ZN3G3D12BinaryOutputC1Ev" >BinaryOutput</dfn>();</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="124">124</th><td><i class="doc">     Doesn't actually open the file; commit() does that.</i></td></tr>
+<tr><th id="125">125</th><td><i class="doc">     Use "&lt;memory&gt;" as the filename if you're going to commit</i></td></tr>
+<tr><th id="126">126</th><td><i class="doc">     to memory.</i></td></tr>
+<tr><th id="127">127</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="128">128</th><td>    <dfn class="decl" id="_ZN3G3D12BinaryOutputC1ERKSsNS_9G3DEndianE" title='G3D::BinaryOutput::BinaryOutput' data-ref="_ZN3G3D12BinaryOutputC1ERKSsNS_9G3DEndianE" >BinaryOutput</dfn>(</td></tr>
+<tr><th id="129">129</th><td>        <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;  <dfn class="local col0 decl" id="1560filename" title='filename' data-type='const std::string &amp;' data-ref="1560filename" >filename</dfn>,</td></tr>
+<tr><th id="130">130</th><td>        <a class="type" href="System.h.html#G3D::G3DEndian" title='G3D::G3DEndian' data-ref="G3D::G3DEndian" >G3DEndian</a>           <dfn class="local col1 decl" id="1561fileEndian" title='fileEndian' data-type='G3D::G3DEndian' data-ref="1561fileEndian" >fileEndian</dfn>);</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>    <dfn class="decl" id="_ZN3G3D12BinaryOutputD1Ev" title='G3D::BinaryOutput::~BinaryOutput' data-ref="_ZN3G3D12BinaryOutputD1Ev" >~BinaryOutput</dfn>();</td></tr>
+<tr><th id="133">133</th><td>    </td></tr>
+<tr><th id="134">134</th><td>    <i class="doc">/** Compresses the data in the buffer in place, </i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">        preceeding it with a little-endian uint32 indicating </i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">        the uncompressed size.</i></td></tr>
+<tr><th id="137">137</th><td><i class="doc"></i></td></tr>
+<tr><th id="138">138</th><td><i class="doc">        Call immediately before commit().</i></td></tr>
+<tr><th id="139">139</th><td><i class="doc"></i></td></tr>
+<tr><th id="140">140</th><td><i class="doc">        Cannot be used for huge files (ones where the data</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">        was already written to disk)-- will throw char*.</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc"></i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">        <span class="command">\param</span> <span class="arg">level</span> Compression level.  0 = fast, low compression; 9 = slow, high compression</i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="145">145</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput8compressEi" title='G3D::BinaryOutput::compress' data-ref="_ZN3G3D12BinaryOutput8compressEi" >compress</dfn>(<em>int</em> <dfn class="local col2 decl" id="1562level" title='level' data-type='int' data-ref="1562level" >level</dfn> = <var>9</var>);</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td>    <i class="doc">/** True if no errors have been encountered.*/</i></td></tr>
+<tr><th id="148">148</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D12BinaryOutput2okEv" title='G3D::BinaryOutput::ok' data-ref="_ZNK3G3D12BinaryOutput2okEv" >ok</dfn>() <em>const</em>;</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="151">151</th><td><i class="doc">     Returns a pointer to the internal memory buffer.</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="153">153</th><td>    <b>inline</b> <em>const</em> <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a>* <dfn class="decl def" id="_ZNK3G3D12BinaryOutput9getCArrayEv" title='G3D::BinaryOutput::getCArray' data-ref="_ZNK3G3D12BinaryOutput9getCArrayEv" >getCArray</dfn>() <em>const</em> {</td></tr>
+<tr><th id="154">154</th><td>        <b>return</b> <a class="member" href="#G3D::BinaryOutput::m_buffer" title='G3D::BinaryOutput::m_buffer' data-ref="G3D::BinaryOutput::m_buffer" >m_buffer</a>;</td></tr>
+<tr><th id="155">155</th><td>    }</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput9setEndianENS_9G3DEndianE" title='G3D::BinaryOutput::setEndian' data-ref="_ZN3G3D12BinaryOutput9setEndianENS_9G3DEndianE" >setEndian</dfn>(<a class="type" href="System.h.html#G3D::G3DEndian" title='G3D::G3DEndian' data-ref="G3D::G3DEndian" >G3DEndian</a> <dfn class="local col3 decl" id="1563fileEndian" title='fileEndian' data-type='G3D::G3DEndian' data-ref="1563fileEndian" >fileEndian</dfn>);</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>    <a class="type" href="System.h.html#G3D::G3DEndian" title='G3D::G3DEndian' data-ref="G3D::G3DEndian" >G3DEndian</a> <dfn class="decl def" id="_ZNK3G3D12BinaryOutput6endianEv" title='G3D::BinaryOutput::endian' data-ref="_ZNK3G3D12BinaryOutput6endianEv" >endian</dfn>() <em>const</em> {</td></tr>
+<tr><th id="160">160</th><td>        <b>return</b> <a class="member" href="#G3D::BinaryOutput::m_fileEndian" title='G3D::BinaryOutput::m_fileEndian' data-ref="G3D::BinaryOutput::m_fileEndian" >m_fileEndian</a>;</td></tr>
+<tr><th id="161">161</th><td>    }</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl def" id="_ZNK3G3D12BinaryOutput11getFilenameEv" title='G3D::BinaryOutput::getFilename' data-ref="_ZNK3G3D12BinaryOutput11getFilenameEv" >getFilename</dfn>() <em>const</em> {</td></tr>
+<tr><th id="164">164</th><td>        <b>return</b> <a class="member" href="#G3D::BinaryOutput::m_filename" title='G3D::BinaryOutput::m_filename' data-ref="G3D::BinaryOutput::m_filename" >m_filename</a>;</td></tr>
+<tr><th id="165">165</th><td>    }</td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc">     Write the bytes to disk.  It is ok to call this </i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">     multiple times; it will just overwrite the previous file.</i></td></tr>
+<tr><th id="170">170</th><td><i class="doc"></i></td></tr>
+<tr><th id="171">171</th><td><i class="doc">     Parent directories are created as needed if they do</i></td></tr>
+<tr><th id="172">172</th><td><i class="doc">     not exist.</i></td></tr>
+<tr><th id="173">173</th><td><i class="doc"></i></td></tr>
+<tr><th id="174">174</th><td><i class="doc">     &lt;B&gt;Not&lt;/B&gt; called from the destructor; you must call</i></td></tr>
+<tr><th id="175">175</th><td><i class="doc">     it yourself.</i></td></tr>
+<tr><th id="176">176</th><td><i class="doc"></i></td></tr>
+<tr><th id="177">177</th><td><i class="doc">     <span class="command">@param</span> <span class="arg">flush</span> If true (default) the file is ready for reading when the method returns, otherwise </i></td></tr>
+<tr><th id="178">178</th><td><i class="doc">      the method returns immediately and writes the file in the background.</i></td></tr>
+<tr><th id="179">179</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="180">180</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput6commitEb" title='G3D::BinaryOutput::commit' data-ref="_ZN3G3D12BinaryOutput6commitEb" >commit</dfn>(<em>bool</em> <dfn class="local col4 decl" id="1564flush" title='flush' data-type='bool' data-ref="1564flush" >flush</dfn> = <b>true</b>);</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="183">183</th><td><i class="doc">     Write the bytes to memory (which must be of</i></td></tr>
+<tr><th id="184">184</th><td><i class="doc">     at least size() bytes).</i></td></tr>
+<tr><th id="185">185</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="186">186</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput6commitEPh" title='G3D::BinaryOutput::commit' data-ref="_ZN3G3D12BinaryOutput6commitEPh" >commit</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a>*);</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="189">189</th><td><i class="doc">      A memory BinaryOutput may be reset so that it can be written to again</i></td></tr>
+<tr><th id="190">190</th><td><i class="doc">      without allocating new memory.  The underlying array will not be deallocated,</i></td></tr>
+<tr><th id="191">191</th><td><i class="doc">      but the reset structure will act like a newly intialized one.</i></td></tr>
+<tr><th id="192">192</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="193">193</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput5resetEv" title='G3D::BinaryOutput::reset' data-ref="_ZN3G3D12BinaryOutput5resetEv" >reset</dfn>();</td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td>    <b>inline</b> <a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a> <dfn class="decl def" id="_ZNK3G3D12BinaryOutput6lengthEv" title='G3D::BinaryOutput::length' data-ref="_ZNK3G3D12BinaryOutput6lengthEv" >length</dfn>() <em>const</em> {</td></tr>
+<tr><th id="197">197</th><td>        <b>return</b> <a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a> + <a class="member" href="#G3D::BinaryOutput::m_alreadyWritten" title='G3D::BinaryOutput::m_alreadyWritten' data-ref="G3D::BinaryOutput::m_alreadyWritten" >m_alreadyWritten</a>;</td></tr>
+<tr><th id="198">198</th><td>    }</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>    <b>inline</b> <a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a> <dfn class="decl def" id="_ZNK3G3D12BinaryOutput4sizeEv" title='G3D::BinaryOutput::size' data-ref="_ZNK3G3D12BinaryOutput4sizeEv" >size</dfn>() <em>const</em> {</td></tr>
+<tr><th id="201">201</th><td>        <b>return</b> <a class="member" href="#_ZNK3G3D12BinaryOutput6lengthEv" title='G3D::BinaryOutput::length' data-ref="_ZNK3G3D12BinaryOutput6lengthEv" >length</a>();</td></tr>
+<tr><th id="202">202</th><td>    }</td></tr>
+<tr><th id="203">203</th><td></td></tr>
+<tr><th id="204">204</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="205">205</th><td><i class="doc">     Sets the length of the file to n, padding</i></td></tr>
+<tr><th id="206">206</th><td><i class="doc">     with 0's past the current end.  Does not</i></td></tr>
+<tr><th id="207">207</th><td><i class="doc">     change the position of the next byte to be</i></td></tr>
+<tr><th id="208">208</th><td><i class="doc">     written unless n &lt; size().</i></td></tr>
+<tr><th id="209">209</th><td><i class="doc"></i></td></tr>
+<tr><th id="210">210</th><td><i class="doc">     Throws char* when resetting a huge file to be shorter</i></td></tr>
+<tr><th id="211">211</th><td><i class="doc">     than its current length.</i></td></tr>
+<tr><th id="212">212</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="213">213</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput9setLengthEl" title='G3D::BinaryOutput::setLength' data-ref="_ZN3G3D12BinaryOutput9setLengthEl" >setLength</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a> <dfn class="local col5 decl" id="1565n" title='n' data-type='int64' data-ref="1565n" >n</dfn>) {</td></tr>
+<tr><th id="214">214</th><td>        <a class="local col5 ref" href="#1565n" title='n' data-ref="1565n" >n</a> = <a class="local col5 ref" href="#1565n" title='n' data-ref="1565n" >n</a> - <a class="member" href="#G3D::BinaryOutput::m_alreadyWritten" title='G3D::BinaryOutput::m_alreadyWritten' data-ref="G3D::BinaryOutput::m_alreadyWritten" >m_alreadyWritten</a>;</td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td>        <b>if</b> (<a class="local col5 ref" href="#1565n" title='n' data-ref="1565n" >n</a> &lt; <var>0</var>) {</td></tr>
+<tr><th id="217">217</th><td>            <b>throw</b> <q>"Cannot resize huge files to be shorter."</q>;</td></tr>
+<tr><th id="218">218</th><td>        }</td></tr>
+<tr><th id="219">219</th><td></td></tr>
+<tr><th id="220">220</th><td>        <b>if</b> (<a class="local col5 ref" href="#1565n" title='n' data-ref="1565n" >n</a> &lt; (<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a>)<a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a>) {</td></tr>
+<tr><th id="221">221</th><td>            <a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> = <a class="local col5 ref" href="#1565n" title='n' data-ref="1565n" >n</a>;</td></tr>
+<tr><th id="222">222</th><td>        }</td></tr>
+<tr><th id="223">223</th><td>        <b>if</b> (<a class="local col5 ref" href="#1565n" title='n' data-ref="1565n" >n</a> &gt; (<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a>)<a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a>) {</td></tr>
+<tr><th id="224">224</th><td>            <a class="member" href="#_ZN3G3D12BinaryOutput12reserveBytesEm" title='G3D::BinaryOutput::reserveBytes' data-ref="_ZN3G3D12BinaryOutput12reserveBytesEm" >reserveBytes</a>((<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>)(<a class="local col5 ref" href="#1565n" title='n' data-ref="1565n" >n</a> - <a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a>));</td></tr>
+<tr><th id="225">225</th><td>        }</td></tr>
+<tr><th id="226">226</th><td>    }</td></tr>
+<tr><th id="227">227</th><td></td></tr>
+<tr><th id="228">228</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="229">229</th><td><i class="doc">     Returns the current byte position in the file,</i></td></tr>
+<tr><th id="230">230</th><td><i class="doc">     where 0 is the beginning and getLength() - 1 is the end.</i></td></tr>
+<tr><th id="231">231</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="232">232</th><td>    <b>inline</b> <a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a> <dfn class="decl def" id="_ZNK3G3D12BinaryOutput8positionEv" title='G3D::BinaryOutput::position' data-ref="_ZNK3G3D12BinaryOutput8positionEv" >position</dfn>() <em>const</em> {</td></tr>
+<tr><th id="233">233</th><td>        <b>return</b> <a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> + <a class="member" href="#G3D::BinaryOutput::m_alreadyWritten" title='G3D::BinaryOutput::m_alreadyWritten' data-ref="G3D::BinaryOutput::m_alreadyWritten" >m_alreadyWritten</a>;</td></tr>
+<tr><th id="234">234</th><td>    }</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="238">238</th><td><i class="doc">     Sets the position.  Can set past length, in which case</i></td></tr>
+<tr><th id="239">239</th><td><i class="doc">     the file is padded with zeros up to one byte before the</i></td></tr>
+<tr><th id="240">240</th><td><i class="doc">     next to be written.</i></td></tr>
+<tr><th id="241">241</th><td><i class="doc"></i></td></tr>
+<tr><th id="242">242</th><td><i class="doc">     May throw a char* exception when seeking backwards on a huge file.</i></td></tr>
+<tr><th id="243">243</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="244">244</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput11setPositionEl" title='G3D::BinaryOutput::setPosition' data-ref="_ZN3G3D12BinaryOutput11setPositionEl" >setPosition</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a> <dfn class="local col6 decl" id="1566p" title='p' data-type='int64' data-ref="1566p" >p</dfn>) {</td></tr>
+<tr><th id="245">245</th><td>        <a class="local col6 ref" href="#1566p" title='p' data-ref="1566p" >p</a> = <a class="local col6 ref" href="#1566p" title='p' data-ref="1566p" >p</a> - <a class="member" href="#G3D::BinaryOutput::m_alreadyWritten" title='G3D::BinaryOutput::m_alreadyWritten' data-ref="G3D::BinaryOutput::m_alreadyWritten" >m_alreadyWritten</a>;</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td>        <b>if</b> (<a class="local col6 ref" href="#1566p" title='p' data-ref="1566p" >p</a> &gt; (<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a>)<a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a>) {</td></tr>
+<tr><th id="248">248</th><td>            <a class="member" href="#_ZN3G3D12BinaryOutput9setLengthEl" title='G3D::BinaryOutput::setLength' data-ref="_ZN3G3D12BinaryOutput9setLengthEl" >setLength</a>((<em>int</em>)(<a class="local col6 ref" href="#1566p" title='p' data-ref="1566p" >p</a> + (<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a>)<a class="member" href="#G3D::BinaryOutput::m_alreadyWritten" title='G3D::BinaryOutput::m_alreadyWritten' data-ref="G3D::BinaryOutput::m_alreadyWritten" >m_alreadyWritten</a>));</td></tr>
+<tr><th id="249">249</th><td>        }</td></tr>
+<tr><th id="250">250</th><td></td></tr>
+<tr><th id="251">251</th><td>        <b>if</b> (<a class="local col6 ref" href="#1566p" title='p' data-ref="1566p" >p</a> &lt; <var>0</var>) {</td></tr>
+<tr><th id="252">252</th><td>            <b>throw</b> <q>"Cannot seek more than 10 MB backwards on huge files."</q>;</td></tr>
+<tr><th id="253">253</th><td>        }</td></tr>
+<tr><th id="254">254</th><td></td></tr>
+<tr><th id="255">255</th><td>        <a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> = (<em>int</em>)<a class="local col6 ref" href="#1566p" title='p' data-ref="1566p" >p</a>;</td></tr>
+<tr><th id="256">256</th><td>    }</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td></td></tr>
+<tr><th id="259">259</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput10writeBytesEPKvm" title='G3D::BinaryOutput::writeBytes' data-ref="_ZN3G3D12BinaryOutput10writeBytesEPKvm" >writeBytes</dfn></td></tr>
+<tr><th id="260">260</th><td>       (<em>const</em> <em>void</em>*         <dfn class="local col7 decl" id="1567b" title='b' data-type='const void *' data-ref="1567b" >b</dfn>,</td></tr>
+<tr><th id="261">261</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>              <dfn class="local col8 decl" id="1568count" title='count' data-type='size_t' data-ref="1568count" >count</dfn>) {</td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput12reserveBytesEm" title='G3D::BinaryOutput::reserveBytes' data-ref="_ZN3G3D12BinaryOutput12reserveBytesEm" >reserveBytes</a>(<a class="local col8 ref" href="#1568count" title='count' data-ref="1568count" >count</a>);</td></tr>
+<tr><th id="264">264</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(m_pos &gt;= <var>0</var>);</td></tr>
+<tr><th id="265">265</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(m_bufferLen &gt;= count);</td></tr>
+<tr><th id="266">266</th><td>        <a class="type" href="System.h.html#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<a class="ref" href="System.h.html#_ZN3G3D6System6memcpyEPvPKvm" title='G3D::System::memcpy' data-ref="_ZN3G3D6System6memcpyEPvPKvm" id="_ZN3G3D6System6memcpyEPvPKvm" >memcpy</a>(<a class="member" href="#G3D::BinaryOutput::m_buffer" title='G3D::BinaryOutput::m_buffer' data-ref="G3D::BinaryOutput::m_buffer" >m_buffer</a> + <a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a>, <a class="local col7 ref" href="#1567b" title='b' data-ref="1567b" >b</a>, <a class="local col8 ref" href="#1568count" title='count' data-ref="1568count" >count</a>);</td></tr>
+<tr><th id="267">267</th><td>        <a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> += <a class="local col8 ref" href="#1568count" title='count' data-ref="1568count" >count</a>;</td></tr>
+<tr><th id="268">268</th><td>    }</td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="271">271</th><td><i class="doc">     Writes a signed 8-bit integer to the current position.</i></td></tr>
+<tr><th id="272">272</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="273">273</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput9writeInt8Ea" title='G3D::BinaryOutput::writeInt8' data-ref="_ZN3G3D12BinaryOutput9writeInt8Ea" >writeInt8</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::int8" title='G3D::int8' data-type='int8_t' data-ref="G3D::int8" >int8</a> <dfn class="local col9 decl" id="1569i" title='i' data-type='int8' data-ref="1569i" >i</dfn>) {</td></tr>
+<tr><th id="274">274</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput12reserveBytesEm" title='G3D::BinaryOutput::reserveBytes' data-ref="_ZN3G3D12BinaryOutput12reserveBytesEm" >reserveBytes</a>(<var>1</var>);</td></tr>
+<tr><th id="275">275</th><td>        <a class="member" href="#G3D::BinaryOutput::m_buffer" title='G3D::BinaryOutput::m_buffer' data-ref="G3D::BinaryOutput::m_buffer" >m_buffer</a>[<a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a>] = *(<a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a>*)&amp;<a class="local col9 ref" href="#1569i" title='i' data-ref="1569i" >i</a>;</td></tr>
+<tr><th id="276">276</th><td>        ++<a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a>;</td></tr>
+<tr><th id="277">277</th><td>    }</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput10writeBool8Eb" title='G3D::BinaryOutput::writeBool8' data-ref="_ZN3G3D12BinaryOutput10writeBool8Eb" >writeBool8</dfn>(<em>bool</em> <dfn class="local col0 decl" id="1570b" title='b' data-type='bool' data-ref="1570b" >b</dfn>) {</td></tr>
+<tr><th id="280">280</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput9writeInt8Ea" title='G3D::BinaryOutput::writeInt8' data-ref="_ZN3G3D12BinaryOutput9writeInt8Ea" >writeInt8</a>(<a class="local col0 ref" href="#1570b" title='b' data-ref="1570b" >b</a> ? <var>1</var> : <var>0</var>);</td></tr>
+<tr><th id="281">281</th><td>    }</td></tr>
+<tr><th id="282">282</th><td></td></tr>
+<tr><th id="283">283</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput10writeUInt8Eh" title='G3D::BinaryOutput::writeUInt8' data-ref="_ZN3G3D12BinaryOutput10writeUInt8Eh" >writeUInt8</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a> <dfn class="local col1 decl" id="1571i" title='i' data-type='uint8' data-ref="1571i" >i</dfn>) {</td></tr>
+<tr><th id="284">284</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput12reserveBytesEm" title='G3D::BinaryOutput::reserveBytes' data-ref="_ZN3G3D12BinaryOutput12reserveBytesEm" >reserveBytes</a>(<var>1</var>);</td></tr>
+<tr><th id="285">285</th><td>        <a class="member" href="#G3D::BinaryOutput::m_buffer" title='G3D::BinaryOutput::m_buffer' data-ref="G3D::BinaryOutput::m_buffer" >m_buffer</a>[<a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a>] = <a class="local col1 ref" href="#1571i" title='i' data-ref="1571i" >i</a>;</td></tr>
+<tr><th id="286">286</th><td>        ++<a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a>;</td></tr>
+<tr><th id="287">287</th><td>    }</td></tr>
+<tr><th id="288">288</th><td></td></tr>
+<tr><th id="289">289</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput11writeUNorm8ENS_6unorm8E" title='G3D::BinaryOutput::writeUNorm8' data-ref="_ZN3G3D12BinaryOutput11writeUNorm8ENS_6unorm8E" >writeUNorm8</dfn>(<a class="type" href="unorm8.h.html#G3D::unorm8" title='G3D::unorm8' data-ref="G3D::unorm8" >unorm8</a> <dfn class="local col2 decl" id="1572i" title='i' data-type='G3D::unorm8' data-ref="1572i" >i</dfn>) {</td></tr>
+<tr><th id="290">290</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput10writeUInt8Eh" title='G3D::BinaryOutput::writeUInt8' data-ref="_ZN3G3D12BinaryOutput10writeUInt8Eh" >writeUInt8</a>(<a class="local col2 ref" href="#1572i" title='i' data-ref="1572i" >i</a>.<a class="ref" href="unorm8.h.html#_ZNK3G3D6unorm84bitsEv" title='G3D::unorm8::bits' data-ref="_ZNK3G3D6unorm84bitsEv" id="_ZNK3G3D6unorm84bitsEv" >bits</a>());</td></tr>
+<tr><th id="291">291</th><td>    }</td></tr>
+<tr><th id="292">292</th><td></td></tr>
+<tr><th id="293">293</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput11writeUInt16Et" title='G3D::BinaryOutput::writeUInt16' data-ref="_ZN3G3D12BinaryOutput11writeUInt16Et" >writeUInt16</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" >uint16</a> <dfn class="local col3 decl" id="1573u" title='u' data-type='uint16' data-ref="1573u" >u</dfn>);</td></tr>
+<tr><th id="294">294</th><td></td></tr>
+<tr><th id="295">295</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput10writeInt16Es" title='G3D::BinaryOutput::writeInt16' data-ref="_ZN3G3D12BinaryOutput10writeInt16Es" >writeInt16</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="local col4 decl" id="1574i" title='i' data-type='int16' data-ref="1574i" >i</dfn>) {</td></tr>
+<tr><th id="296">296</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput11writeUInt16Et" title='G3D::BinaryOutput::writeUInt16' data-ref="_ZN3G3D12BinaryOutput11writeUInt16Et" >writeUInt16</a>(*(<a class="typedef" href="g3dmath.h.html#G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" >uint16</a>*)&amp;<a class="local col4 ref" href="#1574i" title='i' data-ref="1574i" >i</a>);</td></tr>
+<tr><th id="297">297</th><td>    }</td></tr>
+<tr><th id="298">298</th><td></td></tr>
+<tr><th id="299">299</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput11writeUInt32Ej" title='G3D::BinaryOutput::writeUInt32' data-ref="_ZN3G3D12BinaryOutput11writeUInt32Ej" >writeUInt32</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="local col5 decl" id="1575u" title='u' data-type='uint32' data-ref="1575u" >u</dfn>);</td></tr>
+<tr><th id="300">300</th><td></td></tr>
+<tr><th id="301">301</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput10writeInt32Ei" title='G3D::BinaryOutput::writeInt32' data-ref="_ZN3G3D12BinaryOutput10writeInt32Ei" >writeInt32</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::int32" title='G3D::int32' data-type='int32_t' data-ref="G3D::int32" >int32</a> <dfn class="local col6 decl" id="1576i" title='i' data-type='int32' data-ref="1576i" >i</dfn>) {</td></tr>
+<tr><th id="302">302</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(m_beginEndBits == <var>0</var>);</td></tr>
+<tr><th id="303">303</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput11writeUInt32Ej" title='G3D::BinaryOutput::writeUInt32' data-ref="_ZN3G3D12BinaryOutput11writeUInt32Ej" >writeUInt32</a>(*(<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>*)&amp;<a class="local col6 ref" href="#1576i" title='i' data-ref="1576i" >i</a>);</td></tr>
+<tr><th id="304">304</th><td>    }</td></tr>
+<tr><th id="305">305</th><td></td></tr>
+<tr><th id="306">306</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput11writeUInt64Em" title='G3D::BinaryOutput::writeUInt64' data-ref="_ZN3G3D12BinaryOutput11writeUInt64Em" >writeUInt64</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a> <dfn class="local col7 decl" id="1577u" title='u' data-type='uint64' data-ref="1577u" >u</dfn>);</td></tr>
+<tr><th id="307">307</th><td></td></tr>
+<tr><th id="308">308</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput10writeInt64El" title='G3D::BinaryOutput::writeInt64' data-ref="_ZN3G3D12BinaryOutput10writeInt64El" >writeInt64</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a> <dfn class="local col8 decl" id="1578i" title='i' data-type='int64' data-ref="1578i" >i</dfn>) {</td></tr>
+<tr><th id="309">309</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput11writeUInt64Em" title='G3D::BinaryOutput::writeUInt64' data-ref="_ZN3G3D12BinaryOutput11writeUInt64Em" >writeUInt64</a>(*(<a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a>*)&amp;<a class="local col8 ref" href="#1578i" title='i' data-ref="1578i" >i</a>);</td></tr>
+<tr><th id="310">310</th><td>    }</td></tr>
+<tr><th id="311">311</th><td></td></tr>
+<tr><th id="312">312</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput12writeFloat32Ef" title='G3D::BinaryOutput::writeFloat32' data-ref="_ZN3G3D12BinaryOutput12writeFloat32Ef" >writeFloat32</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::float32" title='G3D::float32' data-type='float' data-ref="G3D::float32" >float32</a> <dfn class="local col9 decl" id="1579f" title='f' data-type='float32' data-ref="1579f" >f</dfn>) {</td></tr>
+<tr><th id="313">313</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(m_beginEndBits == <var>0</var>);</td></tr>
+<tr><th id="314">314</th><td>        <b>union</b> {</td></tr>
+<tr><th id="315">315</th><td>            float32 a;</td></tr>
+<tr><th id="316">316</th><td>            uint32 b;</td></tr>
+<tr><th id="317">317</th><td>        };</td></tr>
+<tr><th id="318">318</th><td>        <a class="local col0 ref" href="#1580a" title='a' data-ref="1580a" >a</a> = <a class="local col9 ref" href="#1579f" title='f' data-ref="1579f" >f</a>;</td></tr>
+<tr><th id="319">319</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput11writeUInt32Ej" title='G3D::BinaryOutput::writeUInt32' data-ref="_ZN3G3D12BinaryOutput11writeUInt32Ej" >writeUInt32</a>(<a class="local col1 ref" href="#1581b" title='b' data-ref="1581b" >b</a>);</td></tr>
+<tr><th id="320">320</th><td>    }</td></tr>
+<tr><th id="321">321</th><td></td></tr>
+<tr><th id="322">322</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput12writeFloat64Ed" title='G3D::BinaryOutput::writeFloat64' data-ref="_ZN3G3D12BinaryOutput12writeFloat64Ed" >writeFloat64</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::float64" title='G3D::float64' data-type='double' data-ref="G3D::float64" >float64</a> <dfn class="local col2 decl" id="1582f" title='f' data-type='float64' data-ref="1582f" >f</dfn>) {</td></tr>
+<tr><th id="323">323</th><td>        <b>union</b> {</td></tr>
+<tr><th id="324">324</th><td>            float64 a;</td></tr>
+<tr><th id="325">325</th><td>            uint64 b;</td></tr>
+<tr><th id="326">326</th><td>        };</td></tr>
+<tr><th id="327">327</th><td>        <a class="local col3 ref" href="#1583a" title='a' data-ref="1583a" >a</a> = <a class="local col2 ref" href="#1582f" title='f' data-ref="1582f" >f</a>;</td></tr>
+<tr><th id="328">328</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput11writeUInt64Em" title='G3D::BinaryOutput::writeUInt64' data-ref="_ZN3G3D12BinaryOutput11writeUInt64Em" >writeUInt64</a>(<a class="local col4 ref" href="#1584b" title='b' data-ref="1584b" >b</a>);</td></tr>
+<tr><th id="329">329</th><td>    }</td></tr>
+<tr><th id="330">330</th><td></td></tr>
+<tr><th id="331">331</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="332">332</th><td><i class="doc">     Write a string with NULL termination.</i></td></tr>
+<tr><th id="333">333</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="334">334</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput11writeStringERKSs" title='G3D::BinaryOutput::writeString' data-ref="_ZN3G3D12BinaryOutput11writeStringERKSs" >writeString</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col5 decl" id="1585s" title='s' data-type='const std::string &amp;' data-ref="1585s" >s</dfn>) {</td></tr>
+<tr><th id="335">335</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput11writeStringEPKc" title='G3D::BinaryOutput::writeString' data-ref="_ZN3G3D12BinaryOutput11writeStringEPKc" >writeString</a>(<a class="local col5 ref" href="#1585s" title='s' data-ref="1585s" >s</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="336">336</th><td>    }</td></tr>
+<tr><th id="337">337</th><td></td></tr>
+<tr><th id="338">338</th><td>    <i class="doc">/** Write a string that always consumes len bytes, truncating or padding as necessary*/</i></td></tr>
+<tr><th id="339">339</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput11writeStringERKSsi" title='G3D::BinaryOutput::writeString' data-ref="_ZN3G3D12BinaryOutput11writeStringERKSsi" >writeString</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col6 decl" id="1586s" title='s' data-type='const std::string &amp;' data-ref="1586s" >s</dfn>, <em>int</em> <dfn class="local col7 decl" id="1587len" title='len' data-type='int' data-ref="1587len" >len</dfn>) {</td></tr>
+<tr><th id="340">340</th><td>        <em>const</em> <em>int</em> <dfn class="local col8 decl" id="1588pad" title='pad' data-type='const int' data-ref="1588pad" >pad</dfn> = <a class="local col7 ref" href="#1587len" title='len' data-ref="1587len" >len</a> - ((<em>int</em>)<a class="local col6 ref" href="#1586s" title='s' data-ref="1586s" >s</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string6lengthEv" title='std::basic_string::length' data-ref="_ZNKSt12basic_string6lengthEv" id="_ZNKSt12basic_string6lengthEv" >length</a>() + <var>1</var>);</td></tr>
+<tr><th id="341">341</th><td>        <b>if</b> (<a class="local col8 ref" href="#1588pad" title='pad' data-ref="1588pad" >pad</a> &gt;= <var>0</var>) {</td></tr>
+<tr><th id="342">342</th><td>            <a class="member" href="#_ZN3G3D12BinaryOutput11writeStringEPKc" title='G3D::BinaryOutput::writeString' data-ref="_ZN3G3D12BinaryOutput11writeStringEPKc" >writeString</a>(<a class="local col6 ref" href="#1586s" title='s' data-ref="1586s" >s</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="343">343</th><td>            <b>for</b> (<em>int</em> <dfn class="local col9 decl" id="1589i" title='i' data-type='int' data-ref="1589i" >i</dfn> = <var>0</var>; <a class="local col9 ref" href="#1589i" title='i' data-ref="1589i" >i</a> &lt; <a class="local col8 ref" href="#1588pad" title='pad' data-ref="1588pad" >pad</a>; ++<a class="local col9 ref" href="#1589i" title='i' data-ref="1589i" >i</a>) {</td></tr>
+<tr><th id="344">344</th><td>                <a class="member" href="#_ZN3G3D12BinaryOutput10writeUInt8Eh" title='G3D::BinaryOutput::writeUInt8' data-ref="_ZN3G3D12BinaryOutput10writeUInt8Eh" >writeUInt8</a>(<var>0</var>);</td></tr>
+<tr><th id="345">345</th><td>            }</td></tr>
+<tr><th id="346">346</th><td>        } <b>else</b> {</td></tr>
+<tr><th id="347">347</th><td>            <i>// Truncate</i></td></tr>
+<tr><th id="348">348</th><td>            <a class="member" href="#_ZN3G3D12BinaryOutput10writeBytesEPKvm" title='G3D::BinaryOutput::writeBytes' data-ref="_ZN3G3D12BinaryOutput10writeBytesEPKvm" >writeBytes</a>(<a class="local col6 ref" href="#1586s" title='s' data-ref="1586s" >s</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col7 ref" href="#1587len" title='len' data-ref="1587len" >len</a>);</td></tr>
+<tr><th id="349">349</th><td>        }</td></tr>
+<tr><th id="350">350</th><td>    }</td></tr>
+<tr><th id="351">351</th><td></td></tr>
+<tr><th id="352">352</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput11writeStringEPKc" title='G3D::BinaryOutput::writeString' data-ref="_ZN3G3D12BinaryOutput11writeStringEPKc" >writeString</dfn>(<em>const</em> <em>char</em>* <dfn class="local col0 decl" id="1590s" title='s' data-type='const char *' data-ref="1590s" >s</dfn>);</td></tr>
+<tr><th id="353">353</th><td></td></tr>
+<tr><th id="354">354</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="355">355</th><td><i class="doc">     Write a string, ensuring that the total length</i></td></tr>
+<tr><th id="356">356</th><td><i class="doc">     including NULL is even.</i></td></tr>
+<tr><th id="357">357</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="358">358</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput15writeStringEvenERKSs" title='G3D::BinaryOutput::writeStringEven' data-ref="_ZN3G3D12BinaryOutput15writeStringEvenERKSs" >writeStringEven</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col1 decl" id="1591s" title='s' data-type='const std::string &amp;' data-ref="1591s" >s</dfn>) {</td></tr>
+<tr><th id="359">359</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput15writeStringEvenEPKc" title='G3D::BinaryOutput::writeStringEven' data-ref="_ZN3G3D12BinaryOutput15writeStringEvenEPKc" >writeStringEven</a>(<a class="local col1 ref" href="#1591s" title='s' data-ref="1591s" >s</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="360">360</th><td>    }</td></tr>
+<tr><th id="361">361</th><td></td></tr>
+<tr><th id="362">362</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput15writeStringEvenEPKc" title='G3D::BinaryOutput::writeStringEven' data-ref="_ZN3G3D12BinaryOutput15writeStringEvenEPKc" >writeStringEven</dfn>(<em>const</em> <em>char</em>* <dfn class="local col2 decl" id="1592s" title='s' data-type='const char *' data-ref="1592s" >s</dfn>);</td></tr>
+<tr><th id="363">363</th><td></td></tr>
+<tr><th id="364">364</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput13writeString32EPKc" title='G3D::BinaryOutput::writeString32' data-ref="_ZN3G3D12BinaryOutput13writeString32EPKc" >writeString32</dfn>(<em>const</em> <em>char</em>* <dfn class="local col3 decl" id="1593s" title='s' data-type='const char *' data-ref="1593s" >s</dfn>);</td></tr>
+<tr><th id="365">365</th><td></td></tr>
+<tr><th id="366">366</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="367">367</th><td><i class="doc">     Write a NULL-terminated string with a 32-bit length field in front</i></td></tr>
+<tr><th id="368">368</th><td><i class="doc">     of it.  The NULL character is included in the length count.</i></td></tr>
+<tr><th id="369">369</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="370">370</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput13writeString32ERKSs" title='G3D::BinaryOutput::writeString32' data-ref="_ZN3G3D12BinaryOutput13writeString32ERKSs" >writeString32</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col4 decl" id="1594s" title='s' data-type='const std::string &amp;' data-ref="1594s" >s</dfn>) {</td></tr>
+<tr><th id="371">371</th><td>        <a class="member" href="#_ZN3G3D12BinaryOutput13writeString32EPKc" title='G3D::BinaryOutput::writeString32' data-ref="_ZN3G3D12BinaryOutput13writeString32EPKc" >writeString32</a>(<a class="local col4 ref" href="#1594s" title='s' data-ref="1594s" >s</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="372">372</th><td>    }</td></tr>
+<tr><th id="373">373</th><td></td></tr>
+<tr><th id="374">374</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput12writeVector4ERKNS_7Vector4E" title='G3D::BinaryOutput::writeVector4' data-ref="_ZN3G3D12BinaryOutput12writeVector4ERKNS_7Vector4E" >writeVector4</dfn>(<em>const</em> <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>&amp; <dfn class="local col5 decl" id="1595v" title='v' data-type='const G3D::Vector4 &amp;' data-ref="1595v" >v</dfn>);</td></tr>
+<tr><th id="375">375</th><td></td></tr>
+<tr><th id="376">376</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput12writeVector3ERKNS_7Vector3E" title='G3D::BinaryOutput::writeVector3' data-ref="_ZN3G3D12BinaryOutput12writeVector3ERKNS_7Vector3E" >writeVector3</dfn>(<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col6 decl" id="1596v" title='v' data-type='const G3D::Vector3 &amp;' data-ref="1596v" >v</dfn>);</td></tr>
+<tr><th id="377">377</th><td></td></tr>
+<tr><th id="378">378</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput12writeVector2ERKNS_7Vector2E" title='G3D::BinaryOutput::writeVector2' data-ref="_ZN3G3D12BinaryOutput12writeVector2ERKNS_7Vector2E" >writeVector2</dfn>(<em>const</em> <a class="type" href="Vector2.h.html#G3D::Vector2" title='G3D::Vector2' data-ref="G3D::Vector2" >Vector2</a>&amp; <dfn class="local col7 decl" id="1597v" title='v' data-type='const G3D::Vector2 &amp;' data-ref="1597v" >v</dfn>);</td></tr>
+<tr><th id="379">379</th><td></td></tr>
+<tr><th id="380">380</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput11writeColor4ERKNS_6Color4E" title='G3D::BinaryOutput::writeColor4' data-ref="_ZN3G3D12BinaryOutput11writeColor4ERKNS_6Color4E" >writeColor4</dfn>(<em>const</em> <a class="type" href="Color4.h.html#G3D::Color4" title='G3D::Color4' data-ref="G3D::Color4" >Color4</a>&amp; <dfn class="local col8 decl" id="1598v" title='v' data-type='const G3D::Color4 &amp;' data-ref="1598v" >v</dfn>);</td></tr>
+<tr><th id="381">381</th><td></td></tr>
+<tr><th id="382">382</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput11writeColor3ERKNS_6Color3E" title='G3D::BinaryOutput::writeColor3' data-ref="_ZN3G3D12BinaryOutput11writeColor3ERKNS_6Color3E" >writeColor3</dfn>(<em>const</em> <a class="type" href="Color3.h.html#G3D::Color3" title='G3D::Color3' data-ref="G3D::Color3" >Color3</a>&amp; <dfn class="local col9 decl" id="1599v" title='v' data-type='const G3D::Color3 &amp;' data-ref="1599v" >v</dfn>);</td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="385">385</th><td><i class="doc">     Skips ahead n bytes.</i></td></tr>
+<tr><th id="386">386</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="387">387</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN3G3D12BinaryOutput4skipEi" title='G3D::BinaryOutput::skip' data-ref="_ZN3G3D12BinaryOutput4skipEi" >skip</dfn>(<em>int</em> <dfn class="local col0 decl" id="1600n" title='n' data-type='int' data-ref="1600n" >n</dfn>) {</td></tr>
+<tr><th id="388">388</th><td>        <b>if</b> (<a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> + <a class="local col0 ref" href="#1600n" title='n' data-ref="1600n" >n</a> &gt; (<a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a>)<a class="member" href="#G3D::BinaryOutput::m_bufferLen" title='G3D::BinaryOutput::m_bufferLen' data-ref="G3D::BinaryOutput::m_bufferLen" >m_bufferLen</a>) {</td></tr>
+<tr><th id="389">389</th><td>            <a class="member" href="#_ZN3G3D12BinaryOutput9setLengthEl" title='G3D::BinaryOutput::setLength' data-ref="_ZN3G3D12BinaryOutput9setLengthEl" >setLength</a>(<a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> + <a class="member" href="#G3D::BinaryOutput::m_alreadyWritten" title='G3D::BinaryOutput::m_alreadyWritten' data-ref="G3D::BinaryOutput::m_alreadyWritten" >m_alreadyWritten</a> + <a class="local col0 ref" href="#1600n" title='n' data-ref="1600n" >n</a>);</td></tr>
+<tr><th id="390">390</th><td>        }</td></tr>
+<tr><th id="391">391</th><td>        <a class="member" href="#G3D::BinaryOutput::m_pos" title='G3D::BinaryOutput::m_pos' data-ref="G3D::BinaryOutput::m_pos" >m_pos</a> += <a class="local col0 ref" href="#1600n" title='n' data-ref="1600n" >n</a>;</td></tr>
+<tr><th id="392">392</th><td>    }</td></tr>
+<tr><th id="393">393</th><td></td></tr>
+<tr><th id="394">394</th><td>    <i class="doc">/** Call before a series of BinaryOutput::writeBits calls. Only writeBits </i></td></tr>
+<tr><th id="395">395</th><td><i class="doc">        can be called between beginBits and endBits without corrupting the stream.*/</i></td></tr>
+<tr><th id="396">396</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput9beginBitsEv" title='G3D::BinaryOutput::beginBits' data-ref="_ZN3G3D12BinaryOutput9beginBitsEv" >beginBits</dfn>();</td></tr>
+<tr><th id="397">397</th><td></td></tr>
+<tr><th id="398">398</th><td>    <i class="doc">/** Write numBits from bitString to the output stream.  Bits are numbered from</i></td></tr>
+<tr><th id="399">399</th><td><i class="doc">        low to high.</i></td></tr>
+<tr><th id="400">400</th><td><i class="doc">    </i></td></tr>
+<tr><th id="401">401</th><td><i class="doc">        Can only be </i></td></tr>
+<tr><th id="402">402</th><td><i class="doc">        called between beginBits and endBits.  Bits written are semantically</i></td></tr>
+<tr><th id="403">403</th><td><i class="doc">        little-endian, regardless of the actual endian-ness of the system.  That is,</i></td></tr>
+<tr><th id="404">404</th><td><i class="doc">        &lt;CODE&gt;writeBits(0xABCD, 16)&lt;/CODE&gt; writes 0xCD to the first byte and </i></td></tr>
+<tr><th id="405">405</th><td><i class="doc">        0xAB to the second byte.  However, if used with BinaryInput::readBits, the ordering</i></td></tr>
+<tr><th id="406">406</th><td><i class="doc">        is transparent to the caller.</i></td></tr>
+<tr><th id="407">407</th><td><i class="doc">      */</i></td></tr>
+<tr><th id="408">408</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput9writeBitsEji" title='G3D::BinaryOutput::writeBits' data-ref="_ZN3G3D12BinaryOutput9writeBitsEji" >writeBits</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="local col1 decl" id="1601bitString" title='bitString' data-type='uint32' data-ref="1601bitString" >bitString</dfn>, <em>int</em> <dfn class="local col2 decl" id="1602numBits" title='numBits' data-type='int' data-ref="1602numBits" >numBits</dfn>);</td></tr>
+<tr><th id="409">409</th><td></td></tr>
+<tr><th id="410">410</th><td>    <i class="doc">/** Call after a series of BinaryOutput::writeBits calls. This will</i></td></tr>
+<tr><th id="411">411</th><td><i class="doc">        finish out with zeros the last byte into which bits were written.*/</i></td></tr>
+<tr><th id="412">412</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12BinaryOutput7endBitsEv" title='G3D::BinaryOutput::endBits' data-ref="_ZN3G3D12BinaryOutput7endBitsEv" >endBits</dfn>();</td></tr>
+<tr><th id="413">413</th><td></td></tr>
+<tr><th id="414">414</th><td></td></tr>
+<tr><th id="415">415</th><td><u>#   define <dfn class="macro" id="_M/DECLARE_WRITER" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</dfn>(ucase, lcase)\</u></td></tr>
+<tr><th id="416">416</th><td><u>    void write##ucase(const lcase* <dfn class="local col3 decl" id="1603out" title='out' data-type='const bool *' data-ref="1603out" ><dfn class="local col9 decl" id="1609out" title='out' data-type='const uint8 *' data-ref="1609out" ><dfn class="local col5 decl" id="1615out" title='out' data-type='const int8 *' data-ref="1615out" ><dfn class="local col1 decl" id="1621out" title='out' data-type='const uint16 *' data-ref="1621out" ><dfn class="local col7 decl" id="1627out" title='out' data-type='const int16 *' data-ref="1627out" ><dfn class="local col3 decl" id="1633out" title='out' data-type='const uint32 *' data-ref="1633out" ><dfn class="local col9 decl" id="1639out" title='out' data-type='const int32 *' data-ref="1639out" ><dfn class="local col5 decl" id="1645out" title='out' data-type='const uint64 *' data-ref="1645out" ><dfn class="local col1 decl" id="1651out" title='out' data-type='const int64 *' data-ref="1651out" ><dfn class="local col7 decl" id="1657out" title='out' data-type='const float32 *' data-ref="1657out" ><dfn class="local col3 decl" id="1663out" title='out' data-type='const float64 *' data-ref="1663out" >out</dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn>, int <dfn class="local col4 decl" id="1604n" title='n' data-type='int' data-ref="1604n" ><dfn class="local col0 decl" id="1610n" title='n' data-type='int' data-ref="1610n" ><dfn class="local col6 decl" id="1616n" title='n' data-type='int' data-ref="1616n" ><dfn class="local col2 decl" id="1622n" title='n' data-type='int' data-ref="1622n" ><dfn class="local col8 decl" id="1628n" title='n' data-type='int' data-ref="1628n" ><dfn class="local col4 decl" id="1634n" title='n' data-type='int' data-ref="1634n" ><dfn class="local col0 decl" id="1640n" title='n' data-type='int' data-ref="1640n" ><dfn class="local col6 decl" id="1646n" title='n' data-type='int' data-ref="1646n" ><dfn class="local col2 decl" id="1652n" title='n' data-type='int' data-ref="1652n" ><dfn class="local col8 decl" id="1658n" title='n' data-type='int' data-ref="1658n" ><dfn class="local col4 decl" id="1664n" title='n' data-type='int' data-ref="1664n" >n</dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn>);\</u></td></tr>
+<tr><th id="417">417</th><td><u>    void write##ucase(const std::<a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" ><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a></a></a></a></a></a></a></a></a></a></a>&lt;lcase&gt;&amp; <dfn class="local col5 decl" id="1605out" title='out' data-type='const std::vector&lt;bool&gt; &amp;' data-ref="1605out" ><dfn class="local col1 decl" id="1611out" title='out' data-type='const std::vector&lt;uint8&gt; &amp;' data-ref="1611out" ><dfn class="local col7 decl" id="1617out" title='out' data-type='const std::vector&lt;int8&gt; &amp;' data-ref="1617out" ><dfn class="local col3 decl" id="1623out" title='out' data-type='const std::vector&lt;uint16&gt; &amp;' data-ref="1623out" ><dfn class="local col9 decl" id="1629out" title='out' data-type='const std::vector&lt;int16&gt; &amp;' data-ref="1629out" ><dfn class="local col5 decl" id="1635out" title='out' data-type='const std::vector&lt;uint32&gt; &amp;' data-ref="1635out" ><dfn class="local col1 decl" id="1641out" title='out' data-type='const std::vector&lt;int32&gt; &amp;' data-ref="1641out" ><dfn class="local col7 decl" id="1647out" title='out' data-type='const std::vector&lt;uint64&gt; &amp;' data-ref="1647out" ><dfn class="local col3 decl" id="1653out" title='out' data-type='const std::vector&lt;int64&gt; &amp;' data-ref="1653out" ><dfn class="local col9 decl" id="1659out" title='out' data-type='const std::vector&lt;float32&gt; &amp;' data-ref="1659out" ><dfn class="local col5 decl" id="1665out" title='out' data-type='const std::vector&lt;float64&gt; &amp;' data-ref="1665out" >out</dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn>, int <dfn class="local col6 decl" id="1606n" title='n' data-type='int' data-ref="1606n" ><dfn class="local col2 decl" id="1612n" title='n' data-type='int' data-ref="1612n" ><dfn class="local col8 decl" id="1618n" title='n' data-type='int' data-ref="1618n" ><dfn class="local col4 decl" id="1624n" title='n' data-type='int' data-ref="1624n" ><dfn class="local col0 decl" id="1630n" title='n' data-type='int' data-ref="1630n" ><dfn class="local col6 decl" id="1636n" title='n' data-type='int' data-ref="1636n" ><dfn class="local col2 decl" id="1642n" title='n' data-type='int' data-ref="1642n" ><dfn class="local col8 decl" id="1648n" title='n' data-type='int' data-ref="1648n" ><dfn class="local col4 decl" id="1654n" title='n' data-type='int' data-ref="1654n" ><dfn class="local col0 decl" id="1660n" title='n' data-type='int' data-ref="1660n" ><dfn class="local col6 decl" id="1666n" title='n' data-type='int' data-ref="1666n" >n</dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn>);\</u></td></tr>
+<tr><th id="418">418</th><td><u>    void write##ucase(const <a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" ><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a></a></a></a></a></a></a></a></a></a></a>&lt;lcase&gt;&amp; <dfn class="local col7 decl" id="1607out" title='out' data-type='const Array&lt;bool&gt; &amp;' data-ref="1607out" ><dfn class="local col3 decl" id="1613out" title='out' data-type='const Array&lt;uint8&gt; &amp;' data-ref="1613out" ><dfn class="local col9 decl" id="1619out" title='out' data-type='const Array&lt;int8&gt; &amp;' data-ref="1619out" ><dfn class="local col5 decl" id="1625out" title='out' data-type='const Array&lt;uint16&gt; &amp;' data-ref="1625out" ><dfn class="local col1 decl" id="1631out" title='out' data-type='const Array&lt;int16&gt; &amp;' data-ref="1631out" ><dfn class="local col7 decl" id="1637out" title='out' data-type='const Array&lt;uint32&gt; &amp;' data-ref="1637out" ><dfn class="local col3 decl" id="1643out" title='out' data-type='const Array&lt;int32&gt; &amp;' data-ref="1643out" ><dfn class="local col9 decl" id="1649out" title='out' data-type='const Array&lt;uint64&gt; &amp;' data-ref="1649out" ><dfn class="local col5 decl" id="1655out" title='out' data-type='const Array&lt;int64&gt; &amp;' data-ref="1655out" ><dfn class="local col1 decl" id="1661out" title='out' data-type='const Array&lt;float32&gt; &amp;' data-ref="1661out" ><dfn class="local col7 decl" id="1667out" title='out' data-type='const Array&lt;float64&gt; &amp;' data-ref="1667out" >out</dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn>, int <dfn class="local col8 decl" id="1608n" title='n' data-type='int' data-ref="1608n" ><dfn class="local col4 decl" id="1614n" title='n' data-type='int' data-ref="1614n" ><dfn class="local col0 decl" id="1620n" title='n' data-type='int' data-ref="1620n" ><dfn class="local col6 decl" id="1626n" title='n' data-type='int' data-ref="1626n" ><dfn class="local col2 decl" id="1632n" title='n' data-type='int' data-ref="1632n" ><dfn class="local col8 decl" id="1638n" title='n' data-type='int' data-ref="1638n" ><dfn class="local col4 decl" id="1644n" title='n' data-type='int' data-ref="1644n" ><dfn class="local col0 decl" id="1650n" title='n' data-type='int' data-ref="1650n" ><dfn class="local col6 decl" id="1656n" title='n' data-type='int' data-ref="1656n" ><dfn class="local col2 decl" id="1662n" title='n' data-type='int' data-ref="1662n" ><dfn class="local col8 decl" id="1668n" title='n' data-type='int' data-ref="1668n" >n</dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn></dfn>);</u></td></tr>
+<tr><th id="419">419</th><td></td></tr>
+<tr><th id="420">420</th><td>    <a class="macro" href="#415" title="void writeBool8(const bool* out, int n); void writeBool8(const std::vector&lt;bool&gt;&amp; out, int n); void writeBool8(const Array&lt;bool&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(Bool8,   <em>bool</em>)</td></tr>
+<tr><th id="421">421</th><td>    <a class="macro" href="#415" title="void writeUInt8(const uint8* out, int n); void writeUInt8(const std::vector&lt;uint8&gt;&amp; out, int n); void writeUInt8(const Array&lt;uint8&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(UInt8,   <a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" ><a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" ><a class="typedef" href="g3dmath.h.html#G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</a></a></a>)</td></tr>
+<tr><th id="422">422</th><td>    <a class="macro" href="#415" title="void writeInt8(const int8* out, int n); void writeInt8(const std::vector&lt;int8&gt;&amp; out, int n); void writeInt8(const Array&lt;int8&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(Int8,    <a class="typedef" href="g3dmath.h.html#G3D::int8" title='G3D::int8' data-type='int8_t' data-ref="G3D::int8" ><a class="typedef" href="g3dmath.h.html#G3D::int8" title='G3D::int8' data-type='int8_t' data-ref="G3D::int8" ><a class="typedef" href="g3dmath.h.html#G3D::int8" title='G3D::int8' data-type='int8_t' data-ref="G3D::int8" >int8</a></a></a>)</td></tr>
+<tr><th id="423">423</th><td>    <a class="macro" href="#415" title="void writeUInt16(const uint16* out, int n); void writeUInt16(const std::vector&lt;uint16&gt;&amp; out, int n); void writeUInt16(const Array&lt;uint16&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(UInt16,  <a class="typedef" href="g3dmath.h.html#G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" ><a class="typedef" href="g3dmath.h.html#G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" ><a class="typedef" href="g3dmath.h.html#G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" >uint16</a></a></a>)</td></tr>
+<tr><th id="424">424</th><td>    <a class="macro" href="#415" title="void writeInt16(const int16* out, int n); void writeInt16(const std::vector&lt;int16&gt;&amp; out, int n); void writeInt16(const Array&lt;int16&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(Int16,   <a class="typedef" href="g3dmath.h.html#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" ><a class="typedef" href="g3dmath.h.html#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" ><a class="typedef" href="g3dmath.h.html#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a></a></a>)</td></tr>
+<tr><th id="425">425</th><td>    <a class="macro" href="#415" title="void writeUInt32(const uint32* out, int n); void writeUInt32(const std::vector&lt;uint32&gt;&amp; out, int n); void writeUInt32(const Array&lt;uint32&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(UInt32,  <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" ><a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" ><a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a></a></a>)</td></tr>
+<tr><th id="426">426</th><td>    <a class="macro" href="#415" title="void writeInt32(const int32* out, int n); void writeInt32(const std::vector&lt;int32&gt;&amp; out, int n); void writeInt32(const Array&lt;int32&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(Int32,   <a class="typedef" href="g3dmath.h.html#G3D::int32" title='G3D::int32' data-type='int32_t' data-ref="G3D::int32" ><a class="typedef" href="g3dmath.h.html#G3D::int32" title='G3D::int32' data-type='int32_t' data-ref="G3D::int32" ><a class="typedef" href="g3dmath.h.html#G3D::int32" title='G3D::int32' data-type='int32_t' data-ref="G3D::int32" >int32</a></a></a>)</td></tr>
+<tr><th id="427">427</th><td>    <a class="macro" href="#415" title="void writeUInt64(const uint64* out, int n); void writeUInt64(const std::vector&lt;uint64&gt;&amp; out, int n); void writeUInt64(const Array&lt;uint64&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(UInt64,  <a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" ><a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" ><a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a></a></a>)</td></tr>
+<tr><th id="428">428</th><td>    <a class="macro" href="#415" title="void writeInt64(const int64* out, int n); void writeInt64(const std::vector&lt;int64&gt;&amp; out, int n); void writeInt64(const Array&lt;int64&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(Int64,   <a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" ><a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" ><a class="typedef" href="g3dmath.h.html#G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</a></a></a>)</td></tr>
+<tr><th id="429">429</th><td>    <a class="macro" href="#415" title="void writeFloat32(const float32* out, int n); void writeFloat32(const std::vector&lt;float32&gt;&amp; out, int n); void writeFloat32(const Array&lt;float32&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(Float32, <a class="typedef" href="g3dmath.h.html#G3D::float32" title='G3D::float32' data-type='float' data-ref="G3D::float32" ><a class="typedef" href="g3dmath.h.html#G3D::float32" title='G3D::float32' data-type='float' data-ref="G3D::float32" ><a class="typedef" href="g3dmath.h.html#G3D::float32" title='G3D::float32' data-type='float' data-ref="G3D::float32" >float32</a></a></a>)</td></tr>
+<tr><th id="430">430</th><td>    <a class="macro" href="#415" title="void writeFloat64(const float64* out, int n); void writeFloat64(const std::vector&lt;float64&gt;&amp; out, int n); void writeFloat64(const Array&lt;float64&gt;&amp; out, int n);" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a>(Float64, <a class="typedef" href="g3dmath.h.html#G3D::float64" title='G3D::float64' data-type='double' data-ref="G3D::float64" ><a class="typedef" href="g3dmath.h.html#G3D::float64" title='G3D::float64' data-type='double' data-ref="G3D::float64" ><a class="typedef" href="g3dmath.h.html#G3D::float64" title='G3D::float64' data-type='double' data-ref="G3D::float64" >float64</a></a></a>)    </td></tr>
+<tr><th id="431">431</th><td><u>#   undef <a class="macro" href="#415" data-ref="_M/DECLARE_WRITER">DECLARE_WRITER</a></u></td></tr>
+<tr><th id="432">432</th><td></td></tr>
+<tr><th id="433">433</th><td>};</td></tr>
+<tr><th id="434">434</th><td></td></tr>
+<tr><th id="435">435</th><td>}</td></tr>
+<tr><th id="436">436</th><td></td></tr>
+<tr><th id="437">437</th><td><u>#<span data-ppcond="437">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="438">438</th><td><u>#   pragma warning (pop)</u></td></tr>
+<tr><th id="439">439</th><td><u>#<span data-ppcond="437">endif</span></u></td></tr>
+<tr><th id="440">440</th><td></td></tr>
+<tr><th id="441">441</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="442">442</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore6.x/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

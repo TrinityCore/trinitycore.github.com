@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<title>handler_alloc_hook.ipp [include/boost/asio/impl/handler_alloc_hook.ipp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/impl/handler_alloc_hook.ipp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>asio</a>/<a href='./'>impl</a>/handler_alloc_hook.ipp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// impl/handler_alloc_hook.ipp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_IMPL_HANDLER_ALLOC_HOOK_IPP">BOOST_ASIO_IMPL_HANDLER_ALLOC_HOOK_IPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_IMPL_HANDLER_ALLOC_HOOK_IPP" data-ref="_M/BOOST_ASIO_IMPL_HANDLER_ALLOC_HOOK_IPP">BOOST_ASIO_IMPL_HANDLER_ALLOC_HOOK_IPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../detail/config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../detail/call_stack.hpp.html">&lt;boost/asio/detail/call_stack.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../handler_alloc_hook.hpp.html">&lt;boost/asio/handler_alloc_hook.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="22">if</span> !defined(<span class="macro" data-ref="_M/BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING">BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING</span>)</u></td></tr>
+<tr><th id="23">23</th><td><u># <span data-ppcond="23">if</span> defined(<span class="macro" data-ref="_M/BOOST_ASIO_HAS_IOCP">BOOST_ASIO_HAS_IOCP</span>)</u></td></tr>
+<tr><th id="24">24</th><td><u>#  include &lt;boost/asio/detail/win_iocp_io_service_fwd.hpp&gt;</u></td></tr>
+<tr><th id="25">25</th><td><u>#  include &lt;boost/asio/detail/win_iocp_thread_info.hpp&gt;</u></td></tr>
+<tr><th id="26">26</th><td><u># <span data-ppcond="23">else</span> // defined(BOOST_ASIO_HAS_IOCP)</u></td></tr>
+<tr><th id="27">27</th><td><u>#  include <a href="../detail/task_io_service_thread_info.hpp.html">&lt;boost/asio/detail/task_io_service_thread_info.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u># <span data-ppcond="23">endif</span> // defined(BOOST_ASIO_HAS_IOCP)</u></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="22">endif</span> // !defined(BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING)</u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="../detail/push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="34">34</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><em>void</em>* <dfn class="decl def" id="_ZN5boost4asio21asio_handler_allocateEmz" title='boost::asio::asio_handler_allocate' data-ref="_ZN5boost4asio21asio_handler_allocateEmz" >asio_handler_allocate</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col9 decl" id="2819size" title='size' data-type='std::size_t' data-ref="2819size" >size</dfn>, ...)</td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td><u>#<span data-ppcond="38">if</span> !defined(<span class="macro" data-ref="_M/BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING">BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING</span>)</u></td></tr>
+<tr><th id="39">39</th><td><u># <span data-ppcond="39">if</span> defined(<span class="macro" data-ref="_M/BOOST_ASIO_HAS_IOCP">BOOST_ASIO_HAS_IOCP</span>)</u></td></tr>
+<tr><th id="40">40</th><td>  <b>typedef</b> detail::win_iocp_io_service io_service_impl;</td></tr>
+<tr><th id="41">41</th><td>  <b>typedef</b> detail::win_iocp_thread_info thread_info;</td></tr>
+<tr><th id="42">42</th><td><u># <span data-ppcond="39">else</span> // defined(BOOST_ASIO_HAS_IOCP)</u></td></tr>
+<tr><th id="43">43</th><td>  <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../detail/task_io_service.hpp.html#boost::asio::detail::task_io_service" title='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::task_io_service" >task_io_service</a> <dfn class="local col0 typedef" id="2820io_service_impl" title='io_service_impl' data-type='detail::task_io_service' data-ref="2820io_service_impl" >io_service_impl</dfn>;</td></tr>
+<tr><th id="44">44</th><td>  <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../detail/task_io_service_thread_info.hpp.html#boost::asio::detail::task_io_service_thread_info" title='boost::asio::detail::task_io_service_thread_info' data-ref="boost::asio::detail::task_io_service_thread_info" >task_io_service_thread_info</a> <dfn class="local col1 typedef" id="2821thread_info" title='thread_info' data-type='detail::task_io_service_thread_info' data-ref="2821thread_info" >thread_info</dfn>;</td></tr>
+<tr><th id="45">45</th><td><u># <span data-ppcond="39">endif</span> // defined(BOOST_ASIO_HAS_IOCP)</u></td></tr>
+<tr><th id="46">46</th><td>  <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../detail/call_stack.hpp.html#boost::asio::detail::call_stack" title='boost::asio::detail::call_stack' data-ref="boost::asio::detail::call_stack" >call_stack</a>&lt;<a class="local col0 typedef" href="#2820io_service_impl" title='io_service_impl' data-type='detail::task_io_service' data-ref="2820io_service_impl" >io_service_impl</a>, <a class="local col1 typedef" href="#2821thread_info" title='thread_info' data-type='detail::task_io_service_thread_info' data-ref="2821thread_info" >thread_info</a>&gt; <dfn class="local col2 typedef" id="2822call_stack" title='call_stack' data-type='detail::call_stack&lt;io_service_impl, thread_info&gt;' data-ref="2822call_stack" >call_stack</dfn>;</td></tr>
+<tr><th id="47">47</th><td>  <b>return</b> <a class="local col1 typedef" href="#2821thread_info" title='thread_info' data-type='detail::task_io_service_thread_info' data-ref="2821thread_info" >thread_info</a>::<a class="ref" href="../detail/thread_info_base.hpp.html#_ZN5boost4asio6detail16thread_info_base8allocateEPS2_m" title='boost::asio::detail::thread_info_base::allocate' data-ref="_ZN5boost4asio6detail16thread_info_base8allocateEPS2_m" id="_ZN5boost4asio6detail16thread_info_base8allocateEPS2_m" >allocate</a>(<a class="local col2 typedef" href="#2822call_stack" title='call_stack' data-type='detail::call_stack&lt;io_service_impl, thread_info&gt;' data-ref="2822call_stack" >call_stack</a>::<a class="ref" href="../detail/call_stack.hpp.html#_ZN5boost4asio6detail10call_stack3topEv" title='boost::asio::detail::call_stack::top' data-ref="_ZN5boost4asio6detail10call_stack3topEv" id="_ZN5boost4asio6detail10call_stack3topEv" >top</a>(), <a class="local col9 ref" href="#2819size" title='size' data-ref="2819size" >size</a>);</td></tr>
+<tr><th id="48">48</th><td><u>#<span data-ppcond="38">else</span> // !defined(BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING)</u></td></tr>
+<tr><th id="49">49</th><td>  <b>return</b> ::<b>operator</b> <b>new</b>(size);</td></tr>
+<tr><th id="50">50</th><td><u>#<span data-ppcond="38">endif</span> // !defined(BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING)</u></td></tr>
+<tr><th id="51">51</th><td>}</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><em>void</em> <dfn class="decl def" id="_ZN5boost4asio23asio_handler_deallocateEPvmz" title='boost::asio::asio_handler_deallocate' data-ref="_ZN5boost4asio23asio_handler_deallocateEPvmz" >asio_handler_deallocate</dfn>(<em>void</em>* <dfn class="local col3 decl" id="2823pointer" title='pointer' data-type='void *' data-ref="2823pointer" >pointer</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col4 decl" id="2824size" title='size' data-type='std::size_t' data-ref="2824size" >size</dfn>, ...)</td></tr>
+<tr><th id="54">54</th><td>{</td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="55">if</span> !defined(<span class="macro" data-ref="_M/BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING">BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING</span>)</u></td></tr>
+<tr><th id="56">56</th><td><u># <span data-ppcond="56">if</span> defined(<span class="macro" data-ref="_M/BOOST_ASIO_HAS_IOCP">BOOST_ASIO_HAS_IOCP</span>)</u></td></tr>
+<tr><th id="57">57</th><td>  <b>typedef</b> detail::win_iocp_io_service io_service_impl;</td></tr>
+<tr><th id="58">58</th><td>  <b>typedef</b> detail::win_iocp_thread_info thread_info;</td></tr>
+<tr><th id="59">59</th><td><u># <span data-ppcond="56">else</span> // defined(BOOST_ASIO_HAS_IOCP)</u></td></tr>
+<tr><th id="60">60</th><td>  <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../detail/task_io_service.hpp.html#boost::asio::detail::task_io_service" title='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::task_io_service" >task_io_service</a> <dfn class="local col5 typedef" id="2825io_service_impl" title='io_service_impl' data-type='detail::task_io_service' data-ref="2825io_service_impl" >io_service_impl</dfn>;</td></tr>
+<tr><th id="61">61</th><td>  <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../detail/task_io_service_thread_info.hpp.html#boost::asio::detail::task_io_service_thread_info" title='boost::asio::detail::task_io_service_thread_info' data-ref="boost::asio::detail::task_io_service_thread_info" >task_io_service_thread_info</a> <dfn class="local col6 typedef" id="2826thread_info" title='thread_info' data-type='detail::task_io_service_thread_info' data-ref="2826thread_info" >thread_info</dfn>;</td></tr>
+<tr><th id="62">62</th><td><u># <span data-ppcond="56">endif</span> // defined(BOOST_ASIO_HAS_IOCP)</u></td></tr>
+<tr><th id="63">63</th><td>  <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../detail/call_stack.hpp.html#boost::asio::detail::call_stack" title='boost::asio::detail::call_stack' data-ref="boost::asio::detail::call_stack" >call_stack</a>&lt;<a class="local col5 typedef" href="#2825io_service_impl" title='io_service_impl' data-type='detail::task_io_service' data-ref="2825io_service_impl" >io_service_impl</a>, <a class="local col6 typedef" href="#2826thread_info" title='thread_info' data-type='detail::task_io_service_thread_info' data-ref="2826thread_info" >thread_info</a>&gt; <dfn class="local col7 typedef" id="2827call_stack" title='call_stack' data-type='detail::call_stack&lt;io_service_impl, thread_info&gt;' data-ref="2827call_stack" >call_stack</dfn>;</td></tr>
+<tr><th id="64">64</th><td>  <a class="local col6 typedef" href="#2826thread_info" title='thread_info' data-type='detail::task_io_service_thread_info' data-ref="2826thread_info" >thread_info</a>::<a class="ref" href="../detail/thread_info_base.hpp.html#_ZN5boost4asio6detail16thread_info_base10deallocateEPS2_Pvm" title='boost::asio::detail::thread_info_base::deallocate' data-ref="_ZN5boost4asio6detail16thread_info_base10deallocateEPS2_Pvm" id="_ZN5boost4asio6detail16thread_info_base10deallocateEPS2_Pvm" >deallocate</a>(<a class="local col7 typedef" href="#2827call_stack" title='call_stack' data-type='detail::call_stack&lt;io_service_impl, thread_info&gt;' data-ref="2827call_stack" >call_stack</a>::<a class="ref" href="../detail/call_stack.hpp.html#_ZN5boost4asio6detail10call_stack3topEv" title='boost::asio::detail::call_stack::top' data-ref="_ZN5boost4asio6detail10call_stack3topEv" id="_ZN5boost4asio6detail10call_stack3topEv" >top</a>(), <a class="local col3 ref" href="#2823pointer" title='pointer' data-ref="2823pointer" >pointer</a>, <a class="local col4 ref" href="#2824size" title='size' data-ref="2824size" >size</a>);</td></tr>
+<tr><th id="65">65</th><td><u>#<span data-ppcond="55">else</span> // !defined(BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING)</u></td></tr>
+<tr><th id="66">66</th><td>  (<em>void</em>)size;</td></tr>
+<tr><th id="67">67</th><td>  ::<b>operator</b> <b>delete</b>(pointer);</td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="55">endif</span> // !defined(BOOST_ASIO_DISABLE_SMALL_BLOCK_RECYCLING)</u></td></tr>
+<tr><th id="69">69</th><td>}</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="72">72</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td><u>#include <a href="../detail/pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_IMPL_HANDLER_ALLOC_HOOK_IPP</u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

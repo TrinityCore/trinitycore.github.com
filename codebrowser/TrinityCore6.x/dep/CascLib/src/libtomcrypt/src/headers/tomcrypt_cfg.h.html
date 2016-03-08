@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+<title>tomcrypt_cfg.h [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_cfg.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_cfg.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>headers</a>/tomcrypt_cfg.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* This is the build config file.</i></td></tr>
+<tr><th id="2">2</th><td><i> *</i></td></tr>
+<tr><th id="3">3</th><td><i> * With this you can setup what to inlcude/exclude automatically during any build.  Just comment</i></td></tr>
+<tr><th id="4">4</th><td><i> * out the line that #define's the word for the thing you want to remove.  phew!</i></td></tr>
+<tr><th id="5">5</th><td><i> */</i></td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td><u>#<span data-ppcond="7">ifndef</span> <span class="macro" data-ref="_M/TOMCRYPT_CFG_H">TOMCRYPT_CFG_H</span></u></td></tr>
+<tr><th id="8">8</th><td><u>#define <dfn class="macro" id="_M/TOMCRYPT_CFG_H" data-ref="_M/TOMCRYPT_CFG_H">TOMCRYPT_CFG_H</dfn></u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#<span data-ppcond="10">if</span> defined(<span class="macro" data-ref="_M/_WIN32">_WIN32</span>) || defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>)</u></td></tr>
+<tr><th id="11">11</th><td><u>#define LTC_CALL __cdecl</u></td></tr>
+<tr><th id="12">12</th><td><u>#<span data-ppcond="10">else</span></u></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">ifndef</span> <span class="macro" data-ref="_M/LTC_CALL">LTC_CALL</span></u></td></tr>
+<tr><th id="14">14</th><td>   <u>#define <dfn class="macro" id="_M/LTC_CALL" data-ref="_M/LTC_CALL">LTC_CALL</dfn></u></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="10">endif</span></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/LTC_EXPORT">LTC_EXPORT</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/LTC_EXPORT" data-ref="_M/LTC_EXPORT">LTC_EXPORT</dfn></u></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i>/* certain platforms use macros for these, making the prototypes broken */</i></td></tr>
+<tr><th id="23">23</th><td><u>#<span data-ppcond="23">ifndef</span> <span class="macro" data-ref="_M/LTC_NO_PROTOTYPES">LTC_NO_PROTOTYPES</span></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><i>/* you can change how memory allocation works ... */</i></td></tr>
+<tr><th id="26">26</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>void</em> * <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#27" title="LibTomMalloc" data-ref="_M/XMALLOC">XMALLOC</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="466n" title='n' data-type='size_t' data-ref="466n" >n</dfn>);</td></tr>
+<tr><th id="27">27</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>void</em> * <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#33" title="LibTomRealloc" data-ref="_M/XREALLOC">XREALLOC</a>(<em>void</em> *<dfn class="local col7 decl" id="467p" title='p' data-type='void *' data-ref="467p" >p</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="468n" title='n' data-type='size_t' data-ref="468n" >n</dfn>);</td></tr>
+<tr><th id="28">28</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>void</em> * <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#39" title="LibTomCalloc" data-ref="_M/XCALLOC">XCALLOC</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="469n" title='n' data-type='size_t' data-ref="469n" >n</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="470s" title='s' data-type='size_t' data-ref="470s" >s</dfn>);</td></tr>
+<tr><th id="29">29</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>void</em> <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#45" title="LibTomFree" data-ref="_M/XFREE">XFREE</a>(<em>void</em> *<dfn class="local col1 decl" id="471p" title='p' data-type='void *' data-ref="471p" >p</dfn>);</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>void</em> <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#84" title="LibTomQsort" data-ref="_M/XQSORT">XQSORT</a>(<em>void</em> *<dfn class="local col2 decl" id="472base" title='base' data-type='void *' data-ref="472base" >base</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="473nmemb" title='nmemb' data-type='size_t' data-ref="473nmemb" >nmemb</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="474size" title='size' data-type='size_t' data-ref="474size" >size</dfn>, <em>int</em>(*<dfn class="local col5 decl" id="475compar" title='compar' data-type='int (*)(const void *, const void *)' data-ref="475compar" >compar</dfn>)(<em>const</em> <em>void</em> *, <em>const</em> <em>void</em> *));</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><i>/* change the clock function too */</i></td></tr>
+<tr><th id="35">35</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <a class="typedef" href="../../../../../../../include/time.h.html#clock_t" title='clock_t' data-type='__clock_t' data-ref="clock_t" >clock_t</a> <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#74" title="LibTomClock" data-ref="_M/XCLOCK">XCLOCK</a>(<em>void</em>);</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><i>/* various other functions */</i></td></tr>
+<tr><th id="38">38</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>void</em> * <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#58" title="memcpy" data-ref="_M/XMEMCPY">XMEMCPY</a>(<em>void</em> *<dfn class="local col6 decl" id="476dest" title='dest' data-type='void *' data-ref="476dest" >dest</dfn>, <em>const</em> <em>void</em> *<dfn class="local col7 decl" id="477src" title='src' data-type='const void *' data-ref="477src" >src</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="478n" title='n' data-type='size_t' data-ref="478n" >n</dfn>);</td></tr>
+<tr><th id="39">39</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>int</em>   <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#64" title="memcmp" data-ref="_M/XMEMCMP">XMEMCMP</a>(<em>const</em> <em>void</em> *<dfn class="local col9 decl" id="479s1" title='s1' data-type='const void *' data-ref="479s1" >s1</dfn>, <em>const</em> <em>void</em> *<dfn class="local col0 decl" id="480s2" title='s2' data-type='const void *' data-ref="480s2" >s2</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="481n" title='n' data-type='size_t' data-ref="481n" >n</dfn>);</td></tr>
+<tr><th id="40">40</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>void</em> * <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#52" title="memset" data-ref="_M/XMEMSET">XMEMSET</a>(<em>void</em> *<dfn class="local col2 decl" id="482s" title='s' data-type='void *' data-ref="482s" >s</dfn>, <em>int</em> <dfn class="local col3 decl" id="483c" title='c' data-type='int' data-ref="483c" >c</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="484n" title='n' data-type='size_t' data-ref="484n" >n</dfn>);</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><a class="macro" href="#19" title="" data-ref="_M/LTC_EXPORT">LTC_EXPORT</a> <em>int</em>   <a class="macro" href="#14" title="" data-ref="_M/LTC_CALL">LTC_CALL</a> <a class="macro" href="tomcrypt_custom.h.html#70" title="strcmp" data-ref="_M/XSTRCMP">XSTRCMP</a>(<em>const</em> <em>char</em> *<dfn class="local col5 decl" id="485s1" title='s1' data-type='const char *' data-ref="485s1" >s1</dfn>, <em>const</em> <em>char</em> *<dfn class="local col6 decl" id="486s2" title='s2' data-type='const char *' data-ref="486s2" >s2</dfn>);</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="23">endif</span></u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><i>/* type of argument checking, 0=default, 1=fatal and 2=error+continue, 3=nothing */</i></td></tr>
+<tr><th id="47">47</th><td><u>#<span data-ppcond="47">ifndef</span> <span class="macro" data-ref="_M/ARGTYPE">ARGTYPE</span></u></td></tr>
+<tr><th id="48">48</th><td>   <u>#define <dfn class="macro" id="_M/ARGTYPE" data-ref="_M/ARGTYPE">ARGTYPE</dfn>  0</u></td></tr>
+<tr><th id="49">49</th><td><u>#<span data-ppcond="47">endif</span></u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><i>/* Controls endianess and size of registers.  Leave uncommented to get platform neutral [slower] code </i></td></tr>
+<tr><th id="52">52</th><td><i> * </i></td></tr>
+<tr><th id="53">53</th><td><i> * Note: in order to use the optimized macros your platform must support unaligned 32 and 64 bit read/writes.</i></td></tr>
+<tr><th id="54">54</th><td><i> * The x86 platforms allow this but some others [ARM for instance] do not.  On those platforms you **MUST**</i></td></tr>
+<tr><th id="55">55</th><td><i> * use the portable [slower] macros.</i></td></tr>
+<tr><th id="56">56</th><td><i> */</i></td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><i>/* detect x86-32 machines somewhat */</i></td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="59">if</span> !defined(<span class="macro" data-ref="_M/__STRICT_ANSI__">__STRICT_ANSI__</span>) &amp;&amp; (defined(<span class="macro" data-ref="_M/INTEL_CC">INTEL_CC</span>) || (defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/WIN32">WIN32</span>)) || (defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; (defined(<span class="macro" data-ref="_M/__DJGPP__">__DJGPP__</span>) || defined(<span class="macro" data-ref="_M/__CYGWIN__">__CYGWIN__</span>) || defined(<span class="macro" data-ref="_M/__MINGW32__">__MINGW32__</span>) || defined(<span class="macro" data-ref="_M/__i386__">__i386__</span>))))</u></td></tr>
+<tr><th id="60">60</th><td>   <u>#define ENDIAN_LITTLE</u></td></tr>
+<tr><th id="61">61</th><td>   <u>#define ENDIAN_32BITWORD</u></td></tr>
+<tr><th id="62">62</th><td>   <u>#define LTC_FAST</u></td></tr>
+<tr><th id="63">63</th><td>   <u>#define LTC_FAST_TYPE    unsigned long</u></td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="59">endif</span></u></td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><i>/* detects MIPS R5900 processors (PS2) */</i></td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="67">if</span> (defined(<span class="macro" data-ref="_M/__R5900">__R5900</span>) || defined(<span class="macro" data-ref="_M/R5900">R5900</span>) || defined(<span class="macro" data-ref="_M/__R5900__">__R5900__</span>)) &amp;&amp; (defined(<span class="macro" data-ref="_M/_mips">_mips</span>) || defined(<span class="macro" data-ref="_M/__mips__">__mips__</span>) || defined(<span class="macro" data-ref="_M/mips">mips</span>))</u></td></tr>
+<tr><th id="68">68</th><td>   <u>#define ENDIAN_LITTLE</u></td></tr>
+<tr><th id="69">69</th><td>   <u>#define ENDIAN_64BITWORD</u></td></tr>
+<tr><th id="70">70</th><td><u>#<span data-ppcond="67">endif</span></u></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><i>/* detect amd64 */</i></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="73">if</span> !defined(<span class="macro" data-ref="_M/__STRICT_ANSI__">__STRICT_ANSI__</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__x86_64__">__x86_64__</span>)</u></td></tr>
+<tr><th id="74">74</th><td>   <u>#define ENDIAN_LITTLE</u></td></tr>
+<tr><th id="75">75</th><td>   <u>#define ENDIAN_64BITWORD</u></td></tr>
+<tr><th id="76">76</th><td>   <u>#define LTC_FAST</u></td></tr>
+<tr><th id="77">77</th><td>   <u>#define LTC_FAST_TYPE    unsigned long</u></td></tr>
+<tr><th id="78">78</th><td><u>#<span data-ppcond="73">endif</span></u></td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td><i>/* detect PPC32 */</i></td></tr>
+<tr><th id="81">81</th><td><u>#<span data-ppcond="81">if</span> !defined(<span class="macro" data-ref="_M/__STRICT_ANSI__">__STRICT_ANSI__</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/LTC_PPC32">LTC_PPC32</span>)</u></td></tr>
+<tr><th id="82">82</th><td>   <u>#define ENDIAN_BIG</u></td></tr>
+<tr><th id="83">83</th><td>   <u>#define ENDIAN_32BITWORD</u></td></tr>
+<tr><th id="84">84</th><td>   <u>#define LTC_FAST</u></td></tr>
+<tr><th id="85">85</th><td>   <u>#define LTC_FAST_TYPE    unsigned long</u></td></tr>
+<tr><th id="86">86</th><td><u>#<span data-ppcond="81">endif</span></u>   </td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><i>/* detect sparc and sparc64 */</i></td></tr>
+<tr><th id="89">89</th><td><u>#<span data-ppcond="89">if</span> defined(<span class="macro" data-ref="_M/__sparc__">__sparc__</span>)</u></td></tr>
+<tr><th id="90">90</th><td>  <u>#define ENDIAN_BIG</u></td></tr>
+<tr><th id="91">91</th><td>  <u>#if defined(__arch64__)</u></td></tr>
+<tr><th id="92">92</th><td>    <u>#define ENDIAN_64BITWORD</u></td></tr>
+<tr><th id="93">93</th><td>  <u>#else</u></td></tr>
+<tr><th id="94">94</th><td>    <u>#define ENDIAN_32BITWORD</u></td></tr>
+<tr><th id="95">95</th><td>  <u>#endif</u></td></tr>
+<tr><th id="96">96</th><td><u>#<span data-ppcond="89">endif</span></u></td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td><u>#<span data-ppcond="99">ifdef</span> <span class="macro" data-ref="_M/LTC_NO_FAST">LTC_NO_FAST</span></u></td></tr>
+<tr><th id="100">100</th><td>   <u>#ifdef LTC_FAST</u></td></tr>
+<tr><th id="101">101</th><td>      <u>#undef LTC_FAST</u></td></tr>
+<tr><th id="102">102</th><td>   <u>#endif</u></td></tr>
+<tr><th id="103">103</th><td><u>#<span data-ppcond="99">endif</span></u></td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><i>/* No asm is a quick way to disable anything "not portable" */</i></td></tr>
+<tr><th id="106">106</th><td><u>#<span data-ppcond="106">ifdef</span> <span class="macro" data-ref="_M/LTC_NO_ASM">LTC_NO_ASM</span></u></td></tr>
+<tr><th id="107">107</th><td>   <u>#undef ENDIAN_LITTLE</u></td></tr>
+<tr><th id="108">108</th><td>   <u>#undef ENDIAN_BIG</u></td></tr>
+<tr><th id="109">109</th><td>   <u>#undef ENDIAN_32BITWORD</u></td></tr>
+<tr><th id="110">110</th><td>   <u>#undef ENDIAN_64BITWORD</u></td></tr>
+<tr><th id="111">111</th><td>   <u>#undef LTC_FAST</u></td></tr>
+<tr><th id="112">112</th><td>   <u>#undef LTC_FAST_TYPE</u></td></tr>
+<tr><th id="113">113</th><td>   <u>#define LTC_NO_ROLC</u></td></tr>
+<tr><th id="114">114</th><td>	<u>#define LTC_NO_BSWAP</u></td></tr>
+<tr><th id="115">115</th><td><u>#<span data-ppcond="106">endif</span></u></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><i>/* #define ENDIAN_LITTLE */</i></td></tr>
+<tr><th id="118">118</th><td><i>/* #define ENDIAN_BIG */</i></td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><i>/* #define ENDIAN_32BITWORD */</i></td></tr>
+<tr><th id="121">121</th><td><i>/* #define ENDIAN_64BITWORD */</i></td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><u>#<span data-ppcond="123">if</span> (defined(<span class="macro" data-ref="_M/ENDIAN_BIG">ENDIAN_BIG</span>) || defined(<span class="macro" data-ref="_M/ENDIAN_LITTLE">ENDIAN_LITTLE</span>)) &amp;&amp; !(defined(<span class="macro" data-ref="_M/ENDIAN_32BITWORD">ENDIAN_32BITWORD</span>) || defined(<span class="macro" data-ref="_M/ENDIAN_64BITWORD">ENDIAN_64BITWORD</span>))</u></td></tr>
+<tr><th id="124">124</th><td>    <u>#error You must specify a word size as well as endianess in tomcrypt_cfg.h</u></td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="123">endif</span></u></td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><u>#<span data-ppcond="127">if</span> !(defined(<span class="macro" data-ref="_M/ENDIAN_BIG">ENDIAN_BIG</span>) || defined(<span class="macro" data-ref="_M/ENDIAN_LITTLE">ENDIAN_LITTLE</span>))</u></td></tr>
+<tr><th id="128">128</th><td>   <u>#define <dfn class="macro" id="_M/ENDIAN_NEUTRAL" data-ref="_M/ENDIAN_NEUTRAL">ENDIAN_NEUTRAL</dfn></u></td></tr>
+<tr><th id="129">129</th><td><u>#<span data-ppcond="127">endif</span></u></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><u>#<span data-ppcond="7">endif</span></u></td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_cfg.h,v $ */</i></td></tr>
+<tr><th id="135">135</th><td><i>/* $Revision: 1.19 $ */</i></td></tr>
+<tr><th id="136">136</th><td><i>/* $Date: 2006/12/04 02:19:48 $ */</i></td></tr>
+<tr><th id="137">137</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

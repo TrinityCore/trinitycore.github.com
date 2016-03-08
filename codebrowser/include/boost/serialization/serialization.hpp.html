@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<title>serialization.hpp [include/boost/serialization/serialization.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/serialization/serialization.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>serialization</a>/serialization.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/BOOST_SERIALIZATION_SERIALIZATION_HPP">BOOST_SERIALIZATION_SERIALIZATION_HPP</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/BOOST_SERIALIZATION_SERIALIZATION_HPP" data-ref="_M/BOOST_SERIALIZATION_SERIALIZATION_HPP">BOOST_SERIALIZATION_SERIALIZATION_HPP</dfn></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>// MS compatible compilers support #pragma once</i></td></tr>
+<tr><th id="5">5</th><td><u>#<span data-ppcond="5">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1020)</u></td></tr>
+<tr><th id="6">6</th><td><u># pragma once</u></td></tr>
+<tr><th id="7">7</th><td><u>#<span data-ppcond="5">endif</span></u></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#<span data-ppcond="9">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1310)</u></td></tr>
+<tr><th id="10">10</th><td><u>#  pragma warning (disable : 4675) // suppress ADL warning</u></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="9">endif</span></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../config.hpp.html">&lt;boost/config.hpp&gt;</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="strong_typedef.hpp.html">&lt;boost/serialization/strong_typedef.hpp&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="pfto.hpp.html">&lt;boost/serialization/pfto.hpp&gt;</a></u></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><i>/////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8</i></td></tr>
+<tr><th id="18">18</th><td><i>// serialization.hpp: interface for serialization system.</i></td></tr>
+<tr><th id="19">19</th><td><i></i></td></tr>
+<tr><th id="20">20</th><td><i>// (C) Copyright 2002 Robert Ramey - <a href="http://www.rrsd.com">http://www.rrsd.com</a> . </i></td></tr>
+<tr><th id="21">21</th><td><i>// Use, modification and distribution is subject to the Boost Software</i></td></tr>
+<tr><th id="22">22</th><td><i>// License, Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at</i></td></tr>
+<tr><th id="23">23</th><td><i>// <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="24">24</th><td><i></i></td></tr>
+<tr><th id="25">25</th><td><i>//  See <a href="http://www.boost.org">http://www.boost.org</a> for updates, documentation, and revision history.</i></td></tr>
+<tr><th id="26">26</th><td><i></i></td></tr>
+<tr><th id="27">27</th><td><i>//////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="28">28</th><td><i>// public interface to serialization. </i></td></tr>
+<tr><th id="29">29</th><td><i></i></td></tr>
+<tr><th id="30">30</th><td><i>/////////////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="31">31</th><td><i>// layer 0 - intrusive verison</i></td></tr>
+<tr><th id="32">32</th><td><i>// declared and implemented for each user defined class to be serialized</i></td></tr>
+<tr><th id="33">33</th><td><i>//</i></td></tr>
+<tr><th id="34">34</th><td><i>//  template&lt;Archive&gt;</i></td></tr>
+<tr><th id="35">35</th><td><i>//  serialize(Archive &amp;ar, const unsigned int file_version){</i></td></tr>
+<tr><th id="36">36</th><td><i>//      ar &amp; base_object&lt;base&gt;(*this) &amp; member1 &amp; member2 ... ;</i></td></tr>
+<tr><th id="37">37</th><td><i>//  }</i></td></tr>
+<tr><th id="38">38</th><td><i></i></td></tr>
+<tr><th id="39">39</th><td><i>/////////////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="40">40</th><td><i>// layer 1 - layer that routes member access through the access class.</i></td></tr>
+<tr><th id="41">41</th><td><i>// this is what permits us to grant access to private class member functions</i></td></tr>
+<tr><th id="42">42</th><td><i>// by specifying friend class boost::serialization::access</i></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><u>#include <a href="access.hpp.html">&lt;boost/serialization/access.hpp&gt;</a></u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><i>/////////////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="47">47</th><td><i>// layer 2 - default implementation of non-intrusive serialization.</i></td></tr>
+<tr><th id="48">48</th><td><i>//</i></td></tr>
+<tr><th id="49">49</th><td><i>// note the usage of function overloading to compensate that C++ does not</i></td></tr>
+<tr><th id="50">50</th><td><i>// currently support Partial Template Specialization for function templates </i></td></tr>
+<tr><th id="51">51</th><td><i>// We have declared the version number as "const unsigned long".  </i></td></tr>
+<tr><th id="52">52</th><td><i>// Overriding templates for specific data types should declare the version</i></td></tr>
+<tr><th id="53">53</th><td><i>// number as "const unsigned int". Template matching will first be applied</i></td></tr>
+<tr><th id="54">54</th><td><i>// to functions with the same version types - that is the overloads.  </i></td></tr>
+<tr><th id="55">55</th><td><i>// If there is no declared function prototype that matches, the second argument</i></td></tr>
+<tr><th id="56">56</th><td><i>// will be converted to "const unsigned long" and a match will be made with </i></td></tr>
+<tr><th id="57">57</th><td><i>// one of the default template functions below.</i></td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="60">60</th><td><b>namespace</b> <span class="namespace">serialization</span> {</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><a class="macro" href="strong_typedef.hpp.html#29" title="struct version_type : boost::totally_ordered1&lt; version_type , boost::totally_ordered2&lt; version_type, unsigned int &gt; &gt; { unsigned int t; explicit version_type(const unsigned int t_) : t(t_) {}; version_type(): t() {}; version_type(const version_type &amp; t_) : t(t_.t){} version_type &amp; operator=(const version_type &amp; rhs) { t = rhs.t; return *this;} version_type &amp; operator=(const unsigned int &amp; rhs) { t = rhs; return *this;} operator const unsigned int &amp; () const {return t; } operator unsigned int &amp; () { return t; } bool operator==(const version_type &amp; rhs) const { return t == rhs.t; } bool operator&lt;(const version_type &amp; rhs) const { return t &lt; rhs.t; } };" data-ref="_M/BOOST_STRONG_TYPEDEF">BOOST_STRONG_TYPEDEF</a>(<em>unsigned</em> <em>int</em>, <dfn class="type def" id="boost::serialization::version_type" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><dfn class="decl def" id="_ZN5boost13serialization12version_typeC1Ej" title='boost::serialization::version_type::version_type' data-ref="_ZN5boost13serialization12version_typeC1Ej" ><dfn class="decl def" id="_ZN5boost13serialization12version_typeC1Ev" title='boost::serialization::version_type::version_type' data-ref="_ZN5boost13serialization12version_typeC1Ev" ><dfn class="decl def" id="_ZN5boost13serialization12version_typeC1ERKS1_" title='boost::serialization::version_type::version_type' data-ref="_ZN5boost13serialization12version_typeC1ERKS1_" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" ><a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" >version_type</a></a></a></a></a></a></dfn></dfn></dfn></a></a></dfn>)</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><i>// default implementation - call the member function "serialize"</i></td></tr>
+<tr><th id="65">65</th><td><b>template</b>&lt;<b>class</b> Archive, <b>class</b> T&gt;</td></tr>
+<tr><th id="66">66</th><td><b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost13serialization9serializeERT_RT0_j" title='boost::serialization::serialize' data-ref="_ZN5boost13serialization9serializeERT_RT0_j" >serialize</dfn>(</td></tr>
+<tr><th id="67">67</th><td>    Archive &amp; <dfn class="local col4 decl" id="1554ar" title='ar' data-type='Archive &amp;' data-ref="1554ar" >ar</dfn>, T &amp; <dfn class="local col5 decl" id="1555t" title='t' data-type='T &amp;' data-ref="1555t" >t</dfn>, <em>const</em> <a class="macro" href="pfto.hpp.html#35" title="" data-ref="_M/BOOST_PFTO">BOOST_PFTO</a> <em>unsigned</em> <em>int</em> <dfn class="local col6 decl" id="1556file_version" title='file_version' data-type='const unsigned int' data-ref="1556file_version" >file_version</dfn></td></tr>
+<tr><th id="68">68</th><td>){</td></tr>
+<tr><th id="69">69</th><td>    <a class="type" href="access.hpp.html#boost::serialization::access" title='boost::serialization::access' data-ref="boost::serialization::access" >access</a>::serialize(<a class="local col4 ref" href="#1554ar" title='ar' data-ref="1554ar" >ar</a>, <a class="local col5 ref" href="#1555t" title='t' data-ref="1555t" >t</a>, <b>static_cast</b>&lt;<em>unsigned</em> <em>int</em>&gt;(<a class="local col6 ref" href="#1556file_version" title='file_version' data-ref="1556file_version" >file_version</a>));</td></tr>
+<tr><th id="70">70</th><td>}</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><i>// save data required for construction</i></td></tr>
+<tr><th id="73">73</th><td><b>template</b>&lt;<b>class</b> Archive, <b>class</b> T&gt;</td></tr>
+<tr><th id="74">74</th><td><b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost13serialization19save_construct_dataERT_PKT0_j" title='boost::serialization::save_construct_data' data-ref="_ZN5boost13serialization19save_construct_dataERT_PKT0_j" >save_construct_data</dfn>(</td></tr>
+<tr><th id="75">75</th><td>    Archive &amp; <i>/*ar*/</i>, </td></tr>
+<tr><th id="76">76</th><td>    <em>const</em> T * <i>/*t*/</i>, </td></tr>
+<tr><th id="77">77</th><td>    <em>const</em> <a class="macro" href="pfto.hpp.html#35" title="" data-ref="_M/BOOST_PFTO">BOOST_PFTO</a> <em>unsigned</em> <em>int</em> <i>/*file_version */</i></td></tr>
+<tr><th id="78">78</th><td>){</td></tr>
+<tr><th id="79">79</th><td>    <i>// default is to save no data because default constructor</i></td></tr>
+<tr><th id="80">80</th><td><i>    // requires no arguments.</i></td></tr>
+<tr><th id="81">81</th><td>}</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td><i>// load data required for construction and invoke constructor in place</i></td></tr>
+<tr><th id="84">84</th><td><b>template</b>&lt;<b>class</b> Archive, <b>class</b> T&gt;</td></tr>
+<tr><th id="85">85</th><td><b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost13serialization19load_construct_dataERT_PT0_j" title='boost::serialization::load_construct_data' data-ref="_ZN5boost13serialization19load_construct_dataERT_PT0_j" >load_construct_data</dfn>(</td></tr>
+<tr><th id="86">86</th><td>    Archive &amp; <i>/*ar*/</i>, </td></tr>
+<tr><th id="87">87</th><td>    T * <dfn class="local col7 decl" id="1557t" title='t' data-type='T *' data-ref="1557t" >t</dfn>, </td></tr>
+<tr><th id="88">88</th><td>    <em>const</em> <a class="macro" href="pfto.hpp.html#35" title="" data-ref="_M/BOOST_PFTO">BOOST_PFTO</a> <em>unsigned</em> <em>int</em> <i>/*file_version*/</i></td></tr>
+<tr><th id="89">89</th><td>){</td></tr>
+<tr><th id="90">90</th><td>    <i>// default just uses the default constructor.  going</i></td></tr>
+<tr><th id="91">91</th><td><i>    // through access permits usage of otherwise private default</i></td></tr>
+<tr><th id="92">92</th><td><i>    // constructor</i></td></tr>
+<tr><th id="93">93</th><td>    <a class="type" href="access.hpp.html#boost::serialization::access" title='boost::serialization::access' data-ref="boost::serialization::access" >access</a>::construct(<a class="local col7 ref" href="#1557t" title='t' data-ref="1557t" >t</a>);</td></tr>
+<tr><th id="94">94</th><td>}</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td><i>/////////////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="97">97</th><td><i>// layer 3 - move call into serialization namespace so that ADL will function</i></td></tr>
+<tr><th id="98">98</th><td><i>// in the manner we desire.</i></td></tr>
+<tr><th id="99">99</th><td><i>//</i></td></tr>
+<tr><th id="100">100</th><td><i>// on compilers which don't implement ADL. only the current namespace</i></td></tr>
+<tr><th id="101">101</th><td><i>// i.e. boost::serialization will be searched.</i></td></tr>
+<tr><th id="102">102</th><td><i>// </i></td></tr>
+<tr><th id="103">103</th><td><i>// on compilers which DO implement ADL</i></td></tr>
+<tr><th id="104">104</th><td><i>// serialize overrides can be in any of the following</i></td></tr>
+<tr><th id="105">105</th><td><i>// </i></td></tr>
+<tr><th id="106">106</th><td><i>// 1) same namepace as Archive</i></td></tr>
+<tr><th id="107">107</th><td><i>// 2) same namespace as T</i></td></tr>
+<tr><th id="108">108</th><td><i>// 3) boost::serialization</i></td></tr>
+<tr><th id="109">109</th><td><i>//</i></td></tr>
+<tr><th id="110">110</th><td><i>// Due to Martin Ecker</i></td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td><b>template</b>&lt;<b>class</b> Archive, <b>class</b> T&gt;</td></tr>
+<tr><th id="113">113</th><td><b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost13serialization13serialize_adlERT_RT0_j" title='boost::serialization::serialize_adl' data-ref="_ZN5boost13serialization13serialize_adlERT_RT0_j" >serialize_adl</dfn>(</td></tr>
+<tr><th id="114">114</th><td>    Archive &amp; <dfn class="local col8 decl" id="1558ar" title='ar' data-type='Archive &amp;' data-ref="1558ar" >ar</dfn>, </td></tr>
+<tr><th id="115">115</th><td>    T &amp; <dfn class="local col9 decl" id="1559t" title='t' data-type='T &amp;' data-ref="1559t" >t</dfn>, </td></tr>
+<tr><th id="116">116</th><td>    <em>const</em> <em>unsigned</em> <em>int</em> <dfn class="local col0 decl" id="1560file_version" title='file_version' data-type='const unsigned int' data-ref="1560file_version" >file_version</dfn></td></tr>
+<tr><th id="117">117</th><td>){</td></tr>
+<tr><th id="118">118</th><td>    <i>// note usage of function overloading to delay final resolution</i></td></tr>
+<tr><th id="119">119</th><td><i>    // until the point of instantiation.  This works around the two-phase</i></td></tr>
+<tr><th id="120">120</th><td><i>    // lookup "feature" which inhibits redefintion of a default function</i></td></tr>
+<tr><th id="121">121</th><td><i>    // template implementation. Due to Robert Ramey</i></td></tr>
+<tr><th id="122">122</th><td><i>    //</i></td></tr>
+<tr><th id="123">123</th><td><i>    // Note that this trick generates problems for compiles which don't support</i></td></tr>
+<tr><th id="124">124</th><td><i>    // PFTO, suppress it here.  As far as we know, there are no compilers</i></td></tr>
+<tr><th id="125">125</th><td><i>    // which fail to support PFTO while supporting two-phase lookup.</i></td></tr>
+<tr><th id="126">126</th><td>    <u>#<span data-ppcond="126">if</span> ! defined(<span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span>)</u></td></tr>
+<tr><th id="127">127</th><td>        <em>const</em> <a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" >version_type</a> <dfn class="local col1 decl" id="1561v" title='v' data-type='const boost::serialization::version_type' data-ref="1561v" >v</dfn><a class="ref" href="#62" title='boost::serialization::version_type::version_type' data-ref="_ZN5boost13serialization12version_typeC1Ej" >(</a><a class="local col0 ref" href="#1560file_version" title='file_version' data-ref="1560file_version" >file_version</a>);</td></tr>
+<tr><th id="128">128</th><td>        serialize(<a class="local col8 ref" href="#1558ar" title='ar' data-ref="1558ar" >ar</a>, <a class="local col9 ref" href="#1559t" title='t' data-ref="1559t" >t</a>, <a class="local col1 ref" href="#1561v" title='v' data-ref="1561v" >v</a>);</td></tr>
+<tr><th id="129">129</th><td>    <u>#<span data-ppcond="126">else</span></u></td></tr>
+<tr><th id="130">130</th><td>        serialize(ar, t, file_version);</td></tr>
+<tr><th id="131">131</th><td>    <u>#<span data-ppcond="126">endif</span></u></td></tr>
+<tr><th id="132">132</th><td>}</td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><b>template</b>&lt;<b>class</b> Archive, <b>class</b> T&gt;</td></tr>
+<tr><th id="135">135</th><td><b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost13serialization23save_construct_data_adlERT_PKT0_j" title='boost::serialization::save_construct_data_adl' data-ref="_ZN5boost13serialization23save_construct_data_adlERT_PKT0_j" >save_construct_data_adl</dfn>(</td></tr>
+<tr><th id="136">136</th><td>    Archive &amp; <dfn class="local col2 decl" id="1562ar" title='ar' data-type='Archive &amp;' data-ref="1562ar" >ar</dfn>, </td></tr>
+<tr><th id="137">137</th><td>    <em>const</em> T * <dfn class="local col3 decl" id="1563t" title='t' data-type='const T *' data-ref="1563t" >t</dfn>, </td></tr>
+<tr><th id="138">138</th><td>    <em>const</em> <em>unsigned</em> <em>int</em> <dfn class="local col4 decl" id="1564file_version" title='file_version' data-type='const unsigned int' data-ref="1564file_version" >file_version</dfn></td></tr>
+<tr><th id="139">139</th><td>){</td></tr>
+<tr><th id="140">140</th><td>    <i>// see above</i></td></tr>
+<tr><th id="141">141</th><td>    <u>#<span data-ppcond="141">if</span> ! defined(<span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span>)</u></td></tr>
+<tr><th id="142">142</th><td>        <em>const</em> <a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" >version_type</a> <dfn class="local col5 decl" id="1565v" title='v' data-type='const boost::serialization::version_type' data-ref="1565v" >v</dfn><a class="ref" href="#62" title='boost::serialization::version_type::version_type' data-ref="_ZN5boost13serialization12version_typeC1Ej" >(</a><a class="local col4 ref" href="#1564file_version" title='file_version' data-ref="1564file_version" >file_version</a>);</td></tr>
+<tr><th id="143">143</th><td>        save_construct_data(<a class="local col2 ref" href="#1562ar" title='ar' data-ref="1562ar" >ar</a>, <a class="local col3 ref" href="#1563t" title='t' data-ref="1563t" >t</a>, <a class="local col5 ref" href="#1565v" title='v' data-ref="1565v" >v</a>);</td></tr>
+<tr><th id="144">144</th><td>    <u>#<span data-ppcond="141">else</span></u></td></tr>
+<tr><th id="145">145</th><td>        save_construct_data(ar, t, file_version);</td></tr>
+<tr><th id="146">146</th><td>    <u>#<span data-ppcond="141">endif</span></u></td></tr>
+<tr><th id="147">147</th><td>}</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td><b>template</b>&lt;<b>class</b> Archive, <b>class</b> T&gt;</td></tr>
+<tr><th id="150">150</th><td><b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost13serialization23load_construct_data_adlERT_PT0_j" title='boost::serialization::load_construct_data_adl' data-ref="_ZN5boost13serialization23load_construct_data_adlERT_PT0_j" >load_construct_data_adl</dfn>(</td></tr>
+<tr><th id="151">151</th><td>    Archive &amp; <dfn class="local col6 decl" id="1566ar" title='ar' data-type='Archive &amp;' data-ref="1566ar" >ar</dfn>, </td></tr>
+<tr><th id="152">152</th><td>    T * <dfn class="local col7 decl" id="1567t" title='t' data-type='T *' data-ref="1567t" >t</dfn>, </td></tr>
+<tr><th id="153">153</th><td>    <em>const</em> <em>unsigned</em> <em>int</em> <dfn class="local col8 decl" id="1568file_version" title='file_version' data-type='const unsigned int' data-ref="1568file_version" >file_version</dfn></td></tr>
+<tr><th id="154">154</th><td>){</td></tr>
+<tr><th id="155">155</th><td>    <i>// see above comment</i></td></tr>
+<tr><th id="156">156</th><td>    <u>#<span data-ppcond="156">if</span> ! defined(<span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span>)</u></td></tr>
+<tr><th id="157">157</th><td>        <em>const</em> <a class="type" href="#62" title='boost::serialization::version_type' data-ref="boost::serialization::version_type" >version_type</a> <dfn class="local col9 decl" id="1569v" title='v' data-type='const boost::serialization::version_type' data-ref="1569v" >v</dfn><a class="ref" href="#62" title='boost::serialization::version_type::version_type' data-ref="_ZN5boost13serialization12version_typeC1Ej" >(</a><a class="local col8 ref" href="#1568file_version" title='file_version' data-ref="1568file_version" >file_version</a>);</td></tr>
+<tr><th id="158">158</th><td>        load_construct_data(<a class="local col6 ref" href="#1566ar" title='ar' data-ref="1566ar" >ar</a>, <a class="local col7 ref" href="#1567t" title='t' data-ref="1567t" >t</a>, <a class="local col9 ref" href="#1569v" title='v' data-ref="1569v" >v</a>);</td></tr>
+<tr><th id="159">159</th><td>    <u>#<span data-ppcond="156">else</span></u></td></tr>
+<tr><th id="160">160</th><td>        load_construct_data(ar, t, file_version);</td></tr>
+<tr><th id="161">161</th><td>    <u>#<span data-ppcond="156">endif</span></u></td></tr>
+<tr><th id="162">162</th><td>}</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>} <i>// namespace serialization</i></td></tr>
+<tr><th id="165">165</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td><u>#<span data-ppcond="1">endif</span> //BOOST_SERIALIZATION_SERIALIZATION_HPP</u></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore3.3.5/src/common/Collision/Management/MMapFactory.cpp.html'>TrinityCore3.3.5/src/common/Collision/Management/MMapFactory.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

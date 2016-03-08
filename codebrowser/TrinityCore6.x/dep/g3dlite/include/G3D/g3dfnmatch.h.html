@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<title>g3dfnmatch.h [TrinityCore6.x/dep/g3dlite/include/G3D/g3dfnmatch.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/g3dfnmatch.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/g3dfnmatch.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*-</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 1992, 1993</i></td></tr>
+<tr><th id="3">3</th><td><i> *The Regents of the University of California.  All rights reserved.</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="6">6</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="7">7</th><td><i> * are met:</i></td></tr>
+<tr><th id="8">8</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="9">9</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="10">10</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="11">11</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="12">12</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="13">13</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="14">14</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="15">15</th><td><i> *This product includes software developed by the University of</i></td></tr>
+<tr><th id="16">16</th><td><i> *California, Berkeley and its contributors.</i></td></tr>
+<tr><th id="17">17</th><td><i> * 4. Neither the name of the University nor the names of its contributors</i></td></tr>
+<tr><th id="18">18</th><td><i> *    may be used to endorse or promote products derived from this software</i></td></tr>
+<tr><th id="19">19</th><td><i> *    without specific prior written permission.</i></td></tr>
+<tr><th id="20">20</th><td><i> *</i></td></tr>
+<tr><th id="21">21</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND</i></td></tr>
+<tr><th id="22">22</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="23">23</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="24">24</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="25">25</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="26">26</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="27">27</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="28">28</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="29">29</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="30">30</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="31">31</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="32">32</th><td><i> *</i></td></tr>
+<tr><th id="33">33</th><td><i> *@(#)fnmatch.h8.1 (Berkeley) 6/2/93</i></td></tr>
+<tr><th id="34">34</th><td><i> *</i></td></tr>
+<tr><th id="35">35</th><td><i> * From FreeBSD fnmatch.h 1.7</i></td></tr>
+<tr><th id="36">36</th><td><i> * $Id: g3dfnmatch.h,v 1.1 2010/02/06 06:51:28 morgan3d Exp $</i></td></tr>
+<tr><th id="37">37</th><td><i> */</i></td></tr>
+<tr><th id="38">38</th><td><u>#<span data-ppcond="38">ifndef</span> <span class="macro" data-ref="_M/G3D_g3dfnmatch_h">G3D_g3dfnmatch_h</span></u></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/G3D_g3dfnmatch_h" data-ref="_M/G3D_g3dfnmatch_h">G3D_g3dfnmatch_h</dfn></u></td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><u>#<span data-ppcond="45">if</span> defined(<span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span>)</u> </td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><u>#   if ! defined(FNM_NOMATCH)</u></td></tr>
+<tr><th id="48">48</th><td><u>#       define FNM_NOMATCH        1      /* Match failed. */</u></td></tr>
+<tr><th id="49">49</th><td><u>#       define FNM_NOESCAPE    0x01      /* Disable backslash escaping. */</u></td></tr>
+<tr><th id="50">50</th><td><u>#       define FNM_PATHNAME    0x02      /* Slash must be matched by slash. */</u></td></tr>
+<tr><th id="51">51</th><td><u>#       define FNM_PERIOD      0x04      /* Period must be matched by period. */</u></td></tr>
+<tr><th id="52">52</th><td><u>#       define FNM_LEADING_DIR 0x08      /* Ignore /&lt;tail&gt; after Imatch. */</u></td></tr>
+<tr><th id="53">53</th><td><u>#       define FNM_CASEFOLD    0x10      /* Case insensitive search. */</u></td></tr>
+<tr><th id="54">54</th><td><u>#       define FNM_PREFIX_DIRS 0x20      /* Directory prefixes of pattern match too. */</u></td></tr>
+<tr><th id="55">55</th><td><u>#    endif</u></td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="45">else</span></u> </td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <i>// On non-windows systems, include fnmatch directly</i></td></tr>
+<tr><th id="60">60</th><td><u>#   include <a href="../../../../../include/fnmatch.h.html">&lt;fnmatch.h&gt;</a></u></td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="45">endif</span></u></td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="65">65</th><td><i class="doc">  Function fnmatch() as specified in POSIX 1003.2-1992, section B.6.</i></td></tr>
+<tr><th id="66">66</th><td><i class="doc">  Compares a filename or pathname to a pattern.</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc"></i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">The fnmatch() function checks whether the string argument matches the pattern argument, which is a shell wildcard pattern.</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">The flags argument modifies the behaviour; it is the bitwise OR of zero or more of the following flags:</i></td></tr>
+<tr><th id="70">70</th><td><i class="doc"></i></td></tr>
+<tr><th id="71">71</th><td><i class="doc">- FNM_NOESCAPE If this flag is set, treat backslash as an ordinary character, instead of an escape character.</i></td></tr>
+<tr><th id="72">72</th><td><i class="doc">- FNM_PATHNAME If this flag is set, match a slash in string only with a slash in pattern and not by an asterisk (*) or a question mark (?) metacharacter, nor by a bracket expression ([]) containing a slash.</i></td></tr>
+<tr><th id="73">73</th><td><i class="doc">- FNM_PERIOD If this flag is set, a leading period in string has to be matched exactly by a period in pattern. A period is considered to be leading if it is the first character in string, or if both FNM_PATHNAME is set and the period immediately follows a slash.</i></td></tr>
+<tr><th id="74">74</th><td><i class="doc">- FNM_FILE_NAME This is a GNU synonym for FNM_PATHNAME.</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc">- FNM_LEADING_DIR If this flag (a GNU extension) is set, the pattern is considered to be matched if it matches an initial segment of string which is followed by a slash. This flag is mainly for the internal use of glibc and is only implemented in certain cases.</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">- FNM_CASEFOLD If this flag (a GNU extension) is set, the pattern is matched case-insensitively.</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc"></i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"><span class="command">\return</span> Zero if<span class="command"> \a</span> <span class="arg">string</span> matches<span class="command"> \a</span> <span class="arg">pattern,</span> FNM_NOMATCH if there is no match or another non-zero value if there is an error</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc"></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="81">81</th><td><em>int</em> <dfn class="decl" id="_ZN3G3D10g3dfnmatchEPKcS1_i" title='G3D::g3dfnmatch' data-ref="_ZN3G3D10g3dfnmatchEPKcS1_i" >g3dfnmatch</dfn>(<em>const</em> <em>char</em> *<dfn class="local col1 decl" id="1pattern" title='pattern' data-type='const char *' data-ref="1pattern" >pattern</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="2string" title='string' data-type='const char *' data-ref="2string" >string</dfn>, <em>int</em> <dfn class="local col3 decl" id="3flags" title='flags' data-type='int' data-ref="3flags" >flags</dfn>);</td></tr>
+<tr><th id="82">82</th><td>}</td></tr>
+<tr><th id="83">83</th><td><u>#<span data-ppcond="38">endif</span></u></td></tr>
+<tr><th id="84">84</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/FileSystem.cpp.html'>TrinityCore6.x/dep/g3dlite/source/FileSystem.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

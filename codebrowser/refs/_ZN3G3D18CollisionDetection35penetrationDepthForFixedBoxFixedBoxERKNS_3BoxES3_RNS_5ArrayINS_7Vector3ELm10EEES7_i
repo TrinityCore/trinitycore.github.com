@@ -1,0 +1,68 @@
+<dec f='TrinityCore3.3.5/dep/g3dlite/include/G3D/CollisionDetection.h' l='338' type='static float G3D::CollisionDetection::penetrationDepthForFixedBoxFixedBox(const G3D::Box &amp; box1, const G3D::Box &amp; box2, Array&lt;G3D::Vector3&gt; &amp; contactPoints, Array&lt;G3D::Vector3&gt; &amp; contactNormals, const int lastSeparatingAxis = -1)'/>
+<def f='TrinityCore3.3.5/dep/g3dlite/source/CollisionDetection.cpp' l='347' type='static float G3D::CollisionDetection::penetrationDepthForFixedBoxFixedBox(const G3D::Box &amp; box1, const G3D::Box &amp; box2, Array&lt;G3D::Vector3&gt; &amp; contactPoints, Array&lt;G3D::Vector3&gt; &amp; contactNormals, const int lastSeparatingAxis = -1)'/>
+<doc f='TrinityCore3.3.5/dep/g3dlite/include/G3D/CollisionDetection.h' l='306'>/**
+      Calculates the depth of penetration between two fixed boxes.
+      Contact normal faces away from box1 and into box2.  If there is
+      contact, only one contact point is returned.  The minimally
+      violated separating plane is computed
+         - if the separating axis corresponds to a face
+              the contact point is half way between the deepest vertex
+              and the face
+         - if the separating axis corresponds to two edges
+              the contact point is the midpoint of the smallest line
+              segment between the two edge lines
+
+      @note This is very similiar to calculating the intersection of two lines.
+      Logically then, the two points calculated would be identical if calculated
+      with inifinite precision, but with the finite precision of floating point
+      calculations, these values could (will) differ as the line slope approaches
+      zero or inifinity.
+
+      @cite adobted from David Eberly&apos;s papers, variables used in this function
+      correspond to variables used in pages 6 and 7 in the pdf
+      http://www.magic-software.com/Intersection.html
+      http://www.magic-software.com/Documentation/DynamicCollisionDetection.pdf
+
+      @param box1                Box 1
+      @param box2                Box 2
+      @param contactPoints        Contact point between boxes. [Post Condition]
+      @param contactNormals        Surface normal at contact point. [Post Condition]
+      @param lastSeparatingAxis    Last separating axis. (Used for optimization)
+
+      @return Depth of penetration between the two boxes.  If there is no
+        intersection between the boxes, then a negative value is returned.
+     */</doc>
+<dec f='TrinityCore6.x/dep/g3dlite/include/G3D/CollisionDetection.h' l='338' type='static float G3D::CollisionDetection::penetrationDepthForFixedBoxFixedBox(const G3D::Box &amp; box1, const G3D::Box &amp; box2, Array&lt;G3D::Vector3&gt; &amp; contactPoints, Array&lt;G3D::Vector3&gt; &amp; contactNormals, const int lastSeparatingAxis = -1)'/>
+<def f='TrinityCore6.x/dep/g3dlite/source/CollisionDetection.cpp' l='347' type='static float G3D::CollisionDetection::penetrationDepthForFixedBoxFixedBox(const G3D::Box &amp; box1, const G3D::Box &amp; box2, Array&lt;G3D::Vector3&gt; &amp; contactPoints, Array&lt;G3D::Vector3&gt; &amp; contactNormals, const int lastSeparatingAxis = -1)'/>
+<doc f='TrinityCore6.x/dep/g3dlite/include/G3D/CollisionDetection.h' l='306'>/**
+      Calculates the depth of penetration between two fixed boxes.
+      Contact normal faces away from box1 and into box2.  If there is
+      contact, only one contact point is returned.  The minimally
+      violated separating plane is computed
+         - if the separating axis corresponds to a face
+              the contact point is half way between the deepest vertex
+              and the face
+         - if the separating axis corresponds to two edges
+              the contact point is the midpoint of the smallest line
+              segment between the two edge lines
+
+      @note This is very similiar to calculating the intersection of two lines.
+      Logically then, the two points calculated would be identical if calculated
+      with inifinite precision, but with the finite precision of floating point
+      calculations, these values could (will) differ as the line slope approaches
+      zero or inifinity.
+
+      @cite adobted from David Eberly&apos;s papers, variables used in this function
+      correspond to variables used in pages 6 and 7 in the pdf
+      http://www.magic-software.com/Intersection.html
+      http://www.magic-software.com/Documentation/DynamicCollisionDetection.pdf
+
+      @param box1                Box 1
+      @param box2                Box 2
+      @param contactPoints        Contact point between boxes. [Post Condition]
+      @param contactNormals        Surface normal at contact point. [Post Condition]
+      @param lastSeparatingAxis    Last separating axis. (Used for optimization)
+
+      @return Depth of penetration between the two boxes.  If there is no
+        intersection between the boxes, then a negative value is returned.
+     */</doc>

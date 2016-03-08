@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<title>buffer_resize_guard.hpp [include/boost/asio/detail/buffer_resize_guard.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/detail/buffer_resize_guard.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>asio</a>/<a href='./'>detail</a>/buffer_resize_guard.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// detail/buffer_resize_guard.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_DETAIL_BUFFER_RESIZE_GUARD_HPP">BOOST_ASIO_DETAIL_BUFFER_RESIZE_GUARD_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_DETAIL_BUFFER_RESIZE_GUARD_HPP" data-ref="_M/BOOST_ASIO_DETAIL_BUFFER_RESIZE_GUARD_HPP">BOOST_ASIO_DETAIL_BUFFER_RESIZE_GUARD_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="limits.hpp.html">&lt;boost/asio/detail/limits.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="24">24</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="25">25</th><td><b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><i>// Helper class to manage buffer resizing in an exception safe way.</i></td></tr>
+<tr><th id="28">28</th><td><b>template</b> &lt;<b>typename</b> Buffer&gt;</td></tr>
+<tr><th id="29">29</th><td><b>class</b> <dfn class="type def" id="boost::asio::detail::buffer_resize_guard" title='boost::asio::detail::buffer_resize_guard' data-ref="boost::asio::detail::buffer_resize_guard" >buffer_resize_guard</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td><b>public</b>:</td></tr>
+<tr><th id="32">32</th><td>  <i>// Constructor.</i></td></tr>
+<tr><th id="33">33</th><td>  <dfn class="decl def" id="_ZN5boost4asio6detail19buffer_resize_guardC1ERT_" title='boost::asio::detail::buffer_resize_guard::buffer_resize_guard&lt;Buffer&gt;' data-ref="_ZN5boost4asio6detail19buffer_resize_guardC1ERT_" >buffer_resize_guard</dfn>(Buffer&amp; <dfn class="local col8 decl" id="3728buffer" title='buffer' data-type='Buffer &amp;' data-ref="3728buffer" >buffer</dfn>)</td></tr>
+<tr><th id="34">34</th><td>    : <a class="member" href="#boost::asio::detail::buffer_resize_guard::buffer_" title='boost::asio::detail::buffer_resize_guard::buffer_' data-ref="boost::asio::detail::buffer_resize_guard::buffer_" >buffer_</a>(<a class="local col8 ref" href="#3728buffer" title='buffer' data-ref="3728buffer" >buffer</a>),</td></tr>
+<tr><th id="35">35</th><td>      <a class="member" href="#boost::asio::detail::buffer_resize_guard::old_size_" title='boost::asio::detail::buffer_resize_guard::old_size_' data-ref="boost::asio::detail::buffer_resize_guard::old_size_" >old_size_</a>(<a class="local col8 ref" href="#3728buffer" title='buffer' data-ref="3728buffer" >buffer</a>.size())</td></tr>
+<tr><th id="36">36</th><td>  {</td></tr>
+<tr><th id="37">37</th><td>  }</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>  <i>// Destructor rolls back the buffer resize unless commit was called.</i></td></tr>
+<tr><th id="40">40</th><td>  <dfn class="decl def" id="_ZN5boost4asio6detail19buffer_resize_guardD1Ev" title='boost::asio::detail::buffer_resize_guard::~buffer_resize_guard&lt;Buffer&gt;' data-ref="_ZN5boost4asio6detail19buffer_resize_guardD1Ev" >~buffer_resize_guard</dfn>()</td></tr>
+<tr><th id="41">41</th><td>  {</td></tr>
+<tr><th id="42">42</th><td>    <b>if</b> (<a class="member" href="#boost::asio::detail::buffer_resize_guard::old_size_" title='boost::asio::detail::buffer_resize_guard::old_size_' data-ref="boost::asio::detail::buffer_resize_guard::old_size_" >old_size_</a> != (<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/limits.html#std::numeric_limits" title='std::numeric_limits' data-ref="std::numeric_limits" >numeric_limits</a>&lt;<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>&gt;::<a class="ref" href="../../../c++/4.9/limits.html#_ZNSt14numeric_limitsImE3maxEv" title='std::numeric_limits&lt;unsigned long&gt;::max' data-ref="_ZNSt14numeric_limitsImE3maxEv" id="_ZNSt14numeric_limitsImE3maxEv" >max</a>)())</td></tr>
+<tr><th id="43">43</th><td>    {</td></tr>
+<tr><th id="44">44</th><td>      <a class="member" href="#boost::asio::detail::buffer_resize_guard::buffer_" title='boost::asio::detail::buffer_resize_guard::buffer_' data-ref="boost::asio::detail::buffer_resize_guard::buffer_" >buffer_</a>.resize(<a class="member" href="#boost::asio::detail::buffer_resize_guard::old_size_" title='boost::asio::detail::buffer_resize_guard::old_size_' data-ref="boost::asio::detail::buffer_resize_guard::old_size_" >old_size_</a>);</td></tr>
+<tr><th id="45">45</th><td>    }</td></tr>
+<tr><th id="46">46</th><td>  }</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td>  <i>// Commit the resize transaction.</i></td></tr>
+<tr><th id="49">49</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail19buffer_resize_guard6commitEv" title='boost::asio::detail::buffer_resize_guard::commit' data-ref="_ZN5boost4asio6detail19buffer_resize_guard6commitEv" >commit</dfn>()</td></tr>
+<tr><th id="50">50</th><td>  {</td></tr>
+<tr><th id="51">51</th><td>    <a class="member" href="#boost::asio::detail::buffer_resize_guard::old_size_" title='boost::asio::detail::buffer_resize_guard::old_size_' data-ref="boost::asio::detail::buffer_resize_guard::old_size_" >old_size_</a> = (<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/limits.html#std::numeric_limits" title='std::numeric_limits' data-ref="std::numeric_limits" >numeric_limits</a>&lt;<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>&gt;::<a class="ref" href="../../../c++/4.9/limits.html#_ZNSt14numeric_limitsImE3maxEv" title='std::numeric_limits&lt;unsigned long&gt;::max' data-ref="_ZNSt14numeric_limitsImE3maxEv" id="_ZNSt14numeric_limitsImE3maxEv" >max</a>)();</td></tr>
+<tr><th id="52">52</th><td>  }</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><b>private</b>:</td></tr>
+<tr><th id="55">55</th><td>  <i>// The buffer being managed.</i></td></tr>
+<tr><th id="56">56</th><td>  Buffer&amp; <dfn class="decl" id="boost::asio::detail::buffer_resize_guard::buffer_" title='boost::asio::detail::buffer_resize_guard::buffer_' data-ref="boost::asio::detail::buffer_resize_guard::buffer_" >buffer_</dfn>;</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>  <i>// The size of the buffer at the time the guard was constructed.</i></td></tr>
+<tr><th id="59">59</th><td>  <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="boost::asio::detail::buffer_resize_guard::old_size_" title='boost::asio::detail::buffer_resize_guard::old_size_' data-ref="boost::asio::detail::buffer_resize_guard::old_size_" >old_size_</dfn>;</td></tr>
+<tr><th id="60">60</th><td>};</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>} <i>// namespace detail</i></td></tr>
+<tr><th id="63">63</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="64">64</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><u>#include <a href="pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DETAIL_BUFFER_RESIZE_GUARD_HPP</u></td></tr>
+<tr><th id="69">69</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

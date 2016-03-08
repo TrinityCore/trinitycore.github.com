@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<title>DynamicTree.h [TrinityCore3.3.5/src/common/Collision/DynamicTree.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Collision/DynamicTree.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Collision</a>/DynamicTree.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">ifndef</span> <span class="macro" data-ref="_M/_DYNTREE_H">_DYNTREE_H</span></u></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/_DYNTREE_H" data-ref="_M/_DYNTREE_H">_DYNTREE_H</dfn></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>namespace</b> <span class="namespace">G3D</span></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <b>class</b> <a class="type" href="../../../dep/g3dlite/include/G3D/Ray.h.html#G3D::Ray" title='G3D::Ray' data-ref="G3D::Ray" id="G3D::Ray" >Ray</a>;</td></tr>
+<tr><th id="28">28</th><td>    <b>class</b> <a class="type" href="../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" id="G3D::Vector3" >Vector3</a>;</td></tr>
+<tr><th id="29">29</th><td>}</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>class</b> <a class="type" href="Models/GameObjectModel.h.html#GameObjectModel" title='GameObjectModel' data-ref="GameObjectModel" id="GameObjectModel" >GameObjectModel</a>;</td></tr>
+<tr><th id="32">32</th><td><b>struct</b> <a class="type" href="DynamicTree.cpp.html#DynTreeImpl" title='DynTreeImpl' data-ref="DynTreeImpl" id="DynTreeImpl" >DynTreeImpl</a>;</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><b>class</b> <dfn class="type def" id="DynamicMapTree" title='DynamicMapTree' data-ref="DynamicMapTree" >DynamicMapTree</dfn></td></tr>
+<tr><th id="35">35</th><td>{</td></tr>
+<tr><th id="36">36</th><td>    <a class="type" href="DynamicTree.cpp.html#DynTreeImpl" title='DynTreeImpl' data-ref="DynTreeImpl" >DynTreeImpl</a> *<dfn class="decl" id="DynamicMapTree::impl" title='DynamicMapTree::impl' data-ref="DynamicMapTree::impl" >impl</dfn>;</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><b>public</b>:</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <a class="decl" href="DynamicTree.cpp.html#_ZN14DynamicMapTreeC1Ev" title='DynamicMapTree::DynamicMapTree' data-ref="_ZN14DynamicMapTreeC1Ev" id="_ZN14DynamicMapTreeC1Ev" >DynamicMapTree</a>();</td></tr>
+<tr><th id="41">41</th><td>    <a class="decl" href="DynamicTree.cpp.html#_ZN14DynamicMapTreeD1Ev" title='DynamicMapTree::~DynamicMapTree' data-ref="_ZN14DynamicMapTreeD1Ev" id="_ZN14DynamicMapTreeD1Ev" >~DynamicMapTree</a>();</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <em>bool</em> <a class="decl" href="DynamicTree.cpp.html#_ZNK14DynamicMapTree15isInLineOfSightEffffffj" title='DynamicMapTree::isInLineOfSight' data-ref="_ZNK14DynamicMapTree15isInLineOfSightEffffffj" id="_ZNK14DynamicMapTree15isInLineOfSightEffffffj" >isInLineOfSight</a>(<em>float</em> <dfn class="local col1 decl" id="1x1" title='x1' data-type='float' data-ref="1x1" >x1</dfn>, <em>float</em> <dfn class="local col2 decl" id="2y1" title='y1' data-type='float' data-ref="2y1" >y1</dfn>, <em>float</em> <dfn class="local col3 decl" id="3z1" title='z1' data-type='float' data-ref="3z1" >z1</dfn>, <em>float</em> <dfn class="local col4 decl" id="4x2" title='x2' data-type='float' data-ref="4x2" >x2</dfn>, <em>float</em> <dfn class="local col5 decl" id="5y2" title='y2' data-type='float' data-ref="5y2" >y2</dfn>,</td></tr>
+<tr><th id="44">44</th><td>                         <em>float</em> <dfn class="local col6 decl" id="6z2" title='z2' data-type='float' data-ref="6z2" >z2</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="7phasemask" title='phasemask' data-type='uint32' data-ref="7phasemask" >phasemask</dfn>) <em>const</em>;</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <em>bool</em> <a class="decl" href="DynamicTree.cpp.html#_ZNK14DynamicMapTree19getIntersectionTimeEjRKN3G3D3RayERKNS0_7Vector3ERf" title='DynamicMapTree::getIntersectionTime' data-ref="_ZNK14DynamicMapTree19getIntersectionTimeEjRKN3G3D3RayERKNS0_7Vector3ERf" id="_ZNK14DynamicMapTree19getIntersectionTimeEjRKN3G3D3RayERKNS0_7Vector3ERf" >getIntersectionTime</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="8phasemask" title='phasemask' data-type='uint32' data-ref="8phasemask" >phasemask</dfn>, <em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Ray.h.html#G3D::Ray" title='G3D::Ray' data-ref="G3D::Ray" >Ray</a>&amp; <dfn class="local col9 decl" id="9ray" title='ray' data-type='const G3D::Ray &amp;' data-ref="9ray" >ray</dfn>,</td></tr>
+<tr><th id="47">47</th><td>                             <em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col0 decl" id="10endPos" title='endPos' data-type='const G3D::Vector3 &amp;' data-ref="10endPos" >endPos</dfn>, <em>float</em>&amp; <dfn class="local col1 decl" id="11maxDist" title='maxDist' data-type='float &amp;' data-ref="11maxDist" >maxDist</dfn>) <em>const</em>;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <em>bool</em> <a class="decl" href="DynamicTree.cpp.html#_ZNK14DynamicMapTree15getObjectHitPosEjRKN3G3D7Vector3ES3_RS1_f" title='DynamicMapTree::getObjectHitPos' data-ref="_ZNK14DynamicMapTree15getObjectHitPosEjRKN3G3D7Vector3ES3_RS1_f" id="_ZNK14DynamicMapTree15getObjectHitPosEjRKN3G3D7Vector3ES3_RS1_f" >getObjectHitPos</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="12phasemask" title='phasemask' data-type='uint32' data-ref="12phasemask" >phasemask</dfn>, <em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col3 decl" id="13pPos1" title='pPos1' data-type='const G3D::Vector3 &amp;' data-ref="13pPos1" >pPos1</dfn>,</td></tr>
+<tr><th id="50">50</th><td>                         <em>const</em> <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col4 decl" id="14pPos2" title='pPos2' data-type='const G3D::Vector3 &amp;' data-ref="14pPos2" >pPos2</dfn>, <span class="namespace">G3D::</span><a class="type" href="../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col5 decl" id="15pResultHitPos" title='pResultHitPos' data-type='G3D::Vector3 &amp;' data-ref="15pResultHitPos" >pResultHitPos</dfn>,</td></tr>
+<tr><th id="51">51</th><td>                         <em>float</em> <dfn class="local col6 decl" id="16pModifyDist" title='pModifyDist' data-type='float' data-ref="16pModifyDist" >pModifyDist</dfn>) <em>const</em>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <em>float</em> <a class="decl" href="DynamicTree.cpp.html#_ZNK14DynamicMapTree9getHeightEffffj" title='DynamicMapTree::getHeight' data-ref="_ZNK14DynamicMapTree9getHeightEffffj" id="_ZNK14DynamicMapTree9getHeightEffffj" >getHeight</a>(<em>float</em> <dfn class="local col7 decl" id="17x" title='x' data-type='float' data-ref="17x" >x</dfn>, <em>float</em> <dfn class="local col8 decl" id="18y" title='y' data-type='float' data-ref="18y" >y</dfn>, <em>float</em> <dfn class="local col9 decl" id="19z" title='z' data-type='float' data-ref="19z" >z</dfn>, <em>float</em> <dfn class="local col0 decl" id="20maxSearchDist" title='maxSearchDist' data-type='float' data-ref="20maxSearchDist" >maxSearchDist</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="21phasemask" title='phasemask' data-type='uint32' data-ref="21phasemask" >phasemask</dfn>) <em>const</em>;</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <em>void</em> <a class="decl" href="DynamicTree.cpp.html#_ZN14DynamicMapTree6insertERK15GameObjectModel" title='DynamicMapTree::insert' data-ref="_ZN14DynamicMapTree6insertERK15GameObjectModel" id="_ZN14DynamicMapTree6insertERK15GameObjectModel" >insert</a>(<em>const</em> <a class="type" href="Models/GameObjectModel.h.html#GameObjectModel" title='GameObjectModel' data-ref="GameObjectModel" >GameObjectModel</a>&amp;);</td></tr>
+<tr><th id="56">56</th><td>    <em>void</em> <a class="decl" href="DynamicTree.cpp.html#_ZN14DynamicMapTree6removeERK15GameObjectModel" title='DynamicMapTree::remove' data-ref="_ZN14DynamicMapTree6removeERK15GameObjectModel" id="_ZN14DynamicMapTree6removeERK15GameObjectModel" >remove</a>(<em>const</em> <a class="type" href="Models/GameObjectModel.h.html#GameObjectModel" title='GameObjectModel' data-ref="GameObjectModel" >GameObjectModel</a>&amp;);</td></tr>
+<tr><th id="57">57</th><td>    <em>bool</em> <a class="decl" href="DynamicTree.cpp.html#_ZNK14DynamicMapTree8containsERK15GameObjectModel" title='DynamicMapTree::contains' data-ref="_ZNK14DynamicMapTree8containsERK15GameObjectModel" id="_ZNK14DynamicMapTree8containsERK15GameObjectModel" >contains</a>(<em>const</em> <a class="type" href="Models/GameObjectModel.h.html#GameObjectModel" title='GameObjectModel' data-ref="GameObjectModel" >GameObjectModel</a>&amp;) <em>const</em>;</td></tr>
+<tr><th id="58">58</th><td>    <em>int</em> <a class="decl" href="DynamicTree.cpp.html#_ZNK14DynamicMapTree4sizeEv" title='DynamicMapTree::size' data-ref="_ZNK14DynamicMapTree4sizeEv" id="_ZNK14DynamicMapTree4sizeEv" >size</a>() <em>const</em>;</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>    <em>void</em> <a class="decl" href="DynamicTree.cpp.html#_ZN14DynamicMapTree7balanceEv" title='DynamicMapTree::balance' data-ref="_ZN14DynamicMapTree7balanceEv" id="_ZN14DynamicMapTree7balanceEv" >balance</a>();</td></tr>
+<tr><th id="61">61</th><td>    <em>void</em> <a class="decl" href="DynamicTree.cpp.html#_ZN14DynamicMapTree6updateEj" title='DynamicMapTree::update' data-ref="_ZN14DynamicMapTree6updateEj" id="_ZN14DynamicMapTree6updateEj" >update</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="22diff" title='diff' data-type='uint32' data-ref="22diff" >diff</dfn>);</td></tr>
+<tr><th id="62">62</th><td>};</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="20">endif</span> // _DYNTREE_H</u></td></tr>
+<tr><th id="65">65</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

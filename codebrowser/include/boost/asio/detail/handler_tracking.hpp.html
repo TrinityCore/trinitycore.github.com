@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+<title>handler_tracking.hpp [include/boost/asio/detail/handler_tracking.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/detail/handler_tracking.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>asio</a>/<a href='./'>detail</a>/handler_tracking.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// detail/handler_tracking.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_DETAIL_HANDLER_TRACKING_HPP">BOOST_ASIO_DETAIL_HANDLER_TRACKING_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_DETAIL_HANDLER_TRACKING_HPP" data-ref="_M/BOOST_ASIO_DETAIL_HANDLER_TRACKING_HPP">BOOST_ASIO_DETAIL_HANDLER_TRACKING_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">if</span> defined(<span class="macro" data-ref="_M/BOOST_ASIO_ENABLE_HANDLER_TRACKING">BOOST_ASIO_ENABLE_HANDLER_TRACKING</span>)</u></td></tr>
+<tr><th id="21">21</th><td><u># include &lt;boost/system/error_code.hpp&gt;</u></td></tr>
+<tr><th id="22">22</th><td><u># include &lt;boost/asio/detail/cstdint.hpp&gt;</u></td></tr>
+<tr><th id="23">23</th><td><u># include &lt;boost/asio/detail/static_mutex.hpp&gt;</u></td></tr>
+<tr><th id="24">24</th><td><u># include &lt;boost/asio/detail/tss_ptr.hpp&gt;</u></td></tr>
+<tr><th id="25">25</th><td><u>#<span data-ppcond="20">endif</span> // defined(BOOST_ASIO_ENABLE_HANDLER_TRACKING)</u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="30">30</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="31">31</th><td><b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="33">if</span> defined(<span class="macro" data-ref="_M/BOOST_ASIO_ENABLE_HANDLER_TRACKING">BOOST_ASIO_ENABLE_HANDLER_TRACKING</span>)</u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><b>class</b> handler_tracking</td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td><b>public</b>:</td></tr>
+<tr><th id="38">38</th><td>  <b>class</b> completion;</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>  <i>// Base class for objects containing tracked handlers.</i></td></tr>
+<tr><th id="41">41</th><td>  <b>class</b> tracked_handler</td></tr>
+<tr><th id="42">42</th><td>  {</td></tr>
+<tr><th id="43">43</th><td>  <b>private</b>:</td></tr>
+<tr><th id="44">44</th><td>    <i>// Only the handler_tracking class will have access to the id.</i></td></tr>
+<tr><th id="45">45</th><td>    <b>friend</b> <b>class</b> handler_tracking;</td></tr>
+<tr><th id="46">46</th><td>    <b>friend</b> <b>class</b> completion;</td></tr>
+<tr><th id="47">47</th><td>    uint64_t id_;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>  <b>protected</b>:</td></tr>
+<tr><th id="50">50</th><td>    <i>// Constructor initialises with no id.</i></td></tr>
+<tr><th id="51">51</th><td>    tracked_handler() : id_(<var>0</var>) {}</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <i>// Prevent deletion through this type.</i></td></tr>
+<tr><th id="54">54</th><td>    ~tracked_handler() {}</td></tr>
+<tr><th id="55">55</th><td>  };</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>  <i>// Initialise the tracking system.</i></td></tr>
+<tr><th id="58">58</th><td>  BOOST_ASIO_DECL <em>static</em> <em>void</em> init();</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>  <i>// Record the creation of a tracked handler.</i></td></tr>
+<tr><th id="61">61</th><td>  BOOST_ASIO_DECL <em>static</em> <em>void</em> creation(tracked_handler* h,</td></tr>
+<tr><th id="62">62</th><td>      <em>const</em> <em>char</em>* object_type, <em>void</em>* object, <em>const</em> <em>char</em>* op_name);</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>  <b>class</b> completion</td></tr>
+<tr><th id="65">65</th><td>  {</td></tr>
+<tr><th id="66">66</th><td>  <b>public</b>:</td></tr>
+<tr><th id="67">67</th><td>    <i>// Constructor records that handler is to be invoked with no arguments.</i></td></tr>
+<tr><th id="68">68</th><td>    BOOST_ASIO_DECL <b>explicit</b> completion(tracked_handler* h);</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>    <i>// Destructor records only when an exception is thrown from the handler, or</i></td></tr>
+<tr><th id="71">71</th><td><i>    // if the memory is being freed without the handler having been invoked.</i></td></tr>
+<tr><th id="72">72</th><td>    BOOST_ASIO_DECL ~completion();</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>    <i>// Records that handler is to be invoked with no arguments.</i></td></tr>
+<tr><th id="75">75</th><td>    BOOST_ASIO_DECL <em>void</em> invocation_begin();</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <i>// Records that handler is to be invoked with one arguments.</i></td></tr>
+<tr><th id="78">78</th><td>    BOOST_ASIO_DECL <em>void</em> invocation_begin(<em>const</em> boost::system::error_code&amp; ec);</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <i>// Constructor records that handler is to be invoked with two arguments.</i></td></tr>
+<tr><th id="81">81</th><td>    BOOST_ASIO_DECL <em>void</em> invocation_begin(</td></tr>
+<tr><th id="82">82</th><td>        <em>const</em> boost::system::error_code&amp; ec, std::size_t bytes_transferred);</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>    <i>// Constructor records that handler is to be invoked with two arguments.</i></td></tr>
+<tr><th id="85">85</th><td>    BOOST_ASIO_DECL <em>void</em> invocation_begin(</td></tr>
+<tr><th id="86">86</th><td>        <em>const</em> boost::system::error_code&amp; ec, <em>int</em> signal_number);</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>    <i>// Constructor records that handler is to be invoked with two arguments.</i></td></tr>
+<tr><th id="89">89</th><td>    BOOST_ASIO_DECL <em>void</em> invocation_begin(</td></tr>
+<tr><th id="90">90</th><td>        <em>const</em> boost::system::error_code&amp; ec, <em>const</em> <em>char</em>* arg);</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>    <i>// Record that handler invocation has ended.</i></td></tr>
+<tr><th id="93">93</th><td>    BOOST_ASIO_DECL <em>void</em> invocation_end();</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>  <b>private</b>:</td></tr>
+<tr><th id="96">96</th><td>    <b>friend</b> <b>class</b> handler_tracking;</td></tr>
+<tr><th id="97">97</th><td>    uint64_t id_;</td></tr>
+<tr><th id="98">98</th><td>    <em>bool</em> invoked_;</td></tr>
+<tr><th id="99">99</th><td>    completion* next_;</td></tr>
+<tr><th id="100">100</th><td>  };</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td>  <i>// Record an operation that affects pending handlers.</i></td></tr>
+<tr><th id="103">103</th><td>  BOOST_ASIO_DECL <em>static</em> <em>void</em> operation(<em>const</em> <em>char</em>* object_type,</td></tr>
+<tr><th id="104">104</th><td>      <em>void</em>* object, <em>const</em> <em>char</em>* op_name);</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>  <i>// Write a line of output.</i></td></tr>
+<tr><th id="107">107</th><td>  BOOST_ASIO_DECL <em>static</em> <em>void</em> write_line(<em>const</em> <em>char</em>* format, ...);</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><b>private</b>:</td></tr>
+<tr><th id="110">110</th><td>  <b>struct</b> tracking_state;</td></tr>
+<tr><th id="111">111</th><td>  BOOST_ASIO_DECL <em>static</em> tracking_state* get_state();</td></tr>
+<tr><th id="112">112</th><td>};</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td><u># define BOOST_ASIO_INHERIT_TRACKED_HANDLER \</u></td></tr>
+<tr><th id="115">115</th><td><u>  : public boost::asio::detail::handler_tracking::tracked_handler</u></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><u># define BOOST_ASIO_ALSO_INHERIT_TRACKED_HANDLER \</u></td></tr>
+<tr><th id="118">118</th><td><u>  , public boost::asio::detail::handler_tracking::tracked_handler</u></td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><u># define BOOST_ASIO_HANDLER_TRACKING_INIT \</u></td></tr>
+<tr><th id="121">121</th><td><u>  boost::asio::detail::handler_tracking::init()</u></td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><u># define BOOST_ASIO_HANDLER_CREATION(args) \</u></td></tr>
+<tr><th id="124">124</th><td><u>  boost::asio::detail::handler_tracking::creation args</u></td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td><u># define BOOST_ASIO_HANDLER_COMPLETION(args) \</u></td></tr>
+<tr><th id="127">127</th><td><u>  boost::asio::detail::handler_tracking::completion tracked_completion args</u></td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td><u># define BOOST_ASIO_HANDLER_INVOCATION_BEGIN(args) \</u></td></tr>
+<tr><th id="130">130</th><td><u>  tracked_completion.invocation_begin args</u></td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td><u># define BOOST_ASIO_HANDLER_INVOCATION_END \</u></td></tr>
+<tr><th id="133">133</th><td><u>  tracked_completion.invocation_end()</u></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td><u># define BOOST_ASIO_HANDLER_OPERATION(args) \</u></td></tr>
+<tr><th id="136">136</th><td><u>  boost::asio::detail::handler_tracking::operation args</u></td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td><u>#<span data-ppcond="33">else</span> // defined(BOOST_ASIO_ENABLE_HANDLER_TRACKING)</u></td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_INHERIT_TRACKED_HANDLER" data-ref="_M/BOOST_ASIO_INHERIT_TRACKED_HANDLER">BOOST_ASIO_INHERIT_TRACKED_HANDLER</dfn></u></td></tr>
+<tr><th id="141">141</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_ALSO_INHERIT_TRACKED_HANDLER" data-ref="_M/BOOST_ASIO_ALSO_INHERIT_TRACKED_HANDLER">BOOST_ASIO_ALSO_INHERIT_TRACKED_HANDLER</dfn></u></td></tr>
+<tr><th id="142">142</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_HANDLER_TRACKING_INIT" data-ref="_M/BOOST_ASIO_HANDLER_TRACKING_INIT">BOOST_ASIO_HANDLER_TRACKING_INIT</dfn> (void)0</u></td></tr>
+<tr><th id="143">143</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_HANDLER_CREATION" data-ref="_M/BOOST_ASIO_HANDLER_CREATION">BOOST_ASIO_HANDLER_CREATION</dfn>(args) (void)0</u></td></tr>
+<tr><th id="144">144</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_HANDLER_COMPLETION" data-ref="_M/BOOST_ASIO_HANDLER_COMPLETION">BOOST_ASIO_HANDLER_COMPLETION</dfn>(args) (void)0</u></td></tr>
+<tr><th id="145">145</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_HANDLER_INVOCATION_BEGIN" data-ref="_M/BOOST_ASIO_HANDLER_INVOCATION_BEGIN">BOOST_ASIO_HANDLER_INVOCATION_BEGIN</dfn>(args) (void)0</u></td></tr>
+<tr><th id="146">146</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_HANDLER_INVOCATION_END" data-ref="_M/BOOST_ASIO_HANDLER_INVOCATION_END">BOOST_ASIO_HANDLER_INVOCATION_END</dfn> (void)0</u></td></tr>
+<tr><th id="147">147</th><td><u># define <dfn class="macro" id="_M/BOOST_ASIO_HANDLER_OPERATION" data-ref="_M/BOOST_ASIO_HANDLER_OPERATION">BOOST_ASIO_HANDLER_OPERATION</dfn>(args) (void)0</u></td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td><u>#<span data-ppcond="33">endif</span> // defined(BOOST_ASIO_ENABLE_HANDLER_TRACKING)</u></td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>} <i>// namespace detail</i></td></tr>
+<tr><th id="152">152</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="153">153</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><u>#include <a href="pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td><u>#<span data-ppcond="157">if</span> defined(<a class="macro" href="config.hpp.html#37" data-ref="_M/BOOST_ASIO_HEADER_ONLY">BOOST_ASIO_HEADER_ONLY</a>)</u></td></tr>
+<tr><th id="158">158</th><td><u># include <a href="impl/handler_tracking.ipp.html">&lt;boost/asio/detail/impl/handler_tracking.ipp&gt;</a></u></td></tr>
+<tr><th id="159">159</th><td><u>#<span data-ppcond="157">endif</span> // defined(BOOST_ASIO_HEADER_ONLY)</u></td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DETAIL_HANDLER_TRACKING_HPP</u></td></tr>
+<tr><th id="162">162</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

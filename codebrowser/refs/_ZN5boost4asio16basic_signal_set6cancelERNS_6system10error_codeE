@@ -1,0 +1,21 @@
+<def f='include/boost/asio/basic_signal_set.hpp' l='337' type='boost::system::error_code boost::asio::basic_signal_set::cancel(boost::system::error_code &amp; ec)'/>
+<doc f='include/boost/asio/basic_signal_set.hpp' l='317'>/**
+   * This function forces the completion of any pending asynchronous wait
+   * operations against the signal set. The handler for each cancelled
+   * operation will be invoked with the boost::asio::error::operation_aborted
+   * error code.
+   *
+   * Cancellation does not alter the set of registered signals.
+   *
+   * @param ec Set to indicate what error occurred, if any.
+   *
+   * @note If a registered signal occurred before cancel() is called, then the
+   * handlers for asynchronous wait operations will:
+   *
+   * @li have already been invoked; or
+   *
+   * @li have been queued for invocation in the near future.
+   *
+   * These handlers can no longer be cancelled, and therefore are passed an
+   * error code that indicates the successful completion of the wait operation.
+   */</doc>

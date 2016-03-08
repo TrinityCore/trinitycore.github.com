@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<title>crypt_argchk.c [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/misc/crypt_argchk.c] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/misc/crypt_argchk.c'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>misc</a>/crypt_argchk.c</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* LibTomCrypt, modular cryptographic library -- Tom St Denis</i></td></tr>
+<tr><th id="2">2</th><td><i> *</i></td></tr>
+<tr><th id="3">3</th><td><i> * LibTomCrypt is a library that provides various cryptographic</i></td></tr>
+<tr><th id="4">4</th><td><i> * algorithms in a highly modular and flexible manner.</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * The library is free for all purposes without any express</i></td></tr>
+<tr><th id="7">7</th><td><i> * guarantee it works.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * Tom St Denis, tomstdenis@gmail.com, <a href="http://libtom.org">http://libtom.org</a></i></td></tr>
+<tr><th id="10">10</th><td><i> */</i></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../headers/tomcrypt.h.html">"../headers/tomcrypt.h"</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../../../../../../../include/signal.h.html">&lt;signal.h&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="15">15</th><td><i class="doc"> <span class="command"> @file</span> crypt_argchk.c</i></td></tr>
+<tr><th id="16">16</th><td><i class="doc">  Perform argument checking, Tom St Denis</i></td></tr>
+<tr><th id="17">17</th><td><i class="doc">*/</i>  </td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">if</span> (<a class="macro" href="../headers/tomcrypt_cfg.h.html#48" title="0" data-ref="_M/ARGTYPE">ARGTYPE</a> == 0)</u></td></tr>
+<tr><th id="20">20</th><td><em>void</em> <dfn class="decl def" id="crypt_argchk" title='crypt_argchk' data-ref="crypt_argchk" >crypt_argchk</dfn>(<em>char</em> *<dfn class="local col1 decl" id="1v" title='v' data-type='char *' data-ref="1v" >v</dfn>, <em>char</em> *<dfn class="local col2 decl" id="2s" title='s' data-type='char *' data-ref="2s" >s</dfn>, <em>int</em> <dfn class="local col3 decl" id="3d" title='d' data-type='int' data-ref="3d" >d</dfn>)</td></tr>
+<tr><th id="21">21</th><td>{</td></tr>
+<tr><th id="22">22</th><td>   <a class="ref" href="../../../../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>(<a class="macro" href="../../../../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"LTC_ARGCHK '%s' failure on line %d of file %s\n"</q>,</td></tr>
+<tr><th id="23">23</th><td>           <a class="local col1 ref" href="#1v" title='v' data-ref="1v" >v</a>, <a class="local col3 ref" href="#3d" title='d' data-ref="3d" >d</a>, <a class="local col2 ref" href="#2s" title='s' data-ref="2s" >s</a>);</td></tr>
+<tr><th id="24">24</th><td> (<em>void</em>)<a class="ref" href="../../../../../../../include/signal.h.html#raise" title='raise' data-ref="raise" id="raise" >raise</a>(<a class="macro" href="../../../../../../../include/x86_64-linux-gnu/bits/signum.h.html#37" title="6" data-ref="_M/SIGABRT">SIGABRT</a>);</td></tr>
+<tr><th id="25">25</th><td>}</td></tr>
+<tr><th id="26">26</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/misc/crypt/crypt_argchk.c,v $ */</i></td></tr>
+<tr><th id="29">29</th><td><i>/* $Revision: 1.5 $ */</i></td></tr>
+<tr><th id="30">30</th><td><i>/* $Date: 2006/12/28 01:27:24 $ */</i></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

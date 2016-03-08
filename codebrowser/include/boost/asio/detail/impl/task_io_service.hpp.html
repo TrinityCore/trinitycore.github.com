@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<title>task_io_service.hpp [include/boost/asio/detail/impl/task_io_service.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/detail/impl/task_io_service.hpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>include</a>/<a href='../../..'>boost</a>/<a href='../..'>asio</a>/<a href='..'>detail</a>/<a href='./'>impl</a>/task_io_service.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// detail/impl/task_io_service.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_DETAIL_IMPL_TASK_IO_SERVICE_HPP">BOOST_ASIO_DETAIL_IMPL_TASK_IO_SERVICE_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_DETAIL_IMPL_TASK_IO_SERVICE_HPP" data-ref="_M/BOOST_ASIO_DETAIL_IMPL_TASK_IO_SERVICE_HPP">BOOST_ASIO_DETAIL_IMPL_TASK_IO_SERVICE_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../addressof.hpp.html">&lt;boost/asio/detail/addressof.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../completion_handler.hpp.html">&lt;boost/asio/detail/completion_handler.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../fenced_block.hpp.html">&lt;boost/asio/detail/fenced_block.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../handler_alloc_helpers.hpp.html">&lt;boost/asio/detail/handler_alloc_helpers.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../handler_cont_helpers.hpp.html">&lt;boost/asio/detail/handler_cont_helpers.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../handler_invoke_helpers.hpp.html">&lt;boost/asio/detail/handler_invoke_helpers.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="28">28</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="29">29</th><td><b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>template</b> &lt;<b>typename</b> Handler&gt;</td></tr>
+<tr><th id="32">32</th><td><em>void</em> <a class="type" href="../task_io_service.hpp.html#boost::asio::detail::task_io_service" title='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::task_io_service" >task_io_service</a>::<dfn class="decl def" id="_ZN5boost4asio6detail15task_io_service8dispatchERT_" title='boost::asio::detail::task_io_service::dispatch' data-ref="_ZN5boost4asio6detail15task_io_service8dispatchERT_" >dispatch</dfn>(Handler&amp; <dfn class="local col5 decl" id="3145handler" title='handler' data-type='Handler &amp;' data-ref="3145handler" >handler</dfn>)</td></tr>
+<tr><th id="33">33</th><td>{</td></tr>
+<tr><th id="34">34</th><td>  <b>if</b> (<a class="typedef" href="../task_io_service.hpp.html#boost::asio::detail::task_io_service::thread_call_stack" title='boost::asio::detail::task_io_service::thread_call_stack' data-type='call_stack&lt;boost::asio::detail::task_io_service, thread_info&gt;' data-ref="boost::asio::detail::task_io_service::thread_call_stack" >thread_call_stack</a>::<a class="ref" href="../call_stack.hpp.html#_ZN5boost4asio6detail10call_stack8containsEPT_" title='boost::asio::detail::call_stack::contains' data-ref="_ZN5boost4asio6detail10call_stack8containsEPT_" id="_ZN5boost4asio6detail10call_stack8containsEPT_" >contains</a>(<b>this</b>))</td></tr>
+<tr><th id="35">35</th><td>  {</td></tr>
+<tr><th id="36">36</th><td>    <a class="typedef" href="../fenced_block.hpp.html#boost::asio::detail::fenced_block" title='boost::asio::detail::fenced_block' data-type='boost::asio::detail::gcc_x86_fenced_block' data-ref="boost::asio::detail::fenced_block" >fenced_block</a> <dfn class="local col6 decl" id="3146b" title='b' data-type='fenced_block' data-ref="3146b" >b</dfn><a class="ref" href="../gcc_x86_fenced_block.hpp.html#_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6full_tE" title='boost::asio::detail::gcc_x86_fenced_block::gcc_x86_fenced_block' data-ref="_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6full_tE" id="_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6full_tE" >(</a><a class="typedef" href="../fenced_block.hpp.html#boost::asio::detail::fenced_block" title='boost::asio::detail::fenced_block' data-type='boost::asio::detail::gcc_x86_fenced_block' data-ref="boost::asio::detail::fenced_block" >fenced_block</a>::<a class="enum" href="../gcc_x86_fenced_block.hpp.html#boost::asio::detail::gcc_x86_fenced_block::full_t::full" title='boost::asio::detail::gcc_x86_fenced_block::full_t::full' data-ref="boost::asio::detail::gcc_x86_fenced_block::full_t::full" id="boost::asio::detail::gcc_x86_fenced_block::full_t::full" >full</a>);</td></tr>
+<tr><th id="37">37</th><td>    <span class="namespace">boost_asio_handler_invoke_helpers::</span>invoke(<a class="local col5 ref" href="#3145handler" title='handler' data-ref="3145handler" >handler</a>, <a class="local col5 ref" href="#3145handler" title='handler' data-ref="3145handler" >handler</a>);</td></tr>
+<tr><th id="38">38</th><td>  }</td></tr>
+<tr><th id="39">39</th><td>  <b>else</b></td></tr>
+<tr><th id="40">40</th><td>  {</td></tr>
+<tr><th id="41">41</th><td>    <i>// Allocate and construct an operation to wrap the handler.</i></td></tr>
+<tr><th id="42">42</th><td>    <b>typedef</b> <a class="type" href="../completion_handler.hpp.html#boost::asio::detail::completion_handler" title='boost::asio::detail::completion_handler' data-ref="boost::asio::detail::completion_handler" >completion_handler</a>&lt;Handler&gt; <dfn class="local col7 typedef" id="3147op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3147op" >op</dfn>;</td></tr>
+<tr><th id="43">43</th><td>    <b>typename</b> <a class="local col7 typedef" href="#3147op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3147op" >op</a>::ptr <dfn class="local col8 decl" id="3148p" title='p' data-type='typename op::ptr' data-ref="3148p" >p</dfn> = { <span class="namespace">boost::asio::detail::</span>addressof(<a class="local col5 ref" href="#3145handler" title='handler' data-ref="3145handler" >handler</a>),</td></tr>
+<tr><th id="44">44</th><td>      <span class="namespace">boost_asio_handler_alloc_helpers::</span>allocate(</td></tr>
+<tr><th id="45">45</th><td>        <b>sizeof</b>(<a class="local col7 typedef" href="#3147op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3147op" >op</a>), <a class="local col5 ref" href="#3145handler" title='handler' data-ref="3145handler" >handler</a>), <var>0</var> };</td></tr>
+<tr><th id="46">46</th><td>    <a class="local col8 ref" href="#3148p" title='p' data-ref="3148p" >p</a>.p = <b>new</b> (<a class="local col8 ref" href="#3148p" title='p' data-ref="3148p" >p</a>.v) <a class="local col7 typedef" href="#3147op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3147op" >op</a>(<a class="local col5 ref" href="#3145handler" title='handler' data-ref="3145handler" >handler</a>);</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td>    <a class="macro" href="../handler_tracking.hpp.html#143" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_CREATION">BOOST_ASIO_HANDLER_CREATION</a>((p.p, <q>"io_service"</q>, <b>this</b>, <q>"dispatch"</q>));</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <a class="member" href="task_io_service.ipp.html#_ZN5boost4asio6detail15task_io_service11do_dispatchEPNS1_25task_io_service_operationE" title='boost::asio::detail::task_io_service::do_dispatch' data-ref="_ZN5boost4asio6detail15task_io_service11do_dispatchEPNS1_25task_io_service_operationE" id="_ZN5boost4asio6detail15task_io_service11do_dispatchEPNS1_25task_io_service_operationE" >do_dispatch</a>(<a class="local col8 ref" href="#3148p" title='p' data-ref="3148p" >p</a>.p);</td></tr>
+<tr><th id="51">51</th><td>    <a class="local col8 ref" href="#3148p" title='p' data-ref="3148p" >p</a>.v = <a class="local col8 ref" href="#3148p" title='p' data-ref="3148p" >p</a>.p = <var>0</var>;</td></tr>
+<tr><th id="52">52</th><td>  }</td></tr>
+<tr><th id="53">53</th><td>}</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><b>template</b> &lt;<b>typename</b> Handler&gt;</td></tr>
+<tr><th id="56">56</th><td><em>void</em> <a class="type" href="../task_io_service.hpp.html#boost::asio::detail::task_io_service" title='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::task_io_service" >task_io_service</a>::<dfn class="decl def" id="_ZN5boost4asio6detail15task_io_service4postERT_" title='boost::asio::detail::task_io_service::post' data-ref="_ZN5boost4asio6detail15task_io_service4postERT_" >post</dfn>(Handler&amp; <dfn class="local col9 decl" id="3149handler" title='handler' data-type='Handler &amp;' data-ref="3149handler" >handler</dfn>)</td></tr>
+<tr><th id="57">57</th><td>{</td></tr>
+<tr><th id="58">58</th><td>  <em>bool</em> <dfn class="local col0 decl" id="3150is_continuation" title='is_continuation' data-type='bool' data-ref="3150is_continuation" >is_continuation</dfn> =</td></tr>
+<tr><th id="59">59</th><td>    <span class="namespace">boost_asio_handler_cont_helpers::</span>is_continuation(<a class="local col9 ref" href="#3149handler" title='handler' data-ref="3149handler" >handler</a>);</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>  <i>// Allocate and construct an operation to wrap the handler.</i></td></tr>
+<tr><th id="62">62</th><td>  <b>typedef</b> <a class="type" href="../completion_handler.hpp.html#boost::asio::detail::completion_handler" title='boost::asio::detail::completion_handler' data-ref="boost::asio::detail::completion_handler" >completion_handler</a>&lt;Handler&gt; <dfn class="local col1 typedef" id="3151op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3151op" >op</dfn>;</td></tr>
+<tr><th id="63">63</th><td>  <b>typename</b> <a class="local col1 typedef" href="#3151op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3151op" >op</a>::ptr <dfn class="local col2 decl" id="3152p" title='p' data-type='typename op::ptr' data-ref="3152p" >p</dfn> = { <span class="namespace">boost::asio::detail::</span>addressof(<a class="local col9 ref" href="#3149handler" title='handler' data-ref="3149handler" >handler</a>),</td></tr>
+<tr><th id="64">64</th><td>    <span class="namespace">boost_asio_handler_alloc_helpers::</span>allocate(</td></tr>
+<tr><th id="65">65</th><td>      <b>sizeof</b>(<a class="local col1 typedef" href="#3151op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3151op" >op</a>), <a class="local col9 ref" href="#3149handler" title='handler' data-ref="3149handler" >handler</a>), <var>0</var> };</td></tr>
+<tr><th id="66">66</th><td>  <a class="local col2 ref" href="#3152p" title='p' data-ref="3152p" >p</a>.p = <b>new</b> (<a class="local col2 ref" href="#3152p" title='p' data-ref="3152p" >p</a>.v) <a class="local col1 typedef" href="#3151op" title='op' data-type='completion_handler&lt;Handler&gt;' data-ref="3151op" >op</a>(<a class="local col9 ref" href="#3149handler" title='handler' data-ref="3149handler" >handler</a>);</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>  <a class="macro" href="../handler_tracking.hpp.html#143" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_CREATION">BOOST_ASIO_HANDLER_CREATION</a>((p.p, <q>"io_service"</q>, <b>this</b>, <q>"post"</q>));</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>  <a class="member" href="task_io_service.ipp.html#_ZN5boost4asio6detail15task_io_service25post_immediate_completionEPNS1_25task_io_service_operationEb" title='boost::asio::detail::task_io_service::post_immediate_completion' data-ref="_ZN5boost4asio6detail15task_io_service25post_immediate_completionEPNS1_25task_io_service_operationEb" id="_ZN5boost4asio6detail15task_io_service25post_immediate_completionEPNS1_25task_io_service_operationEb" >post_immediate_completion</a>(<a class="local col2 ref" href="#3152p" title='p' data-ref="3152p" >p</a>.p, <a class="local col0 ref" href="#3150is_continuation" title='is_continuation' data-ref="3150is_continuation" >is_continuation</a>);</td></tr>
+<tr><th id="71">71</th><td>  <a class="local col2 ref" href="#3152p" title='p' data-ref="3152p" >p</a>.v = <a class="local col2 ref" href="#3152p" title='p' data-ref="3152p" >p</a>.p = <var>0</var>;</td></tr>
+<tr><th id="72">72</th><td>}</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>} <i>// namespace detail</i></td></tr>
+<tr><th id="75">75</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="76">76</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><u>#include <a href="../pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DETAIL_IMPL_TASK_IO_SERVICE_HPP</u></td></tr>
+<tr><th id="81">81</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,397 @@
+<!doctype html>
+<html>
+<head>
+<title>extensions.hpp [include/boost/functional/hash/extensions.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/functional/hash/extensions.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>functional</a>/<a href='./'>hash</a>/extensions.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td></td></tr>
+<tr><th id="2">2</th><td><i>// Copyright 2005-2009 Daniel James.</i></td></tr>
+<tr><th id="3">3</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="4">4</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="5">5</th><td><i></i></td></tr>
+<tr><th id="6">6</th><td><i>//  Based on Peter Dimov's proposal</i></td></tr>
+<tr><th id="7">7</th><td><i>//  <a href="http://www.open-std.org/JTC">http://www.open-std.org/JTC</a>1/SC22/WG21/docs/papers/2005/n1756.pdf</i></td></tr>
+<tr><th id="8">8</th><td><i>//  issue 6.18. </i></td></tr>
+<tr><th id="9">9</th><td><i></i></td></tr>
+<tr><th id="10">10</th><td><i>// This implements the extensions to the standard.</i></td></tr>
+<tr><th id="11">11</th><td><i>// It's undocumented, so you shouldn't use it....</i></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">if</span> !defined(<span class="macro" data-ref="_M/BOOST_FUNCTIONAL_HASH_EXTENSIONS_HPP">BOOST_FUNCTIONAL_HASH_EXTENSIONS_HPP</span>)</u></td></tr>
+<tr><th id="14">14</th><td><u>#define <dfn class="macro" id="_M/BOOST_FUNCTIONAL_HASH_EXTENSIONS_HPP" data-ref="_M/BOOST_FUNCTIONAL_HASH_EXTENSIONS_HPP">BOOST_FUNCTIONAL_HASH_EXTENSIONS_HPP</dfn></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="hash.hpp.html">&lt;boost/functional/hash/hash.hpp&gt;</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../../detail/container_fwd.hpp.html">&lt;boost/detail/container_fwd.hpp&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../utility/enable_if.hpp.html">&lt;boost/utility/enable_if.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../static_assert.hpp.html">&lt;boost/static_assert.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../preprocessor/repetition/repeat_from_to.hpp.html">&lt;boost/preprocessor/repetition/repeat_from_to.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../preprocessor/repetition/enum_params.hpp.html">&lt;boost/preprocessor/repetition/enum_params.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#<span data-ppcond="23">if</span> !defined(<a class="macro" href="../../config/stdlib/libstdcpp3.hpp.html#109" data-ref="_M/BOOST_NO_CXX11_HDR_ARRAY">BOOST_NO_CXX11_HDR_ARRAY</a>)</u></td></tr>
+<tr><th id="24">24</th><td><u>#   include &lt;array&gt;</u></td></tr>
+<tr><th id="25">25</th><td><u>#<span data-ppcond="23">endif</span></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="27">if</span> !defined(<a class="macro" href="../../config/stdlib/libstdcpp3.hpp.html#111" data-ref="_M/BOOST_NO_CXX11_HDR_TUPLE">BOOST_NO_CXX11_HDR_TUPLE</a>)</u></td></tr>
+<tr><th id="28">28</th><td><u>#   include &lt;tuple&gt;</u></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="27">endif</span></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><u>#<span data-ppcond="31">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_HDR_MEMORY">BOOST_NO_CXX11_HDR_MEMORY</span>)</u></td></tr>
+<tr><th id="32">32</th><td><u>#   include <a href="../../../c++/4.9/memory.html">&lt;memory&gt;</a></u></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="31">endif</span></u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="35">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1020)</u></td></tr>
+<tr><th id="36">36</th><td><u># pragma once</u></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="35">endif</span></u></td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><u>#<span data-ppcond="39">if</span> defined(<span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span>)</u></td></tr>
+<tr><th id="40">40</th><td><u>#include &lt;boost/type_traits/is_array.hpp&gt;</u></td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="39">endif</span></u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><u>#<span data-ppcond="43">if</span> <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt; 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt; 1300)</u></td></tr>
+<tr><th id="44">44</th><td><u>#include &lt;boost/type_traits/is_const.hpp&gt;</u></td></tr>
+<tr><th id="45">45</th><td><u>#<span data-ppcond="43">endif</span></u></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><b>namespace</b> <span class="namespace">boost</span></td></tr>
+<tr><th id="48">48</th><td>{</td></tr>
+<tr><th id="49">49</th><td>    <b>template</b> &lt;<b>class</b> A, <b>class</b> B&gt;</td></tr>
+<tr><th id="50">50</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt4pairIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt4pairIT_T0_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_pair.h.html#std::pair" title='std::pair' data-ref="std::pair" >pair</a>&lt;A, B&gt; <em>const</em>&amp;);</td></tr>
+<tr><th id="51">51</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> A&gt;</td></tr>
+<tr><th id="52">52</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt6vectorIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt6vectorIT_T0_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T, A&gt; <em>const</em>&amp;);</td></tr>
+<tr><th id="53">53</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> A&gt;</td></tr>
+<tr><th id="54">54</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt4listIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt4listIT_T0_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_list.h.html#std::list" title='std::list' data-ref="std::list" >list</a>&lt;T, A&gt; <em>const</em>&amp; <dfn class="local col8 decl" id="1818v" title='v' data-type='const std::list&lt;T, A&gt; &amp;' data-ref="1818v" >v</dfn>);</td></tr>
+<tr><th id="55">55</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> A&gt;</td></tr>
+<tr><th id="56">56</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt5dequeIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt5dequeIT_T0_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_deque.h.html#std::deque" title='std::deque' data-ref="std::deque" >deque</a>&lt;T, A&gt; <em>const</em>&amp; <dfn class="local col9 decl" id="1819v" title='v' data-type='const std::deque&lt;T, A&gt; &amp;' data-ref="1819v" >v</dfn>);</td></tr>
+<tr><th id="57">57</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="58">58</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt3setIT_T0_T1_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt3setIT_T0_T1_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_set.h.html#std::set" title='std::set' data-ref="std::set" >set</a>&lt;K, C, A&gt; <em>const</em>&amp; <dfn class="local col0 decl" id="1820v" title='v' data-type='const std::set&lt;K, C, A&gt; &amp;' data-ref="1820v" >v</dfn>);</td></tr>
+<tr><th id="59">59</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="60">60</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt8multisetIT_T0_T1_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt8multisetIT_T0_T1_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_multiset.h.html#std::multiset" title='std::multiset' data-ref="std::multiset" >multiset</a>&lt;K, C, A&gt; <em>const</em>&amp; <dfn class="local col1 decl" id="1821v" title='v' data-type='const std::multiset&lt;K, C, A&gt; &amp;' data-ref="1821v" >v</dfn>);</td></tr>
+<tr><th id="61">61</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> T, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="62">62</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt3mapIT_T0_T1_T2_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt3mapIT_T0_T1_T2_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_map.h.html#std::map" title='std::map' data-ref="std::map" >map</a>&lt;K, T, C, A&gt; <em>const</em>&amp; <dfn class="local col2 decl" id="1822v" title='v' data-type='const std::map&lt;K, T, C, A&gt; &amp;' data-ref="1822v" >v</dfn>);</td></tr>
+<tr><th id="63">63</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> T, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="64">64</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt8multimapIT_T0_T1_T2_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt8multimapIT_T0_T1_T2_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_multimap.h.html#std::multimap" title='std::multimap' data-ref="std::multimap" >multimap</a>&lt;K, T, C, A&gt; <em>const</em>&amp; <dfn class="local col3 decl" id="1823v" title='v' data-type='const std::multimap&lt;K, T, C, A&gt; &amp;' data-ref="1823v" >v</dfn>);</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="67">67</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <a class="decl" href="#_ZN5boost10hash_valueERKSt7complexIT_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt7complexIT_E" >hash_value</a>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/complex.html#std::complex" title='std::complex' data-ref="std::complex" >complex</a>&lt;T&gt; <em>const</em>&amp;);</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>    <b>template</b> &lt;<b>class</b> A, <b>class</b> B&gt;</td></tr>
+<tr><th id="70">70</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt4pairIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt4pairIT_T0_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_pair.h.html#std::pair" title='std::pair' data-ref="std::pair" >pair</a>&lt;A, B&gt; <em>const</em>&amp; <dfn class="local col4 decl" id="1824v" title='v' data-type='const std::pair&lt;A, B&gt; &amp;' data-ref="1824v" >v</dfn>)</td></tr>
+<tr><th id="71">71</th><td>    {</td></tr>
+<tr><th id="72">72</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col5 decl" id="1825seed" title='seed' data-type='std::size_t' data-ref="1825seed" >seed</dfn> = <var>0</var>;</td></tr>
+<tr><th id="73">73</th><td>        <span class="namespace">boost::</span>hash_combine(<a class="local col5 ref" href="#1825seed" title='seed' data-ref="1825seed" >seed</a>, <a class="local col4 ref" href="#1824v" title='v' data-ref="1824v" >v</a>.first);</td></tr>
+<tr><th id="74">74</th><td>        <span class="namespace">boost::</span>hash_combine(<a class="local col5 ref" href="#1825seed" title='seed' data-ref="1825seed" >seed</a>, <a class="local col4 ref" href="#1824v" title='v' data-ref="1824v" >v</a>.second);</td></tr>
+<tr><th id="75">75</th><td>        <b>return</b> <a class="local col5 ref" href="#1825seed" title='seed' data-ref="1825seed" >seed</a>;</td></tr>
+<tr><th id="76">76</th><td>    }</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> A&gt;</td></tr>
+<tr><th id="79">79</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt6vectorIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt6vectorIT_T0_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T, A&gt; <em>const</em>&amp; <dfn class="local col6 decl" id="1826v" title='v' data-type='const std::vector&lt;T, A&gt; &amp;' data-ref="1826v" >v</dfn>)</td></tr>
+<tr><th id="80">80</th><td>    {</td></tr>
+<tr><th id="81">81</th><td>        <b>return</b> <span class="namespace">boost::</span>hash_range(<a class="local col6 ref" href="#1826v" title='v' data-ref="1826v" >v</a>.begin(), <a class="local col6 ref" href="#1826v" title='v' data-ref="1826v" >v</a>.end());</td></tr>
+<tr><th id="82">82</th><td>    }</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> A&gt;</td></tr>
+<tr><th id="85">85</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt4listIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt4listIT_T0_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_list.h.html#std::list" title='std::list' data-ref="std::list" >list</a>&lt;T, A&gt; <em>const</em>&amp; <dfn class="local col7 decl" id="1827v" title='v' data-type='const std::list&lt;T, A&gt; &amp;' data-ref="1827v" >v</dfn>)</td></tr>
+<tr><th id="86">86</th><td>    {</td></tr>
+<tr><th id="87">87</th><td>        <b>return</b> <span class="namespace">boost::</span>hash_range(<a class="local col7 ref" href="#1827v" title='v' data-ref="1827v" >v</a>.begin(), <a class="local col7 ref" href="#1827v" title='v' data-ref="1827v" >v</a>.end());</td></tr>
+<tr><th id="88">88</th><td>    }</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> A&gt;</td></tr>
+<tr><th id="91">91</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt5dequeIT_T0_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt5dequeIT_T0_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_deque.h.html#std::deque" title='std::deque' data-ref="std::deque" >deque</a>&lt;T, A&gt; <em>const</em>&amp; <dfn class="local col8 decl" id="1828v" title='v' data-type='const std::deque&lt;T, A&gt; &amp;' data-ref="1828v" >v</dfn>)</td></tr>
+<tr><th id="92">92</th><td>    {</td></tr>
+<tr><th id="93">93</th><td>        <b>return</b> <span class="namespace">boost::</span>hash_range(<a class="local col8 ref" href="#1828v" title='v' data-ref="1828v" >v</a>.begin(), <a class="local col8 ref" href="#1828v" title='v' data-ref="1828v" >v</a>.end());</td></tr>
+<tr><th id="94">94</th><td>    }</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="97">97</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt3setIT_T0_T1_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt3setIT_T0_T1_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_set.h.html#std::set" title='std::set' data-ref="std::set" >set</a>&lt;K, C, A&gt; <em>const</em>&amp; <dfn class="local col9 decl" id="1829v" title='v' data-type='const std::set&lt;K, C, A&gt; &amp;' data-ref="1829v" >v</dfn>)</td></tr>
+<tr><th id="98">98</th><td>    {</td></tr>
+<tr><th id="99">99</th><td>        <b>return</b> <span class="namespace">boost::</span>hash_range(<a class="local col9 ref" href="#1829v" title='v' data-ref="1829v" >v</a>.begin(), <a class="local col9 ref" href="#1829v" title='v' data-ref="1829v" >v</a>.end());</td></tr>
+<tr><th id="100">100</th><td>    }</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="103">103</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt8multisetIT_T0_T1_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt8multisetIT_T0_T1_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_multiset.h.html#std::multiset" title='std::multiset' data-ref="std::multiset" >multiset</a>&lt;K, C, A&gt; <em>const</em>&amp; <dfn class="local col0 decl" id="1830v" title='v' data-type='const std::multiset&lt;K, C, A&gt; &amp;' data-ref="1830v" >v</dfn>)</td></tr>
+<tr><th id="104">104</th><td>    {</td></tr>
+<tr><th id="105">105</th><td>        <b>return</b> <span class="namespace">boost::</span>hash_range(<a class="local col0 ref" href="#1830v" title='v' data-ref="1830v" >v</a>.begin(), <a class="local col0 ref" href="#1830v" title='v' data-ref="1830v" >v</a>.end());</td></tr>
+<tr><th id="106">106</th><td>    }</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> T, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="109">109</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt3mapIT_T0_T1_T2_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt3mapIT_T0_T1_T2_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_map.h.html#std::map" title='std::map' data-ref="std::map" >map</a>&lt;K, T, C, A&gt; <em>const</em>&amp; <dfn class="local col1 decl" id="1831v" title='v' data-type='const std::map&lt;K, T, C, A&gt; &amp;' data-ref="1831v" >v</dfn>)</td></tr>
+<tr><th id="110">110</th><td>    {</td></tr>
+<tr><th id="111">111</th><td>        <b>return</b> <span class="namespace">boost::</span>hash_range(<a class="local col1 ref" href="#1831v" title='v' data-ref="1831v" >v</a>.begin(), <a class="local col1 ref" href="#1831v" title='v' data-ref="1831v" >v</a>.end());</td></tr>
+<tr><th id="112">112</th><td>    }</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>    <b>template</b> &lt;<b>class</b> K, <b>class</b> T, <b>class</b> C, <b>class</b> A&gt;</td></tr>
+<tr><th id="115">115</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt8multimapIT_T0_T1_T2_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt8multimapIT_T0_T1_T2_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_multimap.h.html#std::multimap" title='std::multimap' data-ref="std::multimap" >multimap</a>&lt;K, T, C, A&gt; <em>const</em>&amp; <dfn class="local col2 decl" id="1832v" title='v' data-type='const std::multimap&lt;K, T, C, A&gt; &amp;' data-ref="1832v" >v</dfn>)</td></tr>
+<tr><th id="116">116</th><td>    {</td></tr>
+<tr><th id="117">117</th><td>        <b>return</b> <span class="namespace">boost::</span>hash_range(<a class="local col2 ref" href="#1832v" title='v' data-ref="1832v" >v</a>.begin(), <a class="local col2 ref" href="#1832v" title='v' data-ref="1832v" >v</a>.end());</td></tr>
+<tr><th id="118">118</th><td>    }</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>    <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="121">121</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost10hash_valueERKSt7complexIT_E" title='boost::hash_value' data-ref="_ZN5boost10hash_valueERKSt7complexIT_E" >hash_value</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/complex.html#std::complex" title='std::complex' data-ref="std::complex" >complex</a>&lt;T&gt; <em>const</em>&amp; <dfn class="local col3 decl" id="1833v" title='v' data-type='const std::complex&lt;T&gt; &amp;' data-ref="1833v" >v</dfn>)</td></tr>
+<tr><th id="122">122</th><td>    {</td></tr>
+<tr><th id="123">123</th><td>        <span class="namespace">boost::</span><a class="type" href="hash_fwd.hpp.html#boost::hash" title='boost::hash' data-ref="boost::hash" >hash</a>&lt;T&gt; <dfn class="local col4 decl" id="1834hasher" title='hasher' data-type='boost::hash&lt;T&gt;' data-ref="1834hasher" >hasher</dfn>;</td></tr>
+<tr><th id="124">124</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col5 decl" id="1835seed" title='seed' data-type='std::size_t' data-ref="1835seed" >seed</dfn> = <a class="local col4 ref" href="#1834hasher" title='hasher' data-ref="1834hasher" >hasher</a>(<a class="local col3 ref" href="#1833v" title='v' data-ref="1833v" >v</a>.imag());</td></tr>
+<tr><th id="125">125</th><td>        <a class="local col5 ref" href="#1835seed" title='seed' data-ref="1835seed" >seed</a> ^= <a class="local col4 ref" href="#1834hasher" title='hasher' data-ref="1834hasher" >hasher</a>(<a class="local col3 ref" href="#1833v" title='v' data-ref="1833v" >v</a>.real()) + (<a class="local col5 ref" href="#1835seed" title='seed' data-ref="1835seed" >seed</a>&lt;&lt;<var>6</var>) + (<a class="local col5 ref" href="#1835seed" title='seed' data-ref="1835seed" >seed</a>&gt;&gt;<var>2</var>);</td></tr>
+<tr><th id="126">126</th><td>        <b>return</b> <a class="local col5 ref" href="#1835seed" title='seed' data-ref="1835seed" >seed</a>;</td></tr>
+<tr><th id="127">127</th><td>    }</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td><u>#<span data-ppcond="129">if</span> !defined(<a class="macro" href="../../config/stdlib/libstdcpp3.hpp.html#109" data-ref="_M/BOOST_NO_CXX11_HDR_ARRAY">BOOST_NO_CXX11_HDR_ARRAY</a>)</u></td></tr>
+<tr><th id="130">130</th><td>    <b>template</b> &lt;<b>class</b> T, std::size_t N&gt;</td></tr>
+<tr><th id="131">131</th><td>    std::size_t hash_value(std::array&lt;T, N&gt; <em>const</em>&amp; v)</td></tr>
+<tr><th id="132">132</th><td>    {</td></tr>
+<tr><th id="133">133</th><td>        <b>return</b> boost::hash_range(v.begin(), v.end());</td></tr>
+<tr><th id="134">134</th><td>    }</td></tr>
+<tr><th id="135">135</th><td><u>#<span data-ppcond="129">endif</span></u></td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><u>#<span data-ppcond="137">if</span> !defined(<a class="macro" href="../../config/stdlib/libstdcpp3.hpp.html#111" data-ref="_M/BOOST_NO_CXX11_HDR_TUPLE">BOOST_NO_CXX11_HDR_TUPLE</a>)</u></td></tr>
+<tr><th id="138">138</th><td>    <b>namespace</b> hash_detail {</td></tr>
+<tr><th id="139">139</th><td>        <b>template</b> &lt;std::size_t I, <b>typename</b> T&gt;</td></tr>
+<tr><th id="140">140</th><td>        <b>inline</b> <b>typename</b> boost::enable_if_c&lt;(I == std::tuple_size&lt;T&gt;::value),</td></tr>
+<tr><th id="141">141</th><td>                <em>void</em>&gt;::type</td></tr>
+<tr><th id="142">142</th><td>            hash_combine_tuple(std::size_t&amp;, T <em>const</em>&amp;)</td></tr>
+<tr><th id="143">143</th><td>        {</td></tr>
+<tr><th id="144">144</th><td>        }</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td>        <b>template</b> &lt;std::size_t I, <b>typename</b> T&gt;</td></tr>
+<tr><th id="147">147</th><td>        <b>inline</b> <b>typename</b> boost::enable_if_c&lt;(I &lt; std::tuple_size&lt;T&gt;::value),</td></tr>
+<tr><th id="148">148</th><td>                <em>void</em>&gt;::type</td></tr>
+<tr><th id="149">149</th><td>            hash_combine_tuple(std::size_t&amp; seed, T <em>const</em>&amp; v)</td></tr>
+<tr><th id="150">150</th><td>        {</td></tr>
+<tr><th id="151">151</th><td>            boost::hash_combine(seed, std::get&lt;I&gt;(v));</td></tr>
+<tr><th id="152">152</th><td>            boost::hash_detail::hash_combine_tuple&lt;I + <var>1</var>&gt;(seed, v);</td></tr>
+<tr><th id="153">153</th><td>        }</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td>        <b>template</b> &lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="156">156</th><td>        <b>inline</b> std::size_t hash_tuple(T <em>const</em>&amp; v)</td></tr>
+<tr><th id="157">157</th><td>        {</td></tr>
+<tr><th id="158">158</th><td>            std::size_t seed = <var>0</var>;</td></tr>
+<tr><th id="159">159</th><td>            boost::hash_detail::hash_combine_tuple&lt;<var>0</var>&gt;(seed, v);</td></tr>
+<tr><th id="160">160</th><td>            <b>return</b> seed;</td></tr>
+<tr><th id="161">161</th><td>        }</td></tr>
+<tr><th id="162">162</th><td>    }</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td><u>#if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)</u></td></tr>
+<tr><th id="165">165</th><td>    <b>template</b> &lt;<b>typename</b>... T&gt;</td></tr>
+<tr><th id="166">166</th><td>    <b>inline</b> std::size_t hash_value(std::tuple&lt;T...&gt; <em>const</em>&amp; v)</td></tr>
+<tr><th id="167">167</th><td>    {</td></tr>
+<tr><th id="168">168</th><td>        <b>return</b> boost::hash_detail::hash_tuple(v);</td></tr>
+<tr><th id="169">169</th><td>    }</td></tr>
+<tr><th id="170">170</th><td><u>#else</u></td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>    <b>inline</b> std::size_t hash_value(std::tuple&lt;&gt; <em>const</em>&amp; v)</td></tr>
+<tr><th id="173">173</th><td>    {</td></tr>
+<tr><th id="174">174</th><td>        <b>return</b> boost::hash_detail::hash_tuple(v);</td></tr>
+<tr><th id="175">175</th><td>    }</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td><u>#   define BOOST_HASH_TUPLE_F(z, n, _)                                      \</u></td></tr>
+<tr><th id="178">178</th><td><u>    template&lt;                                                               \</u></td></tr>
+<tr><th id="179">179</th><td><u>        BOOST_PP_ENUM_PARAMS_Z(z, n, typename A)                            \</u></td></tr>
+<tr><th id="180">180</th><td><u>    &gt;                                                                       \</u></td></tr>
+<tr><th id="181">181</th><td><u>    inline std::size_t hash_value(std::tuple&lt;                               \</u></td></tr>
+<tr><th id="182">182</th><td><u>        BOOST_PP_ENUM_PARAMS_Z(z, n, A)                                     \</u></td></tr>
+<tr><th id="183">183</th><td><u>    &gt; const&amp; v)                                                             \</u></td></tr>
+<tr><th id="184">184</th><td><u>    {                                                                       \</u></td></tr>
+<tr><th id="185">185</th><td><u>        return boost::hash_detail::hash_tuple(v);                           \</u></td></tr>
+<tr><th id="186">186</th><td><u>    }</u></td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>    BOOST_PP_REPEAT_FROM_TO(<var>1</var>, <var>11</var>, BOOST_HASH_TUPLE_F, _)</td></tr>
+<tr><th id="189">189</th><td><u>#   undef BOOST_HASH_TUPLE_F</u></td></tr>
+<tr><th id="190">190</th><td><u>#endif</u></td></tr>
+<tr><th id="191">191</th><td></td></tr>
+<tr><th id="192">192</th><td><u>#<span data-ppcond="137">endif</span></u></td></tr>
+<tr><th id="193">193</th><td></td></tr>
+<tr><th id="194">194</th><td><u>#<span data-ppcond="194">if</span> !defined(<a class="macro" href="../../config/stdlib/libstdcpp3.hpp.html#126" data-ref="_M/BOOST_NO_CXX11_SMART_PTR">BOOST_NO_CXX11_SMART_PTR</a>)</u></td></tr>
+<tr><th id="195">195</th><td>    <b>template</b> &lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="196">196</th><td>    <b>inline</b> std::size_t hash_value(std::shared_ptr&lt;T&gt; <em>const</em>&amp; x) {</td></tr>
+<tr><th id="197">197</th><td>        <b>return</b> boost::hash_value(x.get());</td></tr>
+<tr><th id="198">198</th><td>    }</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>    <b>template</b> &lt;<b>typename</b> T, <b>typename</b> Deleter&gt;</td></tr>
+<tr><th id="201">201</th><td>    <b>inline</b> std::size_t hash_value(std::unique_ptr&lt;T, Deleter&gt; <em>const</em>&amp; x) {</td></tr>
+<tr><th id="202">202</th><td>        <b>return</b> boost::hash_value(x.get());</td></tr>
+<tr><th id="203">203</th><td>    }</td></tr>
+<tr><th id="204">204</th><td><u>#<span data-ppcond="194">endif</span></u></td></tr>
+<tr><th id="205">205</th><td></td></tr>
+<tr><th id="206">206</th><td>    <i>//</i></td></tr>
+<tr><th id="207">207</th><td><i>    // call_hash_impl</i></td></tr>
+<tr><th id="208">208</th><td><i>    //</i></td></tr>
+<tr><th id="209">209</th><td><i></i></td></tr>
+<tr><th id="210">210</th><td><i>    // On compilers without function template ordering, this deals with arrays.</i></td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td><u>#<span data-ppcond="212">if</span> defined(<span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span>)</u></td></tr>
+<tr><th id="213">213</th><td>    <b>namespace</b> hash_detail</td></tr>
+<tr><th id="214">214</th><td>    {</td></tr>
+<tr><th id="215">215</th><td>        <b>template</b> &lt;<em>bool</em> IsArray&gt;</td></tr>
+<tr><th id="216">216</th><td>        <b>struct</b> call_hash_impl</td></tr>
+<tr><th id="217">217</th><td>        {</td></tr>
+<tr><th id="218">218</th><td>            <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="219">219</th><td>            <b>struct</b> inner</td></tr>
+<tr><th id="220">220</th><td>            {</td></tr>
+<tr><th id="221">221</th><td>                <em>static</em> std::size_t call(T <em>const</em>&amp; v)</td></tr>
+<tr><th id="222">222</th><td>                {</td></tr>
+<tr><th id="223">223</th><td>                    <b>using</b> <b>namespace</b> boost;</td></tr>
+<tr><th id="224">224</th><td>                    <b>return</b> hash_value(v);</td></tr>
+<tr><th id="225">225</th><td>                }</td></tr>
+<tr><th id="226">226</th><td>            };</td></tr>
+<tr><th id="227">227</th><td>        };</td></tr>
+<tr><th id="228">228</th><td></td></tr>
+<tr><th id="229">229</th><td>        <b>template</b> &lt;&gt;</td></tr>
+<tr><th id="230">230</th><td>        <b>struct</b> call_hash_impl&lt;<b>true</b>&gt;</td></tr>
+<tr><th id="231">231</th><td>        {</td></tr>
+<tr><th id="232">232</th><td>            <b>template</b> &lt;<b>class</b> Array&gt;</td></tr>
+<tr><th id="233">233</th><td>            <b>struct</b> inner</td></tr>
+<tr><th id="234">234</th><td>            {</td></tr>
+<tr><th id="235">235</th><td><u>#if !BOOST_WORKAROUND(BOOST_MSVC, &lt; 1300)</u></td></tr>
+<tr><th id="236">236</th><td>                <em>static</em> std::size_t call(Array <em>const</em>&amp; v)</td></tr>
+<tr><th id="237">237</th><td><u>#else</u></td></tr>
+<tr><th id="238">238</th><td>                <em>static</em> std::size_t call(Array&amp; v)</td></tr>
+<tr><th id="239">239</th><td><u>#endif</u></td></tr>
+<tr><th id="240">240</th><td>                {</td></tr>
+<tr><th id="241">241</th><td>                    <em>const</em> <em>int</em> size = <b>sizeof</b>(v) / <b>sizeof</b>(*v);</td></tr>
+<tr><th id="242">242</th><td>                    <b>return</b> boost::hash_range(v, v + size);</td></tr>
+<tr><th id="243">243</th><td>                }</td></tr>
+<tr><th id="244">244</th><td>            };</td></tr>
+<tr><th id="245">245</th><td>        };</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td>        <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="248">248</th><td>        <b>struct</b> call_hash</td></tr>
+<tr><th id="249">249</th><td>            : <b>public</b> call_hash_impl&lt;boost::is_array&lt;T&gt;::value&gt;</td></tr>
+<tr><th id="250">250</th><td>                ::BOOST_NESTED_TEMPLATE inner&lt;T&gt;</td></tr>
+<tr><th id="251">251</th><td>        {</td></tr>
+<tr><th id="252">252</th><td>        };</td></tr>
+<tr><th id="253">253</th><td>    }</td></tr>
+<tr><th id="254">254</th><td><u>#<span data-ppcond="212">endif</span> // BOOST_NO_FUNCTION_TEMPLATE_ORDERING</u></td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td>    <i>//</i></td></tr>
+<tr><th id="257">257</th><td><i>    // boost::hash</i></td></tr>
+<tr><th id="258">258</th><td><i>    //</i></td></tr>
+<tr><th id="259">259</th><td></td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td><u>#<span data-ppcond="261">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION">BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION</span>)</u></td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td>    <b>template</b> &lt;<b>class</b> T&gt; <b>struct</b> <dfn class="type def" id="boost::hash" title='boost::hash' data-ref="boost::hash" >hash</dfn></td></tr>
+<tr><th id="264">264</th><td>        : <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_function.h.html#std::unary_function" title='std::unary_function' data-ref="std::unary_function" >unary_function</a>&lt;T, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;</td></tr>
+<tr><th id="265">265</th><td>    {</td></tr>
+<tr><th id="266">266</th><td><u>#<span data-ppcond="266">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_FUNCTION_TEMPLATE_ORDERING">BOOST_NO_FUNCTION_TEMPLATE_ORDERING</span>)</u></td></tr>
+<tr><th id="267">267</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZNK5boost4hashclERKT_" title='boost::hash::operator()' data-ref="_ZNK5boost4hashclERKT_" ><b>operator</b>()</dfn>(T <em>const</em>&amp; <dfn class="local col6 decl" id="1836val" title='val' data-type='const T &amp;' data-ref="1836val" >val</dfn>) <em>const</em></td></tr>
+<tr><th id="268">268</th><td>        {</td></tr>
+<tr><th id="269">269</th><td>            <b>return</b> hash_value(<a class="local col6 ref" href="#1836val" title='val' data-ref="1836val" >val</a>);</td></tr>
+<tr><th id="270">270</th><td>        }</td></tr>
+<tr><th id="271">271</th><td><u>#<span data-ppcond="266">else</span></u></td></tr>
+<tr><th id="272">272</th><td>        std::size_t <b>operator</b>()(T <em>const</em>&amp; val) <em>const</em></td></tr>
+<tr><th id="273">273</th><td>        {</td></tr>
+<tr><th id="274">274</th><td>            <b>return</b> hash_detail::call_hash&lt;T&gt;::call(val);</td></tr>
+<tr><th id="275">275</th><td>        }</td></tr>
+<tr><th id="276">276</th><td><u>#<span data-ppcond="266">endif</span></u></td></tr>
+<tr><th id="277">277</th><td>    };</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td><u>#<span data-ppcond="279">if</span> <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (__DMC__ != 0) &amp;&amp; (1 % (( (__DMC__ &lt;= 0x848) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(__DMC__, &lt;= 0x848)</u></td></tr>
+<tr><th id="280">280</th><td>    <b>template</b> &lt;<b>class</b> T, <em>unsigned</em> <em>int</em> n&gt; <b>struct</b> hash&lt;T[n]&gt;</td></tr>
+<tr><th id="281">281</th><td>        : std::unary_function&lt;T[n], std::size_t&gt;</td></tr>
+<tr><th id="282">282</th><td>    {</td></tr>
+<tr><th id="283">283</th><td>        std::size_t <b>operator</b>()(<em>const</em> T* val) <em>const</em></td></tr>
+<tr><th id="284">284</th><td>        {</td></tr>
+<tr><th id="285">285</th><td>            <b>return</b> boost::hash_range(val, val+n);</td></tr>
+<tr><th id="286">286</th><td>        }</td></tr>
+<tr><th id="287">287</th><td>    };</td></tr>
+<tr><th id="288">288</th><td><u>#<span data-ppcond="279">endif</span></u></td></tr>
+<tr><th id="289">289</th><td></td></tr>
+<tr><th id="290">290</th><td><u>#<span data-ppcond="261">else</span> // BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION</u></td></tr>
+<tr><th id="291">291</th><td></td></tr>
+<tr><th id="292">292</th><td>    <i>// On compilers without partial specialization, boost::hash&lt;T&gt;</i></td></tr>
+<tr><th id="293">293</th><td><i>    // has already been declared to deal with pointers, so just</i></td></tr>
+<tr><th id="294">294</th><td><i>    // need to supply the non-pointer version of hash_impl.</i></td></tr>
+<tr><th id="295">295</th><td></td></tr>
+<tr><th id="296">296</th><td>    <b>namespace</b> hash_detail</td></tr>
+<tr><th id="297">297</th><td>    {</td></tr>
+<tr><th id="298">298</th><td>        <b>template</b> &lt;<em>bool</em> IsPointer&gt;</td></tr>
+<tr><th id="299">299</th><td>        <b>struct</b> hash_impl;</td></tr>
+<tr><th id="300">300</th><td></td></tr>
+<tr><th id="301">301</th><td><u>#if !BOOST_WORKAROUND(BOOST_MSVC, &lt; 1300)</u></td></tr>
+<tr><th id="302">302</th><td></td></tr>
+<tr><th id="303">303</th><td>        <b>template</b> &lt;&gt;</td></tr>
+<tr><th id="304">304</th><td>        <b>struct</b> hash_impl&lt;<b>false</b>&gt;</td></tr>
+<tr><th id="305">305</th><td>        {</td></tr>
+<tr><th id="306">306</th><td>            <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="307">307</th><td>            <b>struct</b> inner</td></tr>
+<tr><th id="308">308</th><td>                : std::unary_function&lt;T, std::size_t&gt;</td></tr>
+<tr><th id="309">309</th><td>            {</td></tr>
+<tr><th id="310">310</th><td><u>#if !defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)</u></td></tr>
+<tr><th id="311">311</th><td>                std::size_t <b>operator</b>()(T <em>const</em>&amp; val) <em>const</em></td></tr>
+<tr><th id="312">312</th><td>                {</td></tr>
+<tr><th id="313">313</th><td>                    <b>return</b> hash_value(val);</td></tr>
+<tr><th id="314">314</th><td>                }</td></tr>
+<tr><th id="315">315</th><td><u>#else</u></td></tr>
+<tr><th id="316">316</th><td>                std::size_t <b>operator</b>()(T <em>const</em>&amp; val) <em>const</em></td></tr>
+<tr><th id="317">317</th><td>                {</td></tr>
+<tr><th id="318">318</th><td>                    <b>return</b> hash_detail::call_hash&lt;T&gt;::call(val);</td></tr>
+<tr><th id="319">319</th><td>                }</td></tr>
+<tr><th id="320">320</th><td><u>#endif</u></td></tr>
+<tr><th id="321">321</th><td>            };</td></tr>
+<tr><th id="322">322</th><td>        };</td></tr>
+<tr><th id="323">323</th><td></td></tr>
+<tr><th id="324">324</th><td><u>#else // Visual C++ 6.5</u></td></tr>
+<tr><th id="325">325</th><td></td></tr>
+<tr><th id="326">326</th><td>        <i>// Visual C++ 6.5 has problems with nested member functions and</i></td></tr>
+<tr><th id="327">327</th><td><i>        // applying const to const types in templates. So we get this:</i></td></tr>
+<tr><th id="328">328</th><td></td></tr>
+<tr><th id="329">329</th><td>        <b>template</b> &lt;<em>bool</em> IsConst&gt;</td></tr>
+<tr><th id="330">330</th><td>        <b>struct</b> hash_impl_msvc</td></tr>
+<tr><th id="331">331</th><td>        {</td></tr>
+<tr><th id="332">332</th><td>            <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="333">333</th><td>            <b>struct</b> inner</td></tr>
+<tr><th id="334">334</th><td>                : <b>public</b> std::unary_function&lt;T, std::size_t&gt;</td></tr>
+<tr><th id="335">335</th><td>            {</td></tr>
+<tr><th id="336">336</th><td>                std::size_t <b>operator</b>()(T <em>const</em>&amp; val) <em>const</em></td></tr>
+<tr><th id="337">337</th><td>                {</td></tr>
+<tr><th id="338">338</th><td>                    <b>return</b> hash_detail::call_hash&lt;T <em>const</em>&gt;::call(val);</td></tr>
+<tr><th id="339">339</th><td>                }</td></tr>
+<tr><th id="340">340</th><td></td></tr>
+<tr><th id="341">341</th><td>                std::size_t <b>operator</b>()(T&amp; val) <em>const</em></td></tr>
+<tr><th id="342">342</th><td>                {</td></tr>
+<tr><th id="343">343</th><td>                    <b>return</b> hash_detail::call_hash&lt;T&gt;::call(val);</td></tr>
+<tr><th id="344">344</th><td>                }</td></tr>
+<tr><th id="345">345</th><td>            };</td></tr>
+<tr><th id="346">346</th><td>        };</td></tr>
+<tr><th id="347">347</th><td></td></tr>
+<tr><th id="348">348</th><td>        <b>template</b> &lt;&gt;</td></tr>
+<tr><th id="349">349</th><td>        <b>struct</b> hash_impl_msvc&lt;<b>true</b>&gt;</td></tr>
+<tr><th id="350">350</th><td>        {</td></tr>
+<tr><th id="351">351</th><td>            <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="352">352</th><td>            <b>struct</b> inner</td></tr>
+<tr><th id="353">353</th><td>                : <b>public</b> std::unary_function&lt;T, std::size_t&gt;</td></tr>
+<tr><th id="354">354</th><td>            {</td></tr>
+<tr><th id="355">355</th><td>                std::size_t <b>operator</b>()(T&amp; val) <em>const</em></td></tr>
+<tr><th id="356">356</th><td>                {</td></tr>
+<tr><th id="357">357</th><td>                    <b>return</b> hash_detail::call_hash&lt;T&gt;::call(val);</td></tr>
+<tr><th id="358">358</th><td>                }</td></tr>
+<tr><th id="359">359</th><td>            };</td></tr>
+<tr><th id="360">360</th><td>        };</td></tr>
+<tr><th id="361">361</th><td>        </td></tr>
+<tr><th id="362">362</th><td>        <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="363">363</th><td>        <b>struct</b> hash_impl_msvc2</td></tr>
+<tr><th id="364">364</th><td>            : <b>public</b> hash_impl_msvc&lt;boost::is_const&lt;T&gt;::value&gt;</td></tr>
+<tr><th id="365">365</th><td>                    ::BOOST_NESTED_TEMPLATE inner&lt;T&gt; {};</td></tr>
+<tr><th id="366">366</th><td>        </td></tr>
+<tr><th id="367">367</th><td>        <b>template</b> &lt;&gt;</td></tr>
+<tr><th id="368">368</th><td>        <b>struct</b> hash_impl&lt;<b>false</b>&gt;</td></tr>
+<tr><th id="369">369</th><td>        {</td></tr>
+<tr><th id="370">370</th><td>            <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="371">371</th><td>            <b>struct</b> inner : <b>public</b> hash_impl_msvc2&lt;T&gt; {};</td></tr>
+<tr><th id="372">372</th><td>        };</td></tr>
+<tr><th id="373">373</th><td></td></tr>
+<tr><th id="374">374</th><td><u>#endif // Visual C++ 6.5</u></td></tr>
+<tr><th id="375">375</th><td>    }</td></tr>
+<tr><th id="376">376</th><td><u>#<span data-ppcond="261">endif</span>  // BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION</u></td></tr>
+<tr><th id="377">377</th><td>}</td></tr>
+<tr><th id="378">378</th><td></td></tr>
+<tr><th id="379">379</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="380">380</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

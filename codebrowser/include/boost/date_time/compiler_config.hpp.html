@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+<title>compiler_config.hpp [include/boost/date_time/compiler_config.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/date_time/compiler_config.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>date_time</a>/compiler_config.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/DATE_TIME_COMPILER_CONFIG_HPP___">DATE_TIME_COMPILER_CONFIG_HPP___</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/DATE_TIME_COMPILER_CONFIG_HPP___" data-ref="_M/DATE_TIME_COMPILER_CONFIG_HPP___">DATE_TIME_COMPILER_CONFIG_HPP___</dfn></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>/* Copyright (c) 2002-2004 CrystalClear Software, Inc.</i></td></tr>
+<tr><th id="5">5</th><td><i> * Subject to the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="6">6</th><td><i> * file LICENSE_1_0.txt or <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="7">7</th><td><i> * Author: Jeff Garland, Bart Garst</i></td></tr>
+<tr><th id="8">8</th><td><i> * $Date: 2011-07-26 10:40:21 -0700 (Tue, 26 Jul 2011) $</i></td></tr>
+<tr><th id="9">9</th><td><i> */</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../../c++/4.9/cstdlib.html">&lt;cstdlib&gt;</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../config.hpp.html">&lt;boost/config.hpp&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../detail/workaround.hpp.html">&lt;boost/detail/workaround.hpp&gt;</a></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><i>// With boost release 1.33, date_time will be using a different,</i></td></tr>
+<tr><th id="16">16</th><td><i>// more flexible, IO system. This new system is not compatible with</i></td></tr>
+<tr><th id="17">17</th><td><i>// old compilers. The original date_time IO system remains for those</i></td></tr>
+<tr><th id="18">18</th><td><i>// compilers. They must define this macro to use the legacy IO.</i></td></tr>
+<tr><th id="19">19</th><td><i>//     (defined(__BORLANDC__) &amp;&amp; (__BORLANDC__ &lt;= 0x0581) ) )   &amp;&amp;</i></td></tr>
+<tr><th id="20">20</th><td> <u>#<span data-ppcond="20">if</span>(  <a class="macro" href="../detail/workaround.hpp.html#233" title="(( 1 + 0 == 0) &amp;&amp; (__BORLANDC__ != 0) &amp;&amp; (1 % (( (__BORLANDC__ != ((0x581)-(0x581))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>( __BORLANDC__, <a class="macro" href="../detail/workaround.hpp.html#258" title="!= ((0x581)-(0x581))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(0x581) ) \</u></td></tr>
+<tr><th id="21">21</th><td><u>    || <a class="macro" href="../detail/workaround.hpp.html#233" title="(( 0 + 0 == 0) &amp;&amp; (4 != 0) &amp;&amp; (1 % (( (4 &lt; 3) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>( <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span>, &lt; 3)                         \</u></td></tr>
+<tr><th id="22">22</th><td><u>    || (<a class="macro" href="../detail/workaround.hpp.html#233" title="(( 1 + 0 == 0) &amp;&amp; (_MSC_VER != 0) &amp;&amp; (1 % (( (_MSC_VER &lt;= 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>( _MSC_VER, &lt;= 1300) )                  \</u></td></tr>
+<tr><th id="23">23</th><td><u>    )                                                           \</u></td></tr>
+<tr><th id="24">24</th><td><u>    &amp;&amp; !defined(<span class="macro" data-ref="_M/USE_DATE_TIME_PRE_1_33_FACET_IO">USE_DATE_TIME_PRE_1_33_FACET_IO</span>)</u></td></tr>
+<tr><th id="25">25</th><td><u># define USE_DATE_TIME_PRE_1_33_FACET_IO</u></td></tr>
+<tr><th id="26">26</th><td><u>#<span data-ppcond="20">endif</span></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><i>// This file performs some local compiler configurations</i></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="locale_config.hpp.html">&lt;boost/date_time/locale_config.hpp&gt;</a> //set up locale configurations</u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><i>//Set up a configuration parameter for platforms that have </i></td></tr>
+<tr><th id="34">34</th><td><i>//GetTimeOfDay</i></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="35">if</span> defined(<a class="macro" href="../config/posix_features.hpp.html#79" data-ref="_M/BOOST_HAS_GETTIMEOFDAY">BOOST_HAS_GETTIMEOFDAY</a>) || defined(<span class="macro" data-ref="_M/BOOST_HAS_FTIME">BOOST_HAS_FTIME</span>)</u></td></tr>
+<tr><th id="36">36</th><td><u>#define <dfn class="macro" id="_M/BOOST_DATE_TIME_HAS_HIGH_PRECISION_CLOCK" data-ref="_M/BOOST_DATE_TIME_HAS_HIGH_PRECISION_CLOCK">BOOST_DATE_TIME_HAS_HIGH_PRECISION_CLOCK</dfn></u></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="35">endif</span></u></td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><i>// To Force no default constructors for date &amp; ptime, un-comment following</i></td></tr>
+<tr><th id="40">40</th><td><i>//#define DATE_TIME_NO_DEFAULT_CONSTRUCTOR</i></td></tr>
+<tr><th id="41">41</th><td><i></i></td></tr>
+<tr><th id="42">42</th><td><i>// Include extensions to date_duration - comment out to remove this feature</i></td></tr>
+<tr><th id="43">43</th><td><u>#define <dfn class="macro" id="_M/BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES" data-ref="_M/BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES">BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES</dfn></u></td></tr>
+<tr><th id="44">44</th><td><i>// these extensions are known to cause problems with gcc295</i></td></tr>
+<tr><th id="45">45</th><td><u>#<span data-ppcond="45">if</span> defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; (<span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &lt; 3)</u></td></tr>
+<tr><th id="46">46</th><td><u>#undef BOOST_DATE_TIME_OPTIONAL_GREGORIAN_TYPES</u></td></tr>
+<tr><th id="47">47</th><td><u>#<span data-ppcond="45">endif</span></u></td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><u>#<span data-ppcond="49">if</span> (defined(<span class="macro" data-ref="_M/BOOST_NO_INCLASS_MEMBER_INITIALIZATION">BOOST_NO_INCLASS_MEMBER_INITIALIZATION</span>) || <a class="macro" href="../detail/workaround.hpp.html#233" title="(( 1 + 0 == 0) &amp;&amp; (__BORLANDC__ != 0) &amp;&amp; (1 % (( (__BORLANDC__ != ((0x581)-(0x581))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>( __BORLANDC__,  <a class="macro" href="../detail/workaround.hpp.html#258" title="!= ((0x581)-(0x581))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(0x581) ) )</u></td></tr>
+<tr><th id="50">50</th><td><u>#define BOOST_DATE_TIME_NO_MEMBER_INIT</u></td></tr>
+<tr><th id="51">51</th><td><u>#<span data-ppcond="49">endif</span></u></td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><i>// include these types before we try to re-define them</i></td></tr>
+<tr><th id="54">54</th><td><u>#include <a href="../cstdint.hpp.html">&lt;boost/cstdint.hpp&gt;</a></u></td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td><i>//Define INT64_C for compilers that don't have it</i></td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="57">if</span> (!defined(<a class="macro" href="../../stdint.h.html#282" data-ref="_M/INT64_C">INT64_C</a>))</u></td></tr>
+<tr><th id="58">58</th><td><u>#define INT64_C(value)  int64_t(value)</u></td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="57">endif</span></u></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><i>/* Workaround for Borland iterator error. Error was "Cannot convert 'istream *' to 'wistream *' in function istream_iterator&lt;&gt;::istream_iterator() */</i></td></tr>
+<tr><th id="63">63</th><td><u>#<span data-ppcond="63">if</span> defined(<span class="macro" data-ref="_M/__BORLANDC__">__BORLANDC__</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/BOOST_BCB_WITH_RW_LIB">BOOST_BCB_WITH_RW_LIB</span>)</u></td></tr>
+<tr><th id="64">64</th><td><u>#define BOOST_DATE_TIME_NO_WISTREAM_ITERATOR</u></td></tr>
+<tr><th id="65">65</th><td><u>#<span data-ppcond="63">endif</span></u></td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><i>// Borland v5.64 does not have the following in std namespace; v5.5.1 does</i></td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="69">if</span> defined(<span class="macro" data-ref="_M/__BORLANDC__">__BORLANDC__</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/BOOST_BCB_WITH_STLPORT">BOOST_BCB_WITH_STLPORT</span>)</u></td></tr>
+<tr><th id="70">70</th><td><u>#include &lt;locale&gt;</u></td></tr>
+<tr><th id="71">71</th><td><b>namespace</b> std {</td></tr>
+<tr><th id="72">72</th><td>  <b>using</b> stlport::tolower;</td></tr>
+<tr><th id="73">73</th><td>  <b>using</b> stlport::ctype;</td></tr>
+<tr><th id="74">74</th><td>  <b>using</b> stlport::use_facet;</td></tr>
+<tr><th id="75">75</th><td>}</td></tr>
+<tr><th id="76">76</th><td><u>#<span data-ppcond="69">endif</span></u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><i>// workaround for errors associated with output for date classes </i></td></tr>
+<tr><th id="79">79</th><td><i>// modifications and input streaming for time classes. </i></td></tr>
+<tr><th id="80">80</th><td><i>// Compilers affected are:</i></td></tr>
+<tr><th id="81">81</th><td><i>// gcc295, msvc (neither with STLPort), any borland</i></td></tr>
+<tr><th id="82">82</th><td><i>// </i></td></tr>
+<tr><th id="83">83</th><td><u>#<span data-ppcond="83">if</span> (((defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; (<span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &lt; 3)) || \</u></td></tr>
+<tr><th id="84">84</th><td><u>      (defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &lt; 1300)) ) &amp;&amp; \</u></td></tr>
+<tr><th id="85">85</th><td><u>      !defined(<span class="macro" data-ref="_M/_STLP_OWN_IOSTREAMS">_STLP_OWN_IOSTREAMS</span>) ) || \</u></td></tr>
+<tr><th id="86">86</th><td><u>      <a class="macro" href="../detail/workaround.hpp.html#233" title="(( 1 + 0 == 0) &amp;&amp; (__BORLANDC__ != 0) &amp;&amp; (1 % (( (__BORLANDC__ != ((0x581)-(0x581))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>( __BORLANDC__, <a class="macro" href="../detail/workaround.hpp.html#258" title="!= ((0x581)-(0x581))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(0x581) )</u></td></tr>
+<tr><th id="87">87</th><td><u>#define BOOST_DATE_TIME_INCLUDE_LIMITED_HEADERS</u></td></tr>
+<tr><th id="88">88</th><td><u>#<span data-ppcond="83">endif</span></u></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td><i>// The macro marks up places where compiler complains for missing return statement or</i></td></tr>
+<tr><th id="91">91</th><td><i>// uninitialized variables after calling to boost::throw_exception.</i></td></tr>
+<tr><th id="92">92</th><td><i>// BOOST_UNREACHABLE_RETURN doesn't work since even compilers that support</i></td></tr>
+<tr><th id="93">93</th><td><i>// unreachable statements detection emit such warnings.</i></td></tr>
+<tr><th id="94">94</th><td><u>#<span data-ppcond="94">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>)</u></td></tr>
+<tr><th id="95">95</th><td><i>// Use special MSVC extension to markup unreachable code</i></td></tr>
+<tr><th id="96">96</th><td><u>#  define BOOST_DATE_TIME_UNREACHABLE_EXPRESSION(x) __assume(false)</u></td></tr>
+<tr><th id="97">97</th><td><u>#<span data-ppcond="94">elif</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_UNREACHABLE_RETURN_DETECTION">BOOST_NO_UNREACHABLE_RETURN_DETECTION</span>)</u></td></tr>
+<tr><th id="98">98</th><td><i>// Call to a non-returning function should suppress the warning</i></td></tr>
+<tr><th id="99">99</th><td><u>#  <span data-ppcond="99">if</span> defined(<span class="macro" data-ref="_M/BOOST_NO_STDC_NAMESPACE">BOOST_NO_STDC_NAMESPACE</span>)</u></td></tr>
+<tr><th id="100">100</th><td><b>namespace</b> std {</td></tr>
+<tr><th id="101">101</th><td>    <b>using</b> ::abort;</td></tr>
+<tr><th id="102">102</th><td>}</td></tr>
+<tr><th id="103">103</th><td><u>#  <span data-ppcond="99">endif</span> // defined(BOOST_NO_STDC_NAMESPACE)</u></td></tr>
+<tr><th id="104">104</th><td><u>#  define <dfn class="macro" id="_M/BOOST_DATE_TIME_UNREACHABLE_EXPRESSION" data-ref="_M/BOOST_DATE_TIME_UNREACHABLE_EXPRESSION">BOOST_DATE_TIME_UNREACHABLE_EXPRESSION</dfn>(x) std::abort()</u></td></tr>
+<tr><th id="105">105</th><td><u>#<span data-ppcond="94">else</span></u></td></tr>
+<tr><th id="106">106</th><td><i>// For other poor compilers the specified expression is compiled. Usually, this would be a return statement.</i></td></tr>
+<tr><th id="107">107</th><td><u>#  define BOOST_DATE_TIME_UNREACHABLE_EXPRESSION(x) x</u></td></tr>
+<tr><th id="108">108</th><td><u>#<span data-ppcond="94">endif</span></u></td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td><i>/* The following handles the definition of the necessary macros</i></td></tr>
+<tr><th id="111">111</th><td><i> * for dll building on Win32 platforms.</i></td></tr>
+<tr><th id="112">112</th><td><i> * </i></td></tr>
+<tr><th id="113">113</th><td><i> * For code that will be placed in the date_time .dll, </i></td></tr>
+<tr><th id="114">114</th><td><i> * it must be properly prefixed with BOOST_DATE_TIME_DECL.</i></td></tr>
+<tr><th id="115">115</th><td><i> * The corresponding .cpp file must have BOOST_DATE_TIME_SOURCE</i></td></tr>
+<tr><th id="116">116</th><td><i> * defined before including its header. For examples see:</i></td></tr>
+<tr><th id="117">117</th><td><i> * greg_month.hpp &amp; greg_month.cpp</i></td></tr>
+<tr><th id="118">118</th><td><i> * </i></td></tr>
+<tr><th id="119">119</th><td><i> */</i></td></tr>
+<tr><th id="120">120</th><td><i></i></td></tr>
+<tr><th id="121">121</th><td><i>// we need to import/export our code only if the user has specifically</i></td></tr>
+<tr><th id="122">122</th><td><i>// asked for it by defining either BOOST_ALL_DYN_LINK if they want all boost</i></td></tr>
+<tr><th id="123">123</th><td><i>// libraries to be dynamically linked, or BOOST_DATE_TIME_DYN_LINK</i></td></tr>
+<tr><th id="124">124</th><td><i>// if they want just this one to be dynamically liked:</i></td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="125">if</span> defined(<span class="macro" data-ref="_M/BOOST_ALL_DYN_LINK">BOOST_ALL_DYN_LINK</span>) || defined(<span class="macro" data-ref="_M/BOOST_DATE_TIME_DYN_LINK">BOOST_DATE_TIME_DYN_LINK</span>)</u></td></tr>
+<tr><th id="126">126</th><td>    <i>// export if this is our own source, otherwise import:</i></td></tr>
+<tr><th id="127">127</th><td><u>#   ifdef BOOST_DATE_TIME_SOURCE</u></td></tr>
+<tr><th id="128">128</th><td><u>#     define BOOST_DATE_TIME_DECL BOOST_SYMBOL_EXPORT</u></td></tr>
+<tr><th id="129">129</th><td><u>#   else</u></td></tr>
+<tr><th id="130">130</th><td><u>#     define BOOST_DATE_TIME_DECL BOOST_SYMBOL_IMPORT</u></td></tr>
+<tr><th id="131">131</th><td><u>#   endif  // BOOST_DATE_TIME_SOURCE</u></td></tr>
+<tr><th id="132">132</th><td><u>#<span data-ppcond="125">endif</span>  // DYN_LINK</u></td></tr>
+<tr><th id="133">133</th><td><i>//</i></td></tr>
+<tr><th id="134">134</th><td><i>// if BOOST_WHATEVER_DECL isn't defined yet define it now:</i></td></tr>
+<tr><th id="135">135</th><td><u>#<span data-ppcond="135">ifndef</span> <span class="macro" data-ref="_M/BOOST_DATE_TIME_DECL">BOOST_DATE_TIME_DECL</span></u></td></tr>
+<tr><th id="136">136</th><td><u>#  define <dfn class="macro" id="_M/BOOST_DATE_TIME_DECL" data-ref="_M/BOOST_DATE_TIME_DECL">BOOST_DATE_TIME_DECL</dfn></u></td></tr>
+<tr><th id="137">137</th><td><u>#<span data-ppcond="135">endif</span></u></td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><i>//</i></td></tr>
+<tr><th id="140">140</th><td><i>// Automatically link to the correct build variant where possible. </i></td></tr>
+<tr><th id="141">141</th><td><i>// </i></td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="142">if</span> !defined(<span class="macro" data-ref="_M/BOOST_ALL_NO_LIB">BOOST_ALL_NO_LIB</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_DATE_TIME_NO_LIB">BOOST_DATE_TIME_NO_LIB</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_DATE_TIME_SOURCE">BOOST_DATE_TIME_SOURCE</span>)</u></td></tr>
+<tr><th id="143">143</th><td><i>//</i></td></tr>
+<tr><th id="144">144</th><td><i>// Set the name of our library, this will get undef'ed by auto_link.hpp</i></td></tr>
+<tr><th id="145">145</th><td><i>// once it's done with it:</i></td></tr>
+<tr><th id="146">146</th><td><i>//</i></td></tr>
+<tr><th id="147">147</th><td><u>#define BOOST_LIB_NAME boost_date_time</u></td></tr>
+<tr><th id="148">148</th><td><i>//</i></td></tr>
+<tr><th id="149">149</th><td><i>// If we're importing code from a dll, then tell auto_link.hpp about it:</i></td></tr>
+<tr><th id="150">150</th><td><i>//</i></td></tr>
+<tr><th id="151">151</th><td><u>#if defined(BOOST_ALL_DYN_LINK) || defined(BOOST_DATE_TIME_DYN_LINK)</u></td></tr>
+<tr><th id="152">152</th><td><u>#  define BOOST_DYN_LINK</u></td></tr>
+<tr><th id="153">153</th><td><u>#endif</u></td></tr>
+<tr><th id="154">154</th><td><i>//</i></td></tr>
+<tr><th id="155">155</th><td><i>// And include the header that does the work:</i></td></tr>
+<tr><th id="156">156</th><td><i>//</i></td></tr>
+<tr><th id="157">157</th><td><u>#include &lt;boost/config/auto_link.hpp&gt;</u></td></tr>
+<tr><th id="158">158</th><td><u>#<span data-ppcond="142">endif</span>  // auto-linking disabled</u></td></tr>
+<tr><th id="159">159</th><td></td></tr>
+<tr><th id="160">160</th><td><u>#<span data-ppcond="160">if</span> defined(<a class="macro" href="../config/stdlib/libstdcpp3.hpp.html#45" data-ref="_M/BOOST_HAS_THREADS">BOOST_HAS_THREADS</a>)</u> </td></tr>
+<tr><th id="161">161</th><td><u>#  <span data-ppcond="161">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) || defined(<span class="macro" data-ref="_M/__MWERKS__">__MWERKS__</span>) || defined(<span class="macro" data-ref="_M/__MINGW32__">__MINGW32__</span>) ||  defined(<span class="macro" data-ref="_M/__BORLANDC__">__BORLANDC__</span>)</u></td></tr>
+<tr><th id="162">162</th><td>     <i>//no reentrant posix functions (eg: localtime_r)</i></td></tr>
+<tr><th id="163">163</th><td><u>#  <span data-ppcond="161">elif</span> (!defined(<span class="macro" data-ref="_M/__hpux">__hpux</span>) || (defined(<span class="macro" data-ref="_M/__hpux">__hpux</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/_REENTRANT">_REENTRANT</span>)))</u></td></tr>
+<tr><th id="164">164</th><td><u>#   define <dfn class="macro" id="_M/BOOST_DATE_TIME_HAS_REENTRANT_STD_FUNCTIONS" data-ref="_M/BOOST_DATE_TIME_HAS_REENTRANT_STD_FUNCTIONS">BOOST_DATE_TIME_HAS_REENTRANT_STD_FUNCTIONS</dfn></u></td></tr>
+<tr><th id="165">165</th><td><u>#  <span data-ppcond="161">endif</span></u></td></tr>
+<tr><th id="166">166</th><td><u>#<span data-ppcond="160">endif</span></u></td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td><u>#<span data-ppcond="1">endif</span></u></td></tr>
+<tr><th id="170">170</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

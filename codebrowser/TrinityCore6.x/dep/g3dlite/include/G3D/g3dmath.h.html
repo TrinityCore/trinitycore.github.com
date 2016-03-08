@@ -1,0 +1,964 @@
+<!doctype html>
+<html>
+<head>
+<title>g3dmath.h [TrinityCore6.x/dep/g3dlite/include/G3D/g3dmath.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/g3dmath.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/g3dmath.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> @file</span> g3dmath.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> Math util class.</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> @maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> @cite</span> highestBit by Jukka Liimatta</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"> </i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"><span class="command"> @created</span> 2001-06-02</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"><span class="command"> @edited</span>  2013-01-27</i></td></tr>
+<tr><th id="11">11</th><td><i class="doc"></i></td></tr>
+<tr><th id="12">12</th><td><i class="doc"> Copyright 2000-2013, Morgan McGuire.</i></td></tr>
+<tr><th id="13">13</th><td><i class="doc"> All rights reserved.</i></td></tr>
+<tr><th id="14">14</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="16">ifndef</span> <span class="macro" data-ref="_M/G3D_g3dmath_h">G3D_g3dmath_h</span></u></td></tr>
+<tr><th id="17">17</th><td><u>#define <dfn class="macro" id="_M/G3D_g3dmath_h" data-ref="_M/G3D_g3dmath_h">G3D_g3dmath_h</dfn></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="20">20</th><td><i>// Disable conditional expression is constant, which occurs incorrectly on inlined functions</i></td></tr>
+<tr><th id="21">21</th><td><u>#   pragma warning (push)</u></td></tr>
+<tr><th id="22">22</th><td><u>#   pragma warning (disable : 4127)</u></td></tr>
+<tr><th id="23">23</th><td><i>// disable: "C++ exception handler used"</i></td></tr>
+<tr><th id="24">24</th><td><u>#   pragma warning (disable : 4530)</u></td></tr>
+<tr><th id="25">25</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../../../../../include/ctype.h.html">&lt;ctype.h&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include &lt;float.h&gt;</u></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="../../../../../include/c++/4.9/limits.html">&lt;limits&gt;</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="../../../../../include/stdlib.h.html">&lt;stdlib.h&gt;</a></u></td></tr>
+<tr><th id="32">32</th><td><u>#include &lt;stdint.h&gt;</u></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="34">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &lt; 1000)</u></td></tr>
+<tr><th id="35">35</th><td>    <i>// Visual Studio is missing inttypes.h</i></td></tr>
+<tr><th id="36">36</th><td><u>#   ifndef PRId64</u></td></tr>
+<tr><th id="37">37</th><td><u>#       define PRId64 "I64d"</u></td></tr>
+<tr><th id="38">38</th><td><u>#   endif</u></td></tr>
+<tr><th id="39">39</th><td><u>#<span data-ppcond="34">else</span></u></td></tr>
+<tr><th id="40">40</th><td><u>#include &lt;inttypes.h&gt;</u></td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="34">endif</span></u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><i>/*These defines enable functionality introduced with the 1999 ISO C</i></td></tr>
+<tr><th id="44">44</th><td><i>**standard. They must be defined before the inclusion of math.h to</i></td></tr>
+<tr><th id="45">45</th><td><i>**engage them. If optimisation is enabled, these functions will be </i></td></tr>
+<tr><th id="46">46</th><td><i>**inlined. With optimisation switched off, you have to link in the</i></td></tr>
+<tr><th id="47">47</th><td><i>**maths library using -lm.</i></td></tr>
+<tr><th id="48">48</th><td><i>*/</i></td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><u>#define <dfn class="macro" id="_M/_ISOC9X_SOURCE1" data-ref="_M/_ISOC9X_SOURCE1">_ISOC9X_SOURCE1</dfn></u></td></tr>
+<tr><th id="51">51</th><td><u>#define <dfn class="macro" id="_M/_ISOC99_SOURCE1" data-ref="_M/_ISOC99_SOURCE1">_ISOC99_SOURCE1</dfn></u></td></tr>
+<tr><th id="52">52</th><td><u>#define <dfn class="macro" id="_M/__USE_ISOC9X1" data-ref="_M/__USE_ISOC9X1">__USE_ISOC9X1</dfn></u></td></tr>
+<tr><th id="53">53</th><td><u>#define <dfn class="macro" id="_M/__USE_ISOC991" data-ref="_M/__USE_ISOC991">__USE_ISOC991</dfn></u></td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><u>#include <a href="../../../../../include/math.h.html">&lt;math.h&gt;</a></u></td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><u>#include <a href="debug.h.html">"G3D/debug.h"</a></u></td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><u>#undef <span class="macro" data-ref="_M/min">min</span></u></td></tr>
+<tr><th id="60">60</th><td><u>#undef <span class="macro" data-ref="_M/max">max</span></u></td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc"><span class="command">\def</span> <span class="verb">G3D_DECLARE_SYMBOL(s)</span></i></td></tr>
+<tr><th id="64">64</th><td><i class="doc">Defines SYMBOL_s as a static const std::string with the value s.</i></td></tr>
+<tr><th id="65">65</th><td><i class="doc">Useful for avoiding heap allocation from C-string constants being</i></td></tr>
+<tr><th id="66">66</th><td><i class="doc">converted at runtime.</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="68">68</th><td><u>#define <dfn class="macro" id="_M/G3D_DECLARE_SYMBOL" data-ref="_M/G3D_DECLARE_SYMBOL">G3D_DECLARE_SYMBOL</dfn>(s) \</u></td></tr>
+<tr><th id="69">69</th><td><u>    static const std::string SYMBOL_##s = #s</u></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td><u>#<span data-ppcond="74">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="75">75</th><td><b>inline</b> <em>double</em> <b>__fastcall</b> drand48() {</td></tr>
+<tr><th id="76">76</th><td>    <b>return</b> ::rand() / <em>double</em>(RAND_MAX);</td></tr>
+<tr><th id="77">77</th><td>}</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td><u>#   ifdef _M_IX86</u></td></tr>
+<tr><th id="80">80</th><td>    <i>// 32-bit</i></td></tr>
+<tr><th id="81">81</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">           Win32 implementation of the C99 fast rounding routines.</i></td></tr>
+<tr><th id="83">83</th><td><i class="doc">   </i></td></tr>
+<tr><th id="84">84</th><td><i class="doc">          <span class="command"> @cite</span> routines are</i></td></tr>
+<tr><th id="85">85</th><td><i class="doc">           Copyright (C) 2001 Erik de Castro Lopo &lt;erikd AT mega-nerd DOT com&gt;</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc">   </i></td></tr>
+<tr><th id="87">87</th><td><i class="doc">           Permission to use, copy, modify, distribute, and sell this file for any </i></td></tr>
+<tr><th id="88">88</th><td><i class="doc">           purpose is hereby granted without fee, provided that the above copyright </i></td></tr>
+<tr><th id="89">89</th><td><i class="doc">           and this permission notice appear in all copies.  No representations are</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">           made about the suitability of this software for any purpose.  It is </i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">           provided "as is" without express or implied warranty.</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>         <b>__inline</b> <em>long</em> <em>int</em> lrint (<em>double</em> flt) {</td></tr>
+<tr><th id="96">96</th><td>            <em>int</em> intgr;</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>            _asm {</td></tr>
+<tr><th id="99">99</th><td>                fld flt</td></tr>
+<tr><th id="100">100</th><td>                fistp intgr</td></tr>
+<tr><th id="101">101</th><td>            };</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>            <b>return</b> intgr;</td></tr>
+<tr><th id="104">104</th><td>        }</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>        <b>__inline</b> <em>long</em> <em>int</em> lrintf(<em>float</em> flt) {</td></tr>
+<tr><th id="107">107</th><td>            <em>int</em> intgr;</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>            _asm {</td></tr>
+<tr><th id="110">110</th><td>                fld flt</td></tr>
+<tr><th id="111">111</th><td>                fistp intgr</td></tr>
+<tr><th id="112">112</th><td>            };</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>            <b>return</b> intgr;</td></tr>
+<tr><th id="115">115</th><td>        }</td></tr>
+<tr><th id="116">116</th><td><u>#   else</u></td></tr>
+<tr><th id="117">117</th><td>    <i>// 64-bit</i></td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>    <b>__inline</b> <em>long</em> <em>int</em> lrintf(<em>float</em> flt) {        </td></tr>
+<tr><th id="120">120</th><td>        <b>return</b> (<em>long</em> <em>int</em>)(flt + <var>0.5f</var>);</td></tr>
+<tr><th id="121">121</th><td>    }</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td>    <b>__inline</b> <em>long</em> <em>int</em> lrint (<em>double</em> flt) {</td></tr>
+<tr><th id="124">124</th><td>        <b>return</b> (<em>long</em> <em>int</em>)(flt + <var>0.5</var>);</td></tr>
+<tr><th id="125">125</th><td>    }</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><u>#   endif</u></td></tr>
+<tr><th id="128">128</th><td><u>#<span data-ppcond="74">endif</span></u></td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><u>#define <dfn class="macro" id="_M/fuzzyEpsilon64" data-ref="_M/fuzzyEpsilon64">fuzzyEpsilon64</dfn> (0.0000005)</u></td></tr>
+<tr><th id="132">132</th><td><u>#define <dfn class="macro" id="_M/fuzzyEpsilon32" data-ref="_M/fuzzyEpsilon32">fuzzyEpsilon32</dfn> (0.00001f)</u></td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">    This value should not be tested against directly, instead</i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">    G3D::isNan() and G3D::isFinite() will return reliable results. */</i></td></tr>
+<tr><th id="137">137</th><td><em>double</em> <dfn class="decl" id="_ZN3G3D3infEv" title='G3D::inf' data-ref="_ZN3G3D3infEv" >inf</dfn>();</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><i class="doc">/** This value should not be tested against directly, instead</i></td></tr>
+<tr><th id="140">140</th><td><i class="doc">    G3D::isNan() and G3D::isFinite() will return reliable results. */</i></td></tr>
+<tr><th id="141">141</th><td><em>double</em> <dfn class="decl" id="_ZN3G3D3nanEv" title='G3D::nan' data-ref="_ZN3G3D3nanEv" >nan</dfn>();</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><em>float</em> <dfn class="decl" id="_ZN3G3D4finfEv" title='G3D::finf' data-ref="_ZN3G3D4finfEv" >finf</dfn>();</td></tr>
+<tr><th id="144">144</th><td></td></tr>
+<tr><th id="145">145</th><td><em>float</em> <dfn class="decl" id="_ZN3G3D4fnanEv" title='G3D::fnan' data-ref="_ZN3G3D4fnanEv" >fnan</dfn>();</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</dfn>() {</td></tr>
+<tr><th id="148">148</th><td>    <b>return</b> <var>3.1415926535898</var>;</td></tr>
+<tr><th id="149">149</th><td>}</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D3pifEv" title='G3D::pif' data-ref="_ZN3G3D3pifEv" >pif</dfn>() {</td></tr>
+<tr><th id="152">152</th><td>    <b>return</b> <var>3.1415926535898f</var>;</td></tr>
+<tr><th id="153">153</th><td>}</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D6halfPiEv" title='G3D::halfPi' data-ref="_ZN3G3D6halfPiEv" >halfPi</dfn>() {</td></tr>
+<tr><th id="156">156</th><td>    <b>return</b> <var>1.57079633</var>;</td></tr>
+<tr><th id="157">157</th><td>}</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D5twoPiEv" title='G3D::twoPi' data-ref="_ZN3G3D5twoPiEv" >twoPi</dfn>() {</td></tr>
+<tr><th id="160">160</th><td>    <b>return</b> <var>6.28318531</var>;</td></tr>
+<tr><th id="161">161</th><td>}</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#int8_t" title='int8_t' data-type='signed char' data-ref="int8_t" >int8_t</a>      <dfn class="typedef" id="G3D::int8" title='G3D::int8' data-type='int8_t' data-ref="G3D::int8" >int8</dfn>;</td></tr>
+<tr><th id="164">164</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>     <dfn class="typedef" id="G3D::uint8" title='G3D::uint8' data-type='uint8_t' data-ref="G3D::uint8" >uint8</dfn>;</td></tr>
+<tr><th id="165">165</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#int16_t" title='int16_t' data-type='short' data-ref="int16_t" >int16_t</a>     <dfn class="typedef" id="G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</dfn>;</td></tr>
+<tr><th id="166">166</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#uint16_t" title='uint16_t' data-type='unsigned short' data-ref="uint16_t" >uint16_t</a>    <dfn class="typedef" id="G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" >uint16</dfn>;</td></tr>
+<tr><th id="167">167</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#int32_t" title='int32_t' data-type='int' data-ref="int32_t" >int32_t</a>     <dfn class="typedef" id="G3D::int32" title='G3D::int32' data-type='int32_t' data-ref="G3D::int32" >int32</dfn>;</td></tr>
+<tr><th id="168">168</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>    <dfn class="typedef" id="G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</dfn>;</td></tr>
+<tr><th id="169">169</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#int64_t" title='int64_t' data-type='long' data-ref="int64_t" >int64_t</a>     <dfn class="typedef" id="G3D::int64" title='G3D::int64' data-type='int64_t' data-ref="G3D::int64" >int64</dfn>;</td></tr>
+<tr><th id="170">170</th><td><b>typedef</b> <a class="typedef" href="../../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a>    <dfn class="typedef" id="G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</dfn>;</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td><b>typedef</b> <em>float</em>           <dfn class="typedef" id="G3D::float32" title='G3D::float32' data-type='float' data-ref="G3D::float32" >float32</dfn>;</td></tr>
+<tr><th id="173">173</th><td><b>typedef</b> <em>double</em>          <dfn class="typedef" id="G3D::float64" title='G3D::float64' data-type='double' data-ref="G3D::float64" >float64</dfn>;</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td><em>int</em> <a class="decl" href="#_ZN3G3D4iAbsEi" title='G3D::iAbs' data-ref="_ZN3G3D4iAbsEi" >iAbs</a>(<em>int</em> <dfn class="local col6 decl" id="26iValue" title='iValue' data-type='int' data-ref="26iValue" >iValue</dfn>);</td></tr>
+<tr><th id="176">176</th><td><em>int</em> <a class="decl" href="#_ZN3G3D5iCeilEd" title='G3D::iCeil' data-ref="_ZN3G3D5iCeilEd" >iCeil</a>(<em>double</em> <dfn class="local col7 decl" id="27fValue" title='fValue' data-type='double' data-ref="27fValue" >fValue</dfn>);</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="179">179</th><td><i class="doc"> Clamps the value to the range [low, hi] (inclusive)</i></td></tr>
+<tr><th id="180">180</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="181">181</th><td><em>int</em> <a class="decl" href="#_ZN3G3D6iClampEiii" title='G3D::iClamp' data-ref="_ZN3G3D6iClampEiii" >iClamp</a>(<em>int</em> <dfn class="local col8 decl" id="28val" title='val' data-type='int' data-ref="28val" >val</dfn>, <em>int</em> <dfn class="local col9 decl" id="29low" title='low' data-type='int' data-ref="29low" >low</dfn>, <em>int</em> <dfn class="local col0 decl" id="30hi" title='hi' data-type='int' data-ref="30hi" >hi</dfn>);</td></tr>
+<tr><th id="182">182</th><td><a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <a class="decl" href="#_ZN3G3D6iClampEsss" title='G3D::iClamp' data-ref="_ZN3G3D6iClampEsss" >iClamp</a>(<a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="local col1 decl" id="31val" title='val' data-type='int16' data-ref="31val" >val</dfn>, <a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="local col2 decl" id="32low" title='low' data-type='int16' data-ref="32low" >low</dfn>, <a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="local col3 decl" id="33hi" title='hi' data-type='int16' data-ref="33hi" >hi</dfn>);</td></tr>
+<tr><th id="183">183</th><td><em>double</em> <a class="decl" href="#_ZN3G3D5clampEddd" title='G3D::clamp' data-ref="_ZN3G3D5clampEddd" >clamp</a>(<em>double</em> <dfn class="local col4 decl" id="34val" title='val' data-type='double' data-ref="34val" >val</dfn>, <em>double</em> <dfn class="local col5 decl" id="35low" title='low' data-type='double' data-ref="35low" >low</dfn>, <em>double</em> <dfn class="local col6 decl" id="36hi" title='hi' data-type='double' data-ref="36hi" >hi</dfn>);</td></tr>
+<tr><th id="184">184</th><td><em>float</em> <a class="decl" href="#_ZN3G3D5clampEfff" title='G3D::clamp' data-ref="_ZN3G3D5clampEfff" >clamp</a>(<em>float</em> <dfn class="local col7 decl" id="37val" title='val' data-type='float' data-ref="37val" >val</dfn>, <em>float</em> <dfn class="local col8 decl" id="38low" title='low' data-type='float' data-ref="38low" >low</dfn>, <em>float</em> <dfn class="local col9 decl" id="39hi" title='hi' data-type='float' data-ref="39hi" >hi</dfn>);</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="187">187</th><td><i class="doc"> Returns a + (b - a) * f;</i></td></tr>
+<tr><th id="188">188</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="189">189</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4lerpEddd" title='G3D::lerp' data-ref="_ZN3G3D4lerpEddd" >lerp</dfn>(<em>double</em> <dfn class="local col0 decl" id="40a" title='a' data-type='double' data-ref="40a" >a</dfn>, <em>double</em> <dfn class="local col1 decl" id="41b" title='b' data-type='double' data-ref="41b" >b</dfn>, <em>double</em> <dfn class="local col2 decl" id="42f" title='f' data-type='double' data-ref="42f" >f</dfn>) {</td></tr>
+<tr><th id="190">190</th><td>    <b>return</b> <a class="local col0 ref" href="#40a" title='a' data-ref="40a" >a</a> + (<a class="local col1 ref" href="#41b" title='b' data-ref="41b" >b</a> - <a class="local col0 ref" href="#40a" title='a' data-ref="40a" >a</a>) * <a class="local col2 ref" href="#42f" title='f' data-ref="42f" >f</a>;</td></tr>
+<tr><th id="191">191</th><td>}</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D4lerpEfff" title='G3D::lerp' data-ref="_ZN3G3D4lerpEfff" >lerp</dfn>(<em>float</em> <dfn class="local col3 decl" id="43a" title='a' data-type='float' data-ref="43a" >a</dfn>, <em>float</em> <dfn class="local col4 decl" id="44b" title='b' data-type='float' data-ref="44b" >b</dfn>, <em>float</em> <dfn class="local col5 decl" id="45f" title='f' data-type='float' data-ref="45f" >f</dfn>) {</td></tr>
+<tr><th id="194">194</th><td>    <b>return</b> <a class="local col3 ref" href="#43a" title='a' data-ref="43a" >a</a> + (<a class="local col4 ref" href="#44b" title='b' data-ref="44b" >b</a> - <a class="local col3 ref" href="#43a" title='a' data-ref="43a" >a</a>) * <a class="local col5 ref" href="#45f" title='f' data-ref="45f" >f</a>;</td></tr>
+<tr><th id="195">195</th><td>}</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="198">198</th><td><i class="doc"> Wraps the value to the range [0, hi) (exclusive</i></td></tr>
+<tr><th id="199">199</th><td><i class="doc"> on the high end).  This is like the clock arithmetic</i></td></tr>
+<tr><th id="200">200</th><td><i class="doc"> produced by % (modulo) except the result is guaranteed</i></td></tr>
+<tr><th id="201">201</th><td><i class="doc"> to be positive.</i></td></tr>
+<tr><th id="202">202</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="203">203</th><td><em>int</em> <a class="decl" href="#_ZN3G3D5iWrapEii" title='G3D::iWrap' data-ref="_ZN3G3D5iWrapEii" >iWrap</a>(<em>int</em> <dfn class="local col6 decl" id="46val" title='val' data-type='int' data-ref="46val" >val</dfn>, <em>int</em> <dfn class="local col7 decl" id="47hi" title='hi' data-type='int' data-ref="47hi" >hi</dfn>);</td></tr>
+<tr><th id="204">204</th><td></td></tr>
+<tr><th id="205">205</th><td><em>int</em> <a class="decl" href="#_ZN3G3D6iFloorEd" title='G3D::iFloor' data-ref="_ZN3G3D6iFloorEd" >iFloor</a>(<em>double</em> <dfn class="local col8 decl" id="48fValue" title='fValue' data-type='double' data-ref="48fValue" >fValue</dfn>);</td></tr>
+<tr><th id="206">206</th><td></td></tr>
+<tr><th id="207">207</th><td><em>int</em> <a class="decl" href="#_ZN3G3D5iSignEi" title='G3D::iSign' data-ref="_ZN3G3D5iSignEi" >iSign</a>(<em>int</em> <dfn class="local col9 decl" id="49iValue" title='iValue' data-type='int' data-ref="49iValue" >iValue</dfn>);</td></tr>
+<tr><th id="208">208</th><td><em>int</em> <a class="decl" href="#_ZN3G3D5iSignEd" title='G3D::iSign' data-ref="_ZN3G3D5iSignEd" >iSign</a>(<em>double</em> <dfn class="local col0 decl" id="50fValue" title='fValue' data-type='double' data-ref="50fValue" >fValue</dfn>);</td></tr>
+<tr><th id="209">209</th><td></td></tr>
+<tr><th id="210">210</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D5iSignEf" title='G3D::iSign' data-ref="_ZN3G3D5iSignEf" >iSign</dfn>(<em>float</em> <dfn class="local col1 decl" id="51f" title='f' data-type='float' data-ref="51f" >f</dfn>) {</td></tr>
+<tr><th id="211">211</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D5iSignEd" title='G3D::iSign' data-ref="_ZN3G3D5iSignEd" >iSign</a>((<em>double</em>)<a class="local col1 ref" href="#51f" title='f' data-ref="51f" >f</a>);</td></tr>
+<tr><th id="212">212</th><td>}</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D5roundEd" title='G3D::round' data-ref="_ZN3G3D5roundEd" >round</dfn>(<em>double</em> <dfn class="local col2 decl" id="52f" title='f' data-type='double' data-ref="52f" >f</dfn>) {</td></tr>
+<tr><th id="215">215</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#184" title='floor' data-ref="floor" id="floor" >floor</a>(<a class="local col2 ref" href="#52f" title='f' data-ref="52f" >f</a> + <var>0.5f</var>);</td></tr>
+<tr><th id="216">216</th><td>}</td></tr>
+<tr><th id="217">217</th><td></td></tr>
+<tr><th id="218">218</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D5roundEf" title='G3D::round' data-ref="_ZN3G3D5roundEf" >round</dfn>(<em>float</em> <dfn class="local col3 decl" id="53f" title='f' data-type='float' data-ref="53f" >f</dfn>) {</td></tr>
+<tr><th id="219">219</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#184" title='floor' data-ref="floor" id="floor" >floor</a>(<a class="local col3 ref" href="#53f" title='f' data-ref="53f" >f</a> + <var>0.5f</var>);</td></tr>
+<tr><th id="220">220</th><td>}</td></tr>
+<tr><th id="221">221</th><td>    </td></tr>
+<tr><th id="222">222</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="223">223</th><td><i class="doc">    Fast round to integer using the lrint routine.</i></td></tr>
+<tr><th id="224">224</th><td><i class="doc">    Typically 6x faster than casting to integer.</i></td></tr>
+<tr><th id="225">225</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="226">226</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D6iRoundEd" title='G3D::iRound' data-ref="_ZN3G3D6iRoundEd" >iRound</dfn>(<em>double</em> <dfn class="local col4 decl" id="54fValue" title='fValue' data-type='double' data-ref="54fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="227">227</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#325" title='lrint' data-ref="lrint" id="lrint" >lrint</a>(<a class="local col4 ref" href="#54fValue" title='fValue' data-ref="54fValue" >fValue</a>);</td></tr>
+<tr><th id="228">228</th><td>}</td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="231">231</th><td><i class="doc">    Fast round to integer using the lrint routine.</i></td></tr>
+<tr><th id="232">232</th><td><i class="doc">    Typically 6x faster than casting to integer.</i></td></tr>
+<tr><th id="233">233</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="234">234</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D6iRoundEf" title='G3D::iRound' data-ref="_ZN3G3D6iRoundEf" >iRound</dfn>(<em>float</em> <dfn class="local col5 decl" id="55f" title='f' data-type='float' data-ref="55f" >f</dfn>) {</td></tr>
+<tr><th id="235">235</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#325" title='lrintf' data-ref="lrintf" id="lrintf" >lrintf</a>(<a class="local col5 ref" href="#55f" title='f' data-ref="55f" >f</a>);</td></tr>
+<tr><th id="236">236</th><td>}</td></tr>
+<tr><th id="237">237</th><td></td></tr>
+<tr><th id="238">238</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="239">239</th><td><i class="doc"> Returns a random number uniformly at random between low and hi</i></td></tr>
+<tr><th id="240">240</th><td><i class="doc"> (inclusive).</i></td></tr>
+<tr><th id="241">241</th><td><i class="doc"> <span class="command">@deprecated</span> Use Random::integer</i></td></tr>
+<tr><th id="242">242</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="243">243</th><td><em>int</em> <dfn class="decl" id="_ZN3G3D7iRandomEii" title='G3D::iRandom' data-ref="_ZN3G3D7iRandomEii" >iRandom</dfn>(<em>int</em> <dfn class="local col6 decl" id="56low" title='low' data-type='int' data-ref="56low" >low</dfn>, <em>int</em> <dfn class="local col7 decl" id="57hi" title='hi' data-type='int' data-ref="57hi" >hi</dfn>);</td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td><em>double</em> <a class="decl" href="#_ZN3G3D3absEd" title='G3D::abs' data-ref="_ZN3G3D3absEd" >abs</a> (<em>double</em> <dfn class="local col8 decl" id="58fValue" title='fValue' data-type='double' data-ref="58fValue" >fValue</dfn>);</td></tr>
+<tr><th id="246">246</th><td><em>double</em> <a class="decl" href="#_ZN3G3D4aCosEd" title='G3D::aCos' data-ref="_ZN3G3D4aCosEd" >aCos</a> (<em>double</em> <dfn class="local col9 decl" id="59fValue" title='fValue' data-type='double' data-ref="59fValue" >fValue</dfn>);</td></tr>
+<tr><th id="247">247</th><td><em>double</em> <a class="decl" href="#_ZN3G3D4aSinEd" title='G3D::aSin' data-ref="_ZN3G3D4aSinEd" >aSin</a> (<em>double</em> <dfn class="local col0 decl" id="60fValue" title='fValue' data-type='double' data-ref="60fValue" >fValue</dfn>);</td></tr>
+<tr><th id="248">248</th><td><em>double</em> <a class="decl" href="#_ZN3G3D4aTanEd" title='G3D::aTan' data-ref="_ZN3G3D4aTanEd" >aTan</a> (<em>double</em> <dfn class="local col1 decl" id="61fValue" title='fValue' data-type='double' data-ref="61fValue" >fValue</dfn>);</td></tr>
+<tr><th id="249">249</th><td><em>double</em> <a class="decl" href="#_ZN3G3D5aTan2Edd" title='G3D::aTan2' data-ref="_ZN3G3D5aTan2Edd" >aTan2</a> (<em>double</em> <dfn class="local col2 decl" id="62fY" title='fY' data-type='double' data-ref="62fY" >fY</dfn>, <em>double</em> <dfn class="local col3 decl" id="63fX" title='fX' data-type='double' data-ref="63fX" >fX</dfn>);</td></tr>
+<tr><th id="250">250</th><td><em>double</em> <a class="decl" href="#_ZN3G3D4signEd" title='G3D::sign' data-ref="_ZN3G3D4signEd" >sign</a> (<em>double</em> <dfn class="local col4 decl" id="64fValue" title='fValue' data-type='double' data-ref="64fValue" >fValue</dfn>);</td></tr>
+<tr><th id="251">251</th><td><em>double</em> <a class="decl" href="#_ZN3G3D6squareEd" title='G3D::square' data-ref="_ZN3G3D6squareEd" >square</a> (<em>double</em> <dfn class="local col5 decl" id="65fValue" title='fValue' data-type='double' data-ref="65fValue" >fValue</dfn>);</td></tr>
+<tr><th id="252">252</th><td></td></tr>
+<tr><th id="253">253</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="254">254</th><td><i class="doc"> Returns true if the argument is a finite real number.</i></td></tr>
+<tr><th id="255">255</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="256">256</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D8isFiniteEd" title='G3D::isFinite' data-ref="_ZN3G3D8isFiniteEd" >isFinite</a>(<em>double</em> <dfn class="local col6 decl" id="66x" title='x' data-type='double' data-ref="66x" >x</dfn>);</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="259">259</th><td><i class="doc"> Returns true if the argument is NaN (not a number).</i></td></tr>
+<tr><th id="260">260</th><td><i class="doc"> You can't use x == nan to test this because all</i></td></tr>
+<tr><th id="261">261</th><td><i class="doc"> comparisons against nan return false.</i></td></tr>
+<tr><th id="262">262</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="263">263</th><td><em>bool</em> <dfn class="decl" id="_ZN3G3D5isNaNEd" title='G3D::isNaN' data-ref="_ZN3G3D5isNaNEd" >isNaN</dfn>(<em>double</em> <dfn class="local col7 decl" id="67x" title='x' data-type='double' data-ref="67x" >x</dfn>);</td></tr>
+<tr><th id="264">264</th><td><em>bool</em> <dfn class="decl" id="_ZN3G3D5isNaNEf" title='G3D::isNaN' data-ref="_ZN3G3D5isNaNEf" >isNaN</dfn>(<em>float</em> <dfn class="local col8 decl" id="68x" title='x' data-type='float' data-ref="68x" >x</dfn>);</td></tr>
+<tr><th id="265">265</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D5isNaNEi" title='G3D::isNaN' data-ref="_ZN3G3D5isNaNEi" >isNaN</dfn>(<em>int</em> <dfn class="local col9 decl" id="69x" title='x' data-type='int' data-ref="69x" >x</dfn>) {</td></tr>
+<tr><th id="266">266</th><td>    (<em>void</em>)<a class="local col9 ref" href="#69x" title='x' data-ref="69x" >x</a>;</td></tr>
+<tr><th id="267">267</th><td>    <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="268">268</th><td>}</td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D5isNaNEm" title='G3D::isNaN' data-ref="_ZN3G3D5isNaNEm" >isNaN</dfn>(<a class="typedef" href="#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a> <dfn class="local col0 decl" id="70x" title='x' data-type='uint64' data-ref="70x" >x</dfn>) {</td></tr>
+<tr><th id="271">271</th><td>    (<em>void</em>)<a class="local col0 ref" href="#70x" title='x' data-ref="70x" >x</a>;</td></tr>
+<tr><th id="272">272</th><td>    <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="273">273</th><td>}</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="276">276</th><td><i class="doc"> Computes x % 3.</i></td></tr>
+<tr><th id="277">277</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="278">278</th><td><em>int</em> <a class="decl" href="#_ZN3G3D5iMod3Ei" title='G3D::iMod3' data-ref="_ZN3G3D5iMod3Ei" >iMod3</a>(<em>int</em> <dfn class="local col1 decl" id="71x" title='x' data-type='int' data-ref="71x" >x</dfn>);</td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="281">281</th><td><i class="doc"> Uniform random number between low and hi, inclusive. [low, hi]</i></td></tr>
+<tr><th id="282">282</th><td><i class="doc"> <span class="command">@deprecated</span> </i></td></tr>
+<tr><th id="283">283</th><td><i class="doc"> <span class="command">@sa</span> Random::uniform</i></td></tr>
+<tr><th id="284">284</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="285">285</th><td><em>float</em> <a class="decl" href="#_ZN3G3D13uniformRandomEff" title='G3D::uniformRandom' data-ref="_ZN3G3D13uniformRandomEff" >uniformRandom</a>(<em>float</em> <dfn class="local col2 decl" id="72low" title='low' data-type='float' data-ref="72low" >low</dfn> = <var>0.0f</var>, <em>float</em> <dfn class="local col3 decl" id="73hi" title='hi' data-type='float' data-ref="73hi" >hi</dfn> = <var>1.0f</var>);</td></tr>
+<tr><th id="286">286</th><td></td></tr>
+<tr><th id="287">287</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="288">288</th><td><i class="doc"> Normally distributed random number. </i></td></tr>
+<tr><th id="289">289</th><td><i class="doc"></i></td></tr>
+<tr><th id="290">290</th><td><i class="doc"> <span class="command">@deprecated</span> </i></td></tr>
+<tr><th id="291">291</th><td><i class="doc"> <span class="command">@sa</span> Random::gaussian</i></td></tr>
+<tr><th id="292">292</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="293">293</th><td><em>float</em> <dfn class="decl" id="_ZN3G3D11gaussRandomEff" title='G3D::gaussRandom' data-ref="_ZN3G3D11gaussRandomEff" >gaussRandom</dfn>(<em>float</em> <dfn class="local col4 decl" id="74mean" title='mean' data-type='float' data-ref="74mean" >mean</dfn> = <var>0.0f</var>, <em>float</em> <dfn class="local col5 decl" id="75stdev" title='stdev' data-type='float' data-ref="75stdev" >stdev</dfn> = <var>1.0f</var>);</td></tr>
+<tr><th id="294">294</th><td></td></tr>
+<tr><th id="295">295</th><td></td></tr>
+<tr><th id="296">296</th><td><i class="doc">/** Returns x<span class="tag">&lt;sup&gt;</span>5<span class="tag">&lt;/sup&gt;</span> */</i></td></tr>
+<tr><th id="297">297</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="298">298</th><td><b>inline</b> T <dfn class="decl def" id="_ZN3G3D4pow5ET_" title='G3D::pow5' data-ref="_ZN3G3D4pow5ET_" >pow5</dfn>(T <dfn class="local col6 decl" id="76x" title='x' data-type='T' data-ref="76x" >x</dfn>) {</td></tr>
+<tr><th id="299">299</th><td>    <em>const</em> T <dfn class="local col7 decl" id="77y" title='y' data-type='const T' data-ref="77y" >y</dfn> = <a class="local col6 ref" href="#76x" title='x' data-ref="76x" >x</a> * <a class="local col6 ref" href="#76x" title='x' data-ref="76x" >x</a>;</td></tr>
+<tr><th id="300">300</th><td>    <b>return</b> <a class="local col7 ref" href="#77y" title='y' data-ref="77y" >y</a> * <a class="local col7 ref" href="#77y" title='y' data-ref="77y" >y</a> * <a class="local col6 ref" href="#76x" title='x' data-ref="76x" >x</a>;</td></tr>
+<tr><th id="301">301</th><td>}</td></tr>
+<tr><th id="302">302</th><td></td></tr>
+<tr><th id="303">303</th><td></td></tr>
+<tr><th id="304">304</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="305">305</th><td><b>inline</b> T <dfn class="decl def" id="_ZN3G3D3minERKT_S2_" title='G3D::min' data-ref="_ZN3G3D3minERKT_S2_" >min</dfn>(<em>const</em> T&amp; <dfn class="local col8 decl" id="78x" title='x' data-type='const T &amp;' data-ref="78x" >x</dfn>, <em>const</em> T&amp; <dfn class="local col9 decl" id="79y" title='y' data-type='const T &amp;' data-ref="79y" >y</dfn>) {</td></tr>
+<tr><th id="306">306</th><td>    <b>return</b> <span class="namespace">std::</span>min&lt;T&gt;(<a class="local col8 ref" href="#78x" title='x' data-ref="78x" >x</a>, <a class="local col9 ref" href="#79y" title='y' data-ref="79y" >y</a>);</td></tr>
+<tr><th id="307">307</th><td>}</td></tr>
+<tr><th id="308">308</th><td></td></tr>
+<tr><th id="309">309</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="310">310</th><td><b>inline</b> T <dfn class="decl def" id="_ZN3G3D3minERKT_S2_S2_" title='G3D::min' data-ref="_ZN3G3D3minERKT_S2_S2_" >min</dfn>(<em>const</em> T&amp; <dfn class="local col0 decl" id="80x" title='x' data-type='const T &amp;' data-ref="80x" >x</dfn>, <em>const</em> T&amp; <dfn class="local col1 decl" id="81y" title='y' data-type='const T &amp;' data-ref="81y" >y</dfn>, <em>const</em> T&amp; <dfn class="local col2 decl" id="82z" title='z' data-type='const T &amp;' data-ref="82z" >z</dfn>) {</td></tr>
+<tr><th id="311">311</th><td>    <b>return</b> <span class="namespace">std::</span>min&lt;T&gt;(<span class="namespace">std::</span>min&lt;T&gt;(<a class="local col0 ref" href="#80x" title='x' data-ref="80x" >x</a>, <a class="local col1 ref" href="#81y" title='y' data-ref="81y" >y</a>), <a class="local col2 ref" href="#82z" title='z' data-ref="82z" >z</a>);</td></tr>
+<tr><th id="312">312</th><td>}</td></tr>
+<tr><th id="313">313</th><td></td></tr>
+<tr><th id="314">314</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="315">315</th><td><b>inline</b> T <dfn class="decl def" id="_ZN3G3D3minERKT_S2_S2_S2_" title='G3D::min' data-ref="_ZN3G3D3minERKT_S2_S2_S2_" >min</dfn>(<em>const</em> T&amp; <dfn class="local col3 decl" id="83x" title='x' data-type='const T &amp;' data-ref="83x" >x</dfn>, <em>const</em> T&amp; <dfn class="local col4 decl" id="84y" title='y' data-type='const T &amp;' data-ref="84y" >y</dfn>, <em>const</em> T&amp; <dfn class="local col5 decl" id="85z" title='z' data-type='const T &amp;' data-ref="85z" >z</dfn>, <em>const</em> T&amp; <dfn class="local col6 decl" id="86w" title='w' data-type='const T &amp;' data-ref="86w" >w</dfn>) {</td></tr>
+<tr><th id="316">316</th><td>    <b>return</b> <span class="namespace">std::</span>min&lt;T&gt;(<span class="namespace">std::</span>min&lt;T&gt;(<a class="local col3 ref" href="#83x" title='x' data-ref="83x" >x</a>, <a class="local col4 ref" href="#84y" title='y' data-ref="84y" >y</a>), <span class="namespace">std::</span>min&lt;T&gt;(<a class="local col5 ref" href="#85z" title='z' data-ref="85z" >z</a>, <a class="local col6 ref" href="#86w" title='w' data-ref="86w" >w</a>));</td></tr>
+<tr><th id="317">317</th><td>}</td></tr>
+<tr><th id="318">318</th><td></td></tr>
+<tr><th id="319">319</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="320">320</th><td><b>inline</b> T <dfn class="decl def" id="_ZN3G3D3maxERKT_S2_" title='G3D::max' data-ref="_ZN3G3D3maxERKT_S2_" >max</dfn>(<em>const</em> T&amp; <dfn class="local col7 decl" id="87x" title='x' data-type='const T &amp;' data-ref="87x" >x</dfn>, <em>const</em> T&amp; <dfn class="local col8 decl" id="88y" title='y' data-type='const T &amp;' data-ref="88y" >y</dfn>) {</td></tr>
+<tr><th id="321">321</th><td>    <b>return</b> <span class="namespace">std::</span>max&lt;T&gt;(<a class="local col7 ref" href="#87x" title='x' data-ref="87x" >x</a>, <a class="local col8 ref" href="#88y" title='y' data-ref="88y" >y</a>);</td></tr>
+<tr><th id="322">322</th><td>}</td></tr>
+<tr><th id="323">323</th><td></td></tr>
+<tr><th id="324">324</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="325">325</th><td><b>inline</b> T <dfn class="decl def" id="_ZN3G3D3maxERKT_S2_S2_" title='G3D::max' data-ref="_ZN3G3D3maxERKT_S2_S2_" >max</dfn>(<em>const</em> T&amp; <dfn class="local col9 decl" id="89x" title='x' data-type='const T &amp;' data-ref="89x" >x</dfn>, <em>const</em> T&amp; <dfn class="local col0 decl" id="90y" title='y' data-type='const T &amp;' data-ref="90y" >y</dfn>, <em>const</em> T&amp; <dfn class="local col1 decl" id="91z" title='z' data-type='const T &amp;' data-ref="91z" >z</dfn>) {</td></tr>
+<tr><th id="326">326</th><td>    <b>return</b> <span class="namespace">std::</span>max&lt;T&gt;(<span class="namespace">std::</span>max&lt;T&gt;(<a class="local col9 ref" href="#89x" title='x' data-ref="89x" >x</a>, <a class="local col0 ref" href="#90y" title='y' data-ref="90y" >y</a>), <a class="local col1 ref" href="#91z" title='z' data-ref="91z" >z</a>);</td></tr>
+<tr><th id="327">327</th><td>}</td></tr>
+<tr><th id="328">328</th><td></td></tr>
+<tr><th id="329">329</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="330">330</th><td><b>inline</b> T <dfn class="decl def" id="_ZN3G3D3maxERKT_S2_S2_S2_" title='G3D::max' data-ref="_ZN3G3D3maxERKT_S2_S2_S2_" >max</dfn>(<em>const</em> T&amp; <dfn class="local col2 decl" id="92x" title='x' data-type='const T &amp;' data-ref="92x" >x</dfn>, <em>const</em> T&amp; <dfn class="local col3 decl" id="93y" title='y' data-type='const T &amp;' data-ref="93y" >y</dfn>, <em>const</em> T&amp; <dfn class="local col4 decl" id="94z" title='z' data-type='const T &amp;' data-ref="94z" >z</dfn>, <em>const</em> T&amp; <dfn class="local col5 decl" id="95w" title='w' data-type='const T &amp;' data-ref="95w" >w</dfn>) {</td></tr>
+<tr><th id="331">331</th><td>    <b>return</b> <span class="namespace">std::</span>max&lt;T&gt;(<span class="namespace">std::</span>max&lt;T&gt;(<a class="local col2 ref" href="#92x" title='x' data-ref="92x" >x</a>, <a class="local col3 ref" href="#93y" title='y' data-ref="93y" >y</a>), <span class="namespace">std::</span>max&lt;T&gt;(<a class="local col4 ref" href="#94z" title='z' data-ref="94z" >z</a>, <a class="local col5 ref" href="#95w" title='w' data-ref="95w" >w</a>));</td></tr>
+<tr><th id="332">332</th><td>}</td></tr>
+<tr><th id="333">333</th><td></td></tr>
+<tr><th id="334">334</th><td><em>int</em> <a class="decl" href="#_ZN3G3D4iMinEii" title='G3D::iMin' data-ref="_ZN3G3D4iMinEii" >iMin</a>(<em>int</em> <dfn class="local col6 decl" id="96x" title='x' data-type='int' data-ref="96x" >x</dfn>, <em>int</em> <dfn class="local col7 decl" id="97y" title='y' data-type='int' data-ref="97y" >y</dfn>);</td></tr>
+<tr><th id="335">335</th><td><em>int</em> <a class="decl" href="#_ZN3G3D4iMaxEii" title='G3D::iMax' data-ref="_ZN3G3D4iMaxEii" >iMax</a>(<em>int</em> <dfn class="local col8 decl" id="98x" title='x' data-type='int' data-ref="98x" >x</dfn>, <em>int</em> <dfn class="local col9 decl" id="99y" title='y' data-type='int' data-ref="99y" >y</dfn>);</td></tr>
+<tr><th id="336">336</th><td></td></tr>
+<tr><th id="337">337</th><td><em>double</em> <a class="decl" href="#_ZN3G3D6squareEd" title='G3D::square' data-ref="_ZN3G3D6squareEd" >square</a>(<em>double</em> <dfn class="local col0 decl" id="100x" title='x' data-type='double' data-ref="100x" >x</dfn>);</td></tr>
+<tr><th id="338">338</th><td><em>double</em> <a class="decl" href="#_ZN3G3D10sumSquaresEdd" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEdd" >sumSquares</a>(<em>double</em> <dfn class="local col1 decl" id="101x" title='x' data-type='double' data-ref="101x" >x</dfn>, <em>double</em> <dfn class="local col2 decl" id="102y" title='y' data-type='double' data-ref="102y" >y</dfn>);</td></tr>
+<tr><th id="339">339</th><td><em>double</em> <a class="decl" href="#_ZN3G3D10sumSquaresEddd" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEddd" >sumSquares</a>(<em>double</em> <dfn class="local col3 decl" id="103x" title='x' data-type='double' data-ref="103x" >x</dfn>, <em>double</em> <dfn class="local col4 decl" id="104y" title='y' data-type='double' data-ref="104y" >y</dfn>, <em>double</em> <dfn class="local col5 decl" id="105z" title='z' data-type='double' data-ref="105z" >z</dfn>);</td></tr>
+<tr><th id="340">340</th><td><em>double</em> <a class="decl" href="#_ZN3G3D8distanceEdd" title='G3D::distance' data-ref="_ZN3G3D8distanceEdd" >distance</a>(<em>double</em> <dfn class="local col6 decl" id="106x" title='x' data-type='double' data-ref="106x" >x</dfn>, <em>double</em> <dfn class="local col7 decl" id="107y" title='y' data-type='double' data-ref="107y" >y</dfn>);</td></tr>
+<tr><th id="341">341</th><td><em>double</em> <a class="decl" href="#_ZN3G3D8distanceEddd" title='G3D::distance' data-ref="_ZN3G3D8distanceEddd" >distance</a>(<em>double</em> <dfn class="local col8 decl" id="108x" title='x' data-type='double' data-ref="108x" >x</dfn>, <em>double</em> <dfn class="local col9 decl" id="109y" title='y' data-type='double' data-ref="109y" >y</dfn>, <em>double</em> <dfn class="local col0 decl" id="110z" title='z' data-type='double' data-ref="110z" >z</dfn>);</td></tr>
+<tr><th id="342">342</th><td></td></tr>
+<tr><th id="343">343</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="344">344</th><td><i class="doc">  Returnes the 0-based index of the highest 1 bit from</i></td></tr>
+<tr><th id="345">345</th><td><i class="doc">  the left.  -1 means the number was 0.</i></td></tr>
+<tr><th id="346">346</th><td><i class="doc"></i></td></tr>
+<tr><th id="347">347</th><td><i class="doc"> <span class="command"> @cite</span> Based on code by jukk<span class="command">a@liimatta</span>.org</i></td></tr>
+<tr><th id="348">348</th><td><i class="doc"> */</i> </td></tr>
+<tr><th id="349">349</th><td><em>int</em> <dfn class="decl" id="_ZN3G3D10highestBitEj" title='G3D::highestBit' data-ref="_ZN3G3D10highestBitEj" >highestBit</dfn>(<a class="typedef" href="#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="local col1 decl" id="111x" title='x' data-type='uint32' data-ref="111x" >x</dfn>);</td></tr>
+<tr><th id="350">350</th><td></td></tr>
+<tr><th id="351">351</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="352">352</th><td><i class="doc"> Note that fuzzyEq(a, b) &amp;&amp; fuzzyEq(b, c) does not imply</i></td></tr>
+<tr><th id="353">353</th><td><i class="doc"> fuzzyEq(a, c), although that will be the case on some</i></td></tr>
+<tr><th id="354">354</th><td><i class="doc"> occasions.</i></td></tr>
+<tr><th id="355">355</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="356">356</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D7fuzzyEqEdd" title='G3D::fuzzyEq' data-ref="_ZN3G3D7fuzzyEqEdd" >fuzzyEq</a>(<em>double</em> <dfn class="local col2 decl" id="112a" title='a' data-type='double' data-ref="112a" >a</dfn>, <em>double</em> <dfn class="local col3 decl" id="113b" title='b' data-type='double' data-ref="113b" >b</dfn>);</td></tr>
+<tr><th id="357">357</th><td></td></tr>
+<tr><th id="358">358</th><td></td></tr>
+<tr><th id="359">359</th><td><i class="doc">/** True if a is definitely not equal to b.  </i></td></tr>
+<tr><th id="360">360</th><td><i class="doc">    Guaranteed false if a == b. </i></td></tr>
+<tr><th id="361">361</th><td><i class="doc">    Possibly false when a != b.*/</i></td></tr>
+<tr><th id="362">362</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D7fuzzyNeEdd" title='G3D::fuzzyNe' data-ref="_ZN3G3D7fuzzyNeEdd" >fuzzyNe</a>(<em>double</em> <dfn class="local col4 decl" id="114a" title='a' data-type='double' data-ref="114a" >a</dfn>, <em>double</em> <dfn class="local col5 decl" id="115b" title='b' data-type='double' data-ref="115b" >b</dfn>);</td></tr>
+<tr><th id="363">363</th><td></td></tr>
+<tr><th id="364">364</th><td><i class="doc">/** Is a strictly greater than b? (Guaranteed false if a &lt;= b).</i></td></tr>
+<tr><th id="365">365</th><td><i class="doc">    (Possibly false if a &gt; b) */</i></td></tr>
+<tr><th id="366">366</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D7fuzzyGtEdd" title='G3D::fuzzyGt' data-ref="_ZN3G3D7fuzzyGtEdd" >fuzzyGt</a>(<em>double</em> <dfn class="local col6 decl" id="116a" title='a' data-type='double' data-ref="116a" >a</dfn>, <em>double</em> <dfn class="local col7 decl" id="117b" title='b' data-type='double' data-ref="117b" >b</dfn>);</td></tr>
+<tr><th id="367">367</th><td></td></tr>
+<tr><th id="368">368</th><td><i class="doc">/** Is a near or greater than b? */</i></td></tr>
+<tr><th id="369">369</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D7fuzzyGeEdd" title='G3D::fuzzyGe' data-ref="_ZN3G3D7fuzzyGeEdd" >fuzzyGe</a>(<em>double</em> <dfn class="local col8 decl" id="118a" title='a' data-type='double' data-ref="118a" >a</dfn>, <em>double</em> <dfn class="local col9 decl" id="119b" title='b' data-type='double' data-ref="119b" >b</dfn>);</td></tr>
+<tr><th id="370">370</th><td></td></tr>
+<tr><th id="371">371</th><td><i class="doc">/** Is a strictly less than b? (Guaranteed false if a &gt;= b)*/</i></td></tr>
+<tr><th id="372">372</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D7fuzzyLtEdd" title='G3D::fuzzyLt' data-ref="_ZN3G3D7fuzzyLtEdd" >fuzzyLt</a>(<em>double</em> <dfn class="local col0 decl" id="120a" title='a' data-type='double' data-ref="120a" >a</dfn>, <em>double</em> <dfn class="local col1 decl" id="121b" title='b' data-type='double' data-ref="121b" >b</dfn>);</td></tr>
+<tr><th id="373">373</th><td></td></tr>
+<tr><th id="374">374</th><td><i class="doc">/** Is a near or less than b? */</i></td></tr>
+<tr><th id="375">375</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D7fuzzyLeEdd" title='G3D::fuzzyLe' data-ref="_ZN3G3D7fuzzyLeEdd" >fuzzyLe</a>(<em>double</em> <dfn class="local col2 decl" id="122a" title='a' data-type='double' data-ref="122a" >a</dfn>, <em>double</em> <dfn class="local col3 decl" id="123b" title='b' data-type='double' data-ref="123b" >b</dfn>);</td></tr>
+<tr><th id="376">376</th><td></td></tr>
+<tr><th id="377">377</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="378">378</th><td><i class="doc"> Computes 1 / sqrt(x).</i></td></tr>
+<tr><th id="379">379</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="380">380</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D3rsqEf" title='G3D::rsq' data-ref="_ZN3G3D3rsqEf" >rsq</dfn>(<em>float</em> <dfn class="local col4 decl" id="124x" title='x' data-type='float' data-ref="124x" >x</dfn>) {</td></tr>
+<tr><th id="381">381</th><td>    <b>return</b> <var>1.0f</var> / <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#156" title='sqrtf' data-ref="sqrtf" id="sqrtf" >sqrtf</a>(<a class="local col4 ref" href="#124x" title='x' data-ref="124x" >x</a>);</td></tr>
+<tr><th id="382">382</th><td>}</td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="385">385</th><td><i class="doc"> Return the next power of 2 higher than the input</i></td></tr>
+<tr><th id="386">386</th><td><i class="doc"> If the input is already a power of 2, the output will be the same </i></td></tr>
+<tr><th id="387">387</th><td><i class="doc"> as the input.</i></td></tr>
+<tr><th id="388">388</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="389">389</th><td><em>int</em> <a class="decl" href="#_ZN3G3D8ceilPow2Ej" title='G3D::ceilPow2' data-ref="_ZN3G3D8ceilPow2Ej" >ceilPow2</a>(<em>unsigned</em> <em>int</em> <dfn class="local col5 decl" id="125in" title='in' data-type='unsigned int' data-ref="125in" >in</dfn>);</td></tr>
+<tr><th id="390">390</th><td></td></tr>
+<tr><th id="391">391</th><td><i class="doc">/** Returns 2^x */</i></td></tr>
+<tr><th id="392">392</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D4pow2Ej" title='G3D::pow2' data-ref="_ZN3G3D4pow2Ej" >pow2</dfn>(<em>unsigned</em> <em>int</em> <dfn class="local col6 decl" id="126x" title='x' data-type='unsigned int' data-ref="126x" >x</dfn>) {</td></tr>
+<tr><th id="393">393</th><td>    <b>return</b> <var>1</var> &lt;&lt; <a class="local col6 ref" href="#126x" title='x' data-ref="126x" >x</a>;</td></tr>
+<tr><th id="394">394</th><td>}</td></tr>
+<tr><th id="395">395</th><td></td></tr>
+<tr><th id="396">396</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4log2Ed" title='G3D::log2' data-ref="_ZN3G3D4log2Ed" >log2</dfn>(<em>double</em> <dfn class="local col7 decl" id="127x" title='x' data-type='double' data-ref="127x" >x</dfn>) {</td></tr>
+<tr><th id="397">397</th><td>    <b>return</b> ::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#109" title='log' data-ref="log" id="log" >log</a>(<a class="local col7 ref" href="#127x" title='x' data-ref="127x" >x</a>) * <var>1.442695</var>;</td></tr>
+<tr><th id="398">398</th><td>}</td></tr>
+<tr><th id="399">399</th><td></td></tr>
+<tr><th id="400">400</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D4log2Ef" title='G3D::log2' data-ref="_ZN3G3D4log2Ef" >log2</dfn>(<em>float</em> <dfn class="local col8 decl" id="128x" title='x' data-type='float' data-ref="128x" >x</dfn>) {</td></tr>
+<tr><th id="401">401</th><td>    <b>return</b> ::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#109" title='logf' data-ref="logf" id="logf" >logf</a>(<a class="local col8 ref" href="#128x" title='x' data-ref="128x" >x</a>) * <var>1.442695f</var>;</td></tr>
+<tr><th id="402">402</th><td>}</td></tr>
+<tr><th id="403">403</th><td></td></tr>
+<tr><th id="404">404</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4log2Ei" title='G3D::log2' data-ref="_ZN3G3D4log2Ei" >log2</dfn>(<em>int</em> <dfn class="local col9 decl" id="129x" title='x' data-type='int' data-ref="129x" >x</dfn>) {</td></tr>
+<tr><th id="405">405</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D4log2Ed" title='G3D::log2' data-ref="_ZN3G3D4log2Ed" >log2</a>((<em>double</em>)<a class="local col9 ref" href="#129x" title='x' data-ref="129x" >x</a>);</td></tr>
+<tr><th id="406">406</th><td>}</td></tr>
+<tr><th id="407">407</th><td></td></tr>
+<tr><th id="408">408</th><td></td></tr>
+<tr><th id="409">409</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="410">410</th><td><i class="doc"> * True if num is a power of two.</i></td></tr>
+<tr><th id="411">411</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="412">412</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D6isPow2Ei" title='G3D::isPow2' data-ref="_ZN3G3D6isPow2Ei" >isPow2</a>(<em>int</em> <dfn class="local col0 decl" id="130num" title='num' data-type='int' data-ref="130num" >num</dfn>);</td></tr>
+<tr><th id="413">413</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D6isPow2Em" title='G3D::isPow2' data-ref="_ZN3G3D6isPow2Em" >isPow2</a>(<a class="typedef" href="#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a> <dfn class="local col1 decl" id="131num" title='num' data-type='uint64' data-ref="131num" >num</dfn>);</td></tr>
+<tr><th id="414">414</th><td></td></tr>
+<tr><th id="415">415</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D5isOddEi" title='G3D::isOdd' data-ref="_ZN3G3D5isOddEi" >isOdd</a>(<em>int</em> <dfn class="local col2 decl" id="132num" title='num' data-type='int' data-ref="132num" >num</dfn>);</td></tr>
+<tr><th id="416">416</th><td><em>bool</em> <a class="decl" href="#_ZN3G3D6isEvenEi" title='G3D::isEven' data-ref="_ZN3G3D6isEvenEi" >isEven</a>(<em>int</em> <dfn class="local col3 decl" id="133num" title='num' data-type='int' data-ref="133num" >num</dfn>);</td></tr>
+<tr><th id="417">417</th><td></td></tr>
+<tr><th id="418">418</th><td><em>double</em> <a class="decl" href="#_ZN3G3D9toRadiansEd" title='G3D::toRadians' data-ref="_ZN3G3D9toRadiansEd" >toRadians</a>(<em>double</em> <dfn class="local col4 decl" id="134deg" title='deg' data-type='double' data-ref="134deg" >deg</dfn>);</td></tr>
+<tr><th id="419">419</th><td><em>double</em> <a class="decl" href="#_ZN3G3D9toDegreesEd" title='G3D::toDegrees' data-ref="_ZN3G3D9toDegreesEd" >toDegrees</a>(<em>double</em> <dfn class="local col5 decl" id="135rad" title='rad' data-type='double' data-ref="135rad" >rad</dfn>);</td></tr>
+<tr><th id="420">420</th><td></td></tr>
+<tr><th id="421">421</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="422">422</th><td><i class="doc"> Returns true if x is not exactly equal to 0.0f.</i></td></tr>
+<tr><th id="423">423</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="424">424</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D3anyEf" title='G3D::any' data-ref="_ZN3G3D3anyEf" >any</dfn>(<em>float</em> <dfn class="local col6 decl" id="136x" title='x' data-type='float' data-ref="136x" >x</dfn>) {</td></tr>
+<tr><th id="425">425</th><td>    <b>return</b> <a class="local col6 ref" href="#136x" title='x' data-ref="136x" >x</a> != <var>0</var>;</td></tr>
+<tr><th id="426">426</th><td>}</td></tr>
+<tr><th id="427">427</th><td></td></tr>
+<tr><th id="428">428</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="429">429</th><td><i class="doc"> Returns true if x is not exactly equal to 0.0f.</i></td></tr>
+<tr><th id="430">430</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="431">431</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D3allEf" title='G3D::all' data-ref="_ZN3G3D3allEf" >all</dfn>(<em>float</em> <dfn class="local col7 decl" id="137x" title='x' data-type='float' data-ref="137x" >x</dfn>) {</td></tr>
+<tr><th id="432">432</th><td>    <b>return</b> <a class="local col7 ref" href="#137x" title='x' data-ref="137x" >x</a> != <var>0</var>;</td></tr>
+<tr><th id="433">433</th><td>}</td></tr>
+<tr><th id="434">434</th><td></td></tr>
+<tr><th id="435">435</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="436">436</th><td><i class="doc"> v / v (for DirectX/Cg support)</i></td></tr>
+<tr><th id="437">437</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="438">438</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D9normalizeEf" title='G3D::normalize' data-ref="_ZN3G3D9normalizeEf" >normalize</dfn>(<em>float</em> <dfn class="local col8 decl" id="138v" title='v' data-type='float' data-ref="138v" >v</dfn>) {</td></tr>
+<tr><th id="439">439</th><td>    <b>return</b> <a class="local col8 ref" href="#138v" title='v' data-ref="138v" >v</a> / <a class="local col8 ref" href="#138v" title='v' data-ref="138v" >v</a>;</td></tr>
+<tr><th id="440">440</th><td>}</td></tr>
+<tr><th id="441">441</th><td></td></tr>
+<tr><th id="442">442</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="443">443</th><td><i class="doc"> a * b (for DirectX/Cg support)</i></td></tr>
+<tr><th id="444">444</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="445">445</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D3dotEff" title='G3D::dot' data-ref="_ZN3G3D3dotEff" >dot</dfn>(<em>float</em> <dfn class="local col9 decl" id="139a" title='a' data-type='float' data-ref="139a" >a</dfn>, <em>float</em> <dfn class="local col0 decl" id="140b" title='b' data-type='float' data-ref="140b" >b</dfn>) {</td></tr>
+<tr><th id="446">446</th><td>    <b>return</b> <a class="local col9 ref" href="#139a" title='a' data-ref="139a" >a</a> * <a class="local col0 ref" href="#140b" title='b' data-ref="140b" >b</a>;</td></tr>
+<tr><th id="447">447</th><td>}</td></tr>
+<tr><th id="448">448</th><td></td></tr>
+<tr><th id="449">449</th><td></td></tr>
+<tr><th id="450">450</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="451">451</th><td><i class="doc"> a * b (for DirectX/Cg support)</i></td></tr>
+<tr><th id="452">452</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="453">453</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D3mulEff" title='G3D::mul' data-ref="_ZN3G3D3mulEff" >mul</dfn>(<em>float</em> <dfn class="local col1 decl" id="141a" title='a' data-type='float' data-ref="141a" >a</dfn>, <em>float</em> <dfn class="local col2 decl" id="142b" title='b' data-type='float' data-ref="142b" >b</dfn>) {</td></tr>
+<tr><th id="454">454</th><td>    <b>return</b> <a class="local col1 ref" href="#141a" title='a' data-ref="141a" >a</a> * <a class="local col2 ref" href="#142b" title='b' data-ref="142b" >b</a>;</td></tr>
+<tr><th id="455">455</th><td>}</td></tr>
+<tr><th id="456">456</th><td></td></tr>
+<tr><th id="457">457</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="458">458</th><td><i class="doc"> 2^x</i></td></tr>
+<tr><th id="459">459</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="460">460</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4exp2Ed" title='G3D::exp2' data-ref="_ZN3G3D4exp2Ed" >exp2</dfn>(<em>double</em> <dfn class="local col3 decl" id="143x" title='x' data-type='double' data-ref="143x" >x</dfn>) {</td></tr>
+<tr><th id="461">461</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#153" title='pow' data-ref="pow" id="pow" >pow</a>(<var>2.0</var>, <a class="local col3 ref" href="#143x" title='x' data-ref="143x" >x</a>);</td></tr>
+<tr><th id="462">462</th><td>}</td></tr>
+<tr><th id="463">463</th><td></td></tr>
+<tr><th id="464">464</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D4exp2Ef" title='G3D::exp2' data-ref="_ZN3G3D4exp2Ef" >exp2</dfn>(<em>float</em> <dfn class="local col4 decl" id="144x" title='x' data-type='float' data-ref="144x" >x</dfn>) {</td></tr>
+<tr><th id="465">465</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#153" title='powf' data-ref="powf" id="powf" >powf</a>(<var>2.0f</var>, <a class="local col4 ref" href="#144x" title='x' data-ref="144x" >x</a>);</td></tr>
+<tr><th id="466">466</th><td>}</td></tr>
+<tr><th id="467">467</th><td></td></tr>
+<tr><th id="468">468</th><td><i class="doc">/** <span class="command">@deprecated</span> Use rsq */</i></td></tr>
+<tr><th id="469">469</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D5rsqrtEd" title='G3D::rsqrt' data-ref="_ZN3G3D5rsqrtEd" >rsqrt</dfn>(<em>double</em> <dfn class="local col5 decl" id="145x" title='x' data-type='double' data-ref="145x" >x</dfn>) {</td></tr>
+<tr><th id="470">470</th><td>    <b>return</b> <var>1.0</var> / <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#156" title='sqrt' data-ref="sqrt" id="sqrt" >sqrt</a>(<a class="local col5 ref" href="#145x" title='x' data-ref="145x" >x</a>);</td></tr>
+<tr><th id="471">471</th><td>}</td></tr>
+<tr><th id="472">472</th><td></td></tr>
+<tr><th id="473">473</th><td><i class="doc">/** <span class="command">@deprecated</span> Use rsq */</i></td></tr>
+<tr><th id="474">474</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D5rsqrtEf" title='G3D::rsqrt' data-ref="_ZN3G3D5rsqrtEf" >rsqrt</dfn>(<em>float</em> <dfn class="local col6 decl" id="146x" title='x' data-type='float' data-ref="146x" >x</dfn>) {</td></tr>
+<tr><th id="475">475</th><td>    <i>// TODO: default this to using the SSE2 instruction</i></td></tr>
+<tr><th id="476">476</th><td>    <b>return</b> <var>1.0f</var> / <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#156" title='sqrtf' data-ref="sqrtf" id="sqrtf" >sqrtf</a>(<a class="local col6 ref" href="#146x" title='x' data-ref="146x" >x</a>);</td></tr>
+<tr><th id="477">477</th><td>}</td></tr>
+<tr><th id="478">478</th><td></td></tr>
+<tr><th id="479">479</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="480">480</th><td><i class="doc"> sin(x)/x</i></td></tr>
+<tr><th id="481">481</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="482">482</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4sincEd" title='G3D::sinc' data-ref="_ZN3G3D4sincEd" >sinc</dfn>(<em>double</em> <dfn class="local col7 decl" id="147x" title='x' data-type='double' data-ref="147x" >x</dfn>) {</td></tr>
+<tr><th id="483">483</th><td>    <em>double</em> <dfn class="local col8 decl" id="148r" title='r' data-type='double' data-ref="148r" >r</dfn> = <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#65" title='sin' data-ref="sin" id="sin" >sin</a>(<a class="local col7 ref" href="#147x" title='x' data-ref="147x" >x</a>) / <a class="local col7 ref" href="#147x" title='x' data-ref="147x" >x</a>;</td></tr>
+<tr><th id="484">484</th><td></td></tr>
+<tr><th id="485">485</th><td>    <b>if</b> (<a class="ref" href="#_ZN3G3D5isNaNEd" title='G3D::isNaN' data-ref="_ZN3G3D5isNaNEd" >isNaN</a>(<a class="local col8 ref" href="#148r" title='r' data-ref="148r" >r</a>)) {</td></tr>
+<tr><th id="486">486</th><td>        <b>return</b> <var>1.0</var>;</td></tr>
+<tr><th id="487">487</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="488">488</th><td>        <b>return</b> <a class="local col8 ref" href="#148r" title='r' data-ref="148r" >r</a>;</td></tr>
+<tr><th id="489">489</th><td>    }</td></tr>
+<tr><th id="490">490</th><td>}</td></tr>
+<tr><th id="491">491</th><td></td></tr>
+<tr><th id="492">492</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="493">493</th><td><i class="doc"> Computes a floating point modulo; the result is t wrapped to the range [lo, hi).</i></td></tr>
+<tr><th id="494">494</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="495">495</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D4wrapEfff" title='G3D::wrap' data-ref="_ZN3G3D4wrapEfff" >wrap</dfn>(<em>float</em> <dfn class="local col9 decl" id="149t" title='t' data-type='float' data-ref="149t" >t</dfn>, <em>float</em> <dfn class="local col0 decl" id="150lo" title='lo' data-type='float' data-ref="150lo" >lo</dfn>, <em>float</em> <dfn class="local col1 decl" id="151hi" title='hi' data-type='float' data-ref="151hi" >hi</dfn>) {</td></tr>
+<tr><th id="496">496</th><td>    <b>if</b> ((<a class="local col9 ref" href="#149t" title='t' data-ref="149t" >t</a> &gt;= <a class="local col0 ref" href="#150lo" title='lo' data-ref="150lo" >lo</a>) &amp;&amp; (<a class="local col9 ref" href="#149t" title='t' data-ref="149t" >t</a> &lt; <a class="local col1 ref" href="#151hi" title='hi' data-ref="151hi" >hi</a>)) {</td></tr>
+<tr><th id="497">497</th><td>        <b>return</b> <a class="local col9 ref" href="#149t" title='t' data-ref="149t" >t</a>;</td></tr>
+<tr><th id="498">498</th><td>    }</td></tr>
+<tr><th id="499">499</th><td></td></tr>
+<tr><th id="500">500</th><td>    <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(hi &gt; lo);</td></tr>
+<tr><th id="501">501</th><td></td></tr>
+<tr><th id="502">502</th><td>    <em>float</em> <dfn class="local col2 decl" id="152interval" title='interval' data-type='float' data-ref="152interval" >interval</dfn> = <a class="local col1 ref" href="#151hi" title='hi' data-ref="151hi" >hi</a> - <a class="local col0 ref" href="#150lo" title='lo' data-ref="150lo" >lo</a>;</td></tr>
+<tr><th id="503">503</th><td></td></tr>
+<tr><th id="504">504</th><td>    <b>return</b> <a class="local col9 ref" href="#149t" title='t' data-ref="149t" >t</a> - <a class="local col2 ref" href="#152interval" title='interval' data-ref="152interval" >interval</a> * <a class="ref" href="#_ZN3G3D6iFloorEd" title='G3D::iFloor' data-ref="_ZN3G3D6iFloorEd" >iFloor</a>((<a class="local col9 ref" href="#149t" title='t' data-ref="149t" >t</a> - <a class="local col0 ref" href="#150lo" title='lo' data-ref="150lo" >lo</a>) / <a class="local col2 ref" href="#152interval" title='interval' data-ref="152interval" >interval</a>);</td></tr>
+<tr><th id="505">505</th><td>}</td></tr>
+<tr><th id="506">506</th><td></td></tr>
+<tr><th id="507">507</th><td></td></tr>
+<tr><th id="508">508</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4wrapEddd" title='G3D::wrap' data-ref="_ZN3G3D4wrapEddd" >wrap</dfn>(<em>double</em> <dfn class="local col3 decl" id="153t" title='t' data-type='double' data-ref="153t" >t</dfn>, <em>double</em> <dfn class="local col4 decl" id="154lo" title='lo' data-type='double' data-ref="154lo" >lo</dfn>, <em>double</em> <dfn class="local col5 decl" id="155hi" title='hi' data-type='double' data-ref="155hi" >hi</dfn>) {</td></tr>
+<tr><th id="509">509</th><td>    <b>if</b> ((<a class="local col3 ref" href="#153t" title='t' data-ref="153t" >t</a> &gt;= <a class="local col4 ref" href="#154lo" title='lo' data-ref="154lo" >lo</a>) &amp;&amp; (<a class="local col3 ref" href="#153t" title='t' data-ref="153t" >t</a> &lt; <a class="local col5 ref" href="#155hi" title='hi' data-ref="155hi" >hi</a>)) {</td></tr>
+<tr><th id="510">510</th><td>        <b>return</b> <a class="local col3 ref" href="#153t" title='t' data-ref="153t" >t</a>;</td></tr>
+<tr><th id="511">511</th><td>    }</td></tr>
+<tr><th id="512">512</th><td></td></tr>
+<tr><th id="513">513</th><td>    <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(hi &gt; lo);</td></tr>
+<tr><th id="514">514</th><td></td></tr>
+<tr><th id="515">515</th><td>    <em>double</em> <dfn class="local col6 decl" id="156interval" title='interval' data-type='double' data-ref="156interval" >interval</dfn> = <a class="local col5 ref" href="#155hi" title='hi' data-ref="155hi" >hi</a> - <a class="local col4 ref" href="#154lo" title='lo' data-ref="154lo" >lo</a>;</td></tr>
+<tr><th id="516">516</th><td></td></tr>
+<tr><th id="517">517</th><td>    <b>return</b> <a class="local col3 ref" href="#153t" title='t' data-ref="153t" >t</a> - <a class="local col6 ref" href="#156interval" title='interval' data-ref="156interval" >interval</a> * <a class="ref" href="#_ZN3G3D6iFloorEd" title='G3D::iFloor' data-ref="_ZN3G3D6iFloorEd" >iFloor</a>((<a class="local col3 ref" href="#153t" title='t' data-ref="153t" >t</a> - <a class="local col4 ref" href="#154lo" title='lo' data-ref="154lo" >lo</a>) / <a class="local col6 ref" href="#156interval" title='interval' data-ref="156interval" >interval</a>);</td></tr>
+<tr><th id="518">518</th><td>}</td></tr>
+<tr><th id="519">519</th><td></td></tr>
+<tr><th id="520">520</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4wrapEdd" title='G3D::wrap' data-ref="_ZN3G3D4wrapEdd" >wrap</dfn>(<em>double</em> <dfn class="local col7 decl" id="157t" title='t' data-type='double' data-ref="157t" >t</dfn>, <em>double</em> <dfn class="local col8 decl" id="158hi" title='hi' data-type='double' data-ref="158hi" >hi</dfn>) {</td></tr>
+<tr><th id="521">521</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D4wrapEddd" title='G3D::wrap' data-ref="_ZN3G3D4wrapEddd" >wrap</a>(<a class="local col7 ref" href="#157t" title='t' data-ref="157t" >t</a>, <var>0.0</var>, <a class="local col8 ref" href="#158hi" title='hi' data-ref="158hi" >hi</a>);</td></tr>
+<tr><th id="522">522</th><td>}</td></tr>
+<tr><th id="523">523</th><td></td></tr>
+<tr><th id="524">524</th><td></td></tr>
+<tr><th id="525">525</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D8isFiniteEd" title='G3D::isFinite' data-ref="_ZN3G3D8isFiniteEd" >isFinite</dfn>(<em>double</em> <dfn class="local col9 decl" id="159x" title='x' data-type='double' data-ref="159x" >x</dfn>) {</td></tr>
+<tr><th id="526">526</th><td>    <b>return</b> ! <a class="ref" href="#_ZN3G3D5isNaNEd" title='G3D::isNaN' data-ref="_ZN3G3D5isNaNEd" >isNaN</a>(<a class="local col9 ref" href="#159x" title='x' data-ref="159x" >x</a>) &amp;&amp; (<a class="local col9 ref" href="#159x" title='x' data-ref="159x" >x</a> &lt; <span class="namespace">G3D::</span><a class="ref" href="#_ZN3G3D3infEv" title='G3D::inf' data-ref="_ZN3G3D3infEv" >inf</a>()) &amp;&amp; (<a class="local col9 ref" href="#159x" title='x' data-ref="159x" >x</a> &gt; -<span class="namespace">G3D::</span><a class="ref" href="#_ZN3G3D3infEv" title='G3D::inf' data-ref="_ZN3G3D3infEv" >inf</a>());</td></tr>
+<tr><th id="527">527</th><td>}</td></tr>
+<tr><th id="528">528</th><td></td></tr>
+<tr><th id="529">529</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D8isFiniteEf" title='G3D::isFinite' data-ref="_ZN3G3D8isFiniteEf" >isFinite</dfn>(<em>float</em> <dfn class="local col0 decl" id="160x" title='x' data-type='float' data-ref="160x" >x</dfn>) {</td></tr>
+<tr><th id="530">530</th><td>    <b>return</b> ! <a class="ref" href="#_ZN3G3D5isNaNEf" title='G3D::isNaN' data-ref="_ZN3G3D5isNaNEf" >isNaN</a>(<a class="local col0 ref" href="#160x" title='x' data-ref="160x" >x</a>) &amp;&amp; (<a class="local col0 ref" href="#160x" title='x' data-ref="160x" >x</a> &lt; <span class="namespace">G3D::</span><a class="ref" href="#_ZN3G3D4finfEv" title='G3D::finf' data-ref="_ZN3G3D4finfEv" >finf</a>()) &amp;&amp; (<a class="local col0 ref" href="#160x" title='x' data-ref="160x" >x</a> &gt; -<span class="namespace">G3D::</span><a class="ref" href="#_ZN3G3D4finfEv" title='G3D::finf' data-ref="_ZN3G3D4finfEv" >finf</a>());</td></tr>
+<tr><th id="531">531</th><td>}</td></tr>
+<tr><th id="532">532</th><td></td></tr>
+<tr><th id="533">533</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="534">534</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D4iAbsEi" title='G3D::iAbs' data-ref="_ZN3G3D4iAbsEi" >iAbs</dfn> (<em>int</em> <dfn class="local col1 decl" id="161iValue" title='iValue' data-type='int' data-ref="161iValue" >iValue</dfn>) {</td></tr>
+<tr><th id="535">535</th><td>    <b>return</b> ( <a class="local col1 ref" href="#161iValue" title='iValue' data-ref="161iValue" >iValue</a> &gt;= <var>0</var> ? <a class="local col1 ref" href="#161iValue" title='iValue' data-ref="161iValue" >iValue</a> : -<a class="local col1 ref" href="#161iValue" title='iValue' data-ref="161iValue" >iValue</a> );</td></tr>
+<tr><th id="536">536</th><td>}</td></tr>
+<tr><th id="537">537</th><td></td></tr>
+<tr><th id="538">538</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="539">539</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D5iCeilEd" title='G3D::iCeil' data-ref="_ZN3G3D5iCeilEd" >iCeil</dfn> (<em>double</em> <dfn class="local col2 decl" id="162fValue" title='fValue' data-type='double' data-ref="162fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="540">540</th><td>    <b>return</b> <em>int</em>(::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#178" title='ceil' data-ref="ceil" id="ceil" >ceil</a>(<a class="local col2 ref" href="#162fValue" title='fValue' data-ref="162fValue" >fValue</a>));</td></tr>
+<tr><th id="541">541</th><td>}</td></tr>
+<tr><th id="542">542</th><td></td></tr>
+<tr><th id="543">543</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="544">544</th><td></td></tr>
+<tr><th id="545">545</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D6iClampEiii" title='G3D::iClamp' data-ref="_ZN3G3D6iClampEiii" >iClamp</dfn>(<em>int</em> <dfn class="local col3 decl" id="163val" title='val' data-type='int' data-ref="163val" >val</dfn>, <em>int</em> <dfn class="local col4 decl" id="164low" title='low' data-type='int' data-ref="164low" >low</dfn>, <em>int</em> <dfn class="local col5 decl" id="165hi" title='hi' data-type='int' data-ref="165hi" >hi</dfn>) {</td></tr>
+<tr><th id="546">546</th><td>    <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(low &lt;= hi);</td></tr>
+<tr><th id="547">547</th><td>    <b>if</b> (<a class="local col3 ref" href="#163val" title='val' data-ref="163val" >val</a> &lt;= <a class="local col4 ref" href="#164low" title='low' data-ref="164low" >low</a>) {</td></tr>
+<tr><th id="548">548</th><td>        <b>return</b> <a class="local col4 ref" href="#164low" title='low' data-ref="164low" >low</a>;</td></tr>
+<tr><th id="549">549</th><td>    } <b>else</b> <b>if</b> (<a class="local col3 ref" href="#163val" title='val' data-ref="163val" >val</a> &gt;= <a class="local col5 ref" href="#165hi" title='hi' data-ref="165hi" >hi</a>) {</td></tr>
+<tr><th id="550">550</th><td>        <b>return</b> <a class="local col5 ref" href="#165hi" title='hi' data-ref="165hi" >hi</a>;</td></tr>
+<tr><th id="551">551</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="552">552</th><td>        <b>return</b> <a class="local col3 ref" href="#163val" title='val' data-ref="163val" >val</a>;</td></tr>
+<tr><th id="553">553</th><td>    }</td></tr>
+<tr><th id="554">554</th><td>}</td></tr>
+<tr><th id="555">555</th><td></td></tr>
+<tr><th id="556">556</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="557">557</th><td></td></tr>
+<tr><th id="558">558</th><td><b>inline</b> <a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="decl def" id="_ZN3G3D6iClampEsss" title='G3D::iClamp' data-ref="_ZN3G3D6iClampEsss" >iClamp</dfn>(<a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="local col6 decl" id="166val" title='val' data-type='int16' data-ref="166val" >val</dfn>, <a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="local col7 decl" id="167low" title='low' data-type='int16' data-ref="167low" >low</dfn>, <a class="typedef" href="#G3D::int16" title='G3D::int16' data-type='int16_t' data-ref="G3D::int16" >int16</a> <dfn class="local col8 decl" id="168hi" title='hi' data-type='int16' data-ref="168hi" >hi</dfn>) {</td></tr>
+<tr><th id="559">559</th><td>    <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(low &lt;= hi);</td></tr>
+<tr><th id="560">560</th><td>    <b>if</b> (<a class="local col6 ref" href="#166val" title='val' data-ref="166val" >val</a> &lt;= <a class="local col7 ref" href="#167low" title='low' data-ref="167low" >low</a>) {</td></tr>
+<tr><th id="561">561</th><td>        <b>return</b> <a class="local col7 ref" href="#167low" title='low' data-ref="167low" >low</a>;</td></tr>
+<tr><th id="562">562</th><td>    } <b>else</b> <b>if</b> (<a class="local col6 ref" href="#166val" title='val' data-ref="166val" >val</a> &gt;= <a class="local col8 ref" href="#168hi" title='hi' data-ref="168hi" >hi</a>) {</td></tr>
+<tr><th id="563">563</th><td>        <b>return</b> <a class="local col8 ref" href="#168hi" title='hi' data-ref="168hi" >hi</a>;</td></tr>
+<tr><th id="564">564</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="565">565</th><td>        <b>return</b> <a class="local col6 ref" href="#166val" title='val' data-ref="166val" >val</a>;</td></tr>
+<tr><th id="566">566</th><td>    }</td></tr>
+<tr><th id="567">567</th><td>}</td></tr>
+<tr><th id="568">568</th><td></td></tr>
+<tr><th id="569">569</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="570">570</th><td></td></tr>
+<tr><th id="571">571</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D5clampEddd" title='G3D::clamp' data-ref="_ZN3G3D5clampEddd" >clamp</dfn>(<em>double</em> <dfn class="local col9 decl" id="169val" title='val' data-type='double' data-ref="169val" >val</dfn>, <em>double</em> <dfn class="local col0 decl" id="170low" title='low' data-type='double' data-ref="170low" >low</dfn>, <em>double</em> <dfn class="local col1 decl" id="171hi" title='hi' data-type='double' data-ref="171hi" >hi</dfn>) {</td></tr>
+<tr><th id="572">572</th><td>    <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(low &lt;= hi);</td></tr>
+<tr><th id="573">573</th><td>    <b>if</b> (<a class="local col9 ref" href="#169val" title='val' data-ref="169val" >val</a> &lt;= <a class="local col0 ref" href="#170low" title='low' data-ref="170low" >low</a>) {</td></tr>
+<tr><th id="574">574</th><td>        <b>return</b> <a class="local col0 ref" href="#170low" title='low' data-ref="170low" >low</a>;</td></tr>
+<tr><th id="575">575</th><td>    } <b>else</b> <b>if</b> (<a class="local col9 ref" href="#169val" title='val' data-ref="169val" >val</a> &gt;= <a class="local col1 ref" href="#171hi" title='hi' data-ref="171hi" >hi</a>) {</td></tr>
+<tr><th id="576">576</th><td>        <b>return</b> <a class="local col1 ref" href="#171hi" title='hi' data-ref="171hi" >hi</a>;</td></tr>
+<tr><th id="577">577</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="578">578</th><td>        <b>return</b> <a class="local col9 ref" href="#169val" title='val' data-ref="169val" >val</a>;</td></tr>
+<tr><th id="579">579</th><td>    }</td></tr>
+<tr><th id="580">580</th><td>}</td></tr>
+<tr><th id="581">581</th><td></td></tr>
+<tr><th id="582">582</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D5clampEfff" title='G3D::clamp' data-ref="_ZN3G3D5clampEfff" >clamp</dfn>(<em>float</em> <dfn class="local col2 decl" id="172val" title='val' data-type='float' data-ref="172val" >val</dfn>, <em>float</em> <dfn class="local col3 decl" id="173low" title='low' data-type='float' data-ref="173low" >low</dfn>, <em>float</em> <dfn class="local col4 decl" id="174hi" title='hi' data-type='float' data-ref="174hi" >hi</dfn>) {</td></tr>
+<tr><th id="583">583</th><td>    <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(low &lt;= hi);</td></tr>
+<tr><th id="584">584</th><td>    <b>if</b> (<a class="local col2 ref" href="#172val" title='val' data-ref="172val" >val</a> &lt;= <a class="local col3 ref" href="#173low" title='low' data-ref="173low" >low</a>) {</td></tr>
+<tr><th id="585">585</th><td>        <b>return</b> <a class="local col3 ref" href="#173low" title='low' data-ref="173low" >low</a>;</td></tr>
+<tr><th id="586">586</th><td>    } <b>else</b> <b>if</b> (<a class="local col2 ref" href="#172val" title='val' data-ref="172val" >val</a> &gt;= <a class="local col4 ref" href="#174hi" title='hi' data-ref="174hi" >hi</a>) {</td></tr>
+<tr><th id="587">587</th><td>        <b>return</b> <a class="local col4 ref" href="#174hi" title='hi' data-ref="174hi" >hi</a>;</td></tr>
+<tr><th id="588">588</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="589">589</th><td>        <b>return</b> <a class="local col2 ref" href="#172val" title='val' data-ref="172val" >val</a>;</td></tr>
+<tr><th id="590">590</th><td>    }</td></tr>
+<tr><th id="591">591</th><td>}</td></tr>
+<tr><th id="592">592</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="593">593</th><td></td></tr>
+<tr><th id="594">594</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D5iWrapEii" title='G3D::iWrap' data-ref="_ZN3G3D5iWrapEii" >iWrap</dfn>(<em>int</em> <dfn class="local col5 decl" id="175val" title='val' data-type='int' data-ref="175val" >val</dfn>, <em>int</em> <dfn class="local col6 decl" id="176hi" title='hi' data-type='int' data-ref="176hi" >hi</dfn>) {</td></tr>
+<tr><th id="595">595</th><td>    <b>if</b> (<a class="local col5 ref" href="#175val" title='val' data-ref="175val" >val</a> &lt; <var>0</var>) {</td></tr>
+<tr><th id="596">596</th><td>        <b>return</b> ((<a class="local col5 ref" href="#175val" title='val' data-ref="175val" >val</a> % <a class="local col6 ref" href="#176hi" title='hi' data-ref="176hi" >hi</a>) + <a class="local col6 ref" href="#176hi" title='hi' data-ref="176hi" >hi</a>) % <a class="local col6 ref" href="#176hi" title='hi' data-ref="176hi" >hi</a>;</td></tr>
+<tr><th id="597">597</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="598">598</th><td>        <b>return</b> <a class="local col5 ref" href="#175val" title='val' data-ref="175val" >val</a> % <a class="local col6 ref" href="#176hi" title='hi' data-ref="176hi" >hi</a>;</td></tr>
+<tr><th id="599">599</th><td>    }</td></tr>
+<tr><th id="600">600</th><td>}</td></tr>
+<tr><th id="601">601</th><td></td></tr>
+<tr><th id="602">602</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="603">603</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D6iFloorEd" title='G3D::iFloor' data-ref="_ZN3G3D6iFloorEd" >iFloor</dfn> (<em>double</em> <dfn class="local col7 decl" id="177fValue" title='fValue' data-type='double' data-ref="177fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="604">604</th><td>    <b>return</b> <em>int</em>(::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#184" title='floor' data-ref="floor" id="floor" >floor</a>(<a class="local col7 ref" href="#177fValue" title='fValue' data-ref="177fValue" >fValue</a>));</td></tr>
+<tr><th id="605">605</th><td>}</td></tr>
+<tr><th id="606">606</th><td></td></tr>
+<tr><th id="607">607</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="608">608</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D5iSignEi" title='G3D::iSign' data-ref="_ZN3G3D5iSignEi" >iSign</dfn> (<em>int</em> <dfn class="local col8 decl" id="178iValue" title='iValue' data-type='int' data-ref="178iValue" >iValue</dfn>) {</td></tr>
+<tr><th id="609">609</th><td>    <b>return</b> ( <a class="local col8 ref" href="#178iValue" title='iValue' data-ref="178iValue" >iValue</a> &gt; <var>0</var> ? + <var>1</var> : ( <a class="local col8 ref" href="#178iValue" title='iValue' data-ref="178iValue" >iValue</a> &lt; <var>0</var> ? -<var>1</var> : <var>0</var> ) );</td></tr>
+<tr><th id="610">610</th><td>}</td></tr>
+<tr><th id="611">611</th><td></td></tr>
+<tr><th id="612">612</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D5iSignEd" title='G3D::iSign' data-ref="_ZN3G3D5iSignEd" >iSign</dfn> (<em>double</em> <dfn class="local col9 decl" id="179fValue" title='fValue' data-type='double' data-ref="179fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="613">613</th><td>    <b>return</b> ( <a class="local col9 ref" href="#179fValue" title='fValue' data-ref="179fValue" >fValue</a> &gt; <var>0.0</var> ? + <var>1</var> : ( <a class="local col9 ref" href="#179fValue" title='fValue' data-ref="179fValue" >fValue</a> &lt; <var>0.0</var> ? -<var>1</var> : <var>0</var> ) );</td></tr>
+<tr><th id="614">614</th><td>}</td></tr>
+<tr><th id="615">615</th><td></td></tr>
+<tr><th id="616">616</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="617">617</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D3absEd" title='G3D::abs' data-ref="_ZN3G3D3absEd" >abs</dfn> (<em>double</em> <dfn class="local col0 decl" id="180fValue" title='fValue' data-type='double' data-ref="180fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="618">618</th><td>    <b>return</b> <em>double</em>(::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#181" title='fabs' data-ref="fabs" id="fabs" >fabs</a>(<a class="local col0 ref" href="#180fValue" title='fValue' data-ref="180fValue" >fValue</a>));</td></tr>
+<tr><th id="619">619</th><td>}</td></tr>
+<tr><th id="620">620</th><td></td></tr>
+<tr><th id="621">621</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="622">622</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4aCosEd" title='G3D::aCos' data-ref="_ZN3G3D4aCosEd" >aCos</dfn> (<em>double</em> <dfn class="local col1 decl" id="181fValue" title='fValue' data-type='double' data-ref="181fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="623">623</th><td>    <b>if</b> ( -<var>1.0</var> &lt; <a class="local col1 ref" href="#181fValue" title='fValue' data-ref="181fValue" >fValue</a> ) {</td></tr>
+<tr><th id="624">624</th><td>        <b>if</b> ( <a class="local col1 ref" href="#181fValue" title='fValue' data-ref="181fValue" >fValue</a> &lt; <var>1.0</var> )</td></tr>
+<tr><th id="625">625</th><td>            <b>return</b> <em>double</em>(::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#54" title='acos' data-ref="acos" id="acos" >acos</a>(<a class="local col1 ref" href="#181fValue" title='fValue' data-ref="181fValue" >fValue</a>));</td></tr>
+<tr><th id="626">626</th><td>        <b>else</b></td></tr>
+<tr><th id="627">627</th><td>            <b>return</b> <var>0.0</var>;</td></tr>
+<tr><th id="628">628</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="629">629</th><td>        <b>return</b> <a class="ref" href="#_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</a>();</td></tr>
+<tr><th id="630">630</th><td>    }</td></tr>
+<tr><th id="631">631</th><td>}</td></tr>
+<tr><th id="632">632</th><td></td></tr>
+<tr><th id="633">633</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D4acosEf" title='G3D::acos' data-ref="_ZN3G3D4acosEf" >acos</dfn> (<em>float</em> <dfn class="local col2 decl" id="182fValue" title='fValue' data-type='float' data-ref="182fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="634">634</th><td>    <b>if</b> ( -<var>1.0f</var> &lt; <a class="local col2 ref" href="#182fValue" title='fValue' data-ref="182fValue" >fValue</a> ) {</td></tr>
+<tr><th id="635">635</th><td>        <b>if</b> ( <a class="local col2 ref" href="#182fValue" title='fValue' data-ref="182fValue" >fValue</a> &lt; <var>1.0f</var> ) {</td></tr>
+<tr><th id="636">636</th><td>            <b>return</b> ::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#54" title='acos' data-ref="acos" id="acos" >acos</a>(<a class="local col2 ref" href="#182fValue" title='fValue' data-ref="182fValue" >fValue</a>);</td></tr>
+<tr><th id="637">637</th><td>        } <b>else</b> {</td></tr>
+<tr><th id="638">638</th><td>            <b>return</b> <var>0.0f</var>;</td></tr>
+<tr><th id="639">639</th><td>        }</td></tr>
+<tr><th id="640">640</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="641">641</th><td>        <b>return</b> <a class="ref" href="#_ZN3G3D3pifEv" title='G3D::pif' data-ref="_ZN3G3D3pifEv" >pif</a>();</td></tr>
+<tr><th id="642">642</th><td>    }</td></tr>
+<tr><th id="643">643</th><td>}</td></tr>
+<tr><th id="644">644</th><td></td></tr>
+<tr><th id="645">645</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="646">646</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4aSinEd" title='G3D::aSin' data-ref="_ZN3G3D4aSinEd" >aSin</dfn> (<em>double</em> <dfn class="local col3 decl" id="183fValue" title='fValue' data-type='double' data-ref="183fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="647">647</th><td>    <b>if</b> ( -<var>1.0</var> &lt; <a class="local col3 ref" href="#183fValue" title='fValue' data-ref="183fValue" >fValue</a> ) {</td></tr>
+<tr><th id="648">648</th><td>        <b>if</b> ( <a class="local col3 ref" href="#183fValue" title='fValue' data-ref="183fValue" >fValue</a> &lt; <var>1.0</var> ) {</td></tr>
+<tr><th id="649">649</th><td>            <b>return</b> <em>double</em>(::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#56" title='asin' data-ref="asin" id="asin" >asin</a>(<a class="local col3 ref" href="#183fValue" title='fValue' data-ref="183fValue" >fValue</a>));</td></tr>
+<tr><th id="650">650</th><td>        } <b>else</b> {</td></tr>
+<tr><th id="651">651</th><td>            <b>return</b> -<a class="ref" href="#_ZN3G3D6halfPiEv" title='G3D::halfPi' data-ref="_ZN3G3D6halfPiEv" >halfPi</a>();</td></tr>
+<tr><th id="652">652</th><td>        }</td></tr>
+<tr><th id="653">653</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="654">654</th><td>        <b>return</b> <a class="ref" href="#_ZN3G3D6halfPiEv" title='G3D::halfPi' data-ref="_ZN3G3D6halfPiEv" >halfPi</a>();</td></tr>
+<tr><th id="655">655</th><td>    }</td></tr>
+<tr><th id="656">656</th><td>}</td></tr>
+<tr><th id="657">657</th><td></td></tr>
+<tr><th id="658">658</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="659">659</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4aTanEd" title='G3D::aTan' data-ref="_ZN3G3D4aTanEd" >aTan</dfn> (<em>double</em> <dfn class="local col4 decl" id="184fValue" title='fValue' data-type='double' data-ref="184fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="660">660</th><td>    <b>return</b> <em>double</em>(::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#58" title='atan' data-ref="atan" id="atan" >atan</a>(<a class="local col4 ref" href="#184fValue" title='fValue' data-ref="184fValue" >fValue</a>));</td></tr>
+<tr><th id="661">661</th><td>}</td></tr>
+<tr><th id="662">662</th><td></td></tr>
+<tr><th id="663">663</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="664">664</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D5aTan2Edd" title='G3D::aTan2' data-ref="_ZN3G3D5aTan2Edd" >aTan2</dfn> (<em>double</em> <dfn class="local col5 decl" id="185fY" title='fY' data-type='double' data-ref="185fY" >fY</dfn>, <em>double</em> <dfn class="local col6 decl" id="186fX" title='fX' data-type='double' data-ref="186fX" >fX</dfn>) {</td></tr>
+<tr><th id="665">665</th><td>    <b>return</b> <em>double</em>(::<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#60" title='atan2' data-ref="atan2" id="atan2" >atan2</a>(<a class="local col5 ref" href="#185fY" title='fY' data-ref="185fY" >fY</a>, <a class="local col6 ref" href="#186fX" title='fX' data-ref="186fX" >fX</a>));</td></tr>
+<tr><th id="666">666</th><td>}</td></tr>
+<tr><th id="667">667</th><td></td></tr>
+<tr><th id="668">668</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="669">669</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D4signEd" title='G3D::sign' data-ref="_ZN3G3D4signEd" >sign</dfn> (<em>double</em> <dfn class="local col7 decl" id="187fValue" title='fValue' data-type='double' data-ref="187fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="670">670</th><td>    <b>if</b> (<a class="local col7 ref" href="#187fValue" title='fValue' data-ref="187fValue" >fValue</a> &gt; <var>0.0</var>) {</td></tr>
+<tr><th id="671">671</th><td>        <b>return</b> <var>1.0</var>;</td></tr>
+<tr><th id="672">672</th><td>    }</td></tr>
+<tr><th id="673">673</th><td></td></tr>
+<tr><th id="674">674</th><td>    <b>if</b> (<a class="local col7 ref" href="#187fValue" title='fValue' data-ref="187fValue" >fValue</a> &lt; <var>0.0</var>) {</td></tr>
+<tr><th id="675">675</th><td>        <b>return</b> -<var>1.0</var>;</td></tr>
+<tr><th id="676">676</th><td>    }</td></tr>
+<tr><th id="677">677</th><td></td></tr>
+<tr><th id="678">678</th><td>    <b>return</b> <var>0.0</var>;</td></tr>
+<tr><th id="679">679</th><td>}</td></tr>
+<tr><th id="680">680</th><td></td></tr>
+<tr><th id="681">681</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D4signEf" title='G3D::sign' data-ref="_ZN3G3D4signEf" >sign</dfn> (<em>float</em> <dfn class="local col8 decl" id="188fValue" title='fValue' data-type='float' data-ref="188fValue" >fValue</dfn>) {</td></tr>
+<tr><th id="682">682</th><td>    <b>if</b> (<a class="local col8 ref" href="#188fValue" title='fValue' data-ref="188fValue" >fValue</a> &gt; <var>0.0f</var>) {</td></tr>
+<tr><th id="683">683</th><td>        <b>return</b> <var>1.0f</var>;</td></tr>
+<tr><th id="684">684</th><td>    }</td></tr>
+<tr><th id="685">685</th><td></td></tr>
+<tr><th id="686">686</th><td>    <b>if</b> (<a class="local col8 ref" href="#188fValue" title='fValue' data-ref="188fValue" >fValue</a> &lt; <var>0.0f</var>) {</td></tr>
+<tr><th id="687">687</th><td>        <b>return</b> -<var>1.0f</var>;</td></tr>
+<tr><th id="688">688</th><td>    }</td></tr>
+<tr><th id="689">689</th><td></td></tr>
+<tr><th id="690">690</th><td>    <b>return</b> <var>0.0f</var>;</td></tr>
+<tr><th id="691">691</th><td>}</td></tr>
+<tr><th id="692">692</th><td></td></tr>
+<tr><th id="693">693</th><td></td></tr>
+<tr><th id="694">694</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D13uniformRandomEff" title='G3D::uniformRandom' data-ref="_ZN3G3D13uniformRandomEff" >uniformRandom</dfn>(<em>float</em> <dfn class="local col9 decl" id="189low" title='low' data-type='float' data-ref="189low" >low</dfn>, <em>float</em> <dfn class="local col0 decl" id="190hi" title='hi' data-type='float' data-ref="190hi" >hi</dfn>) {</td></tr>
+<tr><th id="695">695</th><td>    <b>return</b> (<a class="local col0 ref" href="#190hi" title='hi' data-ref="190hi" >hi</a> - <a class="local col9 ref" href="#189low" title='low' data-ref="189low" >low</a>) * <em>float</em>(::<a class="ref" href="../../../../../include/stdlib.h.html#rand" title='rand' data-ref="rand" id="rand" >rand</a>()) / <em>float</em>(<a class="macro" href="../../../../../include/stdlib.h.html#128" title="2147483647" data-ref="_M/RAND_MAX">RAND_MAX</a>) + <a class="local col9 ref" href="#189low" title='low' data-ref="189low" >low</a>;</td></tr>
+<tr><th id="696">696</th><td>}</td></tr>
+<tr><th id="697">697</th><td></td></tr>
+<tr><th id="698">698</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D6squareEd" title='G3D::square' data-ref="_ZN3G3D6squareEd" >square</dfn>(<em>double</em> <dfn class="local col1 decl" id="191x" title='x' data-type='double' data-ref="191x" >x</dfn>) {</td></tr>
+<tr><th id="699">699</th><td>    <b>return</b> <a class="local col1 ref" href="#191x" title='x' data-ref="191x" >x</a> * <a class="local col1 ref" href="#191x" title='x' data-ref="191x" >x</a>;</td></tr>
+<tr><th id="700">700</th><td>}</td></tr>
+<tr><th id="701">701</th><td></td></tr>
+<tr><th id="702">702</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D6squareEf" title='G3D::square' data-ref="_ZN3G3D6squareEf" >square</dfn>(<em>float</em> <dfn class="local col2 decl" id="192x" title='x' data-type='float' data-ref="192x" >x</dfn>) {</td></tr>
+<tr><th id="703">703</th><td>    <b>return</b> <a class="local col2 ref" href="#192x" title='x' data-ref="192x" >x</a> * <a class="local col2 ref" href="#192x" title='x' data-ref="192x" >x</a>;</td></tr>
+<tr><th id="704">704</th><td>}</td></tr>
+<tr><th id="705">705</th><td></td></tr>
+<tr><th id="706">706</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D6squareEi" title='G3D::square' data-ref="_ZN3G3D6squareEi" >square</dfn>(<em>int</em> <dfn class="local col3 decl" id="193x" title='x' data-type='int' data-ref="193x" >x</dfn>) {</td></tr>
+<tr><th id="707">707</th><td>    <b>return</b> <a class="local col3 ref" href="#193x" title='x' data-ref="193x" >x</a> * <a class="local col3 ref" href="#193x" title='x' data-ref="193x" >x</a>;</td></tr>
+<tr><th id="708">708</th><td>}</td></tr>
+<tr><th id="709">709</th><td></td></tr>
+<tr><th id="710">710</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="711">711</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D10sumSquaresEdd" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEdd" >sumSquares</dfn>(<em>double</em> <dfn class="local col4 decl" id="194x" title='x' data-type='double' data-ref="194x" >x</dfn>, <em>double</em> <dfn class="local col5 decl" id="195y" title='y' data-type='double' data-ref="195y" >y</dfn>) {</td></tr>
+<tr><th id="712">712</th><td>    <b>return</b> <a class="local col4 ref" href="#194x" title='x' data-ref="194x" >x</a>*<a class="local col4 ref" href="#194x" title='x' data-ref="194x" >x</a> + <a class="local col5 ref" href="#195y" title='y' data-ref="195y" >y</a>*<a class="local col5 ref" href="#195y" title='y' data-ref="195y" >y</a>;</td></tr>
+<tr><th id="713">713</th><td>}</td></tr>
+<tr><th id="714">714</th><td></td></tr>
+<tr><th id="715">715</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="716">716</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D10sumSquaresEff" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEff" >sumSquares</dfn>(<em>float</em> <dfn class="local col6 decl" id="196x" title='x' data-type='float' data-ref="196x" >x</dfn>, <em>float</em> <dfn class="local col7 decl" id="197y" title='y' data-type='float' data-ref="197y" >y</dfn>) {</td></tr>
+<tr><th id="717">717</th><td>    <b>return</b> <a class="local col6 ref" href="#196x" title='x' data-ref="196x" >x</a>*<a class="local col6 ref" href="#196x" title='x' data-ref="196x" >x</a> + <a class="local col7 ref" href="#197y" title='y' data-ref="197y" >y</a>*<a class="local col7 ref" href="#197y" title='y' data-ref="197y" >y</a>;</td></tr>
+<tr><th id="718">718</th><td>}</td></tr>
+<tr><th id="719">719</th><td></td></tr>
+<tr><th id="720">720</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="721">721</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D10sumSquaresEddd" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEddd" >sumSquares</dfn>(<em>double</em> <dfn class="local col8 decl" id="198x" title='x' data-type='double' data-ref="198x" >x</dfn>, <em>double</em> <dfn class="local col9 decl" id="199y" title='y' data-type='double' data-ref="199y" >y</dfn>, <em>double</em> <dfn class="local col0 decl" id="200z" title='z' data-type='double' data-ref="200z" >z</dfn>) {</td></tr>
+<tr><th id="722">722</th><td>    <b>return</b> <a class="local col8 ref" href="#198x" title='x' data-ref="198x" >x</a>*<a class="local col8 ref" href="#198x" title='x' data-ref="198x" >x</a> + <a class="local col9 ref" href="#199y" title='y' data-ref="199y" >y</a>*<a class="local col9 ref" href="#199y" title='y' data-ref="199y" >y</a> + <a class="local col0 ref" href="#200z" title='z' data-ref="200z" >z</a>*<a class="local col0 ref" href="#200z" title='z' data-ref="200z" >z</a>;</td></tr>
+<tr><th id="723">723</th><td>}</td></tr>
+<tr><th id="724">724</th><td></td></tr>
+<tr><th id="725">725</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="726">726</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D10sumSquaresEfff" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEfff" >sumSquares</dfn>(<em>float</em> <dfn class="local col1 decl" id="201x" title='x' data-type='float' data-ref="201x" >x</dfn>, <em>float</em> <dfn class="local col2 decl" id="202y" title='y' data-type='float' data-ref="202y" >y</dfn>, <em>float</em> <dfn class="local col3 decl" id="203z" title='z' data-type='float' data-ref="203z" >z</dfn>) {</td></tr>
+<tr><th id="727">727</th><td>    <b>return</b> <a class="local col1 ref" href="#201x" title='x' data-ref="201x" >x</a>*<a class="local col1 ref" href="#201x" title='x' data-ref="201x" >x</a> + <a class="local col2 ref" href="#202y" title='y' data-ref="202y" >y</a>*<a class="local col2 ref" href="#202y" title='y' data-ref="202y" >y</a> + <a class="local col3 ref" href="#203z" title='z' data-ref="203z" >z</a>*<a class="local col3 ref" href="#203z" title='z' data-ref="203z" >z</a>;</td></tr>
+<tr><th id="728">728</th><td>}</td></tr>
+<tr><th id="729">729</th><td></td></tr>
+<tr><th id="730">730</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="731">731</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D8distanceEdd" title='G3D::distance' data-ref="_ZN3G3D8distanceEdd" >distance</dfn>(<em>double</em> <dfn class="local col4 decl" id="204x" title='x' data-type='double' data-ref="204x" >x</dfn>, <em>double</em> <dfn class="local col5 decl" id="205y" title='y' data-type='double' data-ref="205y" >y</dfn>) {</td></tr>
+<tr><th id="732">732</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#156" title='sqrt' data-ref="sqrt" id="sqrt" >sqrt</a>(<a class="ref" href="#_ZN3G3D10sumSquaresEdd" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEdd" >sumSquares</a>(<a class="local col4 ref" href="#204x" title='x' data-ref="204x" >x</a>, <a class="local col5 ref" href="#205y" title='y' data-ref="205y" >y</a>));</td></tr>
+<tr><th id="733">733</th><td>}</td></tr>
+<tr><th id="734">734</th><td></td></tr>
+<tr><th id="735">735</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="736">736</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D8distanceEff" title='G3D::distance' data-ref="_ZN3G3D8distanceEff" >distance</dfn>(<em>float</em> <dfn class="local col6 decl" id="206x" title='x' data-type='float' data-ref="206x" >x</dfn>, <em>float</em> <dfn class="local col7 decl" id="207y" title='y' data-type='float' data-ref="207y" >y</dfn>) {</td></tr>
+<tr><th id="737">737</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#156" title='sqrt' data-ref="sqrt" id="sqrt" >sqrt</a>(<a class="ref" href="#_ZN3G3D10sumSquaresEff" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEff" >sumSquares</a>(<a class="local col6 ref" href="#206x" title='x' data-ref="206x" >x</a>, <a class="local col7 ref" href="#207y" title='y' data-ref="207y" >y</a>));</td></tr>
+<tr><th id="738">738</th><td>}</td></tr>
+<tr><th id="739">739</th><td></td></tr>
+<tr><th id="740">740</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="741">741</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D8distanceEddd" title='G3D::distance' data-ref="_ZN3G3D8distanceEddd" >distance</dfn>(<em>double</em> <dfn class="local col8 decl" id="208x" title='x' data-type='double' data-ref="208x" >x</dfn>, <em>double</em> <dfn class="local col9 decl" id="209y" title='y' data-type='double' data-ref="209y" >y</dfn>, <em>double</em> <dfn class="local col0 decl" id="210z" title='z' data-type='double' data-ref="210z" >z</dfn>) {</td></tr>
+<tr><th id="742">742</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#156" title='sqrt' data-ref="sqrt" id="sqrt" >sqrt</a>(<a class="ref" href="#_ZN3G3D10sumSquaresEddd" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEddd" >sumSquares</a>(<a class="local col8 ref" href="#208x" title='x' data-ref="208x" >x</a>, <a class="local col9 ref" href="#209y" title='y' data-ref="209y" >y</a>, <a class="local col0 ref" href="#210z" title='z' data-ref="210z" >z</a>));</td></tr>
+<tr><th id="743">743</th><td>}</td></tr>
+<tr><th id="744">744</th><td></td></tr>
+<tr><th id="745">745</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="746">746</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D8distanceEfff" title='G3D::distance' data-ref="_ZN3G3D8distanceEfff" >distance</dfn>(<em>float</em> <dfn class="local col1 decl" id="211x" title='x' data-type='float' data-ref="211x" >x</dfn>, <em>float</em> <dfn class="local col2 decl" id="212y" title='y' data-type='float' data-ref="212y" >y</dfn>, <em>float</em> <dfn class="local col3 decl" id="213z" title='z' data-type='float' data-ref="213z" >z</dfn>) {</td></tr>
+<tr><th id="747">747</th><td>    <b>return</b> <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#156" title='sqrt' data-ref="sqrt" id="sqrt" >sqrt</a>(<a class="ref" href="#_ZN3G3D10sumSquaresEfff" title='G3D::sumSquares' data-ref="_ZN3G3D10sumSquaresEfff" >sumSquares</a>(<a class="local col1 ref" href="#211x" title='x' data-ref="211x" >x</a>, <a class="local col2 ref" href="#212y" title='y' data-ref="212y" >y</a>, <a class="local col3 ref" href="#213z" title='z' data-ref="213z" >z</a>));</td></tr>
+<tr><th id="748">748</th><td>}</td></tr>
+<tr><th id="749">749</th><td></td></tr>
+<tr><th id="750">750</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="751">751</th><td></td></tr>
+<tr><th id="752">752</th><td><i class="doc">/** <span class="command">@deprecated</span> use G3D::min */</i></td></tr>
+<tr><th id="753">753</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D4iMinEii" title='G3D::iMin' data-ref="_ZN3G3D4iMinEii" >iMin</dfn>(<em>int</em> <dfn class="local col4 decl" id="214x" title='x' data-type='int' data-ref="214x" >x</dfn>, <em>int</em> <dfn class="local col5 decl" id="215y" title='y' data-type='int' data-ref="215y" >y</dfn>) {</td></tr>
+<tr><th id="754">754</th><td>    <b>return</b> (<a class="local col4 ref" href="#214x" title='x' data-ref="214x" >x</a> &gt;= <a class="local col5 ref" href="#215y" title='y' data-ref="215y" >y</a>) ? <a class="local col5 ref" href="#215y" title='y' data-ref="215y" >y</a> : <a class="local col4 ref" href="#214x" title='x' data-ref="214x" >x</a>;</td></tr>
+<tr><th id="755">755</th><td>}</td></tr>
+<tr><th id="756">756</th><td></td></tr>
+<tr><th id="757">757</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="758">758</th><td><i class="doc">/** <span class="command">@deprecated</span> use G3D::min */</i></td></tr>
+<tr><th id="759">759</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D4iMaxEii" title='G3D::iMax' data-ref="_ZN3G3D4iMaxEii" >iMax</dfn>(<em>int</em> <dfn class="local col6 decl" id="216x" title='x' data-type='int' data-ref="216x" >x</dfn>, <em>int</em> <dfn class="local col7 decl" id="217y" title='y' data-type='int' data-ref="217y" >y</dfn>) {</td></tr>
+<tr><th id="760">760</th><td>    <b>return</b> (<a class="local col6 ref" href="#216x" title='x' data-ref="216x" >x</a> &gt;= <a class="local col7 ref" href="#217y" title='y' data-ref="217y" >y</a>) ? <a class="local col6 ref" href="#216x" title='x' data-ref="216x" >x</a> : <a class="local col7 ref" href="#217y" title='y' data-ref="217y" >y</a>;</td></tr>
+<tr><th id="761">761</th><td>}</td></tr>
+<tr><th id="762">762</th><td></td></tr>
+<tr><th id="763">763</th><td><i>//----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="764">764</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D8ceilPow2Ej" title='G3D::ceilPow2' data-ref="_ZN3G3D8ceilPow2Ej" >ceilPow2</dfn>(<em>unsigned</em> <em>int</em> <dfn class="local col8 decl" id="218in" title='in' data-type='unsigned int' data-ref="218in" >in</dfn>) {</td></tr>
+<tr><th id="765">765</th><td>    <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> -= <var>1</var>;</td></tr>
+<tr><th id="766">766</th><td></td></tr>
+<tr><th id="767">767</th><td>    <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> |= <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> &gt;&gt; <var>16</var>;</td></tr>
+<tr><th id="768">768</th><td>    <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> |= <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> &gt;&gt; <var>8</var>;</td></tr>
+<tr><th id="769">769</th><td>    <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> |= <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> &gt;&gt; <var>4</var>;</td></tr>
+<tr><th id="770">770</th><td>    <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> |= <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> &gt;&gt; <var>2</var>;</td></tr>
+<tr><th id="771">771</th><td>    <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> |= <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> &gt;&gt; <var>1</var>;</td></tr>
+<tr><th id="772">772</th><td></td></tr>
+<tr><th id="773">773</th><td>    <b>return</b> <a class="local col8 ref" href="#218in" title='in' data-ref="218in" >in</a> + <var>1</var>;</td></tr>
+<tr><th id="774">774</th><td>}</td></tr>
+<tr><th id="775">775</th><td></td></tr>
+<tr><th id="776">776</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6isPow2Ei" title='G3D::isPow2' data-ref="_ZN3G3D6isPow2Ei" >isPow2</dfn>(<em>int</em> <dfn class="local col9 decl" id="219num" title='num' data-type='int' data-ref="219num" >num</dfn>) {</td></tr>
+<tr><th id="777">777</th><td>    <b>return</b> ((<a class="local col9 ref" href="#219num" title='num' data-ref="219num" >num</a> &amp; -<a class="local col9 ref" href="#219num" title='num' data-ref="219num" >num</a>) == <a class="local col9 ref" href="#219num" title='num' data-ref="219num" >num</a>);</td></tr>
+<tr><th id="778">778</th><td>}</td></tr>
+<tr><th id="779">779</th><td></td></tr>
+<tr><th id="780">780</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6isPow2Em" title='G3D::isPow2' data-ref="_ZN3G3D6isPow2Em" >isPow2</dfn>(<a class="typedef" href="#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a> <dfn class="local col0 decl" id="220x" title='x' data-type='uint64' data-ref="220x" >x</dfn>) {</td></tr>
+<tr><th id="781">781</th><td>    <i>// See <a href="http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/,">http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/,</a> method #9</i></td></tr>
+<tr><th id="782">782</th><td>    <b>return</b> ((<a class="local col0 ref" href="#220x" title='x' data-ref="220x" >x</a> != <var>0</var>) &amp;&amp; !(<a class="local col0 ref" href="#220x" title='x' data-ref="220x" >x</a> &amp; (<a class="local col0 ref" href="#220x" title='x' data-ref="220x" >x</a> - <var>1</var>)));</td></tr>
+<tr><th id="783">783</th><td>}</td></tr>
+<tr><th id="784">784</th><td></td></tr>
+<tr><th id="785">785</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6isPow2Ej" title='G3D::isPow2' data-ref="_ZN3G3D6isPow2Ej" >isPow2</dfn>(<a class="typedef" href="#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="local col1 decl" id="221x" title='x' data-type='uint32' data-ref="221x" >x</dfn>) {</td></tr>
+<tr><th id="786">786</th><td>    <i>// See <a href="http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/,">http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/,</a> method #9</i></td></tr>
+<tr><th id="787">787</th><td>    <b>return</b> ((<a class="local col1 ref" href="#221x" title='x' data-ref="221x" >x</a> != <var>0</var>) &amp;&amp; !(<a class="local col1 ref" href="#221x" title='x' data-ref="221x" >x</a> &amp; (<a class="local col1 ref" href="#221x" title='x' data-ref="221x" >x</a> - <var>1</var>)));</td></tr>
+<tr><th id="788">788</th><td>}</td></tr>
+<tr><th id="789">789</th><td></td></tr>
+<tr><th id="790">790</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D5isOddEi" title='G3D::isOdd' data-ref="_ZN3G3D5isOddEi" >isOdd</dfn>(<em>int</em> <dfn class="local col2 decl" id="222num" title='num' data-type='int' data-ref="222num" >num</dfn>) {</td></tr>
+<tr><th id="791">791</th><td>    <b>return</b> (<a class="local col2 ref" href="#222num" title='num' data-ref="222num" >num</a> &amp; <var>1</var>) == <var>1</var>;</td></tr>
+<tr><th id="792">792</th><td>}</td></tr>
+<tr><th id="793">793</th><td></td></tr>
+<tr><th id="794">794</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D6isEvenEi" title='G3D::isEven' data-ref="_ZN3G3D6isEvenEi" >isEven</dfn>(<em>int</em> <dfn class="local col3 decl" id="223num" title='num' data-type='int' data-ref="223num" >num</dfn>) {</td></tr>
+<tr><th id="795">795</th><td>    <b>return</b> (<a class="local col3 ref" href="#223num" title='num' data-ref="223num" >num</a> &amp; <var>1</var>) == <var>0</var>;</td></tr>
+<tr><th id="796">796</th><td>}</td></tr>
+<tr><th id="797">797</th><td></td></tr>
+<tr><th id="798">798</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D9toRadiansEd" title='G3D::toRadians' data-ref="_ZN3G3D9toRadiansEd" >toRadians</dfn>(<em>double</em> <dfn class="local col4 decl" id="224deg" title='deg' data-type='double' data-ref="224deg" >deg</dfn>) {</td></tr>
+<tr><th id="799">799</th><td>    <b>return</b> <a class="local col4 ref" href="#224deg" title='deg' data-ref="224deg" >deg</a> * <a class="ref" href="#_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</a>() / <var>180.0</var>;</td></tr>
+<tr><th id="800">800</th><td>}</td></tr>
+<tr><th id="801">801</th><td></td></tr>
+<tr><th id="802">802</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D9toDegreesEd" title='G3D::toDegrees' data-ref="_ZN3G3D9toDegreesEd" >toDegrees</dfn>(<em>double</em> <dfn class="local col5 decl" id="225rad" title='rad' data-type='double' data-ref="225rad" >rad</dfn>) {</td></tr>
+<tr><th id="803">803</th><td>    <b>return</b> <a class="local col5 ref" href="#225rad" title='rad' data-ref="225rad" >rad</a> * <var>180.0</var> / <a class="ref" href="#_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</a>();</td></tr>
+<tr><th id="804">804</th><td>}</td></tr>
+<tr><th id="805">805</th><td></td></tr>
+<tr><th id="806">806</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D9toRadiansEf" title='G3D::toRadians' data-ref="_ZN3G3D9toRadiansEf" >toRadians</dfn>(<em>float</em> <dfn class="local col6 decl" id="226deg" title='deg' data-type='float' data-ref="226deg" >deg</dfn>) {</td></tr>
+<tr><th id="807">807</th><td>    <b>return</b> <a class="local col6 ref" href="#226deg" title='deg' data-ref="226deg" >deg</a> * (<em>float</em>)<a class="ref" href="#_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</a>() / <var>180.0f</var>;</td></tr>
+<tr><th id="808">808</th><td>}</td></tr>
+<tr><th id="809">809</th><td></td></tr>
+<tr><th id="810">810</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D9toDegreesEf" title='G3D::toDegrees' data-ref="_ZN3G3D9toDegreesEf" >toDegrees</dfn>(<em>float</em> <dfn class="local col7 decl" id="227rad" title='rad' data-type='float' data-ref="227rad" >rad</dfn>) {</td></tr>
+<tr><th id="811">811</th><td>    <b>return</b> <a class="local col7 ref" href="#227rad" title='rad' data-ref="227rad" >rad</a> * <var>180.0f</var> / (<em>float</em>)<a class="ref" href="#_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</a>();</td></tr>
+<tr><th id="812">812</th><td>}</td></tr>
+<tr><th id="813">813</th><td></td></tr>
+<tr><th id="814">814</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D9toRadiansEi" title='G3D::toRadians' data-ref="_ZN3G3D9toRadiansEi" >toRadians</dfn>(<em>int</em> <dfn class="local col8 decl" id="228deg" title='deg' data-type='int' data-ref="228deg" >deg</dfn>) {</td></tr>
+<tr><th id="815">815</th><td>    <b>return</b> <a class="local col8 ref" href="#228deg" title='deg' data-ref="228deg" >deg</a> * (<em>float</em>)<a class="ref" href="#_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</a>() / <var>180.0f</var>;</td></tr>
+<tr><th id="816">816</th><td>}</td></tr>
+<tr><th id="817">817</th><td></td></tr>
+<tr><th id="818">818</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D9toDegreesEi" title='G3D::toDegrees' data-ref="_ZN3G3D9toDegreesEi" >toDegrees</dfn>(<em>int</em> <dfn class="local col9 decl" id="229rad" title='rad' data-type='int' data-ref="229rad" >rad</dfn>) {</td></tr>
+<tr><th id="819">819</th><td>    <b>return</b> <a class="local col9 ref" href="#229rad" title='rad' data-ref="229rad" >rad</a> * <var>180.0f</var> / (<em>float</em>)<a class="ref" href="#_ZN3G3D2piEv" title='G3D::pi' data-ref="_ZN3G3D2piEv" >pi</a>();</td></tr>
+<tr><th id="820">820</th><td>}</td></tr>
+<tr><th id="821">821</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="822">822</th><td><i class="doc"> Computes an appropriate epsilon for comparing a and b.</i></td></tr>
+<tr><th id="823">823</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="824">824</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D3epsEdd" title='G3D::eps' data-ref="_ZN3G3D3epsEdd" >eps</dfn>(<em>double</em> <dfn class="local col0 decl" id="230a" title='a' data-type='double' data-ref="230a" >a</dfn>, <em>double</em> <dfn class="local col1 decl" id="231b" title='b' data-type='double' data-ref="231b" >b</dfn>) {</td></tr>
+<tr><th id="825">825</th><td>    <i>// For a and b to be nearly equal, they must have nearly</i></td></tr>
+<tr><th id="826">826</th><td><i>    // the same magnitude.  This means that we can ignore b</i></td></tr>
+<tr><th id="827">827</th><td><i>    // since it either has the same magnitude or the comparison</i></td></tr>
+<tr><th id="828">828</th><td><i>    // will fail anyway.</i></td></tr>
+<tr><th id="829">829</th><td>    (<em>void</em>)<a class="local col1 ref" href="#231b" title='b' data-ref="231b" >b</a>;</td></tr>
+<tr><th id="830">830</th><td>    <em>const</em> <em>double</em> <dfn class="local col2 decl" id="232aa" title='aa' data-type='const double' data-ref="232aa" >aa</dfn> = <a class="ref" href="#_ZN3G3D3absEd" title='G3D::abs' data-ref="_ZN3G3D3absEd" >abs</a>(<a class="local col0 ref" href="#230a" title='a' data-ref="230a" >a</a>) + <var>1.0</var>;</td></tr>
+<tr><th id="831">831</th><td>    <b>if</b> (<a class="local col2 ref" href="#232aa" title='aa' data-ref="232aa" >aa</a> == <a class="ref" href="#_ZN3G3D3infEv" title='G3D::inf' data-ref="_ZN3G3D3infEv" >inf</a>()) {</td></tr>
+<tr><th id="832">832</th><td>        <b>return</b> <a class="macro" href="#131" title="(0.0000005)" data-ref="_M/fuzzyEpsilon64">fuzzyEpsilon64</a>;</td></tr>
+<tr><th id="833">833</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="834">834</th><td>        <b>return</b> <a class="macro" href="#131" title="(0.0000005)" data-ref="_M/fuzzyEpsilon64">fuzzyEpsilon64</a> * <a class="local col2 ref" href="#232aa" title='aa' data-ref="232aa" >aa</a>;</td></tr>
+<tr><th id="835">835</th><td>    }</td></tr>
+<tr><th id="836">836</th><td>}</td></tr>
+<tr><th id="837">837</th><td></td></tr>
+<tr><th id="838">838</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D3epsEff" title='G3D::eps' data-ref="_ZN3G3D3epsEff" >eps</dfn>(<em>float</em> <dfn class="local col3 decl" id="233a" title='a' data-type='float' data-ref="233a" >a</dfn>, <em>float</em> <dfn class="local col4 decl" id="234b" title='b' data-type='float' data-ref="234b" >b</dfn>) {</td></tr>
+<tr><th id="839">839</th><td>    <i>// For a and b to be nearly equal, they must have nearly</i></td></tr>
+<tr><th id="840">840</th><td><i>    // the same magnitude.  This means that we can ignore b</i></td></tr>
+<tr><th id="841">841</th><td><i>    // since it either has the same magnitude or the comparison</i></td></tr>
+<tr><th id="842">842</th><td><i>    // will fail anyway.</i></td></tr>
+<tr><th id="843">843</th><td>    (<em>void</em>)<a class="local col4 ref" href="#234b" title='b' data-ref="234b" >b</a>;</td></tr>
+<tr><th id="844">844</th><td>    <em>const</em> <em>float</em> <dfn class="local col5 decl" id="235aa" title='aa' data-type='const float' data-ref="235aa" >aa</dfn> = (<em>float</em>)<a class="ref" href="#_ZN3G3D3absEd" title='G3D::abs' data-ref="_ZN3G3D3absEd" >abs</a>(<a class="local col3 ref" href="#233a" title='a' data-ref="233a" >a</a>) + <var>1.0f</var>;</td></tr>
+<tr><th id="845">845</th><td>    <b>if</b> (<a class="local col5 ref" href="#235aa" title='aa' data-ref="235aa" >aa</a> == <a class="ref" href="#_ZN3G3D3infEv" title='G3D::inf' data-ref="_ZN3G3D3infEv" >inf</a>()) {</td></tr>
+<tr><th id="846">846</th><td>        <b>return</b> <a class="macro" href="#132" title="(0.00001f)" data-ref="_M/fuzzyEpsilon32">fuzzyEpsilon32</a>;</td></tr>
+<tr><th id="847">847</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="848">848</th><td>        <b>return</b> <a class="macro" href="#132" title="(0.00001f)" data-ref="_M/fuzzyEpsilon32">fuzzyEpsilon32</a> * <a class="local col5 ref" href="#235aa" title='aa' data-ref="235aa" >aa</a>;</td></tr>
+<tr><th id="849">849</th><td>    }</td></tr>
+<tr><th id="850">850</th><td>}</td></tr>
+<tr><th id="851">851</th><td></td></tr>
+<tr><th id="852">852</th><td></td></tr>
+<tr><th id="853">853</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7fuzzyEqEff" title='G3D::fuzzyEq' data-ref="_ZN3G3D7fuzzyEqEff" >fuzzyEq</dfn>(<em>float</em> <dfn class="local col6 decl" id="236a" title='a' data-type='float' data-ref="236a" >a</dfn>, <em>float</em> <dfn class="local col7 decl" id="237b" title='b' data-type='float' data-ref="237b" >b</dfn>) {</td></tr>
+<tr><th id="854">854</th><td>    <b>return</b> (<a class="local col6 ref" href="#236a" title='a' data-ref="236a" >a</a> == <a class="local col7 ref" href="#237b" title='b' data-ref="237b" >b</a>) || (<a class="ref" href="#_ZN3G3D3absEd" title='G3D::abs' data-ref="_ZN3G3D3absEd" >abs</a>(<a class="local col6 ref" href="#236a" title='a' data-ref="236a" >a</a> - <a class="local col7 ref" href="#237b" title='b' data-ref="237b" >b</a>) &lt;= <a class="ref" href="#_ZN3G3D3epsEff" title='G3D::eps' data-ref="_ZN3G3D3epsEff" >eps</a>(<a class="local col6 ref" href="#236a" title='a' data-ref="236a" >a</a>, <a class="local col7 ref" href="#237b" title='b' data-ref="237b" >b</a>));</td></tr>
+<tr><th id="855">855</th><td>}</td></tr>
+<tr><th id="856">856</th><td></td></tr>
+<tr><th id="857">857</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7fuzzyEqEdd" title='G3D::fuzzyEq' data-ref="_ZN3G3D7fuzzyEqEdd" >fuzzyEq</dfn>(<em>double</em> <dfn class="local col8 decl" id="238a" title='a' data-type='double' data-ref="238a" >a</dfn>, <em>double</em> <dfn class="local col9 decl" id="239b" title='b' data-type='double' data-ref="239b" >b</dfn>) {</td></tr>
+<tr><th id="858">858</th><td>    <b>return</b> (<a class="local col8 ref" href="#238a" title='a' data-ref="238a" >a</a> == <a class="local col9 ref" href="#239b" title='b' data-ref="239b" >b</a>) || (<a class="ref" href="#_ZN3G3D3absEd" title='G3D::abs' data-ref="_ZN3G3D3absEd" >abs</a>(<a class="local col8 ref" href="#238a" title='a' data-ref="238a" >a</a> - <a class="local col9 ref" href="#239b" title='b' data-ref="239b" >b</a>) &lt;= <a class="ref" href="#_ZN3G3D3epsEdd" title='G3D::eps' data-ref="_ZN3G3D3epsEdd" >eps</a>(<a class="local col8 ref" href="#238a" title='a' data-ref="238a" >a</a>, <a class="local col9 ref" href="#239b" title='b' data-ref="239b" >b</a>));</td></tr>
+<tr><th id="859">859</th><td>}</td></tr>
+<tr><th id="860">860</th><td></td></tr>
+<tr><th id="861">861</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7fuzzyNeEdd" title='G3D::fuzzyNe' data-ref="_ZN3G3D7fuzzyNeEdd" >fuzzyNe</dfn>(<em>double</em> <dfn class="local col0 decl" id="240a" title='a' data-type='double' data-ref="240a" >a</dfn>, <em>double</em> <dfn class="local col1 decl" id="241b" title='b' data-type='double' data-ref="241b" >b</dfn>) {</td></tr>
+<tr><th id="862">862</th><td>    <b>return</b> ! <a class="ref" href="#_ZN3G3D7fuzzyEqEdd" title='G3D::fuzzyEq' data-ref="_ZN3G3D7fuzzyEqEdd" >fuzzyEq</a>(<a class="local col0 ref" href="#240a" title='a' data-ref="240a" >a</a>, <a class="local col1 ref" href="#241b" title='b' data-ref="241b" >b</a>);</td></tr>
+<tr><th id="863">863</th><td>}</td></tr>
+<tr><th id="864">864</th><td></td></tr>
+<tr><th id="865">865</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7fuzzyGtEdd" title='G3D::fuzzyGt' data-ref="_ZN3G3D7fuzzyGtEdd" >fuzzyGt</dfn>(<em>double</em> <dfn class="local col2 decl" id="242a" title='a' data-type='double' data-ref="242a" >a</dfn>, <em>double</em> <dfn class="local col3 decl" id="243b" title='b' data-type='double' data-ref="243b" >b</dfn>) {</td></tr>
+<tr><th id="866">866</th><td>    <b>return</b> <a class="local col2 ref" href="#242a" title='a' data-ref="242a" >a</a> &gt; <a class="local col3 ref" href="#243b" title='b' data-ref="243b" >b</a> + <a class="ref" href="#_ZN3G3D3epsEdd" title='G3D::eps' data-ref="_ZN3G3D3epsEdd" >eps</a>(<a class="local col2 ref" href="#242a" title='a' data-ref="242a" >a</a>, <a class="local col3 ref" href="#243b" title='b' data-ref="243b" >b</a>);</td></tr>
+<tr><th id="867">867</th><td>}</td></tr>
+<tr><th id="868">868</th><td></td></tr>
+<tr><th id="869">869</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7fuzzyGeEdd" title='G3D::fuzzyGe' data-ref="_ZN3G3D7fuzzyGeEdd" >fuzzyGe</dfn>(<em>double</em> <dfn class="local col4 decl" id="244a" title='a' data-type='double' data-ref="244a" >a</dfn>, <em>double</em> <dfn class="local col5 decl" id="245b" title='b' data-type='double' data-ref="245b" >b</dfn>) {</td></tr>
+<tr><th id="870">870</th><td>    <b>return</b> <a class="local col4 ref" href="#244a" title='a' data-ref="244a" >a</a> &gt; <a class="local col5 ref" href="#245b" title='b' data-ref="245b" >b</a> - <a class="ref" href="#_ZN3G3D3epsEdd" title='G3D::eps' data-ref="_ZN3G3D3epsEdd" >eps</a>(<a class="local col4 ref" href="#244a" title='a' data-ref="244a" >a</a>, <a class="local col5 ref" href="#245b" title='b' data-ref="245b" >b</a>);</td></tr>
+<tr><th id="871">871</th><td>}</td></tr>
+<tr><th id="872">872</th><td></td></tr>
+<tr><th id="873">873</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7fuzzyLtEdd" title='G3D::fuzzyLt' data-ref="_ZN3G3D7fuzzyLtEdd" >fuzzyLt</dfn>(<em>double</em> <dfn class="local col6 decl" id="246a" title='a' data-type='double' data-ref="246a" >a</dfn>, <em>double</em> <dfn class="local col7 decl" id="247b" title='b' data-type='double' data-ref="247b" >b</dfn>) {</td></tr>
+<tr><th id="874">874</th><td>    <b>return</b> <a class="local col6 ref" href="#246a" title='a' data-ref="246a" >a</a> &lt; <a class="local col7 ref" href="#247b" title='b' data-ref="247b" >b</a> - <a class="ref" href="#_ZN3G3D3epsEdd" title='G3D::eps' data-ref="_ZN3G3D3epsEdd" >eps</a>(<a class="local col6 ref" href="#246a" title='a' data-ref="246a" >a</a>, <a class="local col7 ref" href="#247b" title='b' data-ref="247b" >b</a>);</td></tr>
+<tr><th id="875">875</th><td>}</td></tr>
+<tr><th id="876">876</th><td></td></tr>
+<tr><th id="877">877</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7fuzzyLeEdd" title='G3D::fuzzyLe' data-ref="_ZN3G3D7fuzzyLeEdd" >fuzzyLe</dfn>(<em>double</em> <dfn class="local col8 decl" id="248a" title='a' data-type='double' data-ref="248a" >a</dfn>, <em>double</em> <dfn class="local col9 decl" id="249b" title='b' data-type='double' data-ref="249b" >b</dfn>) {</td></tr>
+<tr><th id="878">878</th><td>    <b>return</b> <a class="local col8 ref" href="#248a" title='a' data-ref="248a" >a</a> &lt; <a class="local col9 ref" href="#249b" title='b' data-ref="249b" >b</a> + <a class="ref" href="#_ZN3G3D3epsEdd" title='G3D::eps' data-ref="_ZN3G3D3epsEdd" >eps</a>(<a class="local col8 ref" href="#248a" title='a' data-ref="248a" >a</a>, <a class="local col9 ref" href="#249b" title='b' data-ref="249b" >b</a>);</td></tr>
+<tr><th id="879">879</th><td>}</td></tr>
+<tr><th id="880">880</th><td></td></tr>
+<tr><th id="881">881</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D5iMod3Ei" title='G3D::iMod3' data-ref="_ZN3G3D5iMod3Ei" >iMod3</dfn>(<em>int</em> <dfn class="local col0 decl" id="250x" title='x' data-type='int' data-ref="250x" >x</dfn>) {</td></tr>
+<tr><th id="882">882</th><td>    <b>return</b> <a class="local col0 ref" href="#250x" title='x' data-ref="250x" >x</a> % <var>3</var>;</td></tr>
+<tr><th id="883">883</th><td>}</td></tr>
+<tr><th id="884">884</th><td></td></tr>
+<tr><th id="885">885</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="886">886</th><td><i class="doc"> Given a 32-bit integer, returns the integer with the bytes in the opposite order.</i></td></tr>
+<tr><th id="887">887</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="888">888</th><td><b>inline</b> <a class="typedef" href="#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="decl def" id="_ZN3G3D12flipEndian32Ej" title='G3D::flipEndian32' data-ref="_ZN3G3D12flipEndian32Ej" >flipEndian32</dfn>(<em>const</em> <a class="typedef" href="#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="local col1 decl" id="251x" title='x' data-type='const uint32' data-ref="251x" >x</dfn>) {</td></tr>
+<tr><th id="889">889</th><td>    <b>return</b> (<a class="local col1 ref" href="#251x" title='x' data-ref="251x" >x</a> &lt;&lt; <var>24</var>) | ((<a class="local col1 ref" href="#251x" title='x' data-ref="251x" >x</a> &amp; <var>0xFF00</var>) &lt;&lt; <var>8</var>) | </td></tr>
+<tr><th id="890">890</th><td>           ((<a class="local col1 ref" href="#251x" title='x' data-ref="251x" >x</a> &amp; <var>0xFF0000</var>) &gt;&gt; <var>8</var>) | ((<a class="local col1 ref" href="#251x" title='x' data-ref="251x" >x</a> &amp; <var>0xFF000000</var>) &gt;&gt; <var>24</var>);</td></tr>
+<tr><th id="891">891</th><td>}</td></tr>
+<tr><th id="892">892</th><td></td></tr>
+<tr><th id="893">893</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="894">894</th><td><i class="doc"> Given a 16-bit integer, returns the integer with the bytes in the opposite order.</i></td></tr>
+<tr><th id="895">895</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="896">896</th><td><b>inline</b> <a class="typedef" href="#G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" >uint16</a> <dfn class="decl def" id="_ZN3G3D12flipEndian16Et" title='G3D::flipEndian16' data-ref="_ZN3G3D12flipEndian16Et" >flipEndian16</dfn>(<em>const</em> <a class="typedef" href="#G3D::uint16" title='G3D::uint16' data-type='uint16_t' data-ref="G3D::uint16" >uint16</a> <dfn class="local col2 decl" id="252x" title='x' data-type='const uint16' data-ref="252x" >x</dfn>) {</td></tr>
+<tr><th id="897">897</th><td>    <b>return</b> (<a class="local col2 ref" href="#252x" title='x' data-ref="252x" >x</a> &lt;&lt; <var>8</var>) | ((<a class="local col2 ref" href="#252x" title='x' data-ref="252x" >x</a> &amp; <var>0xFF00</var>) &gt;&gt; <var>8</var>);</td></tr>
+<tr><th id="898">898</th><td>}</td></tr>
+<tr><th id="899">899</th><td></td></tr>
+<tr><th id="900">900</th><td><i class="doc">/** The GLSL smoothstep function */</i></td></tr>
+<tr><th id="901">901</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D10smoothstepEfff" title='G3D::smoothstep' data-ref="_ZN3G3D10smoothstepEfff" >smoothstep</dfn>(<em>float</em> <dfn class="local col3 decl" id="253edge0" title='edge0' data-type='float' data-ref="253edge0" >edge0</dfn>, <em>float</em> <dfn class="local col4 decl" id="254edge1" title='edge1' data-type='float' data-ref="254edge1" >edge1</dfn>, <em>float</em> <dfn class="local col5 decl" id="255x" title='x' data-type='float' data-ref="255x" >x</dfn>) {</td></tr>
+<tr><th id="902">902</th><td>    <i>// Scale, bias and saturate x to 0..1 range</i></td></tr>
+<tr><th id="903">903</th><td>    <a class="local col5 ref" href="#255x" title='x' data-ref="255x" >x</a> = <a class="ref" href="#_ZN3G3D5clampEfff" title='G3D::clamp' data-ref="_ZN3G3D5clampEfff" >clamp</a>((<a class="local col5 ref" href="#255x" title='x' data-ref="255x" >x</a> - <a class="local col3 ref" href="#253edge0" title='edge0' data-ref="253edge0" >edge0</a>) / (<a class="local col4 ref" href="#254edge1" title='edge1' data-ref="254edge1" >edge1</a> - <a class="local col3 ref" href="#253edge0" title='edge0' data-ref="253edge0" >edge0</a>), <var>0.0f</var>, <var>1.0f</var>);</td></tr>
+<tr><th id="904">904</th><td></td></tr>
+<tr><th id="905">905</th><td>    <i>// Evaluate polynomial</i></td></tr>
+<tr><th id="906">906</th><td>    <b>return</b> <a class="local col5 ref" href="#255x" title='x' data-ref="255x" >x</a> * <a class="local col5 ref" href="#255x" title='x' data-ref="255x" >x</a> * (<var>3</var> - <var>2</var> * <a class="local col5 ref" href="#255x" title='x' data-ref="255x" >x</a>);</td></tr>
+<tr><th id="907">907</th><td>}</td></tr>
+<tr><th id="908">908</th><td></td></tr>
+<tr><th id="909">909</th><td></td></tr>
+<tr><th id="910">910</th><td><i class="doc">/** Perlin's C2 continous variation on smoothstep() */</i></td></tr>
+<tr><th id="911">911</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D12smootherstepEfff" title='G3D::smootherstep' data-ref="_ZN3G3D12smootherstepEfff" >smootherstep</dfn>(<em>float</em> <dfn class="local col6 decl" id="256edge0" title='edge0' data-type='float' data-ref="256edge0" >edge0</dfn>, <em>float</em> <dfn class="local col7 decl" id="257edge1" title='edge1' data-type='float' data-ref="257edge1" >edge1</dfn>, <em>float</em> <dfn class="local col8 decl" id="258x" title='x' data-type='float' data-ref="258x" >x</dfn>) {</td></tr>
+<tr><th id="912">912</th><td></td></tr>
+<tr><th id="913">913</th><td>    <i>// Scale, and saturate x to 0..1 range</i></td></tr>
+<tr><th id="914">914</th><td>    <a class="local col8 ref" href="#258x" title='x' data-ref="258x" >x</a> = <a class="ref" href="#_ZN3G3D5clampEfff" title='G3D::clamp' data-ref="_ZN3G3D5clampEfff" >clamp</a>((<a class="local col8 ref" href="#258x" title='x' data-ref="258x" >x</a> - <a class="local col6 ref" href="#256edge0" title='edge0' data-ref="256edge0" >edge0</a>) / (<a class="local col7 ref" href="#257edge1" title='edge1' data-ref="257edge1" >edge1</a> - <a class="local col6 ref" href="#256edge0" title='edge0' data-ref="256edge0" >edge0</a>), <var>0.0f</var>, <var>1.0f</var>);</td></tr>
+<tr><th id="915">915</th><td></td></tr>
+<tr><th id="916">916</th><td>    <i>// Evaluate polynomial</i></td></tr>
+<tr><th id="917">917</th><td>    <b>return</b> <a class="local col8 ref" href="#258x" title='x' data-ref="258x" >x</a> * <a class="local col8 ref" href="#258x" title='x' data-ref="258x" >x</a> * <a class="local col8 ref" href="#258x" title='x' data-ref="258x" >x</a> * (<a class="local col8 ref" href="#258x" title='x' data-ref="258x" >x</a> * (<a class="local col8 ref" href="#258x" title='x' data-ref="258x" >x</a> * <var>6</var> - <var>15</var>) + <var>10</var>);</td></tr>
+<tr><th id="918">918</th><td>}</td></tr>
+<tr><th id="919">919</th><td></td></tr>
+<tr><th id="920">920</th><td></td></tr>
+<tr><th id="921">921</th><td><i class="doc">/** Computes |b|^e * sign(b) */</i></td></tr>
+<tr><th id="922">922</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN3G3D9signedPowEff" title='G3D::signedPow' data-ref="_ZN3G3D9signedPowEff" >signedPow</dfn>(<em>float</em> <dfn class="local col9 decl" id="259b" title='b' data-type='float' data-ref="259b" >b</dfn>, <em>float</em> <dfn class="local col0 decl" id="260e" title='e' data-type='float' data-ref="260e" >e</dfn>) {</td></tr>
+<tr><th id="923">923</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D4signEf" title='G3D::sign' data-ref="_ZN3G3D4signEf" >sign</a>(<a class="local col9 ref" href="#259b" title='b' data-ref="259b" >b</a>) * <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#153" title='powf' data-ref="powf" id="powf" >powf</a>(<a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#181" title='fabsf' data-ref="fabsf" id="fabsf" >fabsf</a>(<a class="local col9 ref" href="#259b" title='b' data-ref="259b" >b</a>), <a class="local col0 ref" href="#260e" title='e' data-ref="260e" >e</a>);</td></tr>
+<tr><th id="924">924</th><td>}</td></tr>
+<tr><th id="925">925</th><td></td></tr>
+<tr><th id="926">926</th><td></td></tr>
+<tr><th id="927">927</th><td><i class="doc">/** Computes |b|^e * sign(b) */</i></td></tr>
+<tr><th id="928">928</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN3G3D9signedPowEdd" title='G3D::signedPow' data-ref="_ZN3G3D9signedPowEdd" >signedPow</dfn>(<em>double</em> <dfn class="local col1 decl" id="261b" title='b' data-type='double' data-ref="261b" >b</dfn>, <em>double</em> <dfn class="local col2 decl" id="262e" title='e' data-type='double' data-ref="262e" >e</dfn>) {</td></tr>
+<tr><th id="929">929</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D4signEd" title='G3D::sign' data-ref="_ZN3G3D4signEd" >sign</a>(<a class="local col1 ref" href="#261b" title='b' data-ref="261b" >b</a>) * <a class="ref" href="../../../../../include/x86_64-linux-gnu/bits/mathcalls.h.html#153" title='pow' data-ref="pow" id="pow" >pow</a>(<a class="ref" href="#_ZN3G3D3absEd" title='G3D::abs' data-ref="_ZN3G3D3absEd" >abs</a>(<a class="local col1 ref" href="#261b" title='b' data-ref="261b" >b</a>), <a class="local col2 ref" href="#262e" title='e' data-ref="262e" >e</a>);</td></tr>
+<tr><th id="930">930</th><td>}</td></tr>
+<tr><th id="931">931</th><td></td></tr>
+<tr><th id="932">932</th><td></td></tr>
+<tr><th id="933">933</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="934">934</th><td></td></tr>
+<tr><th id="935">935</th><td><b>namespace</b> <span class="namespace">std</span> {</td></tr>
+<tr><th id="936">936</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZSt3powii" title='std::pow' data-ref="_ZSt3powii" >pow</dfn>(<em>int</em> <dfn class="local col3 decl" id="263a" title='a' data-type='int' data-ref="263a" >a</dfn>, <em>int</em> <dfn class="local col4 decl" id="264b" title='b' data-type='int' data-ref="264b" >b</dfn>) {</td></tr>
+<tr><th id="937">937</th><td>    <b>return</b> (<em>int</em>)<a class="ref" href="#_ZSt3powii" title='std::pow' data-ref="_ZSt3powii" >pow</a>(<em>double</em>(<a class="local col3 ref" href="#263a" title='a' data-ref="263a" >a</a>), <em>double</em>(<a class="local col4 ref" href="#264b" title='b' data-ref="264b" >b</a>));</td></tr>
+<tr><th id="938">938</th><td>}</td></tr>
+<tr><th id="939">939</th><td></td></tr>
+<tr><th id="940">940</th><td>}</td></tr>
+<tr><th id="941">941</th><td><u>#<span data-ppcond="941">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="942">942</th><td><u>#   pragma warning (pop)</u></td></tr>
+<tr><th id="943">943</th><td><u>#<span data-ppcond="941">endif</span></u></td></tr>
+<tr><th id="944">944</th><td></td></tr>
+<tr><th id="945">945</th><td><u>#<span data-ppcond="16">endif</span></u></td></tr>
+<tr><th id="946">946</th><td></td></tr>
+<tr><th id="947">947</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore6.x/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

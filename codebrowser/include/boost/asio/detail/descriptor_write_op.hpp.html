@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<title>descriptor_write_op.hpp [include/boost/asio/detail/descriptor_write_op.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/detail/descriptor_write_op.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>asio</a>/<a href='./'>detail</a>/descriptor_write_op.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// detail/descriptor_write_op.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_DETAIL_DESCRIPTOR_WRITE_OP_HPP">BOOST_ASIO_DETAIL_DESCRIPTOR_WRITE_OP_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_DETAIL_DESCRIPTOR_WRITE_OP_HPP" data-ref="_M/BOOST_ASIO_DETAIL_DESCRIPTOR_WRITE_OP_HPP">BOOST_ASIO_DETAIL_DESCRIPTOR_WRITE_OP_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">if</span> !defined(<span class="macro" data-ref="_M/BOOST_ASIO_WINDOWS">BOOST_ASIO_WINDOWS</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/__CYGWIN__">__CYGWIN__</span>)</u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="addressof.hpp.html">&lt;boost/asio/detail/addressof.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="bind_handler.hpp.html">&lt;boost/asio/detail/bind_handler.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="buffer_sequence_adapter.hpp.html">&lt;boost/asio/detail/buffer_sequence_adapter.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="descriptor_ops.hpp.html">&lt;boost/asio/detail/descriptor_ops.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="fenced_block.hpp.html">&lt;boost/asio/detail/fenced_block.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="reactor_op.hpp.html">&lt;boost/asio/detail/reactor_op.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="32">32</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="33">33</th><td><b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><b>template</b> &lt;<b>typename</b> ConstBufferSequence&gt;</td></tr>
+<tr><th id="36">36</th><td><b>class</b> <dfn class="type def" id="boost::asio::detail::descriptor_write_op_base" title='boost::asio::detail::descriptor_write_op_base' data-ref="boost::asio::detail::descriptor_write_op_base" >descriptor_write_op_base</dfn> : <b>public</b> <a class="type" href="reactor_op.hpp.html#boost::asio::detail::reactor_op" title='boost::asio::detail::reactor_op' data-ref="boost::asio::detail::reactor_op" >reactor_op</a></td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td><b>public</b>:</td></tr>
+<tr><th id="39">39</th><td>  <dfn class="decl def" id="_ZN5boost4asio6detail24descriptor_write_op_baseC1EiRKT_PFvPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEmE" title='boost::asio::detail::descriptor_write_op_base::descriptor_write_op_base&lt;ConstBufferSequence&gt;' data-ref="_ZN5boost4asio6detail24descriptor_write_op_baseC1EiRKT_PFvPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEmE" >descriptor_write_op_base</dfn>(<em>int</em> <dfn class="local col1 decl" id="2871descriptor" title='descriptor' data-type='int' data-ref="2871descriptor" >descriptor</dfn>,</td></tr>
+<tr><th id="40">40</th><td>      <em>const</em> ConstBufferSequence&amp; <dfn class="local col2 decl" id="2872buffers" title='buffers' data-type='const ConstBufferSequence &amp;' data-ref="2872buffers" >buffers</dfn>, <a class="typedef" href="task_io_service_operation.hpp.html#boost::asio::detail::task_io_service_operation::func_type" title='boost::asio::detail::task_io_service_operation::func_type' data-type='void (*)(boost::asio::detail::task_io_service *, boost::asio::detail::task_io_service_operation *, const boost::system::error_code &amp;, std::size_t)' data-ref="boost::asio::detail::task_io_service_operation::func_type" >func_type</a> <dfn class="local col3 decl" id="2873complete_func" title='complete_func' data-type='func_type' data-ref="2873complete_func" >complete_func</dfn>)</td></tr>
+<tr><th id="41">41</th><td>    : <a class="type" href="reactor_op.hpp.html#boost::asio::detail::reactor_op" title='boost::asio::detail::reactor_op' data-ref="boost::asio::detail::reactor_op" >reactor_op</a>(&amp;descriptor_write_op_base::<a class="member" href="#_ZN5boost4asio6detail24descriptor_write_op_base10do_performEPNS1_10reactor_opE" title='boost::asio::detail::descriptor_write_op_base::do_perform' data-ref="_ZN5boost4asio6detail24descriptor_write_op_base10do_performEPNS1_10reactor_opE" >do_perform</a>, <a class="local col3 ref" href="#2873complete_func" title='complete_func' data-ref="2873complete_func" >complete_func</a>),</td></tr>
+<tr><th id="42">42</th><td>      <a class="member" href="#boost::asio::detail::descriptor_write_op_base::descriptor_" title='boost::asio::detail::descriptor_write_op_base::descriptor_' data-ref="boost::asio::detail::descriptor_write_op_base::descriptor_" >descriptor_</a>(<a class="local col1 ref" href="#2871descriptor" title='descriptor' data-ref="2871descriptor" >descriptor</a>),</td></tr>
+<tr><th id="43">43</th><td>      <a class="member" href="#boost::asio::detail::descriptor_write_op_base::buffers_" title='boost::asio::detail::descriptor_write_op_base::buffers_' data-ref="boost::asio::detail::descriptor_write_op_base::buffers_" >buffers_</a>(<a class="local col2 ref" href="#2872buffers" title='buffers' data-ref="2872buffers" >buffers</a>)</td></tr>
+<tr><th id="44">44</th><td>  {</td></tr>
+<tr><th id="45">45</th><td>  }</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>  <em>static</em> <em>bool</em> <dfn class="decl def" id="_ZN5boost4asio6detail24descriptor_write_op_base10do_performEPNS1_10reactor_opE" title='boost::asio::detail::descriptor_write_op_base::do_perform' data-ref="_ZN5boost4asio6detail24descriptor_write_op_base10do_performEPNS1_10reactor_opE" >do_perform</dfn>(<a class="type" href="reactor_op.hpp.html#boost::asio::detail::reactor_op" title='boost::asio::detail::reactor_op' data-ref="boost::asio::detail::reactor_op" >reactor_op</a>* <dfn class="local col4 decl" id="2874base" title='base' data-type='boost::asio::detail::reactor_op *' data-ref="2874base" >base</dfn>)</td></tr>
+<tr><th id="48">48</th><td>  {</td></tr>
+<tr><th id="49">49</th><td>    descriptor_write_op_base* <dfn class="local col5 decl" id="2875o" title='o' data-type='descriptor_write_op_base&lt;ConstBufferSequence&gt; *' data-ref="2875o" >o</dfn>(<b>static_cast</b>&lt;descriptor_write_op_base*&gt;(<a class="local col4 ref" href="#2874base" title='base' data-ref="2874base" >base</a>));</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <a class="type" href="buffer_sequence_adapter.hpp.html#boost::asio::detail::buffer_sequence_adapter" title='boost::asio::detail::buffer_sequence_adapter' data-ref="boost::asio::detail::buffer_sequence_adapter" >buffer_sequence_adapter</a>&lt;<span class="namespace">boost::asio::</span><a class="type" href="../buffer.hpp.html#boost::asio::const_buffer" title='boost::asio::const_buffer' data-ref="boost::asio::const_buffer" >const_buffer</a>,</td></tr>
+<tr><th id="52">52</th><td>        ConstBufferSequence&gt; <dfn class="local col6 decl" id="2876bufs" title='bufs' data-type='buffer_sequence_adapter&lt;boost::asio::const_buffer, ConstBufferSequence&gt;' data-ref="2876bufs" >bufs</dfn>(<a class="local col5 ref" href="#2875o" title='o' data-ref="2875o" >o</a>-&gt;buffers_);</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>    <b>return</b> <span class="namespace">descriptor_ops::</span><a class="ref" href="impl/descriptor_ops.ipp.html#_ZN5boost4asio6detail14descriptor_ops18non_blocking_writeEiPK5iovecmRNS_6system10error_codeERm" title='boost::asio::detail::descriptor_ops::non_blocking_write' data-ref="_ZN5boost4asio6detail14descriptor_ops18non_blocking_writeEiPK5iovecmRNS_6system10error_codeERm" id="_ZN5boost4asio6detail14descriptor_ops18non_blocking_writeEiPK5iovecmRNS_6system10error_codeERm" >non_blocking_write</a>(<a class="local col5 ref" href="#2875o" title='o' data-ref="2875o" >o</a>-&gt;descriptor_,</td></tr>
+<tr><th id="55">55</th><td>        <a class="local col6 ref" href="#2876bufs" title='bufs' data-ref="2876bufs" >bufs</a>.buffers(), <a class="local col6 ref" href="#2876bufs" title='bufs' data-ref="2876bufs" >bufs</a>.count(), <a class="local col5 ref" href="#2875o" title='o' data-ref="2875o" >o</a>-&gt;ec_, <a class="local col5 ref" href="#2875o" title='o' data-ref="2875o" >o</a>-&gt;bytes_transferred_);</td></tr>
+<tr><th id="56">56</th><td>  }</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><b>private</b>:</td></tr>
+<tr><th id="59">59</th><td>  <em>int</em> <dfn class="decl" id="boost::asio::detail::descriptor_write_op_base::descriptor_" title='boost::asio::detail::descriptor_write_op_base::descriptor_' data-ref="boost::asio::detail::descriptor_write_op_base::descriptor_" >descriptor_</dfn>;</td></tr>
+<tr><th id="60">60</th><td>  ConstBufferSequence <dfn class="decl" id="boost::asio::detail::descriptor_write_op_base::buffers_" title='boost::asio::detail::descriptor_write_op_base::buffers_' data-ref="boost::asio::detail::descriptor_write_op_base::buffers_" >buffers_</dfn>;</td></tr>
+<tr><th id="61">61</th><td>};</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td><b>template</b> &lt;<b>typename</b> ConstBufferSequence, <b>typename</b> Handler&gt;</td></tr>
+<tr><th id="64">64</th><td><b>class</b> <dfn class="type def" id="boost::asio::detail::descriptor_write_op" title='boost::asio::detail::descriptor_write_op' data-ref="boost::asio::detail::descriptor_write_op" >descriptor_write_op</dfn></td></tr>
+<tr><th id="65">65</th><td>  : <b>public</b> <a class="type" href="#boost::asio::detail::descriptor_write_op_base" title='boost::asio::detail::descriptor_write_op_base' data-ref="boost::asio::detail::descriptor_write_op_base" >descriptor_write_op_base</a>&lt;ConstBufferSequence&gt;</td></tr>
+<tr><th id="66">66</th><td>{</td></tr>
+<tr><th id="67">67</th><td><b>public</b>:</td></tr>
+<tr><th id="68">68</th><td>  <a class="macro" href="handler_alloc_helpers.hpp.html#54" title="struct ptr { Handler* h; void* v; descriptor_write_op* p; ~ptr() { reset(); } void reset() { if (p) { p-&gt;~descriptor_write_op(); p = 0; } if (v) { boost_asio_handler_alloc_helpers::deallocate(v, sizeof(descriptor_write_op), *h); v = 0; } } }" data-ref="_M/BOOST_ASIO_DEFINE_HANDLER_PTR">BOOST_ASIO_DEFINE_HANDLER_PTR</a>(descriptor_write_op);</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>  <dfn class="decl def" id="_ZN5boost4asio6detail19descriptor_write_opC1EiRKT_RT0_" title='boost::asio::detail::descriptor_write_op::descriptor_write_op&lt;ConstBufferSequence, Handler&gt;' data-ref="_ZN5boost4asio6detail19descriptor_write_opC1EiRKT_RT0_" >descriptor_write_op</dfn>(<em>int</em> <dfn class="local col7 decl" id="2877descriptor" title='descriptor' data-type='int' data-ref="2877descriptor" >descriptor</dfn>,</td></tr>
+<tr><th id="71">71</th><td>      <em>const</em> ConstBufferSequence&amp; <dfn class="local col8 decl" id="2878buffers" title='buffers' data-type='const ConstBufferSequence &amp;' data-ref="2878buffers" >buffers</dfn>, Handler&amp; <dfn class="local col9 decl" id="2879handler" title='handler' data-type='Handler &amp;' data-ref="2879handler" >handler</dfn>)</td></tr>
+<tr><th id="72">72</th><td>    : <a class="type" href="#boost::asio::detail::descriptor_write_op_base" title='boost::asio::detail::descriptor_write_op_base' data-ref="boost::asio::detail::descriptor_write_op_base" >descriptor_write_op_base</a>&lt;ConstBufferSequence&gt;(</td></tr>
+<tr><th id="73">73</th><td>        <a class="local col7 ref" href="#2877descriptor" title='descriptor' data-ref="2877descriptor" >descriptor</a>, <a class="local col8 ref" href="#2878buffers" title='buffers' data-ref="2878buffers" >buffers</a>, &amp;descriptor_write_op::<a class="member" href="#_ZN5boost4asio6detail19descriptor_write_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" title='boost::asio::detail::descriptor_write_op::do_complete' data-ref="_ZN5boost4asio6detail19descriptor_write_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" >do_complete</a>),</td></tr>
+<tr><th id="74">74</th><td>      <a class="member" href="#boost::asio::detail::descriptor_write_op::handler_" title='boost::asio::detail::descriptor_write_op::handler_' data-ref="boost::asio::detail::descriptor_write_op::handler_" >handler_</a>(<a class="macro" href="config.hpp.html#108" title="static_cast&lt;Handler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(Handler)(<a class="local col9 ref" href="#2879handler" title='handler' data-ref="2879handler" >handler</a>))</td></tr>
+<tr><th id="75">75</th><td>  {</td></tr>
+<tr><th id="76">76</th><td>  }</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>  <em>static</em> <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail19descriptor_write_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" title='boost::asio::detail::descriptor_write_op::do_complete' data-ref="_ZN5boost4asio6detail19descriptor_write_op11do_completeEPNS1_15task_io_serviceEPNS1_25task_io_service_operationERKNS_6system10error_codeEm" >do_complete</dfn>(<a class="typedef" href="../io_service.hpp.html#boost::asio::detail::io_service_impl" title='boost::asio::detail::io_service_impl' data-type='boost::asio::detail::task_io_service' data-ref="boost::asio::detail::io_service_impl" >io_service_impl</a>* <dfn class="local col0 decl" id="2880owner" title='owner' data-type='io_service_impl *' data-ref="2880owner" >owner</dfn>, <a class="typedef" href="operation.hpp.html#boost::asio::detail::operation" title='boost::asio::detail::operation' data-type='boost::asio::detail::task_io_service_operation' data-ref="boost::asio::detail::operation" >operation</a>* <dfn class="local col1 decl" id="2881base" title='base' data-type='operation *' data-ref="2881base" >base</dfn>,</td></tr>
+<tr><th id="79">79</th><td>      <em>const</em> <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <i>/*ec*/</i>,</td></tr>
+<tr><th id="80">80</th><td>      <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <i>/*bytes_transferred*/</i>)</td></tr>
+<tr><th id="81">81</th><td>  {</td></tr>
+<tr><th id="82">82</th><td>    <i>// Take ownership of the handler object.</i></td></tr>
+<tr><th id="83">83</th><td>    descriptor_write_op* <dfn class="local col2 decl" id="2882o" title='o' data-type='descriptor_write_op&lt;ConstBufferSequence, Handler&gt; *' data-ref="2882o" >o</dfn>(<b>static_cast</b>&lt;descriptor_write_op*&gt;(<a class="local col1 ref" href="#2881base" title='base' data-ref="2881base" >base</a>));</td></tr>
+<tr><th id="84">84</th><td>    <a class="type" href="#68" title='boost::asio::detail::descriptor_write_op::ptr' data-ref="boost::asio::detail::descriptor_write_op::ptr" >ptr</a> <dfn class="local col3 decl" id="2883p" title='p' data-type='boost::asio::detail::descriptor_write_op::ptr' data-ref="2883p" >p</dfn> = { <span class="namespace">boost::asio::detail::</span>addressof(<a class="local col2 ref" href="#2882o" title='o' data-ref="2882o" >o</a>-&gt;handler_), <a class="local col2 ref" href="#2882o" title='o' data-ref="2882o" >o</a>, <a class="local col2 ref" href="#2882o" title='o' data-ref="2882o" >o</a> };</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>    <a class="macro" href="handler_tracking.hpp.html#144" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_COMPLETION">BOOST_ASIO_HANDLER_COMPLETION</a>((o));</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>    <i>// Make a copy of the handler so that the memory can be deallocated before</i></td></tr>
+<tr><th id="89">89</th><td><i>    // the upcall is made. Even if we're not about to make an upcall, a</i></td></tr>
+<tr><th id="90">90</th><td><i>    // sub-object of the handler may be the true owner of the memory associated</i></td></tr>
+<tr><th id="91">91</th><td><i>    // with the handler. Consequently, a local copy of the handler is required</i></td></tr>
+<tr><th id="92">92</th><td><i>    // to ensure that any owning sub-object remains valid until after we have</i></td></tr>
+<tr><th id="93">93</th><td><i>    // deallocated the memory here.</i></td></tr>
+<tr><th id="94">94</th><td>    <span class="namespace">detail::</span><a class="type" href="bind_handler.hpp.html#boost::asio::detail::binder2" title='boost::asio::detail::binder2' data-ref="boost::asio::detail::binder2" >binder2</a>&lt;Handler, <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>&gt;</td></tr>
+<tr><th id="95">95</th><td>      <dfn class="local col4 decl" id="2884handler" title='handler' data-type='detail::binder2&lt;Handler, boost::system::error_code, std::size_t&gt;' data-ref="2884handler" >handler</dfn>(<a class="local col2 ref" href="#2882o" title='o' data-ref="2882o" >o</a>-&gt;handler_, <a class="local col2 ref" href="#2882o" title='o' data-ref="2882o" >o</a>-&gt;ec_, <a class="local col2 ref" href="#2882o" title='o' data-ref="2882o" >o</a>-&gt;bytes_transferred_);</td></tr>
+<tr><th id="96">96</th><td>    <a class="local col3 ref" href="#2883p" title='p' data-ref="2883p" >p</a>.h = <span class="namespace">boost::asio::detail::</span>addressof(<a class="local col4 ref" href="#2884handler" title='handler' data-ref="2884handler" >handler</a>.handler_);</td></tr>
+<tr><th id="97">97</th><td>    <a class="local col3 ref" href="#2883p" title='p' data-ref="2883p" >p</a>.reset();</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>    <i>// Make the upcall if required.</i></td></tr>
+<tr><th id="100">100</th><td>    <b>if</b> (<a class="local col0 ref" href="#2880owner" title='owner' data-ref="2880owner" >owner</a>)</td></tr>
+<tr><th id="101">101</th><td>    {</td></tr>
+<tr><th id="102">102</th><td>      <a class="typedef" href="fenced_block.hpp.html#boost::asio::detail::fenced_block" title='boost::asio::detail::fenced_block' data-type='boost::asio::detail::gcc_x86_fenced_block' data-ref="boost::asio::detail::fenced_block" >fenced_block</a> <dfn class="local col5 decl" id="2885b" title='b' data-type='fenced_block' data-ref="2885b" >b</dfn><a class="ref" href="gcc_x86_fenced_block.hpp.html#_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6half_tE" title='boost::asio::detail::gcc_x86_fenced_block::gcc_x86_fenced_block' data-ref="_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6half_tE" id="_ZN5boost4asio6detail20gcc_x86_fenced_blockC1ENS2_6half_tE" >(</a><a class="typedef" href="fenced_block.hpp.html#boost::asio::detail::fenced_block" title='boost::asio::detail::fenced_block' data-type='boost::asio::detail::gcc_x86_fenced_block' data-ref="boost::asio::detail::fenced_block" >fenced_block</a>::<a class="enum" href="gcc_x86_fenced_block.hpp.html#boost::asio::detail::gcc_x86_fenced_block::half_t::half" title='boost::asio::detail::gcc_x86_fenced_block::half_t::half' data-ref="boost::asio::detail::gcc_x86_fenced_block::half_t::half" id="boost::asio::detail::gcc_x86_fenced_block::half_t::half" >half</a>);</td></tr>
+<tr><th id="103">103</th><td>      <a class="macro" href="handler_tracking.hpp.html#145" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_INVOCATION_BEGIN">BOOST_ASIO_HANDLER_INVOCATION_BEGIN</a>((handler.arg1_, handler.arg2_));</td></tr>
+<tr><th id="104">104</th><td>      <span class="namespace">boost_asio_handler_invoke_helpers::</span>invoke(<a class="local col4 ref" href="#2884handler" title='handler' data-ref="2884handler" >handler</a>, <a class="local col4 ref" href="#2884handler" title='handler' data-ref="2884handler" >handler</a>.handler_);</td></tr>
+<tr><th id="105">105</th><td>      <a class="macro" href="handler_tracking.hpp.html#146" title="(void)0" data-ref="_M/BOOST_ASIO_HANDLER_INVOCATION_END">BOOST_ASIO_HANDLER_INVOCATION_END</a>;</td></tr>
+<tr><th id="106">106</th><td>    }</td></tr>
+<tr><th id="107">107</th><td>  }</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><b>private</b>:</td></tr>
+<tr><th id="110">110</th><td>  Handler <dfn class="decl" id="boost::asio::detail::descriptor_write_op::handler_" title='boost::asio::detail::descriptor_write_op::handler_' data-ref="boost::asio::detail::descriptor_write_op::handler_" >handler_</dfn>;</td></tr>
+<tr><th id="111">111</th><td>};</td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td>} <i>// namespace detail</i></td></tr>
+<tr><th id="114">114</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="115">115</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><u>#include <a href="pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td><u>#<span data-ppcond="20">endif</span> // !defined(BOOST_ASIO_WINDOWS) &amp;&amp; !defined(__CYGWIN__)</u></td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DETAIL_DESCRIPTOR_WRITE_OP_HPP</u></td></tr>
+<tr><th id="122">122</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

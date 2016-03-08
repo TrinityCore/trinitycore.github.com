@@ -1,0 +1,64 @@
+<dec f='TrinityCore3.3.5/dep/recastnavigation/Recast/Include/Recast.h' l='1009' type='bool rcBuildRegionsMonotone(rcContext * ctx, rcCompactHeightfield &amp; chf, const int borderSize, const int minRegionArea, const int mergeRegionArea)'/>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Recast/Include/Recast.h' l='998'>/// Builds region data for the heightfield using simple monotone partitioning.
+///  @ingroup recast 
+///  @param[in,out]	ctx				The build context to use during the operation.
+///  @param[in,out]	chf				A populated compact heightfield.
+///  @param[in]		borderSize		The size of the non-navigable border around the heightfield.
+///  								[Limit: &gt;=0] [Units: vx]
+///  @param[in]		minRegionArea	The minimum number of cells allowed to form isolated island areas.
+///  								[Limit: &gt;=0] [Units: vx].
+///  @param[in]		mergeRegionArea	Any regions with a span count smaller than this value will, if possible, 
+///  								be merged with larger regions. [Limit: &gt;=0] [Units: vx] 
+///  @returns True if the operation completed successfully.</doc>
+<def f='TrinityCore3.3.5/dep/recastnavigation/Recast/Source/RecastRegion.cpp' l='1357' type='bool rcBuildRegionsMonotone(rcContext * ctx, rcCompactHeightfield &amp; chf, const int borderSize, const int minRegionArea, const int mergeRegionArea)'/>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Recast/Source/RecastRegion.cpp' l='1338'>/// @par
+/// 
+/// Non-null regions will consist of connected, non-overlapping walkable spans that form a single contour.
+/// Contours will form simple polygons.
+/// 
+/// If multiple regions form an area that is smaller than @p minRegionArea, then all spans will be
+/// re-assigned to the zero (null) region.
+/// 
+/// Partitioning can result in smaller than necessary regions. @p mergeRegionArea helps 
+/// reduce unecessarily small regions.
+/// 
+/// See the #rcConfig documentation for more information on the configuration parameters.
+/// 
+/// The region data will be available via the rcCompactHeightfield::maxRegions
+/// and rcCompactSpan::reg fields.
+/// 
+/// @warning The distance field must be created using #rcBuildDistanceField before attempting to build regions.
+/// 
+/// @see rcCompactHeightfield, rcCompactSpan, rcBuildDistanceField, rcBuildRegionsMonotone, rcConfig</doc>
+<dec f='TrinityCore6.x/dep/recastnavigation/Recast/Include/Recast.h' l='1009' type='bool rcBuildRegionsMonotone(rcContext * ctx, rcCompactHeightfield &amp; chf, const int borderSize, const int minRegionArea, const int mergeRegionArea)'/>
+<doc f='TrinityCore6.x/dep/recastnavigation/Recast/Include/Recast.h' l='998'>/// Builds region data for the heightfield using simple monotone partitioning.
+///  @ingroup recast 
+///  @param[in,out]	ctx				The build context to use during the operation.
+///  @param[in,out]	chf				A populated compact heightfield.
+///  @param[in]		borderSize		The size of the non-navigable border around the heightfield.
+///  								[Limit: &gt;=0] [Units: vx]
+///  @param[in]		minRegionArea	The minimum number of cells allowed to form isolated island areas.
+///  								[Limit: &gt;=0] [Units: vx].
+///  @param[in]		mergeRegionArea	Any regions with a span count smaller than this value will, if possible, 
+///  								be merged with larger regions. [Limit: &gt;=0] [Units: vx] 
+///  @returns True if the operation completed successfully.</doc>
+<def f='TrinityCore6.x/dep/recastnavigation/Recast/Source/RecastRegion.cpp' l='1357' type='bool rcBuildRegionsMonotone(rcContext * ctx, rcCompactHeightfield &amp; chf, const int borderSize, const int minRegionArea, const int mergeRegionArea)'/>
+<doc f='TrinityCore6.x/dep/recastnavigation/Recast/Source/RecastRegion.cpp' l='1338'>/// @par
+/// 
+/// Non-null regions will consist of connected, non-overlapping walkable spans that form a single contour.
+/// Contours will form simple polygons.
+/// 
+/// If multiple regions form an area that is smaller than @p minRegionArea, then all spans will be
+/// re-assigned to the zero (null) region.
+/// 
+/// Partitioning can result in smaller than necessary regions. @p mergeRegionArea helps 
+/// reduce unecessarily small regions.
+/// 
+/// See the #rcConfig documentation for more information on the configuration parameters.
+/// 
+/// The region data will be available via the rcCompactHeightfield::maxRegions
+/// and rcCompactSpan::reg fields.
+/// 
+/// @warning The distance field must be created using #rcBuildDistanceField before attempting to build regions.
+/// 
+/// @see rcCompactHeightfield, rcCompactSpan, rcBuildDistanceField, rcBuildRegionsMonotone, rcConfig</doc>

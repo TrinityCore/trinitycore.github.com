@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<title>BIN.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/BIN.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/BIN.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/BIN.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/G3D_BIN_h">G3D_BIN_h</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/G3D_BIN_h" data-ref="_M/G3D_BIN_h">G3D_BIN_h</dfn></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><u>#define <dfn class="macro" id="_M/_BIT" data-ref="_M/_BIT">_BIT</dfn>(N, K) (((N &gt;&gt; (3*K)) &amp; 1) &lt;&lt; K)</u></td></tr>
+<tr><th id="5">5</th><td></td></tr>
+<tr><th id="6">6</th><td><u>#define <dfn class="macro" id="_M/_OCT_CODED_BIN" data-ref="_M/_OCT_CODED_BIN">_OCT_CODED_BIN</dfn>(N) \</u></td></tr>
+<tr><th id="7">7</th><td><u>    (_BIT(N, 0) | _BIT(N, 1) | _BIT(N, 2) | _BIT(N, 3) | \</u></td></tr>
+<tr><th id="8">8</th><td><u>     _BIT(N, 4) | _BIT(N, 5) | _BIT(N, 6) | _BIT(N, 7) | \</u></td></tr>
+<tr><th id="9">9</th><td><u>     _BIT(N,    | _BIT(N, 9) | _BIT(N, 10))</u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="12">12</th><td><i class="doc">    <span class="command">\def</span> <span class="verb">BIN11()</span></i></td></tr>
+<tr><th id="13">13</th><td><i class="doc"></i></td></tr>
+<tr><th id="14">14</th><td><i class="doc">    <span class="command">\brief</span> Create a binary constant up to 11 digits long at compile time.</i></td></tr>
+<tr><th id="15">15</th><td><i class="doc"></i></td></tr>
+<tr><th id="16">16</th><td><i class="doc">    <span class="command">\code</span></i></td></tr>
+<tr><th id="17">17</th><td><i class="doc"><span class="verb">    int i = BIN(01100101001)</span></i></td></tr>
+<tr><th id="18">18</th><td><i class="doc"><span class="verb"></span>    \endcode</i></td></tr>
+<tr><th id="19">19</th><td><i class="doc"></i></td></tr>
+<tr><th id="20">20</th><td><i class="doc">   <span class="command"> \cite</span> By Kaz Kylheku <a href="http://www.velocityreviews.com/forums/t">http://www.velocityreviews.com/forums/t</a>620780-mathew-hendrys-macro-for-binary-integer-literals.html </i></td></tr>
+<tr><th id="21">21</th><td><i class="doc">    <span class="command">\sa</span> BIN8(), BIN11(), BIN16(), BIN32()</i></td></tr>
+<tr><th id="22">22</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="23">23</th><td><u>#define <dfn class="macro" id="_M/BIN11" data-ref="_M/BIN11">BIN11</dfn>(N) _OCT_CODED_BIN(0 ## N ## UL)</u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><i>/* turn a numeric literal into a hex constant </i></td></tr>
+<tr><th id="28">28</th><td><i>   (avoids problems with leading zeroes) </i></td></tr>
+<tr><th id="29">29</th><td><i>   8-bit constants max value 0x11111111, always fits in unsigned long </i></td></tr>
+<tr><th id="30">30</th><td><i>*/</i> </td></tr>
+<tr><th id="31">31</th><td><u>#define <dfn class="macro" id="_M/HEX__" data-ref="_M/HEX__">HEX__</dfn>(n) 0x##n##LU</u> </td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><i>/* 8-bit conversion function */</i> </td></tr>
+<tr><th id="34">34</th><td><u>#define <dfn class="macro" id="_M/B8__" data-ref="_M/B8__">B8__</dfn>(x) ((x&amp;0x0000000FLU)?1:0)      \</u></td></tr>
+<tr><th id="35">35</th><td><u>+((x&amp;0x000000F0LU)?2:0)      \</u></td></tr>
+<tr><th id="36">36</th><td><u>+((x&amp;0x00000F00LU)?4:0)      \</u></td></tr>
+<tr><th id="37">37</th><td><u>+((x&amp;0x0000F000LU)?8:0)      \</u></td></tr>
+<tr><th id="38">38</th><td><u>+((x&amp;0x000F0000LU)?16:0)     \</u></td></tr>
+<tr><th id="39">39</th><td><u>+((x&amp;0x00F00000LU)?32:0)     \</u></td></tr>
+<tr><th id="40">40</th><td><u>+((x&amp;0x0F000000LU)?64:0)     \</u></td></tr>
+<tr><th id="41">41</th><td><u>+((x&amp;0xF0000000LU)?128:0)</u> </td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">    <span class="command">\def</span> <span class="verb">BIN8()</span></i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">    <span class="command">\brief</span> Generate a 16-bit constant in binary notation, in 8-bit strings.</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">    </i></td></tr>
+<tr><th id="47">47</th><td><i class="doc">    The most significant byte is first.</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"></i></td></tr>
+<tr><th id="49">49</th><td><i class="doc">    <span class="command">\code</span></i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"><span class="verb">    unsigned int i = BIN8(01010101); // 85 </span></i></td></tr>
+<tr><th id="51">51</th><td><i class="doc"><span class="verb"></span>    \endcode</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc"></i></td></tr>
+<tr><th id="53">53</th><td><i class="doc">   <span class="command"> \cite</span> Tom Torfs <a href="http://groups.google.com/group/comp.arch.embedded/msg/">http://groups.google.com/group/comp.arch.embedded/msg/</a>9d430b6d3da12c8f</i></td></tr>
+<tr><th id="54">54</th><td><i class="doc">    <span class="command">\sa</span> BIN8(), BIN11(), BIN16(), BIN32()</i></td></tr>
+<tr><th id="55">55</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="56">56</th><td><u>#define <dfn class="macro" id="_M/BIN8" data-ref="_M/BIN8">BIN8</dfn>(d) ((unsigned char)B8__(HEX__(d)))</u> </td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><i class="doc">/** <span class="command">\def</span> <span class="verb">BIN16()</span></i></td></tr>
+<tr><th id="59">59</th><td><i class="doc">    <span class="command">\brief</span> Generate a 16-bit constant in binary notation, in 8-bit strings.</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">    </i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">    The most significant byte is first.</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc"></i></td></tr>
+<tr><th id="63">63</th><td><i class="doc">    <span class="command">\code</span></i></td></tr>
+<tr><th id="64">64</th><td><i class="doc"><span class="verb">    unsigned int i = BIN16(10101010,01010101); // 43605 </span></i></td></tr>
+<tr><th id="65">65</th><td><i class="doc"><span class="verb"></span>    \endcode</i></td></tr>
+<tr><th id="66">66</th><td><i class="doc"></i></td></tr>
+<tr><th id="67">67</th><td><i class="doc">   <span class="command"> \cite</span> Tom Torfs <a href="http://groups.google.com/group/comp.arch.embedded/msg/">http://groups.google.com/group/comp.arch.embedded/msg/</a>9d430b6d3da12c8f</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">    <span class="command">\sa</span> BIN8(), BIN11(), BIN16(), BIN32()</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="70">70</th><td><u>#define <dfn class="macro" id="_M/BIN16" data-ref="_M/BIN16">BIN16</dfn>(dmsb, dlsb) (((unsigned short)BIN8(dmsb) &lt;&lt; 8) + BIN8(dlsb))</u> </td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="74">74</th><td><i class="doc">    <span class="command">\def</span> <span class="verb">BIN32()</span></i></td></tr>
+<tr><th id="75">75</th><td><i class="doc">    <span class="command">\brief</span> Generate a 32-bit constant in binary notation, in 8-bit strings.</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">    </i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">    The most significant byte is first.</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"></i></td></tr>
+<tr><th id="79">79</th><td><i class="doc">    <span class="command">\code</span></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc"><span class="verb">    unsigned int = BIN32(10000000,11111111,10101010,01010101); // 2164238933 </span></i></td></tr>
+<tr><th id="81">81</th><td><i class="doc"><span class="verb"></span>    \endcode</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc"></i></td></tr>
+<tr><th id="83">83</th><td><i class="doc">   <span class="command"> \cite</span> Tom Torfs <a href="http://groups.google.com/group/comp.arch.embedded/msg/">http://groups.google.com/group/comp.arch.embedded/msg/</a>9d430b6d3da12c8f</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc">    <span class="command">\sa</span> BIN8(), BIN11(), BIN16(), BIN32()</i></td></tr>
+<tr><th id="85">85</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="86">86</th><td><u>#define <dfn class="macro" id="_M/BIN32" data-ref="_M/BIN32">BIN32</dfn>(dmsb,db2,db3,dlsb) \</u></td></tr>
+<tr><th id="87">87</th><td><u>    (((unsigned long)BIN8(dmsb) &lt;&lt; 24) + \</u></td></tr>
+<tr><th id="88">88</th><td><u>     ((unsigned long)BIN8(db2)  &lt;&lt; 16) + \</u></td></tr>
+<tr><th id="89">89</th><td><u>     ((unsigned long)BIN8(db3)  &lt;&lt; 8) + \</u></td></tr>
+<tr><th id="90">90</th><td><u>     BIN8(dlsb))</u> </td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td><u>#<span data-ppcond="1">endif</span></u></td></tr>
+<tr><th id="93">93</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/g3dmath.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/g3dmath.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,70 @@
+<dec f='TrinityCore6.x/dep/CascLib/src/CascCommon.h' l='342' type='int RootHandler_CreateDiablo3(TCascStorage * hs, LPBYTE pbRootFile, DWORD cbRootFile)'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascOpenStorage.cpp' l='895' u='c' c='_ZL12LoadRootFileP13_TCascStoragej'/>
+<def f='TrinityCore6.x/dep/CascLib/src/CascRootFile_Diablo3.cpp' l='1079' type='int RootHandler_CreateDiablo3(TCascStorage * hs, LPBYTE pbRootFile, DWORD cbRootFile)'/>
+<doc f='TrinityCore6.x/dep/CascLib/src/CascRootFile_Diablo3.cpp' l='1011'>/*
+static void DumpRootFile(TDumpContext * dc, LPBYTE pbFileData, LPBYTE pbFileDataEnd)
+{
+    char  szMD5Buffer[MD5_STRING_SIZE+1];
+    DWORD dwSignature;
+    DWORD dwItemCount;
+    DWORD i;
+
+    dwSignature = *(PDWORD)pbFileData;
+    if(dwSignature != CASC_DIABLO3_SUBDIR_SIGNATURE)
+        return;
+    pbFileData += sizeof(DWORD);
+
+    // Dump items that contain EncodingKey + AssetId
+    dwItemCount = *(PDWORD)pbFileData;
+    pbFileData += sizeof(DWORD);
+    for(i = 0; i &lt; dwItemCount; i++)
+    {
+        PCASC_DIABLO3_ASSET_ENTRY pEntry = (PCASC_DIABLO3_ASSET_ENTRY)pbFileData;
+
+        if((pbFileData + sizeof(*pEntry)) &gt; pbFileDataEnd)
+            return;
+        pbFileData += sizeof(*pEntry);
+
+        dump_print(dc, &quot;%s %08X\n&quot;, StringFromMD5(pEntry-&gt;EncodingKey, szMD5Buffer), pEntry-&gt;AssetId);
+    }
+
+    // Terminate with two newlines
+    dump_print(dc, &quot;\n&quot;);
+
+    // Dump items that contain EncodingKey + AssetId + FileNumber
+    dwItemCount = *(PDWORD)pbFileData;
+    pbFileData += sizeof(DWORD);
+    for(i = 0; i &lt; dwItemCount; i++)
+    {
+        PCASC_DIABLO3_ASSET_ENTRY2 pEntry = (PCASC_DIABLO3_ASSET_ENTRY2)pbFileData;
+
+        if((pbFileData + sizeof(*pEntry)) &gt; pbFileDataEnd)
+            return;
+        pbFileData += sizeof(*pEntry);
+
+        dump_print(dc, &quot;%s %08X %08X\n&quot;, StringFromMD5((LPBYTE)pEntry-&gt;EncodingKey, szMD5Buffer), pEntry-&gt;AssetId, pEntry-&gt;FileNumber);
+    }
+
+    // Terminate with two newlines
+    dump_print(dc, &quot;\n&quot;);
+
+    // Dump items that contain EncodingKey + FileName
+    dwItemCount = *(PDWORD)pbFileData;
+    pbFileData += sizeof(DWORD);
+    for(i = 0; i &lt; dwItemCount; i++)
+    {
+        PDIABLO3_NAMED_ENTRY pEntry = (PDIABLO3_NAMED_ENTRY)pbFileData;
+        DWORD dwEntrySize = VerifyNamedFileEntry(pbFileData, pbFileDataEnd);
+
+        if((pbFileData + dwEntrySize) &gt; pbFileDataEnd)
+            return;
+        pbFileData += dwEntrySize;
+
+        dump_print(dc, &quot;%s %s\n&quot;, StringFromMD5((LPBYTE)pEntry-&gt;EncodingKey, szMD5Buffer), pEntry-&gt;szFileName);
+    }
+
+    dump_print(dc, &quot;\n\n&quot;);
+}
+*/
+//-----------------------------------------------------------------------------
+// Public functions</doc>

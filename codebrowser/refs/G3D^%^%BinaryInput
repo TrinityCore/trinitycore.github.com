@@ -1,0 +1,44 @@
+<def f='TrinityCore3.3.5/dep/g3dlite/include/G3D/BinaryInput.h' l='69'/>
+<size>88</size>
+<doc f='TrinityCore3.3.5/dep/g3dlite/include/G3D/BinaryInput.h' l='49'>/**
+ Sequential or random access byte-order independent binary file access.
+ Files compressed with zlib and beginning with an unsigned 32-bit int
+ size are transparently decompressed when the compressed = true flag is
+ specified to the constructor.
+
+ For every readX method there are also versions that operate on a whole
+ Array, std::vector, or C-array.  e.g. readFloat32(Array&lt;float32&gt;&amp; array, n)
+ These methods resize the array or std::vector to the appropriate size
+ before reading.  For a C-array, they require the pointer to reference
+ a memory block at least large enough to hold &lt;I&gt;n&lt;/I&gt; elements.
+
+ Most classes define serialize/deserialize methods that use BinaryInput,
+ BinaryOutput, TextInput, and TextOutput.  There are text serializer 
+ functions for primitive types (e.g. int, std::string, float, double) but not 
+ binary serializers-- you &lt;B&gt;must&lt;/b&gt; call the BinaryInput::readInt32 or
+ other appropriate function.  This is because it would be very hard to 
+ debug the error sequence: &lt;CODE&gt;serialize(1.0, bo); ... float f; deserialize(f, bi);&lt;/CODE&gt;
+ in which a double is serialized and then deserialized as a float. 
+ */</doc>
+<def f='TrinityCore6.x/dep/g3dlite/include/G3D/BinaryInput.h' l='69'/>
+<size>88</size>
+<doc f='TrinityCore6.x/dep/g3dlite/include/G3D/BinaryInput.h' l='49'>/**
+ Sequential or random access byte-order independent binary file access.
+ Files compressed with zlib and beginning with an unsigned 32-bit int
+ size are transparently decompressed when the compressed = true flag is
+ specified to the constructor.
+
+ For every readX method there are also versions that operate on a whole
+ Array, std::vector, or C-array.  e.g. readFloat32(Array&lt;float32&gt;&amp; array, n)
+ These methods resize the array or std::vector to the appropriate size
+ before reading.  For a C-array, they require the pointer to reference
+ a memory block at least large enough to hold &lt;I&gt;n&lt;/I&gt; elements.
+
+ Most classes define serialize/deserialize methods that use BinaryInput,
+ BinaryOutput, TextInput, and TextOutput.  There are text serializer 
+ functions for primitive types (e.g. int, std::string, float, double) but not 
+ binary serializers-- you &lt;B&gt;must&lt;/b&gt; call the BinaryInput::readInt32 or
+ other appropriate function.  This is because it would be very hard to 
+ debug the error sequence: &lt;CODE&gt;serialize(1.0, bo); ... float f; deserialize(f, bi);&lt;/CODE&gt;
+ in which a double is serialized and then deserialized as a float. 
+ */</doc>

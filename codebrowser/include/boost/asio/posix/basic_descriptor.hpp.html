@@ -1,0 +1,510 @@
+<!doctype html>
+<html>
+<head>
+<title>basic_descriptor.hpp [include/boost/asio/posix/basic_descriptor.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/posix/basic_descriptor.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>asio</a>/<a href='./'>posix</a>/basic_descriptor.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// posix/basic_descriptor.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_POSIX_BASIC_DESCRIPTOR_HPP">BOOST_ASIO_POSIX_BASIC_DESCRIPTOR_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_POSIX_BASIC_DESCRIPTOR_HPP" data-ref="_M/BOOST_ASIO_POSIX_BASIC_DESCRIPTOR_HPP">BOOST_ASIO_POSIX_BASIC_DESCRIPTOR_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../detail/config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">if</span> defined(<a class="macro" href="../detail/config.hpp.html#534" data-ref="_M/BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR">BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR</a>) \</u></td></tr>
+<tr><th id="21">21</th><td><u>  || defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../basic_io_object.hpp.html">&lt;boost/asio/basic_io_object.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../detail/throw_error.hpp.html">&lt;boost/asio/detail/throw_error.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../error.hpp.html">&lt;boost/asio/error.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="descriptor_base.hpp.html">&lt;boost/asio/posix/descriptor_base.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../detail/push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="31">31</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="32">32</th><td><b>namespace</b> <span class="namespace">posix</span> {</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><i class="doc">/// Provides POSIX descriptor functionality.</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc"> * The posix::basic_descriptor class template provides the ability to wrap a</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc"> * POSIX descriptor.</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc"> * <span class="command">@par</span> Thread Safety</i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Distinct</span><span class="command"> @e</span> <span class="arg">objects:</span> Safe<span class="command">.@n</span></i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Shared</span><span class="command"> @e</span> <span class="arg">objects:</span> Unsafe.</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="43">43</th><td><b>template</b> &lt;<b>typename</b> DescriptorService&gt;</td></tr>
+<tr><th id="44">44</th><td><b>class</b> <dfn class="type def" id="boost::asio::posix::basic_descriptor" title='boost::asio::posix::basic_descriptor' data-ref="boost::asio::posix::basic_descriptor" >basic_descriptor</dfn></td></tr>
+<tr><th id="45">45</th><td>  : <b>public</b> <a class="type" href="../basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;DescriptorService&gt;,</td></tr>
+<tr><th id="46">46</th><td>    <b>public</b> <a class="type" href="descriptor_base.hpp.html#boost::asio::posix::descriptor_base" title='boost::asio::posix::descriptor_base' data-ref="boost::asio::posix::descriptor_base" >descriptor_base</a></td></tr>
+<tr><th id="47">47</th><td>{</td></tr>
+<tr><th id="48">48</th><td><b>public</b>:</td></tr>
+<tr><th id="49">49</th><td>  <i class="doc">/// (Deprecated: Use native_handle_type.) The native representation of a</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc">  /// descriptor.</i></td></tr>
+<tr><th id="51">51</th><td>  <b>typedef</b> <b>typename</b> DescriptorService::native_handle_type <dfn class="typedef" id="boost::asio::posix::basic_descriptor::native_type" title='boost::asio::posix::basic_descriptor::native_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_type" >native_type</dfn>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>  <i class="doc">/// The native representation of a descriptor.</i></td></tr>
+<tr><th id="54">54</th><td>  <b>typedef</b> <b>typename</b> DescriptorService::native_handle_type <dfn class="typedef" id="boost::asio::posix::basic_descriptor::native_handle_type" title='boost::asio::posix::basic_descriptor::native_handle_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_handle_type" >native_handle_type</dfn>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>  <i class="doc">/// A basic_descriptor is always the lowest layer.</i></td></tr>
+<tr><th id="57">57</th><td>  <b>typedef</b> <a class="type" href="#boost::asio::posix::basic_descriptor" title='boost::asio::posix::basic_descriptor' data-ref="boost::asio::posix::basic_descriptor" >basic_descriptor</a>&lt;DescriptorService&gt; <dfn class="typedef" id="boost::asio::posix::basic_descriptor::lowest_layer_type" title='boost::asio::posix::basic_descriptor::lowest_layer_type' data-type='basic_descriptor&lt;DescriptorService&gt;' data-ref="boost::asio::posix::basic_descriptor::lowest_layer_type" >lowest_layer_type</dfn>;</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>  <i class="doc">/// Construct a basic_descriptor without opening it.</i></td></tr>
+<tr><th id="60">60</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">   * This constructor creates a descriptor without opening it.</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the descriptor will use to</i></td></tr>
+<tr><th id="64">64</th><td><i class="doc">   * dispatch handlers for any asynchronous operations performed on the</i></td></tr>
+<tr><th id="65">65</th><td><i class="doc">   * descriptor.</i></td></tr>
+<tr><th id="66">66</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="67">67</th><td>  <b>explicit</b> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptorC1ERNS0_10io_serviceE" title='boost::asio::posix::basic_descriptor::basic_descriptor&lt;DescriptorService&gt;' data-ref="_ZN5boost4asio5posix16basic_descriptorC1ERNS0_10io_serviceE" >basic_descriptor</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="../io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col9 decl" id="4839io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="4839io_service" >io_service</dfn>)</td></tr>
+<tr><th id="68">68</th><td>    : <a class="type" href="../basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;DescriptorService&gt;(<a class="local col9 ref" href="#4839io_service" title='io_service' data-ref="4839io_service" >io_service</a>)</td></tr>
+<tr><th id="69">69</th><td>  {</td></tr>
+<tr><th id="70">70</th><td>  }</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>  <i class="doc">/// Construct a basic_descriptor on an existing native descriptor.</i></td></tr>
+<tr><th id="73">73</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="74">74</th><td><i class="doc">   * This constructor creates a descriptor object to hold an existing native</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc">   * descriptor.</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the descriptor will use to</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">   * dispatch handlers for any asynchronous operations performed on the</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc">   * descriptor.</i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">native_descriptor</span> A native descriptor.</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="83">83</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="85">85</th><td>  <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptorC1ERNS0_10io_serviceERKNT_18native_handle_typeE" title='boost::asio::posix::basic_descriptor::basic_descriptor&lt;DescriptorService&gt;' data-ref="_ZN5boost4asio5posix16basic_descriptorC1ERNS0_10io_serviceERKNT_18native_handle_typeE" >basic_descriptor</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="../io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col0 decl" id="4840io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="4840io_service" >io_service</dfn>,</td></tr>
+<tr><th id="86">86</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::posix::basic_descriptor::native_handle_type" title='boost::asio::posix::basic_descriptor::native_handle_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_handle_type" >native_handle_type</a>&amp; <dfn class="local col1 decl" id="4841native_descriptor" title='native_descriptor' data-type='const native_handle_type &amp;' data-ref="4841native_descriptor" >native_descriptor</dfn>)</td></tr>
+<tr><th id="87">87</th><td>    : <a class="type" href="../basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;DescriptorService&gt;(<a class="local col0 ref" href="#4840io_service" title='io_service' data-ref="4840io_service" >io_service</a>)</td></tr>
+<tr><th id="88">88</th><td>  {</td></tr>
+<tr><th id="89">89</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col2 decl" id="4842ec" title='ec' data-type='boost::system::error_code' data-ref="4842ec" >ec</dfn>;</td></tr>
+<tr><th id="90">90</th><td>    <b>this</b>-&gt;get_service().assign(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="91">91</th><td>        <a class="local col1 ref" href="#4841native_descriptor" title='native_descriptor' data-ref="4841native_descriptor" >native_descriptor</a>, <a class="local col2 ref" href="#4842ec" title='ec' data-ref="4842ec" >ec</a>);</td></tr>
+<tr><th id="92">92</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="../detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col2 ref" href="#4842ec" title='ec' data-ref="4842ec" >ec</a>, <q>"assign"</q>);</td></tr>
+<tr><th id="93">93</th><td>  }</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td><u>#<span data-ppcond="95">if</span> defined(<a class="macro" href="../detail/config.hpp.html#90" data-ref="_M/BOOST_ASIO_HAS_MOVE">BOOST_ASIO_HAS_MOVE</a>) || defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="96">96</th><td>  <i class="doc">/// Move-construct a basic_descriptor from another.</i></td></tr>
+<tr><th id="97">97</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">   * This constructor moves a descriptor from one object to another.</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">other</span> The other basic_descriptor object from which the move will</i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">   * occur.</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="103">103</th><td><i class="doc">   * <span class="command">@note</span> Following the move, the moved-from object is in the same state as if</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc">   * constructed using the<span class="command"> @c</span> <span class="arg">basic_descriptor(io_service&amp;)</span> constructor.</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="106">106</th><td>  <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptorC1EONS1_16basic_descriptorIT_EE" title='boost::asio::posix::basic_descriptor::basic_descriptor&lt;DescriptorService&gt;' data-ref="_ZN5boost4asio5posix16basic_descriptorC1EONS1_16basic_descriptorIT_EE" >basic_descriptor</dfn>(basic_descriptor&amp;&amp; <dfn class="local col3 decl" id="4843other" title='other' data-type='basic_descriptor&lt;DescriptorService&gt; &amp;&amp;' data-ref="4843other" >other</dfn>)</td></tr>
+<tr><th id="107">107</th><td>    : <a class="type" href="../basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;DescriptorService&gt;(</td></tr>
+<tr><th id="108">108</th><td>        <a class="macro" href="../detail/config.hpp.html#108" title="static_cast&lt;basic_descriptor&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(basic_descriptor)(<a class="local col3 ref" href="#4843other" title='other' data-ref="4843other" >other</a>))</td></tr>
+<tr><th id="109">109</th><td>  {</td></tr>
+<tr><th id="110">110</th><td>  }</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>  <i class="doc">/// Move-assign a basic_descriptor from another.</i></td></tr>
+<tr><th id="113">113</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc">   * This assignment operator moves a descriptor from one object to another.</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">other</span> The other basic_descriptor object from which the move will</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">   * occur.</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc">   * <span class="command">@note</span> Following the move, the moved-from object is in the same state as if</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc">   * constructed using the<span class="command"> @c</span> <span class="arg">basic_descriptor(io_service&amp;)</span> constructor.</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="122">122</th><td>  basic_descriptor&amp; <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptoraSEONS1_16basic_descriptorIT_EE" title='boost::asio::posix::basic_descriptor::operator=' data-ref="_ZN5boost4asio5posix16basic_descriptoraSEONS1_16basic_descriptorIT_EE" ><b>operator</b>=</dfn>(basic_descriptor&amp;&amp; <dfn class="local col4 decl" id="4844other" title='other' data-type='basic_descriptor&lt;DescriptorService&gt; &amp;&amp;' data-ref="4844other" >other</dfn>)</td></tr>
+<tr><th id="123">123</th><td>  {</td></tr>
+<tr><th id="124">124</th><td>    <a class="type" href="../basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;DescriptorService&gt;::<b>operator</b>=(</td></tr>
+<tr><th id="125">125</th><td>        <a class="macro" href="../detail/config.hpp.html#108" title="static_cast&lt;basic_descriptor&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(basic_descriptor)(<a class="local col4 ref" href="#4844other" title='other' data-ref="4844other" >other</a>));</td></tr>
+<tr><th id="126">126</th><td>    <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="127">127</th><td>  }</td></tr>
+<tr><th id="128">128</th><td><u>#<span data-ppcond="95">endif</span> // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)</u></td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>  <i class="doc">/// Get a reference to the lowest layer.</i></td></tr>
+<tr><th id="131">131</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="132">132</th><td><i class="doc">   * This function returns a reference to the lowest layer in a stack of</i></td></tr>
+<tr><th id="133">133</th><td><i class="doc">   * layers. Since a basic_descriptor cannot contain any further layers, it</i></td></tr>
+<tr><th id="134">134</th><td><i class="doc">   * simply returns a reference to itself.</i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">   * <span class="command">@return</span> A reference to the lowest layer in the stack of layers. Ownership</i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">   * is not transferred to the caller.</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="139">139</th><td>  <a class="typedef" href="#boost::asio::posix::basic_descriptor::lowest_layer_type" title='boost::asio::posix::basic_descriptor::lowest_layer_type' data-type='basic_descriptor&lt;DescriptorService&gt;' data-ref="boost::asio::posix::basic_descriptor::lowest_layer_type" >lowest_layer_type</a>&amp; <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor12lowest_layerEv" title='boost::asio::posix::basic_descriptor::lowest_layer' data-ref="_ZN5boost4asio5posix16basic_descriptor12lowest_layerEv" >lowest_layer</dfn>()</td></tr>
+<tr><th id="140">140</th><td>  {</td></tr>
+<tr><th id="141">141</th><td>    <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="142">142</th><td>  }</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td>  <i class="doc">/// Get a const reference to the lowest layer.</i></td></tr>
+<tr><th id="145">145</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="146">146</th><td><i class="doc">   * This function returns a const reference to the lowest layer in a stack of</i></td></tr>
+<tr><th id="147">147</th><td><i class="doc">   * layers. Since a basic_descriptor cannot contain any further layers, it</i></td></tr>
+<tr><th id="148">148</th><td><i class="doc">   * simply returns a reference to itself.</i></td></tr>
+<tr><th id="149">149</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="150">150</th><td><i class="doc">   * <span class="command">@return</span> A const reference to the lowest layer in the stack of layers.</i></td></tr>
+<tr><th id="151">151</th><td><i class="doc">   * Ownership is not transferred to the caller.</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="153">153</th><td>  <em>const</em> <a class="typedef" href="#boost::asio::posix::basic_descriptor::lowest_layer_type" title='boost::asio::posix::basic_descriptor::lowest_layer_type' data-type='basic_descriptor&lt;DescriptorService&gt;' data-ref="boost::asio::posix::basic_descriptor::lowest_layer_type" >lowest_layer_type</a>&amp; <dfn class="decl def" id="_ZNK5boost4asio5posix16basic_descriptor12lowest_layerEv" title='boost::asio::posix::basic_descriptor::lowest_layer' data-ref="_ZNK5boost4asio5posix16basic_descriptor12lowest_layerEv" >lowest_layer</dfn>() <em>const</em></td></tr>
+<tr><th id="154">154</th><td>  {</td></tr>
+<tr><th id="155">155</th><td>    <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="156">156</th><td>  }</td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td>  <i class="doc">/// Assign an existing native descriptor to the descriptor.</i></td></tr>
+<tr><th id="159">159</th><td>  <i>/*</i></td></tr>
+<tr><th id="160">160</th><td><i>   * This function opens the descriptor to hold an existing native descriptor.</i></td></tr>
+<tr><th id="161">161</th><td><i>   *</i></td></tr>
+<tr><th id="162">162</th><td><i>   * @param native_descriptor A native descriptor.</i></td></tr>
+<tr><th id="163">163</th><td><i>   *</i></td></tr>
+<tr><th id="164">164</th><td><i>   * @throws boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="165">165</th><td><i>   */</i></td></tr>
+<tr><th id="166">166</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor6assignERKNT_18native_handle_typeE" title='boost::asio::posix::basic_descriptor::assign' data-ref="_ZN5boost4asio5posix16basic_descriptor6assignERKNT_18native_handle_typeE" >assign</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::posix::basic_descriptor::native_handle_type" title='boost::asio::posix::basic_descriptor::native_handle_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_handle_type" >native_handle_type</a>&amp; <dfn class="local col5 decl" id="4845native_descriptor" title='native_descriptor' data-type='const native_handle_type &amp;' data-ref="4845native_descriptor" >native_descriptor</dfn>)</td></tr>
+<tr><th id="167">167</th><td>  {</td></tr>
+<tr><th id="168">168</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col6 decl" id="4846ec" title='ec' data-type='boost::system::error_code' data-ref="4846ec" >ec</dfn>;</td></tr>
+<tr><th id="169">169</th><td>    <b>this</b>-&gt;get_service().assign(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="170">170</th><td>        <a class="local col5 ref" href="#4845native_descriptor" title='native_descriptor' data-ref="4845native_descriptor" >native_descriptor</a>, <a class="local col6 ref" href="#4846ec" title='ec' data-ref="4846ec" >ec</a>);</td></tr>
+<tr><th id="171">171</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="../detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col6 ref" href="#4846ec" title='ec' data-ref="4846ec" >ec</a>, <q>"assign"</q>);</td></tr>
+<tr><th id="172">172</th><td>  }</td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td>  <i class="doc">/// Assign an existing native descriptor to the descriptor.</i></td></tr>
+<tr><th id="175">175</th><td>  <i>/*</i></td></tr>
+<tr><th id="176">176</th><td><i>   * This function opens the descriptor to hold an existing native descriptor.</i></td></tr>
+<tr><th id="177">177</th><td><i>   *</i></td></tr>
+<tr><th id="178">178</th><td><i>   * @param native_descriptor A native descriptor.</i></td></tr>
+<tr><th id="179">179</th><td><i>   *</i></td></tr>
+<tr><th id="180">180</th><td><i>   * @param ec Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="181">181</th><td><i>   */</i></td></tr>
+<tr><th id="182">182</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor6assignERKNT_18native_handle_typeERNS_6system10error_codeE" title='boost::asio::posix::basic_descriptor::assign' data-ref="_ZN5boost4asio5posix16basic_descriptor6assignERKNT_18native_handle_typeERNS_6system10error_codeE" >assign</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::posix::basic_descriptor::native_handle_type" title='boost::asio::posix::basic_descriptor::native_handle_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_handle_type" >native_handle_type</a>&amp; <dfn class="local col7 decl" id="4847native_descriptor" title='native_descriptor' data-type='const native_handle_type &amp;' data-ref="4847native_descriptor" >native_descriptor</dfn>,</td></tr>
+<tr><th id="183">183</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col8 decl" id="4848ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="4848ec" >ec</dfn>)</td></tr>
+<tr><th id="184">184</th><td>  {</td></tr>
+<tr><th id="185">185</th><td>    <b>return</b> <b>this</b>-&gt;get_service().assign(</td></tr>
+<tr><th id="186">186</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col7 ref" href="#4847native_descriptor" title='native_descriptor' data-ref="4847native_descriptor" >native_descriptor</a>, <a class="local col8 ref" href="#4848ec" title='ec' data-ref="4848ec" >ec</a>);</td></tr>
+<tr><th id="187">187</th><td>  }</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td>  <i class="doc">/// Determine whether the descriptor is open.</i></td></tr>
+<tr><th id="190">190</th><td>  <em>bool</em> <dfn class="decl def" id="_ZNK5boost4asio5posix16basic_descriptor7is_openEv" title='boost::asio::posix::basic_descriptor::is_open' data-ref="_ZNK5boost4asio5posix16basic_descriptor7is_openEv" >is_open</dfn>() <em>const</em></td></tr>
+<tr><th id="191">191</th><td>  {</td></tr>
+<tr><th id="192">192</th><td>    <b>return</b> <b>this</b>-&gt;get_service().is_open(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="193">193</th><td>  }</td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td>  <i class="doc">/// Close the descriptor.</i></td></tr>
+<tr><th id="196">196</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="197">197</th><td><i class="doc">   * This function is used to close the descriptor. Any asynchronous read or</i></td></tr>
+<tr><th id="198">198</th><td><i class="doc">   * write operations will be cancelled immediately, and will complete with the</i></td></tr>
+<tr><th id="199">199</th><td><i class="doc">   * boost::asio::error::operation_aborted error.</i></td></tr>
+<tr><th id="200">200</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="201">201</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure. Note that, even if</i></td></tr>
+<tr><th id="202">202</th><td><i class="doc">   * the function indicates an error, the underlying descriptor is closed.</i></td></tr>
+<tr><th id="203">203</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="204">204</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor5closeEv" title='boost::asio::posix::basic_descriptor::close' data-ref="_ZN5boost4asio5posix16basic_descriptor5closeEv" >close</dfn>()</td></tr>
+<tr><th id="205">205</th><td>  {</td></tr>
+<tr><th id="206">206</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col9 decl" id="4849ec" title='ec' data-type='boost::system::error_code' data-ref="4849ec" >ec</dfn>;</td></tr>
+<tr><th id="207">207</th><td>    <b>this</b>-&gt;get_service().close(<b>this</b>-&gt;get_implementation(), <a class="local col9 ref" href="#4849ec" title='ec' data-ref="4849ec" >ec</a>);</td></tr>
+<tr><th id="208">208</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="../detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#4849ec" title='ec' data-ref="4849ec" >ec</a>, <q>"close"</q>);</td></tr>
+<tr><th id="209">209</th><td>  }</td></tr>
+<tr><th id="210">210</th><td></td></tr>
+<tr><th id="211">211</th><td>  <i class="doc">/// Close the descriptor.</i></td></tr>
+<tr><th id="212">212</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="213">213</th><td><i class="doc">   * This function is used to close the descriptor. Any asynchronous read or</i></td></tr>
+<tr><th id="214">214</th><td><i class="doc">   * write operations will be cancelled immediately, and will complete with the</i></td></tr>
+<tr><th id="215">215</th><td><i class="doc">   * boost::asio::error::operation_aborted error.</i></td></tr>
+<tr><th id="216">216</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="217">217</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any. Note that, even if</i></td></tr>
+<tr><th id="218">218</th><td><i class="doc">   * the function indicates an error, the underlying descriptor is closed.</i></td></tr>
+<tr><th id="219">219</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="220">220</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor5closeERNS_6system10error_codeE" title='boost::asio::posix::basic_descriptor::close' data-ref="_ZN5boost4asio5posix16basic_descriptor5closeERNS_6system10error_codeE" >close</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col0 decl" id="4850ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="4850ec" >ec</dfn>)</td></tr>
+<tr><th id="221">221</th><td>  {</td></tr>
+<tr><th id="222">222</th><td>    <b>return</b> <b>this</b>-&gt;get_service().close(<b>this</b>-&gt;get_implementation(), <a class="local col0 ref" href="#4850ec" title='ec' data-ref="4850ec" >ec</a>);</td></tr>
+<tr><th id="223">223</th><td>  }</td></tr>
+<tr><th id="224">224</th><td></td></tr>
+<tr><th id="225">225</th><td>  <i class="doc">/// (Deprecated: Use native_handle().) Get the native descriptor</i></td></tr>
+<tr><th id="226">226</th><td><i class="doc">  /// representation.</i></td></tr>
+<tr><th id="227">227</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="228">228</th><td><i class="doc">   * This function may be used to obtain the underlying representation of the</i></td></tr>
+<tr><th id="229">229</th><td><i class="doc">   * descriptor. This is intended to allow access to native descriptor</i></td></tr>
+<tr><th id="230">230</th><td><i class="doc">   * functionality that is not otherwise provided.</i></td></tr>
+<tr><th id="231">231</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="232">232</th><td>  <a class="typedef" href="#boost::asio::posix::basic_descriptor::native_type" title='boost::asio::posix::basic_descriptor::native_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_type" >native_type</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor6nativeEv" title='boost::asio::posix::basic_descriptor::native' data-ref="_ZN5boost4asio5posix16basic_descriptor6nativeEv" >native</dfn>()</td></tr>
+<tr><th id="233">233</th><td>  {</td></tr>
+<tr><th id="234">234</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_handle(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="235">235</th><td>  }</td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td>  <i class="doc">/// Get the native descriptor representation.</i></td></tr>
+<tr><th id="238">238</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="239">239</th><td><i class="doc">   * This function may be used to obtain the underlying representation of the</i></td></tr>
+<tr><th id="240">240</th><td><i class="doc">   * descriptor. This is intended to allow access to native descriptor</i></td></tr>
+<tr><th id="241">241</th><td><i class="doc">   * functionality that is not otherwise provided.</i></td></tr>
+<tr><th id="242">242</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="243">243</th><td>  <a class="typedef" href="#boost::asio::posix::basic_descriptor::native_handle_type" title='boost::asio::posix::basic_descriptor::native_handle_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_handle_type" >native_handle_type</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor13native_handleEv" title='boost::asio::posix::basic_descriptor::native_handle' data-ref="_ZN5boost4asio5posix16basic_descriptor13native_handleEv" >native_handle</dfn>()</td></tr>
+<tr><th id="244">244</th><td>  {</td></tr>
+<tr><th id="245">245</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_handle(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="246">246</th><td>  }</td></tr>
+<tr><th id="247">247</th><td></td></tr>
+<tr><th id="248">248</th><td>  <i class="doc">/// Release ownership of the native descriptor implementation.</i></td></tr>
+<tr><th id="249">249</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="250">250</th><td><i class="doc">   * This function may be used to obtain the underlying representation of the</i></td></tr>
+<tr><th id="251">251</th><td><i class="doc">   * descriptor. After calling this function,<span class="command"> @c</span> <span class="arg">is_open()</span> returns false. The</i></td></tr>
+<tr><th id="252">252</th><td><i class="doc">   * caller is responsible for closing the descriptor.</i></td></tr>
+<tr><th id="253">253</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="254">254</th><td><i class="doc">   * All outstanding asynchronous read or write operations will finish</i></td></tr>
+<tr><th id="255">255</th><td><i class="doc">   * immediately, and the handlers for cancelled operations will be passed the</i></td></tr>
+<tr><th id="256">256</th><td><i class="doc">   * boost::asio::error::operation_aborted error.</i></td></tr>
+<tr><th id="257">257</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="258">258</th><td>  <a class="typedef" href="#boost::asio::posix::basic_descriptor::native_handle_type" title='boost::asio::posix::basic_descriptor::native_handle_type' data-type='typename DescriptorService::native_handle_type' data-ref="boost::asio::posix::basic_descriptor::native_handle_type" >native_handle_type</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor7releaseEv" title='boost::asio::posix::basic_descriptor::release' data-ref="_ZN5boost4asio5posix16basic_descriptor7releaseEv" >release</dfn>()</td></tr>
+<tr><th id="259">259</th><td>  {</td></tr>
+<tr><th id="260">260</th><td>    <b>return</b> <b>this</b>-&gt;get_service().release(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="261">261</th><td>  }</td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td>  <i class="doc">/// Cancel all asynchronous operations associated with the descriptor.</i></td></tr>
+<tr><th id="264">264</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="265">265</th><td><i class="doc">   * This function causes all outstanding asynchronous read or write operations</i></td></tr>
+<tr><th id="266">266</th><td><i class="doc">   * to finish immediately, and the handlers for cancelled operations will be</i></td></tr>
+<tr><th id="267">267</th><td><i class="doc">   * passed the boost::asio::error::operation_aborted error.</i></td></tr>
+<tr><th id="268">268</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="269">269</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="270">270</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="271">271</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor6cancelEv" title='boost::asio::posix::basic_descriptor::cancel' data-ref="_ZN5boost4asio5posix16basic_descriptor6cancelEv" >cancel</dfn>()</td></tr>
+<tr><th id="272">272</th><td>  {</td></tr>
+<tr><th id="273">273</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col1 decl" id="4851ec" title='ec' data-type='boost::system::error_code' data-ref="4851ec" >ec</dfn>;</td></tr>
+<tr><th id="274">274</th><td>    <b>this</b>-&gt;get_service().cancel(<b>this</b>-&gt;get_implementation(), <a class="local col1 ref" href="#4851ec" title='ec' data-ref="4851ec" >ec</a>);</td></tr>
+<tr><th id="275">275</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="../detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col1 ref" href="#4851ec" title='ec' data-ref="4851ec" >ec</a>, <q>"cancel"</q>);</td></tr>
+<tr><th id="276">276</th><td>  }</td></tr>
+<tr><th id="277">277</th><td></td></tr>
+<tr><th id="278">278</th><td>  <i class="doc">/// Cancel all asynchronous operations associated with the descriptor.</i></td></tr>
+<tr><th id="279">279</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="280">280</th><td><i class="doc">   * This function causes all outstanding asynchronous read or write operations</i></td></tr>
+<tr><th id="281">281</th><td><i class="doc">   * to finish immediately, and the handlers for cancelled operations will be</i></td></tr>
+<tr><th id="282">282</th><td><i class="doc">   * passed the boost::asio::error::operation_aborted error.</i></td></tr>
+<tr><th id="283">283</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="284">284</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="285">285</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="286">286</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor6cancelERNS_6system10error_codeE" title='boost::asio::posix::basic_descriptor::cancel' data-ref="_ZN5boost4asio5posix16basic_descriptor6cancelERNS_6system10error_codeE" >cancel</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col2 decl" id="4852ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="4852ec" >ec</dfn>)</td></tr>
+<tr><th id="287">287</th><td>  {</td></tr>
+<tr><th id="288">288</th><td>    <b>return</b> <b>this</b>-&gt;get_service().cancel(<b>this</b>-&gt;get_implementation(), <a class="local col2 ref" href="#4852ec" title='ec' data-ref="4852ec" >ec</a>);</td></tr>
+<tr><th id="289">289</th><td>  }</td></tr>
+<tr><th id="290">290</th><td></td></tr>
+<tr><th id="291">291</th><td>  <i class="doc">/// Perform an IO control command on the descriptor.</i></td></tr>
+<tr><th id="292">292</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="293">293</th><td><i class="doc">   * This function is used to execute an IO control command on the descriptor.</i></td></tr>
+<tr><th id="294">294</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="295">295</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">command</span> The IO control command to be performed on the descriptor.</i></td></tr>
+<tr><th id="296">296</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="297">297</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="298">298</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="299">299</th><td><i class="doc">   * <span class="command">@sa</span> IoControlCommand<span class="command"> @n</span></i></td></tr>
+<tr><th id="300">300</th><td><i class="doc">   * boost::asio::posix::descriptor_base::bytes_readable<span class="command"> @n</span></i></td></tr>
+<tr><th id="301">301</th><td><i class="doc">   * boost::asio::posix::descriptor_base::non_blocking_io</i></td></tr>
+<tr><th id="302">302</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="303">303</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="304">304</th><td><i class="doc">   * Getting the number of bytes ready to read:</i></td></tr>
+<tr><th id="305">305</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="306">306</th><td><i class="doc">   *<span class="verb"> boost::asio::posix::stream_descriptor descriptor(io_service);</span></i></td></tr>
+<tr><th id="307">307</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="308">308</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::posix::stream_descriptor::bytes_readable command;</span></i></td></tr>
+<tr><th id="309">309</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> descriptor.io_control(command);</span></i></td></tr>
+<tr><th id="310">310</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> std::size_t bytes_readable = command.get();</span></i></td></tr>
+<tr><th id="311">311</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="312">312</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="313">313</th><td>  <b>template</b> &lt;<b>typename</b> IoControlCommand&gt;</td></tr>
+<tr><th id="314">314</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor10io_controlERT_" title='boost::asio::posix::basic_descriptor::io_control' data-ref="_ZN5boost4asio5posix16basic_descriptor10io_controlERT_" >io_control</dfn>(IoControlCommand&amp; <dfn class="local col3 decl" id="4853command" title='command' data-type='IoControlCommand &amp;' data-ref="4853command" >command</dfn>)</td></tr>
+<tr><th id="315">315</th><td>  {</td></tr>
+<tr><th id="316">316</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col4 decl" id="4854ec" title='ec' data-type='boost::system::error_code' data-ref="4854ec" >ec</dfn>;</td></tr>
+<tr><th id="317">317</th><td>    <b>this</b>-&gt;get_service().io_control(<b>this</b>-&gt;get_implementation(), <a class="local col3 ref" href="#4853command" title='command' data-ref="4853command" >command</a>, <a class="local col4 ref" href="#4854ec" title='ec' data-ref="4854ec" >ec</a>);</td></tr>
+<tr><th id="318">318</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="../detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col4 ref" href="#4854ec" title='ec' data-ref="4854ec" >ec</a>, <q>"io_control"</q>);</td></tr>
+<tr><th id="319">319</th><td>  }</td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td>  <i class="doc">/// Perform an IO control command on the descriptor.</i></td></tr>
+<tr><th id="322">322</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="323">323</th><td><i class="doc">   * This function is used to execute an IO control command on the descriptor.</i></td></tr>
+<tr><th id="324">324</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="325">325</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">command</span> The IO control command to be performed on the descriptor.</i></td></tr>
+<tr><th id="326">326</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="327">327</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="328">328</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="329">329</th><td><i class="doc">   * <span class="command">@sa</span> IoControlCommand<span class="command"> @n</span></i></td></tr>
+<tr><th id="330">330</th><td><i class="doc">   * boost::asio::posix::descriptor_base::bytes_readable<span class="command"> @n</span></i></td></tr>
+<tr><th id="331">331</th><td><i class="doc">   * boost::asio::posix::descriptor_base::non_blocking_io</i></td></tr>
+<tr><th id="332">332</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="333">333</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="334">334</th><td><i class="doc">   * Getting the number of bytes ready to read:</i></td></tr>
+<tr><th id="335">335</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="336">336</th><td><i class="doc">   *<span class="verb"> boost::asio::posix::stream_descriptor descriptor(io_service);</span></i></td></tr>
+<tr><th id="337">337</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="338">338</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::posix::stream_descriptor::bytes_readable command;</span></i></td></tr>
+<tr><th id="339">339</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="340">340</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> descriptor.io_control(command, ec);</span></i></td></tr>
+<tr><th id="341">341</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="342">342</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="343">343</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="344">344</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="345">345</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> std::size_t bytes_readable = command.get();</span></i></td></tr>
+<tr><th id="346">346</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="347">347</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="348">348</th><td>  <b>template</b> &lt;<b>typename</b> IoControlCommand&gt;</td></tr>
+<tr><th id="349">349</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor10io_controlERT_RNS_6system10error_codeE" title='boost::asio::posix::basic_descriptor::io_control' data-ref="_ZN5boost4asio5posix16basic_descriptor10io_controlERT_RNS_6system10error_codeE" >io_control</dfn>(IoControlCommand&amp; <dfn class="local col5 decl" id="4855command" title='command' data-type='IoControlCommand &amp;' data-ref="4855command" >command</dfn>,</td></tr>
+<tr><th id="350">350</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col6 decl" id="4856ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="4856ec" >ec</dfn>)</td></tr>
+<tr><th id="351">351</th><td>  {</td></tr>
+<tr><th id="352">352</th><td>    <b>return</b> <b>this</b>-&gt;get_service().io_control(</td></tr>
+<tr><th id="353">353</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col5 ref" href="#4855command" title='command' data-ref="4855command" >command</a>, <a class="local col6 ref" href="#4856ec" title='ec' data-ref="4856ec" >ec</a>);</td></tr>
+<tr><th id="354">354</th><td>  }</td></tr>
+<tr><th id="355">355</th><td></td></tr>
+<tr><th id="356">356</th><td>  <i class="doc">/// Gets the non-blocking mode of the descriptor.</i></td></tr>
+<tr><th id="357">357</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="358">358</th><td><i class="doc">   * <span class="command">@returns</span><span class="command"> @c</span> <span class="arg">true</span> if the descriptor's synchronous operations will fail with</i></td></tr>
+<tr><th id="359">359</th><td><i class="doc">   * boost::asio::error::would_block if they are unable to perform the requested</i></td></tr>
+<tr><th id="360">360</th><td><i class="doc">   * operation immediately. If<span class="command"> @c</span> <span class="arg">false,</span> synchronous operations will block</i></td></tr>
+<tr><th id="361">361</th><td><i class="doc">   * until complete.</i></td></tr>
+<tr><th id="362">362</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="363">363</th><td><i class="doc">   * <span class="command">@note</span> The non-blocking mode has no effect on the behaviour of asynchronous</i></td></tr>
+<tr><th id="364">364</th><td><i class="doc">   * operations. Asynchronous operations will never fail with the error</i></td></tr>
+<tr><th id="365">365</th><td><i class="doc">   * boost::asio::error::would_block.</i></td></tr>
+<tr><th id="366">366</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="367">367</th><td>  <em>bool</em> <dfn class="decl def" id="_ZNK5boost4asio5posix16basic_descriptor12non_blockingEv" title='boost::asio::posix::basic_descriptor::non_blocking' data-ref="_ZNK5boost4asio5posix16basic_descriptor12non_blockingEv" >non_blocking</dfn>() <em>const</em></td></tr>
+<tr><th id="368">368</th><td>  {</td></tr>
+<tr><th id="369">369</th><td>    <b>return</b> <b>this</b>-&gt;get_service().non_blocking(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="370">370</th><td>  }</td></tr>
+<tr><th id="371">371</th><td></td></tr>
+<tr><th id="372">372</th><td>  <i class="doc">/// Sets the non-blocking mode of the descriptor.</i></td></tr>
+<tr><th id="373">373</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="374">374</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the descriptor's synchronous operations will fail</i></td></tr>
+<tr><th id="375">375</th><td><i class="doc">   * with boost::asio::error::would_block if they are unable to perform the</i></td></tr>
+<tr><th id="376">376</th><td><i class="doc">   * requested operation immediately. If<span class="command"> @c</span> <span class="arg">false,</span> synchronous operations will</i></td></tr>
+<tr><th id="377">377</th><td><i class="doc">   * block until complete.</i></td></tr>
+<tr><th id="378">378</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="379">379</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="380">380</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="381">381</th><td><i class="doc">   * <span class="command">@note</span> The non-blocking mode has no effect on the behaviour of asynchronous</i></td></tr>
+<tr><th id="382">382</th><td><i class="doc">   * operations. Asynchronous operations will never fail with the error</i></td></tr>
+<tr><th id="383">383</th><td><i class="doc">   * boost::asio::error::would_block.</i></td></tr>
+<tr><th id="384">384</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="385">385</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor12non_blockingEb" title='boost::asio::posix::basic_descriptor::non_blocking' data-ref="_ZN5boost4asio5posix16basic_descriptor12non_blockingEb" >non_blocking</dfn>(<em>bool</em> <dfn class="local col7 decl" id="4857mode" title='mode' data-type='bool' data-ref="4857mode" >mode</dfn>)</td></tr>
+<tr><th id="386">386</th><td>  {</td></tr>
+<tr><th id="387">387</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col8 decl" id="4858ec" title='ec' data-type='boost::system::error_code' data-ref="4858ec" >ec</dfn>;</td></tr>
+<tr><th id="388">388</th><td>    <b>this</b>-&gt;get_service().non_blocking(<b>this</b>-&gt;get_implementation(), <a class="local col7 ref" href="#4857mode" title='mode' data-ref="4857mode" >mode</a>, <a class="local col8 ref" href="#4858ec" title='ec' data-ref="4858ec" >ec</a>);</td></tr>
+<tr><th id="389">389</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="../detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col8 ref" href="#4858ec" title='ec' data-ref="4858ec" >ec</a>, <q>"non_blocking"</q>);</td></tr>
+<tr><th id="390">390</th><td>  }</td></tr>
+<tr><th id="391">391</th><td></td></tr>
+<tr><th id="392">392</th><td>  <i class="doc">/// Sets the non-blocking mode of the descriptor.</i></td></tr>
+<tr><th id="393">393</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="394">394</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the descriptor's synchronous operations will fail</i></td></tr>
+<tr><th id="395">395</th><td><i class="doc">   * with boost::asio::error::would_block if they are unable to perform the</i></td></tr>
+<tr><th id="396">396</th><td><i class="doc">   * requested operation immediately. If<span class="command"> @c</span> <span class="arg">false,</span> synchronous operations will</i></td></tr>
+<tr><th id="397">397</th><td><i class="doc">   * block until complete.</i></td></tr>
+<tr><th id="398">398</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="399">399</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="400">400</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="401">401</th><td><i class="doc">   * <span class="command">@note</span> The non-blocking mode has no effect on the behaviour of asynchronous</i></td></tr>
+<tr><th id="402">402</th><td><i class="doc">   * operations. Asynchronous operations will never fail with the error</i></td></tr>
+<tr><th id="403">403</th><td><i class="doc">   * boost::asio::error::would_block.</i></td></tr>
+<tr><th id="404">404</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="405">405</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor12non_blockingEbRNS_6system10error_codeE" title='boost::asio::posix::basic_descriptor::non_blocking' data-ref="_ZN5boost4asio5posix16basic_descriptor12non_blockingEbRNS_6system10error_codeE" >non_blocking</dfn>(</td></tr>
+<tr><th id="406">406</th><td>      <em>bool</em> <dfn class="local col9 decl" id="4859mode" title='mode' data-type='bool' data-ref="4859mode" >mode</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col0 decl" id="4860ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="4860ec" >ec</dfn>)</td></tr>
+<tr><th id="407">407</th><td>  {</td></tr>
+<tr><th id="408">408</th><td>    <b>return</b> <b>this</b>-&gt;get_service().non_blocking(</td></tr>
+<tr><th id="409">409</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col9 ref" href="#4859mode" title='mode' data-ref="4859mode" >mode</a>, <a class="local col0 ref" href="#4860ec" title='ec' data-ref="4860ec" >ec</a>);</td></tr>
+<tr><th id="410">410</th><td>  }</td></tr>
+<tr><th id="411">411</th><td></td></tr>
+<tr><th id="412">412</th><td>  <i class="doc">/// Gets the non-blocking mode of the native descriptor implementation.</i></td></tr>
+<tr><th id="413">413</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="414">414</th><td><i class="doc">   * This function is used to retrieve the non-blocking mode of the underlying</i></td></tr>
+<tr><th id="415">415</th><td><i class="doc">   * native descriptor. This mode has no effect on the behaviour of the</i></td></tr>
+<tr><th id="416">416</th><td><i class="doc">   * descriptor object's synchronous operations.</i></td></tr>
+<tr><th id="417">417</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="418">418</th><td><i class="doc">   * <span class="command">@returns</span><span class="command"> @c</span> <span class="arg">true</span> if the underlying descriptor is in non-blocking mode and</i></td></tr>
+<tr><th id="419">419</th><td><i class="doc">   * direct system calls may fail with boost::asio::error::would_block (or the</i></td></tr>
+<tr><th id="420">420</th><td><i class="doc">   * equivalent system error).</i></td></tr>
+<tr><th id="421">421</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="422">422</th><td><i class="doc">   * <span class="command">@note</span> The current non-blocking mode is cached by the descriptor object.</i></td></tr>
+<tr><th id="423">423</th><td><i class="doc">   * Consequently, the return value may be incorrect if the non-blocking mode</i></td></tr>
+<tr><th id="424">424</th><td><i class="doc">   * was set directly on the native descriptor.</i></td></tr>
+<tr><th id="425">425</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="426">426</th><td>  <em>bool</em> <dfn class="decl def" id="_ZNK5boost4asio5posix16basic_descriptor19native_non_blockingEv" title='boost::asio::posix::basic_descriptor::native_non_blocking' data-ref="_ZNK5boost4asio5posix16basic_descriptor19native_non_blockingEv" >native_non_blocking</dfn>() <em>const</em></td></tr>
+<tr><th id="427">427</th><td>  {</td></tr>
+<tr><th id="428">428</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_non_blocking(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="429">429</th><td>  }</td></tr>
+<tr><th id="430">430</th><td></td></tr>
+<tr><th id="431">431</th><td>  <i class="doc">/// Sets the non-blocking mode of the native descriptor implementation.</i></td></tr>
+<tr><th id="432">432</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="433">433</th><td><i class="doc">   * This function is used to modify the non-blocking mode of the underlying</i></td></tr>
+<tr><th id="434">434</th><td><i class="doc">   * native descriptor. It has no effect on the behaviour of the descriptor</i></td></tr>
+<tr><th id="435">435</th><td><i class="doc">   * object's synchronous operations.</i></td></tr>
+<tr><th id="436">436</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="437">437</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the underlying descriptor is put into non-blocking</i></td></tr>
+<tr><th id="438">438</th><td><i class="doc">   * mode and direct system calls may fail with boost::asio::error::would_block</i></td></tr>
+<tr><th id="439">439</th><td><i class="doc">   * (or the equivalent system error).</i></td></tr>
+<tr><th id="440">440</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="441">441</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure. If the<span class="command"> @c</span> <span class="arg">mode</span> is</i></td></tr>
+<tr><th id="442">442</th><td><i class="doc">   *<span class="command"> @c</span> <span class="arg">false,</span> but the current value of<span class="command"> @c</span> <span class="arg">non_blocking()</span> is<span class="command"> @c</span> <span class="arg">true,</span> this</i></td></tr>
+<tr><th id="443">443</th><td><i class="doc">   * function fails with boost::asio::error::invalid_argument, as the</i></td></tr>
+<tr><th id="444">444</th><td><i class="doc">   * combination does not make sense.</i></td></tr>
+<tr><th id="445">445</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="446">446</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor19native_non_blockingEb" title='boost::asio::posix::basic_descriptor::native_non_blocking' data-ref="_ZN5boost4asio5posix16basic_descriptor19native_non_blockingEb" >native_non_blocking</dfn>(<em>bool</em> <dfn class="local col1 decl" id="4861mode" title='mode' data-type='bool' data-ref="4861mode" >mode</dfn>)</td></tr>
+<tr><th id="447">447</th><td>  {</td></tr>
+<tr><th id="448">448</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col2 decl" id="4862ec" title='ec' data-type='boost::system::error_code' data-ref="4862ec" >ec</dfn>;</td></tr>
+<tr><th id="449">449</th><td>    <b>this</b>-&gt;get_service().native_non_blocking(</td></tr>
+<tr><th id="450">450</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col1 ref" href="#4861mode" title='mode' data-ref="4861mode" >mode</a>, <a class="local col2 ref" href="#4862ec" title='ec' data-ref="4862ec" >ec</a>);</td></tr>
+<tr><th id="451">451</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="../detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col2 ref" href="#4862ec" title='ec' data-ref="4862ec" >ec</a>, <q>"native_non_blocking"</q>);</td></tr>
+<tr><th id="452">452</th><td>  }</td></tr>
+<tr><th id="453">453</th><td></td></tr>
+<tr><th id="454">454</th><td>  <i class="doc">/// Sets the non-blocking mode of the native descriptor implementation.</i></td></tr>
+<tr><th id="455">455</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="456">456</th><td><i class="doc">   * This function is used to modify the non-blocking mode of the underlying</i></td></tr>
+<tr><th id="457">457</th><td><i class="doc">   * native descriptor. It has no effect on the behaviour of the descriptor</i></td></tr>
+<tr><th id="458">458</th><td><i class="doc">   * object's synchronous operations.</i></td></tr>
+<tr><th id="459">459</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="460">460</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the underlying descriptor is put into non-blocking</i></td></tr>
+<tr><th id="461">461</th><td><i class="doc">   * mode and direct system calls may fail with boost::asio::error::would_block</i></td></tr>
+<tr><th id="462">462</th><td><i class="doc">   * (or the equivalent system error).</i></td></tr>
+<tr><th id="463">463</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="464">464</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any. If the<span class="command"> @c</span> <span class="arg">mode</span> is</i></td></tr>
+<tr><th id="465">465</th><td><i class="doc">   *<span class="command"> @c</span> <span class="arg">false,</span> but the current value of<span class="command"> @c</span> <span class="arg">non_blocking()</span> is<span class="command"> @c</span> <span class="arg">true,</span> this</i></td></tr>
+<tr><th id="466">466</th><td><i class="doc">   * function fails with boost::asio::error::invalid_argument, as the</i></td></tr>
+<tr><th id="467">467</th><td><i class="doc">   * combination does not make sense.</i></td></tr>
+<tr><th id="468">468</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="469">469</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptor19native_non_blockingEbRNS_6system10error_codeE" title='boost::asio::posix::basic_descriptor::native_non_blocking' data-ref="_ZN5boost4asio5posix16basic_descriptor19native_non_blockingEbRNS_6system10error_codeE" >native_non_blocking</dfn>(</td></tr>
+<tr><th id="470">470</th><td>      <em>bool</em> <dfn class="local col3 decl" id="4863mode" title='mode' data-type='bool' data-ref="4863mode" >mode</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col4 decl" id="4864ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="4864ec" >ec</dfn>)</td></tr>
+<tr><th id="471">471</th><td>  {</td></tr>
+<tr><th id="472">472</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_non_blocking(</td></tr>
+<tr><th id="473">473</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col3 ref" href="#4863mode" title='mode' data-ref="4863mode" >mode</a>, <a class="local col4 ref" href="#4864ec" title='ec' data-ref="4864ec" >ec</a>);</td></tr>
+<tr><th id="474">474</th><td>  }</td></tr>
+<tr><th id="475">475</th><td></td></tr>
+<tr><th id="476">476</th><td><b>protected</b>:</td></tr>
+<tr><th id="477">477</th><td>  <i class="doc">/// Protected destructor to prevent deletion through this type.</i></td></tr>
+<tr><th id="478">478</th><td>  <dfn class="decl def" id="_ZN5boost4asio5posix16basic_descriptorD1Ev" title='boost::asio::posix::basic_descriptor::~basic_descriptor&lt;DescriptorService&gt;' data-ref="_ZN5boost4asio5posix16basic_descriptorD1Ev" >~basic_descriptor</dfn>()</td></tr>
+<tr><th id="479">479</th><td>  {</td></tr>
+<tr><th id="480">480</th><td>  }</td></tr>
+<tr><th id="481">481</th><td>};</td></tr>
+<tr><th id="482">482</th><td></td></tr>
+<tr><th id="483">483</th><td>} <i>// namespace posix</i></td></tr>
+<tr><th id="484">484</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="485">485</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="486">486</th><td></td></tr>
+<tr><th id="487">487</th><td><u>#include <a href="../detail/pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="488">488</th><td></td></tr>
+<tr><th id="489">489</th><td><u>#<span data-ppcond="20">endif</span> // defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)</u></td></tr>
+<tr><th id="490">490</th><td>       <i>//   || defined(GENERATING_DOCUMENTATION)</i></td></tr>
+<tr><th id="491">491</th><td></td></tr>
+<tr><th id="492">492</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_POSIX_BASIC_DESCRIPTOR_HPP</u></td></tr>
+<tr><th id="493">493</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,40 @@
+<dec f='TrinityCore3.3.5/dep/recastnavigation/Recast/Include/Recast.h' l='859' type='void rcFilterLowHangingWalkableObstacles(rcContext * ctx, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Recast/Include/Recast.h' l='853'>/// Marks non-walkable spans as walkable if their maximum is within @p walkableClimp of a walkable neihbor. 
+///  @ingroup recast
+///  @param[in,out]	ctx				The build context to use during the operation.
+///  @param[in]		walkableClimb	Maximum ledge height that is considered to still be traversable. 
+///  								[Limit: &gt;=0] [Units: vx]
+///  @param[in,out]	solid			A fully built heightfield.  (All spans have been added.)</doc>
+<def f='TrinityCore3.3.5/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='36' type='void rcFilterLowHangingWalkableObstacles(rcContext * ctx, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='25'>/// @par
+///
+/// Allows the formation of walkable regions that will flow over low lying 
+/// objects such as curbs, and up structures such as stairways. 
+/// 
+/// Two neighboring spans are walkable if: &lt;tt&gt;rcAbs(currentSpan.smax - neighborSpan.smax) &lt; waklableClimb&lt;/tt&gt;
+/// 
+/// @warning Will override the effect of #rcFilterLedgeSpans.  So if both filters are used, call
+/// #rcFilterLedgeSpans after calling this filter. 
+///
+/// @see rcHeightfield, rcConfig</doc>
+<use f='TrinityCore3.3.5/src/tools/mmaps_generator/MapBuilder.cpp' l='628' u='c' c='_ZN4MMAP10MapBuilder16buildMoveMapTileEjjjRNS_8MeshDataEPfS3_P9dtNavMesh'/>
+<dec f='TrinityCore6.x/dep/recastnavigation/Recast/Include/Recast.h' l='859' type='void rcFilterLowHangingWalkableObstacles(rcContext * ctx, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore6.x/dep/recastnavigation/Recast/Include/Recast.h' l='853'>/// Marks non-walkable spans as walkable if their maximum is within @p walkableClimp of a walkable neihbor. 
+///  @ingroup recast
+///  @param[in,out]	ctx				The build context to use during the operation.
+///  @param[in]		walkableClimb	Maximum ledge height that is considered to still be traversable. 
+///  								[Limit: &gt;=0] [Units: vx]
+///  @param[in,out]	solid			A fully built heightfield.  (All spans have been added.)</doc>
+<def f='TrinityCore6.x/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='36' type='void rcFilterLowHangingWalkableObstacles(rcContext * ctx, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore6.x/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='25'>/// @par
+///
+/// Allows the formation of walkable regions that will flow over low lying 
+/// objects such as curbs, and up structures such as stairways. 
+/// 
+/// Two neighboring spans are walkable if: &lt;tt&gt;rcAbs(currentSpan.smax - neighborSpan.smax) &lt; waklableClimb&lt;/tt&gt;
+/// 
+/// @warning Will override the effect of #rcFilterLedgeSpans.  So if both filters are used, call
+/// #rcFilterLedgeSpans after calling this filter. 
+///
+/// @see rcHeightfield, rcConfig</doc>
+<use f='TrinityCore6.x/src/tools/mmaps_generator/MapBuilder.cpp' l='625' u='c' c='_ZN4MMAP10MapBuilder16buildMoveMapTileEjjjRNS_8MeshDataEPfS3_P9dtNavMesh'/>

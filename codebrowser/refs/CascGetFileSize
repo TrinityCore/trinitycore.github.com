@@ -1,0 +1,25 @@
+<dec f='TrinityCore6.x/dep/CascLib/src/CascLib.h' l='176' type='DWORD CascGetFileSize(HANDLE hFile, PDWORD pdwFileSizeHigh)'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascOpenStorage.cpp' l='738' u='c' c='_ZL20LoadRootFileToMemoryPvPj'/>
+<def f='TrinityCore6.x/dep/CascLib/src/CascReadFile.cpp' l='367' type='DWORD CascGetFileSize(HANDLE hFile, PDWORD pdwFileSizeHigh)'/>
+<doc f='TrinityCore6.x/dep/CascLib/src/CascReadFile.cpp' l='347'>//-----------------------------------------------------------------------------
+// Public functions
+
+//
+// THE FILE SIZE PROBLEM
+//
+// There are members called &quot;FileSize&quot; in many CASC-related structure
+// For various files, these variables have different meaning.
+//
+// Storage      FileName  FileSize     FrameSum    HdrArea     IdxEntry    EncEntry    RootEntry
+// -----------  --------  ----------   --------    --------    --------    --------    ---------
+// HotS(29049)  ENCODING  0x0024BA45 - 0x0024b98a  0x0024BA45  0x0024BA45  n/a         n/a
+// HotS(29049)  ROOT      0x00193340 - 0x00193340  0x0010db65  0x0010db65  0x00193340  n/a
+// HotS(29049)  (other)   0x00001080 - 0x00001080  0x000008eb  0x000008eb  0x00001080  0x00001080
+//
+// WoW(18888)   ENCODING  0x030d487b - 0x030dee79  0x030d487b  0x030d487b  n/a         n/a
+// WoW(18888)   ROOT      0x016a9800 - n/a         0x0131313d  0x0131313d  0x016a9800  n/a
+// WoW(18888)   (other)   0x000007d0 - 0x000007d0  0x00000397  0x00000397  0x000007d0  n/a
+//</doc>
+<use f='TrinityCore6.x/dep/CascLib/src/CascRootFile_Diablo3.cpp' l='662' u='c' c='_ZL16LoadFileToMemoryP13_TCascStoragePhPj'/>
+<use f='TrinityCore6.x/src/tools/map_extractor/loadlib.cpp' l='47' u='c' c='_ZN11ChunkedFile8loadFileEPvRKSsb'/>
+<use f='TrinityCore6.x/src/tools/vmap4_extractor/mpqfile.cpp' l='21' u='c' c='_ZN7MPQFileC1EPvPKcb'/>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+<title>DetourNavMeshBuilder.h [TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMeshBuilder.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMeshBuilder.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>recastnavigation</a>/<a href='..'>Detour</a>/<a href='./'>Include</a>/DetourNavMeshBuilder.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// Copyright (c) 2009-2010 Mikko Mononen memon@inside.org</i></td></tr>
+<tr><th id="3">3</th><td><i>//</i></td></tr>
+<tr><th id="4">4</th><td><i>// This software is provided 'as-is', without any express or implied</i></td></tr>
+<tr><th id="5">5</th><td><i>// warranty.  In no event will the authors be held liable for any damages</i></td></tr>
+<tr><th id="6">6</th><td><i>// arising from the use of this software.</i></td></tr>
+<tr><th id="7">7</th><td><i>// Permission is granted to anyone to use this software for any purpose,</i></td></tr>
+<tr><th id="8">8</th><td><i>// including commercial applications, and to alter it and redistribute it</i></td></tr>
+<tr><th id="9">9</th><td><i>// freely, subject to the following restrictions:</i></td></tr>
+<tr><th id="10">10</th><td><i>// 1. The origin of this software must not be misrepresented; you must not</i></td></tr>
+<tr><th id="11">11</th><td><i>//    claim that you wrote the original software. If you use this software</i></td></tr>
+<tr><th id="12">12</th><td><i>//    in a product, an acknowledgment in the product documentation would be</i></td></tr>
+<tr><th id="13">13</th><td><i>//    appreciated but is not required.</i></td></tr>
+<tr><th id="14">14</th><td><i>// 2. Altered source versions must be plainly marked as such, and must not be</i></td></tr>
+<tr><th id="15">15</th><td><i>//    misrepresented as being the original software.</i></td></tr>
+<tr><th id="16">16</th><td><i>// 3. This notice may not be removed or altered from any source distribution.</i></td></tr>
+<tr><th id="17">17</th><td><i>//</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/DETOURNAVMESHBUILDER_H">DETOURNAVMESHBUILDER_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/DETOURNAVMESHBUILDER_H" data-ref="_M/DETOURNAVMESHBUILDER_H">DETOURNAVMESHBUILDER_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="DetourAlloc.h.html">"DetourAlloc.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><i class="doc">/// Represents the source data used to build an navigation mesh tile.</i></td></tr>
+<tr><th id="25">25</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="26">26</th><td><b>struct</b> <dfn class="type def" id="dtNavMeshCreateParams" title='dtNavMeshCreateParams' data-ref="dtNavMeshCreateParams" >dtNavMeshCreateParams</dfn></td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>	<i class="doc">/// <span class="command">@name</span> <span class="verb">Polygon Mesh Attributes</span></i></td></tr>
+<tr><th id="30">30</th><td><i class="doc">	/// Used to create the base navigation graph.</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc">	/// See #rcPolyMesh for details related to these attributes.</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>	<em>const</em> <em>unsigned</em> <em>short</em>* <dfn class="decl" id="dtNavMeshCreateParams::verts" title='dtNavMeshCreateParams::verts' data-ref="dtNavMeshCreateParams::verts" >verts</dfn>;			<i class="doc">///&lt; The polygon mesh vertices. [(x, y, z) * #vertCount] [Unit: vx]</i></td></tr>
+<tr><th id="35">35</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::vertCount" title='dtNavMeshCreateParams::vertCount' data-ref="dtNavMeshCreateParams::vertCount" >vertCount</dfn>;							<i class="doc">///&lt; The number vertices in the polygon mesh. [Limit: &gt;= 3]</i></td></tr>
+<tr><th id="36">36</th><td>	<em>const</em> <em>unsigned</em> <em>short</em>* <dfn class="decl" id="dtNavMeshCreateParams::polys" title='dtNavMeshCreateParams::polys' data-ref="dtNavMeshCreateParams::polys" >polys</dfn>;			<i class="doc">///&lt; The polygon data. [Size: #polyCount * 2 * #nvp]</i></td></tr>
+<tr><th id="37">37</th><td>	<em>const</em> <em>unsigned</em> <em>short</em>* <dfn class="decl" id="dtNavMeshCreateParams::polyFlags" title='dtNavMeshCreateParams::polyFlags' data-ref="dtNavMeshCreateParams::polyFlags" >polyFlags</dfn>;		<i class="doc">///&lt; The user defined flags assigned to each polygon. [Size: #polyCount]</i></td></tr>
+<tr><th id="38">38</th><td>	<em>const</em> <em>unsigned</em> <em>char</em>* <dfn class="decl" id="dtNavMeshCreateParams::polyAreas" title='dtNavMeshCreateParams::polyAreas' data-ref="dtNavMeshCreateParams::polyAreas" >polyAreas</dfn>;			<i class="doc">///&lt; The user defined area ids assigned to each polygon. [Size: #polyCount]</i></td></tr>
+<tr><th id="39">39</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::polyCount" title='dtNavMeshCreateParams::polyCount' data-ref="dtNavMeshCreateParams::polyCount" >polyCount</dfn>;							<i class="doc">///&lt; Number of polygons in the mesh. [Limit: &gt;= 1]</i></td></tr>
+<tr><th id="40">40</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::nvp" title='dtNavMeshCreateParams::nvp' data-ref="dtNavMeshCreateParams::nvp" >nvp</dfn>;								<i class="doc">///&lt; Number maximum number of vertices per polygon. [Limit: &gt;= 3]</i></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">Height Detail Attributes (Optional)</span></i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">	/// See #rcPolyMeshDetail for details related to these attributes.</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>	<em>const</em> <em>unsigned</em> <em>int</em>* <dfn class="decl" id="dtNavMeshCreateParams::detailMeshes" title='dtNavMeshCreateParams::detailMeshes' data-ref="dtNavMeshCreateParams::detailMeshes" >detailMeshes</dfn>;		<i class="doc">///&lt; The height detail sub-mesh data. [Size: 4 * #polyCount]</i></td></tr>
+<tr><th id="48">48</th><td>	<em>const</em> <em>float</em>* <dfn class="decl" id="dtNavMeshCreateParams::detailVerts" title='dtNavMeshCreateParams::detailVerts' data-ref="dtNavMeshCreateParams::detailVerts" >detailVerts</dfn>;				<i class="doc">///&lt; The detail mesh vertices. [Size: 3 * #detailVertsCount] [Unit: wu]</i></td></tr>
+<tr><th id="49">49</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::detailVertsCount" title='dtNavMeshCreateParams::detailVertsCount' data-ref="dtNavMeshCreateParams::detailVertsCount" >detailVertsCount</dfn>;					<i class="doc">///&lt; The number of vertices in the detail mesh.</i></td></tr>
+<tr><th id="50">50</th><td>	<em>const</em> <em>unsigned</em> <em>char</em>* <dfn class="decl" id="dtNavMeshCreateParams::detailTris" title='dtNavMeshCreateParams::detailTris' data-ref="dtNavMeshCreateParams::detailTris" >detailTris</dfn>;		<i class="doc">///&lt; The detail mesh triangles. [Size: 4 * #detailTriCount]</i></td></tr>
+<tr><th id="51">51</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::detailTriCount" title='dtNavMeshCreateParams::detailTriCount' data-ref="dtNavMeshCreateParams::detailTriCount" >detailTriCount</dfn>;						<i class="doc">///&lt; The number of triangles in the detail mesh.</i></td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="54">54</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">Off-Mesh Connections Attributes (Optional)</span></i></td></tr>
+<tr><th id="55">55</th><td><i class="doc">	/// Used to define a custom point-to-point edge within the navigation graph, an </i></td></tr>
+<tr><th id="56">56</th><td><i class="doc">	/// off-mesh connection is a user defined traversable connection made up to two vertices, </i></td></tr>
+<tr><th id="57">57</th><td><i class="doc">	/// at least one of which resides within a navigation mesh polygon.</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc"></i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">	/// Off-mesh connection vertices. [(ax, ay, az, bx, by, bz) * #offMeshConCount] [Unit: wu]</i></td></tr>
+<tr><th id="61">61</th><td>	<em>const</em> <em>float</em>* <dfn class="decl" id="dtNavMeshCreateParams::offMeshConVerts" title='dtNavMeshCreateParams::offMeshConVerts' data-ref="dtNavMeshCreateParams::offMeshConVerts" >offMeshConVerts</dfn>;</td></tr>
+<tr><th id="62">62</th><td>	<i class="doc">/// Off-mesh connection radii. [Size: #offMeshConCount] [Unit: wu]</i></td></tr>
+<tr><th id="63">63</th><td>	<em>const</em> <em>float</em>* <dfn class="decl" id="dtNavMeshCreateParams::offMeshConRad" title='dtNavMeshCreateParams::offMeshConRad' data-ref="dtNavMeshCreateParams::offMeshConRad" >offMeshConRad</dfn>;</td></tr>
+<tr><th id="64">64</th><td>	<i class="doc">/// User defined flags assigned to the off-mesh connections. [Size: #offMeshConCount]</i></td></tr>
+<tr><th id="65">65</th><td>	<em>const</em> <em>unsigned</em> <em>short</em>* <dfn class="decl" id="dtNavMeshCreateParams::offMeshConFlags" title='dtNavMeshCreateParams::offMeshConFlags' data-ref="dtNavMeshCreateParams::offMeshConFlags" >offMeshConFlags</dfn>;</td></tr>
+<tr><th id="66">66</th><td>	<i class="doc">/// User defined area ids assigned to the off-mesh connections. [Size: #offMeshConCount]</i></td></tr>
+<tr><th id="67">67</th><td>	<em>const</em> <em>unsigned</em> <em>char</em>* <dfn class="decl" id="dtNavMeshCreateParams::offMeshConAreas" title='dtNavMeshCreateParams::offMeshConAreas' data-ref="dtNavMeshCreateParams::offMeshConAreas" >offMeshConAreas</dfn>;</td></tr>
+<tr><th id="68">68</th><td>	<i class="doc">/// The permitted travel direction of the off-mesh connections. [Size: #offMeshConCount]</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">	///</i></td></tr>
+<tr><th id="70">70</th><td><i class="doc">	/// 0 = Travel only from endpoint A to endpoint B.<span class="tag">&lt;br/</span>&gt;</i></td></tr>
+<tr><th id="71">71</th><td><i class="doc">	/// #DT_OFFMESH_CON_BIDIR = Bidirectional travel.</i></td></tr>
+<tr><th id="72">72</th><td>	<em>const</em> <em>unsigned</em> <em>char</em>* <dfn class="decl" id="dtNavMeshCreateParams::offMeshConDir" title='dtNavMeshCreateParams::offMeshConDir' data-ref="dtNavMeshCreateParams::offMeshConDir" >offMeshConDir</dfn>;	</td></tr>
+<tr><th id="73">73</th><td>	<i class="doc">/// The user defined ids of the off-mesh connection. [Size: #offMeshConCount]</i></td></tr>
+<tr><th id="74">74</th><td>	<em>const</em> <em>unsigned</em> <em>int</em>* <dfn class="decl" id="dtNavMeshCreateParams::offMeshConUserID" title='dtNavMeshCreateParams::offMeshConUserID' data-ref="dtNavMeshCreateParams::offMeshConUserID" >offMeshConUserID</dfn>;</td></tr>
+<tr><th id="75">75</th><td>	<i class="doc">/// The number of off-mesh connections. [Limit: &gt;= 0]</i></td></tr>
+<tr><th id="76">76</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::offMeshConCount" title='dtNavMeshCreateParams::offMeshConCount' data-ref="dtNavMeshCreateParams::offMeshConCount" >offMeshConCount</dfn>;</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">Tile Attributes</span></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">	/// <span class="command">@note</span> The tile grid/layer data can be left at zero if the destination is a single tile mesh.</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>	<em>unsigned</em> <em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::userId" title='dtNavMeshCreateParams::userId' data-ref="dtNavMeshCreateParams::userId" >userId</dfn>;	<i class="doc">///&lt; The user defined id of the tile.</i></td></tr>
+<tr><th id="84">84</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::tileX" title='dtNavMeshCreateParams::tileX' data-ref="dtNavMeshCreateParams::tileX" >tileX</dfn>;				<i class="doc">///&lt; The tile's x-grid location within the multi-tile destination mesh. (Along the x-axis.)</i></td></tr>
+<tr><th id="85">85</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::tileY" title='dtNavMeshCreateParams::tileY' data-ref="dtNavMeshCreateParams::tileY" >tileY</dfn>;				<i class="doc">///&lt; The tile's y-grid location within the multi-tile desitation mesh. (Along the z-axis.)</i></td></tr>
+<tr><th id="86">86</th><td>	<em>int</em> <dfn class="decl" id="dtNavMeshCreateParams::tileLayer" title='dtNavMeshCreateParams::tileLayer' data-ref="dtNavMeshCreateParams::tileLayer" >tileLayer</dfn>;			<i class="doc">///&lt; The tile's layer within the layered destination mesh. [Limit: &gt;= 0] (Along the y-axis.)</i></td></tr>
+<tr><th id="87">87</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshCreateParams::bmin" title='dtNavMeshCreateParams::bmin' data-ref="dtNavMeshCreateParams::bmin" >bmin</dfn>[<var>3</var>];			<i class="doc">///&lt; The minimum bounds of the tile. [(x, y, z)] [Unit: wu]</i></td></tr>
+<tr><th id="88">88</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshCreateParams::bmax" title='dtNavMeshCreateParams::bmax' data-ref="dtNavMeshCreateParams::bmax" >bmax</dfn>[<var>3</var>];			<i class="doc">///&lt; The maximum bounds of the tile. [(x, y, z)] [Unit: wu]</i></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">	/// <span class="command">@name</span> <span class="verb">General Configuration Attributes</span></i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">	/// @{</i></td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshCreateParams::walkableHeight" title='dtNavMeshCreateParams::walkableHeight' data-ref="dtNavMeshCreateParams::walkableHeight" >walkableHeight</dfn>;	<i class="doc">///&lt; The agent height. [Unit: wu]</i></td></tr>
+<tr><th id="95">95</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshCreateParams::walkableRadius" title='dtNavMeshCreateParams::walkableRadius' data-ref="dtNavMeshCreateParams::walkableRadius" >walkableRadius</dfn>;	<i class="doc">///&lt; The agent radius. [Unit: wu]</i></td></tr>
+<tr><th id="96">96</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshCreateParams::walkableClimb" title='dtNavMeshCreateParams::walkableClimb' data-ref="dtNavMeshCreateParams::walkableClimb" >walkableClimb</dfn>;	<i class="doc">///&lt; The agent maximum traversable ledge. (Up/Down) [Unit: wu]</i></td></tr>
+<tr><th id="97">97</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshCreateParams::cs" title='dtNavMeshCreateParams::cs' data-ref="dtNavMeshCreateParams::cs" >cs</dfn>;				<i class="doc">///&lt; The xz-plane cell size of the polygon mesh. [Limit: &gt; 0] [Unit: wu]</i></td></tr>
+<tr><th id="98">98</th><td>	<em>float</em> <dfn class="decl" id="dtNavMeshCreateParams::ch" title='dtNavMeshCreateParams::ch' data-ref="dtNavMeshCreateParams::ch" >ch</dfn>;				<i class="doc">///&lt; The y-axis cell height of the polygon mesh. [Limit: &gt; 0] [Unit: wu]</i></td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>	<i class="doc">/// True if a bounding volume tree should be built for the tile.</i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">	/// <span class="command">@note</span> The BVTree is not normally needed for layered navigation meshes.</i></td></tr>
+<tr><th id="102">102</th><td>	<em>bool</em> <dfn class="decl" id="dtNavMeshCreateParams::buildBvTree" title='dtNavMeshCreateParams::buildBvTree' data-ref="dtNavMeshCreateParams::buildBvTree" >buildBvTree</dfn>;</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>	<i class="doc">/// @}</i></td></tr>
+<tr><th id="105">105</th><td>};</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td><i class="doc">/// Builds navigation mesh tile data from the provided tile creation data.</i></td></tr>
+<tr><th id="108">108</th><td><i class="doc">/// <span class="command">@ingroup</span> <span class="verb">detour</span></i></td></tr>
+<tr><th id="109">109</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">params</span>		Tile creation data.</i></td></tr>
+<tr><th id="110">110</th><td><i class="doc">///  <span class="command">@param</span>[out]	<span class="arg">outData</span>		The resulting tile data.</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">///  <span class="command">@param</span>[out]	<span class="arg">outDataSize</span>	The size of the tile data array.</i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">/// <span class="command">@return</span> True if the tile data was successfully created.</i></td></tr>
+<tr><th id="113">113</th><td><em>bool</em> <a class="decl" href="../Source/DetourNavMeshBuilder.cpp.html#_Z19dtCreateNavMeshDataP21dtNavMeshCreateParamsPPhPi" title='dtCreateNavMeshData' data-ref="_Z19dtCreateNavMeshDataP21dtNavMeshCreateParamsPPhPi" id="_Z19dtCreateNavMeshDataP21dtNavMeshCreateParamsPPhPi" >dtCreateNavMeshData</a>(<a class="type" href="#dtNavMeshCreateParams" title='dtNavMeshCreateParams' data-ref="dtNavMeshCreateParams" >dtNavMeshCreateParams</a>* <dfn class="local col1 decl" id="1params" title='params' data-type='dtNavMeshCreateParams *' data-ref="1params" >params</dfn>, <em>unsigned</em> <em>char</em>** <dfn class="local col2 decl" id="2outData" title='outData' data-type='unsigned char **' data-ref="2outData" >outData</dfn>, <em>int</em>* <dfn class="local col3 decl" id="3outDataSize" title='outDataSize' data-type='int *' data-ref="3outDataSize" >outDataSize</dfn>);</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td><i class="doc">/// Swaps the endianess of the tile data's header (#dtMeshHeader).</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">///  <span class="command">@param</span>[in,out]	<span class="arg">data</span>		The tile data array.</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">dataSize</span>	The size of the data array.</i></td></tr>
+<tr><th id="118">118</th><td><em>bool</em> <a class="decl" href="../Source/DetourNavMeshBuilder.cpp.html#_Z25dtNavMeshHeaderSwapEndianPhi" title='dtNavMeshHeaderSwapEndian' data-ref="_Z25dtNavMeshHeaderSwapEndianPhi" id="_Z25dtNavMeshHeaderSwapEndianPhi" >dtNavMeshHeaderSwapEndian</a>(<em>unsigned</em> <em>char</em>* <dfn class="local col4 decl" id="4data" title='data' data-type='unsigned char *' data-ref="4data" >data</dfn>, <em>const</em> <em>int</em> <dfn class="local col5 decl" id="5dataSize" title='dataSize' data-type='const int' data-ref="5dataSize" >dataSize</dfn>);</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><i class="doc">/// Swaps endianess of the tile data.</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc">///  <span class="command">@param</span>[in,out]	<span class="arg">data</span>		The tile data array.</i></td></tr>
+<tr><th id="122">122</th><td><i class="doc">///  <span class="command">@param</span>[in]		<span class="arg">dataSize</span>	The size of the data array.</i></td></tr>
+<tr><th id="123">123</th><td><em>bool</em> <a class="decl" href="../Source/DetourNavMeshBuilder.cpp.html#_Z23dtNavMeshDataSwapEndianPhi" title='dtNavMeshDataSwapEndian' data-ref="_Z23dtNavMeshDataSwapEndianPhi" id="_Z23dtNavMeshDataSwapEndianPhi" >dtNavMeshDataSwapEndian</a>(<em>unsigned</em> <em>char</em>* <dfn class="local col6 decl" id="6data" title='data' data-type='unsigned char *' data-ref="6data" >data</dfn>, <em>const</em> <em>int</em> <dfn class="local col7 decl" id="7dataSize" title='dataSize' data-type='const int' data-ref="7dataSize" >dataSize</dfn>);</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="19">endif</span> // DETOURNAVMESHBUILDER_H</u></td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><i>// This section contains detailed documentation for members that don't have</i></td></tr>
+<tr><th id="128">128</th><td><i>// a source file. It reduces clutter in the main section of the header.</i></td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="131">131</th><td><i class="doc"></i></td></tr>
+<tr><th id="132">132</th><td><i class="doc"><span class="command">@struct</span> <span class="verb" data-ref="dtNavMeshCreateParams">dtNavMeshCreateParams</span></i></td></tr>
+<tr><th id="133">133</th><td><i class="doc"><span class="command">@par</span></i></td></tr>
+<tr><th id="134">134</th><td><i class="doc"></i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">This structure is used to marshal data between the Recast mesh generation pipeline and Detour navigation components.</i></td></tr>
+<tr><th id="136">136</th><td><i class="doc"></i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">See the rcPolyMesh and rcPolyMeshDetail documentation for detailed information related to mesh structure.</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc"></i></td></tr>
+<tr><th id="139">139</th><td><i class="doc">Units are usually in voxels (vx) or world units (wu). The units for voxels, grid size, and cell size </i></td></tr>
+<tr><th id="140">140</th><td><i class="doc">are all based on the values of #cs and #ch.</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc"></i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">The standard navigation mesh build process is to create tile data using dtCreateNavMeshData, then add the tile </i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">to a navigation mesh using either the dtNavMesh single tile <span class="tag">&lt;tt&gt;</span>init()<span class="tag">&lt;/tt&gt;</span> function or the dtNavMesh::addTile()</i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">function.</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc"></i></td></tr>
+<tr><th id="146">146</th><td><i class="doc"><span class="command">@see</span> dtCreateNavMeshData</i></td></tr>
+<tr><th id="147">147</th><td><i class="doc"></i></td></tr>
+<tr><th id="148">148</th><td><i class="doc">*/</i></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Source/DetourNavMeshBuilder.cpp.html'>TrinityCore3.3.5/dep/recastnavigation/Detour/Source/DetourNavMeshBuilder.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

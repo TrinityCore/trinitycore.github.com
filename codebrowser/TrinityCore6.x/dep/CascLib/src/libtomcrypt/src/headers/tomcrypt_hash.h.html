@@ -1,0 +1,396 @@
+<!doctype html>
+<html>
+<head>
+<title>tomcrypt_hash.h [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_hash.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_hash.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>headers</a>/tomcrypt_hash.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* ---- HASH FUNCTIONS ---- */</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <span class="macro" data-ref="_M/LTC_SHA512">LTC_SHA512</span></u></td></tr>
+<tr><th id="3">3</th><td><b>struct</b> sha512_state {</td></tr>
+<tr><th id="4">4</th><td>    ulong64  length, state[<var>8</var>];</td></tr>
+<tr><th id="5">5</th><td>    <em>unsigned</em> <em>long</em> curlen;</td></tr>
+<tr><th id="6">6</th><td>    <em>unsigned</em> <em>char</em> buf[<var>128</var>];</td></tr>
+<tr><th id="7">7</th><td>};</td></tr>
+<tr><th id="8">8</th><td><u>#<span data-ppcond="2">endif</span></u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#<span data-ppcond="10">ifdef</span> <span class="macro" data-ref="_M/LTC_SHA256">LTC_SHA256</span></u></td></tr>
+<tr><th id="11">11</th><td><b>struct</b> sha256_state {</td></tr>
+<tr><th id="12">12</th><td>    ulong64 length;</td></tr>
+<tr><th id="13">13</th><td>    ulong32 state[<var>8</var>], curlen;</td></tr>
+<tr><th id="14">14</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="15">15</th><td>};</td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="10">endif</span></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#14" data-ref="_M/LTC_SHA1">LTC_SHA1</a></u></td></tr>
+<tr><th id="19">19</th><td><b>struct</b> <dfn class="type def" id="sha1_state" title='sha1_state' data-ref="sha1_state" >sha1_state</dfn> {</td></tr>
+<tr><th id="20">20</th><td>    <a class="typedef" href="tomcrypt_macros.h.html#ulong64" title='ulong64' data-type='unsigned long long' data-ref="ulong64" >ulong64</a> <dfn class="decl" id="sha1_state::length" title='sha1_state::length' data-ref="sha1_state::length" >length</dfn>;</td></tr>
+<tr><th id="21">21</th><td>    <a class="typedef" href="tomcrypt_macros.h.html#ulong32" title='ulong32' data-type='unsigned int' data-ref="ulong32" ><a class="typedef" href="tomcrypt_macros.h.html#ulong32" title='ulong32' data-type='unsigned int' data-ref="ulong32" >ulong32</a></a> <dfn class="decl" id="sha1_state::state" title='sha1_state::state' data-ref="sha1_state::state" >state</dfn>[<var>5</var>], <dfn class="decl" id="sha1_state::curlen" title='sha1_state::curlen' data-ref="sha1_state::curlen" >curlen</dfn>;</td></tr>
+<tr><th id="22">22</th><td>    <em>unsigned</em> <em>char</em> <dfn class="decl" id="sha1_state::buf" title='sha1_state::buf' data-ref="sha1_state::buf" >buf</dfn>[<var>64</var>];</td></tr>
+<tr><th id="23">23</th><td>};</td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#<span data-ppcond="26">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#15" data-ref="_M/LTC_MD5">LTC_MD5</a></u></td></tr>
+<tr><th id="27">27</th><td><b>struct</b> <dfn class="type def" id="md5_state" title='md5_state' data-ref="md5_state" >md5_state</dfn> {</td></tr>
+<tr><th id="28">28</th><td>    <a class="typedef" href="tomcrypt_macros.h.html#ulong64" title='ulong64' data-type='unsigned long long' data-ref="ulong64" >ulong64</a> <dfn class="decl" id="md5_state::length" title='md5_state::length' data-ref="md5_state::length" >length</dfn>;</td></tr>
+<tr><th id="29">29</th><td>    <a class="typedef" href="tomcrypt_macros.h.html#ulong32" title='ulong32' data-type='unsigned int' data-ref="ulong32" ><a class="typedef" href="tomcrypt_macros.h.html#ulong32" title='ulong32' data-type='unsigned int' data-ref="ulong32" >ulong32</a></a> <dfn class="decl" id="md5_state::state" title='md5_state::state' data-ref="md5_state::state" >state</dfn>[<var>4</var>], <dfn class="decl" id="md5_state::curlen" title='md5_state::curlen' data-ref="md5_state::curlen" >curlen</dfn>;</td></tr>
+<tr><th id="30">30</th><td>    <em>unsigned</em> <em>char</em> <dfn class="decl" id="md5_state::buf" title='md5_state::buf' data-ref="md5_state::buf" >buf</dfn>[<var>64</var>];</td></tr>
+<tr><th id="31">31</th><td>};</td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="26">endif</span></u></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="34">ifdef</span> <span class="macro" data-ref="_M/LTC_MD4">LTC_MD4</span></u></td></tr>
+<tr><th id="35">35</th><td><b>struct</b> md4_state {</td></tr>
+<tr><th id="36">36</th><td>    ulong64 length;</td></tr>
+<tr><th id="37">37</th><td>    ulong32 state[<var>4</var>], curlen;</td></tr>
+<tr><th id="38">38</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="39">39</th><td>};</td></tr>
+<tr><th id="40">40</th><td><u>#<span data-ppcond="34">endif</span></u></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><u>#<span data-ppcond="42">ifdef</span> <span class="macro" data-ref="_M/LTC_TIGER">LTC_TIGER</span></u></td></tr>
+<tr><th id="43">43</th><td><b>struct</b> tiger_state {</td></tr>
+<tr><th id="44">44</th><td>    ulong64 state[<var>3</var>], length;</td></tr>
+<tr><th id="45">45</th><td>    <em>unsigned</em> <em>long</em> curlen;</td></tr>
+<tr><th id="46">46</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="47">47</th><td>};</td></tr>
+<tr><th id="48">48</th><td><u>#<span data-ppcond="42">endif</span></u></td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><u>#<span data-ppcond="50">ifdef</span> <span class="macro" data-ref="_M/LTC_MD2">LTC_MD2</span></u></td></tr>
+<tr><th id="51">51</th><td><b>struct</b> md2_state {</td></tr>
+<tr><th id="52">52</th><td>    <em>unsigned</em> <em>char</em> chksum[<var>16</var>], X[<var>48</var>], buf[<var>16</var>];</td></tr>
+<tr><th id="53">53</th><td>    <em>unsigned</em> <em>long</em> curlen;</td></tr>
+<tr><th id="54">54</th><td>};</td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="50">endif</span></u></td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="57">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD128">LTC_RIPEMD128</span></u></td></tr>
+<tr><th id="58">58</th><td><b>struct</b> rmd128_state {</td></tr>
+<tr><th id="59">59</th><td>    ulong64 length;</td></tr>
+<tr><th id="60">60</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="61">61</th><td>    ulong32 curlen, state[<var>4</var>];</td></tr>
+<tr><th id="62">62</th><td>};</td></tr>
+<tr><th id="63">63</th><td><u>#<span data-ppcond="57">endif</span></u></td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><u>#<span data-ppcond="65">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD160">LTC_RIPEMD160</span></u></td></tr>
+<tr><th id="66">66</th><td><b>struct</b> rmd160_state {</td></tr>
+<tr><th id="67">67</th><td>    ulong64 length;</td></tr>
+<tr><th id="68">68</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="69">69</th><td>    ulong32 curlen, state[<var>5</var>];</td></tr>
+<tr><th id="70">70</th><td>};</td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="65">endif</span></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="73">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD256">LTC_RIPEMD256</span></u></td></tr>
+<tr><th id="74">74</th><td><b>struct</b> rmd256_state {</td></tr>
+<tr><th id="75">75</th><td>    ulong64 length;</td></tr>
+<tr><th id="76">76</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="77">77</th><td>    ulong32 curlen, state[<var>8</var>];</td></tr>
+<tr><th id="78">78</th><td>};</td></tr>
+<tr><th id="79">79</th><td><u>#<span data-ppcond="73">endif</span></u></td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><u>#<span data-ppcond="81">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD320">LTC_RIPEMD320</span></u></td></tr>
+<tr><th id="82">82</th><td><b>struct</b> rmd320_state {</td></tr>
+<tr><th id="83">83</th><td>    ulong64 length;</td></tr>
+<tr><th id="84">84</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="85">85</th><td>    ulong32 curlen, state[<var>10</var>];</td></tr>
+<tr><th id="86">86</th><td>};</td></tr>
+<tr><th id="87">87</th><td><u>#<span data-ppcond="81">endif</span></u></td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td><u>#<span data-ppcond="89">ifdef</span> <span class="macro" data-ref="_M/LTC_WHIRLPOOL">LTC_WHIRLPOOL</span></u></td></tr>
+<tr><th id="90">90</th><td><b>struct</b> whirlpool_state {</td></tr>
+<tr><th id="91">91</th><td>    ulong64 length, state[<var>8</var>];</td></tr>
+<tr><th id="92">92</th><td>    <em>unsigned</em> <em>char</em> buf[<var>64</var>];</td></tr>
+<tr><th id="93">93</th><td>    ulong32 curlen;</td></tr>
+<tr><th id="94">94</th><td>};</td></tr>
+<tr><th id="95">95</th><td><u>#<span data-ppcond="89">endif</span></u></td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td><u>#<span data-ppcond="97">ifdef</span> <span class="macro" data-ref="_M/LTC_CHC_HASH">LTC_CHC_HASH</span></u></td></tr>
+<tr><th id="98">98</th><td><b>struct</b> chc_state {</td></tr>
+<tr><th id="99">99</th><td>    ulong64 length;</td></tr>
+<tr><th id="100">100</th><td>    <em>unsigned</em> <em>char</em> state[MAXBLOCKSIZE], buf[MAXBLOCKSIZE];</td></tr>
+<tr><th id="101">101</th><td>    ulong32 curlen;</td></tr>
+<tr><th id="102">102</th><td>};</td></tr>
+<tr><th id="103">103</th><td><u>#<span data-ppcond="97">endif</span></u></td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><b>typedef</b> <b>union</b> <dfn class="type def" id="Hash_state" title='Hash_state' data-ref="Hash_state" ><a class="type" href="#Hash_state" title='Hash_state' data-ref="Hash_state" >Hash_state</a></dfn> {</td></tr>
+<tr><th id="106">106</th><td><u>#<span data-ppcond="106">ifdef</span> <span class="macro" data-ref="_M/LTC_CHC_HASH">LTC_CHC_HASH</span></u></td></tr>
+<tr><th id="107">107</th><td>    <b>struct</b> chc_state chc;</td></tr>
+<tr><th id="108">108</th><td><u>#<span data-ppcond="106">endif</span></u></td></tr>
+<tr><th id="109">109</th><td><u>#<span data-ppcond="109">ifdef</span> <span class="macro" data-ref="_M/LTC_WHIRLPOOL">LTC_WHIRLPOOL</span></u></td></tr>
+<tr><th id="110">110</th><td>    <b>struct</b> whirlpool_state whirlpool;</td></tr>
+<tr><th id="111">111</th><td><u>#<span data-ppcond="109">endif</span></u></td></tr>
+<tr><th id="112">112</th><td><u>#<span data-ppcond="112">ifdef</span> <span class="macro" data-ref="_M/LTC_SHA512">LTC_SHA512</span></u></td></tr>
+<tr><th id="113">113</th><td>    <b>struct</b> sha512_state sha512;</td></tr>
+<tr><th id="114">114</th><td><u>#<span data-ppcond="112">endif</span></u></td></tr>
+<tr><th id="115">115</th><td><u>#<span data-ppcond="115">ifdef</span> <span class="macro" data-ref="_M/LTC_SHA256">LTC_SHA256</span></u></td></tr>
+<tr><th id="116">116</th><td>    <b>struct</b> sha256_state sha256;</td></tr>
+<tr><th id="117">117</th><td><u>#<span data-ppcond="115">endif</span></u></td></tr>
+<tr><th id="118">118</th><td><u>#<span data-ppcond="118">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#14" data-ref="_M/LTC_SHA1">LTC_SHA1</a></u></td></tr>
+<tr><th id="119">119</th><td>    <b>struct</b> <a class="type" href="#sha1_state" title='sha1_state' data-ref="sha1_state" >sha1_state</a>   <dfn class="decl" id="Hash_state::sha1" title='Hash_state::sha1' data-ref="Hash_state::sha1" >sha1</dfn>;</td></tr>
+<tr><th id="120">120</th><td><u>#<span data-ppcond="118">endif</span></u></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="121">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#15" data-ref="_M/LTC_MD5">LTC_MD5</a></u></td></tr>
+<tr><th id="122">122</th><td>    <b>struct</b> <a class="type" href="#md5_state" title='md5_state' data-ref="md5_state" >md5_state</a>    <dfn class="decl" id="Hash_state::md5" title='Hash_state::md5' data-ref="Hash_state::md5" >md5</dfn>;</td></tr>
+<tr><th id="123">123</th><td><u>#<span data-ppcond="121">endif</span></u></td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="124">ifdef</span> <span class="macro" data-ref="_M/LTC_MD4">LTC_MD4</span></u></td></tr>
+<tr><th id="125">125</th><td>    <b>struct</b> md4_state    md4;</td></tr>
+<tr><th id="126">126</th><td><u>#<span data-ppcond="124">endif</span></u></td></tr>
+<tr><th id="127">127</th><td><u>#<span data-ppcond="127">ifdef</span> <span class="macro" data-ref="_M/LTC_MD2">LTC_MD2</span></u></td></tr>
+<tr><th id="128">128</th><td>    <b>struct</b> md2_state    md2;</td></tr>
+<tr><th id="129">129</th><td><u>#<span data-ppcond="127">endif</span></u></td></tr>
+<tr><th id="130">130</th><td><u>#<span data-ppcond="130">ifdef</span> <span class="macro" data-ref="_M/LTC_TIGER">LTC_TIGER</span></u></td></tr>
+<tr><th id="131">131</th><td>    <b>struct</b> tiger_state  tiger;</td></tr>
+<tr><th id="132">132</th><td><u>#<span data-ppcond="130">endif</span></u></td></tr>
+<tr><th id="133">133</th><td><u>#<span data-ppcond="133">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD128">LTC_RIPEMD128</span></u></td></tr>
+<tr><th id="134">134</th><td>    <b>struct</b> rmd128_state rmd128;</td></tr>
+<tr><th id="135">135</th><td><u>#<span data-ppcond="133">endif</span></u></td></tr>
+<tr><th id="136">136</th><td><u>#<span data-ppcond="136">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD160">LTC_RIPEMD160</span></u></td></tr>
+<tr><th id="137">137</th><td>    <b>struct</b> rmd160_state rmd160;</td></tr>
+<tr><th id="138">138</th><td><u>#<span data-ppcond="136">endif</span></u></td></tr>
+<tr><th id="139">139</th><td><u>#<span data-ppcond="139">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD256">LTC_RIPEMD256</span></u></td></tr>
+<tr><th id="140">140</th><td>    <b>struct</b> rmd256_state rmd256;</td></tr>
+<tr><th id="141">141</th><td><u>#<span data-ppcond="139">endif</span></u></td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="142">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD320">LTC_RIPEMD320</span></u></td></tr>
+<tr><th id="143">143</th><td>    <b>struct</b> rmd320_state rmd320;</td></tr>
+<tr><th id="144">144</th><td><u>#<span data-ppcond="142">endif</span></u></td></tr>
+<tr><th id="145">145</th><td>    <em>void</em> *<dfn class="decl" id="Hash_state::data" title='Hash_state::data' data-ref="Hash_state::data" >data</dfn>;</td></tr>
+<tr><th id="146">146</th><td>} <dfn class="typedef" id="hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</dfn>;</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td><i class="doc">/** hash descriptor */</i></td></tr>
+<tr><th id="149">149</th><td><b>extern</b>  <b>struct</b> <dfn class="type def" id="ltc_hash_descriptor" title='ltc_hash_descriptor' data-ref="ltc_hash_descriptor" ><a class="type" href="#ltc_hash_descriptor" title='ltc_hash_descriptor' data-ref="ltc_hash_descriptor" >ltc_hash_descriptor</a></dfn> {</td></tr>
+<tr><th id="150">150</th><td>    <i class="doc">/** name of hash */</i></td></tr>
+<tr><th id="151">151</th><td>    <em>char</em> *<dfn class="decl" id="ltc_hash_descriptor::name" title='ltc_hash_descriptor::name' data-ref="ltc_hash_descriptor::name" >name</dfn>;</td></tr>
+<tr><th id="152">152</th><td>    <i class="doc">/** internal ID */</i></td></tr>
+<tr><th id="153">153</th><td>    <em>unsigned</em> <em>char</em> <dfn class="decl" id="ltc_hash_descriptor::ID" title='ltc_hash_descriptor::ID' data-ref="ltc_hash_descriptor::ID" >ID</dfn>;</td></tr>
+<tr><th id="154">154</th><td>    <i class="doc">/** Size of digest in octets */</i></td></tr>
+<tr><th id="155">155</th><td>    <em>unsigned</em> <em>long</em> <dfn class="decl" id="ltc_hash_descriptor::hashsize" title='ltc_hash_descriptor::hashsize' data-ref="ltc_hash_descriptor::hashsize" >hashsize</dfn>;</td></tr>
+<tr><th id="156">156</th><td>    <i class="doc">/** Input block size in octets */</i></td></tr>
+<tr><th id="157">157</th><td>    <em>unsigned</em> <em>long</em> <dfn class="decl" id="ltc_hash_descriptor::blocksize" title='ltc_hash_descriptor::blocksize' data-ref="ltc_hash_descriptor::blocksize" >blocksize</dfn>;</td></tr>
+<tr><th id="158">158</th><td>    <i class="doc">/** ASN.1 OID */</i></td></tr>
+<tr><th id="159">159</th><td>    <em>unsigned</em> <em>long</em> <dfn class="decl" id="ltc_hash_descriptor::OID" title='ltc_hash_descriptor::OID' data-ref="ltc_hash_descriptor::OID" >OID</dfn>[<var>16</var>];</td></tr>
+<tr><th id="160">160</th><td>    <i class="doc">/** Length of DER encoding */</i></td></tr>
+<tr><th id="161">161</th><td>    <em>unsigned</em> <em>long</em> <dfn class="decl" id="ltc_hash_descriptor::OIDlen" title='ltc_hash_descriptor::OIDlen' data-ref="ltc_hash_descriptor::OIDlen" >OIDlen</dfn>;</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td>    <i class="doc">/** Init a hash state</i></td></tr>
+<tr><th id="164">164</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">hash</span>   The hash to initialize</i></td></tr>
+<tr><th id="165">165</th><td><i class="doc">      <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="167">167</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_hash_descriptor::init" title='ltc_hash_descriptor::init' data-ref="ltc_hash_descriptor::init" >init</dfn>)(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> *<dfn class="local col6 decl" id="586hash" title='hash' data-type='hash_state *' data-ref="586hash" >hash</dfn>);</td></tr>
+<tr><th id="168">168</th><td>    <i class="doc">/** Process a block of data </i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">hash</span>   The hash state</i></td></tr>
+<tr><th id="170">170</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">in</span>     The data to hash</i></td></tr>
+<tr><th id="171">171</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">inlen</span>  The length of the data (octets)</i></td></tr>
+<tr><th id="172">172</th><td><i class="doc">      <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="173">173</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="174">174</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_hash_descriptor::process" title='ltc_hash_descriptor::process' data-ref="ltc_hash_descriptor::process" >process</dfn>)(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> *<dfn class="local col7 decl" id="587hash" title='hash' data-type='hash_state *' data-ref="587hash" >hash</dfn>, <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="588in" title='in' data-type='const unsigned char *' data-ref="588in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="589inlen" title='inlen' data-type='unsigned long' data-ref="589inlen" >inlen</dfn>);</td></tr>
+<tr><th id="175">175</th><td>    <i class="doc">/** Produce the digest and store it</i></td></tr>
+<tr><th id="176">176</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">hash</span>   The hash state</i></td></tr>
+<tr><th id="177">177</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">out</span>    [out] The destination of the digest</i></td></tr>
+<tr><th id="178">178</th><td><i class="doc">      <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="179">179</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="180">180</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_hash_descriptor::done" title='ltc_hash_descriptor::done' data-ref="ltc_hash_descriptor::done" >done</dfn>)(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> *<dfn class="local col0 decl" id="590hash" title='hash' data-type='hash_state *' data-ref="590hash" >hash</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col1 decl" id="591out" title='out' data-type='unsigned char *' data-ref="591out" >out</dfn>);</td></tr>
+<tr><th id="181">181</th><td>    <i class="doc">/** Self-test</i></td></tr>
+<tr><th id="182">182</th><td><i class="doc">      <span class="command">@return</span> CRYPT_OK if successful, CRYPT_NOP if self-tests have been disabled</i></td></tr>
+<tr><th id="183">183</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="184">184</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_hash_descriptor::test" title='ltc_hash_descriptor::test' data-ref="ltc_hash_descriptor::test" >test</dfn>)(<em>void</em>);</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>    <i>/* accelerated hmac callback: if you need to-do multiple packets just use the generic hmac_memory and provide a hash callback */</i></td></tr>
+<tr><th id="187">187</th><td>    <em>int</em>  (*<dfn class="decl" id="ltc_hash_descriptor::hmac_block" title='ltc_hash_descriptor::hmac_block' data-ref="ltc_hash_descriptor::hmac_block" >hmac_block</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="592key" title='key' data-type='const unsigned char *' data-ref="592key" >key</dfn>, <em>unsigned</em> <em>long</em>  <dfn class="local col3 decl" id="593keylen" title='keylen' data-type='unsigned long' data-ref="593keylen" >keylen</dfn>,</td></tr>
+<tr><th id="188">188</th><td>                       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="594in" title='in' data-type='const unsigned char *' data-ref="594in" >in</dfn>,  <em>unsigned</em> <em>long</em>  <dfn class="local col5 decl" id="595inlen" title='inlen' data-type='unsigned long' data-ref="595inlen" >inlen</dfn>, </td></tr>
+<tr><th id="189">189</th><td>                             <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="596out" title='out' data-type='unsigned char *' data-ref="596out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col7 decl" id="597outlen" title='outlen' data-type='unsigned long *' data-ref="597outlen" >outlen</dfn>);</td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td>} <dfn class="decl" id="hash_descriptor" title='hash_descriptor' data-ref="hash_descriptor" >hash_descriptor</dfn>[];</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><u>#<span data-ppcond="193">ifdef</span> <span class="macro" data-ref="_M/LTC_CHC_HASH">LTC_CHC_HASH</span></u></td></tr>
+<tr><th id="194">194</th><td><em>int</em> chc_register(<em>int</em> cipher);</td></tr>
+<tr><th id="195">195</th><td><em>int</em> chc_init(hash_state * md);</td></tr>
+<tr><th id="196">196</th><td><em>int</em> chc_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="197">197</th><td><em>int</em> chc_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="198">198</th><td><em>int</em> chc_test(<em>void</em>);</td></tr>
+<tr><th id="199">199</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor chc_desc;</td></tr>
+<tr><th id="200">200</th><td><u>#<span data-ppcond="193">endif</span></u></td></tr>
+<tr><th id="201">201</th><td></td></tr>
+<tr><th id="202">202</th><td><u>#<span data-ppcond="202">ifdef</span> <span class="macro" data-ref="_M/LTC_WHIRLPOOL">LTC_WHIRLPOOL</span></u></td></tr>
+<tr><th id="203">203</th><td><em>int</em> whirlpool_init(hash_state * md);</td></tr>
+<tr><th id="204">204</th><td><em>int</em> whirlpool_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="205">205</th><td><em>int</em> whirlpool_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="206">206</th><td><em>int</em> whirlpool_test(<em>void</em>);</td></tr>
+<tr><th id="207">207</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor whirlpool_desc;</td></tr>
+<tr><th id="208">208</th><td><u>#<span data-ppcond="202">endif</span></u></td></tr>
+<tr><th id="209">209</th><td></td></tr>
+<tr><th id="210">210</th><td><u>#<span data-ppcond="210">ifdef</span> <span class="macro" data-ref="_M/LTC_SHA512">LTC_SHA512</span></u></td></tr>
+<tr><th id="211">211</th><td><em>int</em> sha512_init(hash_state * md);</td></tr>
+<tr><th id="212">212</th><td><em>int</em> sha512_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="213">213</th><td><em>int</em> sha512_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="214">214</th><td><em>int</em> sha512_test(<em>void</em>);</td></tr>
+<tr><th id="215">215</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor sha512_desc;</td></tr>
+<tr><th id="216">216</th><td><u>#<span data-ppcond="210">endif</span></u></td></tr>
+<tr><th id="217">217</th><td></td></tr>
+<tr><th id="218">218</th><td><u>#<span data-ppcond="218">ifdef</span> <span class="macro" data-ref="_M/LTC_SHA384">LTC_SHA384</span></u></td></tr>
+<tr><th id="219">219</th><td><u>#ifndef LTC_SHA512</u></td></tr>
+<tr><th id="220">220</th><td>   <u>#error LTC_SHA512 is required for LTC_SHA384</u></td></tr>
+<tr><th id="221">221</th><td><u>#endif</u></td></tr>
+<tr><th id="222">222</th><td><em>int</em> sha384_init(hash_state * md);</td></tr>
+<tr><th id="223">223</th><td><u>#define sha384_process sha512_process</u></td></tr>
+<tr><th id="224">224</th><td><em>int</em> sha384_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="225">225</th><td><em>int</em> sha384_test(<em>void</em>);</td></tr>
+<tr><th id="226">226</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor sha384_desc;</td></tr>
+<tr><th id="227">227</th><td><u>#<span data-ppcond="218">endif</span></u></td></tr>
+<tr><th id="228">228</th><td></td></tr>
+<tr><th id="229">229</th><td><u>#<span data-ppcond="229">ifdef</span> <span class="macro" data-ref="_M/LTC_SHA256">LTC_SHA256</span></u></td></tr>
+<tr><th id="230">230</th><td><em>int</em> sha256_init(hash_state * md);</td></tr>
+<tr><th id="231">231</th><td><em>int</em> sha256_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="232">232</th><td><em>int</em> sha256_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="233">233</th><td><em>int</em> sha256_test(<em>void</em>);</td></tr>
+<tr><th id="234">234</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor sha256_desc;</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td><u>#ifdef LTC_SHA224</u></td></tr>
+<tr><th id="237">237</th><td><u>#ifndef LTC_SHA256</u></td></tr>
+<tr><th id="238">238</th><td>   <u>#error LTC_SHA256 is required for LTC_SHA224</u></td></tr>
+<tr><th id="239">239</th><td><u>#endif</u></td></tr>
+<tr><th id="240">240</th><td><em>int</em> sha224_init(hash_state * md);</td></tr>
+<tr><th id="241">241</th><td><u>#define sha224_process sha256_process</u></td></tr>
+<tr><th id="242">242</th><td><em>int</em> sha224_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="243">243</th><td><em>int</em> sha224_test(<em>void</em>);</td></tr>
+<tr><th id="244">244</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor sha224_desc;</td></tr>
+<tr><th id="245">245</th><td><u>#endif</u></td></tr>
+<tr><th id="246">246</th><td><u>#<span data-ppcond="229">endif</span></u></td></tr>
+<tr><th id="247">247</th><td></td></tr>
+<tr><th id="248">248</th><td><u>#<span data-ppcond="248">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#14" data-ref="_M/LTC_SHA1">LTC_SHA1</a></u></td></tr>
+<tr><th id="249">249</th><td><em>int</em> <dfn class="decl" id="sha1_init" title='sha1_init' data-ref="sha1_init" >sha1_init</dfn>(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> * <dfn class="local col8 decl" id="598md" title='md' data-type='hash_state *' data-ref="598md" >md</dfn>);</td></tr>
+<tr><th id="250">250</th><td><em>int</em> <dfn class="decl" id="sha1_process" title='sha1_process' data-ref="sha1_process" >sha1_process</dfn>(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> * <dfn class="local col9 decl" id="599md" title='md' data-type='hash_state *' data-ref="599md" >md</dfn>, <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="600in" title='in' data-type='const unsigned char *' data-ref="600in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="601inlen" title='inlen' data-type='unsigned long' data-ref="601inlen" >inlen</dfn>);</td></tr>
+<tr><th id="251">251</th><td><em>int</em> <dfn class="decl" id="sha1_done" title='sha1_done' data-ref="sha1_done" >sha1_done</dfn>(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> * <dfn class="local col2 decl" id="602md" title='md' data-type='hash_state *' data-ref="602md" >md</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="603hash" title='hash' data-type='unsigned char *' data-ref="603hash" >hash</dfn>);</td></tr>
+<tr><th id="252">252</th><td><em>int</em> <dfn class="decl" id="sha1_test" title='sha1_test' data-ref="sha1_test" >sha1_test</dfn>(<em>void</em>);</td></tr>
+<tr><th id="253">253</th><td><b>extern</b> <em>const</em> <b>struct</b> <a class="type" href="#ltc_hash_descriptor" title='ltc_hash_descriptor' data-ref="ltc_hash_descriptor" >ltc_hash_descriptor</a> <dfn class="decl" id="sha1_desc" title='sha1_desc' data-ref="sha1_desc" >sha1_desc</dfn>;</td></tr>
+<tr><th id="254">254</th><td><u>#<span data-ppcond="248">endif</span></u></td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td><u>#<span data-ppcond="256">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#15" data-ref="_M/LTC_MD5">LTC_MD5</a></u></td></tr>
+<tr><th id="257">257</th><td><em>int</em> <dfn class="decl" id="md5_init" title='md5_init' data-ref="md5_init" >md5_init</dfn>(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> * <dfn class="local col4 decl" id="604md" title='md' data-type='hash_state *' data-ref="604md" >md</dfn>);</td></tr>
+<tr><th id="258">258</th><td><em>int</em> <dfn class="decl" id="md5_process" title='md5_process' data-ref="md5_process" >md5_process</dfn>(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> * <dfn class="local col5 decl" id="605md" title='md' data-type='hash_state *' data-ref="605md" >md</dfn>, <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="606in" title='in' data-type='const unsigned char *' data-ref="606in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col7 decl" id="607inlen" title='inlen' data-type='unsigned long' data-ref="607inlen" >inlen</dfn>);</td></tr>
+<tr><th id="259">259</th><td><em>int</em> <dfn class="decl" id="md5_done" title='md5_done' data-ref="md5_done" >md5_done</dfn>(<a class="typedef" href="#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> * <dfn class="local col8 decl" id="608md" title='md' data-type='hash_state *' data-ref="608md" >md</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col9 decl" id="609hash" title='hash' data-type='unsigned char *' data-ref="609hash" >hash</dfn>);</td></tr>
+<tr><th id="260">260</th><td><em>int</em> <dfn class="decl" id="md5_test" title='md5_test' data-ref="md5_test" >md5_test</dfn>(<em>void</em>);</td></tr>
+<tr><th id="261">261</th><td><b>extern</b> <em>const</em> <b>struct</b> <a class="type" href="#ltc_hash_descriptor" title='ltc_hash_descriptor' data-ref="ltc_hash_descriptor" >ltc_hash_descriptor</a> <dfn class="decl" id="md5_desc" title='md5_desc' data-ref="md5_desc" >md5_desc</dfn>;</td></tr>
+<tr><th id="262">262</th><td><u>#<span data-ppcond="256">endif</span></u></td></tr>
+<tr><th id="263">263</th><td></td></tr>
+<tr><th id="264">264</th><td><u>#<span data-ppcond="264">ifdef</span> <span class="macro" data-ref="_M/LTC_MD4">LTC_MD4</span></u></td></tr>
+<tr><th id="265">265</th><td><em>int</em> md4_init(hash_state * md);</td></tr>
+<tr><th id="266">266</th><td><em>int</em> md4_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="267">267</th><td><em>int</em> md4_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="268">268</th><td><em>int</em> md4_test(<em>void</em>);</td></tr>
+<tr><th id="269">269</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor md4_desc;</td></tr>
+<tr><th id="270">270</th><td><u>#<span data-ppcond="264">endif</span></u></td></tr>
+<tr><th id="271">271</th><td></td></tr>
+<tr><th id="272">272</th><td><u>#<span data-ppcond="272">ifdef</span> <span class="macro" data-ref="_M/LTC_MD2">LTC_MD2</span></u></td></tr>
+<tr><th id="273">273</th><td><em>int</em> md2_init(hash_state * md);</td></tr>
+<tr><th id="274">274</th><td><em>int</em> md2_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="275">275</th><td><em>int</em> md2_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="276">276</th><td><em>int</em> md2_test(<em>void</em>);</td></tr>
+<tr><th id="277">277</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor md2_desc;</td></tr>
+<tr><th id="278">278</th><td><u>#<span data-ppcond="272">endif</span></u></td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td><u>#<span data-ppcond="280">ifdef</span> <span class="macro" data-ref="_M/LTC_TIGER">LTC_TIGER</span></u></td></tr>
+<tr><th id="281">281</th><td><em>int</em> tiger_init(hash_state * md);</td></tr>
+<tr><th id="282">282</th><td><em>int</em> tiger_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="283">283</th><td><em>int</em> tiger_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="284">284</th><td><em>int</em> tiger_test(<em>void</em>);</td></tr>
+<tr><th id="285">285</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor tiger_desc;</td></tr>
+<tr><th id="286">286</th><td><u>#<span data-ppcond="280">endif</span></u></td></tr>
+<tr><th id="287">287</th><td></td></tr>
+<tr><th id="288">288</th><td><u>#<span data-ppcond="288">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD128">LTC_RIPEMD128</span></u></td></tr>
+<tr><th id="289">289</th><td><em>int</em> rmd128_init(hash_state * md);</td></tr>
+<tr><th id="290">290</th><td><em>int</em> rmd128_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="291">291</th><td><em>int</em> rmd128_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="292">292</th><td><em>int</em> rmd128_test(<em>void</em>);</td></tr>
+<tr><th id="293">293</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor rmd128_desc;</td></tr>
+<tr><th id="294">294</th><td><u>#<span data-ppcond="288">endif</span></u></td></tr>
+<tr><th id="295">295</th><td></td></tr>
+<tr><th id="296">296</th><td><u>#<span data-ppcond="296">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD160">LTC_RIPEMD160</span></u></td></tr>
+<tr><th id="297">297</th><td><em>int</em> rmd160_init(hash_state * md);</td></tr>
+<tr><th id="298">298</th><td><em>int</em> rmd160_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="299">299</th><td><em>int</em> rmd160_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="300">300</th><td><em>int</em> rmd160_test(<em>void</em>);</td></tr>
+<tr><th id="301">301</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor rmd160_desc;</td></tr>
+<tr><th id="302">302</th><td><u>#<span data-ppcond="296">endif</span></u></td></tr>
+<tr><th id="303">303</th><td></td></tr>
+<tr><th id="304">304</th><td><u>#<span data-ppcond="304">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD256">LTC_RIPEMD256</span></u></td></tr>
+<tr><th id="305">305</th><td><em>int</em> rmd256_init(hash_state * md);</td></tr>
+<tr><th id="306">306</th><td><em>int</em> rmd256_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="307">307</th><td><em>int</em> rmd256_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="308">308</th><td><em>int</em> rmd256_test(<em>void</em>);</td></tr>
+<tr><th id="309">309</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor rmd256_desc;</td></tr>
+<tr><th id="310">310</th><td><u>#<span data-ppcond="304">endif</span></u></td></tr>
+<tr><th id="311">311</th><td></td></tr>
+<tr><th id="312">312</th><td><u>#<span data-ppcond="312">ifdef</span> <span class="macro" data-ref="_M/LTC_RIPEMD320">LTC_RIPEMD320</span></u></td></tr>
+<tr><th id="313">313</th><td><em>int</em> rmd320_init(hash_state * md);</td></tr>
+<tr><th id="314">314</th><td><em>int</em> rmd320_process(hash_state * md, <em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen);</td></tr>
+<tr><th id="315">315</th><td><em>int</em> rmd320_done(hash_state * md, <em>unsigned</em> <em>char</em> *hash);</td></tr>
+<tr><th id="316">316</th><td><em>int</em> rmd320_test(<em>void</em>);</td></tr>
+<tr><th id="317">317</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_hash_descriptor rmd320_desc;</td></tr>
+<tr><th id="318">318</th><td><u>#<span data-ppcond="312">endif</span></u></td></tr>
+<tr><th id="319">319</th><td></td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td><em>int</em> <dfn class="decl" id="find_hash" title='find_hash' data-ref="find_hash" >find_hash</dfn>(<em>const</em> <em>char</em> *<dfn class="local col0 decl" id="610name" title='name' data-type='const char *' data-ref="610name" >name</dfn>);</td></tr>
+<tr><th id="322">322</th><td><em>int</em> <dfn class="decl" id="find_hash_id" title='find_hash_id' data-ref="find_hash_id" >find_hash_id</dfn>(<em>unsigned</em> <em>char</em> <dfn class="local col1 decl" id="611ID" title='ID' data-type='unsigned char' data-ref="611ID" >ID</dfn>);</td></tr>
+<tr><th id="323">323</th><td><em>int</em> <dfn class="decl" id="find_hash_oid" title='find_hash_oid' data-ref="find_hash_oid" >find_hash_oid</dfn>(<em>const</em> <em>unsigned</em> <em>long</em> *<dfn class="local col2 decl" id="612ID" title='ID' data-type='const unsigned long *' data-ref="612ID" >ID</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="613IDlen" title='IDlen' data-type='unsigned long' data-ref="613IDlen" >IDlen</dfn>);</td></tr>
+<tr><th id="324">324</th><td><em>int</em> <dfn class="decl" id="find_hash_any" title='find_hash_any' data-ref="find_hash_any" >find_hash_any</dfn>(<em>const</em> <em>char</em> *<dfn class="local col4 decl" id="614name" title='name' data-type='const char *' data-ref="614name" >name</dfn>, <em>int</em> <dfn class="local col5 decl" id="615digestlen" title='digestlen' data-type='int' data-ref="615digestlen" >digestlen</dfn>);</td></tr>
+<tr><th id="325">325</th><td><em>int</em> <dfn class="decl" id="register_hash" title='register_hash' data-ref="register_hash" >register_hash</dfn>(<em>const</em> <b>struct</b> <a class="type" href="#ltc_hash_descriptor" title='ltc_hash_descriptor' data-ref="ltc_hash_descriptor" >ltc_hash_descriptor</a> *<dfn class="local col6 decl" id="616hash" title='hash' data-type='const struct ltc_hash_descriptor *' data-ref="616hash" >hash</dfn>);</td></tr>
+<tr><th id="326">326</th><td><em>int</em> <dfn class="decl" id="unregister_hash" title='unregister_hash' data-ref="unregister_hash" >unregister_hash</dfn>(<em>const</em> <b>struct</b> <a class="type" href="#ltc_hash_descriptor" title='ltc_hash_descriptor' data-ref="ltc_hash_descriptor" >ltc_hash_descriptor</a> *<dfn class="local col7 decl" id="617hash" title='hash' data-type='const struct ltc_hash_descriptor *' data-ref="617hash" >hash</dfn>);</td></tr>
+<tr><th id="327">327</th><td><em>int</em> <dfn class="decl" id="hash_is_valid" title='hash_is_valid' data-ref="hash_is_valid" >hash_is_valid</dfn>(<em>int</em> <dfn class="local col8 decl" id="618idx" title='idx' data-type='int' data-ref="618idx" >idx</dfn>);</td></tr>
+<tr><th id="328">328</th><td></td></tr>
+<tr><th id="329">329</th><td><a class="macro" href="tomcrypt_custom.h.html#405" title="" data-ref="_M/LTC_MUTEX_PROTO">LTC_MUTEX_PROTO</a>(ltc_hash_mutex)</td></tr>
+<tr><th id="330">330</th><td></td></tr>
+<tr><th id="331">331</th><td><em>int</em> <dfn class="decl" id="hash_memory" title='hash_memory' data-ref="hash_memory" >hash_memory</dfn>(<em>int</em> <dfn class="local col9 decl" id="619hash" title='hash' data-type='int' data-ref="619hash" >hash</dfn>, </td></tr>
+<tr><th id="332">332</th><td>                <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="620in" title='in' data-type='const unsigned char *' data-ref="620in" >in</dfn>,  <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="621inlen" title='inlen' data-type='unsigned long' data-ref="621inlen" >inlen</dfn>, </td></tr>
+<tr><th id="333">333</th><td>                      <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="622out" title='out' data-type='unsigned char *' data-ref="622out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col3 decl" id="623outlen" title='outlen' data-type='unsigned long *' data-ref="623outlen" >outlen</dfn>);</td></tr>
+<tr><th id="334">334</th><td><em>int</em> <dfn class="decl" id="hash_memory_multi" title='hash_memory_multi' data-ref="hash_memory_multi" >hash_memory_multi</dfn>(<em>int</em> <dfn class="local col4 decl" id="624hash" title='hash' data-type='int' data-ref="624hash" >hash</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="625out" title='out' data-type='unsigned char *' data-ref="625out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col6 decl" id="626outlen" title='outlen' data-type='unsigned long *' data-ref="626outlen" >outlen</dfn>,</td></tr>
+<tr><th id="335">335</th><td>                      <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="627in" title='in' data-type='const unsigned char *' data-ref="627in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col8 decl" id="628inlen" title='inlen' data-type='unsigned long' data-ref="628inlen" >inlen</dfn>, ...);</td></tr>
+<tr><th id="336">336</th><td><em>int</em> <dfn class="decl" id="hash_filehandle" title='hash_filehandle' data-ref="hash_filehandle" >hash_filehandle</dfn>(<em>int</em> <dfn class="local col9 decl" id="629hash" title='hash' data-type='int' data-ref="629hash" >hash</dfn>, <a class="typedef" href="../../../../../../../include/stdio.h.html#FILE" title='FILE' data-type='struct _IO_FILE' data-ref="FILE" >FILE</a> *<dfn class="local col0 decl" id="630in" title='in' data-type='FILE *' data-ref="630in" >in</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col1 decl" id="631out" title='out' data-type='unsigned char *' data-ref="631out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col2 decl" id="632outlen" title='outlen' data-type='unsigned long *' data-ref="632outlen" >outlen</dfn>);</td></tr>
+<tr><th id="337">337</th><td><em>int</em> <dfn class="decl" id="hash_file" title='hash_file' data-ref="hash_file" >hash_file</dfn>(<em>int</em> <dfn class="local col3 decl" id="633hash" title='hash' data-type='int' data-ref="633hash" >hash</dfn>, <em>const</em> <em>char</em> *<dfn class="local col4 decl" id="634fname" title='fname' data-type='const char *' data-ref="634fname" >fname</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="635out" title='out' data-type='unsigned char *' data-ref="635out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col6 decl" id="636outlen" title='outlen' data-type='unsigned long *' data-ref="636outlen" >outlen</dfn>);</td></tr>
+<tr><th id="338">338</th><td></td></tr>
+<tr><th id="339">339</th><td><i>/* a simple macro for making hash "process" functions */</i></td></tr>
+<tr><th id="340">340</th><td><u>#define <dfn class="macro" id="_M/HASH_PROCESS" data-ref="_M/HASH_PROCESS">HASH_PROCESS</dfn>(func_name, compress_name, state_var, block_size)                       \</u></td></tr>
+<tr><th id="341">341</th><td><u>int func_name (hash_state * md, const unsigned char *in, unsigned long inlen)               \</u></td></tr>
+<tr><th id="342">342</th><td><u>{                                                                                           \</u></td></tr>
+<tr><th id="343">343</th><td><u>    unsigned long n;                                                                        \</u></td></tr>
+<tr><th id="344">344</th><td><u>    int           err;                                                                      \</u></td></tr>
+<tr><th id="345">345</th><td><u>    LTC_ARGCHK(md != NULL);                                                                 \</u></td></tr>
+<tr><th id="346">346</th><td><u>    LTC_ARGCHK(in != NULL);                                                                 \</u></td></tr>
+<tr><th id="347">347</th><td><u>    if (md-&gt; state_var .curlen &gt; sizeof(md-&gt; state_var .buf)) {                             \</u></td></tr>
+<tr><th id="348">348</th><td><u>       return CRYPT_INVALID_ARG;                                                            \</u></td></tr>
+<tr><th id="349">349</th><td><u>    }                                                                                       \</u></td></tr>
+<tr><th id="350">350</th><td><u>    while (inlen &gt; 0) {                                                                     \</u></td></tr>
+<tr><th id="351">351</th><td><u>        if (md-&gt; state_var .curlen == 0 &amp;&amp; inlen &gt;= block_size) {                           \</u></td></tr>
+<tr><th id="352">352</th><td><u>           if ((err = compress_name (md, (unsigned char *)in)) != CRYPT_OK) {               \</u></td></tr>
+<tr><th id="353">353</th><td><u>              return err;                                                                   \</u></td></tr>
+<tr><th id="354">354</th><td><u>           }                                                                                \</u></td></tr>
+<tr><th id="355">355</th><td><u>           md-&gt; state_var .length += block_size * 8;                                        \</u></td></tr>
+<tr><th id="356">356</th><td><u>           in             += block_size;                                                    \</u></td></tr>
+<tr><th id="357">357</th><td><u>           inlen          -= block_size;                                                    \</u></td></tr>
+<tr><th id="358">358</th><td><u>        } else {                                                                            \</u></td></tr>
+<tr><th id="359">359</th><td><u>           n = MIN(inlen, (block_size - md-&gt; state_var .curlen));                           \</u></td></tr>
+<tr><th id="360">360</th><td><u>           memcpy(md-&gt; state_var .buf + md-&gt; state_var.curlen, in, (size_t)n);              \</u></td></tr>
+<tr><th id="361">361</th><td><u>           md-&gt; state_var .curlen += n;                                                     \</u></td></tr>
+<tr><th id="362">362</th><td><u>           in             += n;                                                             \</u></td></tr>
+<tr><th id="363">363</th><td><u>           inlen          -= n;                                                             \</u></td></tr>
+<tr><th id="364">364</th><td><u>           if (md-&gt; state_var .curlen == block_size) {                                      \</u></td></tr>
+<tr><th id="365">365</th><td><u>              if ((err = compress_name (md, md-&gt; state_var .buf)) != CRYPT_OK) {            \</u></td></tr>
+<tr><th id="366">366</th><td><u>                 return err;                                                                \</u></td></tr>
+<tr><th id="367">367</th><td><u>              }                                                                             \</u></td></tr>
+<tr><th id="368">368</th><td><u>              md-&gt; state_var .length += 8*block_size;                                       \</u></td></tr>
+<tr><th id="369">369</th><td><u>              md-&gt; state_var .curlen = 0;                                                   \</u></td></tr>
+<tr><th id="370">370</th><td><u>           }                                                                                \</u></td></tr>
+<tr><th id="371">371</th><td><u>       }                                                                                    \</u></td></tr>
+<tr><th id="372">372</th><td><u>    }                                                                                       \</u></td></tr>
+<tr><th id="373">373</th><td><u>    return CRYPT_OK;                                                                        \</u></td></tr>
+<tr><th id="374">374</th><td><u>}</u></td></tr>
+<tr><th id="375">375</th><td></td></tr>
+<tr><th id="376">376</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_hash.h,v $ */</i></td></tr>
+<tr><th id="377">377</th><td><i>/* $Revision: 1.22 $ */</i></td></tr>
+<tr><th id="378">378</th><td><i>/* $Date: 2007/05/12 14:32:35 $ */</i></td></tr>
+<tr><th id="379">379</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

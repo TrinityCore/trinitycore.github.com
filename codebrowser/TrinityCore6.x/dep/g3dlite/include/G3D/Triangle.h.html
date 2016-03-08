@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+<title>Triangle.h [TrinityCore6.x/dep/g3dlite/include/G3D/Triangle.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/Triangle.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/Triangle.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> \file</span> G3D/Triangle.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc">  </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"><span class="command"> \maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> \created</span> 2003-04-05</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> \edited</span>  2011-06-20</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"></i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"><span class="command"> \cite</span> Random point method by  Greg Turk, Generating random points in triangles.  In A. S. Glassner, ed., Graphics Gems, pp. 24-28. Academic Press, 1990</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"></i></td></tr>
+<tr><th id="11">11</th><td><i class="doc"> Copyright 2000-2012, Morgan McGuire.</i></td></tr>
+<tr><th id="12">12</th><td><i class="doc"> All rights reserved.</i></td></tr>
+<tr><th id="13">13</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="15">ifndef</span> <span class="macro" data-ref="_M/G3D_Triangle_h">G3D_Triangle_h</span></u></td></tr>
+<tr><th id="16">16</th><td><u>#define <dfn class="macro" id="_M/G3D_Triangle_h" data-ref="_M/G3D_Triangle_h">G3D_Triangle_h</dfn></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="Vector3.h.html">"G3D/Vector3.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="Plane.h.html">"G3D/Plane.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="BoundsTrait.h.html">"G3D/BoundsTrait.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="debugAssert.h.html">"G3D/debugAssert.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="29">29</th><td><i class="doc">  A generic triangle representation.  This should not be used</i></td></tr>
+<tr><th id="30">30</th><td><i class="doc">  as the underlying triangle for creating models; it is intended</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc">  for providing fast property queries but requires a lot of</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">  storage and is mostly immutable.</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">  */</i></td></tr>
+<tr><th id="34">34</th><td><b>class</b> <dfn class="type def" id="G3D::Triangle" title='G3D::Triangle' data-ref="G3D::Triangle" >Triangle</dfn> {</td></tr>
+<tr><th id="35">35</th><td><b>private</b>:</td></tr>
+<tr><th id="36">36</th><td>    <b>friend</b> <b>class</b> <a class="type" href="CollisionDetection.h.html#G3D::CollisionDetection" title='G3D::CollisionDetection' data-ref="G3D::CollisionDetection" >CollisionDetection</a>;</td></tr>
+<tr><th id="37">37</th><td>    <b>friend</b> <b>class</b> <a class="type" href="Ray.h.html#G3D::Ray" title='G3D::Ray' data-ref="G3D::Ray" >Ray</a>;</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>                     <dfn class="decl" id="G3D::Triangle::_vertex" title='G3D::Triangle::_vertex' data-ref="G3D::Triangle::_vertex" >_vertex</dfn>[<var>3</var>];</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <i class="doc">/** edgeDirection[i] is the normalized vector v[i+1] - v[i] */</i></td></tr>
+<tr><th id="42">42</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>                     <dfn class="decl" id="G3D::Triangle::edgeDirection" title='G3D::Triangle::edgeDirection' data-ref="G3D::Triangle::edgeDirection" >edgeDirection</dfn>[<var>3</var>];</td></tr>
+<tr><th id="43">43</th><td>    <em>float</em>                       <dfn class="decl" id="G3D::Triangle::edgeMagnitude" title='G3D::Triangle::edgeMagnitude' data-ref="G3D::Triangle::edgeMagnitude" >edgeMagnitude</dfn>[<var>3</var>];</td></tr>
+<tr><th id="44">44</th><td>    <a class="type" href="Plane.h.html#G3D::Plane" title='G3D::Plane' data-ref="G3D::Plane" >Plane</a>                       <dfn class="decl" id="G3D::Triangle::_plane" title='G3D::Triangle::_plane' data-ref="G3D::Triangle::_plane" >_plane</dfn>;</td></tr>
+<tr><th id="45">45</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="type" href="Vector3.h.html#G3D::Vector3::Axis" title='G3D::Vector3::Axis' data-ref="G3D::Vector3::Axis" >Axis</a>               <dfn class="decl" id="G3D::Triangle::_primaryAxis" title='G3D::Triangle::_primaryAxis' data-ref="G3D::Triangle::_primaryAxis" >_primaryAxis</dfn>;</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <i class="doc">/** vertex[1] - vertex[0] */</i></td></tr>
+<tr><th id="48">48</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>                     <dfn class="decl" id="G3D::Triangle::_edge01" title='G3D::Triangle::_edge01' data-ref="G3D::Triangle::_edge01" >_edge01</dfn>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <i class="doc">/** vertex[2] - vertex[0] */</i></td></tr>
+<tr><th id="51">51</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>                     <dfn class="decl" id="G3D::Triangle::_edge02" title='G3D::Triangle::_edge02' data-ref="G3D::Triangle::_edge02" >_edge02</dfn>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <em>float</em>                       <dfn class="decl" id="G3D::Triangle::_area" title='G3D::Triangle::_area' data-ref="G3D::Triangle::_area" >_area</dfn>;</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D8Triangle4initERKNS_7Vector3ES3_S3_" title='G3D::Triangle::init' data-ref="_ZN3G3D8Triangle4initERKNS_7Vector3ES3_S3_" >init</dfn>(<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col1 decl" id="1v0" title='v0' data-type='const G3D::Vector3 &amp;' data-ref="1v0" >v0</dfn>, <em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col2 decl" id="2v1" title='v1' data-type='const G3D::Vector3 &amp;' data-ref="2v1" >v1</dfn>, <em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col3 decl" id="3v2" title='v2' data-type='const G3D::Vector3 &amp;' data-ref="3v2" >v2</dfn>);</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><b>public</b>:</td></tr>
+<tr><th id="58">58</th><td>    </td></tr>
+<tr><th id="59">59</th><td>    <dfn class="decl" id="_ZN3G3D8TriangleC1ERNS_11BinaryInputE" title='G3D::Triangle::Triangle' data-ref="_ZN3G3D8TriangleC1ERNS_11BinaryInputE" >Triangle</dfn>(<b>class</b> <a class="type" href="Crypto.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col4 decl" id="4b" title='b' data-type='class BinaryInput &amp;' data-ref="4b" >b</dfn>);</td></tr>
+<tr><th id="60">60</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D8Triangle9serializeERNS_12BinaryOutputE" title='G3D::Triangle::serialize' data-ref="_ZN3G3D8Triangle9serializeERNS_12BinaryOutputE" >serialize</dfn>(<b>class</b> <a class="type" href="Crypto.h.html#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp; <dfn class="local col5 decl" id="5b" title='b' data-type='class BinaryOutput &amp;' data-ref="5b" >b</dfn>);</td></tr>
+<tr><th id="61">61</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D8Triangle11deserializeERNS_11BinaryInputE" title='G3D::Triangle::deserialize' data-ref="_ZN3G3D8Triangle11deserializeERNS_11BinaryInputE" >deserialize</dfn>(<b>class</b> <a class="type" href="Crypto.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col6 decl" id="6b" title='b' data-type='class BinaryInput &amp;' data-ref="6b" >b</dfn>);</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <dfn class="decl" id="_ZN3G3D8TriangleC1Ev" title='G3D::Triangle::Triangle' data-ref="_ZN3G3D8TriangleC1Ev" >Triangle</dfn>();</td></tr>
+<tr><th id="64">64</th><td>    </td></tr>
+<tr><th id="65">65</th><td>    <dfn class="decl" id="_ZN3G3D8TriangleC1ERKNS_7Vector3ES3_S3_" title='G3D::Triangle::Triangle' data-ref="_ZN3G3D8TriangleC1ERKNS_7Vector3ES3_S3_" >Triangle</dfn>(<em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="local col7 decl" id="7v0" title='v0' data-type='const Point3 &amp;' data-ref="7v0" >v0</dfn>, <em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="local col8 decl" id="8v1" title='v1' data-type='const Point3 &amp;' data-ref="8v1" >v1</dfn>, <em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="local col9 decl" id="9v2" title='v2' data-type='const Point3 &amp;' data-ref="9v2" >v2</dfn>);</td></tr>
+<tr><th id="66">66</th><td>    </td></tr>
+<tr><th id="67">67</th><td>    <dfn class="decl" id="_ZN3G3D8TriangleD1Ev" title='G3D::Triangle::~Triangle' data-ref="_ZN3G3D8TriangleD1Ev" >~Triangle</dfn>();</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>    <i class="doc">/** 0, 1, or 2 */</i></td></tr>
+<tr><th id="70">70</th><td>    <b>inline</b> <em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="decl def" id="_ZNK3G3D8Triangle6vertexEi" title='G3D::Triangle::vertex' data-ref="_ZNK3G3D8Triangle6vertexEi" >vertex</dfn>(<em>int</em> <dfn class="local col0 decl" id="10n" title='n' data-type='int' data-ref="10n" >n</dfn>) <em>const</em> {</td></tr>
+<tr><th id="71">71</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>((n &gt;= <var>0</var>) &amp;&amp; (n &lt; <var>3</var>));</td></tr>
+<tr><th id="72">72</th><td>        <b>return</b> <a class="member" href="#G3D::Triangle::_vertex" title='G3D::Triangle::_vertex' data-ref="G3D::Triangle::_vertex" >_vertex</a>[<a class="local col0 ref" href="#10n" title='n' data-ref="10n" >n</a>];</td></tr>
+<tr><th id="73">73</th><td>    }</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>    <i class="doc">/** vertex[1] - vertex[0] */</i></td></tr>
+<tr><th id="76">76</th><td>    <b>inline</b> <em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="decl def" id="_ZNK3G3D8Triangle6edge01Ev" title='G3D::Triangle::edge01' data-ref="_ZNK3G3D8Triangle6edge01Ev" >edge01</dfn>() <em>const</em> {</td></tr>
+<tr><th id="77">77</th><td>        <b>return</b> <a class="member" href="#G3D::Triangle::_edge01" title='G3D::Triangle::_edge01' data-ref="G3D::Triangle::_edge01" >_edge01</a>;</td></tr>
+<tr><th id="78">78</th><td>    }</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <i class="doc">/** vertex[2] - vertex[0] */</i></td></tr>
+<tr><th id="81">81</th><td>    <b>inline</b> <em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="decl def" id="_ZNK3G3D8Triangle6edge02Ev" title='G3D::Triangle::edge02' data-ref="_ZNK3G3D8Triangle6edge02Ev" >edge02</dfn>() <em>const</em> {</td></tr>
+<tr><th id="82">82</th><td>        <b>return</b> <a class="member" href="#G3D::Triangle::_edge02" title='G3D::Triangle::_edge02' data-ref="G3D::Triangle::_edge02" >_edge02</a>;</td></tr>
+<tr><th id="83">83</th><td>    }</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>    <em>float</em> <dfn class="decl" id="_ZNK3G3D8Triangle4areaEv" title='G3D::Triangle::area' data-ref="_ZNK3G3D8Triangle4areaEv" >area</dfn>() <em>const</em>;</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="type" href="Vector3.h.html#G3D::Vector3::Axis" title='G3D::Vector3::Axis' data-ref="G3D::Vector3::Axis" >Axis</a> <dfn class="decl def" id="_ZNK3G3D8Triangle11primaryAxisEv" title='G3D::Triangle::primaryAxis' data-ref="_ZNK3G3D8Triangle11primaryAxisEv" >primaryAxis</dfn>() <em>const</em> {</td></tr>
+<tr><th id="88">88</th><td>        <b>return</b> <a class="member" href="#G3D::Triangle::_primaryAxis" title='G3D::Triangle::_primaryAxis' data-ref="G3D::Triangle::_primaryAxis" >_primaryAxis</a>;</td></tr>
+<tr><th id="89">89</th><td>    }</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>    <em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="decl" id="_ZNK3G3D8Triangle6normalEv" title='G3D::Triangle::normal' data-ref="_ZNK3G3D8Triangle6normalEv" >normal</dfn>() <em>const</em>;</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>    <i class="doc">/** Barycenter */</i></td></tr>
+<tr><th id="94">94</th><td>    <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a> <dfn class="decl" id="_ZNK3G3D8Triangle6centerEv" title='G3D::Triangle::center' data-ref="_ZNK3G3D8Triangle6centerEv" >center</dfn>() <em>const</em>;</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>    <em>const</em> <a class="type" href="Plane.h.html#G3D::Plane" title='G3D::Plane' data-ref="G3D::Plane" >Plane</a>&amp; <dfn class="decl" id="_ZNK3G3D8Triangle5planeEv" title='G3D::Triangle::plane' data-ref="_ZNK3G3D8Triangle5planeEv" >plane</dfn>() <em>const</em>;</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>    <i class="doc">/** Returns a random point in the triangle. */</i></td></tr>
+<tr><th id="99">99</th><td>    <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a> <dfn class="decl" id="_ZNK3G3D8Triangle11randomPointEv" title='G3D::Triangle::randomPoint' data-ref="_ZNK3G3D8Triangle11randomPointEv" >randomPoint</dfn>() <em>const</em>;</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZNK3G3D8Triangle21getRandomSurfacePointERNS_7Vector3ES2_" title='G3D::Triangle::getRandomSurfacePoint' data-ref="_ZNK3G3D8Triangle21getRandomSurfacePointERNS_7Vector3ES2_" >getRandomSurfacePoint</dfn></td></tr>
+<tr><th id="102">102</th><td>    (<a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="local col1 decl" id="11P" title='P' data-type='Point3 &amp;' data-ref="11P" >P</dfn>, </td></tr>
+<tr><th id="103">103</th><td>     <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col2 decl" id="12N" title='N' data-type='G3D::Vector3 &amp;' data-ref="12N" >N</dfn> = <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector36ignoreEv" title='G3D::Vector3::ignore' data-ref="_ZN3G3D7Vector36ignoreEv" id="_ZN3G3D7Vector36ignoreEv" >ignore</a>()) <em>const</em> {</td></tr>
+<tr><th id="104">104</th><td>        <a class="local col1 ref" href="#11P" title='P' data-ref="11P" >P</a> <a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3aSERKS0_" title='G3D::Vector3::operator=' data-ref="_ZN3G3D7Vector3aSERKS0_" id="_ZN3G3D7Vector3aSERKS0_" >=</a> <a class="member" href="#_ZNK3G3D8Triangle11randomPointEv" title='G3D::Triangle::randomPoint' data-ref="_ZNK3G3D8Triangle11randomPointEv" >randomPoint</a>();</td></tr>
+<tr><th id="105">105</th><td>        <a class="local col2 ref" href="#12N" title='N' data-ref="12N" >N</a> <a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3aSERKS0_" title='G3D::Vector3::operator=' data-ref="_ZN3G3D7Vector3aSERKS0_" id="_ZN3G3D7Vector3aSERKS0_" >=</a> <a class="member" href="#_ZNK3G3D8Triangle6normalEv" title='G3D::Triangle::normal' data-ref="_ZNK3G3D8Triangle6normalEv" >normal</a>();</td></tr>
+<tr><th id="106">106</th><td>    }</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="109">109</th><td><i class="doc">     For two triangles to be equal they must have</i></td></tr>
+<tr><th id="110">110</th><td><i class="doc">     the same vertices &lt;I&gt;in the same order&lt;/I&gt;.</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">     That is, vertex[0] == vertex[0], etc.</i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="113">113</th><td>    <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK3G3D8TriangleeqERKS0_" title='G3D::Triangle::operator==' data-ref="_ZNK3G3D8TriangleeqERKS0_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::Triangle" title='G3D::Triangle' data-ref="G3D::Triangle" >Triangle</a>&amp; <dfn class="local col3 decl" id="13other" title='other' data-type='const G3D::Triangle &amp;' data-ref="13other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="114">114</th><td>        <b>for</b> (<em>int</em> <dfn class="local col4 decl" id="14i" title='i' data-type='int' data-ref="14i" >i</dfn> = <var>0</var>; <a class="local col4 ref" href="#14i" title='i' data-ref="14i" >i</a> &lt; <var>3</var>; ++<a class="local col4 ref" href="#14i" title='i' data-ref="14i" >i</a>) {</td></tr>
+<tr><th id="115">115</th><td>            <b>if</b> (<a class="member" href="#G3D::Triangle::_vertex" title='G3D::Triangle::_vertex' data-ref="G3D::Triangle::_vertex" >_vertex</a>[<a class="local col4 ref" href="#14i" title='i' data-ref="14i" >i</a>] <a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector3neERKS0_" title='G3D::Vector3::operator!=' data-ref="_ZNK3G3D7Vector3neERKS0_" id="_ZNK3G3D7Vector3neERKS0_" >!=</a> <a class="local col3 ref" href="#13other" title='other' data-ref="13other" >other</a>.<a class="member" href="#G3D::Triangle::_vertex" title='G3D::Triangle::_vertex' data-ref="G3D::Triangle::_vertex" >_vertex</a>[<a class="local col4 ref" href="#14i" title='i' data-ref="14i" >i</a>]) {</td></tr>
+<tr><th id="116">116</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="117">117</th><td>            }</td></tr>
+<tr><th id="118">118</th><td>        }</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="121">121</th><td>    }</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td>    <b>inline</b> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZNK3G3D8Triangle8hashCodeEv" title='G3D::Triangle::hashCode' data-ref="_ZNK3G3D8Triangle8hashCodeEv" >hashCode</dfn>() <em>const</em> {</td></tr>
+<tr><th id="124">124</th><td>        <b>return</b></td></tr>
+<tr><th id="125">125</th><td>            <a class="member" href="#G3D::Triangle::_vertex" title='G3D::Triangle::_vertex' data-ref="G3D::Triangle::_vertex" >_vertex</a>[<var>0</var>].<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector38hashCodeEv" title='G3D::Vector3::hashCode' data-ref="_ZNK3G3D7Vector38hashCodeEv" id="_ZNK3G3D7Vector38hashCodeEv" >hashCode</a>() +</td></tr>
+<tr><th id="126">126</th><td>            (<a class="member" href="#G3D::Triangle::_vertex" title='G3D::Triangle::_vertex' data-ref="G3D::Triangle::_vertex" >_vertex</a>[<var>1</var>].<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector38hashCodeEv" title='G3D::Vector3::hashCode' data-ref="_ZNK3G3D7Vector38hashCodeEv" id="_ZNK3G3D7Vector38hashCodeEv" >hashCode</a>() &gt;&gt; <var>2</var>) +</td></tr>
+<tr><th id="127">127</th><td>            (<a class="member" href="#G3D::Triangle::_vertex" title='G3D::Triangle::_vertex' data-ref="G3D::Triangle::_vertex" >_vertex</a>[<var>2</var>].<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector38hashCodeEv" title='G3D::Vector3::hashCode' data-ref="_ZNK3G3D7Vector38hashCodeEv" id="_ZNK3G3D7Vector38hashCodeEv" >hashCode</a>() &gt;&gt; <var>3</var>);</td></tr>
+<tr><th id="128">128</th><td>    }</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D8Triangle9getBoundsERNS_5AABoxE" title='G3D::Triangle::getBounds' data-ref="_ZNK3G3D8Triangle9getBoundsERNS_5AABoxE" >getBounds</dfn>(<b>class</b> <a class="type" href="AABox.h.html#G3D::AABox" title='G3D::AABox' data-ref="G3D::AABox" >AABox</a>&amp;) <em>const</em>;</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="133">133</th><td><i class="doc">       <span class="command">@brief</span> Intersect the ray at distance less than<span class="command"> @a</span> <span class="arg">distance.</span></i></td></tr>
+<tr><th id="134">134</th><td><i class="doc"></i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">distance</span> Set to the maximum distance (can be G3D::inf())</i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">       to search for an intersection.  On return, this is the smaller</i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">       of the distance to the intersection, if one exists, and the original</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc">       value.</i></td></tr>
+<tr><th id="139">139</th><td><i class="doc">       </i></td></tr>
+<tr><th id="140">140</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">baryCoord</span>  If a triangle is hit before<span class="command"> @a</span> <span class="arg">distance,</span> a</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">       the barycentric coordinates of the hit location on the triangle.</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">       Otherwise, unmodified.</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc"></i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">       <span class="command">@return</span> True if there was an intersection before the original distance.</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="146">146</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D8Triangle9intersectERKNS_3RayERfPf" title='G3D::Triangle::intersect' data-ref="_ZNK3G3D8Triangle9intersectERKNS_3RayERfPf" >intersect</dfn>(<em>const</em> <b>class</b> <a class="type" href="Ray.h.html#G3D::Ray" title='G3D::Ray' data-ref="G3D::Ray" >Ray</a>&amp; <dfn class="local col5 decl" id="15ray" title='ray' data-type='const class Ray &amp;' data-ref="15ray" >ray</dfn>, <em>float</em>&amp; <dfn class="local col6 decl" id="16distance" title='distance' data-type='float &amp;' data-ref="16distance" >distance</dfn>, <em>float</em> <dfn class="local col7 decl" id="17baryCoord" title='baryCoord' data-type='float *' data-ref="17baryCoord" >baryCoord</dfn>[<var>3</var>]) <em>const</em>;</td></tr>
+<tr><th id="147">147</th><td>};</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td>} <i>// namespace G3D</i></td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><b>template</b> &lt;&gt; <b>struct</b> <dfn class="type def" id="HashTrait" title='HashTrait' data-ref="HashTrait" ><a class="type" href="HashTrait.h.html#HashTrait" title='HashTrait' data-ref="HashTrait" >HashTrait</a></dfn>&lt;<span class="namespace">G3D::</span><a class="type" href="#G3D::Triangle" title='G3D::Triangle' data-ref="G3D::Triangle" >Triangle</a>&gt; {</td></tr>
+<tr><th id="152">152</th><td>    <em>static</em> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZN9HashTraitIN3G3D8TriangleEE8hashCodeERKS1_" title='HashTrait&lt;G3D::Triangle&gt;::hashCode' data-ref="_ZN9HashTraitIN3G3D8TriangleEE8hashCodeERKS1_" >hashCode</dfn>(<em>const</em> <span class="namespace">G3D::</span><a class="type" href="#G3D::Triangle" title='G3D::Triangle' data-ref="G3D::Triangle" >Triangle</a>&amp; <dfn class="local col8 decl" id="18key" title='key' data-type='const G3D::Triangle &amp;' data-ref="18key" >key</dfn>) { <b>return</b> <a class="local col8 ref" href="#18key" title='key' data-ref="18key" >key</a>.<a class="ref" href="#_ZNK3G3D8Triangle8hashCodeEv" title='G3D::Triangle::hashCode' data-ref="_ZNK3G3D8Triangle8hashCodeEv" >hashCode</a>(); }</td></tr>
+<tr><th id="153">153</th><td>};</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td></td></tr>
+<tr><th id="156">156</th><td><b>template</b>&lt;&gt; <b>struct</b> <dfn class="type def" id="BoundsTrait" title='BoundsTrait' data-ref="BoundsTrait" ><a class="type" href="BoundsTrait.h.html#BoundsTrait" title='BoundsTrait' data-ref="BoundsTrait" >BoundsTrait</a></dfn>&lt;<b>class</b> <span class="namespace">G3D::</span><a class="type" href="#G3D::Triangle" title='G3D::Triangle' data-ref="G3D::Triangle" >Triangle</a>&gt; {</td></tr>
+<tr><th id="157">157</th><td>    <em>static</em> <em>void</em> <dfn class="decl def" id="_ZN11BoundsTraitIN3G3D8TriangleEE9getBoundsERKS1_RNS0_5AABoxE" title='BoundsTrait&lt;G3D::Triangle&gt;::getBounds' data-ref="_ZN11BoundsTraitIN3G3D8TriangleEE9getBoundsERKS1_RNS0_5AABoxE" >getBounds</dfn>(<em>const</em> <span class="namespace">G3D::</span><a class="type" href="#G3D::Triangle" title='G3D::Triangle' data-ref="G3D::Triangle" >Triangle</a>&amp; <dfn class="local col9 decl" id="19t" title='t' data-type='const G3D::Triangle &amp;' data-ref="19t" >t</dfn>, <span class="namespace">G3D::</span><a class="type" href="AABox.h.html#G3D::AABox" title='G3D::AABox' data-ref="G3D::AABox" >AABox</a>&amp; <dfn class="local col0 decl" id="20out" title='out' data-type='G3D::AABox &amp;' data-ref="20out" >out</dfn>) { <a class="local col9 ref" href="#19t" title='t' data-ref="19t" >t</a>.<a class="ref" href="#_ZNK3G3D8Triangle9getBoundsERNS_5AABoxE" title='G3D::Triangle::getBounds' data-ref="_ZNK3G3D8Triangle9getBoundsERNS_5AABoxE" >getBounds</a>(<a class="local col0 ref" href="#20out" title='out' data-ref="20out" >out</a>); }</td></tr>
+<tr><th id="158">158</th><td>};</td></tr>
+<tr><th id="159">159</th><td></td></tr>
+<tr><th id="160">160</th><td><u>#<span data-ppcond="15">endif</span></u></td></tr>
+<tr><th id="161">161</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/CollisionDetection.cpp.html'>TrinityCore6.x/dep/g3dlite/source/CollisionDetection.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

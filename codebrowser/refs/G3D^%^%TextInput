@@ -1,0 +1,150 @@
+<def f='TrinityCore3.3.5/dep/g3dlite/include/G3D/TextInput.h' l='223'/>
+<size>320</size>
+<doc f='TrinityCore3.3.5/dep/g3dlite/include/G3D/TextInput.h' l='150'>/**
+ \brief A simple tokenizer for parsing text files.  
+ 
+ TextInput handles a
+ superset of C++,Java, Matlab, and Bash code text including single
+ line comments, block comments, quoted strings with escape sequences,
+ and operators.  TextInput recognizes several categories of tokens,
+ which are separated by white space, quotation marks, or the end of a
+ recognized operator:
+
+ &lt;ul&gt;
+  &lt;li&gt;&lt;CODE&gt;Token::SINGLE_QUOTED_TYPE&lt;/CODE&gt; string of characters surrounded by single quotes, e.g., &apos;x&apos;, &apos;\\0&apos;, &apos;foo&apos;.
+  &lt;li&gt;&lt;CODE&gt;Token::DOUBLE_QUOTED_TYPE&lt;/CODE&gt; string of characters surrounded by double quotes, e.g., &quot;x&quot;, &quot;abc\txyz&quot;, &quot;b o b&quot;.
+  &lt;li&gt;&lt;CODE&gt;Token::SYMBOL_TYPE&lt;/CODE&gt; legal C++ operators, keywords, and identifiers.  e.g., &gt;=, Foo, _X, class, {
+  &lt;li&gt;&lt;CODE&gt;Token::INTEGER_TYPE&lt;/CODE&gt; numbers without decimal places or exponential notation. e.g., 10, 0x17F, 32, 0, -155
+  &lt;li&gt;&lt;CODE&gt;Token::FLOATING_POINT_TYPE&lt;/CODE&gt; numbers with decimal places or exponential notation. e.g., 1e3, -1.2, .4, 0.5
+  &lt;li&gt;&lt;CODE&gt;Token::BOOLEAN_TYPE&lt;/CODE&gt; special symbols like &quot;true&quot; and &quot;false&quot;; the exact details can be configured in TextInput::Settings
+  &lt;li&gt;&lt;CODE&gt;Token::LINE_COMMENT_TYPE&lt;/CODE&gt; (disabled by default); generated for line comments as specified by TextInput::Settings
+  &lt;li&gt;&lt;CODE&gt;Token::BLOCK_COMMENT_TYPE&lt;/CODE&gt; (disabled by default); generated for c-style block comments as specified by TextInput::Settings
+  &lt;li&gt;&lt;CODE&gt;Token::NEWLINE_TYPE&lt;/CODE&gt; (disabled by default); generated for any of &quot;\\r&quot;, &quot;\\n&quot; or &quot;\\r\\n&quot;
+ &lt;/ul&gt;
+
+ &lt;P&gt;The special &quot;..&quot; and &quot;...&quot; tokens are always recognized in
+ addition to normal C++ operators. Additional tokens can be made
+ available by changing the Settings.
+
+ Negative numbers are handled specially because of the ambiguity between unary minus and negative numbers-- 
+ see the note on TextInput::read.
+
+  TextInput does not have helper functions for types with non-obvious
+  formatting, or helpers that would be redundant.  Use the serialize
+  methods instead for parsing specific types like int, Vector3, and
+  Color3.
+
+  Inside quoted strings escape sequences are converted.  Thus the
+  string token for [&quot;a\\nb&quot;] is &apos;a&apos;, followed by a newline, followed by
+  &apos;b&apos;.  Outside of quoted strings, escape sequences are not converted,
+  so the token sequence for [a\\nb] is symbol &apos;a&apos;, symbol &apos;\\&apos;, symbol
+  &apos;nb&apos; (this matches what a C++ parser would do).  The exception is
+  that a specified TextInput::Settings::otherCommentCharacter preceeded
+  by a backslash is assumed to be an escaped comment character and is
+  returned as a symbol token instead of being parsed as a comment
+  (this is what a LaTex or VRML parser would do).
+
+  &lt;B&gt;Examples&lt;/B&gt;
+
+  \code
+  TextInput ti(TextInput::FROM_STRING, &quot;name = \&quot;Max\&quot;, height = 6&quot;);
+
+  Token t;
+
+  t = ti.read(); 
+  debugAssert(t.type == Token::SYMBOL);
+  debugAssert(t.sval == &quot;name&quot;);
+
+  ti.read();
+  debugAssert(t.type == Token::SYMBOL);
+  debugAssert(t.sval == &quot;=&quot;);
+
+  std::string name = ti.read().sval;
+  ti.read();
+  \endcode
+
+  \code
+  TextInput ti(TextInput::FROM_STRING, &quot;name = \&quot;Max\&quot;, height = 6&quot;);
+  ti.readSymbols(&quot;name&quot;, &quot;=&quot;);
+  std::string name = ti.readString();
+  ti.readSymbols(&quot;,&quot;, &quot;height&quot;, &quot;=&quot;);
+  double height = ti. readNumber();
+  \endcode
+
+ Assumes that the file is not modified once opened.
+ */</doc>
+<def f='TrinityCore6.x/dep/g3dlite/include/G3D/TextInput.h' l='223'/>
+<size>320</size>
+<doc f='TrinityCore6.x/dep/g3dlite/include/G3D/TextInput.h' l='150'>/**
+ \brief A simple tokenizer for parsing text files.  
+ 
+ TextInput handles a
+ superset of C++,Java, Matlab, and Bash code text including single
+ line comments, block comments, quoted strings with escape sequences,
+ and operators.  TextInput recognizes several categories of tokens,
+ which are separated by white space, quotation marks, or the end of a
+ recognized operator:
+
+ &lt;ul&gt;
+  &lt;li&gt;&lt;CODE&gt;Token::SINGLE_QUOTED_TYPE&lt;/CODE&gt; string of characters surrounded by single quotes, e.g., &apos;x&apos;, &apos;\\0&apos;, &apos;foo&apos;.
+  &lt;li&gt;&lt;CODE&gt;Token::DOUBLE_QUOTED_TYPE&lt;/CODE&gt; string of characters surrounded by double quotes, e.g., &quot;x&quot;, &quot;abc\txyz&quot;, &quot;b o b&quot;.
+  &lt;li&gt;&lt;CODE&gt;Token::SYMBOL_TYPE&lt;/CODE&gt; legal C++ operators, keywords, and identifiers.  e.g., &gt;=, Foo, _X, class, {
+  &lt;li&gt;&lt;CODE&gt;Token::INTEGER_TYPE&lt;/CODE&gt; numbers without decimal places or exponential notation. e.g., 10, 0x17F, 32, 0, -155
+  &lt;li&gt;&lt;CODE&gt;Token::FLOATING_POINT_TYPE&lt;/CODE&gt; numbers with decimal places or exponential notation. e.g., 1e3, -1.2, .4, 0.5
+  &lt;li&gt;&lt;CODE&gt;Token::BOOLEAN_TYPE&lt;/CODE&gt; special symbols like &quot;true&quot; and &quot;false&quot;; the exact details can be configured in TextInput::Settings
+  &lt;li&gt;&lt;CODE&gt;Token::LINE_COMMENT_TYPE&lt;/CODE&gt; (disabled by default); generated for line comments as specified by TextInput::Settings
+  &lt;li&gt;&lt;CODE&gt;Token::BLOCK_COMMENT_TYPE&lt;/CODE&gt; (disabled by default); generated for c-style block comments as specified by TextInput::Settings
+  &lt;li&gt;&lt;CODE&gt;Token::NEWLINE_TYPE&lt;/CODE&gt; (disabled by default); generated for any of &quot;\\r&quot;, &quot;\\n&quot; or &quot;\\r\\n&quot;
+ &lt;/ul&gt;
+
+ &lt;P&gt;The special &quot;..&quot; and &quot;...&quot; tokens are always recognized in
+ addition to normal C++ operators. Additional tokens can be made
+ available by changing the Settings.
+
+ Negative numbers are handled specially because of the ambiguity between unary minus and negative numbers-- 
+ see the note on TextInput::read.
+
+  TextInput does not have helper functions for types with non-obvious
+  formatting, or helpers that would be redundant.  Use the serialize
+  methods instead for parsing specific types like int, Vector3, and
+  Color3.
+
+  Inside quoted strings escape sequences are converted.  Thus the
+  string token for [&quot;a\\nb&quot;] is &apos;a&apos;, followed by a newline, followed by
+  &apos;b&apos;.  Outside of quoted strings, escape sequences are not converted,
+  so the token sequence for [a\\nb] is symbol &apos;a&apos;, symbol &apos;\\&apos;, symbol
+  &apos;nb&apos; (this matches what a C++ parser would do).  The exception is
+  that a specified TextInput::Settings::otherCommentCharacter preceeded
+  by a backslash is assumed to be an escaped comment character and is
+  returned as a symbol token instead of being parsed as a comment
+  (this is what a LaTex or VRML parser would do).
+
+  &lt;B&gt;Examples&lt;/B&gt;
+
+  \code
+  TextInput ti(TextInput::FROM_STRING, &quot;name = \&quot;Max\&quot;, height = 6&quot;);
+
+  Token t;
+
+  t = ti.read(); 
+  debugAssert(t.type == Token::SYMBOL);
+  debugAssert(t.sval == &quot;name&quot;);
+
+  ti.read();
+  debugAssert(t.type == Token::SYMBOL);
+  debugAssert(t.sval == &quot;=&quot;);
+
+  std::string name = ti.read().sval;
+  ti.read();
+  \endcode
+
+  \code
+  TextInput ti(TextInput::FROM_STRING, &quot;name = \&quot;Max\&quot;, height = 6&quot;);
+  ti.readSymbols(&quot;name&quot;, &quot;=&quot;);
+  std::string name = ti.readString();
+  ti.readSymbols(&quot;,&quot;, &quot;height&quot;, &quot;=&quot;);
+  double height = ti. readNumber();
+  \endcode
+
+ Assumes that the file is not modified once opened.
+ */</doc>

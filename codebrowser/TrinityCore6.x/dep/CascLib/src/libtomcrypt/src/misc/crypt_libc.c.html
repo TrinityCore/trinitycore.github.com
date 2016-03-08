@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<title>crypt_libc.c [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/misc/crypt_libc.c] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/misc/crypt_libc.c'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>misc</a>/crypt_libc.c</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><i>/* crypt_libc.c                           Copyright (c) Ladislav Zezula 2010 */</i></td></tr>
+<tr><th id="3">3</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="4">4</th><td><i>/* Description:                                                              */</i></td></tr>
+<tr><th id="5">5</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="6">6</th><td><i>/*   Date    Ver   Who  Comment                                              */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* --------  ----  ---  -------                                              */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* 05.05.10  1.00  Lad  The first version of crypt_libc.c                    */</i></td></tr>
+<tr><th id="9">9</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="10">10</th><td><i></i></td></tr>
+<tr><th id="11">11</th><td><i>// LibTomCrypt header</i></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../../../../../../../include/stdlib.h.html">&lt;stdlib.h&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../headers/tomcrypt.h.html">"../headers/tomcrypt.h"</a></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><em>void</em> * <dfn class="decl def" id="LibTomMalloc" title='LibTomMalloc' data-ref="LibTomMalloc" >LibTomMalloc</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="1n" title='n' data-type='size_t' data-ref="1n" >n</dfn>)</td></tr>
+<tr><th id="16">16</th><td>{</td></tr>
+<tr><th id="17">17</th><td>    <b>return</b> <a class="ref" href="../../../../../../../include/stdlib.h.html#malloc" title='malloc' data-ref="malloc" id="malloc" >malloc</a>(<a class="local col1 ref" href="#1n" title='n' data-ref="1n" >n</a>);</td></tr>
+<tr><th id="18">18</th><td>}</td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><em>void</em> * <dfn class="decl def" id="LibTomCalloc" title='LibTomCalloc' data-ref="LibTomCalloc" >LibTomCalloc</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="2n" title='n' data-type='size_t' data-ref="2n" >n</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="3s" title='s' data-type='size_t' data-ref="3s" >s</dfn>)</td></tr>
+<tr><th id="21">21</th><td>{</td></tr>
+<tr><th id="22">22</th><td>    <b>return</b> <a class="ref" href="../../../../../../../include/stdlib.h.html#calloc" title='calloc' data-ref="calloc" id="calloc" >calloc</a>(<a class="local col2 ref" href="#2n" title='n' data-ref="2n" >n</a>, <a class="local col3 ref" href="#3s" title='s' data-ref="3s" >s</a>);</td></tr>
+<tr><th id="23">23</th><td>}</td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><em>void</em> * <dfn class="decl def" id="LibTomRealloc" title='LibTomRealloc' data-ref="LibTomRealloc" >LibTomRealloc</dfn>(<em>void</em> *<dfn class="local col4 decl" id="4p" title='p' data-type='void *' data-ref="4p" >p</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="5n" title='n' data-type='size_t' data-ref="5n" >n</dfn>)</td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <b>return</b> <a class="ref" href="../../../../../../../include/stdlib.h.html#realloc" title='realloc' data-ref="realloc" id="realloc" >realloc</a>(<a class="local col4 ref" href="#4p" title='p' data-ref="4p" >p</a>, <a class="local col5 ref" href="#5n" title='n' data-ref="5n" >n</a>);</td></tr>
+<tr><th id="28">28</th><td>}</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><em>void</em> <dfn class="decl def" id="LibTomFree" title='LibTomFree' data-ref="LibTomFree" >LibTomFree</dfn>(<em>void</em> * <dfn class="local col6 decl" id="6p" title='p' data-type='void *' data-ref="6p" >p</dfn>)</td></tr>
+<tr><th id="31">31</th><td>{</td></tr>
+<tr><th id="32">32</th><td>    <a class="ref" href="../../../../../../../include/stdlib.h.html#free" title='free' data-ref="free" id="free" >free</a>(<a class="local col6 ref" href="#6p" title='p' data-ref="6p" >p</a>);</td></tr>
+<tr><th id="33">33</th><td>}</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><a class="typedef" href="../../../../../../../include/time.h.html#clock_t" title='clock_t' data-type='__clock_t' data-ref="clock_t" >clock_t</a> <dfn class="decl def" id="LibTomClock" title='LibTomClock' data-ref="LibTomClock" >LibTomClock</dfn>(<em>void</em>)</td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td>    <b>return</b> <a class="ref" href="../../../../../../../include/time.h.html#clock" title='clock' data-ref="clock" id="clock" >clock</a>();</td></tr>
+<tr><th id="38">38</th><td>}</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><em>void</em> <dfn class="decl def" id="LibTomQsort" title='LibTomQsort' data-ref="LibTomQsort" >LibTomQsort</dfn>(<em>void</em> *<dfn class="local col7 decl" id="7base" title='base' data-type='void *' data-ref="7base" >base</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="8nmemb" title='nmemb' data-type='size_t' data-ref="8nmemb" >nmemb</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="9size" title='size' data-type='size_t' data-ref="9size" >size</dfn>, <em>int</em>(*<dfn class="local col0 decl" id="10compar" title='compar' data-type='int (*)(const void *, const void *)' data-ref="10compar" >compar</dfn>)(<em>const</em> <em>void</em> *, <em>const</em> <em>void</em> *))</td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>    <a class="ref" href="../../../../../../../include/stdlib.h.html#qsort" title='qsort' data-ref="qsort" id="qsort" >qsort</a>(<a class="local col7 ref" href="#7base" title='base' data-ref="7base" >base</a>, <a class="local col8 ref" href="#8nmemb" title='nmemb' data-ref="8nmemb" >nmemb</a>, <a class="local col9 ref" href="#9size" title='size' data-ref="9size" >size</a>, <a class="local col0 ref" href="#10compar" title='compar' data-ref="10compar" >compar</a>);</td></tr>
+<tr><th id="43">43</th><td>}</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

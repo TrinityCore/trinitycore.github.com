@@ -1,0 +1,360 @@
+<!doctype html>
+<html>
+<head>
+<title>EventMap.h [TrinityCore3.3.5/src/common/Utilities/EventMap.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Utilities/EventMap.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Utilities</a>/EventMap.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/_EVENT_MAP_H_">_EVENT_MAP_H_</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/_EVENT_MAP_H_" data-ref="_M/_EVENT_MAP_H_">_EVENT_MAP_H_</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="Duration.h.html">"Duration.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="Util.h.html">"Util.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>class</b> <dfn class="type def" id="EventMap" title='EventMap' data-ref="EventMap" >EventMap</dfn></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="28">28</th><td><i class="doc">    * Internal storage type.</i></td></tr>
+<tr><th id="29">29</th><td><i class="doc">    * Key: Time as uint32 when the event should occur.</i></td></tr>
+<tr><th id="30">30</th><td><i class="doc">    * Value: The event data as uint32.</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc">    *</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">    * Structure of event data:</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">    * - Bit  0 - 15: Event Id.</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">    * - Bit 16 - 23: Group</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc">    * - Bit 24 - 31: Phase</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc">    * - Pattern: 0xPPGGEEEE</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="38">38</th><td>    <b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../include/c++/4.9/bits/stl_multimap.h.html#std::multimap" title='std::multimap' data-ref="std::multimap" >multimap</a>&lt;<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&gt; <dfn class="typedef" id="EventMap::EventStore" title='EventMap::EventStore' data-type='std::multimap&lt;uint32, uint32&gt;' data-ref="EventMap::EventStore" >EventStore</dfn>;</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><b>public</b>:</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="decl def" id="_ZN8EventMapC1Ev" title='EventMap::EventMap' data-ref="_ZN8EventMapC1Ev" >EventMap</dfn>() : <a class="member" href="#EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</a>(<var>0</var>), <a class="member" href="#EventMap::_phase" title='EventMap::_phase' data-ref="EventMap::_phase" >_phase</a>(<var>0</var>), <a class="member" href="#EventMap::_lastEvent" title='EventMap::_lastEvent' data-ref="EventMap::_lastEvent" >_lastEvent</a>(<var>0</var>) { }</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">Reset</span></i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">    * <span class="command">@brief</span> Removes all scheduled events and resets time and phase.</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="47">47</th><td>    <em>void</em> <a class="decl" href="EventMap.cpp.html#_ZN8EventMap5ResetEv" title='EventMap::Reset' data-ref="_ZN8EventMap5ResetEv" id="_ZN8EventMap5ResetEv" >Reset</a>();</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">Update</span></i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">    * <span class="command">@brief</span> Updates the timer of the event map.</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">time</span> Value in ms to be added to time.</i></td></tr>
+<tr><th id="53">53</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="54">54</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap6UpdateEj" title='EventMap::Update' data-ref="_ZN8EventMap6UpdateEj" >Update</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="1time" title='time' data-type='uint32' data-ref="1time" >time</dfn>)</td></tr>
+<tr><th id="55">55</th><td>    {</td></tr>
+<tr><th id="56">56</th><td>        <a class="member" href="#EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</a> += <a class="local col1 ref" href="#1time" title='time' data-ref="1time" >time</a>;</td></tr>
+<tr><th id="57">57</th><td>    }</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">GetTimer</span></i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">    * <span class="command">@return</span> Current timer in ms value.</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="63">63</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK8EventMap8GetTimerEv" title='EventMap::GetTimer' data-ref="_ZNK8EventMap8GetTimerEv" >GetTimer</dfn>() <em>const</em></td></tr>
+<tr><th id="64">64</th><td>    {</td></tr>
+<tr><th id="65">65</th><td>        <b>return</b> <a class="member" href="#EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</a>;</td></tr>
+<tr><th id="66">66</th><td>    }</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">GetPhaseMask</span></i></td></tr>
+<tr><th id="70">70</th><td><i class="doc">    * <span class="command">@return</span> Active phases as mask.</i></td></tr>
+<tr><th id="71">71</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="72">72</th><td>    <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl def" id="_ZNK8EventMap12GetPhaseMaskEv" title='EventMap::GetPhaseMask' data-ref="_ZNK8EventMap12GetPhaseMaskEv" >GetPhaseMask</dfn>() <em>const</em></td></tr>
+<tr><th id="73">73</th><td>    {</td></tr>
+<tr><th id="74">74</th><td>        <b>return</b> <a class="member" href="#EventMap::_phase" title='EventMap::_phase' data-ref="EventMap::_phase" >_phase</a>;</td></tr>
+<tr><th id="75">75</th><td>    }</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">Empty</span></i></td></tr>
+<tr><th id="79">79</th><td><i class="doc">    * <span class="command">@return</span> True, if there are no events scheduled.</i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="81">81</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK8EventMap5EmptyEv" title='EventMap::Empty' data-ref="_ZNK8EventMap5EmptyEv" >Empty</dfn>() <em>const</em></td></tr>
+<tr><th id="82">82</th><td>    {</td></tr>
+<tr><th id="83">83</th><td>        <b>return</b> <a class="member" href="#EventMap::_eventMap" title='EventMap::_eventMap' data-ref="EventMap::_eventMap" >_eventMap</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_multimap.h.html#_ZNKSt8multimap5emptyEv" title='std::multimap::empty' data-ref="_ZNKSt8multimap5emptyEv" id="_ZNKSt8multimap5emptyEv" >empty</a>();</td></tr>
+<tr><th id="84">84</th><td>    }</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="87">87</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">SetPhase</span></i></td></tr>
+<tr><th id="88">88</th><td><i class="doc">    * <span class="command">@brief</span> Sets the phase of the map (absolute).</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> Phase which should be set. Values: 1 - 8. 0 resets phase.</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="91">91</th><td>    <em>void</em> <a class="decl" href="EventMap.cpp.html#_ZN8EventMap8SetPhaseEh" title='EventMap::SetPhase' data-ref="_ZN8EventMap8SetPhaseEh" id="_ZN8EventMap8SetPhaseEh" >SetPhase</a>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col2 decl" id="2phase" title='phase' data-type='uint8' data-ref="2phase" >phase</dfn>);</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="94">94</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">AddPhase</span></i></td></tr>
+<tr><th id="95">95</th><td><i class="doc">    * <span class="command">@brief</span> Activates the given phase (bitwise).</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> Phase which should be activated. Values: 1 - 8</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="98">98</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap8AddPhaseEh" title='EventMap::AddPhase' data-ref="_ZN8EventMap8AddPhaseEh" >AddPhase</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col3 decl" id="3phase" title='phase' data-type='uint8' data-ref="3phase" >phase</dfn>)</td></tr>
+<tr><th id="99">99</th><td>    {</td></tr>
+<tr><th id="100">100</th><td>        <b>if</b> (<a class="local col3 ref" href="#3phase" title='phase' data-ref="3phase" >phase</a> &amp;&amp; <a class="local col3 ref" href="#3phase" title='phase' data-ref="3phase" >phase</a> &lt;= <var>8</var>)</td></tr>
+<tr><th id="101">101</th><td>            <a class="member" href="#EventMap::_phase" title='EventMap::_phase' data-ref="EventMap::_phase" >_phase</a> |= <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>(<var>1</var> &lt;&lt; (<a class="local col3 ref" href="#3phase" title='phase' data-ref="3phase" >phase</a> - <var>1</var>));</td></tr>
+<tr><th id="102">102</th><td>    }</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">RemovePhase</span></i></td></tr>
+<tr><th id="106">106</th><td><i class="doc">    * <span class="command">@brief</span> Deactivates the given phase (bitwise).</i></td></tr>
+<tr><th id="107">107</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> Phase which should be deactivated. Values: 1 - 8.</i></td></tr>
+<tr><th id="108">108</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="109">109</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap11RemovePhaseEh" title='EventMap::RemovePhase' data-ref="_ZN8EventMap11RemovePhaseEh" >RemovePhase</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col4 decl" id="4phase" title='phase' data-type='uint8' data-ref="4phase" >phase</dfn>)</td></tr>
+<tr><th id="110">110</th><td>    {</td></tr>
+<tr><th id="111">111</th><td>        <b>if</b> (<a class="local col4 ref" href="#4phase" title='phase' data-ref="4phase" >phase</a> &amp;&amp; <a class="local col4 ref" href="#4phase" title='phase' data-ref="4phase" >phase</a> &lt;= <var>8</var>)</td></tr>
+<tr><th id="112">112</th><td>            <a class="member" href="#EventMap::_phase" title='EventMap::_phase' data-ref="EventMap::_phase" >_phase</a> &amp;= <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>(~(<var>1</var> &lt;&lt; (<a class="local col4 ref" href="#4phase" title='phase' data-ref="4phase" >phase</a> - <var>1</var>)));</td></tr>
+<tr><th id="113">113</th><td>    }</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">ScheduleEvent</span></i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">    * <span class="command">@brief</span> Creates new event entry in map.</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">eventId</span> The id of the new event.</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">time</span> The time in milliseconds as std::chrono::duration until the event occurs.</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">group</span> The group which the event is associated to. Has to be between 1 and 8. 0 means it has no group.</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> The phase in which the event can occur. Has to be between 1 and 8. 0 means it can occur in all phases.</i></td></tr>
+<tr><th id="122">122</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="123">123</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap13ScheduleEventEjRKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEEjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjRKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEEjh" >ScheduleEvent</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="5eventId" title='eventId' data-type='uint32' data-ref="5eventId" >eventId</dfn>, <a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col6 decl" id="6time" title='time' data-type='const Milliseconds &amp;' data-ref="6time" >time</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="7group" title='group' data-type='uint32' data-ref="7group" >group</dfn> = <var>0</var>, <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col8 decl" id="8phase" title='phase' data-type='uint8' data-ref="8phase" >phase</dfn> = <var>0</var>)</td></tr>
+<tr><th id="124">124</th><td>    {</td></tr>
+<tr><th id="125">125</th><td>        <a class="member" href="EventMap.cpp.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="local col5 ref" href="#5eventId" title='eventId' data-ref="5eventId" >eventId</a>, <a class="local col6 ref" href="#6time" title='time' data-ref="6time" >time</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>(), <a class="local col7 ref" href="#7group" title='group' data-ref="7group" >group</a>, <a class="local col8 ref" href="#8phase" title='phase' data-ref="8phase" >phase</a>);</td></tr>
+<tr><th id="126">126</th><td>    }</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="129">129</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">ScheduleEvent</span></i></td></tr>
+<tr><th id="130">130</th><td><i class="doc">    * <span class="command">@brief</span> Creates new event entry in map.</i></td></tr>
+<tr><th id="131">131</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">eventId</span> The id of the new event.</i></td></tr>
+<tr><th id="132">132</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">time</span> The time in milliseconds until the event occurs.</i></td></tr>
+<tr><th id="133">133</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">group</span> The group which the event is associated to. Has to be between 1 and 8. 0 means it has no group.</i></td></tr>
+<tr><th id="134">134</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> The phase in which the event can occur. Has to be between 1 and 8. 0 means it can occur in all phases.</i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="136">136</th><td>    <em>void</em> <a class="decl" href="EventMap.cpp.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="9eventId" title='eventId' data-type='uint32' data-ref="9eventId" >eventId</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col0 decl" id="10time" title='time' data-type='uint32' data-ref="10time" >time</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="11group" title='group' data-type='uint32' data-ref="11group" >group</dfn> = <var>0</var>, <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col2 decl" id="12phase" title='phase' data-type='uint8' data-ref="12phase" >phase</dfn> = <var>0</var>);</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="139">139</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">RescheduleEvent</span></i></td></tr>
+<tr><th id="140">140</th><td><i class="doc">    * <span class="command">@brief</span> Cancels the given event and reschedules it.</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">eventId</span> The id of the event.</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">time</span> The time in milliseconds as std::chrono::duration until the event occurs.</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">group</span> The group which the event is associated to. Has to be between 1 and 8. 0 means it has no group.</i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> The phase in which the event can occur. Has to be between 1 and 8. 0 means it can occur in all phases.</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="146">146</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap15RescheduleEventEjRKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEEjh" title='EventMap::RescheduleEvent' data-ref="_ZN8EventMap15RescheduleEventEjRKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEEjh" >RescheduleEvent</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="13eventId" title='eventId' data-type='uint32' data-ref="13eventId" >eventId</dfn>, <a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col4 decl" id="14time" title='time' data-type='const Milliseconds &amp;' data-ref="14time" >time</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="15group" title='group' data-type='uint32' data-ref="15group" >group</dfn> = <var>0</var>, <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col6 decl" id="16phase" title='phase' data-type='uint8' data-ref="16phase" >phase</dfn> = <var>0</var>)</td></tr>
+<tr><th id="147">147</th><td>    {</td></tr>
+<tr><th id="148">148</th><td>        <a class="member" href="#_ZN8EventMap15RescheduleEventEjjjh" title='EventMap::RescheduleEvent' data-ref="_ZN8EventMap15RescheduleEventEjjjh" >RescheduleEvent</a>(<a class="local col3 ref" href="#13eventId" title='eventId' data-ref="13eventId" >eventId</a>, <a class="local col4 ref" href="#14time" title='time' data-ref="14time" >time</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>(), <a class="local col5 ref" href="#15group" title='group' data-ref="15group" >group</a>, <a class="local col6 ref" href="#16phase" title='phase' data-ref="16phase" >phase</a>);</td></tr>
+<tr><th id="149">149</th><td>    }</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">RescheduleEvent</span></i></td></tr>
+<tr><th id="153">153</th><td><i class="doc">    * <span class="command">@brief</span> Cancels the given event and reschedules it.</i></td></tr>
+<tr><th id="154">154</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">eventId</span> The id of the event.</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">time</span> The time in milliseconds until the event occurs.</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">group</span> The group which the event is associated to. Has to be between 1 and 8. 0 means it has no group.</i></td></tr>
+<tr><th id="157">157</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> The phase in which the event can occur. Has to be between 1 and 8. 0 means it can occur in all phases.</i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="159">159</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap15RescheduleEventEjjjh" title='EventMap::RescheduleEvent' data-ref="_ZN8EventMap15RescheduleEventEjjjh" >RescheduleEvent</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="17eventId" title='eventId' data-type='uint32' data-ref="17eventId" >eventId</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="18time" title='time' data-type='uint32' data-ref="18time" >time</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="19group" title='group' data-type='uint32' data-ref="19group" >group</dfn> = <var>0</var>, <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col0 decl" id="20phase" title='phase' data-type='uint8' data-ref="20phase" >phase</dfn> = <var>0</var>)</td></tr>
+<tr><th id="160">160</th><td>    {</td></tr>
+<tr><th id="161">161</th><td>        <a class="member" href="EventMap.cpp.html#_ZN8EventMap11CancelEventEj" title='EventMap::CancelEvent' data-ref="_ZN8EventMap11CancelEventEj" id="_ZN8EventMap11CancelEventEj" >CancelEvent</a>(<a class="local col7 ref" href="#17eventId" title='eventId' data-ref="17eventId" >eventId</a>);</td></tr>
+<tr><th id="162">162</th><td>        <a class="member" href="EventMap.cpp.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="local col7 ref" href="#17eventId" title='eventId' data-ref="17eventId" >eventId</a>, <a class="local col8 ref" href="#18time" title='time' data-ref="18time" >time</a>, <a class="local col9 ref" href="#19group" title='group' data-ref="19group" >group</a>, <a class="local col0 ref" href="#20phase" title='phase' data-ref="20phase" >phase</a>);</td></tr>
+<tr><th id="163">163</th><td>    }</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">RepeatEvent</span></i></td></tr>
+<tr><th id="167">167</th><td><i class="doc">    * <span class="command">@brief</span> Repeats the mostly recently executed event.</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">time</span> Time until in milliseconds as std::chrono::duration the event occurs.</i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="170">170</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap6RepeatERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEE" title='EventMap::Repeat' data-ref="_ZN8EventMap6RepeatERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEE" >Repeat</dfn>(<a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col1 decl" id="21time" title='time' data-type='const Milliseconds &amp;' data-ref="21time" >time</dfn>)</td></tr>
+<tr><th id="171">171</th><td>    {</td></tr>
+<tr><th id="172">172</th><td>        <a class="member" href="#_ZN8EventMap6RepeatEj" title='EventMap::Repeat' data-ref="_ZN8EventMap6RepeatEj" >Repeat</a>(<a class="local col1 ref" href="#21time" title='time' data-ref="21time" >time</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>());</td></tr>
+<tr><th id="173">173</th><td>    }</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="176">176</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">RepeatEvent</span></i></td></tr>
+<tr><th id="177">177</th><td><i class="doc">    * <span class="command">@brief</span> Repeats the mostly recently executed event.</i></td></tr>
+<tr><th id="178">178</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">time</span> Time until the event occurs.</i></td></tr>
+<tr><th id="179">179</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="180">180</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap6RepeatEj" title='EventMap::Repeat' data-ref="_ZN8EventMap6RepeatEj" >Repeat</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="22time" title='time' data-type='uint32' data-ref="22time" >time</dfn>)</td></tr>
+<tr><th id="181">181</th><td>    {</td></tr>
+<tr><th id="182">182</th><td>        <a class="member" href="#EventMap::_eventMap" title='EventMap::_eventMap' data-ref="EventMap::_eventMap" >_eventMap</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_multimap.h.html#_ZNSt8multimapIjjSt4lessIjESaISt4pairIKjjEEE6insertEOT_" title='std::multimap&lt;unsigned int, unsigned int, std::less&lt;unsigned int&gt;, std::allocator&lt;std::pair&lt;const unsigned int, unsigned int&gt; &gt; &gt;::insert' data-ref="_ZNSt8multimapIjjSt4lessIjESaISt4pairIKjjEEE6insertEOT_" id="_ZNSt8multimapIjjSt4lessIjESaISt4pairIKjjEEE6insertEOT_" >insert</a>(<a class="typedef" href="#EventMap::EventStore" title='EventMap::EventStore' data-type='std::multimap&lt;uint32, uint32&gt;' data-ref="EventMap::EventStore" >EventStore</a>::<a class="typedef" href="../../../../include/c++/4.9/bits/stl_multimap.h.html#std::multimap{unsignedint,unsignedint,std::less{unsignedint},std::allocator{std::pair{constunsignedint,unsignedint}}}::value_type" title='std::multimap&lt;unsigned int, unsigned int, std::less&lt;unsigned int&gt;, std::allocator&lt;std::pair&lt;const unsigned int, unsigned int&gt; &gt; &gt;::value_type' data-type='std::pair&lt;const unsigned int, unsigned int&gt;' data-ref="std::multimap{unsignedint,unsignedint,std::less{unsignedint},std::allocator{std::pair{constunsignedint,unsignedint}}}::value_type" >value_type</a><a class="ref" href="../../../../include/c++/4.9/bits/stl_pair.h.html#_ZNSt4pairIKjjEC1EOT_OT0_" title='std::pair&lt;const unsigned int, unsigned int&gt;::pair' data-ref="_ZNSt4pairIKjjEC1EOT_OT0_" id="_ZNSt4pairIKjjEC1EOT_OT0_" >(</a><a class="member" href="#EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</a> + <a class="local col2 ref" href="#22time" title='time' data-ref="22time" >time</a>, <a class="member" href="#EventMap::_lastEvent" title='EventMap::_lastEvent' data-ref="EventMap::_lastEvent" >_lastEvent</a>));</td></tr>
+<tr><th id="183">183</th><td>    }</td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="186">186</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">RepeatEvent</span></i></td></tr>
+<tr><th id="187">187</th><td><i class="doc">    * <span class="command">@brief</span> Repeats the mostly recently executed event.</i></td></tr>
+<tr><th id="188">188</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">minTime</span> Minimum time as std::chrono::duration until the event occurs.</i></td></tr>
+<tr><th id="189">189</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">maxTime</span> Maximum time as std::chrono::duration until the event occurs.</i></td></tr>
+<tr><th id="190">190</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="191">191</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap6RepeatERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEES6_" title='EventMap::Repeat' data-ref="_ZN8EventMap6RepeatERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEES6_" >Repeat</dfn>(<a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col3 decl" id="23minTime" title='minTime' data-type='const Milliseconds &amp;' data-ref="23minTime" >minTime</dfn>, <a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col4 decl" id="24maxTime" title='maxTime' data-type='const Milliseconds &amp;' data-ref="24maxTime" >maxTime</dfn>)</td></tr>
+<tr><th id="192">192</th><td>    {</td></tr>
+<tr><th id="193">193</th><td>        <a class="member" href="#_ZN8EventMap6RepeatEjj" title='EventMap::Repeat' data-ref="_ZN8EventMap6RepeatEjj" >Repeat</a>(<a class="local col3 ref" href="#23minTime" title='minTime' data-ref="23minTime" >minTime</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>(), <a class="local col4 ref" href="#24maxTime" title='maxTime' data-ref="24maxTime" >maxTime</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>());</td></tr>
+<tr><th id="194">194</th><td>    }</td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="197">197</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">RepeatEvent</span></i></td></tr>
+<tr><th id="198">198</th><td><i class="doc">    * <span class="command">@brief</span> Repeats the mostly recently executed event, Equivalent to Repeat(urand(minTime, maxTime).</i></td></tr>
+<tr><th id="199">199</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">minTime</span> Minimum time until the event occurs.</i></td></tr>
+<tr><th id="200">200</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">maxTime</span> Maximum time until the event occurs.</i></td></tr>
+<tr><th id="201">201</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="202">202</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap6RepeatEjj" title='EventMap::Repeat' data-ref="_ZN8EventMap6RepeatEjj" >Repeat</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="25minTime" title='minTime' data-type='uint32' data-ref="25minTime" >minTime</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="26maxTime" title='maxTime' data-type='uint32' data-ref="26maxTime" >maxTime</dfn>)</td></tr>
+<tr><th id="203">203</th><td>    {</td></tr>
+<tr><th id="204">204</th><td>        <a class="member" href="#_ZN8EventMap6RepeatEj" title='EventMap::Repeat' data-ref="_ZN8EventMap6RepeatEj" >Repeat</a>(<a class="ref" href="Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<a class="local col5 ref" href="#25minTime" title='minTime' data-ref="25minTime" >minTime</a>, <a class="local col6 ref" href="#26maxTime" title='maxTime' data-ref="26maxTime" >maxTime</a>));</td></tr>
+<tr><th id="205">205</th><td>    }</td></tr>
+<tr><th id="206">206</th><td></td></tr>
+<tr><th id="207">207</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="208">208</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">ExecuteEvent</span></i></td></tr>
+<tr><th id="209">209</th><td><i class="doc">    * <span class="command">@brief</span> Returns the next event to execute and removes it from map.</i></td></tr>
+<tr><th id="210">210</th><td><i class="doc">    * <span class="command">@return</span> Id of the event to execute.</i></td></tr>
+<tr><th id="211">211</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="212">212</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <a class="decl" href="EventMap.cpp.html#_ZN8EventMap12ExecuteEventEv" title='EventMap::ExecuteEvent' data-ref="_ZN8EventMap12ExecuteEventEv" id="_ZN8EventMap12ExecuteEventEv" >ExecuteEvent</a>();</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="215">215</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">DelayEvents</span></i></td></tr>
+<tr><th id="216">216</th><td><i class="doc">    * <span class="command">@brief</span> Delays all events in the map. If delay is greater than or equal internal timer, delay will be 0.</i></td></tr>
+<tr><th id="217">217</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">delay</span> Amount of delay in ms as std::chrono::duration.</i></td></tr>
+<tr><th id="218">218</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="219">219</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap11DelayEventsERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEE" title='EventMap::DelayEvents' data-ref="_ZN8EventMap11DelayEventsERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEE" >DelayEvents</dfn>(<a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col7 decl" id="27delay" title='delay' data-type='const Milliseconds &amp;' data-ref="27delay" >delay</dfn>)</td></tr>
+<tr><th id="220">220</th><td>    {</td></tr>
+<tr><th id="221">221</th><td>        <a class="member" href="#_ZN8EventMap11DelayEventsEj" title='EventMap::DelayEvents' data-ref="_ZN8EventMap11DelayEventsEj" >DelayEvents</a>(<a class="local col7 ref" href="#27delay" title='delay' data-ref="27delay" >delay</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>());</td></tr>
+<tr><th id="222">222</th><td>    }</td></tr>
+<tr><th id="223">223</th><td></td></tr>
+<tr><th id="224">224</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="225">225</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">DelayEvents</span></i></td></tr>
+<tr><th id="226">226</th><td><i class="doc">    * <span class="command">@brief</span> Delays all events in the map. If delay is greater than or equal internal timer, delay will be 0.</i></td></tr>
+<tr><th id="227">227</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">delay</span> Amount of delay.</i></td></tr>
+<tr><th id="228">228</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="229">229</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap11DelayEventsEj" title='EventMap::DelayEvents' data-ref="_ZN8EventMap11DelayEventsEj" >DelayEvents</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="28delay" title='delay' data-type='uint32' data-ref="28delay" >delay</dfn>)</td></tr>
+<tr><th id="230">230</th><td>    {</td></tr>
+<tr><th id="231">231</th><td>        <a class="member" href="#EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</a> = <a class="local col8 ref" href="#28delay" title='delay' data-ref="28delay" >delay</a> &lt; <a class="member" href="#EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</a> ? <a class="member" href="#EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</a> - <a class="local col8 ref" href="#28delay" title='delay' data-ref="28delay" >delay</a> : <var>0</var>;</td></tr>
+<tr><th id="232">232</th><td>    }</td></tr>
+<tr><th id="233">233</th><td></td></tr>
+<tr><th id="234">234</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="235">235</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">DelayEvents</span></i></td></tr>
+<tr><th id="236">236</th><td><i class="doc">    * <span class="command">@brief</span> Delay all events of the same group.</i></td></tr>
+<tr><th id="237">237</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">delay</span> Amount of delay in ms as std::chrono::duration.</i></td></tr>
+<tr><th id="238">238</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">group</span> Group of the events.</i></td></tr>
+<tr><th id="239">239</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="240">240</th><td>    <em>void</em> <dfn class="decl def" id="_ZN8EventMap11DelayEventsERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEEj" title='EventMap::DelayEvents' data-ref="_ZN8EventMap11DelayEventsERKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEEj" >DelayEvents</dfn>(<a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col9 decl" id="29delay" title='delay' data-type='const Milliseconds &amp;' data-ref="29delay" >delay</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col0 decl" id="30group" title='group' data-type='uint32' data-ref="30group" >group</dfn>)</td></tr>
+<tr><th id="241">241</th><td>    {</td></tr>
+<tr><th id="242">242</th><td>        <a class="member" href="EventMap.cpp.html#_ZN8EventMap11DelayEventsEjj" title='EventMap::DelayEvents' data-ref="_ZN8EventMap11DelayEventsEjj" id="_ZN8EventMap11DelayEventsEjj" >DelayEvents</a>(<a class="local col9 ref" href="#29delay" title='delay' data-ref="29delay" >delay</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>(), <a class="local col0 ref" href="#30group" title='group' data-ref="30group" >group</a>);</td></tr>
+<tr><th id="243">243</th><td>    }</td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="246">246</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">DelayEvents</span></i></td></tr>
+<tr><th id="247">247</th><td><i class="doc">    * <span class="command">@brief</span> Delay all events of the same group.</i></td></tr>
+<tr><th id="248">248</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">delay</span> Amount of delay.</i></td></tr>
+<tr><th id="249">249</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">group</span> Group of the events.</i></td></tr>
+<tr><th id="250">250</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="251">251</th><td>    <em>void</em> <a class="decl" href="EventMap.cpp.html#_ZN8EventMap11DelayEventsEjj" title='EventMap::DelayEvents' data-ref="_ZN8EventMap11DelayEventsEjj" id="_ZN8EventMap11DelayEventsEjj" >DelayEvents</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="31delay" title='delay' data-type='uint32' data-ref="31delay" >delay</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="32group" title='group' data-type='uint32' data-ref="32group" >group</dfn>);</td></tr>
+<tr><th id="252">252</th><td></td></tr>
+<tr><th id="253">253</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="254">254</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">CancelEvent</span></i></td></tr>
+<tr><th id="255">255</th><td><i class="doc">    * <span class="command">@brief</span> Cancels all events of the specified id.</i></td></tr>
+<tr><th id="256">256</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">eventId</span> Event id to cancel.</i></td></tr>
+<tr><th id="257">257</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="258">258</th><td>    <em>void</em> <a class="decl" href="EventMap.cpp.html#_ZN8EventMap11CancelEventEj" title='EventMap::CancelEvent' data-ref="_ZN8EventMap11CancelEventEj" id="_ZN8EventMap11CancelEventEj" >CancelEvent</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="33eventId" title='eventId' data-type='uint32' data-ref="33eventId" >eventId</dfn>);</td></tr>
+<tr><th id="259">259</th><td></td></tr>
+<tr><th id="260">260</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="261">261</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">CancelEventGroup</span></i></td></tr>
+<tr><th id="262">262</th><td><i class="doc">    * <span class="command">@brief</span> Cancel events belonging to specified group.</i></td></tr>
+<tr><th id="263">263</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">group</span> Group to cancel.</i></td></tr>
+<tr><th id="264">264</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="265">265</th><td>    <em>void</em> <a class="decl" href="EventMap.cpp.html#_ZN8EventMap16CancelEventGroupEj" title='EventMap::CancelEventGroup' data-ref="_ZN8EventMap16CancelEventGroupEj" id="_ZN8EventMap16CancelEventGroupEj" >CancelEventGroup</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="34group" title='group' data-type='uint32' data-ref="34group" >group</dfn>);</td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="268">268</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">GetNextEventTime</span></i></td></tr>
+<tr><th id="269">269</th><td><i class="doc">    * <span class="command">@brief</span> Returns closest occurence of specified event.</i></td></tr>
+<tr><th id="270">270</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">eventId</span> Wanted event id.</i></td></tr>
+<tr><th id="271">271</th><td><i class="doc">    * <span class="command">@return</span> Time of found event.</i></td></tr>
+<tr><th id="272">272</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="273">273</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <a class="decl" href="EventMap.cpp.html#_ZNK8EventMap16GetNextEventTimeEj" title='EventMap::GetNextEventTime' data-ref="_ZNK8EventMap16GetNextEventTimeEj" id="_ZNK8EventMap16GetNextEventTimeEj" >GetNextEventTime</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="35eventId" title='eventId' data-type='uint32' data-ref="35eventId" >eventId</dfn>) <em>const</em>;</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="276">276</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">GetNextEventTime</span></i></td></tr>
+<tr><th id="277">277</th><td><i class="doc">    * <span class="command">@return</span> Time of next event.</i></td></tr>
+<tr><th id="278">278</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="279">279</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK8EventMap16GetNextEventTimeEv" title='EventMap::GetNextEventTime' data-ref="_ZNK8EventMap16GetNextEventTimeEv" >GetNextEventTime</dfn>() <em>const</em></td></tr>
+<tr><th id="280">280</th><td>    {</td></tr>
+<tr><th id="281">281</th><td>        <b>return</b> <a class="member" href="#_ZNK8EventMap5EmptyEv" title='EventMap::Empty' data-ref="_ZNK8EventMap5EmptyEv" >Empty</a>() ? <var>0</var> : <a class="member" href="#EventMap::_eventMap" title='EventMap::_eventMap' data-ref="EventMap::_eventMap" >_eventMap</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_multimap.h.html#_ZNKSt8multimap5beginEv" title='std::multimap::begin' data-ref="_ZNKSt8multimap5beginEv" id="_ZNKSt8multimap5beginEv" >begin</a>()<a class="ref" href="../../../../include/c++/4.9/bits/stl_tree.h.html#_ZNKSt23_Rb_tree_const_iteratorptEv" title='std::_Rb_tree_const_iterator::operator-&gt;' data-ref="_ZNKSt23_Rb_tree_const_iteratorptEv" id="_ZNKSt23_Rb_tree_const_iteratorptEv" >-&gt;</a><a class="ref" href="../../../../include/c++/4.9/bits/stl_pair.h.html#std::pair::first" title='std::pair&lt;const unsigned int, unsigned int&gt;::first' data-ref="std::pair::first" id="std::pair::first" >first</a>;</td></tr>
+<tr><th id="282">282</th><td>    }</td></tr>
+<tr><th id="283">283</th><td></td></tr>
+<tr><th id="284">284</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="285">285</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">IsInPhase</span></i></td></tr>
+<tr><th id="286">286</th><td><i class="doc">    * <span class="command">@brief</span> Returns whether event map is in specified phase or not.</i></td></tr>
+<tr><th id="287">287</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">phase</span> Wanted phase.</i></td></tr>
+<tr><th id="288">288</th><td><i class="doc">    * <span class="command">@return</span> True, if phase of event map contains specified phase.</i></td></tr>
+<tr><th id="289">289</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="290">290</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK8EventMap9IsInPhaseEh" title='EventMap::IsInPhase' data-ref="_ZNK8EventMap9IsInPhaseEh" >IsInPhase</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col6 decl" id="36phase" title='phase' data-type='uint8' data-ref="36phase" >phase</dfn>) <em>const</em></td></tr>
+<tr><th id="291">291</th><td>    {</td></tr>
+<tr><th id="292">292</th><td>        <b>return</b> <a class="local col6 ref" href="#36phase" title='phase' data-ref="36phase" >phase</a> &lt;= <var>8</var> &amp;&amp; (!<a class="local col6 ref" href="#36phase" title='phase' data-ref="36phase" >phase</a> || <a class="member" href="#EventMap::_phase" title='EventMap::_phase' data-ref="EventMap::_phase" >_phase</a> &amp; (<var>1</var> &lt;&lt; (<a class="local col6 ref" href="#36phase" title='phase' data-ref="36phase" >phase</a> - <var>1</var>)));</td></tr>
+<tr><th id="293">293</th><td>    }</td></tr>
+<tr><th id="294">294</th><td></td></tr>
+<tr><th id="295">295</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="296">296</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">GetTimeUntilEvent</span></i></td></tr>
+<tr><th id="297">297</th><td><i class="doc">    * <span class="command">@brief</span> Returns time in milliseconds until next event.</i></td></tr>
+<tr><th id="298">298</th><td><i class="doc">    * <span class="command">@param</span> <span class="arg">eventId</span> of the event.</i></td></tr>
+<tr><th id="299">299</th><td><i class="doc">    * <span class="command">@return</span> Time of next event.</i></td></tr>
+<tr><th id="300">300</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="301">301</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <a class="decl" href="EventMap.cpp.html#_ZNK8EventMap17GetTimeUntilEventEj" title='EventMap::GetTimeUntilEvent' data-ref="_ZNK8EventMap17GetTimeUntilEventEj" id="_ZNK8EventMap17GetTimeUntilEventEj" >GetTimeUntilEvent</a>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="37eventId" title='eventId' data-type='uint32' data-ref="37eventId" >eventId</dfn>) <em>const</em>;</td></tr>
+<tr><th id="302">302</th><td></td></tr>
+<tr><th id="303">303</th><td><b>private</b>:</td></tr>
+<tr><th id="304">304</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="305">305</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">_time</span></i></td></tr>
+<tr><th id="306">306</th><td><i class="doc">    * <span class="command">@brief</span> Internal timer.</i></td></tr>
+<tr><th id="307">307</th><td><i class="doc">    *</i></td></tr>
+<tr><th id="308">308</th><td><i class="doc">    * This does not represent the real date/time value.</i></td></tr>
+<tr><th id="309">309</th><td><i class="doc">    * It's more like a stopwatch: It can run, it can be stopped,</i></td></tr>
+<tr><th id="310">310</th><td><i class="doc">    * it can be resetted and so on. Events occur when this timer</i></td></tr>
+<tr><th id="311">311</th><td><i class="doc">    * has reached their time value. Its value is changed in the</i></td></tr>
+<tr><th id="312">312</th><td><i class="doc">    * Update method.</i></td></tr>
+<tr><th id="313">313</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="314">314</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="EventMap::_time" title='EventMap::_time' data-ref="EventMap::_time" >_time</dfn>;</td></tr>
+<tr><th id="315">315</th><td></td></tr>
+<tr><th id="316">316</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="317">317</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">_phase</span></i></td></tr>
+<tr><th id="318">318</th><td><i class="doc">    * <span class="command">@brief</span> Phase mask of the event map.</i></td></tr>
+<tr><th id="319">319</th><td><i class="doc">    *</i></td></tr>
+<tr><th id="320">320</th><td><i class="doc">    * Contains the phases the event map is in. Multiple</i></td></tr>
+<tr><th id="321">321</th><td><i class="doc">    * phases from 1 to 8 can be set with SetPhase or</i></td></tr>
+<tr><th id="322">322</th><td><i class="doc">    * AddPhase. RemovePhase deactives a phase.</i></td></tr>
+<tr><th id="323">323</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="324">324</th><td>    <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="EventMap::_phase" title='EventMap::_phase' data-ref="EventMap::_phase" >_phase</dfn>;</td></tr>
+<tr><th id="325">325</th><td></td></tr>
+<tr><th id="326">326</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="327">327</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">_eventMap</span></i></td></tr>
+<tr><th id="328">328</th><td><i class="doc">    * <span class="command">@brief</span> Internal event storage map. Contains the scheduled events.</i></td></tr>
+<tr><th id="329">329</th><td><i class="doc">    *</i></td></tr>
+<tr><th id="330">330</th><td><i class="doc">    * See typedef at the beginning of the class for more</i></td></tr>
+<tr><th id="331">331</th><td><i class="doc">    * details.</i></td></tr>
+<tr><th id="332">332</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="333">333</th><td>    <a class="typedef" href="#EventMap::EventStore" title='EventMap::EventStore' data-type='std::multimap&lt;uint32, uint32&gt;' data-ref="EventMap::EventStore" >EventStore</a> <dfn class="decl" id="EventMap::_eventMap" title='EventMap::_eventMap' data-ref="EventMap::_eventMap" >_eventMap</dfn>;</td></tr>
+<tr><th id="334">334</th><td></td></tr>
+<tr><th id="335">335</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="336">336</th><td><i class="doc">    * <span class="command">@name</span> <span class="verb">_lastEvent</span></i></td></tr>
+<tr><th id="337">337</th><td><i class="doc">    * <span class="command">@brief</span> Stores information on the most recently executed event</i></td></tr>
+<tr><th id="338">338</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="339">339</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="EventMap::_lastEvent" title='EventMap::_lastEvent' data-ref="EventMap::_lastEvent" >_lastEvent</dfn>;</td></tr>
+<tr><th id="340">340</th><td>};</td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td><u>#<span data-ppcond="18">endif</span> // _EVENT_MAP_H_</u></td></tr>
+<tr><th id="343">343</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='EventMap.cpp.html'>TrinityCore3.3.5/src/common/Utilities/EventMap.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+<title>dbcfile.cpp [TrinityCore3.3.5/src/tools/vmap4_extractor/dbcfile.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/tools/vmap4_extractor/dbcfile.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>tools</a>/<a href='./'>vmap4_extractor</a>/dbcfile.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="dbcfile.h.html">"dbcfile.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="mpq_libmpq04.h.html">"mpq_libmpq04.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#undef <span class="macro" data-ref="_M/min">min</span></u></td></tr>
+<tr><th id="22">22</th><td><u>#undef <span class="macro" data-ref="_M/max">max</span></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../include/c++/4.9/cstdio.html">&lt;cstdio&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<dfn class="decl def" id="_ZN7DBCFileC1ERKSs" title='DBCFile::DBCFile' data-ref="_ZN7DBCFileC1ERKSs" >DBCFile</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col7 decl" id="17filename" title='filename' data-type='const std::string &amp;' data-ref="17filename" >filename</dfn>):</td></tr>
+<tr><th id="27">27</th><td>    <a class="member" href="dbcfile.h.html#DBCFile::filename" title='DBCFile::filename' data-ref="DBCFile::filename" id="DBCFile::filename" >filename</a><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" id="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" >(</a><a class="local col7 ref" href="#17filename" title='filename' data-ref="17filename" >filename</a>), <a class="member" href="dbcfile.h.html#DBCFile::recordSize" title='DBCFile::recordSize' data-ref="DBCFile::recordSize" id="DBCFile::recordSize" >recordSize</a>(<var>0</var>), <a class="member" href="dbcfile.h.html#DBCFile::recordCount" title='DBCFile::recordCount' data-ref="DBCFile::recordCount" id="DBCFile::recordCount" >recordCount</a>(<var>0</var>), <a class="member" href="dbcfile.h.html#DBCFile::fieldCount" title='DBCFile::fieldCount' data-ref="DBCFile::fieldCount" id="DBCFile::fieldCount" >fieldCount</a>(<var>0</var>), <a class="member" href="dbcfile.h.html#DBCFile::stringSize" title='DBCFile::stringSize' data-ref="DBCFile::stringSize" id="DBCFile::stringSize" >stringSize</a>(<var>0</var>), <a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" id="DBCFile::data" >data</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>), <a class="member" href="dbcfile.h.html#DBCFile::stringTable" title='DBCFile::stringTable' data-ref="DBCFile::stringTable" id="DBCFile::stringTable" >stringTable</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td>}</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><em>bool</em> <a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<dfn class="decl def" id="_ZN7DBCFile4openEv" title='DBCFile::open' data-ref="_ZN7DBCFile4openEv" >open</dfn>()</td></tr>
+<tr><th id="33">33</th><td>{</td></tr>
+<tr><th id="34">34</th><td>    <a class="type" href="mpq_libmpq04.h.html#MPQFile" title='MPQFile' data-ref="MPQFile" >MPQFile</a> <dfn class="local col8 decl" id="18f" title='f' data-type='MPQFile' data-ref="18f" >f</dfn><a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFileC1EPKc" title='MPQFile::MPQFile' data-ref="_ZN7MPQFileC1EPKc" id="_ZN7MPQFileC1EPKc" >(</a><a class="member" href="dbcfile.h.html#DBCFile::filename" title='DBCFile::filename' data-ref="DBCFile::filename" id="DBCFile::filename" >filename</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>    <i>// Need some error checking, otherwise an unhandled exception error occurs</i></td></tr>
+<tr><th id="37">37</th><td><i>    // if people screw with the data path.</i></td></tr>
+<tr><th id="38">38</th><td>    <b>if</b> (<a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile5isEofEv" title='MPQFile::isEof' data-ref="_ZN7MPQFile5isEofEv" id="_ZN7MPQFile5isEofEv" >isEof</a>() == <b>true</b>)</td></tr>
+<tr><th id="39">39</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <em>unsigned</em> <em>char</em> <dfn class="local col9 decl" id="19header" title='header' data-type='unsigned char [4]' data-ref="19header" >header</dfn>[<var>4</var>];</td></tr>
+<tr><th id="42">42</th><td>    <em>unsigned</em> <em>int</em> <dfn class="local col0 decl" id="20na" title='na' data-type='unsigned int' data-ref="20na" >na</dfn>,<dfn class="local col1 decl" id="21nb" title='nb' data-type='unsigned int' data-ref="21nb" >nb</dfn>,<dfn class="local col2 decl" id="22es" title='es' data-type='unsigned int' data-ref="22es" >es</dfn>,<dfn class="local col3 decl" id="23ss" title='ss' data-type='unsigned int' data-ref="23ss" >ss</dfn>;</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>    <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(<a class="local col9 ref" href="#19header" title='header' data-ref="19header" >header</a>,<var>4</var>); <i>// File Header</i></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <b>if</b> (<a class="local col9 ref" href="#19header" title='header' data-ref="19header" >header</a>[<var>0</var>]!=<kdb>'W'</kdb> || <a class="local col9 ref" href="#19header" title='header' data-ref="19header" >header</a>[<var>1</var>]!=<kdb>'D'</kdb> || <a class="local col9 ref" href="#19header" title='header' data-ref="19header" >header</a>[<var>2</var>]!=<kdb>'B'</kdb> || <a class="local col9 ref" href="#19header" title='header' data-ref="19header" >header</a>[<var>3</var>] != <kdb>'C'</kdb>)</td></tr>
+<tr><th id="47">47</th><td>    {</td></tr>
+<tr><th id="48">48</th><td>        <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile5closeEv" title='MPQFile::close' data-ref="_ZN7MPQFile5closeEv" id="_ZN7MPQFile5closeEv" >close</a>();</td></tr>
+<tr><th id="49">49</th><td>        <a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" id="DBCFile::data" >data</a> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="50">50</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Critical Error: An error occured while trying to read the DBCFile %s."</q>, <a class="member" href="dbcfile.h.html#DBCFile::filename" title='DBCFile::filename' data-ref="DBCFile::filename" id="DBCFile::filename" >filename</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="51">51</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="52">52</th><td>    }</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>    <i>//assert(header[0]=='W' &amp;&amp; header[1]=='D' &amp;&amp; header[2]=='B' &amp;&amp; header[3] == 'C');</i></td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(&amp;<a class="local col0 ref" href="#20na" title='na' data-ref="20na" >na</a>,<var>4</var>); <i>// Number of records</i></td></tr>
+<tr><th id="57">57</th><td>    <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(&amp;<a class="local col1 ref" href="#21nb" title='nb' data-ref="21nb" >nb</a>,<var>4</var>); <i>// Number of fields</i></td></tr>
+<tr><th id="58">58</th><td>    <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(&amp;<a class="local col2 ref" href="#22es" title='es' data-ref="22es" >es</a>,<var>4</var>); <i>// Size of a record</i></td></tr>
+<tr><th id="59">59</th><td>    <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(&amp;<a class="local col3 ref" href="#23ss" title='ss' data-ref="23ss" >ss</a>,<var>4</var>); <i>// String size</i></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <a class="member" href="dbcfile.h.html#DBCFile::recordSize" title='DBCFile::recordSize' data-ref="DBCFile::recordSize" id="DBCFile::recordSize" >recordSize</a> = <a class="local col2 ref" href="#22es" title='es' data-ref="22es" >es</a>;</td></tr>
+<tr><th id="62">62</th><td>    <a class="member" href="dbcfile.h.html#DBCFile::recordCount" title='DBCFile::recordCount' data-ref="DBCFile::recordCount" id="DBCFile::recordCount" >recordCount</a> = <a class="local col0 ref" href="#20na" title='na' data-ref="20na" >na</a>;</td></tr>
+<tr><th id="63">63</th><td>    <a class="member" href="dbcfile.h.html#DBCFile::fieldCount" title='DBCFile::fieldCount' data-ref="DBCFile::fieldCount" id="DBCFile::fieldCount" >fieldCount</a> = <a class="local col1 ref" href="#21nb" title='nb' data-ref="21nb" >nb</a>;</td></tr>
+<tr><th id="64">64</th><td>    <a class="member" href="dbcfile.h.html#DBCFile::stringSize" title='DBCFile::stringSize' data-ref="DBCFile::stringSize" id="DBCFile::stringSize" >stringSize</a> = <a class="local col3 ref" href="#23ss" title='ss' data-ref="23ss" >ss</a>;</td></tr>
+<tr><th id="65">65</th><td>    <i>//assert(fieldCount*4 == recordSize);</i></td></tr>
+<tr><th id="66">66</th><td>    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(fieldCount*<var>4</var> &gt;= recordSize);</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" id="DBCFile::data" >data</a> = <b>new</b> <em>unsigned</em> <em>char</em>[<a class="member" href="dbcfile.h.html#DBCFile::recordSize" title='DBCFile::recordSize' data-ref="DBCFile::recordSize" id="DBCFile::recordSize" >recordSize</a>*<a class="member" href="dbcfile.h.html#DBCFile::recordCount" title='DBCFile::recordCount' data-ref="DBCFile::recordCount" id="DBCFile::recordCount" >recordCount</a>+<a class="member" href="dbcfile.h.html#DBCFile::stringSize" title='DBCFile::stringSize' data-ref="DBCFile::stringSize" id="DBCFile::stringSize" >stringSize</a>];</td></tr>
+<tr><th id="69">69</th><td>    <a class="member" href="dbcfile.h.html#DBCFile::stringTable" title='DBCFile::stringTable' data-ref="DBCFile::stringTable" id="DBCFile::stringTable" >stringTable</a> = <a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" id="DBCFile::data" >data</a> + <a class="member" href="dbcfile.h.html#DBCFile::recordSize" title='DBCFile::recordSize' data-ref="DBCFile::recordSize" id="DBCFile::recordSize" >recordSize</a>*<a class="member" href="dbcfile.h.html#DBCFile::recordCount" title='DBCFile::recordCount' data-ref="DBCFile::recordCount" id="DBCFile::recordCount" >recordCount</a>;</td></tr>
+<tr><th id="70">70</th><td>    <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(<a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" id="DBCFile::data" >data</a>,<a class="member" href="dbcfile.h.html#DBCFile::recordSize" title='DBCFile::recordSize' data-ref="DBCFile::recordSize" id="DBCFile::recordSize" >recordSize</a>*<a class="member" href="dbcfile.h.html#DBCFile::recordCount" title='DBCFile::recordCount' data-ref="DBCFile::recordCount" id="DBCFile::recordCount" >recordCount</a>+<a class="member" href="dbcfile.h.html#DBCFile::stringSize" title='DBCFile::stringSize' data-ref="DBCFile::stringSize" id="DBCFile::stringSize" >stringSize</a>);</td></tr>
+<tr><th id="71">71</th><td>    <a class="local col8 ref" href="#18f" title='f' data-ref="18f" >f</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile5closeEv" title='MPQFile::close' data-ref="_ZN7MPQFile5closeEv" id="_ZN7MPQFile5closeEv" >close</a>();</td></tr>
+<tr><th id="72">72</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="73">73</th><td>}</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<dfn class="decl def" id="_ZN7DBCFileD1Ev" title='DBCFile::~DBCFile' data-ref="_ZN7DBCFileD1Ev" >~DBCFile</dfn>()</td></tr>
+<tr><th id="76">76</th><td>{</td></tr>
+<tr><th id="77">77</th><td>    <b>delete</b> [] <a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" >data</a>;</td></tr>
+<tr><th id="78">78</th><td>}</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td><a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<a class="type" href="dbcfile.h.html#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a> <a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<dfn class="decl def" id="_ZN7DBCFile9getRecordEm" title='DBCFile::getRecord' data-ref="_ZN7DBCFile9getRecordEm" >getRecord</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="24id" title='id' data-type='size_t' data-ref="24id" >id</dfn>)</td></tr>
+<tr><th id="81">81</th><td>{</td></tr>
+<tr><th id="82">82</th><td>    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(data);</td></tr>
+<tr><th id="83">83</th><td>    <b>return</b> <a class="type" href="dbcfile.h.html#DBCFile::Record" title='DBCFile::Record' data-ref="DBCFile::Record" >Record</a><a class="ref" href="dbcfile.h.html#_ZN7DBCFile6RecordC1ERS_Ph" title='DBCFile::Record::Record' data-ref="_ZN7DBCFile6RecordC1ERS_Ph" id="_ZN7DBCFile6RecordC1ERS_Ph" >(</a>*<b>this</b>, <a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" id="DBCFile::data" >data</a> + <a class="local col4 ref" href="#24id" title='id' data-ref="24id" >id</a>*<a class="member" href="dbcfile.h.html#DBCFile::recordSize" title='DBCFile::recordSize' data-ref="DBCFile::recordSize" id="DBCFile::recordSize" >recordSize</a>);</td></tr>
+<tr><th id="84">84</th><td>}</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<a class="type" href="dbcfile.h.html#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<dfn class="decl def" id="_ZN7DBCFile5beginEv" title='DBCFile::begin' data-ref="_ZN7DBCFile5beginEv" >begin</dfn>()</td></tr>
+<tr><th id="87">87</th><td>{</td></tr>
+<tr><th id="88">88</th><td>    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(data);</td></tr>
+<tr><th id="89">89</th><td>    <b>return</b> <a class="type" href="dbcfile.h.html#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a><a class="ref" href="dbcfile.h.html#_ZN7DBCFile8IteratorC1ERS_Ph" title='DBCFile::Iterator::Iterator' data-ref="_ZN7DBCFile8IteratorC1ERS_Ph" id="_ZN7DBCFile8IteratorC1ERS_Ph" >(</a>*<b>this</b>, <a class="member" href="dbcfile.h.html#DBCFile::data" title='DBCFile::data' data-ref="DBCFile::data" id="DBCFile::data" >data</a>);</td></tr>
+<tr><th id="90">90</th><td>}</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td><a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<a class="type" href="dbcfile.h.html#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<dfn class="decl def" id="_ZN7DBCFile3endEv" title='DBCFile::end' data-ref="_ZN7DBCFile3endEv" >end</dfn>()</td></tr>
+<tr><th id="93">93</th><td>{</td></tr>
+<tr><th id="94">94</th><td>    <a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(data);</td></tr>
+<tr><th id="95">95</th><td>    <b>return</b> <a class="type" href="dbcfile.h.html#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a><a class="ref" href="dbcfile.h.html#_ZN7DBCFile8IteratorC1ERS_Ph" title='DBCFile::Iterator::Iterator' data-ref="_ZN7DBCFile8IteratorC1ERS_Ph" id="_ZN7DBCFile8IteratorC1ERS_Ph" >(</a>*<b>this</b>, <a class="member" href="dbcfile.h.html#DBCFile::stringTable" title='DBCFile::stringTable' data-ref="DBCFile::stringTable" id="DBCFile::stringTable" >stringTable</a>);</td></tr>
+<tr><th id="96">96</th><td>}</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

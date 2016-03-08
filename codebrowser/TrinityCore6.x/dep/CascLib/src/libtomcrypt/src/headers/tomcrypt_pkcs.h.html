@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<title>tomcrypt_pkcs.h [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_pkcs.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_pkcs.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>headers</a>/tomcrypt_pkcs.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* LTC_PKCS Header Info */</i></td></tr>
+<tr><th id="2">2</th><td></td></tr>
+<tr><th id="3">3</th><td><i>/* ===&gt; LTC_PKCS #1 -- RSA Cryptography &lt;=== */</i></td></tr>
+<tr><th id="4">4</th><td><u>#<span data-ppcond="4">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#378" data-ref="_M/LTC_PKCS_1">LTC_PKCS_1</a></u></td></tr>
+<tr><th id="5">5</th><td></td></tr>
+<tr><th id="6">6</th><td><b>enum</b> <dfn class="type def" id="ltc_pkcs_1_v1_5_blocks" title='ltc_pkcs_1_v1_5_blocks' data-ref="ltc_pkcs_1_v1_5_blocks" >ltc_pkcs_1_v1_5_blocks</dfn></td></tr>
+<tr><th id="7">7</th><td>{</td></tr>
+<tr><th id="8">8</th><td>  <dfn class="enum" id="ltc_pkcs_1_v1_5_blocks::LTC_LTC_PKCS_1_EMSA" title='ltc_pkcs_1_v1_5_blocks::LTC_LTC_PKCS_1_EMSA' data-ref="ltc_pkcs_1_v1_5_blocks::LTC_LTC_PKCS_1_EMSA" >LTC_LTC_PKCS_1_EMSA</dfn>   = <var>1</var>,        <i>/* Block type 1 (LTC_PKCS #1 v1.5 signature padding) */</i></td></tr>
+<tr><th id="9">9</th><td>  <dfn class="enum" id="ltc_pkcs_1_v1_5_blocks::LTC_LTC_PKCS_1_EME" title='ltc_pkcs_1_v1_5_blocks::LTC_LTC_PKCS_1_EME' data-ref="ltc_pkcs_1_v1_5_blocks::LTC_LTC_PKCS_1_EME" >LTC_LTC_PKCS_1_EME</dfn>    = <var>2</var>         <i>/* Block type 2 (LTC_PKCS #1 v1.5 encryption padding) */</i></td></tr>
+<tr><th id="10">10</th><td>};</td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><b>enum</b> <dfn class="type def" id="ltc_pkcs_1_paddings" title='ltc_pkcs_1_paddings' data-ref="ltc_pkcs_1_paddings" >ltc_pkcs_1_paddings</dfn></td></tr>
+<tr><th id="13">13</th><td>{</td></tr>
+<tr><th id="14">14</th><td>  <dfn class="enum" id="ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_V1_5" title='ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_V1_5' data-ref="ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_V1_5" >LTC_LTC_PKCS_1_V1_5</dfn>   = <var>1</var>,        <i>/* LTC_PKCS #1 v1.5 padding (\sa ltc_pkcs_1_v1_5_blocks) */</i></td></tr>
+<tr><th id="15">15</th><td>  <dfn class="enum" id="ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_OAEP" title='ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_OAEP' data-ref="ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_OAEP" >LTC_LTC_PKCS_1_OAEP</dfn>   = <var>2</var>,        <i>/* LTC_PKCS #1 v2.0 encryption padding */</i></td></tr>
+<tr><th id="16">16</th><td>  <dfn class="enum" id="ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_PSS" title='ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_PSS' data-ref="ltc_pkcs_1_paddings::LTC_LTC_PKCS_1_PSS" >LTC_LTC_PKCS_1_PSS</dfn>    = <var>3</var>         <i>/* LTC_PKCS #1 v2.1 signature padding */</i></td></tr>
+<tr><th id="17">17</th><td>};</td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><em>int</em> <dfn class="decl" id="pkcs_1_mgf1" title='pkcs_1_mgf1' data-ref="pkcs_1_mgf1" >pkcs_1_mgf1</dfn>(      <em>int</em>            <dfn class="local col1 decl" id="1171hash_idx" title='hash_idx' data-type='int' data-ref="1171hash_idx" >hash_idx</dfn>,</td></tr>
+<tr><th id="20">20</th><td>                <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="1172seed" title='seed' data-type='const unsigned char *' data-ref="1172seed" >seed</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="1173seedlen" title='seedlen' data-type='unsigned long' data-ref="1173seedlen" >seedlen</dfn>,</td></tr>
+<tr><th id="21">21</th><td>                      <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="1174mask" title='mask' data-type='unsigned char *' data-ref="1174mask" >mask</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col5 decl" id="1175masklen" title='masklen' data-type='unsigned long' data-ref="1175masklen" >masklen</dfn>);</td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><em>int</em> <dfn class="decl" id="pkcs_1_i2osp" title='pkcs_1_i2osp' data-ref="pkcs_1_i2osp" >pkcs_1_i2osp</dfn>(<em>void</em> *<dfn class="local col6 decl" id="1176n" title='n' data-type='void *' data-ref="1176n" >n</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col7 decl" id="1177modulus_len" title='modulus_len' data-type='unsigned long' data-ref="1177modulus_len" >modulus_len</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="1178out" title='out' data-type='unsigned char *' data-ref="1178out" >out</dfn>);</td></tr>
+<tr><th id="24">24</th><td><em>int</em> <dfn class="decl" id="pkcs_1_os2ip" title='pkcs_1_os2ip' data-ref="pkcs_1_os2ip" >pkcs_1_os2ip</dfn>(<em>void</em> *<dfn class="local col9 decl" id="1179n" title='n' data-type='void *' data-ref="1179n" >n</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="1180in" title='in' data-type='unsigned char *' data-ref="1180in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="1181inlen" title='inlen' data-type='unsigned long' data-ref="1181inlen" >inlen</dfn>);</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>/* *** v1.5 padding */</i></td></tr>
+<tr><th id="27">27</th><td><em>int</em> <dfn class="decl" id="pkcs_1_v1_5_encode" title='pkcs_1_v1_5_encode' data-ref="pkcs_1_v1_5_encode" >pkcs_1_v1_5_encode</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="1182msg" title='msg' data-type='const unsigned char *' data-ref="1182msg" >msg</dfn>, </td></tr>
+<tr><th id="28">28</th><td>                             <em>unsigned</em> <em>long</em>  <dfn class="local col3 decl" id="1183msglen" title='msglen' data-type='unsigned long' data-ref="1183msglen" >msglen</dfn>,</td></tr>
+<tr><th id="29">29</th><td>                             <em>int</em>            <dfn class="local col4 decl" id="1184block_type" title='block_type' data-type='int' data-ref="1184block_type" >block_type</dfn>,</td></tr>
+<tr><th id="30">30</th><td>                             <em>unsigned</em> <em>long</em>  <dfn class="local col5 decl" id="1185modulus_bitlen" title='modulus_bitlen' data-type='unsigned long' data-ref="1185modulus_bitlen" >modulus_bitlen</dfn>,</td></tr>
+<tr><th id="31">31</th><td>                                <a class="typedef" href="tomcrypt_prng.h.html#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col6 decl" id="1186prng" title='prng' data-type='prng_state *' data-ref="1186prng" >prng</dfn>, </td></tr>
+<tr><th id="32">32</th><td>                                       <em>int</em>  <dfn class="local col7 decl" id="1187prng_idx" title='prng_idx' data-type='int' data-ref="1187prng_idx" >prng_idx</dfn>,</td></tr>
+<tr><th id="33">33</th><td>                             <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="1188out" title='out' data-type='unsigned char *' data-ref="1188out" >out</dfn>, </td></tr>
+<tr><th id="34">34</th><td>                             <em>unsigned</em> <em>long</em> *<dfn class="local col9 decl" id="1189outlen" title='outlen' data-type='unsigned long *' data-ref="1189outlen" >outlen</dfn>);</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><em>int</em> <dfn class="decl" id="pkcs_1_v1_5_decode" title='pkcs_1_v1_5_decode' data-ref="pkcs_1_v1_5_decode" >pkcs_1_v1_5_decode</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="1190msg" title='msg' data-type='const unsigned char *' data-ref="1190msg" >msg</dfn>, </td></tr>
+<tr><th id="37">37</th><td>                             <em>unsigned</em> <em>long</em>  <dfn class="local col1 decl" id="1191msglen" title='msglen' data-type='unsigned long' data-ref="1191msglen" >msglen</dfn>,</td></tr>
+<tr><th id="38">38</th><td>                                       <em>int</em>  <dfn class="local col2 decl" id="1192block_type" title='block_type' data-type='int' data-ref="1192block_type" >block_type</dfn>,</td></tr>
+<tr><th id="39">39</th><td>                             <em>unsigned</em> <em>long</em>  <dfn class="local col3 decl" id="1193modulus_bitlen" title='modulus_bitlen' data-type='unsigned long' data-ref="1193modulus_bitlen" >modulus_bitlen</dfn>,</td></tr>
+<tr><th id="40">40</th><td>                             <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="1194out" title='out' data-type='unsigned char *' data-ref="1194out" >out</dfn>, </td></tr>
+<tr><th id="41">41</th><td>                             <em>unsigned</em> <em>long</em> *<dfn class="local col5 decl" id="1195outlen" title='outlen' data-type='unsigned long *' data-ref="1195outlen" >outlen</dfn>,</td></tr>
+<tr><th id="42">42</th><td>                                       <em>int</em> *<dfn class="local col6 decl" id="1196is_valid" title='is_valid' data-type='int *' data-ref="1196is_valid" >is_valid</dfn>);</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><i>/* *** v2.1 padding */</i></td></tr>
+<tr><th id="45">45</th><td><em>int</em> <dfn class="decl" id="pkcs_1_oaep_encode" title='pkcs_1_oaep_encode' data-ref="pkcs_1_oaep_encode" >pkcs_1_oaep_encode</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="1197msg" title='msg' data-type='const unsigned char *' data-ref="1197msg" >msg</dfn>,    <em>unsigned</em> <em>long</em> <dfn class="local col8 decl" id="1198msglen" title='msglen' data-type='unsigned long' data-ref="1198msglen" >msglen</dfn>,</td></tr>
+<tr><th id="46">46</th><td>                       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col9 decl" id="1199lparam" title='lparam' data-type='const unsigned char *' data-ref="1199lparam" >lparam</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col0 decl" id="1200lparamlen" title='lparamlen' data-type='unsigned long' data-ref="1200lparamlen" >lparamlen</dfn>,</td></tr>
+<tr><th id="47">47</th><td>                             <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="1201modulus_bitlen" title='modulus_bitlen' data-type='unsigned long' data-ref="1201modulus_bitlen" >modulus_bitlen</dfn>, <a class="typedef" href="tomcrypt_prng.h.html#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col2 decl" id="1202prng" title='prng' data-type='prng_state *' data-ref="1202prng" >prng</dfn>,</td></tr>
+<tr><th id="48">48</th><td>                             <em>int</em>           <dfn class="local col3 decl" id="1203prng_idx" title='prng_idx' data-type='int' data-ref="1203prng_idx" >prng_idx</dfn>,         <em>int</em>  <dfn class="local col4 decl" id="1204hash_idx" title='hash_idx' data-type='int' data-ref="1204hash_idx" >hash_idx</dfn>,</td></tr>
+<tr><th id="49">49</th><td>                             <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="1205out" title='out' data-type='unsigned char *' data-ref="1205out" >out</dfn>,    <em>unsigned</em> <em>long</em> *<dfn class="local col6 decl" id="1206outlen" title='outlen' data-type='unsigned long *' data-ref="1206outlen" >outlen</dfn>);</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><em>int</em> <dfn class="decl" id="pkcs_1_oaep_decode" title='pkcs_1_oaep_decode' data-ref="pkcs_1_oaep_decode" >pkcs_1_oaep_decode</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="1207msg" title='msg' data-type='const unsigned char *' data-ref="1207msg" >msg</dfn>,    <em>unsigned</em> <em>long</em> <dfn class="local col8 decl" id="1208msglen" title='msglen' data-type='unsigned long' data-ref="1208msglen" >msglen</dfn>,</td></tr>
+<tr><th id="52">52</th><td>                       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col9 decl" id="1209lparam" title='lparam' data-type='const unsigned char *' data-ref="1209lparam" >lparam</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col0 decl" id="1210lparamlen" title='lparamlen' data-type='unsigned long' data-ref="1210lparamlen" >lparamlen</dfn>,</td></tr>
+<tr><th id="53">53</th><td>                             <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="1211modulus_bitlen" title='modulus_bitlen' data-type='unsigned long' data-ref="1211modulus_bitlen" >modulus_bitlen</dfn>, <em>int</em> <dfn class="local col2 decl" id="1212hash_idx" title='hash_idx' data-type='int' data-ref="1212hash_idx" >hash_idx</dfn>,</td></tr>
+<tr><th id="54">54</th><td>                             <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="1213out" title='out' data-type='unsigned char *' data-ref="1213out" >out</dfn>,    <em>unsigned</em> <em>long</em> *<dfn class="local col4 decl" id="1214outlen" title='outlen' data-type='unsigned long *' data-ref="1214outlen" >outlen</dfn>,</td></tr>
+<tr><th id="55">55</th><td>                             <em>int</em>           *<dfn class="local col5 decl" id="1215res" title='res' data-type='int *' data-ref="1215res" >res</dfn>);</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><em>int</em> <dfn class="decl" id="pkcs_1_pss_encode" title='pkcs_1_pss_encode' data-ref="pkcs_1_pss_encode" >pkcs_1_pss_encode</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="1216msghash" title='msghash' data-type='const unsigned char *' data-ref="1216msghash" >msghash</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col7 decl" id="1217msghashlen" title='msghashlen' data-type='unsigned long' data-ref="1217msghashlen" >msghashlen</dfn>,</td></tr>
+<tr><th id="58">58</th><td>                            <em>unsigned</em> <em>long</em> <dfn class="local col8 decl" id="1218saltlen" title='saltlen' data-type='unsigned long' data-ref="1218saltlen" >saltlen</dfn>,  <a class="typedef" href="tomcrypt_prng.h.html#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a>   *<dfn class="local col9 decl" id="1219prng" title='prng' data-type='prng_state *' data-ref="1219prng" >prng</dfn>,     </td></tr>
+<tr><th id="59">59</th><td>                            <em>int</em>           <dfn class="local col0 decl" id="1220prng_idx" title='prng_idx' data-type='int' data-ref="1220prng_idx" >prng_idx</dfn>, <em>int</em>           <dfn class="local col1 decl" id="1221hash_idx" title='hash_idx' data-type='int' data-ref="1221hash_idx" >hash_idx</dfn>,</td></tr>
+<tr><th id="60">60</th><td>                            <em>unsigned</em> <em>long</em> <dfn class="local col2 decl" id="1222modulus_bitlen" title='modulus_bitlen' data-type='unsigned long' data-ref="1222modulus_bitlen" >modulus_bitlen</dfn>,</td></tr>
+<tr><th id="61">61</th><td>                            <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="1223out" title='out' data-type='unsigned char *' data-ref="1223out" >out</dfn>,     <em>unsigned</em> <em>long</em> *<dfn class="local col4 decl" id="1224outlen" title='outlen' data-type='unsigned long *' data-ref="1224outlen" >outlen</dfn>);</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td><em>int</em> <dfn class="decl" id="pkcs_1_pss_decode" title='pkcs_1_pss_decode' data-ref="pkcs_1_pss_decode" >pkcs_1_pss_decode</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="1225msghash" title='msghash' data-type='const unsigned char *' data-ref="1225msghash" >msghash</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col6 decl" id="1226msghashlen" title='msghashlen' data-type='unsigned long' data-ref="1226msghashlen" >msghashlen</dfn>,</td></tr>
+<tr><th id="64">64</th><td>                      <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="1227sig" title='sig' data-type='const unsigned char *' data-ref="1227sig" >sig</dfn>,     <em>unsigned</em> <em>long</em> <dfn class="local col8 decl" id="1228siglen" title='siglen' data-type='unsigned long' data-ref="1228siglen" >siglen</dfn>,</td></tr>
+<tr><th id="65">65</th><td>                            <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="1229saltlen" title='saltlen' data-type='unsigned long' data-ref="1229saltlen" >saltlen</dfn>,  <em>int</em>           <dfn class="local col0 decl" id="1230hash_idx" title='hash_idx' data-type='int' data-ref="1230hash_idx" >hash_idx</dfn>,</td></tr>
+<tr><th id="66">66</th><td>                            <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="1231modulus_bitlen" title='modulus_bitlen' data-type='unsigned long' data-ref="1231modulus_bitlen" >modulus_bitlen</dfn>, <em>int</em>    *<dfn class="local col2 decl" id="1232res" title='res' data-type='int *' data-ref="1232res" >res</dfn>);</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="4">endif</span> /* LTC_PKCS_1 */</u></td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><i>/* ===&gt; LTC_PKCS #5 -- Password Based Cryptography &lt;=== */</i></td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="71">ifdef</span> <span class="macro" data-ref="_M/LTC_PKCS_5">LTC_PKCS_5</span></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><i>/* Algorithm #1 (old) */</i></td></tr>
+<tr><th id="74">74</th><td><em>int</em> pkcs_5_alg1(<em>const</em> <em>unsigned</em> <em>char</em> *password, <em>unsigned</em> <em>long</em> password_len, </td></tr>
+<tr><th id="75">75</th><td>                <em>const</em> <em>unsigned</em> <em>char</em> *salt, </td></tr>
+<tr><th id="76">76</th><td>                <em>int</em> iteration_count,  <em>int</em> hash_idx,</td></tr>
+<tr><th id="77">77</th><td>                <em>unsigned</em> <em>char</em> *out,   <em>unsigned</em> <em>long</em> *outlen);</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td><i>/* Algorithm #2 (new) */</i></td></tr>
+<tr><th id="80">80</th><td><em>int</em> pkcs_5_alg2(<em>const</em> <em>unsigned</em> <em>char</em> *password, <em>unsigned</em> <em>long</em> password_len, </td></tr>
+<tr><th id="81">81</th><td>                <em>const</em> <em>unsigned</em> <em>char</em> *salt,     <em>unsigned</em> <em>long</em> salt_len,</td></tr>
+<tr><th id="82">82</th><td>                <em>int</em> iteration_count,           <em>int</em> hash_idx,</td></tr>
+<tr><th id="83">83</th><td>                <em>unsigned</em> <em>char</em> *out,            <em>unsigned</em> <em>long</em> *outlen);</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><u>#<span data-ppcond="71">endif</span>  /* LTC_PKCS_5 */</u></td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_pkcs.h,v $ */</i></td></tr>
+<tr><th id="88">88</th><td><i>/* $Revision: 1.8 $ */</i></td></tr>
+<tr><th id="89">89</th><td><i>/* $Date: 2007/05/12 14:32:35 $ */</i></td></tr>
+<tr><th id="90">90</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

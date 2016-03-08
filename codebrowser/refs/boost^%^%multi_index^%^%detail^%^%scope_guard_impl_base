@@ -1,0 +1,46 @@
+<def f='include/boost/multi_index/detail/scope_guard.hpp' l='59'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='96' c='boost::multi_index::detail::null_guard'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='126' c='boost::multi_index::detail::scope_guard_impl0'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='159' c='boost::multi_index::detail::scope_guard_impl1'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='192' c='boost::multi_index::detail::scope_guard_impl2'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='226' c='boost::multi_index::detail::scope_guard_impl3'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='261' c='boost::multi_index::detail::scope_guard_impl4'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='301' c='boost::multi_index::detail::obj_scope_guard_impl0'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='334' c='boost::multi_index::detail::obj_scope_guard_impl1'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='370' c='boost::multi_index::detail::obj_scope_guard_impl2'/>
+<ovr f='include/boost/multi_index/detail/scope_guard.hpp' l='408' c='boost::multi_index::detail::obj_scope_guard_impl3'/>
+<size>1</size>
+<doc f='include/boost/multi_index/detail/scope_guard.hpp' l='24'>/* Until some official version of the ScopeGuard idiom makes it into Boost,
+ * we locally define our own. This is a merely reformated version of
+ * ScopeGuard.h as defined in:
+ *   Alexandrescu, A., Marginean, P.:&quot;Generic&lt;Programming&gt;: Change the Way You
+ *     Write Exception-Safe Code - Forever&quot;, C/C++ Users Jornal, Dec 2000,
+ *     http://www.drdobbs.com/184403758
+ * with the following modifications:
+ *   - General pretty formatting (pretty to my taste at least.)
+ *   - Naming style changed to standard C++ library requirements.
+ *   - Added scope_guard_impl4 and obj_scope_guard_impl3, (Boost.MultiIndex
+ *     needs them). A better design would provide guards for many more
+ *     arguments through the Boost Preprocessor Library.
+ *   - Added scope_guard_impl_base::touch (see below.)
+ *   - Removed RefHolder and ByRef, whose functionality is provided
+ *     already by Boost.Ref.
+ *   - Removed static make_guard&apos;s and make_obj_guard&apos;s, so that the code
+ *     will work even if BOOST_NO_MEMBER_TEMPLATES is defined. This forces
+ *     us to move some private ctors to public, though.
+ *
+ * NB: CodeWarrior Pro 8 seems to have problems looking up safe_execute
+ * without an explicit qualification.
+ * 
+ * We also define the following variants of the idiom:
+ * 
+ *   - make_guard_if_c&lt;bool&gt;( ... )
+ *   - make_guard_if&lt;IntegralConstant&gt;( ... )
+ *   - make_obj_guard_if_c&lt;bool&gt;( ... )
+ *   - make_obj_guard_if&lt;IntegralConstant&gt;( ... )
+ * which may be used with a compile-time constant to yield
+ * a &quot;null_guard&quot; if the boolean compile-time parameter is false,
+ * or conversely, the guard is only constructed if the constant is true.
+ * This is useful to avoid extra tagging, because the returned
+ * null_guard can be optimzed comlpetely away by the compiler.
+ */</doc>

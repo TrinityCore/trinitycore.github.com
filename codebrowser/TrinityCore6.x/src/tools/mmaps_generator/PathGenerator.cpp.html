@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+<head>
+<title>PathGenerator.cpp [TrinityCore6.x/src/tools/mmaps_generator/PathGenerator.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/tools/mmaps_generator/PathGenerator.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>tools</a>/<a href='./'>mmaps_generator</a>/PathGenerator.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="PathCommon.h.html">"PathCommon.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="MapBuilder.h.html">"MapBuilder.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../common/Utilities/Timer.h.html">"Timer.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><b>using</b> <b>namespace</b> MMAP;</td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><em>bool</em> <dfn class="decl def" id="_Z16checkDirectoriesb" title='checkDirectories' data-ref="_Z16checkDirectoriesb" >checkDirectories</dfn>(<em>bool</em> <dfn class="local col1 decl" id="1debugOutput" title='debugOutput' data-type='bool' data-ref="1debugOutput" >debugOutput</dfn>)</td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&gt; <dfn class="local col2 decl" id="2dirFiles" title='dirFiles' data-type='std::vector&lt;std::string&gt;' data-ref="2dirFiles" >dirFiles</dfn>;</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>    <b>if</b> (<a class="ref" href="PathCommon.h.html#_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" title='MMAP::getDirContents' data-ref="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" id="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" >getDirContents</a>(<a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>, <q>"maps"</q>) == <a class="enum" href="PathCommon.h.html#MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" title='MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND' data-ref="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" id="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" >LISTFILE_DIRECTORY_NOT_FOUND</a> || <a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNKSt6vector5emptyEv" title='std::vector::empty' data-ref="_ZNKSt6vector5emptyEv" id="_ZNKSt6vector5emptyEv" >empty</a>())</td></tr>
+<tr><th id="30">30</th><td>    {</td></tr>
+<tr><th id="31">31</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"'maps' directory is empty or does not exist\n"</q>);</td></tr>
+<tr><th id="32">32</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="33">33</th><td>    }</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>    <a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNSt6vector5clearEv" title='std::vector::clear' data-ref="_ZNSt6vector5clearEv" id="_ZNSt6vector5clearEv" >clear</a>();</td></tr>
+<tr><th id="36">36</th><td>    <b>if</b> (<a class="ref" href="PathCommon.h.html#_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" title='MMAP::getDirContents' data-ref="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" id="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" >getDirContents</a>(<a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>, <q>"vmaps"</q>, <q>"*.vmtree"</q>) == <a class="enum" href="PathCommon.h.html#MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" title='MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND' data-ref="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" id="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" >LISTFILE_DIRECTORY_NOT_FOUND</a> || <a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNKSt6vector5emptyEv" title='std::vector::empty' data-ref="_ZNKSt6vector5emptyEv" id="_ZNKSt6vector5emptyEv" >empty</a>())</td></tr>
+<tr><th id="37">37</th><td>    {</td></tr>
+<tr><th id="38">38</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"'vmaps' directory is empty or does not exist\n"</q>);</td></tr>
+<tr><th id="39">39</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="40">40</th><td>    }</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>    <a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNSt6vector5clearEv" title='std::vector::clear' data-ref="_ZNSt6vector5clearEv" id="_ZNSt6vector5clearEv" >clear</a>();</td></tr>
+<tr><th id="43">43</th><td>    <b>if</b> (<a class="ref" href="PathCommon.h.html#_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" title='MMAP::getDirContents' data-ref="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" id="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" >getDirContents</a>(<a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>, <q>"mmaps"</q>) == <a class="enum" href="PathCommon.h.html#MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" title='MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND' data-ref="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" id="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" >LISTFILE_DIRECTORY_NOT_FOUND</a>)</td></tr>
+<tr><th id="44">44</th><td>    {</td></tr>
+<tr><th id="45">45</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"'mmaps' directory does not exist\n"</q>);</td></tr>
+<tr><th id="46">46</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="47">47</th><td>    }</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNSt6vector5clearEv" title='std::vector::clear' data-ref="_ZNSt6vector5clearEv" id="_ZNSt6vector5clearEv" >clear</a>();</td></tr>
+<tr><th id="50">50</th><td>    <b>if</b> (<a class="local col1 ref" href="#1debugOutput" title='debugOutput' data-ref="1debugOutput" >debugOutput</a>)</td></tr>
+<tr><th id="51">51</th><td>    {</td></tr>
+<tr><th id="52">52</th><td>        <b>if</b> (<a class="ref" href="PathCommon.h.html#_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" title='MMAP::getDirContents' data-ref="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" id="_ZN4MMAP14getDirContentsERSt6vectorISsSaISsEESsSs" >getDirContents</a>(<a class="local col2 ref" href="#2dirFiles" title='dirFiles' data-ref="2dirFiles" >dirFiles</a>, <q>"meshes"</q>) == <a class="enum" href="PathCommon.h.html#MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" title='MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND' data-ref="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" id="MMAP::ListFilesResult::LISTFILE_DIRECTORY_NOT_FOUND" >LISTFILE_DIRECTORY_NOT_FOUND</a>)</td></tr>
+<tr><th id="53">53</th><td>        {</td></tr>
+<tr><th id="54">54</th><td>            <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"'meshes' directory does not exist (no place to put debugOutput files)\n"</q>);</td></tr>
+<tr><th id="55">55</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="56">56</th><td>        }</td></tr>
+<tr><th id="57">57</th><td>    }</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="60">60</th><td>}</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><em>bool</em> <dfn class="decl def" id="_Z10handleArgsiPPcRiS1_S1_RfRbS3_S3_S3_S3_S3_S3_RS_S4_S1_" title='handleArgs' data-ref="_Z10handleArgsiPPcRiS1_S1_RfRbS3_S3_S3_S3_S3_S3_RS_S4_S1_" >handleArgs</dfn>(<em>int</em> <dfn class="local col3 decl" id="3argc" title='argc' data-type='int' data-ref="3argc" >argc</dfn>, <em>char</em>** <dfn class="local col4 decl" id="4argv" title='argv' data-type='char **' data-ref="4argv" >argv</dfn>,</td></tr>
+<tr><th id="63">63</th><td>               <em>int</em> &amp;<dfn class="local col5 decl" id="5mapnum" title='mapnum' data-type='int &amp;' data-ref="5mapnum" >mapnum</dfn>,</td></tr>
+<tr><th id="64">64</th><td>               <em>int</em> &amp;<dfn class="local col6 decl" id="6tileX" title='tileX' data-type='int &amp;' data-ref="6tileX" >tileX</dfn>,</td></tr>
+<tr><th id="65">65</th><td>               <em>int</em> &amp;<dfn class="local col7 decl" id="7tileY" title='tileY' data-type='int &amp;' data-ref="7tileY" >tileY</dfn>,</td></tr>
+<tr><th id="66">66</th><td>               <em>float</em> &amp;<dfn class="local col8 decl" id="8maxAngle" title='maxAngle' data-type='float &amp;' data-ref="8maxAngle" >maxAngle</dfn>,</td></tr>
+<tr><th id="67">67</th><td>               <em>bool</em> &amp;<dfn class="local col9 decl" id="9skipLiquid" title='skipLiquid' data-type='bool &amp;' data-ref="9skipLiquid" >skipLiquid</dfn>,</td></tr>
+<tr><th id="68">68</th><td>               <em>bool</em> &amp;<dfn class="local col0 decl" id="10skipContinents" title='skipContinents' data-type='bool &amp;' data-ref="10skipContinents" >skipContinents</dfn>,</td></tr>
+<tr><th id="69">69</th><td>               <em>bool</em> &amp;<dfn class="local col1 decl" id="11skipJunkMaps" title='skipJunkMaps' data-type='bool &amp;' data-ref="11skipJunkMaps" >skipJunkMaps</dfn>,</td></tr>
+<tr><th id="70">70</th><td>               <em>bool</em> &amp;<dfn class="local col2 decl" id="12skipBattlegrounds" title='skipBattlegrounds' data-type='bool &amp;' data-ref="12skipBattlegrounds" >skipBattlegrounds</dfn>,</td></tr>
+<tr><th id="71">71</th><td>               <em>bool</em> &amp;<dfn class="local col3 decl" id="13debugOutput" title='debugOutput' data-type='bool &amp;' data-ref="13debugOutput" >debugOutput</dfn>,</td></tr>
+<tr><th id="72">72</th><td>               <em>bool</em> &amp;<dfn class="local col4 decl" id="14silent" title='silent' data-type='bool &amp;' data-ref="14silent" >silent</dfn>,</td></tr>
+<tr><th id="73">73</th><td>               <em>bool</em> &amp;<dfn class="local col5 decl" id="15bigBaseUnit" title='bigBaseUnit' data-type='bool &amp;' data-ref="15bigBaseUnit" >bigBaseUnit</dfn>,</td></tr>
+<tr><th id="74">74</th><td>               <em>char</em>* &amp;<dfn class="local col6 decl" id="16offMeshInputPath" title='offMeshInputPath' data-type='char *&amp;' data-ref="16offMeshInputPath" >offMeshInputPath</dfn>,</td></tr>
+<tr><th id="75">75</th><td>               <em>char</em>* &amp;<dfn class="local col7 decl" id="17file" title='file' data-type='char *&amp;' data-ref="17file" >file</dfn>,</td></tr>
+<tr><th id="76">76</th><td>               <em>int</em>&amp; <dfn class="local col8 decl" id="18threads" title='threads' data-type='int &amp;' data-ref="18threads" >threads</dfn>)</td></tr>
+<tr><th id="77">77</th><td>{</td></tr>
+<tr><th id="78">78</th><td>    <em>char</em>* <dfn class="local col9 decl" id="19param" title='param' data-type='char *' data-ref="19param" >param</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="79">79</th><td>    <b>for</b> (<em>int</em> <dfn class="local col0 decl" id="20i" title='i' data-type='int' data-ref="20i" >i</dfn> = <var>1</var>; <a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a> &lt; <a class="local col3 ref" href="#3argc" title='argc' data-ref="3argc" >argc</a>; ++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>)</td></tr>
+<tr><th id="80">80</th><td>    {</td></tr>
+<tr><th id="81">81</th><td>        <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--maxAngle"</q>) == <var>0</var>)</td></tr>
+<tr><th id="82">82</th><td>        {</td></tr>
+<tr><th id="83">83</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="84">84</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="85">85</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>            <em>float</em> <dfn class="local col1 decl" id="21maxangle" title='maxangle' data-type='float' data-ref="21maxangle" >maxangle</dfn> = <a class="ref" href="../../../../include/stdlib.h.html#atof" title='atof' data-ref="atof" id="atof" >atof</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>);</td></tr>
+<tr><th id="88">88</th><td>            <b>if</b> (<a class="local col1 ref" href="#21maxangle" title='maxangle' data-ref="21maxangle" >maxangle</a> &lt;= <var>90.f</var> &amp;&amp; <a class="local col1 ref" href="#21maxangle" title='maxangle' data-ref="21maxangle" >maxangle</a> &gt;= <var>45.f</var>)</td></tr>
+<tr><th id="89">89</th><td>                <a class="local col8 ref" href="#8maxAngle" title='maxAngle' data-ref="8maxAngle" >maxAngle</a> = <a class="local col1 ref" href="#21maxangle" title='maxangle' data-ref="21maxangle" >maxangle</a>;</td></tr>
+<tr><th id="90">90</th><td>            <b>else</b></td></tr>
+<tr><th id="91">91</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid option for '--maxAngle', using default\n"</q>);</td></tr>
+<tr><th id="92">92</th><td>        }</td></tr>
+<tr><th id="93">93</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--threads"</q>) == <var>0</var>)</td></tr>
+<tr><th id="94">94</th><td>        {</td></tr>
+<tr><th id="95">95</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="96">96</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="97">97</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="98">98</th><td>            <a class="local col8 ref" href="#18threads" title='threads' data-ref="18threads" >threads</a> = <a class="ref" href="../../../../include/stdlib.h.html#atoi" title='atoi' data-ref="atoi" id="atoi" >atoi</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>);</td></tr>
+<tr><th id="99">99</th><td>            <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Using %i threads to extract mmaps\n"</q>, <a class="local col8 ref" href="#18threads" title='threads' data-ref="18threads" >threads</a>);</td></tr>
+<tr><th id="100">100</th><td>        }</td></tr>
+<tr><th id="101">101</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--file"</q>) == <var>0</var>)</td></tr>
+<tr><th id="102">102</th><td>        {</td></tr>
+<tr><th id="103">103</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="104">104</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="105">105</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="106">106</th><td>            <a class="local col7 ref" href="#17file" title='file' data-ref="17file" >file</a> = <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>;</td></tr>
+<tr><th id="107">107</th><td>        }</td></tr>
+<tr><th id="108">108</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--tile"</q>) == <var>0</var>)</td></tr>
+<tr><th id="109">109</th><td>        {</td></tr>
+<tr><th id="110">110</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="111">111</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="112">112</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>            <em>char</em>* <dfn class="local col2 decl" id="22stileX" title='stileX' data-type='char *' data-ref="22stileX" >stileX</dfn> = <a class="ref" href="../../../../include/string.h.html#strtok" title='strtok' data-ref="strtok" id="strtok" >strtok</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>","</q>);</td></tr>
+<tr><th id="115">115</th><td>            <em>char</em>* <dfn class="local col3 decl" id="23stileY" title='stileY' data-type='char *' data-ref="23stileY" >stileY</dfn> = <a class="ref" href="../../../../include/string.h.html#strtok" title='strtok' data-ref="strtok" id="strtok" >strtok</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <q>","</q>);</td></tr>
+<tr><th id="116">116</th><td>            <em>int</em> <dfn class="local col4 decl" id="24tilex" title='tilex' data-type='int' data-ref="24tilex" >tilex</dfn> = <a class="ref" href="../../../../include/stdlib.h.html#atoi" title='atoi' data-ref="atoi" id="atoi" >atoi</a>(<a class="local col2 ref" href="#22stileX" title='stileX' data-ref="22stileX" >stileX</a>);</td></tr>
+<tr><th id="117">117</th><td>            <em>int</em> <dfn class="local col5 decl" id="25tiley" title='tiley' data-type='int' data-ref="25tiley" >tiley</dfn> = <a class="ref" href="../../../../include/stdlib.h.html#atoi" title='atoi' data-ref="atoi" id="atoi" >atoi</a>(<a class="local col3 ref" href="#23stileY" title='stileY' data-ref="23stileY" >stileY</a>);</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>            <b>if</b> ((<a class="local col4 ref" href="#24tilex" title='tilex' data-ref="24tilex" >tilex</a> &gt; <var>0</var> &amp;&amp; <a class="local col4 ref" href="#24tilex" title='tilex' data-ref="24tilex" >tilex</a> &lt; <var>64</var>) || (<a class="local col4 ref" href="#24tilex" title='tilex' data-ref="24tilex" >tilex</a> == <var>0</var> &amp;&amp; <a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col2 ref" href="#22stileX" title='stileX' data-ref="22stileX" >stileX</a>, <q>"0"</q>) == <var>0</var>))</td></tr>
+<tr><th id="120">120</th><td>                <a class="local col6 ref" href="#6tileX" title='tileX' data-ref="6tileX" >tileX</a> = <a class="local col4 ref" href="#24tilex" title='tilex' data-ref="24tilex" >tilex</a>;</td></tr>
+<tr><th id="121">121</th><td>            <b>if</b> ((<a class="local col5 ref" href="#25tiley" title='tiley' data-ref="25tiley" >tiley</a> &gt; <var>0</var> &amp;&amp; <a class="local col5 ref" href="#25tiley" title='tiley' data-ref="25tiley" >tiley</a> &lt; <var>64</var>) || (<a class="local col5 ref" href="#25tiley" title='tiley' data-ref="25tiley" >tiley</a> == <var>0</var> &amp;&amp; <a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col3 ref" href="#23stileY" title='stileY' data-ref="23stileY" >stileY</a>, <q>"0"</q>) == <var>0</var>))</td></tr>
+<tr><th id="122">122</th><td>                <a class="local col7 ref" href="#7tileY" title='tileY' data-ref="7tileY" >tileY</a> = <a class="local col5 ref" href="#25tiley" title='tiley' data-ref="25tiley" >tiley</a>;</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>            <b>if</b> (<a class="local col6 ref" href="#6tileX" title='tileX' data-ref="6tileX" >tileX</a> &lt; <var>0</var> || <a class="local col7 ref" href="#7tileY" title='tileY' data-ref="7tileY" >tileY</a> &lt; <var>0</var>)</td></tr>
+<tr><th id="125">125</th><td>            {</td></tr>
+<tr><th id="126">126</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid tile coords.\n"</q>);</td></tr>
+<tr><th id="127">127</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="128">128</th><td>            }</td></tr>
+<tr><th id="129">129</th><td>        }</td></tr>
+<tr><th id="130">130</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--skipLiquid"</q>) == <var>0</var>)</td></tr>
+<tr><th id="131">131</th><td>        {</td></tr>
+<tr><th id="132">132</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="133">133</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="134">134</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>            <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"true"</q>) == <var>0</var>)</td></tr>
+<tr><th id="137">137</th><td>                <a class="local col9 ref" href="#9skipLiquid" title='skipLiquid' data-ref="9skipLiquid" >skipLiquid</a> = <b>true</b>;</td></tr>
+<tr><th id="138">138</th><td>            <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"false"</q>) == <var>0</var>)</td></tr>
+<tr><th id="139">139</th><td>                <a class="local col9 ref" href="#9skipLiquid" title='skipLiquid' data-ref="9skipLiquid" >skipLiquid</a> = <b>false</b>;</td></tr>
+<tr><th id="140">140</th><td>            <b>else</b></td></tr>
+<tr><th id="141">141</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid option for '--skipLiquid', using default\n"</q>);</td></tr>
+<tr><th id="142">142</th><td>        }</td></tr>
+<tr><th id="143">143</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--skipContinents"</q>) == <var>0</var>)</td></tr>
+<tr><th id="144">144</th><td>        {</td></tr>
+<tr><th id="145">145</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="146">146</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="147">147</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td>            <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"true"</q>) == <var>0</var>)</td></tr>
+<tr><th id="150">150</th><td>                <a class="local col0 ref" href="#10skipContinents" title='skipContinents' data-ref="10skipContinents" >skipContinents</a> = <b>true</b>;</td></tr>
+<tr><th id="151">151</th><td>            <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"false"</q>) == <var>0</var>)</td></tr>
+<tr><th id="152">152</th><td>                <a class="local col0 ref" href="#10skipContinents" title='skipContinents' data-ref="10skipContinents" >skipContinents</a> = <b>false</b>;</td></tr>
+<tr><th id="153">153</th><td>            <b>else</b></td></tr>
+<tr><th id="154">154</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid option for '--skipContinents', using default\n"</q>);</td></tr>
+<tr><th id="155">155</th><td>        }</td></tr>
+<tr><th id="156">156</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--skipJunkMaps"</q>) == <var>0</var>)</td></tr>
+<tr><th id="157">157</th><td>        {</td></tr>
+<tr><th id="158">158</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="159">159</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="160">160</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>            <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"true"</q>) == <var>0</var>)</td></tr>
+<tr><th id="163">163</th><td>                <a class="local col1 ref" href="#11skipJunkMaps" title='skipJunkMaps' data-ref="11skipJunkMaps" >skipJunkMaps</a> = <b>true</b>;</td></tr>
+<tr><th id="164">164</th><td>            <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"false"</q>) == <var>0</var>)</td></tr>
+<tr><th id="165">165</th><td>                <a class="local col1 ref" href="#11skipJunkMaps" title='skipJunkMaps' data-ref="11skipJunkMaps" >skipJunkMaps</a> = <b>false</b>;</td></tr>
+<tr><th id="166">166</th><td>            <b>else</b></td></tr>
+<tr><th id="167">167</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid option for '--skipJunkMaps', using default\n"</q>);</td></tr>
+<tr><th id="168">168</th><td>        }</td></tr>
+<tr><th id="169">169</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--skipBattlegrounds"</q>) == <var>0</var>)</td></tr>
+<tr><th id="170">170</th><td>        {</td></tr>
+<tr><th id="171">171</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="172">172</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="173">173</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td>            <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"true"</q>) == <var>0</var>)</td></tr>
+<tr><th id="176">176</th><td>                <a class="local col2 ref" href="#12skipBattlegrounds" title='skipBattlegrounds' data-ref="12skipBattlegrounds" >skipBattlegrounds</a> = <b>true</b>;</td></tr>
+<tr><th id="177">177</th><td>            <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"false"</q>) == <var>0</var>)</td></tr>
+<tr><th id="178">178</th><td>                <a class="local col2 ref" href="#12skipBattlegrounds" title='skipBattlegrounds' data-ref="12skipBattlegrounds" >skipBattlegrounds</a> = <b>false</b>;</td></tr>
+<tr><th id="179">179</th><td>            <b>else</b></td></tr>
+<tr><th id="180">180</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid option for '--skipBattlegrounds', using default\n"</q>);</td></tr>
+<tr><th id="181">181</th><td>        }</td></tr>
+<tr><th id="182">182</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--debugOutput"</q>) == <var>0</var>)</td></tr>
+<tr><th id="183">183</th><td>        {</td></tr>
+<tr><th id="184">184</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="185">185</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="186">186</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>            <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"true"</q>) == <var>0</var>)</td></tr>
+<tr><th id="189">189</th><td>                <a class="local col3 ref" href="#13debugOutput" title='debugOutput' data-ref="13debugOutput" >debugOutput</a> = <b>true</b>;</td></tr>
+<tr><th id="190">190</th><td>            <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"false"</q>) == <var>0</var>)</td></tr>
+<tr><th id="191">191</th><td>                <a class="local col3 ref" href="#13debugOutput" title='debugOutput' data-ref="13debugOutput" >debugOutput</a> = <b>false</b>;</td></tr>
+<tr><th id="192">192</th><td>            <b>else</b></td></tr>
+<tr><th id="193">193</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid option for '--debugOutput', using default true\n"</q>);</td></tr>
+<tr><th id="194">194</th><td>        }</td></tr>
+<tr><th id="195">195</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--silent"</q>) == <var>0</var>)</td></tr>
+<tr><th id="196">196</th><td>        {</td></tr>
+<tr><th id="197">197</th><td>            <a class="local col4 ref" href="#14silent" title='silent' data-ref="14silent" >silent</a> = <b>true</b>;</td></tr>
+<tr><th id="198">198</th><td>        }</td></tr>
+<tr><th id="199">199</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--bigBaseUnit"</q>) == <var>0</var>)</td></tr>
+<tr><th id="200">200</th><td>        {</td></tr>
+<tr><th id="201">201</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="202">202</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="203">203</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="204">204</th><td></td></tr>
+<tr><th id="205">205</th><td>            <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"true"</q>) == <var>0</var>)</td></tr>
+<tr><th id="206">206</th><td>                <a class="local col5 ref" href="#15bigBaseUnit" title='bigBaseUnit' data-ref="15bigBaseUnit" >bigBaseUnit</a> = <b>true</b>;</td></tr>
+<tr><th id="207">207</th><td>            <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>, <q>"false"</q>) == <var>0</var>)</td></tr>
+<tr><th id="208">208</th><td>                <a class="local col5 ref" href="#15bigBaseUnit" title='bigBaseUnit' data-ref="15bigBaseUnit" >bigBaseUnit</a> = <b>false</b>;</td></tr>
+<tr><th id="209">209</th><td>            <b>else</b></td></tr>
+<tr><th id="210">210</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid option for '--bigBaseUnit', using default false\n"</q>);</td></tr>
+<tr><th id="211">211</th><td>        }</td></tr>
+<tr><th id="212">212</th><td>        <b>else</b> <b>if</b> (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"--offMeshInput"</q>) == <var>0</var>)</td></tr>
+<tr><th id="213">213</th><td>        {</td></tr>
+<tr><th id="214">214</th><td>            <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a> = <a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="215">215</th><td>            <b>if</b> (!<a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>)</td></tr>
+<tr><th id="216">216</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="217">217</th><td></td></tr>
+<tr><th id="218">218</th><td>            <a class="local col6 ref" href="#16offMeshInputPath" title='offMeshInputPath' data-ref="16offMeshInputPath" >offMeshInputPath</a> = <a class="local col9 ref" href="#19param" title='param' data-ref="19param" >param</a>;</td></tr>
+<tr><th id="219">219</th><td>        }</td></tr>
+<tr><th id="220">220</th><td>        <b>else</b></td></tr>
+<tr><th id="221">221</th><td>        {</td></tr>
+<tr><th id="222">222</th><td>            <em>int</em> <dfn class="local col6 decl" id="26map" title='map' data-type='int' data-ref="26map" >map</dfn> = <a class="ref" href="../../../../include/stdlib.h.html#atoi" title='atoi' data-ref="atoi" id="atoi" >atoi</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>]);</td></tr>
+<tr><th id="223">223</th><td>            <b>if</b> (<a class="local col6 ref" href="#26map" title='map' data-ref="26map" >map</a> &gt; <var>0</var> || (<a class="local col6 ref" href="#26map" title='map' data-ref="26map" >map</a> == <var>0</var> &amp;&amp; (<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#4argv" title='argv' data-ref="4argv" >argv</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>], <q>"0"</q>) == <var>0</var>)))</td></tr>
+<tr><th id="224">224</th><td>                <a class="local col5 ref" href="#5mapnum" title='mapnum' data-ref="5mapnum" >mapnum</a> = <a class="local col6 ref" href="#26map" title='map' data-ref="26map" >map</a>;</td></tr>
+<tr><th id="225">225</th><td>            <b>else</b></td></tr>
+<tr><th id="226">226</th><td>            {</td></tr>
+<tr><th id="227">227</th><td>                <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"invalid map id\n"</q>);</td></tr>
+<tr><th id="228">228</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="229">229</th><td>            }</td></tr>
+<tr><th id="230">230</th><td>        }</td></tr>
+<tr><th id="231">231</th><td>    }</td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="234">234</th><td>}</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td><em>int</em> <dfn class="decl def" id="_Z6finishPKci" title='finish' data-ref="_Z6finishPKci" >finish</dfn>(<em>const</em> <em>char</em>* <dfn class="local col7 decl" id="27message" title='message' data-type='const char *' data-ref="27message" >message</dfn>, <em>int</em> <dfn class="local col8 decl" id="28returnValue" title='returnValue' data-type='int' data-ref="28returnValue" >returnValue</dfn>)</td></tr>
+<tr><th id="237">237</th><td>{</td></tr>
+<tr><th id="238">238</th><td>    <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"%s"</q>, <a class="local col7 ref" href="#27message" title='message' data-ref="27message" >message</a>);</td></tr>
+<tr><th id="239">239</th><td>    <a class="ref" href="../../../../include/stdio.h.html#getchar" title='getchar' data-ref="getchar" id="getchar" >getchar</a>(); <i>// Wait for user input</i></td></tr>
+<tr><th id="240">240</th><td>    <b>return</b> <a class="local col8 ref" href="#28returnValue" title='returnValue' data-ref="28returnValue" >returnValue</a>;</td></tr>
+<tr><th id="241">241</th><td>}</td></tr>
+<tr><th id="242">242</th><td></td></tr>
+<tr><th id="243">243</th><td><em>int</em> <dfn class="decl def" id="main" title='main' data-ref="main" >main</dfn>(<em>int</em> <dfn class="local col9 decl" id="29argc" title='argc' data-type='int' data-ref="29argc" >argc</dfn>, <em>char</em>** <dfn class="local col0 decl" id="30argv" title='argv' data-type='char **' data-ref="30argv" >argv</dfn>)</td></tr>
+<tr><th id="244">244</th><td>{</td></tr>
+<tr><th id="245">245</th><td>    <em>int</em> <dfn class="local col1 decl" id="31threads" title='threads' data-type='int' data-ref="31threads" >threads</dfn> = <var>3</var>, <dfn class="local col2 decl" id="32mapnum" title='mapnum' data-type='int' data-ref="32mapnum" >mapnum</dfn> = -<var>1</var>;</td></tr>
+<tr><th id="246">246</th><td>    <em>float</em> <dfn class="local col3 decl" id="33maxAngle" title='maxAngle' data-type='float' data-ref="33maxAngle" >maxAngle</dfn> = <var>70.0f</var>;</td></tr>
+<tr><th id="247">247</th><td>    <em>int</em> <dfn class="local col4 decl" id="34tileX" title='tileX' data-type='int' data-ref="34tileX" >tileX</dfn> = -<var>1</var>, <dfn class="local col5 decl" id="35tileY" title='tileY' data-type='int' data-ref="35tileY" >tileY</dfn> = -<var>1</var>;</td></tr>
+<tr><th id="248">248</th><td>    <em>bool</em> <dfn class="local col6 decl" id="36skipLiquid" title='skipLiquid' data-type='bool' data-ref="36skipLiquid" >skipLiquid</dfn> = <b>false</b>,</td></tr>
+<tr><th id="249">249</th><td>         <dfn class="local col7 decl" id="37skipContinents" title='skipContinents' data-type='bool' data-ref="37skipContinents" >skipContinents</dfn> = <b>false</b>,</td></tr>
+<tr><th id="250">250</th><td>         <dfn class="local col8 decl" id="38skipJunkMaps" title='skipJunkMaps' data-type='bool' data-ref="38skipJunkMaps" >skipJunkMaps</dfn> = <b>true</b>,</td></tr>
+<tr><th id="251">251</th><td>         <dfn class="local col9 decl" id="39skipBattlegrounds" title='skipBattlegrounds' data-type='bool' data-ref="39skipBattlegrounds" >skipBattlegrounds</dfn> = <b>false</b>,</td></tr>
+<tr><th id="252">252</th><td>         <dfn class="local col0 decl" id="40debugOutput" title='debugOutput' data-type='bool' data-ref="40debugOutput" >debugOutput</dfn> = <b>false</b>,</td></tr>
+<tr><th id="253">253</th><td>         <dfn class="local col1 decl" id="41silent" title='silent' data-type='bool' data-ref="41silent" >silent</dfn> = <b>false</b>,</td></tr>
+<tr><th id="254">254</th><td>         <dfn class="local col2 decl" id="42bigBaseUnit" title='bigBaseUnit' data-type='bool' data-ref="42bigBaseUnit" >bigBaseUnit</dfn> = <b>false</b>;</td></tr>
+<tr><th id="255">255</th><td>    <em>char</em>* <dfn class="local col3 decl" id="43offMeshInputPath" title='offMeshInputPath' data-type='char *' data-ref="43offMeshInputPath" >offMeshInputPath</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="256">256</th><td>    <em>char</em>* <dfn class="local col4 decl" id="44file" title='file' data-type='char *' data-ref="44file" >file</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td>    <em>bool</em> <dfn class="local col5 decl" id="45validParam" title='validParam' data-type='bool' data-ref="45validParam" >validParam</dfn> = <a class="ref" href="#_Z10handleArgsiPPcRiS1_S1_RfRbS3_S3_S3_S3_S3_S3_RS_S4_S1_" title='handleArgs' data-ref="_Z10handleArgsiPPcRiS1_S1_RfRbS3_S3_S3_S3_S3_S3_RS_S4_S1_" >handleArgs</a>(<a class="local col9 ref" href="#29argc" title='argc' data-ref="29argc" >argc</a>, <a class="local col0 ref" href="#30argv" title='argv' data-ref="30argv" >argv</a>, <a class="local col2 ref" href="#32mapnum" title='mapnum' data-ref="32mapnum" >mapnum</a>,</td></tr>
+<tr><th id="259">259</th><td>                                 <a class="local col4 ref" href="#34tileX" title='tileX' data-ref="34tileX" >tileX</a>, <a class="local col5 ref" href="#35tileY" title='tileY' data-ref="35tileY" >tileY</a>, <a class="local col3 ref" href="#33maxAngle" title='maxAngle' data-ref="33maxAngle" >maxAngle</a>,</td></tr>
+<tr><th id="260">260</th><td>                                 <a class="local col6 ref" href="#36skipLiquid" title='skipLiquid' data-ref="36skipLiquid" >skipLiquid</a>, <a class="local col7 ref" href="#37skipContinents" title='skipContinents' data-ref="37skipContinents" >skipContinents</a>, <a class="local col8 ref" href="#38skipJunkMaps" title='skipJunkMaps' data-ref="38skipJunkMaps" >skipJunkMaps</a>, <a class="local col9 ref" href="#39skipBattlegrounds" title='skipBattlegrounds' data-ref="39skipBattlegrounds" >skipBattlegrounds</a>,</td></tr>
+<tr><th id="261">261</th><td>                                 <a class="local col0 ref" href="#40debugOutput" title='debugOutput' data-ref="40debugOutput" >debugOutput</a>, <a class="local col1 ref" href="#41silent" title='silent' data-ref="41silent" >silent</a>, <a class="local col2 ref" href="#42bigBaseUnit" title='bigBaseUnit' data-ref="42bigBaseUnit" >bigBaseUnit</a>, <a class="local col3 ref" href="#43offMeshInputPath" title='offMeshInputPath' data-ref="43offMeshInputPath" >offMeshInputPath</a>, <a class="local col4 ref" href="#44file" title='file' data-ref="44file" >file</a>, <a class="local col1 ref" href="#31threads" title='threads' data-ref="31threads" >threads</a>);</td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td>    <b>if</b> (!<a class="local col5 ref" href="#45validParam" title='validParam' data-ref="45validParam" >validParam</a>)</td></tr>
+<tr><th id="264">264</th><td>        <b>return</b> <a class="local col1 ref" href="#41silent" title='silent' data-ref="41silent" >silent</a> ? -<var>1</var> : <a class="ref" href="#_Z6finishPKci" title='finish' data-ref="_Z6finishPKci" >finish</a>(<q>"You have specified invalid parameters"</q>, -<var>1</var>);</td></tr>
+<tr><th id="265">265</th><td></td></tr>
+<tr><th id="266">266</th><td>    <b>if</b> (<a class="local col2 ref" href="#32mapnum" title='mapnum' data-ref="32mapnum" >mapnum</a> == -<var>1</var> &amp;&amp; <a class="local col0 ref" href="#40debugOutput" title='debugOutput' data-ref="40debugOutput" >debugOutput</a>)</td></tr>
+<tr><th id="267">267</th><td>    {</td></tr>
+<tr><th id="268">268</th><td>        <b>if</b> (<a class="local col1 ref" href="#41silent" title='silent' data-ref="41silent" >silent</a>)</td></tr>
+<tr><th id="269">269</th><td>            <b>return</b> -<var>2</var>;</td></tr>
+<tr><th id="270">270</th><td></td></tr>
+<tr><th id="271">271</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"You have specifed debug output, but didn't specify a map to generate.\n"</q>);</td></tr>
+<tr><th id="272">272</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"This will generate debug output for ALL maps.\n"</q>);</td></tr>
+<tr><th id="273">273</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Are you sure you want to continue? (y/n) "</q>);</td></tr>
+<tr><th id="274">274</th><td>        <b>if</b> (<a class="ref" href="../../../../include/stdio.h.html#getchar" title='getchar' data-ref="getchar" id="getchar" >getchar</a>() != <kdb>'y'</kdb>)</td></tr>
+<tr><th id="275">275</th><td>            <b>return</b> <var>0</var>;</td></tr>
+<tr><th id="276">276</th><td>    }</td></tr>
+<tr><th id="277">277</th><td></td></tr>
+<tr><th id="278">278</th><td>    <b>if</b> (!<a class="ref" href="#_Z16checkDirectoriesb" title='checkDirectories' data-ref="_Z16checkDirectoriesb" >checkDirectories</a>(<a class="local col0 ref" href="#40debugOutput" title='debugOutput' data-ref="40debugOutput" >debugOutput</a>))</td></tr>
+<tr><th id="279">279</th><td>        <b>return</b> <a class="local col1 ref" href="#41silent" title='silent' data-ref="41silent" >silent</a> ? -<var>3</var> : <a class="ref" href="#_Z6finishPKci" title='finish' data-ref="_Z6finishPKci" >finish</a>(<q>"Press ENTER to close..."</q>, -<var>3</var>);</td></tr>
+<tr><th id="280">280</th><td></td></tr>
+<tr><th id="281">281</th><td>    <a class="type" href="MapBuilder.h.html#MMAP::MapBuilder" title='MMAP::MapBuilder' data-ref="MMAP::MapBuilder" >MapBuilder</a> <dfn class="local col6 decl" id="46builder" title='builder' data-type='MMAP::MapBuilder' data-ref="46builder" >builder</dfn><a class="ref" href="MapBuilder.h.html#_ZN4MMAP10MapBuilderC1EfbbbbbbPKc" title='MMAP::MapBuilder::MapBuilder' data-ref="_ZN4MMAP10MapBuilderC1EfbbbbbbPKc" id="_ZN4MMAP10MapBuilderC1EfbbbbbbPKc" >(</a><a class="local col3 ref" href="#33maxAngle" title='maxAngle' data-ref="33maxAngle" >maxAngle</a>, <a class="local col6 ref" href="#36skipLiquid" title='skipLiquid' data-ref="36skipLiquid" >skipLiquid</a>, <a class="local col7 ref" href="#37skipContinents" title='skipContinents' data-ref="37skipContinents" >skipContinents</a>, <a class="local col8 ref" href="#38skipJunkMaps" title='skipJunkMaps' data-ref="38skipJunkMaps" >skipJunkMaps</a>,</td></tr>
+<tr><th id="282">282</th><td>                       <a class="local col9 ref" href="#39skipBattlegrounds" title='skipBattlegrounds' data-ref="39skipBattlegrounds" >skipBattlegrounds</a>, <a class="local col0 ref" href="#40debugOutput" title='debugOutput' data-ref="40debugOutput" >debugOutput</a>, <a class="local col2 ref" href="#42bigBaseUnit" title='bigBaseUnit' data-ref="42bigBaseUnit" >bigBaseUnit</a>, <a class="local col3 ref" href="#43offMeshInputPath" title='offMeshInputPath' data-ref="43offMeshInputPath" >offMeshInputPath</a>);</td></tr>
+<tr><th id="283">283</th><td></td></tr>
+<tr><th id="284">284</th><td>    <a class="typedef" href="../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="47start" title='start' data-type='uint32' data-ref="47start" >start</dfn> = <a class="ref" href="../../common/Utilities/Timer.h.html#_Z9getMSTimev" title='getMSTime' data-ref="_Z9getMSTimev" id="_Z9getMSTimev" >getMSTime</a>();</td></tr>
+<tr><th id="285">285</th><td>    <b>if</b> (<a class="local col4 ref" href="#44file" title='file' data-ref="44file" >file</a>)</td></tr>
+<tr><th id="286">286</th><td>        <a class="local col6 ref" href="#46builder" title='builder' data-ref="46builder" >builder</a>.<a class="ref" href="MapBuilder.h.html#_ZN4MMAP10MapBuilder17buildMeshFromFileEPc" title='MMAP::MapBuilder::buildMeshFromFile' data-ref="_ZN4MMAP10MapBuilder17buildMeshFromFileEPc" id="_ZN4MMAP10MapBuilder17buildMeshFromFileEPc" >buildMeshFromFile</a>(<a class="local col4 ref" href="#44file" title='file' data-ref="44file" >file</a>);</td></tr>
+<tr><th id="287">287</th><td>    <b>else</b> <b>if</b> (<a class="local col4 ref" href="#34tileX" title='tileX' data-ref="34tileX" >tileX</a> &gt; -<var>1</var> &amp;&amp; <a class="local col5 ref" href="#35tileY" title='tileY' data-ref="35tileY" >tileY</a> &gt; -<var>1</var> &amp;&amp; <a class="local col2 ref" href="#32mapnum" title='mapnum' data-ref="32mapnum" >mapnum</a> &gt;= <var>0</var>)</td></tr>
+<tr><th id="288">288</th><td>        <a class="local col6 ref" href="#46builder" title='builder' data-ref="46builder" >builder</a>.<a class="ref" href="MapBuilder.h.html#_ZN4MMAP10MapBuilder15buildSingleTileEjjj" title='MMAP::MapBuilder::buildSingleTile' data-ref="_ZN4MMAP10MapBuilder15buildSingleTileEjjj" id="_ZN4MMAP10MapBuilder15buildSingleTileEjjj" >buildSingleTile</a>(<a class="local col2 ref" href="#32mapnum" title='mapnum' data-ref="32mapnum" >mapnum</a>, <a class="local col4 ref" href="#34tileX" title='tileX' data-ref="34tileX" >tileX</a>, <a class="local col5 ref" href="#35tileY" title='tileY' data-ref="35tileY" >tileY</a>);</td></tr>
+<tr><th id="289">289</th><td>    <b>else</b> <b>if</b> (<a class="local col2 ref" href="#32mapnum" title='mapnum' data-ref="32mapnum" >mapnum</a> &gt;= <var>0</var>)</td></tr>
+<tr><th id="290">290</th><td>        <a class="local col6 ref" href="#46builder" title='builder' data-ref="46builder" >builder</a>.<a class="ref" href="MapBuilder.h.html#_ZN4MMAP10MapBuilder8buildMapEj" title='MMAP::MapBuilder::buildMap' data-ref="_ZN4MMAP10MapBuilder8buildMapEj" id="_ZN4MMAP10MapBuilder8buildMapEj" >buildMap</a>(<a class="typedef" href="../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="local col2 ref" href="#32mapnum" title='mapnum' data-ref="32mapnum" >mapnum</a>));</td></tr>
+<tr><th id="291">291</th><td>    <b>else</b></td></tr>
+<tr><th id="292">292</th><td>        <a class="local col6 ref" href="#46builder" title='builder' data-ref="46builder" >builder</a>.<a class="ref" href="MapBuilder.h.html#_ZN4MMAP10MapBuilder12buildAllMapsEi" title='MMAP::MapBuilder::buildAllMaps' data-ref="_ZN4MMAP10MapBuilder12buildAllMapsEi" id="_ZN4MMAP10MapBuilder12buildAllMapsEi" >buildAllMaps</a>(<a class="local col1 ref" href="#31threads" title='threads' data-ref="31threads" >threads</a>);</td></tr>
+<tr><th id="293">293</th><td></td></tr>
+<tr><th id="294">294</th><td>    <b>if</b> (!<a class="local col1 ref" href="#41silent" title='silent' data-ref="41silent" >silent</a>)</td></tr>
+<tr><th id="295">295</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Finished. MMAPS were built in %u ms!\n"</q>, <a class="ref" href="../../common/Utilities/Timer.h.html#_Z18GetMSTimeDiffToNowj" title='GetMSTimeDiffToNow' data-ref="_Z18GetMSTimeDiffToNowj" id="_Z18GetMSTimeDiffToNowj" >GetMSTimeDiffToNow</a>(<a class="local col7 ref" href="#47start" title='start' data-ref="47start" >start</a>));</td></tr>
+<tr><th id="296">296</th><td>    <b>return</b> <var>0</var>;</td></tr>
+<tr><th id="297">297</th><td>}</td></tr>
+<tr><th id="298">298</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

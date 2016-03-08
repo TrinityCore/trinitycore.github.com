@@ -1,0 +1,27 @@
+<def f='include/boost/asio/basic_socket_acceptor.hpp' l='136' type='void boost::asio::basic_socket_acceptor::basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;(boost::asio::io_service &amp; io_service, const endpoint_type &amp; endpoint, bool reuse_addr = true)'/>
+<doc f='include/boost/asio/basic_socket_acceptor.hpp' l='110'>/**
+   * This constructor creates an acceptor and automatically opens it to listen
+   * for new connections on the specified endpoint.
+   *
+   * @param io_service The io_service object that the acceptor will use to
+   * dispatch handlers for any asynchronous operations performed on the
+   * acceptor.
+   *
+   * @param endpoint An endpoint on the local machine on which the acceptor
+   * will listen for new connections.
+   *
+   * @param reuse_addr Whether the constructor should set the socket option
+   * socket_base::reuse_address.
+   *
+   * @throws boost::system::system_error Thrown on failure.
+   *
+   * @note This constructor is equivalent to the following code:
+   * @code
+   * basic_socket_acceptor&lt;Protocol&gt; acceptor(io_service);
+   * acceptor.open(endpoint.protocol());
+   * if (reuse_addr)
+   *   acceptor.set_option(socket_base::reuse_address(true));
+   * acceptor.bind(endpoint);
+   * acceptor.listen(listen_backlog);
+   * @endcode
+   */</doc>

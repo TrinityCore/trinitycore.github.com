@@ -1,0 +1,42 @@
+<dec f='TrinityCore3.3.5/dep/recastnavigation/Recast/Include/Recast.h' l='869' type='void rcFilterLedgeSpans(rcContext * ctx, const int walkableHeight, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Recast/Include/Recast.h' l='861'>/// Marks spans that are ledges as not-walkable. 
+///  @ingroup recast
+///  @param[in,out]	ctx				The build context to use during the operation.
+///  @param[in]		walkableHeight	Minimum floor to &apos;ceiling&apos; height that will still allow the floor area to 
+///  								be considered walkable. [Limit: &gt;= 3] [Units: vx]
+///  @param[in]		walkableClimb	Maximum ledge height that is considered to still be traversable. 
+///  								[Limit: &gt;=0] [Units: vx]
+///  @param[in,out]	solid			A fully built heightfield.  (All spans have been added.)</doc>
+<def f='TrinityCore3.3.5/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='84' type='void rcFilterLedgeSpans(rcContext * ctx, const int walkableHeight, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='74'>/// @par
+///
+/// A ledge is a span with one or more neighbors whose maximum is further away than @p walkableClimb
+/// from the current span&apos;s maximum.
+/// This method removes the impact of the overestimation of conservative voxelization 
+/// so the resulting mesh will not have regions hanging in the air over ledges.
+/// 
+/// A span is a ledge if: &lt;tt&gt;rcAbs(currentSpan.smax - neighborSpan.smax) &gt; walkableClimb&lt;/tt&gt;
+/// 
+/// @see rcHeightfield, rcConfig</doc>
+<use f='TrinityCore3.3.5/src/tools/mmaps_generator/MapBuilder.cpp' l='629' u='c' c='_ZN4MMAP10MapBuilder16buildMoveMapTileEjjjRNS_8MeshDataEPfS3_P9dtNavMesh'/>
+<dec f='TrinityCore6.x/dep/recastnavigation/Recast/Include/Recast.h' l='869' type='void rcFilterLedgeSpans(rcContext * ctx, const int walkableHeight, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore6.x/dep/recastnavigation/Recast/Include/Recast.h' l='861'>/// Marks spans that are ledges as not-walkable. 
+///  @ingroup recast
+///  @param[in,out]	ctx				The build context to use during the operation.
+///  @param[in]		walkableHeight	Minimum floor to &apos;ceiling&apos; height that will still allow the floor area to 
+///  								be considered walkable. [Limit: &gt;= 3] [Units: vx]
+///  @param[in]		walkableClimb	Maximum ledge height that is considered to still be traversable. 
+///  								[Limit: &gt;=0] [Units: vx]
+///  @param[in,out]	solid			A fully built heightfield.  (All spans have been added.)</doc>
+<def f='TrinityCore6.x/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='84' type='void rcFilterLedgeSpans(rcContext * ctx, const int walkableHeight, const int walkableClimb, rcHeightfield &amp; solid)'/>
+<doc f='TrinityCore6.x/dep/recastnavigation/Recast/Source/RecastFilter.cpp' l='74'>/// @par
+///
+/// A ledge is a span with one or more neighbors whose maximum is further away than @p walkableClimb
+/// from the current span&apos;s maximum.
+/// This method removes the impact of the overestimation of conservative voxelization 
+/// so the resulting mesh will not have regions hanging in the air over ledges.
+/// 
+/// A span is a ledge if: &lt;tt&gt;rcAbs(currentSpan.smax - neighborSpan.smax) &gt; walkableClimb&lt;/tt&gt;
+/// 
+/// @see rcHeightfield, rcConfig</doc>
+<use f='TrinityCore6.x/src/tools/mmaps_generator/MapBuilder.cpp' l='626' u='c' c='_ZN4MMAP10MapBuilder16buildMoveMapTileEjjjRNS_8MeshDataEPfS3_P9dtNavMesh'/>

@@ -1,0 +1,1156 @@
+<!doctype html>
+<html>
+<head>
+<title>basic_socket_acceptor.hpp [include/boost/asio/basic_socket_acceptor.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/basic_socket_acceptor.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>asio</a>/basic_socket_acceptor.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// basic_socket_acceptor.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_BASIC_SOCKET_ACCEPTOR_HPP">BOOST_ASIO_BASIC_SOCKET_ACCEPTOR_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_BASIC_SOCKET_ACCEPTOR_HPP" data-ref="_M/BOOST_ASIO_BASIC_SOCKET_ACCEPTOR_HPP">BOOST_ASIO_BASIC_SOCKET_ACCEPTOR_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="detail/config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="basic_io_object.hpp.html">&lt;boost/asio/basic_io_object.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="basic_socket.hpp.html">&lt;boost/asio/basic_socket.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="detail/handler_type_requirements.hpp.html">&lt;boost/asio/detail/handler_type_requirements.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="detail/throw_error.hpp.html">&lt;boost/asio/detail/throw_error.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="detail/type_traits.hpp.html">&lt;boost/asio/detail/type_traits.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="error.hpp.html">&lt;boost/asio/error.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="socket_acceptor_service.hpp.html">&lt;boost/asio/socket_acceptor_service.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="socket_base.hpp.html">&lt;boost/asio/socket_base.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="detail/push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="31">31</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><i class="doc">/// Provides the ability to accept new connections.</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc"> * The basic_socket_acceptor class template is used for accepting new socket</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc"> * connections.</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"> * <span class="command">@par</span> Thread Safety</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Distinct</span><span class="command"> @e</span> <span class="arg">objects:</span> Safe<span class="command">.@n</span></i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Shared</span><span class="command"> @e</span> <span class="arg">objects:</span> Unsafe.</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"> * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> * Opening a socket acceptor with the SO_REUSEADDR option enabled:</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc"> * <span class="command">@code</span></i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"> *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="46">46</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), port);</span></i></td></tr>
+<tr><th id="47">47</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> acceptor.open(endpoint.protocol());</span></i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));</span></i></td></tr>
+<tr><th id="49">49</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> acceptor.bind(endpoint);</span></i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> acceptor.listen();</span></i></td></tr>
+<tr><th id="51">51</th><td><i class="doc"><span class="verb"></span> * @endcode</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="53">53</th><td><b>template</b> &lt;<b>typename</b> Protocol,</td></tr>
+<tr><th id="54">54</th><td>    <b>typename</b> SocketAcceptorService = <a class="type" href="socket_acceptor_service.hpp.html#boost::asio::socket_acceptor_service" title='boost::asio::socket_acceptor_service' data-ref="boost::asio::socket_acceptor_service" >socket_acceptor_service</a>&lt;Protocol&gt; &gt;</td></tr>
+<tr><th id="55">55</th><td><b>class</b> <dfn class="type def" id="boost::asio::basic_socket_acceptor" title='boost::asio::basic_socket_acceptor' data-ref="boost::asio::basic_socket_acceptor" >basic_socket_acceptor</dfn></td></tr>
+<tr><th id="56">56</th><td>  : <b>public</b> <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;,</td></tr>
+<tr><th id="57">57</th><td>    <b>public</b> <a class="type" href="socket_base.hpp.html#boost::asio::socket_base" title='boost::asio::socket_base' data-ref="boost::asio::socket_base" >socket_base</a></td></tr>
+<tr><th id="58">58</th><td>{</td></tr>
+<tr><th id="59">59</th><td><b>public</b>:</td></tr>
+<tr><th id="60">60</th><td>  <i class="doc">/// (Deprecated: Use native_handle_type.) The native representation of an</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">  /// acceptor.</i></td></tr>
+<tr><th id="62">62</th><td>  <b>typedef</b> <b>typename</b> SocketAcceptorService::native_handle_type <dfn class="typedef" id="boost::asio::basic_socket_acceptor::native_type" title='boost::asio::basic_socket_acceptor::native_type' data-type='typename SocketAcceptorService::native_handle_type' data-ref="boost::asio::basic_socket_acceptor::native_type" >native_type</dfn>;</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>  <i class="doc">/// The native representation of an acceptor.</i></td></tr>
+<tr><th id="65">65</th><td>  <b>typedef</b> <b>typename</b> SocketAcceptorService::native_handle_type <dfn class="typedef" id="boost::asio::basic_socket_acceptor::native_handle_type" title='boost::asio::basic_socket_acceptor::native_handle_type' data-type='typename SocketAcceptorService::native_handle_type' data-ref="boost::asio::basic_socket_acceptor::native_handle_type" >native_handle_type</dfn>;</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>  <i class="doc">/// The protocol type.</i></td></tr>
+<tr><th id="68">68</th><td>  <b>typedef</b> Protocol <dfn class="typedef" id="boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</dfn>;</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>  <i class="doc">/// The endpoint type.</i></td></tr>
+<tr><th id="71">71</th><td>  <b>typedef</b> <b>typename</b> Protocol::endpoint <dfn class="typedef" id="boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</dfn>;</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>  <i class="doc">/// Construct an acceptor without opening it.</i></td></tr>
+<tr><th id="74">74</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc">   * This constructor creates an acceptor without opening it to listen for new</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">   * connections. The open() function must be called before the acceptor can</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">   * accept new socket connections.</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the acceptor will use to</i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">   * dispatch handlers for any asynchronous operations performed on the</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">   * acceptor.</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="83">83</th><td>  <b>explicit</b> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceE" title='boost::asio::basic_socket_acceptor::basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;' data-ref="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceE" >basic_socket_acceptor</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col2 decl" id="3362io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="3362io_service" >io_service</dfn>)</td></tr>
+<tr><th id="84">84</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;(<a class="local col2 ref" href="#3362io_service" title='io_service' data-ref="3362io_service" >io_service</a>)</td></tr>
+<tr><th id="85">85</th><td>  {</td></tr>
+<tr><th id="86">86</th><td>  }</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>  <i class="doc">/// Construct an open acceptor.</i></td></tr>
+<tr><th id="89">89</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">   * This constructor creates an acceptor and automatically opens it.</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the acceptor will use to</i></td></tr>
+<tr><th id="93">93</th><td><i class="doc">   * dispatch handlers for any asynchronous operations performed on the</i></td></tr>
+<tr><th id="94">94</th><td><i class="doc">   * acceptor.</i></td></tr>
+<tr><th id="95">95</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">protocol</span> An object specifying protocol parameters to be used.</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="100">100</th><td>  <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceERKT_" title='boost::asio::basic_socket_acceptor::basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;' data-ref="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceERKT_" >basic_socket_acceptor</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col3 decl" id="3363io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="3363io_service" >io_service</dfn>,</td></tr>
+<tr><th id="101">101</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>&amp; <dfn class="local col4 decl" id="3364protocol" title='protocol' data-type='const protocol_type &amp;' data-ref="3364protocol" >protocol</dfn>)</td></tr>
+<tr><th id="102">102</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;(<a class="local col3 ref" href="#3363io_service" title='io_service' data-ref="3363io_service" >io_service</a>)</td></tr>
+<tr><th id="103">103</th><td>  {</td></tr>
+<tr><th id="104">104</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col5 decl" id="3365ec" title='ec' data-type='boost::system::error_code' data-ref="3365ec" >ec</dfn>;</td></tr>
+<tr><th id="105">105</th><td>    <b>this</b>-&gt;get_service().open(<b>this</b>-&gt;get_implementation(), <a class="local col4 ref" href="#3364protocol" title='protocol' data-ref="3364protocol" >protocol</a>, <a class="local col5 ref" href="#3365ec" title='ec' data-ref="3365ec" >ec</a>);</td></tr>
+<tr><th id="106">106</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col5 ref" href="#3365ec" title='ec' data-ref="3365ec" >ec</a>, <q>"open"</q>);</td></tr>
+<tr><th id="107">107</th><td>  }</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>  <i class="doc">/// Construct an acceptor opened on the given endpoint.</i></td></tr>
+<tr><th id="110">110</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">   * This constructor creates an acceptor and automatically opens it to listen</i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">   * for new connections on the specified endpoint.</i></td></tr>
+<tr><th id="113">113</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the acceptor will use to</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc">   * dispatch handlers for any asynchronous operations performed on the</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">   * acceptor.</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">endpoint</span> An endpoint on the local machine on which the acceptor</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc">   * will listen for new connections.</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">reuse_addr</span> Whether the constructor should set the socket option</i></td></tr>
+<tr><th id="122">122</th><td><i class="doc">   * socket_base::reuse_address.</i></td></tr>
+<tr><th id="123">123</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="124">124</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="125">125</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="126">126</th><td><i class="doc">   * <span class="command">@note</span> This constructor is equivalent to the following code:</i></td></tr>
+<tr><th id="127">127</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="128">128</th><td><i class="doc">   *<span class="verb"> basic_socket_acceptor&lt;Protocol&gt; acceptor(io_service);</span></i></td></tr>
+<tr><th id="129">129</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.open(endpoint.protocol());</span></i></td></tr>
+<tr><th id="130">130</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (reuse_addr)</span></i></td></tr>
+<tr><th id="131">131</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   acceptor.set_option(socket_base::reuse_address(true));</span></i></td></tr>
+<tr><th id="132">132</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.bind(endpoint);</span></i></td></tr>
+<tr><th id="133">133</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.listen(listen_backlog);</span></i></td></tr>
+<tr><th id="134">134</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="136">136</th><td>  <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceERKNT_8endpointEb" title='boost::asio::basic_socket_acceptor::basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;' data-ref="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceERKNT_8endpointEb" >basic_socket_acceptor</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col6 decl" id="3366io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="3366io_service" >io_service</dfn>,</td></tr>
+<tr><th id="137">137</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>&amp; <dfn class="local col7 decl" id="3367endpoint" title='endpoint' data-type='const endpoint_type &amp;' data-ref="3367endpoint" >endpoint</dfn>, <em>bool</em> <dfn class="local col8 decl" id="3368reuse_addr" title='reuse_addr' data-type='bool' data-ref="3368reuse_addr" >reuse_addr</dfn> = <b>true</b>)</td></tr>
+<tr><th id="138">138</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;(<a class="local col6 ref" href="#3366io_service" title='io_service' data-ref="3366io_service" >io_service</a>)</td></tr>
+<tr><th id="139">139</th><td>  {</td></tr>
+<tr><th id="140">140</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col9 decl" id="3369ec" title='ec' data-type='boost::system::error_code' data-ref="3369ec" >ec</dfn>;</td></tr>
+<tr><th id="141">141</th><td>    <em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a> <dfn class="local col0 decl" id="3370protocol" title='protocol' data-type='const protocol_type' data-ref="3370protocol" >protocol</dfn> = <a class="local col7 ref" href="#3367endpoint" title='endpoint' data-ref="3367endpoint" >endpoint</a>.protocol();</td></tr>
+<tr><th id="142">142</th><td>    <b>this</b>-&gt;get_service().open(<b>this</b>-&gt;get_implementation(), <a class="local col0 ref" href="#3370protocol" title='protocol' data-ref="3370protocol" >protocol</a>, <a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>);</td></tr>
+<tr><th id="143">143</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>, <q>"open"</q>);</td></tr>
+<tr><th id="144">144</th><td>    <b>if</b> (<a class="local col8 ref" href="#3368reuse_addr" title='reuse_addr' data-ref="3368reuse_addr" >reuse_addr</a>)</td></tr>
+<tr><th id="145">145</th><td>    {</td></tr>
+<tr><th id="146">146</th><td>      <b>this</b>-&gt;get_service().set_option(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="147">147</th><td>          <a class="type" href="socket_base.hpp.html#boost::asio::socket_base" title='boost::asio::socket_base' data-ref="boost::asio::socket_base" >socket_base</a>::<a class="typedef" href="socket_base.hpp.html#boost::asio::socket_base::reuse_address" title='boost::asio::socket_base::reuse_address' data-type='boost::asio::detail::socket_option::boolean&lt;1, 2&gt;' data-ref="boost::asio::socket_base::reuse_address" >reuse_address</a><a class="ref" href="detail/socket_option.hpp.html#_ZN5boost4asio6detail13socket_option7booleanC1Eb" title='boost::asio::detail::socket_option::boolean::boolean&lt;Level, Name&gt;' data-ref="_ZN5boost4asio6detail13socket_option7booleanC1Eb" id="_ZN5boost4asio6detail13socket_option7booleanC1Eb" >(</a><b>true</b>), <a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>);</td></tr>
+<tr><th id="148">148</th><td>      <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>, <q>"set_option"</q>);</td></tr>
+<tr><th id="149">149</th><td>    }</td></tr>
+<tr><th id="150">150</th><td>    <b>this</b>-&gt;get_service().bind(<b>this</b>-&gt;get_implementation(), <a class="local col7 ref" href="#3367endpoint" title='endpoint' data-ref="3367endpoint" >endpoint</a>, <a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>);</td></tr>
+<tr><th id="151">151</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>, <q>"bind"</q>);</td></tr>
+<tr><th id="152">152</th><td>    <b>this</b>-&gt;get_service().listen(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="153">153</th><td>        <a class="type" href="socket_base.hpp.html#boost::asio::socket_base" title='boost::asio::socket_base' data-ref="boost::asio::socket_base" >socket_base</a>::<a class="member" href="socket_base.hpp.html#498" title='boost::asio::socket_base::max_connections' data-ref="_ZN5boost4asio11socket_base15max_connectionsE" >max_connections</a>, <a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>);</td></tr>
+<tr><th id="154">154</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#3369ec" title='ec' data-ref="3369ec" >ec</a>, <q>"listen"</q>);</td></tr>
+<tr><th id="155">155</th><td>  }</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>  <i class="doc">/// Construct a basic_socket_acceptor on an existing native acceptor.</i></td></tr>
+<tr><th id="158">158</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="159">159</th><td><i class="doc">   * This constructor creates an acceptor object to hold an existing native</i></td></tr>
+<tr><th id="160">160</th><td><i class="doc">   * acceptor.</i></td></tr>
+<tr><th id="161">161</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="162">162</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the acceptor will use to</i></td></tr>
+<tr><th id="163">163</th><td><i class="doc">   * dispatch handlers for any asynchronous operations performed on the</i></td></tr>
+<tr><th id="164">164</th><td><i class="doc">   * acceptor.</i></td></tr>
+<tr><th id="165">165</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">protocol</span> An object specifying protocol parameters to be used.</i></td></tr>
+<tr><th id="167">167</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">native_acceptor</span> A native acceptor.</i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="170">170</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="171">171</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="172">172</th><td>  <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceERKT_RKNT0_18native_handle_typeE" title='boost::asio::basic_socket_acceptor::basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;' data-ref="_ZN5boost4asio21basic_socket_acceptorC1ERNS0_10io_serviceERKT_RKNT0_18native_handle_typeE" >basic_socket_acceptor</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col1 decl" id="3371io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="3371io_service" >io_service</dfn>,</td></tr>
+<tr><th id="173">173</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>&amp; <dfn class="local col2 decl" id="3372protocol" title='protocol' data-type='const protocol_type &amp;' data-ref="3372protocol" >protocol</dfn>, <em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::native_handle_type" title='boost::asio::basic_socket_acceptor::native_handle_type' data-type='typename SocketAcceptorService::native_handle_type' data-ref="boost::asio::basic_socket_acceptor::native_handle_type" >native_handle_type</a>&amp; <dfn class="local col3 decl" id="3373native_acceptor" title='native_acceptor' data-type='const native_handle_type &amp;' data-ref="3373native_acceptor" >native_acceptor</dfn>)</td></tr>
+<tr><th id="174">174</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;(<a class="local col1 ref" href="#3371io_service" title='io_service' data-ref="3371io_service" >io_service</a>)</td></tr>
+<tr><th id="175">175</th><td>  {</td></tr>
+<tr><th id="176">176</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col4 decl" id="3374ec" title='ec' data-type='boost::system::error_code' data-ref="3374ec" >ec</dfn>;</td></tr>
+<tr><th id="177">177</th><td>    <b>this</b>-&gt;get_service().assign(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="178">178</th><td>        <a class="local col2 ref" href="#3372protocol" title='protocol' data-ref="3372protocol" >protocol</a>, <a class="local col3 ref" href="#3373native_acceptor" title='native_acceptor' data-ref="3373native_acceptor" >native_acceptor</a>, <a class="local col4 ref" href="#3374ec" title='ec' data-ref="3374ec" >ec</a>);</td></tr>
+<tr><th id="179">179</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col4 ref" href="#3374ec" title='ec' data-ref="3374ec" >ec</a>, <q>"assign"</q>);</td></tr>
+<tr><th id="180">180</th><td>  }</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td><u>#<span data-ppcond="182">if</span> defined(<a class="macro" href="detail/config.hpp.html#90" data-ref="_M/BOOST_ASIO_HAS_MOVE">BOOST_ASIO_HAS_MOVE</a>) || defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="183">183</th><td>  <i class="doc">/// Move-construct a basic_socket_acceptor from another.</i></td></tr>
+<tr><th id="184">184</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="185">185</th><td><i class="doc">   * This constructor moves an acceptor from one object to another.</i></td></tr>
+<tr><th id="186">186</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="187">187</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">other</span> The other basic_socket_acceptor object from which the move</i></td></tr>
+<tr><th id="188">188</th><td><i class="doc">   * will occur.</i></td></tr>
+<tr><th id="189">189</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="190">190</th><td><i class="doc">   * <span class="command">@note</span> Following the move, the moved-from object is in the same state as if</i></td></tr>
+<tr><th id="191">191</th><td><i class="doc">   * constructed using the<span class="command"> @c</span> <span class="arg">basic_socket_acceptor(io_service&amp;)</span> constructor.</i></td></tr>
+<tr><th id="192">192</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="193">193</th><td>  <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptorC1EONS0_21basic_socket_acceptorIT_T0_EE" title='boost::asio::basic_socket_acceptor::basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;' data-ref="_ZN5boost4asio21basic_socket_acceptorC1EONS0_21basic_socket_acceptorIT_T0_EE" >basic_socket_acceptor</dfn>(basic_socket_acceptor&amp;&amp; <dfn class="local col5 decl" id="3375other" title='other' data-type='basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt; &amp;&amp;' data-ref="3375other" >other</dfn>)</td></tr>
+<tr><th id="194">194</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;(</td></tr>
+<tr><th id="195">195</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;basic_socket_acceptor&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(basic_socket_acceptor)(<a class="local col5 ref" href="#3375other" title='other' data-ref="3375other" >other</a>))</td></tr>
+<tr><th id="196">196</th><td>  {</td></tr>
+<tr><th id="197">197</th><td>  }</td></tr>
+<tr><th id="198">198</th><td></td></tr>
+<tr><th id="199">199</th><td>  <i class="doc">/// Move-assign a basic_socket_acceptor from another.</i></td></tr>
+<tr><th id="200">200</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="201">201</th><td><i class="doc">   * This assignment operator moves an acceptor from one object to another.</i></td></tr>
+<tr><th id="202">202</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="203">203</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">other</span> The other basic_socket_acceptor object from which the move</i></td></tr>
+<tr><th id="204">204</th><td><i class="doc">   * will occur.</i></td></tr>
+<tr><th id="205">205</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="206">206</th><td><i class="doc">   * <span class="command">@note</span> Following the move, the moved-from object is in the same state as if</i></td></tr>
+<tr><th id="207">207</th><td><i class="doc">   * constructed using the<span class="command"> @c</span> <span class="arg">basic_socket_acceptor(io_service&amp;)</span> constructor.</i></td></tr>
+<tr><th id="208">208</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="209">209</th><td>  basic_socket_acceptor&amp; <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptoraSEONS0_21basic_socket_acceptorIT_T0_EE" title='boost::asio::basic_socket_acceptor::operator=' data-ref="_ZN5boost4asio21basic_socket_acceptoraSEONS0_21basic_socket_acceptorIT_T0_EE" ><b>operator</b>=</dfn>(basic_socket_acceptor&amp;&amp; <dfn class="local col6 decl" id="3376other" title='other' data-type='basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt; &amp;&amp;' data-ref="3376other" >other</dfn>)</td></tr>
+<tr><th id="210">210</th><td>  {</td></tr>
+<tr><th id="211">211</th><td>    <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;::<b>operator</b>=(</td></tr>
+<tr><th id="212">212</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;basic_socket_acceptor&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(basic_socket_acceptor)(<a class="local col6 ref" href="#3376other" title='other' data-ref="3376other" >other</a>));</td></tr>
+<tr><th id="213">213</th><td>    <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="214">214</th><td>  }</td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td>  <i>// All socket acceptors have access to each other's implementations.</i></td></tr>
+<tr><th id="217">217</th><td>  <b>template</b> &lt;<b>typename</b> Protocol1, <b>typename</b> SocketAcceptorService1&gt;</td></tr>
+<tr><th id="218">218</th><td>  <b>friend</b> <b>class</b> <a class="type" href="#boost::asio::basic_socket_acceptor" title='boost::asio::basic_socket_acceptor' data-ref="boost::asio::basic_socket_acceptor" >basic_socket_acceptor</a>;</td></tr>
+<tr><th id="219">219</th><td></td></tr>
+<tr><th id="220">220</th><td>  <i class="doc">/// Move-construct a basic_socket_acceptor from an acceptor of another</i></td></tr>
+<tr><th id="221">221</th><td><i class="doc">  /// protocol type.</i></td></tr>
+<tr><th id="222">222</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="223">223</th><td><i class="doc">   * This constructor moves an acceptor from one object to another.</i></td></tr>
+<tr><th id="224">224</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="225">225</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">other</span> The other basic_socket_acceptor object from which the move</i></td></tr>
+<tr><th id="226">226</th><td><i class="doc">   * will occur.</i></td></tr>
+<tr><th id="227">227</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="228">228</th><td><i class="doc">   * <span class="command">@note</span> Following the move, the moved-from object is in the same state as if</i></td></tr>
+<tr><th id="229">229</th><td><i class="doc">   * constructed using the<span class="command"> @c</span> <span class="arg">basic_socket(io_service&amp;)</span> constructor.</i></td></tr>
+<tr><th id="230">230</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="231">231</th><td>  <b>template</b> &lt;<b>typename</b> Protocol1, <b>typename</b> SocketAcceptorService1&gt;</td></tr>
+<tr><th id="232">232</th><td>  <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptorC1EONS0_21basic_socket_acceptorIT_T0_EEPNS0_9enable_ifIXsr14is_convertibleIS3_T_EE5valueEvE4typeE" title='boost::asio::basic_socket_acceptor::basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;' data-ref="_ZN5boost4asio21basic_socket_acceptorC1EONS0_21basic_socket_acceptorIT_T0_EEPNS0_9enable_ifIXsr14is_convertibleIS3_T_EE5valueEvE4typeE" >basic_socket_acceptor</dfn>(</td></tr>
+<tr><th id="233">233</th><td>      <a class="type" href="#boost::asio::basic_socket_acceptor" title='boost::asio::basic_socket_acceptor' data-ref="boost::asio::basic_socket_acceptor" >basic_socket_acceptor</a>&lt;Protocol1, SocketAcceptorService1&gt;&amp;&amp; <dfn class="local col7 decl" id="3377other" title='other' data-type='basic_socket_acceptor&lt;Protocol1, SocketAcceptorService1&gt; &amp;&amp;' data-ref="3377other" >other</dfn>,</td></tr>
+<tr><th id="234">234</th><td>      <b>typename</b> <a class="type" href="detail/type_traits.hpp.html#boost::asio::enable_if" title='boost::asio::enable_if' data-ref="boost::asio::enable_if" >enable_if</a>&lt;<a class="type" href="../type_traits/is_convertible.hpp.html#484" title='boost::is_convertible' data-ref="boost::is_convertible" >is_convertible</a>&lt;Protocol1, Protocol&gt;::value&gt;::type* = <var>0</var>)</td></tr>
+<tr><th id="235">235</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;(<a class="local col7 ref" href="#3377other" title='other' data-ref="3377other" >other</a>.get_io_service())</td></tr>
+<tr><th id="236">236</th><td>  {</td></tr>
+<tr><th id="237">237</th><td>    <b>this</b>-&gt;get_service().<b>template</b> converting_move_construct&lt;Protocol1&gt;(</td></tr>
+<tr><th id="238">238</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col7 ref" href="#3377other" title='other' data-ref="3377other" >other</a>.get_implementation());</td></tr>
+<tr><th id="239">239</th><td>  }</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>  <i class="doc">/// Move-assign a basic_socket_acceptor from an acceptor of another protocol</i></td></tr>
+<tr><th id="242">242</th><td><i class="doc">  /// type.</i></td></tr>
+<tr><th id="243">243</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="244">244</th><td><i class="doc">   * This assignment operator moves an acceptor from one object to another.</i></td></tr>
+<tr><th id="245">245</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="246">246</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">other</span> The other basic_socket_acceptor object from which the move</i></td></tr>
+<tr><th id="247">247</th><td><i class="doc">   * will occur.</i></td></tr>
+<tr><th id="248">248</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="249">249</th><td><i class="doc">   * <span class="command">@note</span> Following the move, the moved-from object is in the same state as if</i></td></tr>
+<tr><th id="250">250</th><td><i class="doc">   * constructed using the<span class="command"> @c</span> <span class="arg">basic_socket(io_service&amp;)</span> constructor.</i></td></tr>
+<tr><th id="251">251</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="252">252</th><td>  <b>template</b> &lt;<b>typename</b> Protocol1, <b>typename</b> SocketAcceptorService1&gt;</td></tr>
+<tr><th id="253">253</th><td>  <b>typename</b> <a class="type" href="detail/type_traits.hpp.html#boost::asio::enable_if" title='boost::asio::enable_if' data-ref="boost::asio::enable_if" >enable_if</a>&lt;<a class="type" href="../type_traits/is_convertible.hpp.html#484" title='boost::is_convertible' data-ref="boost::is_convertible" >is_convertible</a>&lt;Protocol1, Protocol&gt;::value,</td></tr>
+<tr><th id="254">254</th><td>      basic_socket_acceptor&gt;::type&amp; <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptoraSEONS0_21basic_socket_acceptorIT_T0_EE" title='boost::asio::basic_socket_acceptor::operator=' data-ref="_ZN5boost4asio21basic_socket_acceptoraSEONS0_21basic_socket_acceptorIT_T0_EE" ><b>operator</b>=</dfn>(</td></tr>
+<tr><th id="255">255</th><td>        <a class="type" href="#boost::asio::basic_socket_acceptor" title='boost::asio::basic_socket_acceptor' data-ref="boost::asio::basic_socket_acceptor" >basic_socket_acceptor</a>&lt;Protocol1, SocketAcceptorService1&gt;&amp;&amp; <dfn class="local col8 decl" id="3378other" title='other' data-type='basic_socket_acceptor&lt;Protocol1, SocketAcceptorService1&gt; &amp;&amp;' data-ref="3378other" >other</dfn>)</td></tr>
+<tr><th id="256">256</th><td>  {</td></tr>
+<tr><th id="257">257</th><td>    basic_socket_acceptor <dfn class="local col9 decl" id="3379tmp" title='tmp' data-type='basic_socket_acceptor&lt;Protocol, SocketAcceptorService&gt;' data-ref="3379tmp" >tmp</dfn>(<a class="macro" href="detail/config.hpp.html#109" title="static_cast&lt;basic_socket_acceptor&lt; Protocol1, SocketAcceptorService1&gt;&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST2">BOOST_ASIO_MOVE_CAST2</a>(<a class="type" href="#boost::asio::basic_socket_acceptor" title='boost::asio::basic_socket_acceptor' data-ref="boost::asio::basic_socket_acceptor" >basic_socket_acceptor</a>&lt;</td></tr>
+<tr><th id="258">258</th><td>            Protocol1, SocketAcceptorService1&gt;)(<a class="local col8 ref" href="#3378other" title='other' data-ref="3378other" >other</a>));</td></tr>
+<tr><th id="259">259</th><td>    <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;SocketAcceptorService&gt;::<b>operator</b>=(</td></tr>
+<tr><th id="260">260</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;basic_socket_acceptor&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(basic_socket_acceptor)(<a class="local col9 ref" href="#3379tmp" title='tmp' data-ref="3379tmp" >tmp</a>));</td></tr>
+<tr><th id="261">261</th><td>    <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="262">262</th><td>  }</td></tr>
+<tr><th id="263">263</th><td><u>#<span data-ppcond="182">endif</span> // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)</u></td></tr>
+<tr><th id="264">264</th><td></td></tr>
+<tr><th id="265">265</th><td>  <i class="doc">/// Open the acceptor using the specified protocol.</i></td></tr>
+<tr><th id="266">266</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="267">267</th><td><i class="doc">   * This function opens the socket acceptor so that it will use the specified</i></td></tr>
+<tr><th id="268">268</th><td><i class="doc">   * protocol.</i></td></tr>
+<tr><th id="269">269</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="270">270</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">protocol</span> An object specifying which protocol is to be used.</i></td></tr>
+<tr><th id="271">271</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="272">272</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="273">273</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="274">274</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="275">275</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="276">276</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="277">277</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.open(boost::asio::ip::tcp::v4());</span></i></td></tr>
+<tr><th id="278">278</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="279">279</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="280">280</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor4openERKT_" title='boost::asio::basic_socket_acceptor::open' data-ref="_ZN5boost4asio21basic_socket_acceptor4openERKT_" >open</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>&amp; <dfn class="local col0 decl" id="3380protocol" title='protocol' data-type='const protocol_type &amp;' data-ref="3380protocol" >protocol</dfn> = <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>())</td></tr>
+<tr><th id="281">281</th><td>  {</td></tr>
+<tr><th id="282">282</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col1 decl" id="3381ec" title='ec' data-type='boost::system::error_code' data-ref="3381ec" >ec</dfn>;</td></tr>
+<tr><th id="283">283</th><td>    <b>this</b>-&gt;get_service().open(<b>this</b>-&gt;get_implementation(), <a class="local col0 ref" href="#3380protocol" title='protocol' data-ref="3380protocol" >protocol</a>, <a class="local col1 ref" href="#3381ec" title='ec' data-ref="3381ec" >ec</a>);</td></tr>
+<tr><th id="284">284</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col1 ref" href="#3381ec" title='ec' data-ref="3381ec" >ec</a>, <q>"open"</q>);</td></tr>
+<tr><th id="285">285</th><td>  }</td></tr>
+<tr><th id="286">286</th><td></td></tr>
+<tr><th id="287">287</th><td>  <i class="doc">/// Open the acceptor using the specified protocol.</i></td></tr>
+<tr><th id="288">288</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="289">289</th><td><i class="doc">   * This function opens the socket acceptor so that it will use the specified</i></td></tr>
+<tr><th id="290">290</th><td><i class="doc">   * protocol.</i></td></tr>
+<tr><th id="291">291</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="292">292</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">protocol</span> An object specifying which protocol is to be used.</i></td></tr>
+<tr><th id="293">293</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="294">294</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="295">295</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="296">296</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="297">297</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="298">298</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="299">299</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="300">300</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.open(boost::asio::ip::tcp::v4(), ec);</span></i></td></tr>
+<tr><th id="301">301</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="302">302</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="303">303</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="304">304</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="305">305</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="306">306</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="307">307</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor4openERKT_RNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::open' data-ref="_ZN5boost4asio21basic_socket_acceptor4openERKT_RNS_6system10error_codeE" >open</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>&amp; <dfn class="local col2 decl" id="3382protocol" title='protocol' data-type='const protocol_type &amp;' data-ref="3382protocol" >protocol</dfn>,</td></tr>
+<tr><th id="308">308</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col3 decl" id="3383ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3383ec" >ec</dfn>)</td></tr>
+<tr><th id="309">309</th><td>  {</td></tr>
+<tr><th id="310">310</th><td>    <b>return</b> <b>this</b>-&gt;get_service().open(<b>this</b>-&gt;get_implementation(), <a class="local col2 ref" href="#3382protocol" title='protocol' data-ref="3382protocol" >protocol</a>, <a class="local col3 ref" href="#3383ec" title='ec' data-ref="3383ec" >ec</a>);</td></tr>
+<tr><th id="311">311</th><td>  }</td></tr>
+<tr><th id="312">312</th><td></td></tr>
+<tr><th id="313">313</th><td>  <i class="doc">/// Assigns an existing native acceptor to the acceptor.</i></td></tr>
+<tr><th id="314">314</th><td>  <i>/*</i></td></tr>
+<tr><th id="315">315</th><td><i>   * This function opens the acceptor to hold an existing native acceptor.</i></td></tr>
+<tr><th id="316">316</th><td><i>   *</i></td></tr>
+<tr><th id="317">317</th><td><i>   * @param protocol An object specifying which protocol is to be used.</i></td></tr>
+<tr><th id="318">318</th><td><i>   *</i></td></tr>
+<tr><th id="319">319</th><td><i>   * @param native_acceptor A native acceptor.</i></td></tr>
+<tr><th id="320">320</th><td><i>   *</i></td></tr>
+<tr><th id="321">321</th><td><i>   * @throws boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="322">322</th><td><i>   */</i></td></tr>
+<tr><th id="323">323</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6assignERKT_RKNT0_18native_handle_typeE" title='boost::asio::basic_socket_acceptor::assign' data-ref="_ZN5boost4asio21basic_socket_acceptor6assignERKT_RKNT0_18native_handle_typeE" >assign</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>&amp; <dfn class="local col4 decl" id="3384protocol" title='protocol' data-type='const protocol_type &amp;' data-ref="3384protocol" >protocol</dfn>,</td></tr>
+<tr><th id="324">324</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::native_handle_type" title='boost::asio::basic_socket_acceptor::native_handle_type' data-type='typename SocketAcceptorService::native_handle_type' data-ref="boost::asio::basic_socket_acceptor::native_handle_type" >native_handle_type</a>&amp; <dfn class="local col5 decl" id="3385native_acceptor" title='native_acceptor' data-type='const native_handle_type &amp;' data-ref="3385native_acceptor" >native_acceptor</dfn>)</td></tr>
+<tr><th id="325">325</th><td>  {</td></tr>
+<tr><th id="326">326</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col6 decl" id="3386ec" title='ec' data-type='boost::system::error_code' data-ref="3386ec" >ec</dfn>;</td></tr>
+<tr><th id="327">327</th><td>    <b>this</b>-&gt;get_service().assign(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="328">328</th><td>        <a class="local col4 ref" href="#3384protocol" title='protocol' data-ref="3384protocol" >protocol</a>, <a class="local col5 ref" href="#3385native_acceptor" title='native_acceptor' data-ref="3385native_acceptor" >native_acceptor</a>, <a class="local col6 ref" href="#3386ec" title='ec' data-ref="3386ec" >ec</a>);</td></tr>
+<tr><th id="329">329</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col6 ref" href="#3386ec" title='ec' data-ref="3386ec" >ec</a>, <q>"assign"</q>);</td></tr>
+<tr><th id="330">330</th><td>  }</td></tr>
+<tr><th id="331">331</th><td></td></tr>
+<tr><th id="332">332</th><td>  <i class="doc">/// Assigns an existing native acceptor to the acceptor.</i></td></tr>
+<tr><th id="333">333</th><td>  <i>/*</i></td></tr>
+<tr><th id="334">334</th><td><i>   * This function opens the acceptor to hold an existing native acceptor.</i></td></tr>
+<tr><th id="335">335</th><td><i>   *</i></td></tr>
+<tr><th id="336">336</th><td><i>   * @param protocol An object specifying which protocol is to be used.</i></td></tr>
+<tr><th id="337">337</th><td><i>   *</i></td></tr>
+<tr><th id="338">338</th><td><i>   * @param native_acceptor A native acceptor.</i></td></tr>
+<tr><th id="339">339</th><td><i>   *</i></td></tr>
+<tr><th id="340">340</th><td><i>   * @param ec Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="341">341</th><td><i>   */</i></td></tr>
+<tr><th id="342">342</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6assignERKT_RKNT0_18native_handle_typeERNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::assign' data-ref="_ZN5boost4asio21basic_socket_acceptor6assignERKT_RKNT0_18native_handle_typeERNS_6system10error_codeE" >assign</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>&amp; <dfn class="local col7 decl" id="3387protocol" title='protocol' data-type='const protocol_type &amp;' data-ref="3387protocol" >protocol</dfn>,</td></tr>
+<tr><th id="343">343</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::native_handle_type" title='boost::asio::basic_socket_acceptor::native_handle_type' data-type='typename SocketAcceptorService::native_handle_type' data-ref="boost::asio::basic_socket_acceptor::native_handle_type" >native_handle_type</a>&amp; <dfn class="local col8 decl" id="3388native_acceptor" title='native_acceptor' data-type='const native_handle_type &amp;' data-ref="3388native_acceptor" >native_acceptor</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col9 decl" id="3389ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3389ec" >ec</dfn>)</td></tr>
+<tr><th id="344">344</th><td>  {</td></tr>
+<tr><th id="345">345</th><td>    <b>return</b> <b>this</b>-&gt;get_service().assign(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="346">346</th><td>        <a class="local col7 ref" href="#3387protocol" title='protocol' data-ref="3387protocol" >protocol</a>, <a class="local col8 ref" href="#3388native_acceptor" title='native_acceptor' data-ref="3388native_acceptor" >native_acceptor</a>, <a class="local col9 ref" href="#3389ec" title='ec' data-ref="3389ec" >ec</a>);</td></tr>
+<tr><th id="347">347</th><td>  }</td></tr>
+<tr><th id="348">348</th><td></td></tr>
+<tr><th id="349">349</th><td>  <i class="doc">/// Determine whether the acceptor is open.</i></td></tr>
+<tr><th id="350">350</th><td>  <em>bool</em> <dfn class="decl def" id="_ZNK5boost4asio21basic_socket_acceptor7is_openEv" title='boost::asio::basic_socket_acceptor::is_open' data-ref="_ZNK5boost4asio21basic_socket_acceptor7is_openEv" >is_open</dfn>() <em>const</em></td></tr>
+<tr><th id="351">351</th><td>  {</td></tr>
+<tr><th id="352">352</th><td>    <b>return</b> <b>this</b>-&gt;get_service().is_open(<b>this</b>-&gt;get_implementation());</td></tr>
+<tr><th id="353">353</th><td>  }</td></tr>
+<tr><th id="354">354</th><td></td></tr>
+<tr><th id="355">355</th><td>  <i class="doc">/// Bind the acceptor to the given local endpoint.</i></td></tr>
+<tr><th id="356">356</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="357">357</th><td><i class="doc">   * This function binds the socket acceptor to the specified endpoint on the</i></td></tr>
+<tr><th id="358">358</th><td><i class="doc">   * local machine.</i></td></tr>
+<tr><th id="359">359</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="360">360</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">endpoint</span> An endpoint on the local machine to which the socket</i></td></tr>
+<tr><th id="361">361</th><td><i class="doc">   * acceptor will be bound.</i></td></tr>
+<tr><th id="362">362</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="363">363</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="364">364</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="365">365</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="366">366</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="367">367</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="368">368</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), 12345);</span></i></td></tr>
+<tr><th id="369">369</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.open(endpoint.protocol());</span></i></td></tr>
+<tr><th id="370">370</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.bind(endpoint);</span></i></td></tr>
+<tr><th id="371">371</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="372">372</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="373">373</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor4bindERKNT_8endpointE" title='boost::asio::basic_socket_acceptor::bind' data-ref="_ZN5boost4asio21basic_socket_acceptor4bindERKNT_8endpointE" >bind</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>&amp; <dfn class="local col0 decl" id="3390endpoint" title='endpoint' data-type='const endpoint_type &amp;' data-ref="3390endpoint" >endpoint</dfn>)</td></tr>
+<tr><th id="374">374</th><td>  {</td></tr>
+<tr><th id="375">375</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col1 decl" id="3391ec" title='ec' data-type='boost::system::error_code' data-ref="3391ec" >ec</dfn>;</td></tr>
+<tr><th id="376">376</th><td>    <b>this</b>-&gt;get_service().bind(<b>this</b>-&gt;get_implementation(), <a class="local col0 ref" href="#3390endpoint" title='endpoint' data-ref="3390endpoint" >endpoint</a>, <a class="local col1 ref" href="#3391ec" title='ec' data-ref="3391ec" >ec</a>);</td></tr>
+<tr><th id="377">377</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col1 ref" href="#3391ec" title='ec' data-ref="3391ec" >ec</a>, <q>"bind"</q>);</td></tr>
+<tr><th id="378">378</th><td>  }</td></tr>
+<tr><th id="379">379</th><td></td></tr>
+<tr><th id="380">380</th><td>  <i class="doc">/// Bind the acceptor to the given local endpoint.</i></td></tr>
+<tr><th id="381">381</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="382">382</th><td><i class="doc">   * This function binds the socket acceptor to the specified endpoint on the</i></td></tr>
+<tr><th id="383">383</th><td><i class="doc">   * local machine.</i></td></tr>
+<tr><th id="384">384</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="385">385</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">endpoint</span> An endpoint on the local machine to which the socket</i></td></tr>
+<tr><th id="386">386</th><td><i class="doc">   * acceptor will be bound.</i></td></tr>
+<tr><th id="387">387</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="388">388</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="389">389</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="390">390</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="391">391</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="392">392</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="393">393</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), 12345);</span></i></td></tr>
+<tr><th id="394">394</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.open(endpoint.protocol());</span></i></td></tr>
+<tr><th id="395">395</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="396">396</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.bind(endpoint, ec);</span></i></td></tr>
+<tr><th id="397">397</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="398">398</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="399">399</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="400">400</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="401">401</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="402">402</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="403">403</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor4bindERKNT_8endpointERNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::bind' data-ref="_ZN5boost4asio21basic_socket_acceptor4bindERKNT_8endpointERNS_6system10error_codeE" >bind</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>&amp; <dfn class="local col2 decl" id="3392endpoint" title='endpoint' data-type='const endpoint_type &amp;' data-ref="3392endpoint" >endpoint</dfn>,</td></tr>
+<tr><th id="404">404</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col3 decl" id="3393ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3393ec" >ec</dfn>)</td></tr>
+<tr><th id="405">405</th><td>  {</td></tr>
+<tr><th id="406">406</th><td>    <b>return</b> <b>this</b>-&gt;get_service().bind(<b>this</b>-&gt;get_implementation(), <a class="local col2 ref" href="#3392endpoint" title='endpoint' data-ref="3392endpoint" >endpoint</a>, <a class="local col3 ref" href="#3393ec" title='ec' data-ref="3393ec" >ec</a>);</td></tr>
+<tr><th id="407">407</th><td>  }</td></tr>
+<tr><th id="408">408</th><td></td></tr>
+<tr><th id="409">409</th><td>  <i class="doc">/// Place the acceptor into the state where it will listen for new</i></td></tr>
+<tr><th id="410">410</th><td><i class="doc">  /// connections.</i></td></tr>
+<tr><th id="411">411</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="412">412</th><td><i class="doc">   * This function puts the socket acceptor into the state where it may accept</i></td></tr>
+<tr><th id="413">413</th><td><i class="doc">   * new connections.</i></td></tr>
+<tr><th id="414">414</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="415">415</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">backlog</span> The maximum length of the queue of pending connections.</i></td></tr>
+<tr><th id="416">416</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="417">417</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="418">418</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="419">419</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6listenEi" title='boost::asio::basic_socket_acceptor::listen' data-ref="_ZN5boost4asio21basic_socket_acceptor6listenEi" >listen</dfn>(<em>int</em> <dfn class="local col4 decl" id="3394backlog" title='backlog' data-type='int' data-ref="3394backlog" >backlog</dfn> = <a class="type" href="socket_base.hpp.html#boost::asio::socket_base" title='boost::asio::socket_base' data-ref="boost::asio::socket_base" >socket_base</a>::<a class="member" href="socket_base.hpp.html#498" title='boost::asio::socket_base::max_connections' data-ref="_ZN5boost4asio11socket_base15max_connectionsE" >max_connections</a>)</td></tr>
+<tr><th id="420">420</th><td>  {</td></tr>
+<tr><th id="421">421</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col5 decl" id="3395ec" title='ec' data-type='boost::system::error_code' data-ref="3395ec" >ec</dfn>;</td></tr>
+<tr><th id="422">422</th><td>    <b>this</b>-&gt;get_service().listen(<b>this</b>-&gt;get_implementation(), <a class="local col4 ref" href="#3394backlog" title='backlog' data-ref="3394backlog" >backlog</a>, <a class="local col5 ref" href="#3395ec" title='ec' data-ref="3395ec" >ec</a>);</td></tr>
+<tr><th id="423">423</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col5 ref" href="#3395ec" title='ec' data-ref="3395ec" >ec</a>, <q>"listen"</q>);</td></tr>
+<tr><th id="424">424</th><td>  }</td></tr>
+<tr><th id="425">425</th><td></td></tr>
+<tr><th id="426">426</th><td>  <i class="doc">/// Place the acceptor into the state where it will listen for new</i></td></tr>
+<tr><th id="427">427</th><td><i class="doc">  /// connections.</i></td></tr>
+<tr><th id="428">428</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="429">429</th><td><i class="doc">   * This function puts the socket acceptor into the state where it may accept</i></td></tr>
+<tr><th id="430">430</th><td><i class="doc">   * new connections.</i></td></tr>
+<tr><th id="431">431</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="432">432</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">backlog</span> The maximum length of the queue of pending connections.</i></td></tr>
+<tr><th id="433">433</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="434">434</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="435">435</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="436">436</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="437">437</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="438">438</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="439">439</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="440">440</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="441">441</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.listen(boost::asio::socket_base::max_connections, ec);</span></i></td></tr>
+<tr><th id="442">442</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="443">443</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="444">444</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="445">445</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="446">446</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="447">447</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="448">448</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6listenEiRNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::listen' data-ref="_ZN5boost4asio21basic_socket_acceptor6listenEiRNS_6system10error_codeE" >listen</dfn>(<em>int</em> <dfn class="local col6 decl" id="3396backlog" title='backlog' data-type='int' data-ref="3396backlog" >backlog</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col7 decl" id="3397ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3397ec" >ec</dfn>)</td></tr>
+<tr><th id="449">449</th><td>  {</td></tr>
+<tr><th id="450">450</th><td>    <b>return</b> <b>this</b>-&gt;get_service().listen(<b>this</b>-&gt;get_implementation(), <a class="local col6 ref" href="#3396backlog" title='backlog' data-ref="3396backlog" >backlog</a>, <a class="local col7 ref" href="#3397ec" title='ec' data-ref="3397ec" >ec</a>);</td></tr>
+<tr><th id="451">451</th><td>  }</td></tr>
+<tr><th id="452">452</th><td></td></tr>
+<tr><th id="453">453</th><td>  <i class="doc">/// Close the acceptor.</i></td></tr>
+<tr><th id="454">454</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="455">455</th><td><i class="doc">   * This function is used to close the acceptor. Any asynchronous accept</i></td></tr>
+<tr><th id="456">456</th><td><i class="doc">   * operations will be cancelled immediately.</i></td></tr>
+<tr><th id="457">457</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="458">458</th><td><i class="doc">   * A subsequent call to open() is required before the acceptor can again be</i></td></tr>
+<tr><th id="459">459</th><td><i class="doc">   * used to again perform socket accept operations.</i></td></tr>
+<tr><th id="460">460</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="461">461</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="462">462</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="463">463</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor5closeEv" title='boost::asio::basic_socket_acceptor::close' data-ref="_ZN5boost4asio21basic_socket_acceptor5closeEv" >close</dfn>()</td></tr>
+<tr><th id="464">464</th><td>  {</td></tr>
+<tr><th id="465">465</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col8 decl" id="3398ec" title='ec' data-type='boost::system::error_code' data-ref="3398ec" >ec</dfn>;</td></tr>
+<tr><th id="466">466</th><td>    <b>this</b>-&gt;get_service().close(<b>this</b>-&gt;get_implementation(), <a class="local col8 ref" href="#3398ec" title='ec' data-ref="3398ec" >ec</a>);</td></tr>
+<tr><th id="467">467</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col8 ref" href="#3398ec" title='ec' data-ref="3398ec" >ec</a>, <q>"close"</q>);</td></tr>
+<tr><th id="468">468</th><td>  }</td></tr>
+<tr><th id="469">469</th><td></td></tr>
+<tr><th id="470">470</th><td>  <i class="doc">/// Close the acceptor.</i></td></tr>
+<tr><th id="471">471</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="472">472</th><td><i class="doc">   * This function is used to close the acceptor. Any asynchronous accept</i></td></tr>
+<tr><th id="473">473</th><td><i class="doc">   * operations will be cancelled immediately.</i></td></tr>
+<tr><th id="474">474</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="475">475</th><td><i class="doc">   * A subsequent call to open() is required before the acceptor can again be</i></td></tr>
+<tr><th id="476">476</th><td><i class="doc">   * used to again perform socket accept operations.</i></td></tr>
+<tr><th id="477">477</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="478">478</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="479">479</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="480">480</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="481">481</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="482">482</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="483">483</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="484">484</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="485">485</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.close(ec);</span></i></td></tr>
+<tr><th id="486">486</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="487">487</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="488">488</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="489">489</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="490">490</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="491">491</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="492">492</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor5closeERNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::close' data-ref="_ZN5boost4asio21basic_socket_acceptor5closeERNS_6system10error_codeE" >close</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col9 decl" id="3399ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3399ec" >ec</dfn>)</td></tr>
+<tr><th id="493">493</th><td>  {</td></tr>
+<tr><th id="494">494</th><td>    <b>return</b> <b>this</b>-&gt;get_service().close(<b>this</b>-&gt;get_implementation(), <a class="local col9 ref" href="#3399ec" title='ec' data-ref="3399ec" >ec</a>);</td></tr>
+<tr><th id="495">495</th><td>  }</td></tr>
+<tr><th id="496">496</th><td></td></tr>
+<tr><th id="497">497</th><td>  <i class="doc">/// (Deprecated: Use native_handle().) Get the native acceptor representation.</i></td></tr>
+<tr><th id="498">498</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="499">499</th><td><i class="doc">   * This function may be used to obtain the underlying representation of the</i></td></tr>
+<tr><th id="500">500</th><td><i class="doc">   * acceptor. This is intended to allow access to native acceptor functionality</i></td></tr>
+<tr><th id="501">501</th><td><i class="doc">   * that is not otherwise provided.</i></td></tr>
+<tr><th id="502">502</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="503">503</th><td>  <a class="typedef" href="#boost::asio::basic_socket_acceptor::native_type" title='boost::asio::basic_socket_acceptor::native_type' data-type='typename SocketAcceptorService::native_handle_type' data-ref="boost::asio::basic_socket_acceptor::native_type" >native_type</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6nativeEv" title='boost::asio::basic_socket_acceptor::native' data-ref="_ZN5boost4asio21basic_socket_acceptor6nativeEv" >native</dfn>()</td></tr>
+<tr><th id="504">504</th><td>  {</td></tr>
+<tr><th id="505">505</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_handle(<b>this</b>-&gt;get_implementation());</td></tr>
+<tr><th id="506">506</th><td>  }</td></tr>
+<tr><th id="507">507</th><td></td></tr>
+<tr><th id="508">508</th><td>  <i class="doc">/// Get the native acceptor representation.</i></td></tr>
+<tr><th id="509">509</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="510">510</th><td><i class="doc">   * This function may be used to obtain the underlying representation of the</i></td></tr>
+<tr><th id="511">511</th><td><i class="doc">   * acceptor. This is intended to allow access to native acceptor functionality</i></td></tr>
+<tr><th id="512">512</th><td><i class="doc">   * that is not otherwise provided.</i></td></tr>
+<tr><th id="513">513</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="514">514</th><td>  <a class="typedef" href="#boost::asio::basic_socket_acceptor::native_handle_type" title='boost::asio::basic_socket_acceptor::native_handle_type' data-type='typename SocketAcceptorService::native_handle_type' data-ref="boost::asio::basic_socket_acceptor::native_handle_type" >native_handle_type</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor13native_handleEv" title='boost::asio::basic_socket_acceptor::native_handle' data-ref="_ZN5boost4asio21basic_socket_acceptor13native_handleEv" >native_handle</dfn>()</td></tr>
+<tr><th id="515">515</th><td>  {</td></tr>
+<tr><th id="516">516</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_handle(<b>this</b>-&gt;get_implementation());</td></tr>
+<tr><th id="517">517</th><td>  }</td></tr>
+<tr><th id="518">518</th><td></td></tr>
+<tr><th id="519">519</th><td>  <i class="doc">/// Cancel all asynchronous operations associated with the acceptor.</i></td></tr>
+<tr><th id="520">520</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="521">521</th><td><i class="doc">   * This function causes all outstanding asynchronous connect, send and receive</i></td></tr>
+<tr><th id="522">522</th><td><i class="doc">   * operations to finish immediately, and the handlers for cancelled operations</i></td></tr>
+<tr><th id="523">523</th><td><i class="doc">   * will be passed the boost::asio::error::operation_aborted error.</i></td></tr>
+<tr><th id="524">524</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="525">525</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="526">526</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="527">527</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6cancelEv" title='boost::asio::basic_socket_acceptor::cancel' data-ref="_ZN5boost4asio21basic_socket_acceptor6cancelEv" >cancel</dfn>()</td></tr>
+<tr><th id="528">528</th><td>  {</td></tr>
+<tr><th id="529">529</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col0 decl" id="3400ec" title='ec' data-type='boost::system::error_code' data-ref="3400ec" >ec</dfn>;</td></tr>
+<tr><th id="530">530</th><td>    <b>this</b>-&gt;get_service().cancel(<b>this</b>-&gt;get_implementation(), <a class="local col0 ref" href="#3400ec" title='ec' data-ref="3400ec" >ec</a>);</td></tr>
+<tr><th id="531">531</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col0 ref" href="#3400ec" title='ec' data-ref="3400ec" >ec</a>, <q>"cancel"</q>);</td></tr>
+<tr><th id="532">532</th><td>  }</td></tr>
+<tr><th id="533">533</th><td></td></tr>
+<tr><th id="534">534</th><td>  <i class="doc">/// Cancel all asynchronous operations associated with the acceptor.</i></td></tr>
+<tr><th id="535">535</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="536">536</th><td><i class="doc">   * This function causes all outstanding asynchronous connect, send and receive</i></td></tr>
+<tr><th id="537">537</th><td><i class="doc">   * operations to finish immediately, and the handlers for cancelled operations</i></td></tr>
+<tr><th id="538">538</th><td><i class="doc">   * will be passed the boost::asio::error::operation_aborted error.</i></td></tr>
+<tr><th id="539">539</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="540">540</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="541">541</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="542">542</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6cancelERNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::cancel' data-ref="_ZN5boost4asio21basic_socket_acceptor6cancelERNS_6system10error_codeE" >cancel</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col1 decl" id="3401ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3401ec" >ec</dfn>)</td></tr>
+<tr><th id="543">543</th><td>  {</td></tr>
+<tr><th id="544">544</th><td>    <b>return</b> <b>this</b>-&gt;get_service().cancel(<b>this</b>-&gt;get_implementation(), <a class="local col1 ref" href="#3401ec" title='ec' data-ref="3401ec" >ec</a>);</td></tr>
+<tr><th id="545">545</th><td>  }</td></tr>
+<tr><th id="546">546</th><td></td></tr>
+<tr><th id="547">547</th><td>  <i class="doc">/// Set an option on the acceptor.</i></td></tr>
+<tr><th id="548">548</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="549">549</th><td><i class="doc">   * This function is used to set an option on the acceptor.</i></td></tr>
+<tr><th id="550">550</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="551">551</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">option</span> The new option value to be set on the acceptor.</i></td></tr>
+<tr><th id="552">552</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="553">553</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="554">554</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="555">555</th><td><i class="doc">   * <span class="command">@sa</span> SettableSocketOption<span class="command"> @n</span></i></td></tr>
+<tr><th id="556">556</th><td><i class="doc">   * boost::asio::socket_base::reuse_address</i></td></tr>
+<tr><th id="557">557</th><td><i class="doc">   * boost::asio::socket_base::enable_connection_aborted</i></td></tr>
+<tr><th id="558">558</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="559">559</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="560">560</th><td><i class="doc">   * Setting the SOL_SOCKET/SO_REUSEADDR option:</i></td></tr>
+<tr><th id="561">561</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="562">562</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="563">563</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="564">564</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::acceptor::reuse_address option(true);</span></i></td></tr>
+<tr><th id="565">565</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.set_option(option);</span></i></td></tr>
+<tr><th id="566">566</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="567">567</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="568">568</th><td>  <b>template</b> &lt;<b>typename</b> SettableSocketOption&gt;</td></tr>
+<tr><th id="569">569</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor10set_optionERKT_" title='boost::asio::basic_socket_acceptor::set_option' data-ref="_ZN5boost4asio21basic_socket_acceptor10set_optionERKT_" >set_option</dfn>(<em>const</em> SettableSocketOption&amp; <dfn class="local col2 decl" id="3402option" title='option' data-type='const SettableSocketOption &amp;' data-ref="3402option" >option</dfn>)</td></tr>
+<tr><th id="570">570</th><td>  {</td></tr>
+<tr><th id="571">571</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col3 decl" id="3403ec" title='ec' data-type='boost::system::error_code' data-ref="3403ec" >ec</dfn>;</td></tr>
+<tr><th id="572">572</th><td>    <b>this</b>-&gt;get_service().set_option(<b>this</b>-&gt;get_implementation(), <a class="local col2 ref" href="#3402option" title='option' data-ref="3402option" >option</a>, <a class="local col3 ref" href="#3403ec" title='ec' data-ref="3403ec" >ec</a>);</td></tr>
+<tr><th id="573">573</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col3 ref" href="#3403ec" title='ec' data-ref="3403ec" >ec</a>, <q>"set_option"</q>);</td></tr>
+<tr><th id="574">574</th><td>  }</td></tr>
+<tr><th id="575">575</th><td></td></tr>
+<tr><th id="576">576</th><td>  <i class="doc">/// Set an option on the acceptor.</i></td></tr>
+<tr><th id="577">577</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="578">578</th><td><i class="doc">   * This function is used to set an option on the acceptor.</i></td></tr>
+<tr><th id="579">579</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="580">580</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">option</span> The new option value to be set on the acceptor.</i></td></tr>
+<tr><th id="581">581</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="582">582</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="583">583</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="584">584</th><td><i class="doc">   * <span class="command">@sa</span> SettableSocketOption<span class="command"> @n</span></i></td></tr>
+<tr><th id="585">585</th><td><i class="doc">   * boost::asio::socket_base::reuse_address</i></td></tr>
+<tr><th id="586">586</th><td><i class="doc">   * boost::asio::socket_base::enable_connection_aborted</i></td></tr>
+<tr><th id="587">587</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="588">588</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="589">589</th><td><i class="doc">   * Setting the SOL_SOCKET/SO_REUSEADDR option:</i></td></tr>
+<tr><th id="590">590</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="591">591</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="592">592</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="593">593</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::acceptor::reuse_address option(true);</span></i></td></tr>
+<tr><th id="594">594</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="595">595</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.set_option(option, ec);</span></i></td></tr>
+<tr><th id="596">596</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="597">597</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="598">598</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="599">599</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="600">600</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="601">601</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="602">602</th><td>  <b>template</b> &lt;<b>typename</b> SettableSocketOption&gt;</td></tr>
+<tr><th id="603">603</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor10set_optionERKT_RNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::set_option' data-ref="_ZN5boost4asio21basic_socket_acceptor10set_optionERKT_RNS_6system10error_codeE" >set_option</dfn>(<em>const</em> SettableSocketOption&amp; <dfn class="local col4 decl" id="3404option" title='option' data-type='const SettableSocketOption &amp;' data-ref="3404option" >option</dfn>,</td></tr>
+<tr><th id="604">604</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col5 decl" id="3405ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3405ec" >ec</dfn>)</td></tr>
+<tr><th id="605">605</th><td>  {</td></tr>
+<tr><th id="606">606</th><td>    <b>return</b> <b>this</b>-&gt;get_service().set_option(</td></tr>
+<tr><th id="607">607</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col4 ref" href="#3404option" title='option' data-ref="3404option" >option</a>, <a class="local col5 ref" href="#3405ec" title='ec' data-ref="3405ec" >ec</a>);</td></tr>
+<tr><th id="608">608</th><td>  }</td></tr>
+<tr><th id="609">609</th><td></td></tr>
+<tr><th id="610">610</th><td>  <i class="doc">/// Get an option from the acceptor.</i></td></tr>
+<tr><th id="611">611</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="612">612</th><td><i class="doc">   * This function is used to get the current value of an option on the</i></td></tr>
+<tr><th id="613">613</th><td><i class="doc">   * acceptor.</i></td></tr>
+<tr><th id="614">614</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="615">615</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">option</span> The option value to be obtained from the acceptor.</i></td></tr>
+<tr><th id="616">616</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="617">617</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="618">618</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="619">619</th><td><i class="doc">   * <span class="command">@sa</span> GettableSocketOption<span class="command"> @n</span></i></td></tr>
+<tr><th id="620">620</th><td><i class="doc">   * boost::asio::socket_base::reuse_address</i></td></tr>
+<tr><th id="621">621</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="622">622</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="623">623</th><td><i class="doc">   * Getting the value of the SOL_SOCKET/SO_REUSEADDR option:</i></td></tr>
+<tr><th id="624">624</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="625">625</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="626">626</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="627">627</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::acceptor::reuse_address option;</span></i></td></tr>
+<tr><th id="628">628</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.get_option(option);</span></i></td></tr>
+<tr><th id="629">629</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> bool is_set = option.get();</span></i></td></tr>
+<tr><th id="630">630</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="631">631</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="632">632</th><td>  <b>template</b> &lt;<b>typename</b> GettableSocketOption&gt;</td></tr>
+<tr><th id="633">633</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor10get_optionERT_" title='boost::asio::basic_socket_acceptor::get_option' data-ref="_ZN5boost4asio21basic_socket_acceptor10get_optionERT_" >get_option</dfn>(GettableSocketOption&amp; <dfn class="local col6 decl" id="3406option" title='option' data-type='GettableSocketOption &amp;' data-ref="3406option" >option</dfn>)</td></tr>
+<tr><th id="634">634</th><td>  {</td></tr>
+<tr><th id="635">635</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col7 decl" id="3407ec" title='ec' data-type='boost::system::error_code' data-ref="3407ec" >ec</dfn>;</td></tr>
+<tr><th id="636">636</th><td>    <b>this</b>-&gt;get_service().get_option(<b>this</b>-&gt;get_implementation(), <a class="local col6 ref" href="#3406option" title='option' data-ref="3406option" >option</a>, <a class="local col7 ref" href="#3407ec" title='ec' data-ref="3407ec" >ec</a>);</td></tr>
+<tr><th id="637">637</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col7 ref" href="#3407ec" title='ec' data-ref="3407ec" >ec</a>, <q>"get_option"</q>);</td></tr>
+<tr><th id="638">638</th><td>  }</td></tr>
+<tr><th id="639">639</th><td></td></tr>
+<tr><th id="640">640</th><td>  <i class="doc">/// Get an option from the acceptor.</i></td></tr>
+<tr><th id="641">641</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="642">642</th><td><i class="doc">   * This function is used to get the current value of an option on the</i></td></tr>
+<tr><th id="643">643</th><td><i class="doc">   * acceptor.</i></td></tr>
+<tr><th id="644">644</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="645">645</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">option</span> The option value to be obtained from the acceptor.</i></td></tr>
+<tr><th id="646">646</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="647">647</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="648">648</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="649">649</th><td><i class="doc">   * <span class="command">@sa</span> GettableSocketOption<span class="command"> @n</span></i></td></tr>
+<tr><th id="650">650</th><td><i class="doc">   * boost::asio::socket_base::reuse_address</i></td></tr>
+<tr><th id="651">651</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="652">652</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="653">653</th><td><i class="doc">   * Getting the value of the SOL_SOCKET/SO_REUSEADDR option:</i></td></tr>
+<tr><th id="654">654</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="655">655</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="656">656</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="657">657</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::acceptor::reuse_address option;</span></i></td></tr>
+<tr><th id="658">658</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="659">659</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.get_option(option, ec);</span></i></td></tr>
+<tr><th id="660">660</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="661">661</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="662">662</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="663">663</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="664">664</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> bool is_set = option.get();</span></i></td></tr>
+<tr><th id="665">665</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="666">666</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="667">667</th><td>  <b>template</b> &lt;<b>typename</b> GettableSocketOption&gt;</td></tr>
+<tr><th id="668">668</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor10get_optionERT_RNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::get_option' data-ref="_ZN5boost4asio21basic_socket_acceptor10get_optionERT_RNS_6system10error_codeE" >get_option</dfn>(GettableSocketOption&amp; <dfn class="local col8 decl" id="3408option" title='option' data-type='GettableSocketOption &amp;' data-ref="3408option" >option</dfn>,</td></tr>
+<tr><th id="669">669</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col9 decl" id="3409ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3409ec" >ec</dfn>)</td></tr>
+<tr><th id="670">670</th><td>  {</td></tr>
+<tr><th id="671">671</th><td>    <b>return</b> <b>this</b>-&gt;get_service().get_option(</td></tr>
+<tr><th id="672">672</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col8 ref" href="#3408option" title='option' data-ref="3408option" >option</a>, <a class="local col9 ref" href="#3409ec" title='ec' data-ref="3409ec" >ec</a>);</td></tr>
+<tr><th id="673">673</th><td>  }</td></tr>
+<tr><th id="674">674</th><td></td></tr>
+<tr><th id="675">675</th><td>  <i class="doc">/// Perform an IO control command on the acceptor.</i></td></tr>
+<tr><th id="676">676</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="677">677</th><td><i class="doc">   * This function is used to execute an IO control command on the acceptor.</i></td></tr>
+<tr><th id="678">678</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="679">679</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">command</span> The IO control command to be performed on the acceptor.</i></td></tr>
+<tr><th id="680">680</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="681">681</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="682">682</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="683">683</th><td><i class="doc">   * <span class="command">@sa</span> IoControlCommand<span class="command"> @n</span></i></td></tr>
+<tr><th id="684">684</th><td><i class="doc">   * boost::asio::socket_base::non_blocking_io</i></td></tr>
+<tr><th id="685">685</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="686">686</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="687">687</th><td><i class="doc">   * Getting the number of bytes ready to read:</i></td></tr>
+<tr><th id="688">688</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="689">689</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="690">690</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="691">691</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::acceptor::non_blocking_io command(true);</span></i></td></tr>
+<tr><th id="692">692</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> socket.io_control(command);</span></i></td></tr>
+<tr><th id="693">693</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="694">694</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="695">695</th><td>  <b>template</b> &lt;<b>typename</b> IoControlCommand&gt;</td></tr>
+<tr><th id="696">696</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor10io_controlERT_" title='boost::asio::basic_socket_acceptor::io_control' data-ref="_ZN5boost4asio21basic_socket_acceptor10io_controlERT_" >io_control</dfn>(IoControlCommand&amp; <dfn class="local col0 decl" id="3410command" title='command' data-type='IoControlCommand &amp;' data-ref="3410command" >command</dfn>)</td></tr>
+<tr><th id="697">697</th><td>  {</td></tr>
+<tr><th id="698">698</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col1 decl" id="3411ec" title='ec' data-type='boost::system::error_code' data-ref="3411ec" >ec</dfn>;</td></tr>
+<tr><th id="699">699</th><td>    <b>this</b>-&gt;get_service().io_control(<b>this</b>-&gt;get_implementation(), <a class="local col0 ref" href="#3410command" title='command' data-ref="3410command" >command</a>, <a class="local col1 ref" href="#3411ec" title='ec' data-ref="3411ec" >ec</a>);</td></tr>
+<tr><th id="700">700</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col1 ref" href="#3411ec" title='ec' data-ref="3411ec" >ec</a>, <q>"io_control"</q>);</td></tr>
+<tr><th id="701">701</th><td>  }</td></tr>
+<tr><th id="702">702</th><td></td></tr>
+<tr><th id="703">703</th><td>  <i class="doc">/// Perform an IO control command on the acceptor.</i></td></tr>
+<tr><th id="704">704</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="705">705</th><td><i class="doc">   * This function is used to execute an IO control command on the acceptor.</i></td></tr>
+<tr><th id="706">706</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="707">707</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">command</span> The IO control command to be performed on the acceptor.</i></td></tr>
+<tr><th id="708">708</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="709">709</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="710">710</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="711">711</th><td><i class="doc">   * <span class="command">@sa</span> IoControlCommand<span class="command"> @n</span></i></td></tr>
+<tr><th id="712">712</th><td><i class="doc">   * boost::asio::socket_base::non_blocking_io</i></td></tr>
+<tr><th id="713">713</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="714">714</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="715">715</th><td><i class="doc">   * Getting the number of bytes ready to read:</i></td></tr>
+<tr><th id="716">716</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="717">717</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="718">718</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="719">719</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::acceptor::non_blocking_io command(true);</span></i></td></tr>
+<tr><th id="720">720</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="721">721</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> socket.io_control(command, ec);</span></i></td></tr>
+<tr><th id="722">722</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="723">723</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="724">724</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="725">725</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="726">726</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="727">727</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="728">728</th><td>  <b>template</b> &lt;<b>typename</b> IoControlCommand&gt;</td></tr>
+<tr><th id="729">729</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor10io_controlERT_RNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::io_control' data-ref="_ZN5boost4asio21basic_socket_acceptor10io_controlERT_RNS_6system10error_codeE" >io_control</dfn>(IoControlCommand&amp; <dfn class="local col2 decl" id="3412command" title='command' data-type='IoControlCommand &amp;' data-ref="3412command" >command</dfn>,</td></tr>
+<tr><th id="730">730</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col3 decl" id="3413ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3413ec" >ec</dfn>)</td></tr>
+<tr><th id="731">731</th><td>  {</td></tr>
+<tr><th id="732">732</th><td>    <b>return</b> <b>this</b>-&gt;get_service().io_control(</td></tr>
+<tr><th id="733">733</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col2 ref" href="#3412command" title='command' data-ref="3412command" >command</a>, <a class="local col3 ref" href="#3413ec" title='ec' data-ref="3413ec" >ec</a>);</td></tr>
+<tr><th id="734">734</th><td>  }</td></tr>
+<tr><th id="735">735</th><td></td></tr>
+<tr><th id="736">736</th><td>  <i class="doc">/// Gets the non-blocking mode of the acceptor.</i></td></tr>
+<tr><th id="737">737</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="738">738</th><td><i class="doc">   * <span class="command">@returns</span><span class="command"> @c</span> <span class="arg">true</span> if the acceptor's synchronous operations will fail with</i></td></tr>
+<tr><th id="739">739</th><td><i class="doc">   * boost::asio::error::would_block if they are unable to perform the requested</i></td></tr>
+<tr><th id="740">740</th><td><i class="doc">   * operation immediately. If<span class="command"> @c</span> <span class="arg">false,</span> synchronous operations will block</i></td></tr>
+<tr><th id="741">741</th><td><i class="doc">   * until complete.</i></td></tr>
+<tr><th id="742">742</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="743">743</th><td><i class="doc">   * <span class="command">@note</span> The non-blocking mode has no effect on the behaviour of asynchronous</i></td></tr>
+<tr><th id="744">744</th><td><i class="doc">   * operations. Asynchronous operations will never fail with the error</i></td></tr>
+<tr><th id="745">745</th><td><i class="doc">   * boost::asio::error::would_block.</i></td></tr>
+<tr><th id="746">746</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="747">747</th><td>  <em>bool</em> <dfn class="decl def" id="_ZNK5boost4asio21basic_socket_acceptor12non_blockingEv" title='boost::asio::basic_socket_acceptor::non_blocking' data-ref="_ZNK5boost4asio21basic_socket_acceptor12non_blockingEv" >non_blocking</dfn>() <em>const</em></td></tr>
+<tr><th id="748">748</th><td>  {</td></tr>
+<tr><th id="749">749</th><td>    <b>return</b> <b>this</b>-&gt;get_service().non_blocking(<b>this</b>-&gt;get_implementation());</td></tr>
+<tr><th id="750">750</th><td>  }</td></tr>
+<tr><th id="751">751</th><td></td></tr>
+<tr><th id="752">752</th><td>  <i class="doc">/// Sets the non-blocking mode of the acceptor.</i></td></tr>
+<tr><th id="753">753</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="754">754</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the acceptor's synchronous operations will fail</i></td></tr>
+<tr><th id="755">755</th><td><i class="doc">   * with boost::asio::error::would_block if they are unable to perform the</i></td></tr>
+<tr><th id="756">756</th><td><i class="doc">   * requested operation immediately. If<span class="command"> @c</span> <span class="arg">false,</span> synchronous operations will</i></td></tr>
+<tr><th id="757">757</th><td><i class="doc">   * block until complete.</i></td></tr>
+<tr><th id="758">758</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="759">759</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="760">760</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="761">761</th><td><i class="doc">   * <span class="command">@note</span> The non-blocking mode has no effect on the behaviour of asynchronous</i></td></tr>
+<tr><th id="762">762</th><td><i class="doc">   * operations. Asynchronous operations will never fail with the error</i></td></tr>
+<tr><th id="763">763</th><td><i class="doc">   * boost::asio::error::would_block.</i></td></tr>
+<tr><th id="764">764</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="765">765</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor12non_blockingEb" title='boost::asio::basic_socket_acceptor::non_blocking' data-ref="_ZN5boost4asio21basic_socket_acceptor12non_blockingEb" >non_blocking</dfn>(<em>bool</em> <dfn class="local col4 decl" id="3414mode" title='mode' data-type='bool' data-ref="3414mode" >mode</dfn>)</td></tr>
+<tr><th id="766">766</th><td>  {</td></tr>
+<tr><th id="767">767</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col5 decl" id="3415ec" title='ec' data-type='boost::system::error_code' data-ref="3415ec" >ec</dfn>;</td></tr>
+<tr><th id="768">768</th><td>    <b>this</b>-&gt;get_service().non_blocking(<b>this</b>-&gt;get_implementation(), <a class="local col4 ref" href="#3414mode" title='mode' data-ref="3414mode" >mode</a>, <a class="local col5 ref" href="#3415ec" title='ec' data-ref="3415ec" >ec</a>);</td></tr>
+<tr><th id="769">769</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col5 ref" href="#3415ec" title='ec' data-ref="3415ec" >ec</a>, <q>"non_blocking"</q>);</td></tr>
+<tr><th id="770">770</th><td>  }</td></tr>
+<tr><th id="771">771</th><td></td></tr>
+<tr><th id="772">772</th><td>  <i class="doc">/// Sets the non-blocking mode of the acceptor.</i></td></tr>
+<tr><th id="773">773</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="774">774</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the acceptor's synchronous operations will fail</i></td></tr>
+<tr><th id="775">775</th><td><i class="doc">   * with boost::asio::error::would_block if they are unable to perform the</i></td></tr>
+<tr><th id="776">776</th><td><i class="doc">   * requested operation immediately. If<span class="command"> @c</span> <span class="arg">false,</span> synchronous operations will</i></td></tr>
+<tr><th id="777">777</th><td><i class="doc">   * block until complete.</i></td></tr>
+<tr><th id="778">778</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="779">779</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="780">780</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="781">781</th><td><i class="doc">   * <span class="command">@note</span> The non-blocking mode has no effect on the behaviour of asynchronous</i></td></tr>
+<tr><th id="782">782</th><td><i class="doc">   * operations. Asynchronous operations will never fail with the error</i></td></tr>
+<tr><th id="783">783</th><td><i class="doc">   * boost::asio::error::would_block.</i></td></tr>
+<tr><th id="784">784</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="785">785</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor12non_blockingEbRNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::non_blocking' data-ref="_ZN5boost4asio21basic_socket_acceptor12non_blockingEbRNS_6system10error_codeE" >non_blocking</dfn>(</td></tr>
+<tr><th id="786">786</th><td>      <em>bool</em> <dfn class="local col6 decl" id="3416mode" title='mode' data-type='bool' data-ref="3416mode" >mode</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col7 decl" id="3417ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3417ec" >ec</dfn>)</td></tr>
+<tr><th id="787">787</th><td>  {</td></tr>
+<tr><th id="788">788</th><td>    <b>return</b> <b>this</b>-&gt;get_service().non_blocking(</td></tr>
+<tr><th id="789">789</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col6 ref" href="#3416mode" title='mode' data-ref="3416mode" >mode</a>, <a class="local col7 ref" href="#3417ec" title='ec' data-ref="3417ec" >ec</a>);</td></tr>
+<tr><th id="790">790</th><td>  }</td></tr>
+<tr><th id="791">791</th><td></td></tr>
+<tr><th id="792">792</th><td>  <i class="doc">/// Gets the non-blocking mode of the native acceptor implementation.</i></td></tr>
+<tr><th id="793">793</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="794">794</th><td><i class="doc">   * This function is used to retrieve the non-blocking mode of the underlying</i></td></tr>
+<tr><th id="795">795</th><td><i class="doc">   * native acceptor. This mode has no effect on the behaviour of the acceptor</i></td></tr>
+<tr><th id="796">796</th><td><i class="doc">   * object's synchronous operations.</i></td></tr>
+<tr><th id="797">797</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="798">798</th><td><i class="doc">   * <span class="command">@returns</span><span class="command"> @c</span> <span class="arg">true</span> if the underlying acceptor is in non-blocking mode and</i></td></tr>
+<tr><th id="799">799</th><td><i class="doc">   * direct system calls may fail with boost::asio::error::would_block (or the</i></td></tr>
+<tr><th id="800">800</th><td><i class="doc">   * equivalent system error).</i></td></tr>
+<tr><th id="801">801</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="802">802</th><td><i class="doc">   * <span class="command">@note</span> The current non-blocking mode is cached by the acceptor object.</i></td></tr>
+<tr><th id="803">803</th><td><i class="doc">   * Consequently, the return value may be incorrect if the non-blocking mode</i></td></tr>
+<tr><th id="804">804</th><td><i class="doc">   * was set directly on the native acceptor.</i></td></tr>
+<tr><th id="805">805</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="806">806</th><td>  <em>bool</em> <dfn class="decl def" id="_ZNK5boost4asio21basic_socket_acceptor19native_non_blockingEv" title='boost::asio::basic_socket_acceptor::native_non_blocking' data-ref="_ZNK5boost4asio21basic_socket_acceptor19native_non_blockingEv" >native_non_blocking</dfn>() <em>const</em></td></tr>
+<tr><th id="807">807</th><td>  {</td></tr>
+<tr><th id="808">808</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_non_blocking(<b>this</b>-&gt;get_implementation());</td></tr>
+<tr><th id="809">809</th><td>  }</td></tr>
+<tr><th id="810">810</th><td></td></tr>
+<tr><th id="811">811</th><td>  <i class="doc">/// Sets the non-blocking mode of the native acceptor implementation.</i></td></tr>
+<tr><th id="812">812</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="813">813</th><td><i class="doc">   * This function is used to modify the non-blocking mode of the underlying</i></td></tr>
+<tr><th id="814">814</th><td><i class="doc">   * native acceptor. It has no effect on the behaviour of the acceptor object's</i></td></tr>
+<tr><th id="815">815</th><td><i class="doc">   * synchronous operations.</i></td></tr>
+<tr><th id="816">816</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="817">817</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the underlying acceptor is put into non-blocking</i></td></tr>
+<tr><th id="818">818</th><td><i class="doc">   * mode and direct system calls may fail with boost::asio::error::would_block</i></td></tr>
+<tr><th id="819">819</th><td><i class="doc">   * (or the equivalent system error).</i></td></tr>
+<tr><th id="820">820</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="821">821</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure. If the<span class="command"> @c</span> <span class="arg">mode</span> is</i></td></tr>
+<tr><th id="822">822</th><td><i class="doc">   *<span class="command"> @c</span> <span class="arg">false,</span> but the current value of<span class="command"> @c</span> <span class="arg">non_blocking()</span> is<span class="command"> @c</span> <span class="arg">true,</span> this</i></td></tr>
+<tr><th id="823">823</th><td><i class="doc">   * function fails with boost::asio::error::invalid_argument, as the</i></td></tr>
+<tr><th id="824">824</th><td><i class="doc">   * combination does not make sense.</i></td></tr>
+<tr><th id="825">825</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="826">826</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor19native_non_blockingEb" title='boost::asio::basic_socket_acceptor::native_non_blocking' data-ref="_ZN5boost4asio21basic_socket_acceptor19native_non_blockingEb" >native_non_blocking</dfn>(<em>bool</em> <dfn class="local col8 decl" id="3418mode" title='mode' data-type='bool' data-ref="3418mode" >mode</dfn>)</td></tr>
+<tr><th id="827">827</th><td>  {</td></tr>
+<tr><th id="828">828</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col9 decl" id="3419ec" title='ec' data-type='boost::system::error_code' data-ref="3419ec" >ec</dfn>;</td></tr>
+<tr><th id="829">829</th><td>    <b>this</b>-&gt;get_service().native_non_blocking(</td></tr>
+<tr><th id="830">830</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col8 ref" href="#3418mode" title='mode' data-ref="3418mode" >mode</a>, <a class="local col9 ref" href="#3419ec" title='ec' data-ref="3419ec" >ec</a>);</td></tr>
+<tr><th id="831">831</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#3419ec" title='ec' data-ref="3419ec" >ec</a>, <q>"native_non_blocking"</q>);</td></tr>
+<tr><th id="832">832</th><td>  }</td></tr>
+<tr><th id="833">833</th><td></td></tr>
+<tr><th id="834">834</th><td>  <i class="doc">/// Sets the non-blocking mode of the native acceptor implementation.</i></td></tr>
+<tr><th id="835">835</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="836">836</th><td><i class="doc">   * This function is used to modify the non-blocking mode of the underlying</i></td></tr>
+<tr><th id="837">837</th><td><i class="doc">   * native acceptor. It has no effect on the behaviour of the acceptor object's</i></td></tr>
+<tr><th id="838">838</th><td><i class="doc">   * synchronous operations.</i></td></tr>
+<tr><th id="839">839</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="840">840</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">mode</span> If<span class="command"> @c</span> <span class="arg">true,</span> the underlying acceptor is put into non-blocking</i></td></tr>
+<tr><th id="841">841</th><td><i class="doc">   * mode and direct system calls may fail with boost::asio::error::would_block</i></td></tr>
+<tr><th id="842">842</th><td><i class="doc">   * (or the equivalent system error).</i></td></tr>
+<tr><th id="843">843</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="844">844</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any. If the<span class="command"> @c</span> <span class="arg">mode</span> is</i></td></tr>
+<tr><th id="845">845</th><td><i class="doc">   *<span class="command"> @c</span> <span class="arg">false,</span> but the current value of<span class="command"> @c</span> <span class="arg">non_blocking()</span> is<span class="command"> @c</span> <span class="arg">true,</span> this</i></td></tr>
+<tr><th id="846">846</th><td><i class="doc">   * function fails with boost::asio::error::invalid_argument, as the</i></td></tr>
+<tr><th id="847">847</th><td><i class="doc">   * combination does not make sense.</i></td></tr>
+<tr><th id="848">848</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="849">849</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor19native_non_blockingEbRNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::native_non_blocking' data-ref="_ZN5boost4asio21basic_socket_acceptor19native_non_blockingEbRNS_6system10error_codeE" >native_non_blocking</dfn>(</td></tr>
+<tr><th id="850">850</th><td>      <em>bool</em> <dfn class="local col0 decl" id="3420mode" title='mode' data-type='bool' data-ref="3420mode" >mode</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col1 decl" id="3421ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3421ec" >ec</dfn>)</td></tr>
+<tr><th id="851">851</th><td>  {</td></tr>
+<tr><th id="852">852</th><td>    <b>return</b> <b>this</b>-&gt;get_service().native_non_blocking(</td></tr>
+<tr><th id="853">853</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col0 ref" href="#3420mode" title='mode' data-ref="3420mode" >mode</a>, <a class="local col1 ref" href="#3421ec" title='ec' data-ref="3421ec" >ec</a>);</td></tr>
+<tr><th id="854">854</th><td>  }</td></tr>
+<tr><th id="855">855</th><td></td></tr>
+<tr><th id="856">856</th><td>  <i class="doc">/// Get the local endpoint of the acceptor.</i></td></tr>
+<tr><th id="857">857</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="858">858</th><td><i class="doc">   * This function is used to obtain the locally bound endpoint of the acceptor.</i></td></tr>
+<tr><th id="859">859</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="860">860</th><td><i class="doc">   * <span class="command">@returns</span> An object that represents the local endpoint of the acceptor.</i></td></tr>
+<tr><th id="861">861</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="862">862</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="863">863</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="864">864</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="865">865</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="866">866</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="867">867</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="868">868</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::endpoint endpoint = acceptor.local_endpoint();</span></i></td></tr>
+<tr><th id="869">869</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="870">870</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="871">871</th><td>  <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a> <dfn class="decl def" id="_ZNK5boost4asio21basic_socket_acceptor14local_endpointEv" title='boost::asio::basic_socket_acceptor::local_endpoint' data-ref="_ZNK5boost4asio21basic_socket_acceptor14local_endpointEv" >local_endpoint</dfn>() <em>const</em></td></tr>
+<tr><th id="872">872</th><td>  {</td></tr>
+<tr><th id="873">873</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col2 decl" id="3422ec" title='ec' data-type='boost::system::error_code' data-ref="3422ec" >ec</dfn>;</td></tr>
+<tr><th id="874">874</th><td>    <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a> <dfn class="local col3 decl" id="3423ep" title='ep' data-type='endpoint_type' data-ref="3423ep" >ep</dfn> = <b>this</b>-&gt;get_service().local_endpoint(</td></tr>
+<tr><th id="875">875</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col2 ref" href="#3422ec" title='ec' data-ref="3422ec" >ec</a>);</td></tr>
+<tr><th id="876">876</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col2 ref" href="#3422ec" title='ec' data-ref="3422ec" >ec</a>, <q>"local_endpoint"</q>);</td></tr>
+<tr><th id="877">877</th><td>    <b>return</b> <a class="local col3 ref" href="#3423ep" title='ep' data-ref="3423ep" >ep</a>;</td></tr>
+<tr><th id="878">878</th><td>  }</td></tr>
+<tr><th id="879">879</th><td></td></tr>
+<tr><th id="880">880</th><td>  <i class="doc">/// Get the local endpoint of the acceptor.</i></td></tr>
+<tr><th id="881">881</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="882">882</th><td><i class="doc">   * This function is used to obtain the locally bound endpoint of the acceptor.</i></td></tr>
+<tr><th id="883">883</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="884">884</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="885">885</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="886">886</th><td><i class="doc">   * <span class="command">@returns</span> An object that represents the local endpoint of the acceptor.</i></td></tr>
+<tr><th id="887">887</th><td><i class="doc">   * Returns a default-constructed endpoint object if an error occurred and the</i></td></tr>
+<tr><th id="888">888</th><td><i class="doc">   * error handler did not throw an exception.</i></td></tr>
+<tr><th id="889">889</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="890">890</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="891">891</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="892">892</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="893">893</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="894">894</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="895">895</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::endpoint endpoint = acceptor.local_endpoint(ec);</span></i></td></tr>
+<tr><th id="896">896</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="897">897</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="898">898</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="899">899</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="900">900</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="901">901</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="902">902</th><td>  <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a> <dfn class="decl def" id="_ZNK5boost4asio21basic_socket_acceptor14local_endpointERNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::local_endpoint' data-ref="_ZNK5boost4asio21basic_socket_acceptor14local_endpointERNS_6system10error_codeE" >local_endpoint</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col4 decl" id="3424ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3424ec" >ec</dfn>) <em>const</em></td></tr>
+<tr><th id="903">903</th><td>  {</td></tr>
+<tr><th id="904">904</th><td>    <b>return</b> <b>this</b>-&gt;get_service().local_endpoint(<b>this</b>-&gt;get_implementation(), <a class="local col4 ref" href="#3424ec" title='ec' data-ref="3424ec" >ec</a>);</td></tr>
+<tr><th id="905">905</th><td>  }</td></tr>
+<tr><th id="906">906</th><td></td></tr>
+<tr><th id="907">907</th><td>  <i class="doc">/// Accept a new connection.</i></td></tr>
+<tr><th id="908">908</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="909">909</th><td><i class="doc">   * This function is used to accept a new connection from a peer into the</i></td></tr>
+<tr><th id="910">910</th><td><i class="doc">   * given socket. The function call will block until a new connection has been</i></td></tr>
+<tr><th id="911">911</th><td><i class="doc">   * accepted successfully or an error occurs.</i></td></tr>
+<tr><th id="912">912</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="913">913</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer</span> The socket into which the new connection will be accepted.</i></td></tr>
+<tr><th id="914">914</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="915">915</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="916">916</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="917">917</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="918">918</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="919">919</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="920">920</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="921">921</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::socket socket(io_service);</span></i></td></tr>
+<tr><th id="922">922</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.accept(socket);</span></i></td></tr>
+<tr><th id="923">923</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="924">924</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="925">925</th><td>  <b>template</b> &lt;<b>typename</b> Protocol1, <b>typename</b> SocketService&gt;</td></tr>
+<tr><th id="926">926</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T0_EEPNS0_9enable_ifIXsr14is_convertibleIT_S3_EE5valueEvE4typeE" title='boost::asio::basic_socket_acceptor::accept' data-ref="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T0_EEPNS0_9enable_ifIXsr14is_convertibleIT_S3_EE5valueEvE4typeE" >accept</dfn>(<a class="type" href="basic_socket.hpp.html#boost::asio::basic_socket" title='boost::asio::basic_socket' data-ref="boost::asio::basic_socket" >basic_socket</a>&lt;Protocol1, SocketService&gt;&amp; <dfn class="local col5 decl" id="3425peer" title='peer' data-type='basic_socket&lt;Protocol1, SocketService&gt; &amp;' data-ref="3425peer" >peer</dfn>,</td></tr>
+<tr><th id="927">927</th><td>      <b>typename</b> <a class="type" href="detail/type_traits.hpp.html#boost::asio::enable_if" title='boost::asio::enable_if' data-ref="boost::asio::enable_if" >enable_if</a>&lt;<a class="type" href="../type_traits/is_convertible.hpp.html#484" title='boost::is_convertible' data-ref="boost::is_convertible" >is_convertible</a>&lt;Protocol, Protocol1&gt;::value&gt;::type* = <var>0</var>)</td></tr>
+<tr><th id="928">928</th><td>  {</td></tr>
+<tr><th id="929">929</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col6 decl" id="3426ec" title='ec' data-type='boost::system::error_code' data-ref="3426ec" >ec</dfn>;</td></tr>
+<tr><th id="930">930</th><td>    <b>this</b>-&gt;get_service().accept(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="931">931</th><td>        <a class="local col5 ref" href="#3425peer" title='peer' data-ref="3425peer" >peer</a>, <b>static_cast</b>&lt;<a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>*&gt;(<var>0</var>), <a class="local col6 ref" href="#3426ec" title='ec' data-ref="3426ec" >ec</a>);</td></tr>
+<tr><th id="932">932</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col6 ref" href="#3426ec" title='ec' data-ref="3426ec" >ec</a>, <q>"accept"</q>);</td></tr>
+<tr><th id="933">933</th><td>  }</td></tr>
+<tr><th id="934">934</th><td></td></tr>
+<tr><th id="935">935</th><td>  <i class="doc">/// Accept a new connection.</i></td></tr>
+<tr><th id="936">936</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="937">937</th><td><i class="doc">   * This function is used to accept a new connection from a peer into the</i></td></tr>
+<tr><th id="938">938</th><td><i class="doc">   * given socket. The function call will block until a new connection has been</i></td></tr>
+<tr><th id="939">939</th><td><i class="doc">   * accepted successfully or an error occurs.</i></td></tr>
+<tr><th id="940">940</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="941">941</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer</span> The socket into which the new connection will be accepted.</i></td></tr>
+<tr><th id="942">942</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="943">943</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="944">944</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="945">945</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="946">946</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="947">947</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="948">948</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="949">949</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::soocket socket(io_service);</span></i></td></tr>
+<tr><th id="950">950</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="951">951</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.accept(socket, ec);</span></i></td></tr>
+<tr><th id="952">952</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="953">953</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="954">954</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="955">955</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="956">956</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="957">957</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="958">958</th><td>  <b>template</b> &lt;<b>typename</b> Protocol1, <b>typename</b> SocketService&gt;</td></tr>
+<tr><th id="959">959</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T0_EERNS_6system10error_codeEPNS0_9enable_ifIXsr14is_convertibleIT_S3_EE5valueEvE4typeE" title='boost::asio::basic_socket_acceptor::accept' data-ref="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T0_EERNS_6system10error_codeEPNS0_9enable_ifIXsr14is_convertibleIT_S3_EE5valueEvE4typeE" >accept</dfn>(</td></tr>
+<tr><th id="960">960</th><td>      <a class="type" href="basic_socket.hpp.html#boost::asio::basic_socket" title='boost::asio::basic_socket' data-ref="boost::asio::basic_socket" >basic_socket</a>&lt;Protocol1, SocketService&gt;&amp; <dfn class="local col7 decl" id="3427peer" title='peer' data-type='basic_socket&lt;Protocol1, SocketService&gt; &amp;' data-ref="3427peer" >peer</dfn>,</td></tr>
+<tr><th id="961">961</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col8 decl" id="3428ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3428ec" >ec</dfn>,</td></tr>
+<tr><th id="962">962</th><td>      <b>typename</b> <a class="type" href="detail/type_traits.hpp.html#boost::asio::enable_if" title='boost::asio::enable_if' data-ref="boost::asio::enable_if" >enable_if</a>&lt;<a class="type" href="../type_traits/is_convertible.hpp.html#484" title='boost::is_convertible' data-ref="boost::is_convertible" >is_convertible</a>&lt;Protocol, Protocol1&gt;::value&gt;::type* = <var>0</var>)</td></tr>
+<tr><th id="963">963</th><td>  {</td></tr>
+<tr><th id="964">964</th><td>    <b>return</b> <b>this</b>-&gt;get_service().accept(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="965">965</th><td>        <a class="local col7 ref" href="#3427peer" title='peer' data-ref="3427peer" >peer</a>, <b>static_cast</b>&lt;<a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>*&gt;(<var>0</var>), <a class="local col8 ref" href="#3428ec" title='ec' data-ref="3428ec" >ec</a>);</td></tr>
+<tr><th id="966">966</th><td>  }</td></tr>
+<tr><th id="967">967</th><td></td></tr>
+<tr><th id="968">968</th><td>  <i class="doc">/// Start an asynchronous accept.</i></td></tr>
+<tr><th id="969">969</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="970">970</th><td><i class="doc">   * This function is used to asynchronously accept a new connection into a</i></td></tr>
+<tr><th id="971">971</th><td><i class="doc">   * socket. The function call always returns immediately.</i></td></tr>
+<tr><th id="972">972</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="973">973</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer</span> The socket into which the new connection will be accepted.</i></td></tr>
+<tr><th id="974">974</th><td><i class="doc">   * Ownership of the peer object is retained by the caller, which must</i></td></tr>
+<tr><th id="975">975</th><td><i class="doc">   * guarantee that it is valid until the handler is called.</i></td></tr>
+<tr><th id="976">976</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="977">977</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">handler</span> The handler to be called when the accept operation</i></td></tr>
+<tr><th id="978">978</th><td><i class="doc">   * completes. Copies will be made of the handler as required. The function</i></td></tr>
+<tr><th id="979">979</th><td><i class="doc">   * signature of the handler must be:</i></td></tr>
+<tr><th id="980">980</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> void handler(</span></i></td></tr>
+<tr><th id="981">981</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   const boost::system::error_code&amp; error // Result of operation.</span></i></td></tr>
+<tr><th id="982">982</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ); @</span>endcode</i></td></tr>
+<tr><th id="983">983</th><td><i class="doc">   * Regardless of whether the asynchronous operation completes immediately or</i></td></tr>
+<tr><th id="984">984</th><td><i class="doc">   * not, the handler will not be invoked from within this function. Invocation</i></td></tr>
+<tr><th id="985">985</th><td><i class="doc">   * of the handler will be performed in a manner equivalent to using</i></td></tr>
+<tr><th id="986">986</th><td><i class="doc">   * boost::asio::io_service::post().</i></td></tr>
+<tr><th id="987">987</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="988">988</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="989">989</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="990">990</th><td><i class="doc">   *<span class="verb"> void accept_handler(const boost::system::error_code&amp; error)</span></i></td></tr>
+<tr><th id="991">991</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="992">992</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   if (!error)</span></i></td></tr>
+<tr><th id="993">993</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   {</span></i></td></tr>
+<tr><th id="994">994</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">     // Accept succeeded.</span></i></td></tr>
+<tr><th id="995">995</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   }</span></i></td></tr>
+<tr><th id="996">996</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="997">997</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"></span></i></td></tr>
+<tr><th id="998">998</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="999">999</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"></span></i></td></tr>
+<tr><th id="1000">1000</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="1001">1001</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="1002">1002</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::socket socket(io_service);</span></i></td></tr>
+<tr><th id="1003">1003</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.async_accept(socket, accept_handler);</span></i></td></tr>
+<tr><th id="1004">1004</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="1005">1005</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="1006">1006</th><td>  <b>template</b> &lt;<b>typename</b> Protocol1, <b>typename</b> SocketService, <b>typename</b> AcceptHandler&gt;</td></tr>
+<tr><th id="1007">1007</th><td>  <a class="macro" href="async_result.hpp.html#91" title="typename ::boost::asio::async_result&lt; typename ::boost::asio::handler_type&lt;AcceptHandler, void (boost::system::error_code)&gt;::type&gt;::type" data-ref="_M/BOOST_ASIO_INITFN_RESULT_TYPE">BOOST_ASIO_INITFN_RESULT_TYPE</a>(AcceptHandler,</td></tr>
+<tr><th id="1008">1008</th><td>      <em>void</em> (boost::system::<a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>))</td></tr>
+<tr><th id="1009">1009</th><td>  <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor12async_acceptERNS0_12basic_socketIT_T0_EEOT1_PNS0_9enable_ifIXsr14is_convertibleIT_S3_EE5valueEvE4typeE" title='boost::asio::basic_socket_acceptor::async_accept' data-ref="_ZN5boost4asio21basic_socket_acceptor12async_acceptERNS0_12basic_socketIT_T0_EEOT1_PNS0_9enable_ifIXsr14is_convertibleIT_S3_EE5valueEvE4typeE" >async_accept</dfn>(<a class="type" href="basic_socket.hpp.html#boost::asio::basic_socket" title='boost::asio::basic_socket' data-ref="boost::asio::basic_socket" >basic_socket</a>&lt;Protocol1, SocketService&gt;&amp; <dfn class="local col9 decl" id="3429peer" title='peer' data-type='basic_socket&lt;Protocol1, SocketService&gt; &amp;' data-ref="3429peer" >peer</dfn>,</td></tr>
+<tr><th id="1010">1010</th><td>      <a class="macro" href="detail/config.hpp.html#107" title="AcceptHandler&amp;&amp;" data-ref="_M/BOOST_ASIO_MOVE_ARG">BOOST_ASIO_MOVE_ARG</a>(AcceptHandler) <dfn class="local col0 decl" id="3430handler" title='handler' data-type='AcceptHandler &amp;&amp;' data-ref="3430handler" >handler</dfn>,</td></tr>
+<tr><th id="1011">1011</th><td>      <b>typename</b> <a class="type" href="detail/type_traits.hpp.html#boost::asio::enable_if" title='boost::asio::enable_if' data-ref="boost::asio::enable_if" >enable_if</a>&lt;<a class="type" href="../type_traits/is_convertible.hpp.html#484" title='boost::is_convertible' data-ref="boost::is_convertible" >is_convertible</a>&lt;Protocol, Protocol1&gt;::value&gt;::type* = <var>0</var>)</td></tr>
+<tr><th id="1012">1012</th><td>  {</td></tr>
+<tr><th id="1013">1013</th><td>    <i>// If you get an error on the following line it means that your handler does</i></td></tr>
+<tr><th id="1014">1014</th><td><i>    // not meet the documented type requirements for a AcceptHandler.</i></td></tr>
+<tr><th id="1015">1015</th><td>    <a class="macro" href="detail/handler_type_requirements.hpp.html#191" title="typedef typename handler_type&lt;AcceptHandler, void(boost::system::error_code)&gt;::type asio_true_handler_type; static_assert(sizeof(boost::asio::detail::one_arg_handler_test( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;(), static_cast&lt;const boost::system::error_code*&gt;(0))) == 1, &quot;AcceptHandler type requirements not met&quot;); typedef boost::asio::detail::handler_type_requirements&lt; sizeof( boost::asio::detail::argbyv( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;())) + sizeof( boost::asio::detail::lvref&lt; asio_true_handler_type&gt;()( boost::asio::detail::lvref&lt;const boost::system::error_code&gt;()), char(0))&gt;" data-ref="_M/BOOST_ASIO_ACCEPT_HANDLER_CHECK">BOOST_ASIO_ACCEPT_HANDLER_CHECK</a>(AcceptHandler, handler) <dfn class="local col1 typedef" id="3431type_check" title='type_check' data-type='boost::asio::detail::handler_type_requirements&lt;sizeof (boost::asio::detail::argbyv(boost::asio::detail::clvref&lt;asio_true_handler_type&gt;())) + sizeof (boost::asio::detail::lvref&lt;asio_true_handler_type&gt;()(boost::asio::detail::lvref&lt;const boost::system::error_code&gt;()) , char(0))&gt;' data-ref="3431type_check" >type_check</dfn>;</td></tr>
+<tr><th id="1016">1016</th><td></td></tr>
+<tr><th id="1017">1017</th><td>    <b>return</b> <b>this</b>-&gt;get_service().async_accept(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="1018">1018</th><td>        <a class="local col9 ref" href="#3429peer" title='peer' data-ref="3429peer" >peer</a>, <b>static_cast</b>&lt;<a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>*&gt;(<var>0</var>),</td></tr>
+<tr><th id="1019">1019</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;AcceptHandler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(AcceptHandler)(<a class="local col0 ref" href="#3430handler" title='handler' data-ref="3430handler" >handler</a>));</td></tr>
+<tr><th id="1020">1020</th><td>  }</td></tr>
+<tr><th id="1021">1021</th><td></td></tr>
+<tr><th id="1022">1022</th><td>  <i class="doc">/// Accept a new connection and obtain the endpoint of the peer</i></td></tr>
+<tr><th id="1023">1023</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="1024">1024</th><td><i class="doc">   * This function is used to accept a new connection from a peer into the</i></td></tr>
+<tr><th id="1025">1025</th><td><i class="doc">   * given socket, and additionally provide the endpoint of the remote peer.</i></td></tr>
+<tr><th id="1026">1026</th><td><i class="doc">   * The function call will block until a new connection has been accepted</i></td></tr>
+<tr><th id="1027">1027</th><td><i class="doc">   * successfully or an error occurs.</i></td></tr>
+<tr><th id="1028">1028</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1029">1029</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer</span> The socket into which the new connection will be accepted.</i></td></tr>
+<tr><th id="1030">1030</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1031">1031</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer_endpoint</span> An endpoint object which will receive the endpoint of</i></td></tr>
+<tr><th id="1032">1032</th><td><i class="doc">   * the remote peer.</i></td></tr>
+<tr><th id="1033">1033</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1034">1034</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="1035">1035</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1036">1036</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="1037">1037</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="1038">1038</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="1039">1039</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="1040">1040</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::socket socket(io_service);</span></i></td></tr>
+<tr><th id="1041">1041</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::endpoint endpoint;</span></i></td></tr>
+<tr><th id="1042">1042</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.accept(socket, endpoint);</span></i></td></tr>
+<tr><th id="1043">1043</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="1044">1044</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="1045">1045</th><td>  <b>template</b> &lt;<b>typename</b> SocketService&gt;</td></tr>
+<tr><th id="1046">1046</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T_EERNS3_8endpointE" title='boost::asio::basic_socket_acceptor::accept' data-ref="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T_EERNS3_8endpointE" >accept</dfn>(<a class="type" href="basic_socket.hpp.html#boost::asio::basic_socket" title='boost::asio::basic_socket' data-ref="boost::asio::basic_socket" >basic_socket</a>&lt;<a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>, SocketService&gt;&amp; <dfn class="local col2 decl" id="3432peer" title='peer' data-type='basic_socket&lt;protocol_type, SocketService&gt; &amp;' data-ref="3432peer" >peer</dfn>,</td></tr>
+<tr><th id="1047">1047</th><td>      <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>&amp; <dfn class="local col3 decl" id="3433peer_endpoint" title='peer_endpoint' data-type='endpoint_type &amp;' data-ref="3433peer_endpoint" >peer_endpoint</dfn>)</td></tr>
+<tr><th id="1048">1048</th><td>  {</td></tr>
+<tr><th id="1049">1049</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col4 decl" id="3434ec" title='ec' data-type='boost::system::error_code' data-ref="3434ec" >ec</dfn>;</td></tr>
+<tr><th id="1050">1050</th><td>    <b>this</b>-&gt;get_service().accept(<b>this</b>-&gt;get_implementation(),</td></tr>
+<tr><th id="1051">1051</th><td>        <a class="local col2 ref" href="#3432peer" title='peer' data-ref="3432peer" >peer</a>, &amp;<a class="local col3 ref" href="#3433peer_endpoint" title='peer_endpoint' data-ref="3433peer_endpoint" >peer_endpoint</a>, <a class="local col4 ref" href="#3434ec" title='ec' data-ref="3434ec" >ec</a>);</td></tr>
+<tr><th id="1052">1052</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col4 ref" href="#3434ec" title='ec' data-ref="3434ec" >ec</a>, <q>"accept"</q>);</td></tr>
+<tr><th id="1053">1053</th><td>  }</td></tr>
+<tr><th id="1054">1054</th><td></td></tr>
+<tr><th id="1055">1055</th><td>  <i class="doc">/// Accept a new connection and obtain the endpoint of the peer</i></td></tr>
+<tr><th id="1056">1056</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="1057">1057</th><td><i class="doc">   * This function is used to accept a new connection from a peer into the</i></td></tr>
+<tr><th id="1058">1058</th><td><i class="doc">   * given socket, and additionally provide the endpoint of the remote peer.</i></td></tr>
+<tr><th id="1059">1059</th><td><i class="doc">   * The function call will block until a new connection has been accepted</i></td></tr>
+<tr><th id="1060">1060</th><td><i class="doc">   * successfully or an error occurs.</i></td></tr>
+<tr><th id="1061">1061</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1062">1062</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer</span> The socket into which the new connection will be accepted.</i></td></tr>
+<tr><th id="1063">1063</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1064">1064</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer_endpoint</span> An endpoint object which will receive the endpoint of</i></td></tr>
+<tr><th id="1065">1065</th><td><i class="doc">   * the remote peer.</i></td></tr>
+<tr><th id="1066">1066</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1067">1067</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="1068">1068</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1069">1069</th><td><i class="doc">   * <span class="command">@par</span> Example</i></td></tr>
+<tr><th id="1070">1070</th><td><i class="doc">   * <span class="command">@code</span></i></td></tr>
+<tr><th id="1071">1071</th><td><i class="doc">   *<span class="verb"> boost::asio::ip::tcp::acceptor acceptor(io_service);</span></i></td></tr>
+<tr><th id="1072">1072</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="1073">1073</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::socket socket(io_service);</span></i></td></tr>
+<tr><th id="1074">1074</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::asio::ip::tcp::endpoint endpoint;</span></i></td></tr>
+<tr><th id="1075">1075</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> boost::system::error_code ec;</span></i></td></tr>
+<tr><th id="1076">1076</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> acceptor.accept(socket, endpoint, ec);</span></i></td></tr>
+<tr><th id="1077">1077</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> if (ec)</span></i></td></tr>
+<tr><th id="1078">1078</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> {</span></i></td></tr>
+<tr><th id="1079">1079</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   // An error occurred.</span></i></td></tr>
+<tr><th id="1080">1080</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> }</span></i></td></tr>
+<tr><th id="1081">1081</th><td><i class="doc"><span class="verb"></span>   * @endcode</i></td></tr>
+<tr><th id="1082">1082</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="1083">1083</th><td>  <b>template</b> &lt;<b>typename</b> SocketService&gt;</td></tr>
+<tr><th id="1084">1084</th><td>  <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T_EERNS3_8endpointERNS_6system10error_codeE" title='boost::asio::basic_socket_acceptor::accept' data-ref="_ZN5boost4asio21basic_socket_acceptor6acceptERNS0_12basic_socketIT_T_EERNS3_8endpointERNS_6system10error_codeE" >accept</dfn>(</td></tr>
+<tr><th id="1085">1085</th><td>      <a class="type" href="basic_socket.hpp.html#boost::asio::basic_socket" title='boost::asio::basic_socket' data-ref="boost::asio::basic_socket" >basic_socket</a>&lt;<a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>, SocketService&gt;&amp; <dfn class="local col5 decl" id="3435peer" title='peer' data-type='basic_socket&lt;protocol_type, SocketService&gt; &amp;' data-ref="3435peer" >peer</dfn>,</td></tr>
+<tr><th id="1086">1086</th><td>      <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>&amp; <dfn class="local col6 decl" id="3436peer_endpoint" title='peer_endpoint' data-type='endpoint_type &amp;' data-ref="3436peer_endpoint" >peer_endpoint</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col7 decl" id="3437ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="3437ec" >ec</dfn>)</td></tr>
+<tr><th id="1087">1087</th><td>  {</td></tr>
+<tr><th id="1088">1088</th><td>    <b>return</b> <b>this</b>-&gt;get_service().accept(</td></tr>
+<tr><th id="1089">1089</th><td>        <b>this</b>-&gt;get_implementation(), <a class="local col5 ref" href="#3435peer" title='peer' data-ref="3435peer" >peer</a>, &amp;<a class="local col6 ref" href="#3436peer_endpoint" title='peer_endpoint' data-ref="3436peer_endpoint" >peer_endpoint</a>, <a class="local col7 ref" href="#3437ec" title='ec' data-ref="3437ec" >ec</a>);</td></tr>
+<tr><th id="1090">1090</th><td>  }</td></tr>
+<tr><th id="1091">1091</th><td></td></tr>
+<tr><th id="1092">1092</th><td>  <i class="doc">/// Start an asynchronous accept.</i></td></tr>
+<tr><th id="1093">1093</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="1094">1094</th><td><i class="doc">   * This function is used to asynchronously accept a new connection into a</i></td></tr>
+<tr><th id="1095">1095</th><td><i class="doc">   * socket, and additionally obtain the endpoint of the remote peer. The</i></td></tr>
+<tr><th id="1096">1096</th><td><i class="doc">   * function call always returns immediately.</i></td></tr>
+<tr><th id="1097">1097</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1098">1098</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer</span> The socket into which the new connection will be accepted.</i></td></tr>
+<tr><th id="1099">1099</th><td><i class="doc">   * Ownership of the peer object is retained by the caller, which must</i></td></tr>
+<tr><th id="1100">1100</th><td><i class="doc">   * guarantee that it is valid until the handler is called.</i></td></tr>
+<tr><th id="1101">1101</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1102">1102</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">peer_endpoint</span> An endpoint object into which the endpoint of the</i></td></tr>
+<tr><th id="1103">1103</th><td><i class="doc">   * remote peer will be written. Ownership of the peer_endpoint object is</i></td></tr>
+<tr><th id="1104">1104</th><td><i class="doc">   * retained by the caller, which must guarantee that it is valid until the</i></td></tr>
+<tr><th id="1105">1105</th><td><i class="doc">   * handler is called.</i></td></tr>
+<tr><th id="1106">1106</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="1107">1107</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">handler</span> The handler to be called when the accept operation</i></td></tr>
+<tr><th id="1108">1108</th><td><i class="doc">   * completes. Copies will be made of the handler as required. The function</i></td></tr>
+<tr><th id="1109">1109</th><td><i class="doc">   * signature of the handler must be:</i></td></tr>
+<tr><th id="1110">1110</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> void handler(</span></i></td></tr>
+<tr><th id="1111">1111</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   const boost::system::error_code&amp; error // Result of operation.</span></i></td></tr>
+<tr><th id="1112">1112</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ); @</span>endcode</i></td></tr>
+<tr><th id="1113">1113</th><td><i class="doc">   * Regardless of whether the asynchronous operation completes immediately or</i></td></tr>
+<tr><th id="1114">1114</th><td><i class="doc">   * not, the handler will not be invoked from within this function. Invocation</i></td></tr>
+<tr><th id="1115">1115</th><td><i class="doc">   * of the handler will be performed in a manner equivalent to using</i></td></tr>
+<tr><th id="1116">1116</th><td><i class="doc">   * boost::asio::io_service::post().</i></td></tr>
+<tr><th id="1117">1117</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="1118">1118</th><td>  <b>template</b> &lt;<b>typename</b> SocketService, <b>typename</b> AcceptHandler&gt;</td></tr>
+<tr><th id="1119">1119</th><td>  <a class="macro" href="async_result.hpp.html#91" title="typename ::boost::asio::async_result&lt; typename ::boost::asio::handler_type&lt;AcceptHandler, void (boost::system::error_code)&gt;::type&gt;::type" data-ref="_M/BOOST_ASIO_INITFN_RESULT_TYPE">BOOST_ASIO_INITFN_RESULT_TYPE</a>(AcceptHandler,</td></tr>
+<tr><th id="1120">1120</th><td>      <em>void</em> (boost::system::<a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>))</td></tr>
+<tr><th id="1121">1121</th><td>  <dfn class="decl def" id="_ZN5boost4asio21basic_socket_acceptor12async_acceptERNS0_12basic_socketIT_T_EERNS3_8endpointEOT0_" title='boost::asio::basic_socket_acceptor::async_accept' data-ref="_ZN5boost4asio21basic_socket_acceptor12async_acceptERNS0_12basic_socketIT_T_EERNS3_8endpointEOT0_" >async_accept</dfn>(<a class="type" href="basic_socket.hpp.html#boost::asio::basic_socket" title='boost::asio::basic_socket' data-ref="boost::asio::basic_socket" >basic_socket</a>&lt;<a class="typedef" href="#boost::asio::basic_socket_acceptor::protocol_type" title='boost::asio::basic_socket_acceptor::protocol_type' data-type='Protocol' data-ref="boost::asio::basic_socket_acceptor::protocol_type" >protocol_type</a>, SocketService&gt;&amp; <dfn class="local col8 decl" id="3438peer" title='peer' data-type='basic_socket&lt;protocol_type, SocketService&gt; &amp;' data-ref="3438peer" >peer</dfn>,</td></tr>
+<tr><th id="1122">1122</th><td>      <a class="typedef" href="#boost::asio::basic_socket_acceptor::endpoint_type" title='boost::asio::basic_socket_acceptor::endpoint_type' data-type='typename Protocol::endpoint' data-ref="boost::asio::basic_socket_acceptor::endpoint_type" >endpoint_type</a>&amp; <dfn class="local col9 decl" id="3439peer_endpoint" title='peer_endpoint' data-type='endpoint_type &amp;' data-ref="3439peer_endpoint" >peer_endpoint</dfn>, <a class="macro" href="detail/config.hpp.html#107" title="AcceptHandler&amp;&amp;" data-ref="_M/BOOST_ASIO_MOVE_ARG">BOOST_ASIO_MOVE_ARG</a>(AcceptHandler) <dfn class="local col0 decl" id="3440handler" title='handler' data-type='AcceptHandler &amp;&amp;' data-ref="3440handler" >handler</dfn>)</td></tr>
+<tr><th id="1123">1123</th><td>  {</td></tr>
+<tr><th id="1124">1124</th><td>    <i>// If you get an error on the following line it means that your handler does</i></td></tr>
+<tr><th id="1125">1125</th><td><i>    // not meet the documented type requirements for a AcceptHandler.</i></td></tr>
+<tr><th id="1126">1126</th><td>    <a class="macro" href="detail/handler_type_requirements.hpp.html#191" title="typedef typename handler_type&lt;AcceptHandler, void(boost::system::error_code)&gt;::type asio_true_handler_type; static_assert(sizeof(boost::asio::detail::one_arg_handler_test( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;(), static_cast&lt;const boost::system::error_code*&gt;(0))) == 1, &quot;AcceptHandler type requirements not met&quot;); typedef boost::asio::detail::handler_type_requirements&lt; sizeof( boost::asio::detail::argbyv( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;())) + sizeof( boost::asio::detail::lvref&lt; asio_true_handler_type&gt;()( boost::asio::detail::lvref&lt;const boost::system::error_code&gt;()), char(0))&gt;" data-ref="_M/BOOST_ASIO_ACCEPT_HANDLER_CHECK">BOOST_ASIO_ACCEPT_HANDLER_CHECK</a>(AcceptHandler, handler) <dfn class="local col1 typedef" id="3441type_check" title='type_check' data-type='boost::asio::detail::handler_type_requirements&lt;sizeof (boost::asio::detail::argbyv(boost::asio::detail::clvref&lt;asio_true_handler_type&gt;())) + sizeof (boost::asio::detail::lvref&lt;asio_true_handler_type&gt;()(boost::asio::detail::lvref&lt;const boost::system::error_code&gt;()) , char(0))&gt;' data-ref="3441type_check" >type_check</dfn>;</td></tr>
+<tr><th id="1127">1127</th><td></td></tr>
+<tr><th id="1128">1128</th><td>    <b>return</b> <b>this</b>-&gt;get_service().async_accept(<b>this</b>-&gt;get_implementation(), <a class="local col8 ref" href="#3438peer" title='peer' data-ref="3438peer" >peer</a>,</td></tr>
+<tr><th id="1129">1129</th><td>        &amp;<a class="local col9 ref" href="#3439peer_endpoint" title='peer_endpoint' data-ref="3439peer_endpoint" >peer_endpoint</a>, <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;AcceptHandler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(AcceptHandler)(<a class="local col0 ref" href="#3440handler" title='handler' data-ref="3440handler" >handler</a>));</td></tr>
+<tr><th id="1130">1130</th><td>  }</td></tr>
+<tr><th id="1131">1131</th><td>};</td></tr>
+<tr><th id="1132">1132</th><td></td></tr>
+<tr><th id="1133">1133</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="1134">1134</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="1135">1135</th><td></td></tr>
+<tr><th id="1136">1136</th><td><u>#include <a href="detail/pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="1137">1137</th><td></td></tr>
+<tr><th id="1138">1138</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_BASIC_SOCKET_ACCEPTOR_HPP</u></td></tr>
+<tr><th id="1139">1139</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

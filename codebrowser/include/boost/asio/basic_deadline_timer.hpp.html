@@ -1,0 +1,538 @@
+<!doctype html>
+<html>
+<head>
+<title>basic_deadline_timer.hpp [include/boost/asio/basic_deadline_timer.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/basic_deadline_timer.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>asio</a>/basic_deadline_timer.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// basic_deadline_timer.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_BASIC_DEADLINE_TIMER_HPP">BOOST_ASIO_BASIC_DEADLINE_TIMER_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_BASIC_DEADLINE_TIMER_HPP" data-ref="_M/BOOST_ASIO_BASIC_DEADLINE_TIMER_HPP">BOOST_ASIO_BASIC_DEADLINE_TIMER_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="detail/config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">if</span> defined(<a class="macro" href="detail/config.hpp.html#280" data-ref="_M/BOOST_ASIO_HAS_BOOST_DATE_TIME">BOOST_ASIO_HAS_BOOST_DATE_TIME</a>) \</u></td></tr>
+<tr><th id="21">21</th><td><u>  || defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../c++/4.9/cstddef.html">&lt;cstddef&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="basic_io_object.hpp.html">&lt;boost/asio/basic_io_object.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="deadline_timer_service.hpp.html">&lt;boost/asio/deadline_timer_service.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="detail/handler_type_requirements.hpp.html">&lt;boost/asio/detail/handler_type_requirements.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="detail/throw_error.hpp.html">&lt;boost/asio/detail/throw_error.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="error.hpp.html">&lt;boost/asio/error.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="detail/push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="33">33</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i class="doc">/// Provides waitable timer functionality.</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc"> * The basic_deadline_timer class template provides the ability to perform a</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"> * blocking or asynchronous wait for a timer to expire.</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"> * A deadline timer is always in one of two states: "expired" or "not expired".</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> * If the wait() or async_wait() function is called on an expired timer, the</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"> * wait operation will complete immediately.</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc"> * Most applications will use the boost::asio::deadline_timer typedef.</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc"> * <span class="command">@par</span> Thread Safety</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Distinct</span><span class="command"> @e</span> <span class="arg">objects:</span> Safe<span class="command">.@n</span></i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Shared</span><span class="command"> @e</span> <span class="arg">objects:</span> Unsafe.</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"> * <span class="command">@par</span> Examples</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc"> * Performing a blocking wait:</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc"> * <span class="command">@code</span></i></td></tr>
+<tr><th id="53">53</th><td><i class="doc"> *<span class="verb"> // Construct a timer without setting an expiry time.</span></i></td></tr>
+<tr><th id="54">54</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> boost::asio::deadline_timer timer(io_service);</span></i></td></tr>
+<tr><th id="55">55</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="56">56</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> // Set an expiry time relative to now.</span></i></td></tr>
+<tr><th id="57">57</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> timer.expires_from_now(boost::posix_time::seconds(5));</span></i></td></tr>
+<tr><th id="58">58</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="59">59</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> // Wait for the timer to expire.</span></i></td></tr>
+<tr><th id="60">60</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> timer.wait();</span></i></td></tr>
+<tr><th id="61">61</th><td><i class="doc"><span class="verb"></span> * @endcode</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc"> * <span class="command">@par</span> </i></td></tr>
+<tr><th id="64">64</th><td><i class="doc"> * Performing an asynchronous wait:</i></td></tr>
+<tr><th id="65">65</th><td><i class="doc"> * <span class="command">@code</span></i></td></tr>
+<tr><th id="66">66</th><td><i class="doc"> *<span class="verb"> void handler(const boost::system::error_code&amp; error)</span></i></td></tr>
+<tr><th id="67">67</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> {</span></i></td></tr>
+<tr><th id="68">68</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   if (!error)</span></i></td></tr>
+<tr><th id="69">69</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   {</span></i></td></tr>
+<tr><th id="70">70</th><td><i class="doc"><span class="verb"></span> *<span class="verb">     // Timer expired.</span></i></td></tr>
+<tr><th id="71">71</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   }</span></i></td></tr>
+<tr><th id="72">72</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> }</span></i></td></tr>
+<tr><th id="73">73</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="74">74</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> ...</span></i></td></tr>
+<tr><th id="75">75</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="76">76</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> // Construct a timer with an absolute expiry time.</span></i></td></tr>
+<tr><th id="77">77</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> boost::asio::deadline_timer timer(io_service,</span></i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"><span class="verb"></span> *<span class="verb">     boost::posix_time::time_from_string("2005-12-07 23:59:59.000"));</span></i></td></tr>
+<tr><th id="79">79</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> // Start an asynchronous wait.</span></i></td></tr>
+<tr><th id="81">81</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> timer.async_wait(handler);</span></i></td></tr>
+<tr><th id="82">82</th><td><i class="doc"><span class="verb"></span> * @endcode</i></td></tr>
+<tr><th id="83">83</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc"> * <span class="command">@par</span> Changing an active deadline_timer's expiry time</i></td></tr>
+<tr><th id="85">85</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc"> * Changing the expiry time of a timer while there are pending asynchronous</i></td></tr>
+<tr><th id="87">87</th><td><i class="doc"> * waits causes those wait operations to be cancelled. To ensure that the action</i></td></tr>
+<tr><th id="88">88</th><td><i class="doc"> * associated with the timer is performed only once, use something like this:</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc"> * used:</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc"> * <span class="command">@code</span></i></td></tr>
+<tr><th id="92">92</th><td><i class="doc"> *<span class="verb"> void on_some_event()</span></i></td></tr>
+<tr><th id="93">93</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> {</span></i></td></tr>
+<tr><th id="94">94</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   if (my_timer.expires_from_now(seconds(5)) &gt; 0)</span></i></td></tr>
+<tr><th id="95">95</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   {</span></i></td></tr>
+<tr><th id="96">96</th><td><i class="doc"><span class="verb"></span> *<span class="verb">     // We managed to cancel the timer. Start new asynchronous wait.</span></i></td></tr>
+<tr><th id="97">97</th><td><i class="doc"><span class="verb"></span> *<span class="verb">     my_timer.async_wait(on_timeout);</span></i></td></tr>
+<tr><th id="98">98</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   }</span></i></td></tr>
+<tr><th id="99">99</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   else</span></i></td></tr>
+<tr><th id="100">100</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   {</span></i></td></tr>
+<tr><th id="101">101</th><td><i class="doc"><span class="verb"></span> *<span class="verb">     // Too late, timer has already expired!</span></i></td></tr>
+<tr><th id="102">102</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   }</span></i></td></tr>
+<tr><th id="103">103</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> }</span></i></td></tr>
+<tr><th id="104">104</th><td><i class="doc"><span class="verb"></span> *<span class="verb"></span></i></td></tr>
+<tr><th id="105">105</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> void on_timeout(const boost::system::error_code&amp; e)</span></i></td></tr>
+<tr><th id="106">106</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> {</span></i></td></tr>
+<tr><th id="107">107</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   if (e != boost::asio::error::operation_aborted)</span></i></td></tr>
+<tr><th id="108">108</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   {</span></i></td></tr>
+<tr><th id="109">109</th><td><i class="doc"><span class="verb"></span> *<span class="verb">     // Timer was not cancelled, take necessary action.</span></i></td></tr>
+<tr><th id="110">110</th><td><i class="doc"><span class="verb"></span> *<span class="verb">   }</span></i></td></tr>
+<tr><th id="111">111</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> }</span></i></td></tr>
+<tr><th id="112">112</th><td><i class="doc"><span class="verb"></span> * @endcode</i></td></tr>
+<tr><th id="113">113</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc"> * <span class="command">@li</span> The boost::asio::basic_deadline_timer::expires_from_now() function</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc"> * cancels any pending asynchronous waits, and returns the number of</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc"> * asynchronous waits that were cancelled. If it returns 0 then you were too</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc"> * late and the wait handler has already been executed, or will soon be</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc"> * executed. If it returns 1 then the wait handler was successfully cancelled.</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc"> * <span class="command">@li</span> If a wait handler is cancelled, the boost::system::error_code passed to</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc"> * it contains the value boost::asio::error::operation_aborted.</i></td></tr>
+<tr><th id="122">122</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="123">123</th><td><b>template</b> &lt;<b>typename</b> Time,</td></tr>
+<tr><th id="124">124</th><td>    <b>typename</b> TimeTraits = <span class="namespace">boost::asio::</span><a class="type" href="time_traits.hpp.html#boost::asio::time_traits" title='boost::asio::time_traits' data-ref="boost::asio::time_traits" >time_traits</a>&lt;Time&gt;,</td></tr>
+<tr><th id="125">125</th><td>    <b>typename</b> TimerService = <a class="type" href="deadline_timer_service.hpp.html#boost::asio::deadline_timer_service" title='boost::asio::deadline_timer_service' data-ref="boost::asio::deadline_timer_service" >deadline_timer_service</a>&lt;Time, TimeTraits&gt; &gt;</td></tr>
+<tr><th id="126">126</th><td><b>class</b> <dfn class="type def" id="boost::asio::basic_deadline_timer" title='boost::asio::basic_deadline_timer' data-ref="boost::asio::basic_deadline_timer" >basic_deadline_timer</dfn></td></tr>
+<tr><th id="127">127</th><td>  : <b>public</b> <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;TimerService&gt;</td></tr>
+<tr><th id="128">128</th><td>{</td></tr>
+<tr><th id="129">129</th><td><b>public</b>:</td></tr>
+<tr><th id="130">130</th><td>  <i class="doc">/// The time traits type.</i></td></tr>
+<tr><th id="131">131</th><td>  <b>typedef</b> TimeTraits <dfn class="typedef" id="boost::asio::basic_deadline_timer::traits_type" title='boost::asio::basic_deadline_timer::traits_type' data-type='TimeTraits' data-ref="boost::asio::basic_deadline_timer::traits_type" >traits_type</dfn>;</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>  <i class="doc">/// The time type.</i></td></tr>
+<tr><th id="134">134</th><td>  <b>typedef</b> <b>typename</b> <a class="typedef" href="#boost::asio::basic_deadline_timer::traits_type" title='boost::asio::basic_deadline_timer::traits_type' data-type='TimeTraits' data-ref="boost::asio::basic_deadline_timer::traits_type" >traits_type</a>::time_type <dfn class="typedef" id="boost::asio::basic_deadline_timer::time_type" title='boost::asio::basic_deadline_timer::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::basic_deadline_timer::time_type" >time_type</dfn>;</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>  <i class="doc">/// The duration type.</i></td></tr>
+<tr><th id="137">137</th><td>  <b>typedef</b> <b>typename</b> <a class="typedef" href="#boost::asio::basic_deadline_timer::traits_type" title='boost::asio::basic_deadline_timer::traits_type' data-type='TimeTraits' data-ref="boost::asio::basic_deadline_timer::traits_type" >traits_type</a>::duration_type <dfn class="typedef" id="boost::asio::basic_deadline_timer::duration_type" title='boost::asio::basic_deadline_timer::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::basic_deadline_timer::duration_type" >duration_type</dfn>;</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td>  <i class="doc">/// Constructor.</i></td></tr>
+<tr><th id="140">140</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">   * This constructor creates a timer without setting an expiry time. The</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">   * expires_at() or expires_from_now() functions must be called to set an</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">   * expiry time before the timer can be waited on.</i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the timer will use to dispatch</i></td></tr>
+<tr><th id="146">146</th><td><i class="doc">   * handlers for any asynchronous operations performed on the timer.</i></td></tr>
+<tr><th id="147">147</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="148">148</th><td>  <b>explicit</b> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timerC1ERNS0_10io_serviceE" title='boost::asio::basic_deadline_timer::basic_deadline_timer&lt;Time, TimeTraits, TimerService&gt;' data-ref="_ZN5boost4asio20basic_deadline_timerC1ERNS0_10io_serviceE" >basic_deadline_timer</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col6 decl" id="2326io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="2326io_service" >io_service</dfn>)</td></tr>
+<tr><th id="149">149</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;TimerService&gt;(<a class="local col6 ref" href="#2326io_service" title='io_service' data-ref="2326io_service" >io_service</a>)</td></tr>
+<tr><th id="150">150</th><td>  {</td></tr>
+<tr><th id="151">151</th><td>  }</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>  <i class="doc">/// Constructor to set a particular expiry time as an absolute time.</i></td></tr>
+<tr><th id="154">154</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">   * This constructor creates a timer and sets the expiry time.</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="157">157</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the timer will use to dispatch</i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">   * handlers for any asynchronous operations performed on the timer.</i></td></tr>
+<tr><th id="159">159</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="160">160</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">expiry_time</span> The expiry time to be used for the timer, expressed</i></td></tr>
+<tr><th id="161">161</th><td><i class="doc">   * as an absolute time.</i></td></tr>
+<tr><th id="162">162</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="163">163</th><td>  <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timerC1ERNS0_10io_serviceERKNT0_9time_typeE" title='boost::asio::basic_deadline_timer::basic_deadline_timer&lt;Time, TimeTraits, TimerService&gt;' data-ref="_ZN5boost4asio20basic_deadline_timerC1ERNS0_10io_serviceERKNT0_9time_typeE" >basic_deadline_timer</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col7 decl" id="2327io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="2327io_service" >io_service</dfn>,</td></tr>
+<tr><th id="164">164</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::basic_deadline_timer::time_type" title='boost::asio::basic_deadline_timer::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::basic_deadline_timer::time_type" >time_type</a>&amp; <dfn class="local col8 decl" id="2328expiry_time" title='expiry_time' data-type='const time_type &amp;' data-ref="2328expiry_time" >expiry_time</dfn>)</td></tr>
+<tr><th id="165">165</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;TimerService&gt;(<a class="local col7 ref" href="#2327io_service" title='io_service' data-ref="2327io_service" >io_service</a>)</td></tr>
+<tr><th id="166">166</th><td>  {</td></tr>
+<tr><th id="167">167</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col9 decl" id="2329ec" title='ec' data-type='boost::system::error_code' data-ref="2329ec" >ec</dfn>;</td></tr>
+<tr><th id="168">168</th><td>    <b>this</b>-&gt;service.expires_at(<b>this</b>-&gt;implementation, <a class="local col8 ref" href="#2328expiry_time" title='expiry_time' data-ref="2328expiry_time" >expiry_time</a>, <a class="local col9 ref" href="#2329ec" title='ec' data-ref="2329ec" >ec</a>);</td></tr>
+<tr><th id="169">169</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#2329ec" title='ec' data-ref="2329ec" >ec</a>, <q>"expires_at"</q>);</td></tr>
+<tr><th id="170">170</th><td>  }</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>  <i class="doc">/// Constructor to set a particular expiry time relative to now.</i></td></tr>
+<tr><th id="173">173</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="174">174</th><td><i class="doc">   * This constructor creates a timer and sets the expiry time.</i></td></tr>
+<tr><th id="175">175</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="176">176</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the timer will use to dispatch</i></td></tr>
+<tr><th id="177">177</th><td><i class="doc">   * handlers for any asynchronous operations performed on the timer.</i></td></tr>
+<tr><th id="178">178</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="179">179</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">expiry_time</span> The expiry time to be used for the timer, relative to</i></td></tr>
+<tr><th id="180">180</th><td><i class="doc">   * now.</i></td></tr>
+<tr><th id="181">181</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="182">182</th><td>  <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timerC1ERNS0_10io_serviceERKNT0_13duration_typeE" title='boost::asio::basic_deadline_timer::basic_deadline_timer&lt;Time, TimeTraits, TimerService&gt;' data-ref="_ZN5boost4asio20basic_deadline_timerC1ERNS0_10io_serviceERKNT0_13duration_typeE" >basic_deadline_timer</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col0 decl" id="2330io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="2330io_service" >io_service</dfn>,</td></tr>
+<tr><th id="183">183</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::basic_deadline_timer::duration_type" title='boost::asio::basic_deadline_timer::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::basic_deadline_timer::duration_type" >duration_type</a>&amp; <dfn class="local col1 decl" id="2331expiry_time" title='expiry_time' data-type='const duration_type &amp;' data-ref="2331expiry_time" >expiry_time</dfn>)</td></tr>
+<tr><th id="184">184</th><td>    : <a class="type" href="basic_io_object.hpp.html#boost::asio::basic_io_object" title='boost::asio::basic_io_object' data-ref="boost::asio::basic_io_object" >basic_io_object</a>&lt;TimerService&gt;(<a class="local col0 ref" href="#2330io_service" title='io_service' data-ref="2330io_service" >io_service</a>)</td></tr>
+<tr><th id="185">185</th><td>  {</td></tr>
+<tr><th id="186">186</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col2 decl" id="2332ec" title='ec' data-type='boost::system::error_code' data-ref="2332ec" >ec</dfn>;</td></tr>
+<tr><th id="187">187</th><td>    <b>this</b>-&gt;service.expires_from_now(<b>this</b>-&gt;implementation, <a class="local col1 ref" href="#2331expiry_time" title='expiry_time' data-ref="2331expiry_time" >expiry_time</a>, <a class="local col2 ref" href="#2332ec" title='ec' data-ref="2332ec" >ec</a>);</td></tr>
+<tr><th id="188">188</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col2 ref" href="#2332ec" title='ec' data-ref="2332ec" >ec</a>, <q>"expires_from_now"</q>);</td></tr>
+<tr><th id="189">189</th><td>  }</td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td>  <i class="doc">/// Cancel any asynchronous operations that are waiting on the timer.</i></td></tr>
+<tr><th id="192">192</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="193">193</th><td><i class="doc">   * This function forces the completion of any pending asynchronous wait</i></td></tr>
+<tr><th id="194">194</th><td><i class="doc">   * operations against the timer. The handler for each cancelled operation will</i></td></tr>
+<tr><th id="195">195</th><td><i class="doc">   * be invoked with the boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="196">196</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="197">197</th><td><i class="doc">   * Cancelling the timer does not change the expiry time.</i></td></tr>
+<tr><th id="198">198</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="199">199</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled.</i></td></tr>
+<tr><th id="200">200</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="201">201</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="202">202</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="203">203</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when cancel() is called, then the</i></td></tr>
+<tr><th id="204">204</th><td><i class="doc">   * handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="205">205</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="206">206</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="207">207</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="208">208</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="209">209</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="210">210</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="211">211</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="212">212</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="213">213</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer6cancelEv" title='boost::asio::basic_deadline_timer::cancel' data-ref="_ZN5boost4asio20basic_deadline_timer6cancelEv" >cancel</dfn>()</td></tr>
+<tr><th id="214">214</th><td>  {</td></tr>
+<tr><th id="215">215</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col3 decl" id="2333ec" title='ec' data-type='boost::system::error_code' data-ref="2333ec" >ec</dfn>;</td></tr>
+<tr><th id="216">216</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col4 decl" id="2334s" title='s' data-type='std::size_t' data-ref="2334s" >s</dfn> = <b>this</b>-&gt;service.cancel(<b>this</b>-&gt;implementation, <a class="local col3 ref" href="#2333ec" title='ec' data-ref="2333ec" >ec</a>);</td></tr>
+<tr><th id="217">217</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col3 ref" href="#2333ec" title='ec' data-ref="2333ec" >ec</a>, <q>"cancel"</q>);</td></tr>
+<tr><th id="218">218</th><td>    <b>return</b> <a class="local col4 ref" href="#2334s" title='s' data-ref="2334s" >s</a>;</td></tr>
+<tr><th id="219">219</th><td>  }</td></tr>
+<tr><th id="220">220</th><td></td></tr>
+<tr><th id="221">221</th><td>  <i class="doc">/// Cancel any asynchronous operations that are waiting on the timer.</i></td></tr>
+<tr><th id="222">222</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="223">223</th><td><i class="doc">   * This function forces the completion of any pending asynchronous wait</i></td></tr>
+<tr><th id="224">224</th><td><i class="doc">   * operations against the timer. The handler for each cancelled operation will</i></td></tr>
+<tr><th id="225">225</th><td><i class="doc">   * be invoked with the boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="226">226</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="227">227</th><td><i class="doc">   * Cancelling the timer does not change the expiry time.</i></td></tr>
+<tr><th id="228">228</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="229">229</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="230">230</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="231">231</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled.</i></td></tr>
+<tr><th id="232">232</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="233">233</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when cancel() is called, then the</i></td></tr>
+<tr><th id="234">234</th><td><i class="doc">   * handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="235">235</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="236">236</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="237">237</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="238">238</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="239">239</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="240">240</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="241">241</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="242">242</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="243">243</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer6cancelERNS_6system10error_codeE" title='boost::asio::basic_deadline_timer::cancel' data-ref="_ZN5boost4asio20basic_deadline_timer6cancelERNS_6system10error_codeE" >cancel</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col5 decl" id="2335ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2335ec" >ec</dfn>)</td></tr>
+<tr><th id="244">244</th><td>  {</td></tr>
+<tr><th id="245">245</th><td>    <b>return</b> <b>this</b>-&gt;service.cancel(<b>this</b>-&gt;implementation, <a class="local col5 ref" href="#2335ec" title='ec' data-ref="2335ec" >ec</a>);</td></tr>
+<tr><th id="246">246</th><td>  }</td></tr>
+<tr><th id="247">247</th><td></td></tr>
+<tr><th id="248">248</th><td>  <i class="doc">/// Cancels one asynchronous operation that is waiting on the timer.</i></td></tr>
+<tr><th id="249">249</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="250">250</th><td><i class="doc">   * This function forces the completion of one pending asynchronous wait</i></td></tr>
+<tr><th id="251">251</th><td><i class="doc">   * operation against the timer. Handlers are cancelled in FIFO order. The</i></td></tr>
+<tr><th id="252">252</th><td><i class="doc">   * handler for the cancelled operation will be invoked with the</i></td></tr>
+<tr><th id="253">253</th><td><i class="doc">   * boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="254">254</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="255">255</th><td><i class="doc">   * Cancelling the timer does not change the expiry time.</i></td></tr>
+<tr><th id="256">256</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="257">257</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled. That is,</i></td></tr>
+<tr><th id="258">258</th><td><i class="doc">   * either 0 or 1.</i></td></tr>
+<tr><th id="259">259</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="260">260</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="261">261</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="262">262</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when cancel_one() is called, then</i></td></tr>
+<tr><th id="263">263</th><td><i class="doc">   * the handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="264">264</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="265">265</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="266">266</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="267">267</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="268">268</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="269">269</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="270">270</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="271">271</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="272">272</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer10cancel_oneEv" title='boost::asio::basic_deadline_timer::cancel_one' data-ref="_ZN5boost4asio20basic_deadline_timer10cancel_oneEv" >cancel_one</dfn>()</td></tr>
+<tr><th id="273">273</th><td>  {</td></tr>
+<tr><th id="274">274</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col6 decl" id="2336ec" title='ec' data-type='boost::system::error_code' data-ref="2336ec" >ec</dfn>;</td></tr>
+<tr><th id="275">275</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col7 decl" id="2337s" title='s' data-type='std::size_t' data-ref="2337s" >s</dfn> = <b>this</b>-&gt;service.cancel_one(<b>this</b>-&gt;implementation, <a class="local col6 ref" href="#2336ec" title='ec' data-ref="2336ec" >ec</a>);</td></tr>
+<tr><th id="276">276</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col6 ref" href="#2336ec" title='ec' data-ref="2336ec" >ec</a>, <q>"cancel_one"</q>);</td></tr>
+<tr><th id="277">277</th><td>    <b>return</b> <a class="local col7 ref" href="#2337s" title='s' data-ref="2337s" >s</a>;</td></tr>
+<tr><th id="278">278</th><td>  }</td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td>  <i class="doc">/// Cancels one asynchronous operation that is waiting on the timer.</i></td></tr>
+<tr><th id="281">281</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="282">282</th><td><i class="doc">   * This function forces the completion of one pending asynchronous wait</i></td></tr>
+<tr><th id="283">283</th><td><i class="doc">   * operation against the timer. Handlers are cancelled in FIFO order. The</i></td></tr>
+<tr><th id="284">284</th><td><i class="doc">   * handler for the cancelled operation will be invoked with the</i></td></tr>
+<tr><th id="285">285</th><td><i class="doc">   * boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="286">286</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="287">287</th><td><i class="doc">   * Cancelling the timer does not change the expiry time.</i></td></tr>
+<tr><th id="288">288</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="289">289</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="290">290</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="291">291</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled. That is,</i></td></tr>
+<tr><th id="292">292</th><td><i class="doc">   * either 0 or 1.</i></td></tr>
+<tr><th id="293">293</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="294">294</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when cancel_one() is called, then</i></td></tr>
+<tr><th id="295">295</th><td><i class="doc">   * the handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="296">296</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="297">297</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="298">298</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="299">299</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="300">300</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="301">301</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="302">302</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="303">303</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="304">304</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer10cancel_oneERNS_6system10error_codeE" title='boost::asio::basic_deadline_timer::cancel_one' data-ref="_ZN5boost4asio20basic_deadline_timer10cancel_oneERNS_6system10error_codeE" >cancel_one</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col8 decl" id="2338ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2338ec" >ec</dfn>)</td></tr>
+<tr><th id="305">305</th><td>  {</td></tr>
+<tr><th id="306">306</th><td>    <b>return</b> <b>this</b>-&gt;service.cancel_one(<b>this</b>-&gt;implementation, <a class="local col8 ref" href="#2338ec" title='ec' data-ref="2338ec" >ec</a>);</td></tr>
+<tr><th id="307">307</th><td>  }</td></tr>
+<tr><th id="308">308</th><td></td></tr>
+<tr><th id="309">309</th><td>  <i class="doc">/// Get the timer's expiry time as an absolute time.</i></td></tr>
+<tr><th id="310">310</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="311">311</th><td><i class="doc">   * This function may be used to obtain the timer's current expiry time.</i></td></tr>
+<tr><th id="312">312</th><td><i class="doc">   * Whether the timer has expired or not does not affect this value.</i></td></tr>
+<tr><th id="313">313</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="314">314</th><td>  <a class="typedef" href="#boost::asio::basic_deadline_timer::time_type" title='boost::asio::basic_deadline_timer::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::basic_deadline_timer::time_type" >time_type</a> <dfn class="decl def" id="_ZNK5boost4asio20basic_deadline_timer10expires_atEv" title='boost::asio::basic_deadline_timer::expires_at' data-ref="_ZNK5boost4asio20basic_deadline_timer10expires_atEv" >expires_at</dfn>() <em>const</em></td></tr>
+<tr><th id="315">315</th><td>  {</td></tr>
+<tr><th id="316">316</th><td>    <b>return</b> <b>this</b>-&gt;service.expires_at(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="317">317</th><td>  }</td></tr>
+<tr><th id="318">318</th><td></td></tr>
+<tr><th id="319">319</th><td>  <i class="doc">/// Set the timer's expiry time as an absolute time.</i></td></tr>
+<tr><th id="320">320</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="321">321</th><td><i class="doc">   * This function sets the expiry time. Any pending asynchronous wait</i></td></tr>
+<tr><th id="322">322</th><td><i class="doc">   * operations will be cancelled. The handler for each cancelled operation will</i></td></tr>
+<tr><th id="323">323</th><td><i class="doc">   * be invoked with the boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="324">324</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="325">325</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">expiry_time</span> The expiry time to be used for the timer.</i></td></tr>
+<tr><th id="326">326</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="327">327</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled.</i></td></tr>
+<tr><th id="328">328</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="329">329</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="330">330</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="331">331</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when expires_at() is called, then</i></td></tr>
+<tr><th id="332">332</th><td><i class="doc">   * the handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="333">333</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="334">334</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="335">335</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="336">336</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="337">337</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="338">338</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="339">339</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="340">340</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="341">341</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer10expires_atERKNT0_9time_typeE" title='boost::asio::basic_deadline_timer::expires_at' data-ref="_ZN5boost4asio20basic_deadline_timer10expires_atERKNT0_9time_typeE" >expires_at</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_deadline_timer::time_type" title='boost::asio::basic_deadline_timer::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::basic_deadline_timer::time_type" >time_type</a>&amp; <dfn class="local col9 decl" id="2339expiry_time" title='expiry_time' data-type='const time_type &amp;' data-ref="2339expiry_time" >expiry_time</dfn>)</td></tr>
+<tr><th id="342">342</th><td>  {</td></tr>
+<tr><th id="343">343</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col0 decl" id="2340ec" title='ec' data-type='boost::system::error_code' data-ref="2340ec" >ec</dfn>;</td></tr>
+<tr><th id="344">344</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col1 decl" id="2341s" title='s' data-type='std::size_t' data-ref="2341s" >s</dfn> = <b>this</b>-&gt;service.expires_at(</td></tr>
+<tr><th id="345">345</th><td>        <b>this</b>-&gt;implementation, <a class="local col9 ref" href="#2339expiry_time" title='expiry_time' data-ref="2339expiry_time" >expiry_time</a>, <a class="local col0 ref" href="#2340ec" title='ec' data-ref="2340ec" >ec</a>);</td></tr>
+<tr><th id="346">346</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col0 ref" href="#2340ec" title='ec' data-ref="2340ec" >ec</a>, <q>"expires_at"</q>);</td></tr>
+<tr><th id="347">347</th><td>    <b>return</b> <a class="local col1 ref" href="#2341s" title='s' data-ref="2341s" >s</a>;</td></tr>
+<tr><th id="348">348</th><td>  }</td></tr>
+<tr><th id="349">349</th><td></td></tr>
+<tr><th id="350">350</th><td>  <i class="doc">/// Set the timer's expiry time as an absolute time.</i></td></tr>
+<tr><th id="351">351</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="352">352</th><td><i class="doc">   * This function sets the expiry time. Any pending asynchronous wait</i></td></tr>
+<tr><th id="353">353</th><td><i class="doc">   * operations will be cancelled. The handler for each cancelled operation will</i></td></tr>
+<tr><th id="354">354</th><td><i class="doc">   * be invoked with the boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="355">355</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="356">356</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">expiry_time</span> The expiry time to be used for the timer.</i></td></tr>
+<tr><th id="357">357</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="358">358</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="359">359</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="360">360</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled.</i></td></tr>
+<tr><th id="361">361</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="362">362</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when expires_at() is called, then</i></td></tr>
+<tr><th id="363">363</th><td><i class="doc">   * the handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="364">364</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="365">365</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="366">366</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="367">367</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="368">368</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="369">369</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="370">370</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="371">371</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="372">372</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer10expires_atERKNT0_9time_typeERNS_6system10error_codeE" title='boost::asio::basic_deadline_timer::expires_at' data-ref="_ZN5boost4asio20basic_deadline_timer10expires_atERKNT0_9time_typeERNS_6system10error_codeE" >expires_at</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_deadline_timer::time_type" title='boost::asio::basic_deadline_timer::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::basic_deadline_timer::time_type" >time_type</a>&amp; <dfn class="local col2 decl" id="2342expiry_time" title='expiry_time' data-type='const time_type &amp;' data-ref="2342expiry_time" >expiry_time</dfn>,</td></tr>
+<tr><th id="373">373</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col3 decl" id="2343ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2343ec" >ec</dfn>)</td></tr>
+<tr><th id="374">374</th><td>  {</td></tr>
+<tr><th id="375">375</th><td>    <b>return</b> <b>this</b>-&gt;service.expires_at(<b>this</b>-&gt;implementation, <a class="local col2 ref" href="#2342expiry_time" title='expiry_time' data-ref="2342expiry_time" >expiry_time</a>, <a class="local col3 ref" href="#2343ec" title='ec' data-ref="2343ec" >ec</a>);</td></tr>
+<tr><th id="376">376</th><td>  }</td></tr>
+<tr><th id="377">377</th><td></td></tr>
+<tr><th id="378">378</th><td>  <i class="doc">/// Get the timer's expiry time relative to now.</i></td></tr>
+<tr><th id="379">379</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="380">380</th><td><i class="doc">   * This function may be used to obtain the timer's current expiry time.</i></td></tr>
+<tr><th id="381">381</th><td><i class="doc">   * Whether the timer has expired or not does not affect this value.</i></td></tr>
+<tr><th id="382">382</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="383">383</th><td>  <a class="typedef" href="#boost::asio::basic_deadline_timer::duration_type" title='boost::asio::basic_deadline_timer::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::basic_deadline_timer::duration_type" >duration_type</a> <dfn class="decl def" id="_ZNK5boost4asio20basic_deadline_timer16expires_from_nowEv" title='boost::asio::basic_deadline_timer::expires_from_now' data-ref="_ZNK5boost4asio20basic_deadline_timer16expires_from_nowEv" >expires_from_now</dfn>() <em>const</em></td></tr>
+<tr><th id="384">384</th><td>  {</td></tr>
+<tr><th id="385">385</th><td>    <b>return</b> <b>this</b>-&gt;service.expires_from_now(<b>this</b>-&gt;implementation);</td></tr>
+<tr><th id="386">386</th><td>  }</td></tr>
+<tr><th id="387">387</th><td></td></tr>
+<tr><th id="388">388</th><td>  <i class="doc">/// Set the timer's expiry time relative to now.</i></td></tr>
+<tr><th id="389">389</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="390">390</th><td><i class="doc">   * This function sets the expiry time. Any pending asynchronous wait</i></td></tr>
+<tr><th id="391">391</th><td><i class="doc">   * operations will be cancelled. The handler for each cancelled operation will</i></td></tr>
+<tr><th id="392">392</th><td><i class="doc">   * be invoked with the boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="393">393</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="394">394</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">expiry_time</span> The expiry time to be used for the timer.</i></td></tr>
+<tr><th id="395">395</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="396">396</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled.</i></td></tr>
+<tr><th id="397">397</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="398">398</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="399">399</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="400">400</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when expires_from_now() is called,</i></td></tr>
+<tr><th id="401">401</th><td><i class="doc">   * then the handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="402">402</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="403">403</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="404">404</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="405">405</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="406">406</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="407">407</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="408">408</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="409">409</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="410">410</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer16expires_from_nowERKNT0_13duration_typeE" title='boost::asio::basic_deadline_timer::expires_from_now' data-ref="_ZN5boost4asio20basic_deadline_timer16expires_from_nowERKNT0_13duration_typeE" >expires_from_now</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_deadline_timer::duration_type" title='boost::asio::basic_deadline_timer::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::basic_deadline_timer::duration_type" >duration_type</a>&amp; <dfn class="local col4 decl" id="2344expiry_time" title='expiry_time' data-type='const duration_type &amp;' data-ref="2344expiry_time" >expiry_time</dfn>)</td></tr>
+<tr><th id="411">411</th><td>  {</td></tr>
+<tr><th id="412">412</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col5 decl" id="2345ec" title='ec' data-type='boost::system::error_code' data-ref="2345ec" >ec</dfn>;</td></tr>
+<tr><th id="413">413</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col6 decl" id="2346s" title='s' data-type='std::size_t' data-ref="2346s" >s</dfn> = <b>this</b>-&gt;service.expires_from_now(</td></tr>
+<tr><th id="414">414</th><td>        <b>this</b>-&gt;implementation, <a class="local col4 ref" href="#2344expiry_time" title='expiry_time' data-ref="2344expiry_time" >expiry_time</a>, <a class="local col5 ref" href="#2345ec" title='ec' data-ref="2345ec" >ec</a>);</td></tr>
+<tr><th id="415">415</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col5 ref" href="#2345ec" title='ec' data-ref="2345ec" >ec</a>, <q>"expires_from_now"</q>);</td></tr>
+<tr><th id="416">416</th><td>    <b>return</b> <a class="local col6 ref" href="#2346s" title='s' data-ref="2346s" >s</a>;</td></tr>
+<tr><th id="417">417</th><td>  }</td></tr>
+<tr><th id="418">418</th><td></td></tr>
+<tr><th id="419">419</th><td>  <i class="doc">/// Set the timer's expiry time relative to now.</i></td></tr>
+<tr><th id="420">420</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="421">421</th><td><i class="doc">   * This function sets the expiry time. Any pending asynchronous wait</i></td></tr>
+<tr><th id="422">422</th><td><i class="doc">   * operations will be cancelled. The handler for each cancelled operation will</i></td></tr>
+<tr><th id="423">423</th><td><i class="doc">   * be invoked with the boost::asio::error::operation_aborted error code.</i></td></tr>
+<tr><th id="424">424</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="425">425</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">expiry_time</span> The expiry time to be used for the timer.</i></td></tr>
+<tr><th id="426">426</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="427">427</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="428">428</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="429">429</th><td><i class="doc">   * <span class="command">@return</span> The number of asynchronous operations that were cancelled.</i></td></tr>
+<tr><th id="430">430</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="431">431</th><td><i class="doc">   * <span class="command">@note</span> If the timer has already expired when expires_from_now() is called,</i></td></tr>
+<tr><th id="432">432</th><td><i class="doc">   * then the handlers for asynchronous wait operations will:</i></td></tr>
+<tr><th id="433">433</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="434">434</th><td><i class="doc">   * <span class="command">@li</span> have already been invoked; or</i></td></tr>
+<tr><th id="435">435</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="436">436</th><td><i class="doc">   * <span class="command">@li</span> have been queued for invocation in the near future.</i></td></tr>
+<tr><th id="437">437</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="438">438</th><td><i class="doc">   * These handlers can no longer be cancelled, and therefore are passed an</i></td></tr>
+<tr><th id="439">439</th><td><i class="doc">   * error code that indicates the successful completion of the wait operation.</i></td></tr>
+<tr><th id="440">440</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="441">441</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer16expires_from_nowERKNT0_13duration_typeERNS_6system10error_codeE" title='boost::asio::basic_deadline_timer::expires_from_now' data-ref="_ZN5boost4asio20basic_deadline_timer16expires_from_nowERKNT0_13duration_typeERNS_6system10error_codeE" >expires_from_now</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::basic_deadline_timer::duration_type" title='boost::asio::basic_deadline_timer::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::basic_deadline_timer::duration_type" >duration_type</a>&amp; <dfn class="local col7 decl" id="2347expiry_time" title='expiry_time' data-type='const duration_type &amp;' data-ref="2347expiry_time" >expiry_time</dfn>,</td></tr>
+<tr><th id="442">442</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col8 decl" id="2348ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2348ec" >ec</dfn>)</td></tr>
+<tr><th id="443">443</th><td>  {</td></tr>
+<tr><th id="444">444</th><td>    <b>return</b> <b>this</b>-&gt;service.expires_from_now(</td></tr>
+<tr><th id="445">445</th><td>        <b>this</b>-&gt;implementation, <a class="local col7 ref" href="#2347expiry_time" title='expiry_time' data-ref="2347expiry_time" >expiry_time</a>, <a class="local col8 ref" href="#2348ec" title='ec' data-ref="2348ec" >ec</a>);</td></tr>
+<tr><th id="446">446</th><td>  }</td></tr>
+<tr><th id="447">447</th><td></td></tr>
+<tr><th id="448">448</th><td>  <i class="doc">/// Perform a blocking wait on the timer.</i></td></tr>
+<tr><th id="449">449</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="450">450</th><td><i class="doc">   * This function is used to wait for the timer to expire. This function</i></td></tr>
+<tr><th id="451">451</th><td><i class="doc">   * blocks and does not return until the timer has expired.</i></td></tr>
+<tr><th id="452">452</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="453">453</th><td><i class="doc">   * <span class="command">@throws</span> boost::system::system_error Thrown on failure.</i></td></tr>
+<tr><th id="454">454</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="455">455</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer4waitEv" title='boost::asio::basic_deadline_timer::wait' data-ref="_ZN5boost4asio20basic_deadline_timer4waitEv" >wait</dfn>()</td></tr>
+<tr><th id="456">456</th><td>  {</td></tr>
+<tr><th id="457">457</th><td>    <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col9 decl" id="2349ec" title='ec' data-type='boost::system::error_code' data-ref="2349ec" >ec</dfn>;</td></tr>
+<tr><th id="458">458</th><td>    <b>this</b>-&gt;service.wait(<b>this</b>-&gt;implementation, <a class="local col9 ref" href="#2349ec" title='ec' data-ref="2349ec" >ec</a>);</td></tr>
+<tr><th id="459">459</th><td>    <span class="namespace">boost::asio::detail::</span><a class="ref" href="detail/throw_error.hpp.html#_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" title='boost::asio::detail::throw_error' data-ref="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" id="_ZN5boost4asio6detail11throw_errorERKNS_6system10error_codeEPKc" >throw_error</a>(<a class="local col9 ref" href="#2349ec" title='ec' data-ref="2349ec" >ec</a>, <q>"wait"</q>);</td></tr>
+<tr><th id="460">460</th><td>  }</td></tr>
+<tr><th id="461">461</th><td></td></tr>
+<tr><th id="462">462</th><td>  <i class="doc">/// Perform a blocking wait on the timer.</i></td></tr>
+<tr><th id="463">463</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="464">464</th><td><i class="doc">   * This function is used to wait for the timer to expire. This function</i></td></tr>
+<tr><th id="465">465</th><td><i class="doc">   * blocks and does not return until the timer has expired.</i></td></tr>
+<tr><th id="466">466</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="467">467</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">ec</span> Set to indicate what error occurred, if any.</i></td></tr>
+<tr><th id="468">468</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="469">469</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer4waitERNS_6system10error_codeE" title='boost::asio::basic_deadline_timer::wait' data-ref="_ZN5boost4asio20basic_deadline_timer4waitERNS_6system10error_codeE" >wait</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col0 decl" id="2350ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2350ec" >ec</dfn>)</td></tr>
+<tr><th id="470">470</th><td>  {</td></tr>
+<tr><th id="471">471</th><td>    <b>this</b>-&gt;service.wait(<b>this</b>-&gt;implementation, <a class="local col0 ref" href="#2350ec" title='ec' data-ref="2350ec" >ec</a>);</td></tr>
+<tr><th id="472">472</th><td>  }</td></tr>
+<tr><th id="473">473</th><td></td></tr>
+<tr><th id="474">474</th><td>  <i class="doc">/// Start an asynchronous wait on the timer.</i></td></tr>
+<tr><th id="475">475</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="476">476</th><td><i class="doc">   * This function may be used to initiate an asynchronous wait against the</i></td></tr>
+<tr><th id="477">477</th><td><i class="doc">   * timer. It always returns immediately.</i></td></tr>
+<tr><th id="478">478</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="479">479</th><td><i class="doc">   * For each call to async_wait(), the supplied handler will be called exactly</i></td></tr>
+<tr><th id="480">480</th><td><i class="doc">   * once. The handler will be called when:</i></td></tr>
+<tr><th id="481">481</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="482">482</th><td><i class="doc">   * <span class="command">@li</span> The timer has expired.</i></td></tr>
+<tr><th id="483">483</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="484">484</th><td><i class="doc">   * <span class="command">@li</span> The timer was cancelled, in which case the handler is passed the error</i></td></tr>
+<tr><th id="485">485</th><td><i class="doc">   * code boost::asio::error::operation_aborted.</i></td></tr>
+<tr><th id="486">486</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="487">487</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">handler</span> The handler to be called when the timer expires. Copies</i></td></tr>
+<tr><th id="488">488</th><td><i class="doc">   * will be made of the handler as required. The function signature of the</i></td></tr>
+<tr><th id="489">489</th><td><i class="doc">   * handler must be:</i></td></tr>
+<tr><th id="490">490</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> void handler(</span></i></td></tr>
+<tr><th id="491">491</th><td><i class="doc"><span class="verb"></span>   *<span class="verb">   const boost::system::error_code&amp; error // Result of operation.</span></i></td></tr>
+<tr><th id="492">492</th><td><i class="doc"><span class="verb"></span>   *<span class="verb"> ); @</span>endcode</i></td></tr>
+<tr><th id="493">493</th><td><i class="doc">   * Regardless of whether the asynchronous operation completes immediately or</i></td></tr>
+<tr><th id="494">494</th><td><i class="doc">   * not, the handler will not be invoked from within this function. Invocation</i></td></tr>
+<tr><th id="495">495</th><td><i class="doc">   * of the handler will be performed in a manner equivalent to using</i></td></tr>
+<tr><th id="496">496</th><td><i class="doc">   * boost::asio::io_service::post().</i></td></tr>
+<tr><th id="497">497</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="498">498</th><td>  <b>template</b> &lt;<b>typename</b> WaitHandler&gt;</td></tr>
+<tr><th id="499">499</th><td>  <a class="macro" href="async_result.hpp.html#91" title="typename ::boost::asio::async_result&lt; typename ::boost::asio::handler_type&lt;WaitHandler, void (boost::system::error_code)&gt;::type&gt;::type" data-ref="_M/BOOST_ASIO_INITFN_RESULT_TYPE">BOOST_ASIO_INITFN_RESULT_TYPE</a>(WaitHandler,</td></tr>
+<tr><th id="500">500</th><td>      <em>void</em> (boost::system::<a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>))</td></tr>
+<tr><th id="501">501</th><td>  <dfn class="decl def" id="_ZN5boost4asio20basic_deadline_timer10async_waitEOT_" title='boost::asio::basic_deadline_timer::async_wait' data-ref="_ZN5boost4asio20basic_deadline_timer10async_waitEOT_" >async_wait</dfn>(<a class="macro" href="detail/config.hpp.html#107" title="WaitHandler&amp;&amp;" data-ref="_M/BOOST_ASIO_MOVE_ARG">BOOST_ASIO_MOVE_ARG</a>(WaitHandler) <dfn class="local col1 decl" id="2351handler" title='handler' data-type='WaitHandler &amp;&amp;' data-ref="2351handler" >handler</dfn>)</td></tr>
+<tr><th id="502">502</th><td>  {</td></tr>
+<tr><th id="503">503</th><td>    <i>// If you get an error on the following line it means that your handler does</i></td></tr>
+<tr><th id="504">504</th><td><i>    // not meet the documented type requirements for a WaitHandler.</i></td></tr>
+<tr><th id="505">505</th><td>    <a class="macro" href="detail/handler_type_requirements.hpp.html#295" title="typedef typename handler_type&lt;WaitHandler, void(boost::system::error_code)&gt;::type asio_true_handler_type; static_assert(sizeof(boost::asio::detail::one_arg_handler_test( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;(), static_cast&lt;const boost::system::error_code*&gt;(0))) == 1, &quot;WaitHandler type requirements not met&quot;); typedef boost::asio::detail::handler_type_requirements&lt; sizeof( boost::asio::detail::argbyv( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;())) + sizeof( boost::asio::detail::lvref&lt; asio_true_handler_type&gt;()( boost::asio::detail::lvref&lt;const boost::system::error_code&gt;()), char(0))&gt;" data-ref="_M/BOOST_ASIO_WAIT_HANDLER_CHECK">BOOST_ASIO_WAIT_HANDLER_CHECK</a>(WaitHandler, handler) <dfn class="local col2 typedef" id="2352type_check" title='type_check' data-type='boost::asio::detail::handler_type_requirements&lt;sizeof (boost::asio::detail::argbyv(boost::asio::detail::clvref&lt;asio_true_handler_type&gt;())) + sizeof (boost::asio::detail::lvref&lt;asio_true_handler_type&gt;()(boost::asio::detail::lvref&lt;const boost::system::error_code&gt;()) , char(0))&gt;' data-ref="2352type_check" >type_check</dfn>;</td></tr>
+<tr><th id="506">506</th><td></td></tr>
+<tr><th id="507">507</th><td>    <b>return</b> <b>this</b>-&gt;service.async_wait(<b>this</b>-&gt;implementation,</td></tr>
+<tr><th id="508">508</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;WaitHandler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(WaitHandler)(<a class="local col1 ref" href="#2351handler" title='handler' data-ref="2351handler" >handler</a>));</td></tr>
+<tr><th id="509">509</th><td>  }</td></tr>
+<tr><th id="510">510</th><td>};</td></tr>
+<tr><th id="511">511</th><td></td></tr>
+<tr><th id="512">512</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="513">513</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="514">514</th><td></td></tr>
+<tr><th id="515">515</th><td><u>#include <a href="detail/pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="516">516</th><td></td></tr>
+<tr><th id="517">517</th><td><u>#<span data-ppcond="20">endif</span> // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)</u></td></tr>
+<tr><th id="518">518</th><td>       <i>// || defined(GENERATING_DOCUMENTATION)</i></td></tr>
+<tr><th id="519">519</th><td></td></tr>
+<tr><th id="520">520</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_BASIC_DEADLINE_TIMER_HPP</u></td></tr>
+<tr><th id="521">521</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

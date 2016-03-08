@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<title>CascDecompress.cpp [TrinityCore6.x/dep/CascLib/src/CascDecompress.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/CascDecompress.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>CascLib</a>/<a href='./'>src</a>/CascDecompress.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><i>/* CascDecompress.cpp                     Copyright (c) Ladislav Zezula 2014 */</i></td></tr>
+<tr><th id="3">3</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="4">4</th><td><i>/* Decompression functions                                                   */</i></td></tr>
+<tr><th id="5">5</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="6">6</th><td><i>/*   Date    Ver   Who  Comment                                              */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* --------  ----  ---  -------                                              */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* 02.05.14  1.00  Lad  The first version of CascDecompress.cpp              */</i></td></tr>
+<tr><th id="9">9</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#define <dfn class="macro" id="_M/__CASCLIB_SELF__" data-ref="_M/__CASCLIB_SELF__">__CASCLIB_SELF__</dfn></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="CascLib.h.html">"CascLib.h"</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="CascCommon.h.html">"CascCommon.h"</a></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="16">16</th><td><i>// Public functions</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><em>int</em> <dfn class="decl def" id="_Z14CascDecompressPhPjS_j" title='CascDecompress' data-ref="_Z14CascDecompressPhPjS_j" >CascDecompress</dfn>(<a class="typedef" href="CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col1 decl" id="1pbOutBuffer" title='pbOutBuffer' data-type='LPBYTE' data-ref="1pbOutBuffer" >pbOutBuffer</dfn>, <a class="typedef" href="CascPort.h.html#PDWORD" title='PDWORD' data-type='DWORD *' data-ref="PDWORD" >PDWORD</a> <dfn class="local col2 decl" id="2pcbOutBuffer" title='pcbOutBuffer' data-type='PDWORD' data-ref="2pcbOutBuffer" >pcbOutBuffer</dfn>, <a class="typedef" href="CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col3 decl" id="3pbInBuffer" title='pbInBuffer' data-type='LPBYTE' data-ref="3pbInBuffer" >pbInBuffer</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col4 decl" id="4cbInBuffer" title='cbInBuffer' data-type='DWORD' data-ref="4cbInBuffer" >cbInBuffer</dfn>)</td></tr>
+<tr><th id="19">19</th><td>{</td></tr>
+<tr><th id="20">20</th><td>    <a class="typedef" href="../../zlib/zlib.h.html#z_stream" title='z_stream' data-type='struct z_stream_s' data-ref="z_stream" >z_stream</a> <dfn class="local col5 decl" id="5z" title='z' data-type='z_stream' data-ref="5z" >z</dfn>;                        <i>// Stream information for zlib</i></td></tr>
+<tr><th id="21">21</th><td>    <em>int</em> <dfn class="local col6 decl" id="6nResult" title='nResult' data-type='int' data-ref="6nResult" >nResult</dfn>;</td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td>    <i>// Fill the stream structure for zlib</i></td></tr>
+<tr><th id="24">24</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::next_in" title='z_stream_s::next_in' data-ref="z_stream_s::next_in" id="z_stream_s::next_in" >next_in</a>   = <a class="local col3 ref" href="#3pbInBuffer" title='pbInBuffer' data-ref="3pbInBuffer" >pbInBuffer</a>;</td></tr>
+<tr><th id="25">25</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::avail_in" title='z_stream_s::avail_in' data-ref="z_stream_s::avail_in" id="z_stream_s::avail_in" >avail_in</a>  = <a class="local col4 ref" href="#4cbInBuffer" title='cbInBuffer' data-ref="4cbInBuffer" >cbInBuffer</a>;</td></tr>
+<tr><th id="26">26</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::total_in" title='z_stream_s::total_in' data-ref="z_stream_s::total_in" id="z_stream_s::total_in" >total_in</a>  = <a class="local col4 ref" href="#4cbInBuffer" title='cbInBuffer' data-ref="4cbInBuffer" >cbInBuffer</a>;</td></tr>
+<tr><th id="27">27</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::next_out" title='z_stream_s::next_out' data-ref="z_stream_s::next_out" id="z_stream_s::next_out" >next_out</a>  = <a class="local col1 ref" href="#1pbOutBuffer" title='pbOutBuffer' data-ref="1pbOutBuffer" >pbOutBuffer</a>;</td></tr>
+<tr><th id="28">28</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::avail_out" title='z_stream_s::avail_out' data-ref="z_stream_s::avail_out" id="z_stream_s::avail_out" >avail_out</a> = *<a class="local col2 ref" href="#2pcbOutBuffer" title='pcbOutBuffer' data-ref="2pcbOutBuffer" >pcbOutBuffer</a>;</td></tr>
+<tr><th id="29">29</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::total_out" title='z_stream_s::total_out' data-ref="z_stream_s::total_out" id="z_stream_s::total_out" >total_out</a> = <var>0</var>;</td></tr>
+<tr><th id="30">30</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::zalloc" title='z_stream_s::zalloc' data-ref="z_stream_s::zalloc" id="z_stream_s::zalloc" >zalloc</a>    = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="31">31</th><td>    <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::zfree" title='z_stream_s::zfree' data-ref="z_stream_s::zfree" id="z_stream_s::zfree" >zfree</a>     = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>    <i>// Initialize the decompression structure</i></td></tr>
+<tr><th id="34">34</th><td>    <b>if</b>((<a class="local col6 ref" href="#6nResult" title='nResult' data-ref="6nResult" >nResult</a> = <a class="macro" href="../../zlib/zlib.h.html#1649" title="inflateInit_((&amp;z), &quot;1.2.8&quot;, (int)sizeof(z_stream))" data-ref="_M/inflateInit">inflateInit</a>(&amp;<a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>)) == <a class="macro" href="../../zlib/zlib.h.html#173" title="0" data-ref="_M/Z_OK">Z_OK</a>)</td></tr>
+<tr><th id="35">35</th><td>    {</td></tr>
+<tr><th id="36">36</th><td>        <i>// Call zlib to decompress the data</i></td></tr>
+<tr><th id="37">37</th><td>        <a class="local col6 ref" href="#6nResult" title='nResult' data-ref="6nResult" >nResult</a> = <a class="ref" href="../../zlib/zlib.h.html#inflate" title='inflate' data-ref="inflate" id="inflate" >inflate</a>(&amp;<a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>, <a class="macro" href="../../zlib/zlib.h.html#164" title="0" data-ref="_M/Z_NO_FLUSH">Z_NO_FLUSH</a>);</td></tr>
+<tr><th id="38">38</th><td>        <a class="ref" href="../../zlib/zlib.h.html#inflateEnd" title='inflateEnd' data-ref="inflateEnd" id="inflateEnd" >inflateEnd</a>(&amp;<a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>);</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>        <i>// Give the size of the uncompressed data</i></td></tr>
+<tr><th id="41">41</th><td>        *<a class="local col2 ref" href="#2pcbOutBuffer" title='pcbOutBuffer' data-ref="2pcbOutBuffer" >pcbOutBuffer</a> = <a class="local col5 ref" href="#5z" title='z' data-ref="5z" >z</a>.<a class="ref" href="../../zlib/zlib.h.html#z_stream_s::total_out" title='z_stream_s::total_out' data-ref="z_stream_s::total_out" id="z_stream_s::total_out" >total_out</a>;</td></tr>
+<tr><th id="42">42</th><td>    }</td></tr>
+<tr><th id="43">43</th><td>    </td></tr>
+<tr><th id="44">44</th><td>    <i>// Return an error code</i></td></tr>
+<tr><th id="45">45</th><td>    <b>return</b> (<a class="local col6 ref" href="#6nResult" title='nResult' data-ref="6nResult" >nResult</a> == <a class="macro" href="../../zlib/zlib.h.html#173" title="0" data-ref="_M/Z_OK">Z_OK</a> || <a class="local col6 ref" href="#6nResult" title='nResult' data-ref="6nResult" >nResult</a> == <a class="macro" href="../../zlib/zlib.h.html#174" title="1" data-ref="_M/Z_STREAM_END">Z_STREAM_END</a>) ? <a class="macro" href="CascPort.h.html#204" title="0" data-ref="_M/ERROR_SUCCESS">ERROR_SUCCESS</a> : <a class="macro" href="CascPort.h.html#218" title="1004" data-ref="_M/ERROR_FILE_CORRUPT">ERROR_FILE_CORRUPT</a>;</td></tr>
+<tr><th id="46">46</th><td>}</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

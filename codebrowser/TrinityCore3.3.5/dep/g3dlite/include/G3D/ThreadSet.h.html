@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<title>ThreadSet.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/ThreadSet.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/ThreadSet.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/ThreadSet.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/G3D_ThreadSet_h">G3D_ThreadSet_h</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/G3D_ThreadSet_h" data-ref="_M/G3D_ThreadSet_h">G3D_ThreadSet_h</dfn></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="5">5</th><td><u>#include <a href="Array.h.html">"G3D/Array.h"</a></u></td></tr>
+<tr><th id="6">6</th><td><u>#include <a href="ReferenceCount.h.html">"G3D/ReferenceCount.h"</a></u></td></tr>
+<tr><th id="7">7</th><td><u>#include <a href="GMutex.h.html">"G3D/GMutex.h"</a></u></td></tr>
+<tr><th id="8">8</th><td><u>#include <a href="SpawnBehavior.h.html">"G3D/SpawnBehavior.h"</a></u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><b>class</b> <a class="type" href="GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" id="G3D::GThread" >GThread</a>;</td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><i class="doc">/** Manages a set of threads. All methods are threadsafe except for</i></td></tr>
+<tr><th id="15">15</th><td><i class="doc">    the iterator begin/end. </i></td></tr>
+<tr><th id="16">16</th><td><i class="doc"></i></td></tr>
+<tr><th id="17">17</th><td><i class="doc">   <span class="command"> @beta</span>*/</i></td></tr>
+<tr><th id="18">18</th><td><b>class</b> <dfn class="type def" id="G3D::ThreadSet" title='G3D::ThreadSet' data-ref="G3D::ThreadSet" >ThreadSet</dfn> : <b>public</b> <a class="type" href="ReferenceCount.h.html#G3D::ReferenceCountedObject" title='G3D::ReferenceCountedObject' data-ref="G3D::ReferenceCountedObject" >ReferenceCountedObject</a> {</td></tr>
+<tr><th id="19">19</th><td><b>public</b>:</td></tr>
+<tr><th id="20">20</th><td>    <i class="doc">/** Intended to allow future use with a template parameter.*/</i></td></tr>
+<tr><th id="21">21</th><td>    <b>typedef</b> <a class="type" href="GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>                                        <dfn class="typedef" id="G3D::ThreadSet::Thread" title='G3D::ThreadSet::Thread' data-type='G3D::GThread' data-ref="G3D::ThreadSet::Thread" >Thread</dfn>;</td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td>    <b>typedef</b> <a class="type" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#std::tr1::shared_ptr" title='std::tr1::shared_ptr' data-ref="std::tr1::shared_ptr" >shared_ptr</a>&lt;<a class="typedef" href="#G3D::ThreadSet::Thread" title='G3D::ThreadSet::Thread' data-type='G3D::GThread' data-ref="G3D::ThreadSet::Thread" >Thread</a>&gt;                <dfn class="typedef" id="G3D::ThreadSet::ThreadRef" title='G3D::ThreadSet::ThreadRef' data-type='shared_ptr&lt;Thread&gt;' data-ref="G3D::ThreadSet::ThreadRef" >ThreadRef</dfn>;</td></tr>
+<tr><th id="24">24</th><td>    <b>typedef</b> <a class="type" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#std::tr1::shared_ptr" title='std::tr1::shared_ptr' data-ref="std::tr1::shared_ptr" >shared_ptr</a>&lt;<a class="type" href="#G3D::ThreadSet" title='G3D::ThreadSet' data-ref="G3D::ThreadSet" >ThreadSet</a>&gt;             <dfn class="typedef" id="G3D::ThreadSet::Ref" title='G3D::ThreadSet::Ref' data-type='shared_ptr&lt;G3D::ThreadSet&gt;' data-ref="G3D::ThreadSet::Ref" >Ref</dfn>;</td></tr>
+<tr><th id="25">25</th><td>    <b>typedef</b> <a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<a class="typedef" href="#G3D::ThreadSet::ThreadRef" title='G3D::ThreadSet::ThreadRef' data-type='shared_ptr&lt;Thread&gt;' data-ref="G3D::ThreadSet::ThreadRef" >ThreadRef</a>&gt;::<a class="typedef" href="Array.h.html#G3D::Array{std::tr1::shared_ptr{G3D::GThread},10}::Iterator" title='G3D::Array&lt;std::tr1::shared_ptr&lt;G3D::GThread&gt;, 10&gt;::Iterator' data-type='std::tr1::shared_ptr&lt;G3D::GThread&gt; *' data-ref="G3D::Array{std::tr1::shared_ptr{G3D::GThread},10}::Iterator" >Iterator</a>                     <dfn class="typedef" id="G3D::ThreadSet::Iterator" title='G3D::ThreadSet::Iterator' data-type='Array&lt;ThreadRef&gt;::Iterator' data-ref="G3D::ThreadSet::Iterator" >Iterator</dfn>;</td></tr>
+<tr><th id="26">26</th><td>    <b>typedef</b> <a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<a class="typedef" href="#G3D::ThreadSet::ThreadRef" title='G3D::ThreadSet::ThreadRef' data-type='shared_ptr&lt;Thread&gt;' data-ref="G3D::ThreadSet::ThreadRef" >ThreadRef</a>&gt;::<a class="typedef" href="Array.h.html#G3D::Array{std::tr1::shared_ptr{G3D::GThread},10}::ConstIterator" title='G3D::Array&lt;std::tr1::shared_ptr&lt;G3D::GThread&gt;, 10&gt;::ConstIterator' data-type='const std::tr1::shared_ptr&lt;G3D::GThread&gt; *' data-ref="G3D::Array{std::tr1::shared_ptr{G3D::GThread},10}::ConstIterator" >ConstIterator</a>                <dfn class="typedef" id="G3D::ThreadSet::ConstIterator" title='G3D::ThreadSet::ConstIterator' data-type='Array&lt;ThreadRef&gt;::ConstIterator' data-ref="G3D::ThreadSet::ConstIterator" >ConstIterator</dfn>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>private</b>:</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td>    <i class="doc">/** Protects m_thread */</i></td></tr>
+<tr><th id="31">31</th><td>    <a class="type" href="GMutex.h.html#G3D::GMutex" title='G3D::GMutex' data-ref="G3D::GMutex" >GMutex</a>                <dfn class="decl" id="G3D::ThreadSet::m_lock" title='G3D::ThreadSet::m_lock' data-ref="G3D::ThreadSet::m_lock" >m_lock</dfn>;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>    <i class="doc">/** Threads in the set */</i></td></tr>
+<tr><th id="34">34</th><td>    <a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<a class="typedef" href="#G3D::ThreadSet::ThreadRef" title='G3D::ThreadSet::ThreadRef' data-type='shared_ptr&lt;Thread&gt;' data-ref="G3D::ThreadSet::ThreadRef" >ThreadRef</a>&gt;      <dfn class="decl" id="G3D::ThreadSet::m_thread" title='G3D::ThreadSet::m_thread' data-ref="G3D::ThreadSet::m_thread" >m_thread</dfn>;</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><b>public</b>:</td></tr>
+<tr><th id="37">37</th><td>    </td></tr>
+<tr><th id="38">38</th><td>    <i class="doc">/** Total number of threads (some of which may be completed). */</i></td></tr>
+<tr><th id="39">39</th><td>    <em>int</em> <dfn class="decl" id="_ZNK3G3D9ThreadSet4sizeEv" title='G3D::ThreadSet::size' data-ref="_ZNK3G3D9ThreadSet4sizeEv" >size</dfn>() <em>const</em>;</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <i class="doc">/** Number of threads that have been started */</i></td></tr>
+<tr><th id="42">42</th><td>    <em>int</em> <dfn class="decl" id="_ZNK3G3D9ThreadSet10numStartedEv" title='G3D::ThreadSet::numStarted' data-ref="_ZNK3G3D9ThreadSet10numStartedEv" >numStarted</dfn>() <em>const</em>;</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>    <i class="doc">/** Start all threads that are not currently started.</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"></i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">lastThreadBehavior</span> If USE_CURRENT_THREAD, takes the</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc">        last unstarted thread and executes it manually on the current</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc">        thread.  This helps to take full advantage of the machine when</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc">        running a large number of jobs and avoids the overhead of a</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc">        thread start for single-thread groups.  Note that this forces</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">        start() to block until that thread is complete.</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">      */</i></td></tr>
+<tr><th id="53">53</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D9ThreadSet5startENS_13SpawnBehaviorE" title='G3D::ThreadSet::start' data-ref="_ZNK3G3D9ThreadSet5startENS_13SpawnBehaviorE" >start</dfn>(<a class="type" href="SpawnBehavior.h.html#G3D::SpawnBehavior" title='G3D::SpawnBehavior' data-ref="G3D::SpawnBehavior" >SpawnBehavior</a> <dfn class="local col1 decl" id="1lastThreadBehavior" title='lastThreadBehavior' data-type='G3D::SpawnBehavior' data-ref="1lastThreadBehavior" >lastThreadBehavior</dfn> = <a class="enum" href="SpawnBehavior.h.html#G3D::SpawnBehavior::USE_NEW_THREAD" title='G3D::SpawnBehavior::USE_NEW_THREAD' data-ref="G3D::SpawnBehavior::USE_NEW_THREAD" >USE_NEW_THREAD</a>) <em>const</em>;</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <i class="doc">/** Terminate all threads that are currently started */</i></td></tr>
+<tr><th id="56">56</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D9ThreadSet9terminateEv" title='G3D::ThreadSet::terminate' data-ref="_ZNK3G3D9ThreadSet9terminateEv" >terminate</dfn>() <em>const</em>;</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <i class="doc">/** Waits until all started threads have completed. */</i></td></tr>
+<tr><th id="59">59</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D9ThreadSet17waitForCompletionEv" title='G3D::ThreadSet::waitForCompletion' data-ref="_ZNK3G3D9ThreadSet17waitForCompletionEv" >waitForCompletion</dfn>() <em>const</em>;</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <i class="doc">/** Remove all (not stopping them) */</i></td></tr>
+<tr><th id="62">62</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D9ThreadSet5clearEv" title='G3D::ThreadSet::clear' data-ref="_ZN3G3D9ThreadSet5clearEv" >clear</dfn>();</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>    <i class="doc">/** Removes completed threads and returns the new size.*/</i></td></tr>
+<tr><th id="65">65</th><td>    <em>int</em> <dfn class="decl" id="_ZN3G3D9ThreadSet15removeCompletedEv" title='G3D::ThreadSet::removeCompleted' data-ref="_ZN3G3D9ThreadSet15removeCompletedEv" >removeCompleted</dfn>();</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>    <i class="doc">/** Inserts a new thread, if it is not already present, and </i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">        returns the new number of threads.*/</i></td></tr>
+<tr><th id="69">69</th><td>    <em>int</em> <dfn class="decl" id="_ZN3G3D9ThreadSet6insertERKNSt3tr110shared_ptrINS_7GThreadEEE" title='G3D::ThreadSet::insert' data-ref="_ZN3G3D9ThreadSet6insertERKNSt3tr110shared_ptrINS_7GThreadEEE" >insert</dfn>(<em>const</em> <a class="typedef" href="#G3D::ThreadSet::ThreadRef" title='G3D::ThreadSet::ThreadRef' data-type='shared_ptr&lt;Thread&gt;' data-ref="G3D::ThreadSet::ThreadRef" >ThreadRef</a>&amp; <dfn class="local col2 decl" id="2t" title='t' data-type='const ThreadRef &amp;' data-ref="2t" >t</dfn>);</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>    <i class="doc">/** Removes a thread. Returns true if the thread was present and</i></td></tr>
+<tr><th id="72">72</th><td><i class="doc">        removed. */</i></td></tr>
+<tr><th id="73">73</th><td>    <em>bool</em> <dfn class="decl" id="_ZN3G3D9ThreadSet6removeERKNSt3tr110shared_ptrINS_7GThreadEEE" title='G3D::ThreadSet::remove' data-ref="_ZN3G3D9ThreadSet6removeERKNSt3tr110shared_ptrINS_7GThreadEEE" >remove</dfn>(<em>const</em> <a class="typedef" href="#G3D::ThreadSet::ThreadRef" title='G3D::ThreadSet::ThreadRef' data-type='shared_ptr&lt;Thread&gt;' data-ref="G3D::ThreadSet::ThreadRef" >ThreadRef</a>&amp; <dfn class="local col3 decl" id="3t" title='t' data-type='const ThreadRef &amp;' data-ref="3t" >t</dfn>);</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>    <em>bool</em> <dfn class="decl" id="_ZNK3G3D9ThreadSet8containsERKNSt3tr110shared_ptrINS_7GThreadEEE" title='G3D::ThreadSet::contains' data-ref="_ZNK3G3D9ThreadSet8containsERKNSt3tr110shared_ptrINS_7GThreadEEE" >contains</dfn>(<em>const</em> <a class="typedef" href="#G3D::ThreadSet::ThreadRef" title='G3D::ThreadSet::ThreadRef' data-type='shared_ptr&lt;Thread&gt;' data-ref="G3D::ThreadSet::ThreadRef" >ThreadRef</a>&amp; <dfn class="local col4 decl" id="4t" title='t' data-type='const ThreadRef &amp;' data-ref="4t" >t</dfn>) <em>const</em>;</td></tr>
+<tr><th id="76">76</th><td>   </td></tr>
+<tr><th id="77">77</th><td>    <i class="doc">/** It is an error to mutate the ThreadSet while iterating through it. */</i></td></tr>
+<tr><th id="78">78</th><td>    <a class="typedef" href="#G3D::ThreadSet::Iterator" title='G3D::ThreadSet::Iterator' data-type='Array&lt;ThreadRef&gt;::Iterator' data-ref="G3D::ThreadSet::Iterator" >Iterator</a> <dfn class="decl" id="_ZN3G3D9ThreadSet5beginEv" title='G3D::ThreadSet::begin' data-ref="_ZN3G3D9ThreadSet5beginEv" >begin</dfn>();</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <a class="typedef" href="#G3D::ThreadSet::Iterator" title='G3D::ThreadSet::Iterator' data-type='Array&lt;ThreadRef&gt;::Iterator' data-ref="G3D::ThreadSet::Iterator" >Iterator</a> <dfn class="decl" id="_ZN3G3D9ThreadSet3endEv" title='G3D::ThreadSet::end' data-ref="_ZN3G3D9ThreadSet3endEv" >end</dfn>();</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>    <a class="typedef" href="#G3D::ThreadSet::ConstIterator" title='G3D::ThreadSet::ConstIterator' data-type='Array&lt;ThreadRef&gt;::ConstIterator' data-ref="G3D::ThreadSet::ConstIterator" >ConstIterator</a> <dfn class="decl" id="_ZNK3G3D9ThreadSet5beginEv" title='G3D::ThreadSet::begin' data-ref="_ZNK3G3D9ThreadSet5beginEv" >begin</dfn>() <em>const</em>;</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>    <a class="typedef" href="#G3D::ThreadSet::ConstIterator" title='G3D::ThreadSet::ConstIterator' data-type='Array&lt;ThreadRef&gt;::ConstIterator' data-ref="G3D::ThreadSet::ConstIterator" >ConstIterator</a> <dfn class="decl" id="_ZNK3G3D9ThreadSet3endEv" title='G3D::ThreadSet::end' data-ref="_ZNK3G3D9ThreadSet3endEv" >end</dfn>() <em>const</em>;</td></tr>
+<tr><th id="85">85</th><td>};</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>} <i>// namespace G3D</i></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td><u>#<span data-ppcond="1">endif</span></u></td></tr>
+<tr><th id="91">91</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/GThread.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/GThread.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,29 @@
+<def f='include/boost/asio/basic_socket.hpp' l='690' type='boost::system::error_code boost::asio::basic_socket::connect(const endpoint_type &amp; peer_endpoint, boost::system::error_code &amp; ec)'/>
+<use f='TrinityCore6.x/src/tools/connection_patcher/Helper.cpp' l='68' u='c' c='_ZN18Connection_Patcher6Helper12DownloadFileERKSsiS2_RSo'/>
+<doc f='include/boost/asio/basic_socket.hpp' l='663'>/**
+   * This function is used to connect a socket to the specified remote endpoint.
+   * The function call will block until the connection is successfully made or
+   * an error occurs.
+   *
+   * The socket is automatically opened if it is not already open. If the
+   * connect fails, and the socket was automatically opened, the socket is
+   * not returned to the closed state.
+   *
+   * @param peer_endpoint The remote endpoint to which the socket will be
+   * connected.
+   *
+   * @param ec Set to indicate what error occurred, if any.
+   *
+   * @par Example
+   * @code
+   * boost::asio::ip::tcp::socket socket(io_service);
+   * boost::asio::ip::tcp::endpoint endpoint(
+   *     boost::asio::ip::address::from_string(&quot;1.2.3.4&quot;), 12345);
+   * boost::system::error_code ec;
+   * socket.connect(endpoint, ec);
+   * if (ec)
+   * {
+   *   // An error occurred.
+   * }
+   * @endcode
+   */</doc>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<title>debugPrintf.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/debugPrintf.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/debugPrintf.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/debugPrintf.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> @file</span> debugPrintf.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"><span class="command"> @maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> @created</span> 2001-08-26</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> @edited</span>  2007-07-20</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"></i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"> Copyright 2000-2007, Morgan McGuire.</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"> All rights reserved.</i></td></tr>
+<tr><th id="11">11</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">ifndef</span> <span class="macro" data-ref="_M/G3D_DEBUGPRINTF_H">G3D_DEBUGPRINTF_H</span></u></td></tr>
+<tr><th id="14">14</th><td><u>#define <dfn class="macro" id="_M/G3D_DEBUGPRINTF_H" data-ref="_M/G3D_DEBUGPRINTF_H">G3D_DEBUGPRINTF_H</dfn></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../../../../../include/stdio.h.html">&lt;stdio.h&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../../../../include/c++/4.9/cstdarg.html">&lt;cstdarg&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="format.h.html">"G3D/format.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>typedef</b> <em>void</em> (*<dfn class="typedef" id="G3D::ConsolePrintHook" title='G3D::ConsolePrintHook' data-type='void (*)(const std::string &amp;)' data-ref="G3D::ConsolePrintHook" >ConsolePrintHook</dfn>)(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;);</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>namespace</b> <span class="namespace">_internal</span> {</td></tr>
+<tr><th id="27">27</th><td>    <b>extern</b> <a class="typedef" href="#G3D::ConsolePrintHook" title='G3D::ConsolePrintHook' data-type='void (*)(const std::string &amp;)' data-ref="G3D::ConsolePrintHook" >ConsolePrintHook</a> <dfn class="decl" id="_ZN3G3D9_internal17_consolePrintHookE" title='G3D::_internal::_consolePrintHook' data-ref="_ZN3G3D9_internal17_consolePrintHookE" >_consolePrintHook</dfn>;</td></tr>
+<tr><th id="28">28</th><td>}</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i class="doc">/** Called by consolePrintf after the log and terminal have been written to.</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc"> Used by GConsole to intercept printing routines.*/</i></td></tr>
+<tr><th id="32">32</th><td><em>void</em> <dfn class="decl" id="_ZN3G3D19setConsolePrintHookEPFvRKSsE" title='G3D::setConsolePrintHook' data-ref="_ZN3G3D19setConsolePrintHookEPFvRKSsE" >setConsolePrintHook</dfn>(<a class="typedef" href="#G3D::ConsolePrintHook" title='G3D::ConsolePrintHook' data-type='void (*)(const std::string &amp;)' data-ref="G3D::ConsolePrintHook" >ConsolePrintHook</a> <dfn class="local col5 decl" id="115h" title='h' data-type='ConsolePrintHook' data-ref="115h" >h</dfn>);</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><a class="typedef" href="#G3D::ConsolePrintHook" title='G3D::ConsolePrintHook' data-type='void (*)(const std::string &amp;)' data-ref="G3D::ConsolePrintHook" >ConsolePrintHook</a> <dfn class="decl" id="_ZN3G3D16consolePrintHookEv" title='G3D::consolePrintHook' data-ref="_ZN3G3D16consolePrintHookEv" >consolePrintHook</dfn>();</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc">   Sends output to the log and to the last GConsole instantiated.</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"></i></td></tr>
+<tr><th id="39">39</th><td><i class="doc">   Guarantees that the output has been flushed by the time the routine</i></td></tr>
+<tr><th id="40">40</th><td><i class="doc">   returns.</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc">   <span class="command">@sa</span> G3D::logPrintf, G3D::screenPrintf</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc">   <span class="command">@return</span> The string that was printed</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="44">44</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <a class="macro" href="platform.h.html#279" title="" data-ref="_M/__cdecl"><b>__cdecl</b></a> <dfn class="decl" id="_ZN3G3D13consolePrintfEPKcz" title='G3D::consolePrintf' data-ref="_ZN3G3D13consolePrintfEPKcz" >consolePrintf</dfn>(<em>const</em> <em>char</em>* <dfn class="local col6 decl" id="116fmt" title='fmt' data-type='const char *' data-ref="116fmt" >fmt</dfn> ...) <a class="macro" href="platform.h.html#297" title="__attribute__((__format__(__printf__, 1, 2)))" data-ref="_M/G3D_CHECK_PRINTF_ARGS">G3D_CHECK_PRINTF_ARGS</a>;</td></tr>
+<tr><th id="45">45</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D12consolePrintERKSs" title='G3D::consolePrint' data-ref="_ZN3G3D12consolePrintERKSs" >consolePrint</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;);</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc">   Under visual studio, appears in the VS debug pane.</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc">   On unix-based operating systems the output is sent to stderr.</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"></i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">   Also sends output to the console (G3D::consolePrintf) if there is a consolePrintHook,</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">   and log (G3D::logPrintf), and flushes before returning.   </i></td></tr>
+<tr><th id="53">53</th><td><i class="doc"></i></td></tr>
+<tr><th id="54">54</th><td><i class="doc">   <span class="command">@return</span> The string that was printed</i></td></tr>
+<tr><th id="55">55</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="56">56</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <a class="macro" href="platform.h.html#279" title="" data-ref="_M/__cdecl"><b>__cdecl</b></a> <dfn class="decl" id="_ZN3G3D11debugPrintfEPKcz" title='G3D::debugPrintf' data-ref="_ZN3G3D11debugPrintfEPKcz" >debugPrintf</dfn>(<em>const</em> <em>char</em>* <dfn class="local col7 decl" id="117fmt" title='fmt' data-type='const char *' data-ref="117fmt" >fmt</dfn> ...) <a class="macro" href="platform.h.html#297" title="__attribute__((__format__(__printf__, 1, 2)))" data-ref="_M/G3D_CHECK_PRINTF_ARGS">G3D_CHECK_PRINTF_ARGS</a>;</td></tr>
+<tr><th id="57">57</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D10debugPrintERKSs" title='G3D::debugPrint' data-ref="_ZN3G3D10debugPrintERKSs" >debugPrint</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;);</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>} <i>// namespace G3D</i></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<title>SHA256.cpp [TrinityCore6.x/src/common/Cryptography/SHA256.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/common/Cryptography/SHA256.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Cryptography</a>/SHA256.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="SHA256.h.html">"SHA256.h"</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="BigNumber.h.html">"BigNumber.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../../../include/c++/4.9/cstring.html">&lt;cstring&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include &lt;stdarg.h&gt;</u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><a class="type" href="SHA256.h.html#SHA256Hash" title='SHA256Hash' data-ref="SHA256Hash" >SHA256Hash</a>::<dfn class="decl def" id="_ZN10SHA256HashC1Ev" title='SHA256Hash::SHA256Hash' data-ref="_ZN10SHA256HashC1Ev" >SHA256Hash</dfn>()</td></tr>
+<tr><th id="24">24</th><td>{</td></tr>
+<tr><th id="25">25</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA256_Init" title='SHA256_Init' data-ref="SHA256_Init" id="SHA256_Init" >SHA256_Init</a>(&amp;<a class="member" href="SHA256.h.html#SHA256Hash::mC" title='SHA256Hash::mC' data-ref="SHA256Hash::mC" id="SHA256Hash::mC" >mC</a>);</td></tr>
+<tr><th id="26">26</th><td>    <a class="ref" href="../../../../include/string.h.html#memset" title='memset' data-ref="memset" id="memset" >memset</a>(<a class="member" href="SHA256.h.html#SHA256Hash::mDigest" title='SHA256Hash::mDigest' data-ref="SHA256Hash::mDigest" id="SHA256Hash::mDigest" >mDigest</a>, <var>0</var>, <a class="macro" href="../../../../include/openssl/sha.h.html#134" title="32" data-ref="_M/SHA256_DIGEST_LENGTH">SHA256_DIGEST_LENGTH</a> * <b>sizeof</b>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>));</td></tr>
+<tr><th id="27">27</th><td>}</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><a class="type" href="SHA256.h.html#SHA256Hash" title='SHA256Hash' data-ref="SHA256Hash" >SHA256Hash</a>::<dfn class="decl def" id="_ZN10SHA256HashD1Ev" title='SHA256Hash::~SHA256Hash' data-ref="_ZN10SHA256HashD1Ev" >~SHA256Hash</dfn>()</td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA256_Init" title='SHA256_Init' data-ref="SHA256_Init" id="SHA256_Init" >SHA256_Init</a>(&amp;<a class="member" href="SHA256.h.html#SHA256Hash::mC" title='SHA256Hash::mC' data-ref="SHA256Hash::mC" id="SHA256Hash::mC" >mC</a>);</td></tr>
+<tr><th id="32">32</th><td>}</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><em>void</em> <a class="type" href="SHA256.h.html#SHA256Hash" title='SHA256Hash' data-ref="SHA256Hash" >SHA256Hash</a>::<dfn class="decl def" id="_ZN10SHA256Hash10UpdateDataEPKhi" title='SHA256Hash::UpdateData' data-ref="_ZN10SHA256Hash10UpdateDataEPKhi" >UpdateData</dfn>(<em>const</em> <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col5 decl" id="5dta" title='dta' data-type='const uint8 *' data-ref="5dta" >dta</dfn>, <em>int</em> <dfn class="local col6 decl" id="6len" title='len' data-type='int' data-ref="6len" >len</dfn>)</td></tr>
+<tr><th id="35">35</th><td>{</td></tr>
+<tr><th id="36">36</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA256_Update" title='SHA256_Update' data-ref="SHA256_Update" id="SHA256_Update" >SHA256_Update</a>(&amp;<a class="member" href="SHA256.h.html#SHA256Hash::mC" title='SHA256Hash::mC' data-ref="SHA256Hash::mC" id="SHA256Hash::mC" >mC</a>, <a class="local col5 ref" href="#5dta" title='dta' data-ref="5dta" >dta</a>, <a class="local col6 ref" href="#6len" title='len' data-ref="6len" >len</a>);</td></tr>
+<tr><th id="37">37</th><td>}</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><em>void</em> <a class="type" href="SHA256.h.html#SHA256Hash" title='SHA256Hash' data-ref="SHA256Hash" >SHA256Hash</a>::<dfn class="decl def" id="_ZN10SHA256Hash10UpdateDataERKSs" title='SHA256Hash::UpdateData' data-ref="_ZN10SHA256Hash10UpdateDataERKSs" >UpdateData</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> &amp;<dfn class="local col7 decl" id="7str" title='str' data-type='const std::string &amp;' data-ref="7str" >str</dfn>)</td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <a class="member" href="#_ZN10SHA256Hash10UpdateDataEPKhi" title='SHA256Hash::UpdateData' data-ref="_ZN10SHA256Hash10UpdateDataEPKhi" >UpdateData</a>((<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <em>const</em>*)<a class="local col7 ref" href="#7str" title='str' data-ref="7str" >str</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col7 ref" href="#7str" title='str' data-ref="7str" >str</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string6lengthEv" title='std::basic_string::length' data-ref="_ZNKSt12basic_string6lengthEv" id="_ZNKSt12basic_string6lengthEv" >length</a>());</td></tr>
+<tr><th id="42">42</th><td>}</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><em>void</em> <a class="type" href="SHA256.h.html#SHA256Hash" title='SHA256Hash' data-ref="SHA256Hash" >SHA256Hash</a>::<dfn class="decl def" id="_ZN10SHA256Hash16UpdateBigNumbersEP9BigNumberz" title='SHA256Hash::UpdateBigNumbers' data-ref="_ZN10SHA256Hash16UpdateBigNumbersEP9BigNumberz" >UpdateBigNumbers</dfn>(<a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col8 decl" id="8bn0" title='bn0' data-type='BigNumber *' data-ref="8bn0" >bn0</dfn>, ...)</td></tr>
+<tr><th id="45">45</th><td>{</td></tr>
+<tr><th id="46">46</th><td>    <span class='typedef' title='va_list' data-type='__gnuc_va_list' data-ref="va_list" >va_list</span> <dfn class="local col9 decl" id="9v" title='v' data-type='va_list' data-ref="9v" >v</dfn>;</td></tr>
+<tr><th id="47">47</th><td>    <a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col0 decl" id="10bn" title='bn' data-type='BigNumber *' data-ref="10bn" >bn</dfn>;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <span class="macro" title="__builtin_va_start(v, bn0)" data-ref="_M/va_start">va_start</span>(<a class="local col9 ref" href="#9v" title='v' data-ref="9v" >v</a>, <a class="local col8 ref" href="#8bn0" title='bn0' data-ref="8bn0" >bn0</a>);</td></tr>
+<tr><th id="50">50</th><td>    <a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a> = <a class="local col8 ref" href="#8bn0" title='bn0' data-ref="8bn0" >bn0</a>;</td></tr>
+<tr><th id="51">51</th><td>    <b>while</b> (<a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a>)</td></tr>
+<tr><th id="52">52</th><td>    {</td></tr>
+<tr><th id="53">53</th><td>        <a class="member" href="#_ZN10SHA256Hash10UpdateDataEPKhi" title='SHA256Hash::UpdateData' data-ref="_ZN10SHA256Hash10UpdateDataEPKhi" >UpdateData</a>(<a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a>-&gt;<a class="ref" href="BigNumber.h.html#_ZN9BigNumber11AsByteArrayEib" title='BigNumber::AsByteArray' data-ref="_ZN9BigNumber11AsByteArrayEib" id="_ZN9BigNumber11AsByteArrayEib" >AsByteArray</a>().<a class="ref" href="../../../../include/c++/4.9/bits/unique_ptr.h.html#_ZNKSt10unique_ptrIA_T_T0_E3getEv" title='std::unique_ptr&lt;type-parameter-0-0 [], type-parameter-0-1&gt;::get' data-ref="_ZNKSt10unique_ptrIA_T_T0_E3getEv" id="_ZNKSt10unique_ptrIA_T_T0_E3getEv" >get</a>(), <a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a>-&gt;<a class="ref" href="BigNumber.h.html#_ZN9BigNumber11GetNumBytesEv" title='BigNumber::GetNumBytes' data-ref="_ZN9BigNumber11GetNumBytesEv" id="_ZN9BigNumber11GetNumBytesEv" >GetNumBytes</a>());</td></tr>
+<tr><th id="54">54</th><td>        <a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a> = <span class="macro" title="__builtin_va_arg(v, BigNumber*)" data-ref="_M/va_arg">va_arg</span>(<a class="local col9 ref" href="#9v" title='v' data-ref="9v" >v</a>, <a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>*);</td></tr>
+<tr><th id="55">55</th><td>    }</td></tr>
+<tr><th id="56">56</th><td>    <span class="macro" title="__builtin_va_end(v)" data-ref="_M/va_end">va_end</span>(<a class="local col9 ref" href="#9v" title='v' data-ref="9v" >v</a>);</td></tr>
+<tr><th id="57">57</th><td>}</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><em>void</em> <a class="type" href="SHA256.h.html#SHA256Hash" title='SHA256Hash' data-ref="SHA256Hash" >SHA256Hash</a>::<dfn class="decl def" id="_ZN10SHA256Hash10InitializeEv" title='SHA256Hash::Initialize' data-ref="_ZN10SHA256Hash10InitializeEv" >Initialize</dfn>()</td></tr>
+<tr><th id="60">60</th><td>{</td></tr>
+<tr><th id="61">61</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA256_Init" title='SHA256_Init' data-ref="SHA256_Init" id="SHA256_Init" >SHA256_Init</a>(&amp;<a class="member" href="SHA256.h.html#SHA256Hash::mC" title='SHA256Hash::mC' data-ref="SHA256Hash::mC" id="SHA256Hash::mC" >mC</a>);</td></tr>
+<tr><th id="62">62</th><td>}</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><em>void</em> <a class="type" href="SHA256.h.html#SHA256Hash" title='SHA256Hash' data-ref="SHA256Hash" >SHA256Hash</a>::<dfn class="decl def" id="_ZN10SHA256Hash8FinalizeEv" title='SHA256Hash::Finalize' data-ref="_ZN10SHA256Hash8FinalizeEv" >Finalize</dfn>(<em>void</em>)</td></tr>
+<tr><th id="65">65</th><td>{</td></tr>
+<tr><th id="66">66</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA256_Final" title='SHA256_Final' data-ref="SHA256_Final" id="SHA256_Final" >SHA256_Final</a>(<a class="member" href="SHA256.h.html#SHA256Hash::mDigest" title='SHA256Hash::mDigest' data-ref="SHA256Hash::mDigest" id="SHA256Hash::mDigest" >mDigest</a>, &amp;<a class="member" href="SHA256.h.html#SHA256Hash::mC" title='SHA256Hash::mC' data-ref="SHA256Hash::mC" id="SHA256Hash::mC" >mC</a>);</td></tr>
+<tr><th id="67">67</th><td>}</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

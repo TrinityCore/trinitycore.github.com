@@ -1,0 +1,23 @@
+<dec f='TrinityCore6.x/dep/CascLib/src/common/FileStream.h' l='221' type='TFileStream * FileStream_OpenFile(const TCHAR * szFileName, DWORD dwStreamFlags)'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascFiles.cpp' l='923' u='c' c='_Z18CheckGameDirectoryP13_TCascStoragePc'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascOpenStorage.cpp' l='505' u='c' c='_ZL14LoadKeyMappingP19_CASC_MAPPING_TABLEj'/>
+<use f='TrinityCore6.x/dep/CascLib/src/CascReadFile.cpp' l='49' u='c' c='_ZL22EnsureDataStreamIsOpenP10_TCascFile'/>
+<use f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='1010' u='c' c='_ZL18AllocateFileStreamPKcmj'/>
+<def f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='2384' type='TFileStream * FileStream_OpenFile(const TCHAR * szFileName, DWORD dwStreamFlags)'/>
+<doc f='TrinityCore6.x/dep/CascLib/src/common/FileStream.cpp' l='2367'>/**
+ * This function opens an existing file for read or read-write access
+ * - If the current platform supports file sharing,
+ *   the file must be open for read sharing (i.e. another application
+ *   can open the file for read, but not for write)
+ * - If the file does not exist, the function must return NULL
+ * - If the file exists but cannot be open, then function must return NULL
+ * - The parameters of the function must be validate by the caller
+ * - The function must initialize all stream function pointers in TFileStream
+ * - If the function fails from any reason, it must close all handles
+ *   and free all memory that has been allocated in the process of stream creation,
+ *   including the TFileStream structure itself
+ *
+ * \a szFileName Name of the file to open
+ * \a dwStreamFlags specifies the provider and base storage type
+ */</doc>
+<use f='TrinityCore6.x/dep/CascLib/src/common/ListFile.cpp' l='59' u='c' c='_Z21ListFile_OpenExternalPKc'/>

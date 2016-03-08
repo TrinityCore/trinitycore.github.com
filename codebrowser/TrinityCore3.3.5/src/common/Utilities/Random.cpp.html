@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<title>Random.cpp [TrinityCore3.3.5/src/common/Utilities/Random.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Utilities/Random.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Utilities</a>/Random.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2015 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="Random.h.html">"Random.h"</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../Debugging/Errors.h.html">"Errors.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../dep/SFMT/SFMT.h.html">"SFMT.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../include/boost/thread/tss.hpp.html">&lt;boost/thread/tss.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><em>static</em> <span class="namespace">boost::</span><a class="type" href="../../../dep/SFMT/SFMT.h.html#boost::thread_specific_ptr" title='boost::thread_specific_ptr' data-ref="boost::thread_specific_ptr" >thread_specific_ptr</a>&lt;<a class="type" href="../../../dep/SFMT/SFMT.h.html#SFMTRand" title='SFMTRand' data-ref="SFMTRand" >SFMTRand</a>&gt; <dfn class="tu decl def" id="_ZL8sfmtRand" title='sfmtRand' data-type='boost::thread_specific_ptr&lt;SFMTRand&gt;' data-ref="_ZL8sfmtRand" >sfmtRand</dfn>;</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><em>static</em> <a class="type" href="../../../dep/SFMT/SFMT.h.html#SFMTRand" title='SFMTRand' data-ref="SFMTRand" >SFMTRand</a>* <dfn class="tu decl def" id="_ZL6GetRngv" title='GetRng' data-type='SFMTRand * GetRng()' data-ref="_ZL6GetRngv" >GetRng</dfn>()</td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td>    <a class="type" href="../../../dep/SFMT/SFMT.h.html#SFMTRand" title='SFMTRand' data-ref="SFMTRand" >SFMTRand</a>* <dfn class="local col4 decl" id="264rand" title='rand' data-type='SFMTRand *' data-ref="264rand" >rand</dfn> = <a class="tu ref" href="#_ZL8sfmtRand" title='sfmtRand' data-use='m' data-ref="_ZL8sfmtRand" >sfmtRand</a>.<a class="ref" href="../../../../include/boost/thread/tss.hpp.html#_ZNK5boost19thread_specific_ptr3getEv" title='boost::thread_specific_ptr::get' data-ref="_ZNK5boost19thread_specific_ptr3getEv" id="_ZNK5boost19thread_specific_ptr3getEv" >get</a>();</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td>    <b>if</b> (!<a class="local col4 ref" href="#264rand" title='rand' data-ref="264rand" >rand</a>)</td></tr>
+<tr><th id="31">31</th><td>    {</td></tr>
+<tr><th id="32">32</th><td>        <a class="local col4 ref" href="#264rand" title='rand' data-ref="264rand" >rand</a> = <b>new</b> <a class="type" href="../../../dep/SFMT/SFMT.h.html#SFMTRand" title='SFMTRand' data-ref="SFMTRand" >SFMTRand</a><a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRandC1Ev" title='SFMTRand::SFMTRand' data-ref="_ZN8SFMTRandC1Ev" id="_ZN8SFMTRandC1Ev" >(</a>);</td></tr>
+<tr><th id="33">33</th><td>        <a class="tu ref" href="#_ZL8sfmtRand" title='sfmtRand' data-use='m' data-ref="_ZL8sfmtRand" >sfmtRand</a>.<a class="ref" href="../../../../include/boost/thread/tss.hpp.html#_ZN5boost19thread_specific_ptr5resetEPT_" title='boost::thread_specific_ptr::reset' data-ref="_ZN5boost19thread_specific_ptr5resetEPT_" id="_ZN5boost19thread_specific_ptr5resetEPT_" >reset</a>(<a class="local col4 ref" href="#264rand" title='rand' data-ref="264rand" >rand</a>);</td></tr>
+<tr><th id="34">34</th><td>    }</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>    <b>return</b> <a class="local col4 ref" href="#264rand" title='rand' data-ref="264rand" >rand</a>;</td></tr>
+<tr><th id="37">37</th><td>}</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="decl def" id="_Z5irandii" title='irand' data-ref="_Z5irandii" >irand</dfn>(<a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col5 decl" id="265min" title='min' data-type='int32' data-ref="265min" >min</dfn>, <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col6 decl" id="266max" title='max' data-type='int32' data-ref="266max" >max</dfn>)</td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <a class="macro" href="../Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col6 ref" href="#266max" title='max' data-ref="266max" >max</a> &gt;= <a class="local col5 ref" href="#265min" title='min' data-ref="265min" >min</a>);</td></tr>
+<tr><th id="42">42</th><td>    <b>return</b> <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a>(<a class="tu ref" href="#_ZL6GetRngv" title='GetRng' data-use='c' data-ref="_ZL6GetRngv" >GetRng</a>()-&gt;<a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRand7IRandomEii" title='SFMTRand::IRandom' data-ref="_ZN8SFMTRand7IRandomEii" id="_ZN8SFMTRand7IRandomEii" >IRandom</a>(<a class="local col5 ref" href="#265min" title='min' data-ref="265min" >min</a>, <a class="local col6 ref" href="#266max" title='max' data-ref="266max" >max</a>));</td></tr>
+<tr><th id="43">43</th><td>}</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_Z5urandjj" title='urand' data-ref="_Z5urandjj" >urand</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="267min" title='min' data-type='uint32' data-ref="267min" >min</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="268max" title='max' data-type='uint32' data-ref="268max" >max</dfn>)</td></tr>
+<tr><th id="46">46</th><td>{</td></tr>
+<tr><th id="47">47</th><td>    <a class="macro" href="../Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col8 ref" href="#268max" title='max' data-ref="268max" >max</a> &gt;= <a class="local col7 ref" href="#267min" title='min' data-ref="267min" >min</a>);</td></tr>
+<tr><th id="48">48</th><td>    <b>return</b> <a class="tu ref" href="#_ZL6GetRngv" title='GetRng' data-use='c' data-ref="_ZL6GetRngv" >GetRng</a>()-&gt;<a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRand7URandomEjj" title='SFMTRand::URandom' data-ref="_ZN8SFMTRand7URandomEjj" id="_ZN8SFMTRand7URandomEjj" >URandom</a>(<a class="local col7 ref" href="#267min" title='min' data-ref="267min" >min</a>, <a class="local col8 ref" href="#268max" title='max' data-ref="268max" >max</a>);</td></tr>
+<tr><th id="49">49</th><td>}</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_Z7urandmsjj" title='urandms' data-ref="_Z7urandmsjj" >urandms</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="269min" title='min' data-type='uint32' data-ref="269min" >min</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col0 decl" id="270max" title='max' data-type='uint32' data-ref="270max" >max</dfn>)</td></tr>
+<tr><th id="52">52</th><td>{</td></tr>
+<tr><th id="53">53</th><td>    <a class="macro" href="../Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col0 ref" href="#270max" title='max' data-ref="270max" >max</a> &gt;= <a class="local col9 ref" href="#269min" title='min' data-ref="269min" >min</a>);</td></tr>
+<tr><th id="54">54</th><td>    <a class="macro" href="../Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<span class="macro" title="2147483647" data-ref="_M/INT_MAX">INT_MAX</span> / <a class="enum" href="../Common.h.html#TimeConstants::IN_MILLISECONDS" title='TimeConstants::IN_MILLISECONDS' data-ref="TimeConstants::IN_MILLISECONDS" id="TimeConstants::IN_MILLISECONDS" >IN_MILLISECONDS</a> &gt;= <a class="local col0 ref" href="#270max" title='max' data-ref="270max" >max</a>);</td></tr>
+<tr><th id="55">55</th><td>    <b>return</b> <a class="tu ref" href="#_ZL6GetRngv" title='GetRng' data-use='c' data-ref="_ZL6GetRngv" >GetRng</a>()-&gt;<a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRand7URandomEjj" title='SFMTRand::URandom' data-ref="_ZN8SFMTRand7URandomEjj" id="_ZN8SFMTRand7URandomEjj" >URandom</a>(<a class="local col9 ref" href="#269min" title='min' data-ref="269min" >min</a> * <a class="enum" href="../Common.h.html#TimeConstants::IN_MILLISECONDS" title='TimeConstants::IN_MILLISECONDS' data-ref="TimeConstants::IN_MILLISECONDS" id="TimeConstants::IN_MILLISECONDS" >IN_MILLISECONDS</a>, <a class="local col0 ref" href="#270max" title='max' data-ref="270max" >max</a> * <a class="enum" href="../Common.h.html#TimeConstants::IN_MILLISECONDS" title='TimeConstants::IN_MILLISECONDS' data-ref="TimeConstants::IN_MILLISECONDS" id="TimeConstants::IN_MILLISECONDS" >IN_MILLISECONDS</a>);</td></tr>
+<tr><th id="56">56</th><td>}</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><em>float</em> <dfn class="decl def" id="_Z5frandff" title='frand' data-ref="_Z5frandff" >frand</dfn>(<em>float</em> <dfn class="local col1 decl" id="271min" title='min' data-type='float' data-ref="271min" >min</dfn>, <em>float</em> <dfn class="local col2 decl" id="272max" title='max' data-type='float' data-ref="272max" >max</dfn>)</td></tr>
+<tr><th id="59">59</th><td>{</td></tr>
+<tr><th id="60">60</th><td>    <a class="macro" href="../Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col2 ref" href="#272max" title='max' data-ref="272max" >max</a> &gt;= <a class="local col1 ref" href="#271min" title='min' data-ref="271min" >min</a>);</td></tr>
+<tr><th id="61">61</th><td>    <b>return</b> <em>float</em>(<a class="tu ref" href="#_ZL6GetRngv" title='GetRng' data-use='c' data-ref="_ZL6GetRngv" >GetRng</a>()-&gt;<a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRand6RandomEv" title='SFMTRand::Random' data-ref="_ZN8SFMTRand6RandomEv" id="_ZN8SFMTRand6RandomEv" >Random</a>() * (<a class="local col2 ref" href="#272max" title='max' data-ref="272max" >max</a> - <a class="local col1 ref" href="#271min" title='min' data-ref="271min" >min</a>) + <a class="local col1 ref" href="#271min" title='min' data-ref="271min" >min</a>);</td></tr>
+<tr><th id="62">62</th><td>}</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <dfn class="decl def" id="_Z8randtimeRKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEES5_" title='randtime' data-ref="_Z8randtimeRKNSt6chrono8durationIlSt5ratioILl1ELl1000EEEES5_" >randtime</dfn>(<a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col3 decl" id="273min" title='min' data-type='const Milliseconds &amp;' data-ref="273min" >min</dfn>, <a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a> <em>const</em>&amp; <dfn class="local col4 decl" id="274max" title='max' data-type='const Milliseconds &amp;' data-ref="274max" >max</dfn>)</td></tr>
+<tr><th id="65">65</th><td>{</td></tr>
+<tr><th id="66">66</th><td>    <em>long</em> <em>long</em> <dfn class="local col5 decl" id="275diff" title='diff' data-type='long long' data-ref="275diff" >diff</dfn> = <a class="local col4 ref" href="#274max" title='max' data-ref="274max" >max</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>() - <a class="local col3 ref" href="#273min" title='min' data-ref="273min" >min</a>.<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>();</td></tr>
+<tr><th id="67">67</th><td>    <a class="macro" href="../Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col5 ref" href="#275diff" title='diff' data-ref="275diff" >diff</a> &gt;= <var>0</var>);</td></tr>
+<tr><th id="68">68</th><td>    <a class="macro" href="../Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col5 ref" href="#275diff" title='diff' data-ref="275diff" >diff</a> &lt;= (<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>)-<var>1</var>);</td></tr>
+<tr><th id="69">69</th><td>    <b>return</b> <a class="local col3 ref" href="#273min" title='min' data-ref="273min" >min</a> <a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNSt6chronoplERKNS_8durationIT_T0_EERKNS0_IT1_T2_EE" title='std::chrono::operator+' data-ref="_ZNSt6chronoplERKNS_8durationIT_T0_EERKNS0_IT1_T2_EE" id="_ZNSt6chronoplERKNS_8durationIT_T0_EERKNS0_IT1_T2_EE" >+</a> <a class="typedef" href="Duration.h.html#Milliseconds" title='Milliseconds' data-type='std::chrono::milliseconds' data-ref="Milliseconds" >Milliseconds</a><a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNSt6chrono8durationIlSt5ratioILl1ELl1000EEEC1ERKT_" title='std::chrono::duration&lt;long, std::ratio&lt;1, 1000&gt; &gt;::duration' data-ref="_ZNSt6chrono8durationIlSt5ratioILl1ELl1000EEEC1ERKT_" id="_ZNSt6chrono8durationIlSt5ratioILl1ELl1000EEEC1ERKT_" >(</a><a class="ref" href="#_Z5urandjj" title='urand' data-ref="_Z5urandjj" >urand</a>(<var>0</var>, <a class="local col5 ref" href="#275diff" title='diff' data-ref="275diff" >diff</a>));</td></tr>
+<tr><th id="70">70</th><td>}</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_Z6rand32v" title='rand32' data-ref="_Z6rand32v" >rand32</dfn>()</td></tr>
+<tr><th id="73">73</th><td>{</td></tr>
+<tr><th id="74">74</th><td>    <b>return</b> <a class="tu ref" href="#_ZL6GetRngv" title='GetRng' data-use='c' data-ref="_ZL6GetRngv" >GetRng</a>()-&gt;<a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRand7BRandomEv" title='SFMTRand::BRandom' data-ref="_ZN8SFMTRand7BRandomEv" id="_ZN8SFMTRand7BRandomEv" >BRandom</a>();</td></tr>
+<tr><th id="75">75</th><td>}</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><em>double</em> <dfn class="decl def" id="_Z9rand_normv" title='rand_norm' data-ref="_Z9rand_normv" >rand_norm</dfn>()</td></tr>
+<tr><th id="78">78</th><td>{</td></tr>
+<tr><th id="79">79</th><td>    <b>return</b> <a class="tu ref" href="#_ZL6GetRngv" title='GetRng' data-use='c' data-ref="_ZL6GetRngv" >GetRng</a>()-&gt;<a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRand6RandomEv" title='SFMTRand::Random' data-ref="_ZN8SFMTRand6RandomEv" id="_ZN8SFMTRand6RandomEv" >Random</a>();</td></tr>
+<tr><th id="80">80</th><td>}</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><em>double</em> <dfn class="decl def" id="_Z11rand_chancev" title='rand_chance' data-ref="_Z11rand_chancev" >rand_chance</dfn>()</td></tr>
+<tr><th id="83">83</th><td>{</td></tr>
+<tr><th id="84">84</th><td>    <b>return</b> <a class="tu ref" href="#_ZL6GetRngv" title='GetRng' data-use='c' data-ref="_ZL6GetRngv" >GetRng</a>()-&gt;<a class="ref" href="../../../dep/SFMT/SFMT.h.html#_ZN8SFMTRand6RandomEv" title='SFMTRand::Random' data-ref="_ZN8SFMTRand6RandomEv" id="_ZN8SFMTRand6RandomEv" >Random</a>() * <var>100.0</var>;</td></tr>
+<tr><th id="85">85</th><td>}</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td><a class="type" href="Random.h.html#SFMTEngine" title='SFMTEngine' data-ref="SFMTEngine" >SFMTEngine</a>&amp; <a class="type" href="Random.h.html#SFMTEngine" title='SFMTEngine' data-ref="SFMTEngine" >SFMTEngine</a>::<dfn class="decl def" id="_ZN10SFMTEngine8InstanceEv" title='SFMTEngine::Instance' data-ref="_ZN10SFMTEngine8InstanceEv" >Instance</dfn>()</td></tr>
+<tr><th id="88">88</th><td>{</td></tr>
+<tr><th id="89">89</th><td>    <em>static</em> <a class="type" href="Random.h.html#SFMTEngine" title='SFMTEngine' data-ref="SFMTEngine" >SFMTEngine</a> <dfn class="local col6 decl" id="276engine" title='engine' data-type='SFMTEngine' data-ref="276engine" >engine</dfn>;</td></tr>
+<tr><th id="90">90</th><td>    <b>return</b> <a class="local col6 ref" href="#276engine" title='engine' data-ref="276engine" >engine</a>;</td></tr>
+<tr><th id="91">91</th><td>}</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

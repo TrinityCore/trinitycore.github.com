@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<title>UprightFrame.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/UprightFrame.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/UprightFrame.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/UprightFrame.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> \file</span> G3D/UprightFrame.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> <span class="command">\author</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="5">5</th><td></td></tr>
+<tr><th id="6">6</th><td><u>#<span data-ppcond="6">ifndef</span> <span class="macro" data-ref="_M/G3D_UprightFrame_h">G3D_UprightFrame_h</span></u></td></tr>
+<tr><th id="7">7</th><td><u>#define <dfn class="macro" id="_M/G3D_UprightFrame_h" data-ref="_M/G3D_UprightFrame_h">G3D_UprightFrame_h</dfn></u></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="10">10</th><td><u>#include <a href="Spline.h.html">"G3D/Spline.h"</a></u></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="Any.h.html">"G3D/Any.h"</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="CoordinateFrame.h.html">"G3D/CoordinateFrame.h"</a></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="17">17</th><td><i class="doc">    <span class="command">\brief</span>  Coordinate frame expressed in Euler angles.</i></td></tr>
+<tr><th id="18">18</th><td><i class="doc">            Unlike a G3D::Quat, UprightFrame always keeps the reference frame from rolling about its own z axis.</i></td></tr>
+<tr><th id="19">19</th><td><i class="doc">            Particularly useful for cameras.</i></td></tr>
+<tr><th id="20">20</th><td><i class="doc"></i></td></tr>
+<tr><th id="21">21</th><td><i class="doc">    <span class="command">\sa</span> G3D::CoordinateFrame, G3D::Matrix4, G3D::PhysicsFrame, G3D::UprightSpline, G3D::UprightSplineManipulator</i></td></tr>
+<tr><th id="22">22</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="23">23</th><td><b>class</b> <dfn class="type def" id="G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</dfn> {</td></tr>
+<tr><th id="24">24</th><td><b>public</b>:</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>         <dfn class="decl" id="G3D::UprightFrame::translation" title='G3D::UprightFrame::translation' data-ref="G3D::UprightFrame::translation" >translation</dfn>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td>    <i class="doc">/** -pi/2 &lt; pitch &lt; pi/2 in radians about the X-axis */</i></td></tr>
+<tr><th id="29">29</th><td>    <em>float</em>           <dfn class="decl" id="G3D::UprightFrame::pitch" title='G3D::UprightFrame::pitch' data-ref="G3D::UprightFrame::pitch" >pitch</dfn>;</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>    <i class="doc">/** In radians about the Y-axis */</i></td></tr>
+<tr><th id="32">32</th><td>    <em>float</em>           <dfn class="decl" id="G3D::UprightFrame::yaw" title='G3D::UprightFrame::yaw' data-ref="G3D::UprightFrame::yaw" >yaw</dfn>;</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>    <dfn class="decl def" id="_ZN3G3D12UprightFrameC1ERKNS_7Vector3Eff" title='G3D::UprightFrame::UprightFrame' data-ref="_ZN3G3D12UprightFrameC1ERKNS_7Vector3Eff" >UprightFrame</dfn>(<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col9 decl" id="159t" title='t' data-type='const G3D::Vector3 &amp;' data-ref="159t" >t</dfn> = <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector34zeroEv" title='G3D::Vector3::zero' data-ref="_ZN3G3D7Vector34zeroEv" id="_ZN3G3D7Vector34zeroEv" >zero</a>(), <em>float</em> <dfn class="local col0 decl" id="160p" title='p' data-type='float' data-ref="160p" >p</dfn> = <var>0</var>, <em>float</em> <dfn class="local col1 decl" id="161y" title='y' data-type='float' data-ref="161y" >y</dfn> = <var>0</var>) </td></tr>
+<tr><th id="35">35</th><td>        : <a class="member" href="#G3D::UprightFrame::translation" title='G3D::UprightFrame::translation' data-ref="G3D::UprightFrame::translation" >translation</a><a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3C1ERKS0_" title='G3D::Vector3::Vector3' data-ref="_ZN3G3D7Vector3C1ERKS0_" id="_ZN3G3D7Vector3C1ERKS0_" >(</a><a class="local col9 ref" href="#159t" title='t' data-ref="159t" >t</a>), <a class="member" href="#G3D::UprightFrame::pitch" title='G3D::UprightFrame::pitch' data-ref="G3D::UprightFrame::pitch" >pitch</a>(<a class="local col0 ref" href="#160p" title='p' data-ref="160p" >p</a>), <a class="member" href="#G3D::UprightFrame::yaw" title='G3D::UprightFrame::yaw' data-ref="G3D::UprightFrame::yaw" >yaw</a>(<a class="local col1 ref" href="#161y" title='y' data-ref="161y" >y</a>) {}</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <dfn class="decl" id="_ZN3G3D12UprightFrameC1ERKNS_15CoordinateFrameE" title='G3D::UprightFrame::UprightFrame' data-ref="_ZN3G3D12UprightFrameC1ERKNS_15CoordinateFrameE" >UprightFrame</dfn>(<em>const</em> <a class="type" href="CoordinateFrame.h.html#G3D::CoordinateFrame" title='G3D::CoordinateFrame' data-ref="G3D::CoordinateFrame" >CoordinateFrame</a>&amp; <dfn class="local col2 decl" id="162cframe" title='cframe' data-type='const G3D::CoordinateFrame &amp;' data-ref="162cframe" >cframe</dfn>);</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>    <i class="doc">/** Constructs an UprightFrame from an Any object.</i></td></tr>
+<tr><th id="40">40</th><td><i class="doc">        </i></td></tr>
+<tr><th id="41">41</th><td><i class="doc">        The Any format for UprightFrame is:</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"></i></td></tr>
+<tr><th id="43">43</th><td><i class="doc">        pitch = ##,</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">        translation = Vector3(),</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">        yaw = ##</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="47">47</th><td>    <b>explicit</b> <dfn class="decl" id="_ZN3G3D12UprightFrameC1ERKNS_3AnyE" title='G3D::UprightFrame::UprightFrame' data-ref="_ZN3G3D12UprightFrameC1ERKNS_3AnyE" >UprightFrame</dfn>(<em>const</em> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a>&amp; <dfn class="local col3 decl" id="163any" title='any' data-type='const G3D::Any &amp;' data-ref="163any" >any</dfn>);</td></tr>
+<tr><th id="48">48</th><td>    </td></tr>
+<tr><th id="49">49</th><td>    <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a> <dfn class="decl" id="_ZNK3G3D12UprightFrame5toAnyEv" title='G3D::UprightFrame::toAny' data-ref="_ZNK3G3D12UprightFrame5toAnyEv" >toAny</dfn>() <em>const</em>;</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a>&amp; <dfn class="decl" id="_ZN3G3D12UprightFrameaSERKNS_3AnyE" title='G3D::UprightFrame::operator=' data-ref="_ZN3G3D12UprightFrameaSERKNS_3AnyE" ><b>operator</b>=</dfn>(<em>const</em> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a>&amp; <dfn class="local col4 decl" id="164any" title='any' data-type='const G3D::Any &amp;' data-ref="164any" >any</dfn>);</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <i class="doc">/** Supports implicit cast to CoordinateFrame */</i></td></tr>
+<tr><th id="54">54</th><td>    <dfn class="decl def" id="_ZNK3G3D12UprightFramecvNS_15CoordinateFrameEEv" title='G3D::UprightFrame::operator CoordinateFrame' data-ref="_ZNK3G3D12UprightFramecvNS_15CoordinateFrameEEv" ><b>operator</b> <a class="type" href="CoordinateFrame.h.html#G3D::CoordinateFrame" title='G3D::CoordinateFrame' data-ref="G3D::CoordinateFrame" >CoordinateFrame</a></dfn>() <em>const</em> {</td></tr>
+<tr><th id="55">55</th><td>        <b>return</b> <a class="member" href="#_ZNK3G3D12UprightFrame17toCoordinateFrameEv" title='G3D::UprightFrame::toCoordinateFrame' data-ref="_ZNK3G3D12UprightFrame17toCoordinateFrameEv" >toCoordinateFrame</a>();</td></tr>
+<tr><th id="56">56</th><td>    }</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <a class="type" href="CoordinateFrame.h.html#G3D::CoordinateFrame" title='G3D::CoordinateFrame' data-ref="G3D::CoordinateFrame" >CoordinateFrame</a> <dfn class="decl" id="_ZNK3G3D12UprightFrame17toCoordinateFrameEv" title='G3D::UprightFrame::toCoordinateFrame' data-ref="_ZNK3G3D12UprightFrame17toCoordinateFrameEv" >toCoordinateFrame</dfn>() <em>const</em>;</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>    <i class="doc">/** Required for use with spline */</i></td></tr>
+<tr><th id="61">61</th><td>    <a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a> <dfn class="decl" id="_ZNK3G3D12UprightFrameplERKS0_" title='G3D::UprightFrame::operator+' data-ref="_ZNK3G3D12UprightFrameplERKS0_" ><b>operator</b>+</dfn>(<em>const</em> <a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a>&amp; <dfn class="local col5 decl" id="165other" title='other' data-type='const G3D::UprightFrame &amp;' data-ref="165other" >other</dfn>) <em>const</em>;</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <i class="doc">/** Required for use with spline */</i></td></tr>
+<tr><th id="64">64</th><td>    <a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a> <dfn class="decl" id="_ZNK3G3D12UprightFramemlEf" title='G3D::UprightFrame::operator*' data-ref="_ZNK3G3D12UprightFramemlEf" ><b>operator</b>*</dfn>(<em>const</em> <em>float</em> <dfn class="local col6 decl" id="166k" title='k' data-type='const float' data-ref="166k" >k</dfn>) <em>const</em>;</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc">       Unwraps the yaw values in the elements of the array such that</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">       they still represent the same angles but strictly increase/decrease</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">       without wrapping about zero.  For use with Spline&lt;UprightFrame&gt;</i></td></tr>
+<tr><th id="70">70</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="71">71</th><td>    <em>static</em> <em>void</em> <dfn class="decl" id="_ZN3G3D12UprightFrame9unwrapYawEPS0_i" title='G3D::UprightFrame::unwrapYaw' data-ref="_ZN3G3D12UprightFrame9unwrapYawEPS0_i" >unwrapYaw</dfn>(<a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a>* <dfn class="local col7 decl" id="167a" title='a' data-type='G3D::UprightFrame *' data-ref="167a" >a</dfn>, <em>int</em> <dfn class="local col8 decl" id="168N" title='N' data-type='int' data-ref="168N" >N</dfn>);</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D12UprightFrame9serializeERNS_12BinaryOutputE" title='G3D::UprightFrame::serialize' data-ref="_ZNK3G3D12UprightFrame9serializeERNS_12BinaryOutputE" >serialize</dfn>(<b>class</b> <a class="type" href="BinaryOutput.h.html#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp; <dfn class="local col9 decl" id="169b" title='b' data-type='class BinaryOutput &amp;' data-ref="169b" >b</dfn>) <em>const</em>;</td></tr>
+<tr><th id="74">74</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D12UprightFrame11deserializeERNS_11BinaryInputE" title='G3D::UprightFrame::deserialize' data-ref="_ZN3G3D12UprightFrame11deserializeERNS_11BinaryInputE" >deserialize</dfn>(<b>class</b> <a class="type" href="BinaryInput.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col0 decl" id="170b" title='b' data-type='class BinaryInput &amp;' data-ref="170b" >b</dfn>);</td></tr>
+<tr><th id="75">75</th><td>};</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><i class="doc">/** </i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">    <span class="command">\brief</span> Shortest-path linear velocity spline for camera positions.  Always keeps the camera from rolling.</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc"></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">    <span class="command">\sa</span> G3D::UprightSplineManipulator, G3D::UprightFrame</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="82">82</th><td><b>class</b> <dfn class="type def" id="G3D::UprightSpline" title='G3D::UprightSpline' data-ref="G3D::UprightSpline" >UprightSpline</dfn> : <b>public</b> <a class="type" href="Spline.h.html#G3D::Spline" title='G3D::Spline' data-ref="G3D::Spline" >Spline</a>&lt;<a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a>&gt; {</td></tr>
+<tr><th id="83">83</th><td><b>protected</b>:</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZNK3G3D13UprightSpline18ensureShortestPathEPNS_12UprightFrameEi" title='G3D::UprightSpline::ensureShortestPath' data-ref="_ZNK3G3D13UprightSpline18ensureShortestPathEPNS_12UprightFrameEi" >ensureShortestPath</dfn>(<a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a>* <dfn class="local col1 decl" id="171A" title='A' data-type='G3D::UprightFrame *' data-ref="171A" >A</dfn>, <em>int</em> <dfn class="local col2 decl" id="172N" title='N' data-type='int' data-ref="172N" >N</dfn>) <em>const</em> {</td></tr>
+<tr><th id="86">86</th><td>        <a class="type" href="#G3D::UprightFrame" title='G3D::UprightFrame' data-ref="G3D::UprightFrame" >UprightFrame</a>::<a class="ref" href="#_ZN3G3D12UprightFrame9unwrapYawEPS0_i" title='G3D::UprightFrame::unwrapYaw' data-ref="_ZN3G3D12UprightFrame9unwrapYawEPS0_i" >unwrapYaw</a>(<a class="local col1 ref" href="#171A" title='A' data-ref="171A" >A</a>, <a class="local col2 ref" href="#172N" title='N' data-ref="172N" >N</a>);</td></tr>
+<tr><th id="87">87</th><td>    }</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td><b>public</b>:</td></tr>
+<tr><th id="90">90</th><td>    <dfn class="decl" id="_ZN3G3D13UprightSplineC1Ev" title='G3D::UprightSpline::UprightSpline' data-ref="_ZN3G3D13UprightSplineC1Ev" >UprightSpline</dfn>();</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>    <i class="doc">/** Constructs an UprightSpline from an Any object.</i></td></tr>
+<tr><th id="94">94</th><td><i class="doc">        </i></td></tr>
+<tr><th id="95">95</th><td><i class="doc">        The Any format for UprightSpline is:</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc"></i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">        controls = (UprightFrame, ...),</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">        times = (##, ...),</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">        cyclic = bool</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc"></i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">        The controls and times arrays must have the same length.</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="103">103</th><td>    <b>explicit</b> <dfn class="decl" id="_ZN3G3D13UprightSplineC1ERKNS_3AnyE" title='G3D::UprightSpline::UprightSpline' data-ref="_ZN3G3D13UprightSplineC1ERKNS_3AnyE" >UprightSpline</dfn>(<em>const</em> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a>&amp; <dfn class="local col3 decl" id="173any" title='any' data-type='const G3D::Any &amp;' data-ref="173any" >any</dfn>);</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td>    <b>virtual</b> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a> <dfn class="virtual decl" id="_ZNK3G3D13UprightSpline5toAnyERKSs" title='G3D::UprightSpline::toAny' data-ref="_ZNK3G3D13UprightSpline5toAnyERKSs" >toAny</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col4 decl" id="174myName" title='myName' data-type='const std::string &amp;' data-ref="174myName" >myName</dfn>) <em>const</em> override;</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>    <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a> <dfn class="decl" id="_ZNK3G3D13UprightSpline5toAnyEv" title='G3D::UprightSpline::toAny' data-ref="_ZNK3G3D13UprightSpline5toAnyEv" >toAny</dfn>() <em>const</em>;</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>    <a class="type" href="#G3D::UprightSpline" title='G3D::UprightSpline' data-ref="G3D::UprightSpline" >UprightSpline</a>&amp; <dfn class="decl" id="_ZN3G3D13UprightSplineaSERKNS_3AnyE" title='G3D::UprightSpline::operator=' data-ref="_ZN3G3D13UprightSplineaSERKNS_3AnyE" ><b>operator</b>=</dfn>(<em>const</em> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a>&amp; <dfn class="local col5 decl" id="175any" title='any' data-type='const G3D::Any &amp;' data-ref="175any" >any</dfn>);</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D13UprightSpline9serializeERNS_12BinaryOutputE" title='G3D::UprightSpline::serialize' data-ref="_ZNK3G3D13UprightSpline9serializeERNS_12BinaryOutputE" >serialize</dfn>(<b>class</b> <a class="type" href="BinaryOutput.h.html#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp; <dfn class="local col6 decl" id="176b" title='b' data-type='class BinaryOutput &amp;' data-ref="176b" >b</dfn>) <em>const</em>;</td></tr>
+<tr><th id="112">112</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D13UprightSpline11deserializeERNS_11BinaryInputE" title='G3D::UprightSpline::deserialize' data-ref="_ZN3G3D13UprightSpline11deserializeERNS_11BinaryInputE" >deserialize</dfn>(<b>class</b> <a class="type" href="BinaryInput.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col7 decl" id="177b" title='b' data-type='class BinaryInput &amp;' data-ref="177b" >b</dfn>);</td></tr>
+<tr><th id="113">113</th><td>};</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>}</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><u>#<span data-ppcond="6">endif</span></u></td></tr>
+<tr><th id="118">118</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/CoordinateFrame.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/CoordinateFrame.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

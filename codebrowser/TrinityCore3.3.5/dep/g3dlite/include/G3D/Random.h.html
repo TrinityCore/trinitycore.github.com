@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<title>Random.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/Random.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/Random.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/Random.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> \file</span> G3D/Random.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"><span class="command"> \maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> \created</span> 2009-01-02</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> \edited</span>  2012-07-20</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"></i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"> Copyright 2000-2012, Morgan McGuire.</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc"> All rights reserved.</i></td></tr>
+<tr><th id="11">11</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="12">12</th><td><u>#<span data-ppcond="12">ifndef</span> <span class="macro" data-ref="_M/G3D_Random_h">G3D_Random_h</span></u></td></tr>
+<tr><th id="13">13</th><td><u>#define <dfn class="macro" id="_M/G3D_Random_h" data-ref="_M/G3D_Random_h">G3D_Random_h</dfn></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="GMutex.h.html">"G3D/GMutex.h"</a></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><i class="doc">/** Random number generator.</i></td></tr>
+<tr><th id="22">22</th><td><i class="doc"></i></td></tr>
+<tr><th id="23">23</th><td><i class="doc">    Threadsafe.</i></td></tr>
+<tr><th id="24">24</th><td><i class="doc"></i></td></tr>
+<tr><th id="25">25</th><td><i class="doc">    Useful for generating consistent random numbers across platforms</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc">    and when multiple threads are involved.</i></td></tr>
+<tr><th id="27">27</th><td><i class="doc"></i></td></tr>
+<tr><th id="28">28</th><td><i class="doc">    Uses the Fast Mersenne Twister (FMT-19937) algorithm.</i></td></tr>
+<tr><th id="29">29</th><td><i class="doc"></i></td></tr>
+<tr><th id="30">30</th><td><i class="doc">    On average, uniform() runs about 2x-3x faster than rand().</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc"></i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">   <span class="command"> @cite</span> <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/index.html">http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/index.html</a></i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">    </i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">    On OS X, Random is about 10x faster than drand48() (which is</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc">    threadsafe) and 4x faster than rand() (which is not threadsafe).</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc"></i></td></tr>
+<tr><th id="37">37</th><td><i class="doc">    <span class="command">\sa</span> Noise</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="39">39</th><td><b>class</b> <dfn class="type def" id="G3D::Random" title='G3D::Random' data-ref="G3D::Random" >Random</dfn> {</td></tr>
+<tr><th id="40">40</th><td><b>protected</b>:</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>    <i class="doc">/** Constants (important for the algorithm; do not modify) */</i></td></tr>
+<tr><th id="43">43</th><td>    <b>enum</b> {</td></tr>
+<tr><th id="44">44</th><td>        <dfn class="enum" id="G3D::Random::::N" title='G3D::Random::::N' data-ref="G3D::Random::::N" >N</dfn> = <var>624</var>,</td></tr>
+<tr><th id="45">45</th><td>        <dfn class="enum" id="G3D::Random::::M" title='G3D::Random::::M' data-ref="G3D::Random::::M" >M</dfn> = <var>397</var>,</td></tr>
+<tr><th id="46">46</th><td>        <dfn class="enum" id="G3D::Random::::R" title='G3D::Random::::R' data-ref="G3D::Random::::R" >R</dfn> = <var>31</var>,</td></tr>
+<tr><th id="47">47</th><td>        <dfn class="enum" id="G3D::Random::::U" title='G3D::Random::::U' data-ref="G3D::Random::::U" >U</dfn> = <var>11</var>,</td></tr>
+<tr><th id="48">48</th><td>        <dfn class="enum" id="G3D::Random::::S" title='G3D::Random::::S' data-ref="G3D::Random::::S" >S</dfn> = <var>7</var>,</td></tr>
+<tr><th id="49">49</th><td>        <dfn class="enum" id="G3D::Random::::T" title='G3D::Random::::T' data-ref="G3D::Random::::T" >T</dfn> = <var>15</var>,</td></tr>
+<tr><th id="50">50</th><td>        <dfn class="enum" id="G3D::Random::::L" title='G3D::Random::::L' data-ref="G3D::Random::::L" >L</dfn> = <var>18</var>,</td></tr>
+<tr><th id="51">51</th><td>        <dfn class="enum" id="G3D::Random::::A" title='G3D::Random::::A' data-ref="G3D::Random::::A" >A</dfn> = <var>0x9908B0DF</var>,</td></tr>
+<tr><th id="52">52</th><td>        <dfn class="enum" id="G3D::Random::::B" title='G3D::Random::::B' data-ref="G3D::Random::::B" >B</dfn> = <var>0x9D2C5680</var>,</td></tr>
+<tr><th id="53">53</th><td>        <dfn class="enum" id="G3D::Random::::C" title='G3D::Random::::C' data-ref="G3D::Random::::C" >C</dfn> = <var>0xEFC60000</var>};</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <i class="doc">/** </i></td></tr>
+<tr><th id="56">56</th><td><i class="doc">        Prevents multiple overlapping calls to generate(). </i></td></tr>
+<tr><th id="57">57</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="58">58</th><td>    <a class="type" href="GMutex.h.html#G3D::Spinlock" title='G3D::Spinlock' data-ref="G3D::Spinlock" >Spinlock</a>     <dfn class="decl" id="G3D::Random::lock" title='G3D::Random::lock' data-ref="G3D::Random::lock" >lock</dfn>;</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>    <i class="doc">/** State vector (these are the next N values that will be returned) */</i></td></tr>
+<tr><th id="61">61</th><td>    <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a>*      <dfn class="decl" id="G3D::Random::state" title='G3D::Random::state' data-ref="G3D::Random::state" >state</dfn>;</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <i class="doc">/** Index into state */</i></td></tr>
+<tr><th id="64">64</th><td>    <em>int</em>          <dfn class="decl" id="G3D::Random::index" title='G3D::Random::index' data-ref="G3D::Random::index" >index</dfn>;</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <em>bool</em>         <dfn class="decl" id="G3D::Random::m_threadsafe" title='G3D::Random::m_threadsafe' data-ref="G3D::Random::m_threadsafe" >m_threadsafe</dfn>;</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <i class="doc">/** Generate the next N ints, and store them for readback later.</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">        Called from bits() */</i></td></tr>
+<tr><th id="70">70</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D6Random8generateEv" title='G3D::Random::generate' data-ref="_ZN3G3D6Random8generateEv" >generate</dfn>();</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>    <i class="doc">/** For subclasses.  The void* parameter is just to distinguish this from the</i></td></tr>
+<tr><th id="73">73</th><td><i class="doc">        public constructor.*/</i></td></tr>
+<tr><th id="74">74</th><td>    <dfn class="decl" id="_ZN3G3D6RandomC1EPv" title='G3D::Random::Random' data-ref="_ZN3G3D6RandomC1EPv" >Random</dfn>(<em>void</em>*);</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><b>private</b>:</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>    <a class="type" href="#G3D::Random" title='G3D::Random' data-ref="G3D::Random" >Random</a>&amp; <dfn class="decl def" id="_ZN3G3D6RandomaSERKS0_" title='G3D::Random::operator=' data-ref="_ZN3G3D6RandomaSERKS0_" ><b>operator</b>=</dfn>(<em>const</em> <a class="type" href="#G3D::Random" title='G3D::Random' data-ref="G3D::Random" >Random</a>&amp;) {</td></tr>
+<tr><th id="80">80</th><td>        <a class="macro" href="debugAssert.h.html#165" title="{ if (!(false)) { G3D::_internal::_releaseInputGrab_(); if ((G3D::_internal::_failureHook != __null) &amp;&amp; G3D::_internal::_failureHook(&quot;false&quot;, &quot;There is no copy constructor or assignment operator for Random because you &quot; &quot;probably didn&apos;t actually want to copy the state--it would &quot; &quot;be slow and duplicate the state of a pseudo-random sequence.  Maybe you could &quot; &quot;provide arguments to a member variable in the constructor, &quot; &quot;or pass the Random by reference?&quot;, &quot;/home/nayd/TrinityCore/dep/g3dlite/include/G3D/Random.h&quot;, 85, true)) { ::exit(-1); } G3D::_internal::_restoreInputGrab_(); } }" data-ref="_M/alwaysAssertM">alwaysAssertM</a>(<b>false</b>,</td></tr>
+<tr><th id="81">81</th><td>            <q>"There is no copy constructor or assignment operator for Random because you "</q></td></tr>
+<tr><th id="82">82</th><td>            <q>"probably didn't actually want to copy the state--it would "</q></td></tr>
+<tr><th id="83">83</th><td>            <q>"be slow and duplicate the state of a pseudo-random sequence.  Maybe you could "</q></td></tr>
+<tr><th id="84">84</th><td>            <q>"provide arguments to a member variable in the constructor, "</q></td></tr>
+<tr><th id="85">85</th><td>            <q>"or pass the Random by reference?"</q>);</td></tr>
+<tr><th id="86">86</th><td>        <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="87">87</th><td>    }</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td>    <dfn class="decl def" id="_ZN3G3D6RandomC1ERKS0_" title='G3D::Random::Random' data-ref="_ZN3G3D6RandomC1ERKS0_" >Random</dfn>(<em>const</em> <a class="type" href="#G3D::Random" title='G3D::Random' data-ref="G3D::Random" >Random</a>&amp; <dfn class="local col8 decl" id="3978r" title='r' data-type='const G3D::Random &amp;' data-ref="3978r" >r</dfn>) {</td></tr>
+<tr><th id="90">90</th><td>        *<b>this</b> <a class="member" href="#_ZN3G3D6RandomaSERKS0_" title='G3D::Random::operator=' data-ref="_ZN3G3D6RandomaSERKS0_" >=</a> <a class="local col8 ref" href="#3978r" title='r' data-ref="3978r" >r</a>;</td></tr>
+<tr><th id="91">91</th><td>    }</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><b>public</b>:</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>    <i class="doc">/** <span class="command">\param</span> <span class="arg">threadsafe</span> Set to false if you know that this random</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">        will only be used on a single thread.  This eliminates the</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">        lock and improves performance on some platforms.</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="99">99</th><td>    <dfn class="decl" id="_ZN3G3D6RandomC1Ejb" title='G3D::Random::Random' data-ref="_ZN3G3D6RandomC1Ejb" >Random</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="local col9 decl" id="3979seed" title='seed' data-type='uint32' data-ref="3979seed" >seed</dfn> = <var>0xF018A4D2</var>, <em>bool</em> <dfn class="local col0 decl" id="3980threadsafe" title='threadsafe' data-type='bool' data-ref="3980threadsafe" >threadsafe</dfn> = <b>true</b>);</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>    <b>virtual</b> <dfn class="virtual decl" id="_ZN3G3D6RandomD1Ev" title='G3D::Random::~Random' data-ref="_ZN3G3D6RandomD1Ev" >~Random</dfn>();</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D6Random5resetEjb" title='G3D::Random::reset' data-ref="_ZN3G3D6Random5resetEjb" >reset</dfn>(<a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="local col1 decl" id="3981seed" title='seed' data-type='uint32' data-ref="3981seed" >seed</dfn> = <var>0xF018A4D2</var>, <em>bool</em> <dfn class="local col2 decl" id="3982threadsafe" title='threadsafe' data-type='bool' data-ref="3982threadsafe" >threadsafe</dfn> = <b>true</b>);</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td>    <i class="doc">/** Each bit is random.  Subclasses can choose to override just </i></td></tr>
+<tr><th id="106">106</th><td><i class="doc">       this method and the other methods will all work automatically. */</i></td></tr>
+<tr><th id="107">107</th><td>    <b>virtual</b> <a class="typedef" href="g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <dfn class="virtual decl" id="_ZN3G3D6Random4bitsEv" title='G3D::Random::bits' data-ref="_ZN3G3D6Random4bitsEv" >bits</dfn>();</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>    <i class="doc">/** Uniform random integer on the range [min, max] */</i></td></tr>
+<tr><th id="110">110</th><td>    <b>virtual</b> <em>int</em> <dfn class="virtual decl" id="_ZN3G3D6Random7integerEii" title='G3D::Random::integer' data-ref="_ZN3G3D6Random7integerEii" >integer</dfn>(<em>int</em> <dfn class="local col3 decl" id="3983min" title='min' data-type='int' data-ref="3983min" >min</dfn>, <em>int</em> <dfn class="local col4 decl" id="3984max" title='max' data-type='int' data-ref="3984max" >max</dfn>);</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>    <i class="doc">/** Uniform random float on the range [min, max] */</i></td></tr>
+<tr><th id="113">113</th><td>    <b>virtual</b> <b>inline</b> <em>float</em> <dfn class="virtual decl def" id="_ZN3G3D6Random7uniformEff" title='G3D::Random::uniform' data-ref="_ZN3G3D6Random7uniformEff" >uniform</dfn>(<em>float</em> <dfn class="local col5 decl" id="3985low" title='low' data-type='float' data-ref="3985low" >low</dfn>, <em>float</em> <dfn class="local col6 decl" id="3986high" title='high' data-type='float' data-ref="3986high" >high</dfn>) {</td></tr>
+<tr><th id="114">114</th><td>        <i>// We could compute the ratio in double precision here for</i></td></tr>
+<tr><th id="115">115</th><td><i>        // about 1.5x slower performance and slightly better</i></td></tr>
+<tr><th id="116">116</th><td><i>        // precision.</i></td></tr>
+<tr><th id="117">117</th><td>        <b>return</b> <a class="local col5 ref" href="#3985low" title='low' data-ref="3985low" >low</a> + (<a class="local col6 ref" href="#3986high" title='high' data-ref="3986high" >high</a> - <a class="local col5 ref" href="#3985low" title='low' data-ref="3985low" >low</a>) * ((<em>float</em>)<a class="virtual member" href="#_ZN3G3D6Random4bitsEv" title='G3D::Random::bits' data-ref="_ZN3G3D6Random4bitsEv" >bits</a>() / (<em>float</em>)<var>0xFFFFFFFFUL</var>);</td></tr>
+<tr><th id="118">118</th><td>    }</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>    <i class="doc">/** Uniform random float on the range [0, 1] */</i></td></tr>
+<tr><th id="121">121</th><td>    <b>virtual</b> <b>inline</b> <em>float</em> <dfn class="virtual decl def" id="_ZN3G3D6Random7uniformEv" title='G3D::Random::uniform' data-ref="_ZN3G3D6Random7uniformEv" >uniform</dfn>() {</td></tr>
+<tr><th id="122">122</th><td>        <i>// We could compute the ratio in double precision here for</i></td></tr>
+<tr><th id="123">123</th><td><i>        // about 1.5x slower performance and slightly better</i></td></tr>
+<tr><th id="124">124</th><td><i>        // precision.</i></td></tr>
+<tr><th id="125">125</th><td>        <em>const</em> <em>float</em> <dfn class="local col7 decl" id="3987norm" title='norm' data-type='const float' data-ref="3987norm" >norm</dfn> = <var>1.0f</var> / (<em>float</em>)<var>0xFFFFFFFFUL</var>;</td></tr>
+<tr><th id="126">126</th><td>        <b>return</b> (<em>float</em>)<a class="virtual member" href="#_ZN3G3D6Random4bitsEv" title='G3D::Random::bits' data-ref="_ZN3G3D6Random4bitsEv" >bits</a>() * <a class="local col7 ref" href="#3987norm" title='norm' data-ref="3987norm" >norm</a>;</td></tr>
+<tr><th id="127">127</th><td>    }</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>    <i class="doc">/** Normally distributed reals. */</i></td></tr>
+<tr><th id="130">130</th><td>    <b>virtual</b> <em>float</em> <dfn class="virtual decl" id="_ZN3G3D6Random8gaussianEff" title='G3D::Random::gaussian' data-ref="_ZN3G3D6Random8gaussianEff" >gaussian</dfn>(<em>float</em> <dfn class="local col8 decl" id="3988mean" title='mean' data-type='float' data-ref="3988mean" >mean</dfn>, <em>float</em> <dfn class="local col9 decl" id="3989stdev" title='stdev' data-type='float' data-ref="3989stdev" >stdev</dfn>);</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>    <i class="doc">/** Returns 3D unit vectors distributed according to </i></td></tr>
+<tr><th id="133">133</th><td><i class="doc">        a cosine distribution about the positive z-axis. */</i></td></tr>
+<tr><th id="134">134</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D6Random7cosHemiERfS1_S1_" title='G3D::Random::cosHemi' data-ref="_ZN3G3D6Random7cosHemiERfS1_S1_" >cosHemi</dfn>(<em>float</em>&amp; <dfn class="local col0 decl" id="3990x" title='x' data-type='float &amp;' data-ref="3990x" >x</dfn>, <em>float</em>&amp; <dfn class="local col1 decl" id="3991y" title='y' data-type='float &amp;' data-ref="3991y" >y</dfn>, <em>float</em>&amp; <dfn class="local col2 decl" id="3992z" title='z' data-type='float &amp;' data-ref="3992z" >z</dfn>);</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>    <i class="doc">/** Returns 3D unit vectors distributed according to </i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">        a cosine distribution about the z-axis. */</i></td></tr>
+<tr><th id="138">138</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D6Random9cosSphereERfS1_S1_" title='G3D::Random::cosSphere' data-ref="_ZN3G3D6Random9cosSphereERfS1_S1_" >cosSphere</dfn>(<em>float</em>&amp; <dfn class="local col3 decl" id="3993x" title='x' data-type='float &amp;' data-ref="3993x" >x</dfn>, <em>float</em>&amp; <dfn class="local col4 decl" id="3994y" title='y' data-type='float &amp;' data-ref="3994y" >y</dfn>, <em>float</em>&amp; <dfn class="local col5 decl" id="3995z" title='z' data-type='float &amp;' data-ref="3995z" >z</dfn>);</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td>    <i class="doc">/** Returns 3D unit vectors distributed according to a cosine</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">        power distribution (<span class="command">\f$</span><span class="verb"> \cos^k \theta \</span>f$) about</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">        the z-axis. */</i></td></tr>
+<tr><th id="143">143</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D6Random10cosPowHemiEfRfS1_S1_" title='G3D::Random::cosPowHemi' data-ref="_ZN3G3D6Random10cosPowHemiEfRfS1_S1_" >cosPowHemi</dfn>(<em>const</em> <em>float</em> <dfn class="local col6 decl" id="3996k" title='k' data-type='const float' data-ref="3996k" >k</dfn>, <em>float</em>&amp; <dfn class="local col7 decl" id="3997x" title='x' data-type='float &amp;' data-ref="3997x" >x</dfn>, <em>float</em>&amp; <dfn class="local col8 decl" id="3998y" title='y' data-type='float &amp;' data-ref="3998y" >y</dfn>, <em>float</em>&amp; <dfn class="local col9 decl" id="3999z" title='z' data-type='float &amp;' data-ref="3999z" >z</dfn>);</td></tr>
+<tr><th id="144">144</th><td></td></tr>
+<tr><th id="145">145</th><td>    <i class="doc">/** Returns 3D unit vectors uniformly distributed on the </i></td></tr>
+<tr><th id="146">146</th><td><i class="doc">        hemisphere about the z-axis. */</i></td></tr>
+<tr><th id="147">147</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D6Random4hemiERfS1_S1_" title='G3D::Random::hemi' data-ref="_ZN3G3D6Random4hemiERfS1_S1_" >hemi</dfn>(<em>float</em>&amp; <dfn class="local col0 decl" id="4000x" title='x' data-type='float &amp;' data-ref="4000x" >x</dfn>, <em>float</em>&amp; <dfn class="local col1 decl" id="4001y" title='y' data-type='float &amp;' data-ref="4001y" >y</dfn>, <em>float</em>&amp; <dfn class="local col2 decl" id="4002z" title='z' data-type='float &amp;' data-ref="4002z" >z</dfn>);</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td>    <i class="doc">/** Returns 3D unit vectors uniformly distributed on the sphere */</i></td></tr>
+<tr><th id="150">150</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN3G3D6Random6sphereERfS1_S1_" title='G3D::Random::sphere' data-ref="_ZN3G3D6Random6sphereERfS1_S1_" >sphere</dfn>(<em>float</em>&amp; <dfn class="local col3 decl" id="4003x" title='x' data-type='float &amp;' data-ref="4003x" >x</dfn>, <em>float</em>&amp; <dfn class="local col4 decl" id="4004y" title='y' data-type='float &amp;' data-ref="4004y" >y</dfn>, <em>float</em>&amp; <dfn class="local col5 decl" id="4005z" title='z' data-type='float &amp;' data-ref="4005z" >z</dfn>);</td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="153">153</th><td><i class="doc">       A shared instance for when the performance and features but not</i></td></tr>
+<tr><th id="154">154</th><td><i class="doc">       consistency of the class are desired.  It is slightly (10%)</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">       faster to use a distinct instance than to use the common one.</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">       </i></td></tr>
+<tr><th id="157">157</th><td><i class="doc">       Threadsafe.</i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="159">159</th><td>    <em>static</em> <a class="type" href="#G3D::Random" title='G3D::Random' data-ref="G3D::Random" >Random</a>&amp; <dfn class="decl" id="_ZN3G3D6Random6commonEv" title='G3D::Random::common' data-ref="_ZN3G3D6Random6commonEv" >common</dfn>();</td></tr>
+<tr><th id="160">160</th><td>};</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>}</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td><u>#<span data-ppcond="12">endif</span></u></td></tr>
+<tr><th id="165">165</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

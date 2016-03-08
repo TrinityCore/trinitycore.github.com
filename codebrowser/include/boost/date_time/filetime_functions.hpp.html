@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+<title>filetime_functions.hpp [include/boost/date_time/filetime_functions.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/date_time/filetime_functions.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>date_time</a>/filetime_functions.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/DATE_TIME_FILETIME_FUNCTIONS_HPP__">DATE_TIME_FILETIME_FUNCTIONS_HPP__</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/DATE_TIME_FILETIME_FUNCTIONS_HPP__" data-ref="_M/DATE_TIME_FILETIME_FUNCTIONS_HPP__">DATE_TIME_FILETIME_FUNCTIONS_HPP__</dfn></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>/* Copyright (c) 2004 CrystalClear Software, Inc.</i></td></tr>
+<tr><th id="5">5</th><td><i> * Use, modification and distribution is subject to the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="7">7</th><td><i> * file LICENSE_1_0.txt or <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="8">8</th><td><i> * Author: Jeff Garland, Bart Garst</i></td></tr>
+<tr><th id="9">9</th><td><i> * $Date: 2012-09-22 09:04:10 -0700 (Sat, 22 Sep 2012) $</i></td></tr>
+<tr><th id="10">10</th><td><i> */</i></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><i class="doc">/*!<span class="command"> @file</span> filetime_functions.hpp</i></td></tr>
+<tr><th id="13">13</th><td><i class="doc"> * Function(s) for converting between a FILETIME structure and a</i></td></tr>
+<tr><th id="14">14</th><td><i class="doc"> * time object. This file is only available on systems that have</i></td></tr>
+<tr><th id="15">15</th><td><i class="doc"> * BOOST_HAS_FTIME defined.</i></td></tr>
+<tr><th id="16">16</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="compiler_config.hpp.html">&lt;boost/date_time/compiler_config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">if</span> defined(<span class="macro" data-ref="_M/BOOST_HAS_FTIME">BOOST_HAS_FTIME</span>) // skip this file if no FILETIME</u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#if defined(BOOST_USE_WINDOWS_H)</u></td></tr>
+<tr><th id="23">23</th><td><u>#  include &lt;windows.h&gt;</u></td></tr>
+<tr><th id="24">24</th><td><u>#endif</u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#include &lt;boost/cstdint.hpp&gt;</u></td></tr>
+<tr><th id="27">27</th><td><u>#include &lt;boost/date_time/time.hpp&gt;</u></td></tr>
+<tr><th id="28">28</th><td><u>#include &lt;boost/date_time/date_defs.hpp&gt;</u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>namespace</b> boost {</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>namespace</b> date_time {</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><b>namespace</b> winapi {</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><u>#if !defined(BOOST_USE_WINDOWS_H)</u></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>    <b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>        <b>struct</b> FILETIME</td></tr>
+<tr><th id="41">41</th><td>        {</td></tr>
+<tr><th id="42">42</th><td>            boost::uint32_t dwLowDateTime;</td></tr>
+<tr><th id="43">43</th><td>            boost::uint32_t dwHighDateTime;</td></tr>
+<tr><th id="44">44</th><td>        };</td></tr>
+<tr><th id="45">45</th><td>        <b>struct</b> SYSTEMTIME</td></tr>
+<tr><th id="46">46</th><td>        {</td></tr>
+<tr><th id="47">47</th><td>            boost::uint16_t wYear;</td></tr>
+<tr><th id="48">48</th><td>            boost::uint16_t wMonth;</td></tr>
+<tr><th id="49">49</th><td>            boost::uint16_t wDayOfWeek;</td></tr>
+<tr><th id="50">50</th><td>            boost::uint16_t wDay;</td></tr>
+<tr><th id="51">51</th><td>            boost::uint16_t wHour;</td></tr>
+<tr><th id="52">52</th><td>            boost::uint16_t wMinute;</td></tr>
+<tr><th id="53">53</th><td>            boost::uint16_t wSecond;</td></tr>
+<tr><th id="54">54</th><td>            boost::uint16_t wMilliseconds;</td></tr>
+<tr><th id="55">55</th><td>        };</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>        __declspec(dllimport) <em>void</em> <b>__stdcall</b> GetSystemTimeAsFileTime(FILETIME* lpFileTime);</td></tr>
+<tr><th id="58">58</th><td>        __declspec(dllimport) <em>int</em> <b>__stdcall</b> FileTimeToLocalFileTime(<em>const</em> FILETIME* lpFileTime, FILETIME* lpLocalFileTime);</td></tr>
+<tr><th id="59">59</th><td>        __declspec(dllimport) <em>void</em> <b>__stdcall</b> GetSystemTime(SYSTEMTIME* lpSystemTime);</td></tr>
+<tr><th id="60">60</th><td>        __declspec(dllimport) <em>int</em> <b>__stdcall</b> SystemTimeToFileTime(<em>const</em> SYSTEMTIME* lpSystemTime, FILETIME* lpFileTime);</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>    } <i>// extern "C"</i></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#endif // defined(BOOST_USE_WINDOWS_H)</u></td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <b>typedef</b> FILETIME file_time;</td></tr>
+<tr><th id="67">67</th><td>    <b>typedef</b> SYSTEMTIME system_time;</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>    <b>inline</b> <em>void</em> get_system_time_as_file_time(file_time&amp; ft)</td></tr>
+<tr><th id="70">70</th><td>    {</td></tr>
+<tr><th id="71">71</th><td><u>#if BOOST_WORKAROUND(__MWERKS__, BOOST_TESTED_AT(0x3205))</u></td></tr>
+<tr><th id="72">72</th><td>        <i>// Some runtime library implementations expect local times as the norm for ctime.</i></td></tr>
+<tr><th id="73">73</th><td>        file_time ft_utc;</td></tr>
+<tr><th id="74">74</th><td>        GetSystemTimeAsFileTime(&amp;ft_utc);</td></tr>
+<tr><th id="75">75</th><td>        FileTimeToLocalFileTime(&amp;ft_utc, &amp;ft);</td></tr>
+<tr><th id="76">76</th><td><u>#elif defined(BOOST_HAS_GETSYSTEMTIMEASFILETIME)</u></td></tr>
+<tr><th id="77">77</th><td>        GetSystemTimeAsFileTime(&amp;ft);</td></tr>
+<tr><th id="78">78</th><td><u>#else</u></td></tr>
+<tr><th id="79">79</th><td>        system_time st;</td></tr>
+<tr><th id="80">80</th><td>        GetSystemTime(&amp;st);</td></tr>
+<tr><th id="81">81</th><td>        SystemTimeToFileTime(&amp;st, &amp;ft);</td></tr>
+<tr><th id="82">82</th><td><u>#endif</u></td></tr>
+<tr><th id="83">83</th><td>    }</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>    <i class="doc">/*!</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc">     * The function converts file_time into number of microseconds elapsed since 1970-Jan-01</i></td></tr>
+<tr><th id="87">87</th><td><i class="doc">     *</i></td></tr>
+<tr><th id="88">88</th><td><i class="doc">     * <span class="command">\note</span> Only dates after 1970-Jan-01 are supported. Dates before will be wrapped.</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc">     *</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">     * <span class="command">\note</span> The function is templated on the FILETIME type, so that</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">     *       it can be used with both native FILETIME and the ad-hoc</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">     *       boost::date_time::winapi::file_time type.</i></td></tr>
+<tr><th id="93">93</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="94">94</th><td>    <b>template</b>&lt; <b>typename</b> FileTimeT &gt;</td></tr>
+<tr><th id="95">95</th><td>    <b>inline</b> boost::uint64_t file_time_to_microseconds(FileTimeT <em>const</em>&amp; ft)</td></tr>
+<tr><th id="96">96</th><td>    {</td></tr>
+<tr><th id="97">97</th><td>        <i>/* shift is difference between 1970-Jan-01 &amp; 1601-Jan-01</i></td></tr>
+<tr><th id="98">98</th><td><i>        * in 100-nanosecond intervals */</i></td></tr>
+<tr><th id="99">99</th><td>        <em>const</em> uint64_t shift = <var>116444736000000000ULL</var>; <i>// (27111902 &lt;&lt; 32) + 3577643008</i></td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>        <b>union</b> {</td></tr>
+<tr><th id="102">102</th><td>            FileTimeT as_file_time;</td></tr>
+<tr><th id="103">103</th><td>            uint64_t as_integer; <i>// 100-nanos since 1601-Jan-01</i></td></tr>
+<tr><th id="104">104</th><td>        } caster;</td></tr>
+<tr><th id="105">105</th><td>        caster.as_file_time = ft;</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>        caster.as_integer -= shift; <i>// filetime is now 100-nanos since 1970-Jan-01</i></td></tr>
+<tr><th id="108">108</th><td>        <b>return</b> (caster.as_integer / <var>10</var>); <i>// truncate to microseconds</i></td></tr>
+<tr><th id="109">109</th><td>    }</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>} <i>// namespace winapi</i></td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td><i class="doc">//! Create a time object from an initialized FILETIME struct.</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc"> * Create a time object from an initialized FILETIME struct.</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc"> * A FILETIME struct holds 100-nanosecond units (0.0000001). When</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc"> * built with microsecond resolution the file_time's sub second value</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc"> * will be truncated. Nanosecond resolution has no truncation.</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc"> * <span class="command">\note</span> The function is templated on the FILETIME type, so that</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc"> *       it can be used with both native FILETIME and the ad-hoc</i></td></tr>
+<tr><th id="122">122</th><td><i class="doc"> *       boost::date_time::winapi::file_time type.</i></td></tr>
+<tr><th id="123">123</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="124">124</th><td><b>template</b>&lt; <b>typename</b> TimeT, <b>typename</b> FileTimeT &gt;</td></tr>
+<tr><th id="125">125</th><td><b>inline</b></td></tr>
+<tr><th id="126">126</th><td>TimeT time_from_ftime(<em>const</em> FileTimeT&amp; ft)</td></tr>
+<tr><th id="127">127</th><td>{</td></tr>
+<tr><th id="128">128</th><td>    <b>typedef</b> <b>typename</b> TimeT::date_type date_type;</td></tr>
+<tr><th id="129">129</th><td>    <b>typedef</b> <b>typename</b> TimeT::date_duration_type date_duration_type;</td></tr>
+<tr><th id="130">130</th><td>    <b>typedef</b> <b>typename</b> TimeT::time_duration_type time_duration_type;</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>    <i>// <a href="https://svn.boost.org/trac/boost/ticket/">https://svn.boost.org/trac/boost/ticket/</a>2523</i></td></tr>
+<tr><th id="133">133</th><td><i>    // Since this function can be called with arbitrary times, including ones that</i></td></tr>
+<tr><th id="134">134</th><td><i>    // are before 1970-Jan-01, we'll have to cast the time a bit differently,</i></td></tr>
+<tr><th id="135">135</th><td><i>    // than it is done in the file_time_to_microseconds function. This allows to</i></td></tr>
+<tr><th id="136">136</th><td><i>    // avoid integer wrapping for dates before 1970-Jan-01.</i></td></tr>
+<tr><th id="137">137</th><td>    <b>union</b> {</td></tr>
+<tr><th id="138">138</th><td>        FileTimeT as_file_time;</td></tr>
+<tr><th id="139">139</th><td>        uint64_t as_integer; <i>// 100-nanos since 1601-Jan-01</i></td></tr>
+<tr><th id="140">140</th><td>    } caster;</td></tr>
+<tr><th id="141">141</th><td>    caster.as_file_time = ft;</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td>    uint64_t sec = caster.as_integer / <var>10000000UL</var>;</td></tr>
+<tr><th id="144">144</th><td>    uint32_t sub_sec = (caster.as_integer % <var>10000000UL</var>) <i>// 100-nanoseconds since the last second</i></td></tr>
+<tr><th id="145">145</th><td><u>#if !defined(BOOST_DATE_TIME_POSIX_TIME_STD_CONFIG)</u></td></tr>
+<tr><th id="146">146</th><td>        / <var>10</var>; <i>// microseconds since the last second</i></td></tr>
+<tr><th id="147">147</th><td><u>#else</u></td></tr>
+<tr><th id="148">148</th><td>        * <var>100</var>; <i>// nanoseconds since the last second</i></td></tr>
+<tr><th id="149">149</th><td><u>#endif</u></td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>    <i>// split sec into usable chunks: days, hours, minutes, &amp; seconds</i></td></tr>
+<tr><th id="152">152</th><td>    <em>const</em> uint32_t sec_per_day = <var>86400</var>; <i>// seconds per day</i></td></tr>
+<tr><th id="153">153</th><td>    uint32_t days = <b>static_cast</b>&lt; uint32_t &gt;(sec / sec_per_day);</td></tr>
+<tr><th id="154">154</th><td>    uint32_t tmp = <b>static_cast</b>&lt; uint32_t &gt;(sec % sec_per_day);</td></tr>
+<tr><th id="155">155</th><td>    uint32_t hours = tmp / <var>3600</var>; <i>// sec_per_hour</i></td></tr>
+<tr><th id="156">156</th><td>    tmp %= <var>3600</var>;</td></tr>
+<tr><th id="157">157</th><td>    uint32_t minutes = tmp / <var>60</var>; <i>// sec_per_min</i></td></tr>
+<tr><th id="158">158</th><td>    tmp %= <var>60</var>;</td></tr>
+<tr><th id="159">159</th><td>    uint32_t seconds = tmp; <i>// seconds</i></td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>    date_duration_type dd(days);</td></tr>
+<tr><th id="162">162</th><td>    date_type d = date_type(<var>1601</var>, Jan, <var>01</var>) + dd;</td></tr>
+<tr><th id="163">163</th><td>    <b>return</b> TimeT(d, time_duration_type(hours, minutes, seconds, sub_sec));</td></tr>
+<tr><th id="164">164</th><td>}</td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td>}} <i>// boost::date_time</i></td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><u>#<span data-ppcond="20">endif</span> // BOOST_HAS_FTIME</u></td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td><u>#<span data-ppcond="1">endif</span> // DATE_TIME_FILETIME_FUNCTIONS_HPP__</u></td></tr>
+<tr><th id="171">171</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,1026 @@
+<!doctype html>
+<html>
+<head>
+<title>Table.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/Table.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/Table.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/Table.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> <span class="command"> @file</span> Table.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc">  Templated hash table class.</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"></i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> <span class="command"> @maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> <span class="command"> @created</span> 2001-04-22</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"> <span class="command"> @edited</span>  2013-01-22</i></td></tr>
+<tr><th id="9">9</th><td><i class="doc">  Copyright 2000-2013, Morgan McGuire.</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc">  All rights reserved.</i></td></tr>
+<tr><th id="11">11</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">ifndef</span> <span class="macro" data-ref="_M/G3D_Table_h">G3D_Table_h</span></u></td></tr>
+<tr><th id="14">14</th><td><u>#define <dfn class="macro" id="_M/G3D_Table_h" data-ref="_M/G3D_Table_h">G3D_Table_h</dfn></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="../../../../../include/c++/4.9/cstddef.html">&lt;cstddef&gt;</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="Array.h.html">"G3D/Array.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="debug.h.html">"G3D/debug.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="System.h.html">"G3D/System.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="EqualsTrait.h.html">"G3D/EqualsTrait.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="HashTrait.h.html">"G3D/HashTrait.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="MemoryManager.h.html">"G3D/MemoryManager.h"</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#<span data-ppcond="28">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="29">29</th><td><u>#   pragma warning (push)</u></td></tr>
+<tr><th id="30">30</th><td>    <i>// Debug name too long warning</i></td></tr>
+<tr><th id="31">31</th><td><u>#   pragma warning (disable : 4786)</u></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="28">endif</span></u></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc"> An unordered data structure mapping keys to values.</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"></i></td></tr>
+<tr><th id="39">39</th><td><i class="doc"> There are two ways of definining custom hash functions (G3D provides built-in ones for most classes):</i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"></i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> <span class="tag">&lt;pre&gt;</span></i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"> class Foo {</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> public:</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">     std::string     name;</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">     int             index;</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">     static size_t hashCode(const Foo&amp; key) {</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc">          return HashTrait&lt;std::string&gt;::hashCode(key.name) + key.index;</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc">     }</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc">  };</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"></i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">  template&lt;&gt; struct HashTrait&lt;class Foo&gt; {</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">       static size_t hashCode(const Foo&amp; key) { return HashTrait&lt;std::string&gt;::hashCode(key.name) + key.index; }</i></td></tr>
+<tr><th id="53">53</th><td><i class="doc">  }; </i></td></tr>
+<tr><th id="54">54</th><td><i class="doc"></i></td></tr>
+<tr><th id="55">55</th><td><i class="doc"></i></td></tr>
+<tr><th id="56">56</th><td><i class="doc">  // Use Foo::hashCode</i></td></tr>
+<tr><th id="57">57</th><td><i class="doc">  Table&lt;Foo, std::string, Foo&gt; fooTable1;</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc"></i></td></tr>
+<tr><th id="59">59</th><td><i class="doc">  // Use HashTrait&lt;Foo&gt;</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">  Table&lt;Foo, std::string&gt;      fooTable2;</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">  <span class="tag">&lt;/pre&gt;</span></i></td></tr>
+<tr><th id="62">62</th><td><i class="doc"></i></td></tr>
+<tr><th id="63">63</th><td><i class="doc"></i></td></tr>
+<tr><th id="64">64</th><td><i class="doc"> Key must be a pointer, an int, a std::string or provide overloads for: </i></td></tr>
+<tr><th id="65">65</th><td><i class="doc"></i></td></tr>
+<tr><th id="66">66</th><td><i class="doc">  &lt;PRE&gt;</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc">    template&lt;&gt; struct HashTrait&lt;class Key&gt; {</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">        static size_t hashCode(const Key&amp; key) { return reinterpret_cast&lt;size_t&gt;( ... ); }</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">    }; </i></td></tr>
+<tr><th id="70">70</th><td><i class="doc">  &lt;/PRE&gt;</i></td></tr>
+<tr><th id="71">71</th><td><i class="doc"></i></td></tr>
+<tr><th id="72">72</th><td><i class="doc">  and one of </i></td></tr>
+<tr><th id="73">73</th><td><i class="doc"></i></td></tr>
+<tr><th id="74">74</th><td><i class="doc">  &lt;PRE&gt;</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc">    template&lt;&gt; struct EqualsTrait&lt;class Key&gt;{</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">         static bool equals(const Key&amp; a, const Key&amp; b) { return ... ; }</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">    };</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"></i></td></tr>
+<tr><th id="79">79</th><td><i class="doc"></i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">    bool operator==(const Key&amp;, const Key&amp;);</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">  &lt;/PRE&gt;</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc"></i></td></tr>
+<tr><th id="83">83</th><td><i class="doc"> G3D pre-defines HashTrait specializations for common types (like &lt;CODE&gt;int&lt;/CODE&gt; and &lt;CODE&gt;std::string&lt;/CODE&gt;).</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc"> If you use a Table with a different type you must write those functions yourself.  For example,</i></td></tr>
+<tr><th id="85">85</th><td><i class="doc"> an enum would use:</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc"></i></td></tr>
+<tr><th id="87">87</th><td><i class="doc">  &lt;PRE&gt;</i></td></tr>
+<tr><th id="88">88</th><td><i class="doc">    template&lt;&gt; struct HashTrait&lt;MyEnum&gt; {</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc">        static size_t hashCode(const MyEnum&amp; key) const { return reinterpret_cast&lt;size_t&gt;( key ); }</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">    };</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">  &lt;/PRE&gt;</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc"></i></td></tr>
+<tr><th id="93">93</th><td><i class="doc">  And rely on the default enum operator==.</i></td></tr>
+<tr><th id="94">94</th><td><i class="doc"></i></td></tr>
+<tr><th id="95">95</th><td><i class="doc"></i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">  Periodically check that debugGetLoad() is low (&gt; 0.1).  When it gets near</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">  1.0 your hash function is badly designed and maps too many inputs to</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">  the same output.</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="100">100</th><td><b>template</b>&lt;<b>class</b> Key, <b>class</b> Value, <b>class</b> HashFunc = <a class="type" href="HashTrait.h.html#HashTrait" title='HashTrait' data-ref="HashTrait" >HashTrait</a>&lt;Key&gt;, <b>class</b> EqualsFunc = <a class="type" href="EqualsTrait.h.html#EqualsTrait" title='EqualsTrait' data-ref="EqualsTrait" >EqualsTrait</a>&lt;Key&gt; &gt; </td></tr>
+<tr><th id="101">101</th><td><b>class</b> <dfn class="type def" id="G3D::Table" title='G3D::Table' data-ref="G3D::Table" >Table</dfn> {</td></tr>
+<tr><th id="102">102</th><td><b>public</b>:</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">     The pairs returned by iterator.</i></td></tr>
+<tr><th id="106">106</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="107">107</th><td>    <b>class</b> <dfn class="type def" id="G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</dfn> {</td></tr>
+<tr><th id="108">108</th><td>    <b>public</b>:</td></tr>
+<tr><th id="109">109</th><td>        Key    <dfn class="decl" id="G3D::Table::Entry::key" title='G3D::Table::Entry::key' data-ref="G3D::Table::Entry::key" >key</dfn>;</td></tr>
+<tr><th id="110">110</th><td>        Value  <dfn class="decl" id="G3D::Table::Entry::value" title='G3D::Table::Entry::value' data-ref="G3D::Table::Entry::value" >value</dfn>;</td></tr>
+<tr><th id="111">111</th><td>        <dfn class="decl def" id="_ZN3G3D5Table5EntryC1Ev" title='G3D::Table::Entry::Entry' data-ref="_ZN3G3D5Table5EntryC1Ev" >Entry</dfn>() {}</td></tr>
+<tr><th id="112">112</th><td>        <dfn class="decl def" id="_ZN3G3D5Table5EntryC1ERKT_" title='G3D::Table::Entry::Entry' data-ref="_ZN3G3D5Table5EntryC1ERKT_" >Entry</dfn>(<em>const</em> Key&amp; <dfn class="local col1 decl" id="4061k" title='k' data-type='const Key &amp;' data-ref="4061k" >k</dfn>) : <a class="member" href="#G3D::Table::Entry::key" title='G3D::Table::Entry::key' data-ref="G3D::Table::Entry::key" >key</a>(<a class="local col1 ref" href="#4061k" title='k' data-ref="4061k" >k</a>) {}</td></tr>
+<tr><th id="113">113</th><td>        <dfn class="decl def" id="_ZN3G3D5Table5EntryC1ERKT_RKT0_" title='G3D::Table::Entry::Entry' data-ref="_ZN3G3D5Table5EntryC1ERKT_RKT0_" >Entry</dfn>(<em>const</em> Key&amp; <dfn class="local col2 decl" id="4062k" title='k' data-type='const Key &amp;' data-ref="4062k" >k</dfn>, <em>const</em> Value&amp; <dfn class="local col3 decl" id="4063v" title='v' data-type='const Value &amp;' data-ref="4063v" >v</dfn>) : <a class="member" href="#G3D::Table::Entry::key" title='G3D::Table::Entry::key' data-ref="G3D::Table::Entry::key" >key</a>(<a class="local col2 ref" href="#4062k" title='k' data-ref="4062k" >k</a>), <a class="member" href="#G3D::Table::Entry::value" title='G3D::Table::Entry::value' data-ref="G3D::Table::Entry::value" >value</a>(<a class="local col3 ref" href="#4063v" title='v' data-ref="4063v" >v</a>) {}</td></tr>
+<tr><th id="114">114</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table5EntryeqERKS1_" title='G3D::Table::Entry::operator==' data-ref="_ZNK3G3D5Table5EntryeqERKS1_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a> &amp;<dfn class="local col4 decl" id="4064peer" title='peer' data-type='const G3D::Table::Entry &amp;' data-ref="4064peer" >peer</dfn>) <em>const</em> { <b>return</b> (<a class="member" href="#G3D::Table::Entry::key" title='G3D::Table::Entry::key' data-ref="G3D::Table::Entry::key" >key</a> == <a class="local col4 ref" href="#4064peer" title='peer' data-ref="4064peer" >peer</a>.key &amp;&amp; <a class="member" href="#G3D::Table::Entry::value" title='G3D::Table::Entry::value' data-ref="G3D::Table::Entry::value" >value</a> == <a class="local col4 ref" href="#4064peer" title='peer' data-ref="4064peer" >peer</a>.value); }</td></tr>
+<tr><th id="115">115</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table5EntryneERKS1_" title='G3D::Table::Entry::operator!=' data-ref="_ZNK3G3D5Table5EntryneERKS1_" ><b>operator</b>!=</dfn>(<em>const</em> <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a> &amp;<dfn class="local col5 decl" id="4065peer" title='peer' data-type='const G3D::Table::Entry &amp;' data-ref="4065peer" >peer</dfn>) <em>const</em> { <b>return</b> !<a class="member" href="#_ZNK3G3D5Table5EntryeqERKS1_" title='G3D::Table::Entry::operator==' data-ref="_ZNK3G3D5Table5EntryeqERKS1_" ><b>operator</b>==</a>(<a class="local col5 ref" href="#4065peer" title='peer' data-ref="4065peer" >peer</a>); }</td></tr>
+<tr><th id="116">116</th><td>    };</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><b>private</b>:</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>    <b>typedef</b> <a class="type" href="#G3D::Table" title='G3D::Table' data-ref="G3D::Table" >Table</a>&lt;Key, Value, HashFunc, EqualsFunc&gt; <dfn class="typedef" id="G3D::Table::ThisType" title='G3D::Table::ThisType' data-type='Table&lt;Key, Value, HashFunc, EqualsFunc&gt;' data-ref="G3D::Table::ThisType" >ThisType</dfn>;</td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="123">123</th><td><i class="doc">     Linked list nodes used internally by HashTable.</i></td></tr>
+<tr><th id="124">124</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="125">125</th><td>    <b>class</b> <dfn class="type def" id="G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</dfn> {</td></tr>
+<tr><th id="126">126</th><td>    <b>public</b>:</td></tr>
+<tr><th id="127">127</th><td>        <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>       <dfn class="decl" id="G3D::Table::Node::entry" title='G3D::Table::Node::entry' data-ref="G3D::Table::Node::entry" >entry</dfn>;</td></tr>
+<tr><th id="128">128</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>      <dfn class="decl" id="G3D::Table::Node::hashCode" title='G3D::Table::Node::hashCode' data-ref="G3D::Table::Node::hashCode" >hashCode</dfn>;</td></tr>
+<tr><th id="129">129</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*       <dfn class="decl" id="G3D::Table::Node::next" title='G3D::Table::Node::next' data-ref="G3D::Table::Node::next" >next</dfn>;</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>    <b>private</b>:</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>        <i>// Private to require use of the allocator</i></td></tr>
+<tr><th id="134">134</th><td>        <dfn class="decl def" id="_ZN3G3D5Table4NodeC1ERKT_RKT0_mPS1_" title='G3D::Table::Node::Node' data-ref="_ZN3G3D5Table4NodeC1ERKT_RKT0_mPS1_" >Node</dfn>(<em>const</em> Key&amp; <dfn class="local col6 decl" id="4066k" title='k' data-type='const Key &amp;' data-ref="4066k" >k</dfn>, <em>const</em> Value&amp; <dfn class="local col7 decl" id="4067v" title='v' data-type='const Value &amp;' data-ref="4067v" >v</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="4068h" title='h' data-type='size_t' data-ref="4068h" >h</dfn>, <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col9 decl" id="4069n" title='n' data-type='G3D::Table::Node *' data-ref="4069n" >n</dfn>) </td></tr>
+<tr><th id="135">135</th><td>            : <a class="member" href="#G3D::Table::Node::entry" title='G3D::Table::Node::entry' data-ref="G3D::Table::Node::entry" >entry</a>(<a class="local col6 ref" href="#4066k" title='k' data-ref="4066k" >k</a>, <a class="local col7 ref" href="#4067v" title='v' data-ref="4067v" >v</a>), <a class="member" href="#G3D::Table::Node::hashCode" title='G3D::Table::Node::hashCode' data-ref="G3D::Table::Node::hashCode" >hashCode</a>(<a class="local col8 ref" href="#4068h" title='h' data-ref="4068h" >h</a>), <a class="member" href="#G3D::Table::Node::next" title='G3D::Table::Node::next' data-ref="G3D::Table::Node::next" >next</a>(<a class="local col9 ref" href="#4069n" title='n' data-ref="4069n" >n</a>) {</td></tr>
+<tr><th id="136">136</th><td>                <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>((next == NULL) || isValidHeapPointer(next));</td></tr>
+<tr><th id="137">137</th><td>        }</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td>        <dfn class="decl def" id="_ZN3G3D5Table4NodeC1ERKT_mPS1_" title='G3D::Table::Node::Node' data-ref="_ZN3G3D5Table4NodeC1ERKT_mPS1_" >Node</dfn>(<em>const</em> Key&amp; <dfn class="local col0 decl" id="4070k" title='k' data-type='const Key &amp;' data-ref="4070k" >k</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="4071h" title='h' data-type='size_t' data-ref="4071h" >h</dfn>, <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col2 decl" id="4072n" title='n' data-type='G3D::Table::Node *' data-ref="4072n" >n</dfn>) </td></tr>
+<tr><th id="140">140</th><td>            : <a class="member" href="#G3D::Table::Node::entry" title='G3D::Table::Node::entry' data-ref="G3D::Table::Node::entry" >entry</a>(<a class="local col0 ref" href="#4070k" title='k' data-ref="4070k" >k</a>), <a class="member" href="#G3D::Table::Node::hashCode" title='G3D::Table::Node::hashCode' data-ref="G3D::Table::Node::hashCode" >hashCode</a>(<a class="local col1 ref" href="#4071h" title='h' data-ref="4071h" >h</a>), <a class="member" href="#G3D::Table::Node::next" title='G3D::Table::Node::next' data-ref="G3D::Table::Node::next" >next</a>(<a class="local col2 ref" href="#4072n" title='n' data-ref="4072n" >n</a>) {</td></tr>
+<tr><th id="141">141</th><td>                <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>((next == NULL) || isValidHeapPointer(next));</td></tr>
+<tr><th id="142">142</th><td>        }</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td>    <b>public</b>:</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td>        <em>static</em> <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="decl def" id="_ZN3G3D5Table4Node6createERKT_RKT0_mPS1_RNSt3tr110shared_ptrINS_13MemoryManagerEEE" title='G3D::Table::Node::create' data-ref="_ZN3G3D5Table4Node6createERKT_RKT0_mPS1_RNSt3tr110shared_ptrINS_13MemoryManagerEEE" >create</dfn>(<em>const</em> Key&amp; <dfn class="local col3 decl" id="4073k" title='k' data-type='const Key &amp;' data-ref="4073k" >k</dfn>, <em>const</em> Value&amp; <dfn class="local col4 decl" id="4074v" title='v' data-type='const Value &amp;' data-ref="4074v" >v</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="4075h" title='h' data-type='size_t' data-ref="4075h" >h</dfn>, <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col6 decl" id="4076n" title='n' data-type='G3D::Table::Node *' data-ref="4076n" >n</dfn>, <a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="typedef" href="MemoryManager.h.html#G3D::MemoryManager::Ref" title='G3D::MemoryManager::Ref' data-type='shared_ptr&lt;class MemoryManager&gt;' data-ref="G3D::MemoryManager::Ref" >Ref</a>&amp; <dfn class="local col7 decl" id="4077mm" title='mm' data-type='MemoryManager::Ref &amp;' data-ref="4077mm" >mm</dfn>) {</td></tr>
+<tr><th id="147">147</th><td>            <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col8 decl" id="4078node" title='node' data-type='G3D::Table::Node *' data-ref="4078node" >node</dfn> = (<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*)<a class="local col7 ref" href="#4077mm" title='mm' data-ref="4077mm" >mm</a><a class="ref" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#_ZNKSt3tr112__shared_ptrptEv" title='std::tr1::__shared_ptr::operator-&gt;' data-ref="_ZNKSt3tr112__shared_ptrptEv" id="_ZNKSt3tr112__shared_ptrptEv" >-&gt;</a><a class="virtual ref" href="MemoryManager.h.html#_ZN3G3D13MemoryManager5allocEm" title='G3D::MemoryManager::alloc' data-ref="_ZN3G3D13MemoryManager5allocEm" id="_ZN3G3D13MemoryManager5allocEm" >alloc</a>(<b>sizeof</b>(<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>));</td></tr>
+<tr><th id="148">148</th><td>            <b>return</b> <b>new</b> (<a class="local col8 ref" href="#4078node" title='node' data-ref="4078node" >node</a>) <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>(<a class="local col3 ref" href="#4073k" title='k' data-ref="4073k" >k</a>, <a class="local col4 ref" href="#4074v" title='v' data-ref="4074v" >v</a>, <a class="local col5 ref" href="#4075h" title='h' data-ref="4075h" >h</a>, <a class="local col6 ref" href="#4076n" title='n' data-ref="4076n" >n</a>);</td></tr>
+<tr><th id="149">149</th><td>        }</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>        <em>static</em> <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="decl def" id="_ZN3G3D5Table4Node6createERKT_mPS1_RNSt3tr110shared_ptrINS_13MemoryManagerEEE" title='G3D::Table::Node::create' data-ref="_ZN3G3D5Table4Node6createERKT_mPS1_RNSt3tr110shared_ptrINS_13MemoryManagerEEE" >create</dfn>(<em>const</em> Key&amp; <dfn class="local col9 decl" id="4079k" title='k' data-type='const Key &amp;' data-ref="4079k" >k</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="4080hashCode" title='hashCode' data-type='size_t' data-ref="4080hashCode" >hashCode</dfn>, <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col1 decl" id="4081n" title='n' data-type='G3D::Table::Node *' data-ref="4081n" >n</dfn>, <a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="typedef" href="MemoryManager.h.html#G3D::MemoryManager::Ref" title='G3D::MemoryManager::Ref' data-type='shared_ptr&lt;class MemoryManager&gt;' data-ref="G3D::MemoryManager::Ref" >Ref</a>&amp; <dfn class="local col2 decl" id="4082mm" title='mm' data-type='MemoryManager::Ref &amp;' data-ref="4082mm" >mm</dfn>) {</td></tr>
+<tr><th id="152">152</th><td>            <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col3 decl" id="4083node" title='node' data-type='G3D::Table::Node *' data-ref="4083node" >node</dfn> = (<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*)<a class="local col2 ref" href="#4082mm" title='mm' data-ref="4082mm" >mm</a><a class="ref" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#_ZNKSt3tr112__shared_ptrptEv" title='std::tr1::__shared_ptr::operator-&gt;' data-ref="_ZNKSt3tr112__shared_ptrptEv" id="_ZNKSt3tr112__shared_ptrptEv" >-&gt;</a><a class="virtual ref" href="MemoryManager.h.html#_ZN3G3D13MemoryManager5allocEm" title='G3D::MemoryManager::alloc' data-ref="_ZN3G3D13MemoryManager5allocEm" id="_ZN3G3D13MemoryManager5allocEm" >alloc</a>(<b>sizeof</b>(<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>));</td></tr>
+<tr><th id="153">153</th><td>            <b>return</b> <b>new</b> (<a class="local col3 ref" href="#4083node" title='node' data-ref="4083node" >node</a>) <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>(<a class="local col9 ref" href="#4079k" title='k' data-ref="4079k" >k</a>, <a class="local col0 ref" href="#4080hashCode" title='hashCode' data-ref="4080hashCode" >hashCode</a>, <a class="local col1 ref" href="#4081n" title='n' data-ref="4081n" >n</a>);</td></tr>
+<tr><th id="154">154</th><td>        }</td></tr>
+<tr><th id="155">155</th><td></td></tr>
+<tr><th id="156">156</th><td>        <em>static</em> <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table4Node7destroyEPS1_RNSt3tr110shared_ptrINS_13MemoryManagerEEE" title='G3D::Table::Node::destroy' data-ref="_ZN3G3D5Table4Node7destroyEPS1_RNSt3tr110shared_ptrINS_13MemoryManagerEEE" >destroy</dfn>(<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col4 decl" id="4084n" title='n' data-type='G3D::Table::Node *' data-ref="4084n" >n</dfn>, <a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="typedef" href="MemoryManager.h.html#G3D::MemoryManager::Ref" title='G3D::MemoryManager::Ref' data-type='shared_ptr&lt;class MemoryManager&gt;' data-ref="G3D::MemoryManager::Ref" >Ref</a>&amp; <dfn class="local col5 decl" id="4085mm" title='mm' data-type='MemoryManager::Ref &amp;' data-ref="4085mm" >mm</dfn>) {</td></tr>
+<tr><th id="157">157</th><td>            <a class="local col4 ref" href="#4084n" title='n' data-ref="4084n" >n</a>-&gt;~<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>();</td></tr>
+<tr><th id="158">158</th><td>            <a class="local col5 ref" href="#4085mm" title='mm' data-ref="4085mm" >mm</a><a class="ref" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#_ZNKSt3tr112__shared_ptrptEv" title='std::tr1::__shared_ptr::operator-&gt;' data-ref="_ZNKSt3tr112__shared_ptrptEv" id="_ZNKSt3tr112__shared_ptrptEv" >-&gt;</a><a class="virtual ref" href="MemoryManager.h.html#_ZN3G3D13MemoryManager4freeEPv" title='G3D::MemoryManager::free' data-ref="_ZN3G3D13MemoryManager4freeEPv" id="_ZN3G3D13MemoryManager4freeEPv" >free</a>(<a class="local col4 ref" href="#4084n" title='n' data-ref="4084n" >n</a>);</td></tr>
+<tr><th id="159">159</th><td>        }</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="162">162</th><td><i class="doc">        Clones a whole chain;</i></td></tr>
+<tr><th id="163">163</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="164">164</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="decl def" id="_ZN3G3D5Table4Node5cloneERNSt3tr110shared_ptrINS_13MemoryManagerEEE" title='G3D::Table::Node::clone' data-ref="_ZN3G3D5Table4Node5cloneERNSt3tr110shared_ptrINS_13MemoryManagerEEE" >clone</dfn>(<a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="typedef" href="MemoryManager.h.html#G3D::MemoryManager::Ref" title='G3D::MemoryManager::Ref' data-type='shared_ptr&lt;class MemoryManager&gt;' data-ref="G3D::MemoryManager::Ref" >Ref</a>&amp; <dfn class="local col6 decl" id="4086mm" title='mm' data-type='MemoryManager::Ref &amp;' data-ref="4086mm" >mm</dfn>) {</td></tr>
+<tr><th id="165">165</th><td>           <b>return</b> create(<b>this</b>-&gt;entry.key, <b>this</b>-&gt;entry.value, <a class="member" href="#G3D::Table::Node::hashCode" title='G3D::Table::Node::hashCode' data-ref="G3D::Table::Node::hashCode" >hashCode</a>, (<a class="member" href="#G3D::Table::Node::next" title='G3D::Table::Node::next' data-ref="G3D::Table::Node::next" >next</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) ? <span class="macro" title="__null" data-ref="_M/NULL">NULL</span> : <a class="member" href="#G3D::Table::Node::next" title='G3D::Table::Node::next' data-ref="G3D::Table::Node::next" >next</a>-&gt;clone(<a class="local col6 ref" href="#4086mm" title='mm' data-ref="4086mm" >mm</a>), <a class="local col6 ref" href="#4086mm" title='mm' data-ref="4086mm" >mm</a>);</td></tr>
+<tr><th id="166">166</th><td>        }</td></tr>
+<tr><th id="167">167</th><td>    };</td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td>    <em>void</em> <dfn class="decl def" id="_ZNK3G3D5Table14checkIntegrityEv" title='G3D::Table::checkIntegrity' data-ref="_ZNK3G3D5Table14checkIntegrityEv" >checkIntegrity</dfn>() <em>const</em> {</td></tr>
+<tr><th id="170">170</th><td><u>#       <span data-ppcond="170">ifdef</span> <span class="macro" data-ref="_M/G3D_DEBUG">G3D_DEBUG</span></u></td></tr>
+<tr><th id="171">171</th><td>           debugAssert(m_bucket == NULL || isValidHeapPointer(m_bucket));</td></tr>
+<tr><th id="172">172</th><td>           <b>for</b> (size_t b = <var>0</var>; b &lt; m_numBuckets; ++b) {</td></tr>
+<tr><th id="173">173</th><td>               Node* node = m_bucket[b];</td></tr>
+<tr><th id="174">174</th><td>               debugAssert(node == NULL || isValidHeapPointer(node));</td></tr>
+<tr><th id="175">175</th><td>               <b>while</b> (node != NULL) {</td></tr>
+<tr><th id="176">176</th><td>                   debugAssert(node == NULL || isValidHeapPointer(node));</td></tr>
+<tr><th id="177">177</th><td>                   node = node-&gt;next;</td></tr>
+<tr><th id="178">178</th><td>               }</td></tr>
+<tr><th id="179">179</th><td>           }</td></tr>
+<tr><th id="180">180</th><td><u>#       <span data-ppcond="170">endif</span></u></td></tr>
+<tr><th id="181">181</th><td>    }</td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td>    <i class="doc">/** Number of elements in the table.*/</i></td></tr>
+<tr><th id="184">184</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>              <dfn class="decl" id="G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</dfn>;</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="187">187</th><td><i class="doc">     Array of Node*. </i></td></tr>
+<tr><th id="188">188</th><td><i class="doc"></i></td></tr>
+<tr><th id="189">189</th><td><i class="doc">     We don't use Array&lt;Node*&gt; because Table is lower-level than Array.</i></td></tr>
+<tr><th id="190">190</th><td><i class="doc">     Some elements may be NULL.</i></td></tr>
+<tr><th id="191">191</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="192">192</th><td>    <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>**              <dfn class="decl" id="G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</dfn>;</td></tr>
+<tr><th id="193">193</th><td>    </td></tr>
+<tr><th id="194">194</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="195">195</th><td><i class="doc">     Length of the m_bucket array.</i></td></tr>
+<tr><th id="196">196</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="197">197</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>              <dfn class="decl" id="G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</dfn>;</td></tr>
+<tr><th id="198">198</th><td></td></tr>
+<tr><th id="199">199</th><td>    <a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="typedef" href="MemoryManager.h.html#G3D::MemoryManager::Ref" title='G3D::MemoryManager::Ref' data-type='shared_ptr&lt;class MemoryManager&gt;' data-ref="G3D::MemoryManager::Ref" >Ref</a>  <dfn class="decl" id="G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</dfn>;</td></tr>
+<tr><th id="200">200</th><td></td></tr>
+<tr><th id="201">201</th><td>    <em>void</em>* <dfn class="decl def" id="_ZNK3G3D5Table5allocEm" title='G3D::Table::alloc' data-ref="_ZNK3G3D5Table5allocEm" >alloc</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="4087s" title='s' data-type='size_t' data-ref="4087s" >s</dfn>) <em>const</em> {</td></tr>
+<tr><th id="202">202</th><td>        <b>return</b> <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a><a class="ref" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#_ZNKSt3tr112__shared_ptrptEv" title='std::tr1::__shared_ptr::operator-&gt;' data-ref="_ZNKSt3tr112__shared_ptrptEv" id="_ZNKSt3tr112__shared_ptrptEv" >-&gt;</a><a class="virtual ref" href="MemoryManager.h.html#_ZN3G3D13MemoryManager5allocEm" title='G3D::MemoryManager::alloc' data-ref="_ZN3G3D13MemoryManager5allocEm" id="_ZN3G3D13MemoryManager5allocEm" >alloc</a>(<a class="local col7 ref" href="#4087s" title='s' data-ref="4087s" >s</a>);</td></tr>
+<tr><th id="203">203</th><td>    }</td></tr>
+<tr><th id="204">204</th><td></td></tr>
+<tr><th id="205">205</th><td>    <em>void</em> <dfn class="decl def" id="_ZNK3G3D5Table4freeEPv" title='G3D::Table::free' data-ref="_ZNK3G3D5Table4freeEPv" >free</dfn>(<em>void</em>* <dfn class="local col8 decl" id="4088p" title='p' data-type='void *' data-ref="4088p" >p</dfn>) <em>const</em> {</td></tr>
+<tr><th id="206">206</th><td>        <b>return</b> <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a><a class="ref" href="../../../../../include/c++/4.9/tr1/shared_ptr.h.html#_ZNKSt3tr112__shared_ptrptEv" title='std::tr1::__shared_ptr::operator-&gt;' data-ref="_ZNKSt3tr112__shared_ptrptEv" id="_ZNKSt3tr112__shared_ptrptEv" >-&gt;</a><a class="virtual ref" href="MemoryManager.h.html#_ZN3G3D13MemoryManager4freeEPv" title='G3D::MemoryManager::free' data-ref="_ZN3G3D13MemoryManager4freeEPv" id="_ZN3G3D13MemoryManager4freeEPv" >free</a>(<a class="local col8 ref" href="#4088p" title='p' data-ref="4088p" >p</a>);</td></tr>
+<tr><th id="207">207</th><td>    }</td></tr>
+<tr><th id="208">208</th><td></td></tr>
+<tr><th id="209">209</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="210">210</th><td><i class="doc">     Re-hashes for a larger m_bucket size.</i></td></tr>
+<tr><th id="211">211</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="212">212</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table6resizeEm" title='G3D::Table::resize' data-ref="_ZN3G3D5Table6resizeEm" >resize</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="4089newSize" title='newSize' data-type='size_t' data-ref="4089newSize" >newSize</dfn>) {</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td>        <i>// Hang onto the old m_bucket array</i></td></tr>
+<tr><th id="215">215</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>** <dfn class="local col0 decl" id="4090oldBucket" title='oldBucket' data-type='G3D::Table::Node **' data-ref="4090oldBucket" >oldBucket</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>;</td></tr>
+<tr><th id="216">216</th><td></td></tr>
+<tr><th id="217">217</th><td>        <i>// Allocate a new m_bucket array with the new size</i></td></tr>
+<tr><th id="218">218</th><td>        <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a> = (<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>**)<a class="member" href="#_ZNK3G3D5Table5allocEm" title='G3D::Table::alloc' data-ref="_ZNK3G3D5Table5allocEm" >alloc</a>(<b>sizeof</b>(<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*) * <a class="local col9 ref" href="#4089newSize" title='newSize' data-ref="4089newSize" >newSize</a>);</td></tr>
+<tr><th id="219">219</th><td>        <a class="macro" href="debugAssert.h.html#165" title="{ if (!(m_bucket != __null)) { G3D::_internal::_releaseInputGrab_(); if ((G3D::_internal::_failureHook != __null) &amp;&amp; G3D::_internal::_failureHook(&quot;m_bucket != NULL&quot;, &quot;MemoryManager::alloc returned NULL. Out of memory.&quot;, &quot;/home/nayd/TrinityCore/dep/g3dlite/include/G3D/Table.h&quot;, 219, true)) { ::exit(-1); } G3D::_internal::_restoreInputGrab_(); } }" data-ref="_M/alwaysAssertM">alwaysAssertM</a>(<a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <q>"MemoryManager::alloc returned NULL. Out of memory."</q>);</td></tr>
+<tr><th id="220">220</th><td>        <i>// Set all pointers to NULL</i></td></tr>
+<tr><th id="221">221</th><td>        <a class="type" href="System.h.html#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<a class="ref" href="System.h.html#_ZN3G3D6System6memsetEPvhm" title='G3D::System::memset' data-ref="_ZN3G3D6System6memsetEPvhm" id="_ZN3G3D6System6memsetEPvhm" >memset</a>(<a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>, <var>0</var>, <a class="local col9 ref" href="#4089newSize" title='newSize' data-ref="4089newSize" >newSize</a> * <b>sizeof</b>(<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*));</td></tr>
+<tr><th id="222">222</th><td>        <i>// Move each node to its new hash location</i></td></tr>
+<tr><th id="223">223</th><td>        <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="4091b" title='b' data-type='size_t' data-ref="4091b" >b</dfn> = <var>0</var>; <a class="local col1 ref" href="#4091b" title='b' data-ref="4091b" >b</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col1 ref" href="#4091b" title='b' data-ref="4091b" >b</a>) {</td></tr>
+<tr><th id="224">224</th><td>            <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col2 decl" id="4092node" title='node' data-type='G3D::Table::Node *' data-ref="4092node" >node</dfn> = <a class="local col0 ref" href="#4090oldBucket" title='oldBucket' data-ref="4090oldBucket" >oldBucket</a>[<a class="local col1 ref" href="#4091b" title='b' data-ref="4091b" >b</a>];</td></tr>
+<tr><th id="225">225</th><td>         </td></tr>
+<tr><th id="226">226</th><td>            <i>// There is a linked list of nodes at this m_bucket</i></td></tr>
+<tr><th id="227">227</th><td>            <b>while</b> (<a class="local col2 ref" href="#4092node" title='node' data-ref="4092node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="228">228</th><td>                <i>// Hang onto the old next pointer</i></td></tr>
+<tr><th id="229">229</th><td>                <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col3 decl" id="4093nextNode" title='nextNode' data-type='G3D::Table::Node *' data-ref="4093nextNode" >nextNode</dfn> = <a class="local col2 ref" href="#4092node" title='node' data-ref="4092node" >node</a>-&gt;next;</td></tr>
+<tr><th id="230">230</th><td>        </td></tr>
+<tr><th id="231">231</th><td>                <i>// Insert at the head of the list for m_bucket[i]</i></td></tr>
+<tr><th id="232">232</th><td>                <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4094i" title='i' data-type='size_t' data-ref="4094i" >i</dfn> = <a class="local col2 ref" href="#4092node" title='node' data-ref="4092node" >node</a>-&gt;hashCode % <a class="local col9 ref" href="#4089newSize" title='newSize' data-ref="4089newSize" >newSize</a>;</td></tr>
+<tr><th id="233">233</th><td>                <a class="local col2 ref" href="#4092node" title='node' data-ref="4092node" >node</a>-&gt;next = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col4 ref" href="#4094i" title='i' data-ref="4094i" >i</a>];</td></tr>
+<tr><th id="234">234</th><td>                <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col4 ref" href="#4094i" title='i' data-ref="4094i" >i</a>] = <a class="local col2 ref" href="#4092node" title='node' data-ref="4092node" >node</a>;</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td>                <i>// Move on to the next node</i></td></tr>
+<tr><th id="237">237</th><td>                <a class="local col2 ref" href="#4092node" title='node' data-ref="4092node" >node</a> = <a class="local col3 ref" href="#4093nextNode" title='nextNode' data-ref="4093nextNode" >nextNode</a>;</td></tr>
+<tr><th id="238">238</th><td>            }</td></tr>
+<tr><th id="239">239</th><td></td></tr>
+<tr><th id="240">240</th><td>            <i>// Drop the old pointer for cleanliness when debugging</i></td></tr>
+<tr><th id="241">241</th><td>            <a class="local col0 ref" href="#4090oldBucket" title='oldBucket' data-ref="4090oldBucket" >oldBucket</a>[<a class="local col1 ref" href="#4091b" title='b' data-ref="4091b" >b</a>] = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="242">242</th><td>        }</td></tr>
+<tr><th id="243">243</th><td></td></tr>
+<tr><th id="244">244</th><td>        <i>// Delete the old storage</i></td></tr>
+<tr><th id="245">245</th><td>        <a class="member" href="#_ZNK3G3D5Table4freeEPv" title='G3D::Table::free' data-ref="_ZNK3G3D5Table4freeEPv" >free</a>(<a class="local col0 ref" href="#4090oldBucket" title='oldBucket' data-ref="4090oldBucket" >oldBucket</a>);</td></tr>
+<tr><th id="246">246</th><td>        <b>this</b>-&gt;m_numBuckets = <a class="local col9 ref" href="#4089newSize" title='newSize' data-ref="4089newSize" >newSize</a>;</td></tr>
+<tr><th id="247">247</th><td></td></tr>
+<tr><th id="248">248</th><td>        <a class="member" href="#_ZNK3G3D5Table14checkIntegrityEv" title='G3D::Table::checkIntegrity' data-ref="_ZNK3G3D5Table14checkIntegrityEv" >checkIntegrity</a>();</td></tr>
+<tr><th id="249">249</th><td>    }</td></tr>
+<tr><th id="250">250</th><td></td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table8copyFromERKNS_5TableIT_T0_T1_T2_EE" title='G3D::Table::copyFrom' data-ref="_ZN3G3D5Table8copyFromERKNS_5TableIT_T0_T1_T2_EE" >copyFrom</dfn>(<em>const</em> <a class="typedef" href="#G3D::Table::ThisType" title='G3D::Table::ThisType' data-type='Table&lt;Key, Value, HashFunc, EqualsFunc&gt;' data-ref="G3D::Table::ThisType" >ThisType</a>&amp; <dfn class="local col5 decl" id="4095h" title='h' data-type='const ThisType &amp;' data-ref="4095h" >h</dfn>) {</td></tr>
+<tr><th id="253">253</th><td>        <b>if</b> (&amp;<a class="local col5 ref" href="#4095h" title='h' data-ref="4095h" >h</a> == <b>this</b>) {</td></tr>
+<tr><th id="254">254</th><td>            <b>return</b>;</td></tr>
+<tr><th id="255">255</th><td>        }</td></tr>
+<tr><th id="256">256</th><td></td></tr>
+<tr><th id="257">257</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(m_bucket == NULL);</td></tr>
+<tr><th id="258">258</th><td>        <a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> = <a class="local col5 ref" href="#4095h" title='h' data-ref="4095h" >h</a>.m_size;</td></tr>
+<tr><th id="259">259</th><td>        <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> = <a class="local col5 ref" href="#4095h" title='h' data-ref="4095h" >h</a>.m_numBuckets;</td></tr>
+<tr><th id="260">260</th><td>        <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a> = (<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>**)<a class="member" href="#_ZNK3G3D5Table5allocEm" title='G3D::Table::alloc' data-ref="_ZNK3G3D5Table5allocEm" >alloc</a>(<b>sizeof</b>(<a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*) * <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>);</td></tr>
+<tr><th id="261">261</th><td>        <i>// No need to NULL elements since we're about to overwrite them</i></td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td>        <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="4096b" title='b' data-type='size_t' data-ref="4096b" >b</dfn> = <var>0</var>; <a class="local col6 ref" href="#4096b" title='b' data-ref="4096b" >b</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col6 ref" href="#4096b" title='b' data-ref="4096b" >b</a>) {</td></tr>
+<tr><th id="264">264</th><td>            <b>if</b> (<a class="local col5 ref" href="#4095h" title='h' data-ref="4095h" >h</a>.m_bucket[<a class="local col6 ref" href="#4096b" title='b' data-ref="4096b" >b</a>] != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="265">265</th><td>                <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col6 ref" href="#4096b" title='b' data-ref="4096b" >b</a>] = <a class="local col5 ref" href="#4095h" title='h' data-ref="4095h" >h</a>.m_bucket[<a class="local col6 ref" href="#4096b" title='b' data-ref="4096b" >b</a>]-&gt;clone(<a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a>);</td></tr>
+<tr><th id="266">266</th><td>            } <b>else</b> {</td></tr>
+<tr><th id="267">267</th><td>                <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col6 ref" href="#4096b" title='b' data-ref="4096b" >b</a>] = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="268">268</th><td>            }</td></tr>
+<tr><th id="269">269</th><td>        }</td></tr>
+<tr><th id="270">270</th><td></td></tr>
+<tr><th id="271">271</th><td>        <a class="member" href="#_ZNK3G3D5Table14checkIntegrityEv" title='G3D::Table::checkIntegrity' data-ref="_ZNK3G3D5Table14checkIntegrityEv" >checkIntegrity</a>();</td></tr>
+<tr><th id="272">272</th><td>    }</td></tr>
+<tr><th id="273">273</th><td></td></tr>
+<tr><th id="274">274</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="275">275</th><td><i class="doc">     Frees the heap structures for the nodes.</i></td></tr>
+<tr><th id="276">276</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="277">277</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table10freeMemoryEv" title='G3D::Table::freeMemory' data-ref="_ZN3G3D5Table10freeMemoryEv" >freeMemory</dfn>() {</td></tr>
+<tr><th id="278">278</th><td>        <a class="member" href="#_ZNK3G3D5Table14checkIntegrityEv" title='G3D::Table::checkIntegrity' data-ref="_ZNK3G3D5Table14checkIntegrityEv" >checkIntegrity</a>();</td></tr>
+<tr><th id="279">279</th><td></td></tr>
+<tr><th id="280">280</th><td>        <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="4097b" title='b' data-type='size_t' data-ref="4097b" >b</dfn> = <var>0</var>; <a class="local col7 ref" href="#4097b" title='b' data-ref="4097b" >b</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col7 ref" href="#4097b" title='b' data-ref="4097b" >b</a>) {</td></tr>
+<tr><th id="281">281</th><td>            <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col8 decl" id="4098node" title='node' data-type='G3D::Table::Node *' data-ref="4098node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col7 ref" href="#4097b" title='b' data-ref="4097b" >b</a>];</td></tr>
+<tr><th id="282">282</th><td>            <b>while</b> (<a class="local col8 ref" href="#4098node" title='node' data-ref="4098node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="283">283</th><td>                <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col9 decl" id="4099next" title='next' data-type='G3D::Table::Node *' data-ref="4099next" >next</dfn> = <a class="local col8 ref" href="#4098node" title='node' data-ref="4098node" >node</a>-&gt;next;</td></tr>
+<tr><th id="284">284</th><td>                <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>::destroy(<a class="local col8 ref" href="#4098node" title='node' data-ref="4098node" >node</a>, <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a>);</td></tr>
+<tr><th id="285">285</th><td>                <a class="local col8 ref" href="#4098node" title='node' data-ref="4098node" >node</a> = <a class="local col9 ref" href="#4099next" title='next' data-ref="4099next" >next</a>;</td></tr>
+<tr><th id="286">286</th><td>            }</td></tr>
+<tr><th id="287">287</th><td>            <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col7 ref" href="#4097b" title='b' data-ref="4097b" >b</a>] = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="288">288</th><td>        }</td></tr>
+<tr><th id="289">289</th><td>        <a class="member" href="#_ZNK3G3D5Table4freeEPv" title='G3D::Table::free' data-ref="_ZNK3G3D5Table4freeEPv" >free</a>(<a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>);</td></tr>
+<tr><th id="290">290</th><td>        <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>     = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="291">291</th><td>        <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> = <var>0</var>;</td></tr>
+<tr><th id="292">292</th><td>        <a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a>       = <var>0</var>;</td></tr>
+<tr><th id="293">293</th><td>    }</td></tr>
+<tr><th id="294">294</th><td></td></tr>
+<tr><th id="295">295</th><td><b>public</b>:</td></tr>
+<tr><th id="296">296</th><td></td></tr>
+<tr><th id="297">297</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="298">298</th><td><i class="doc">     Creates an empty hash table using the default MemoryManager.</i></td></tr>
+<tr><th id="299">299</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="300">300</th><td>    <dfn class="decl def" id="_ZN3G3D5TableC1Ev" title='G3D::Table::Table&lt;Key, Value, HashFunc, EqualsFunc&gt;' data-ref="_ZN3G3D5TableC1Ev" >Table</dfn>() : <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="301">301</th><td>        <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a> = <a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="ref" href="MemoryManager.h.html#_ZN3G3D13MemoryManager6createEv" title='G3D::MemoryManager::create' data-ref="_ZN3G3D13MemoryManager6createEv" id="_ZN3G3D13MemoryManager6createEv" >create</a>();</td></tr>
+<tr><th id="302">302</th><td>        <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> = <var>0</var>;</td></tr>
+<tr><th id="303">303</th><td>        <a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a>       = <var>0</var>;</td></tr>
+<tr><th id="304">304</th><td>        <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>     = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="305">305</th><td>        <a class="member" href="#_ZNK3G3D5Table14checkIntegrityEv" title='G3D::Table::checkIntegrity' data-ref="_ZNK3G3D5Table14checkIntegrityEv" >checkIntegrity</a>();</td></tr>
+<tr><th id="306">306</th><td>    }</td></tr>
+<tr><th id="307">307</th><td></td></tr>
+<tr><th id="308">308</th><td>    <i class="doc">/** Changes the internal memory manager to m */</i></td></tr>
+<tr><th id="309">309</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table24clearAndSetMemoryManagerERKNSt3tr110shared_ptrINS_13MemoryManagerEEE" title='G3D::Table::clearAndSetMemoryManager' data-ref="_ZN3G3D5Table24clearAndSetMemoryManagerERKNSt3tr110shared_ptrINS_13MemoryManagerEEE" >clearAndSetMemoryManager</dfn>(<em>const</em> <a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="typedef" href="MemoryManager.h.html#G3D::MemoryManager::Ref" title='G3D::MemoryManager::Ref' data-type='shared_ptr&lt;class MemoryManager&gt;' data-ref="G3D::MemoryManager::Ref" >Ref</a>&amp; <dfn class="local col0 decl" id="4100m" title='m' data-type='const MemoryManager::Ref &amp;' data-ref="4100m" >m</dfn>) {</td></tr>
+<tr><th id="310">310</th><td>        <a class="member" href="#_ZN3G3D5Table5clearEv" title='G3D::Table::clear' data-ref="_ZN3G3D5Table5clearEv" >clear</a>();</td></tr>
+<tr><th id="311">311</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(m_bucket == NULL);</td></tr>
+<tr><th id="312">312</th><td>        <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a> = <a class="local col0 ref" href="#4100m" title='m' data-ref="4100m" >m</a>;</td></tr>
+<tr><th id="313">313</th><td>    }</td></tr>
+<tr><th id="314">314</th><td></td></tr>
+<tr><th id="315">315</th><td>    <i class="doc">/** </i></td></tr>
+<tr><th id="316">316</th><td><i class="doc">        Recommends that the table resize to anticipate at least this number of elements.</i></td></tr>
+<tr><th id="317">317</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="318">318</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table11setSizeHintEm" title='G3D::Table::setSizeHint' data-ref="_ZN3G3D5Table11setSizeHintEm" >setSizeHint</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="4101n" title='n' data-type='size_t' data-ref="4101n" >n</dfn>) {</td></tr>
+<tr><th id="319">319</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="4102s" title='s' data-type='size_t' data-ref="4102s" >s</dfn> = <a class="local col1 ref" href="#4101n" title='n' data-ref="4101n" >n</a> * <var>3</var>;</td></tr>
+<tr><th id="320">320</th><td>        <b>if</b> (<a class="local col2 ref" href="#4102s" title='s' data-ref="4102s" >s</a> &gt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>) {</td></tr>
+<tr><th id="321">321</th><td>            <a class="member" href="#_ZN3G3D5Table6resizeEm" title='G3D::Table::resize' data-ref="_ZN3G3D5Table6resizeEm" >resize</a>(<a class="local col2 ref" href="#4102s" title='s' data-ref="4102s" >s</a>);</td></tr>
+<tr><th id="322">322</th><td>        }</td></tr>
+<tr><th id="323">323</th><td>    }</td></tr>
+<tr><th id="324">324</th><td>    </td></tr>
+<tr><th id="325">325</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="326">326</th><td><i class="doc">       Destroys all of the memory allocated by the table, but does &lt;B&gt;not&lt;/B&gt;</i></td></tr>
+<tr><th id="327">327</th><td><i class="doc">       call delete on keys or values if they are pointers.  If you want to</i></td></tr>
+<tr><th id="328">328</th><td><i class="doc">       deallocate things that the table points at, use getKeys() and Array::deleteAll()</i></td></tr>
+<tr><th id="329">329</th><td><i class="doc">       to delete them.</i></td></tr>
+<tr><th id="330">330</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="331">331</th><td>    <b>virtual</b> <dfn class="virtual decl def" id="_ZN3G3D5TableD1Ev" title='G3D::Table::~Table&lt;Key, Value, HashFunc, EqualsFunc&gt;' data-ref="_ZN3G3D5TableD1Ev" >~Table</dfn>() {</td></tr>
+<tr><th id="332">332</th><td>        <a class="member" href="#_ZN3G3D5Table10freeMemoryEv" title='G3D::Table::freeMemory' data-ref="_ZN3G3D5Table10freeMemoryEv" >freeMemory</a>();</td></tr>
+<tr><th id="333">333</th><td>    }</td></tr>
+<tr><th id="334">334</th><td></td></tr>
+<tr><th id="335">335</th><td>    <i class="doc">/** Uses the default memory manager */</i></td></tr>
+<tr><th id="336">336</th><td>    <dfn class="decl def" id="_ZN3G3D5TableC1ERKNS_5TableIT_T0_T1_T2_EE" title='G3D::Table::Table&lt;Key, Value, HashFunc, EqualsFunc&gt;' data-ref="_ZN3G3D5TableC1ERKNS_5TableIT_T0_T1_T2_EE" >Table</dfn>(<em>const</em> <a class="typedef" href="#G3D::Table::ThisType" title='G3D::Table::ThisType' data-type='Table&lt;Key, Value, HashFunc, EqualsFunc&gt;' data-ref="G3D::Table::ThisType" >ThisType</a>&amp; <dfn class="local col3 decl" id="4103h" title='h' data-type='const ThisType &amp;' data-ref="4103h" >h</dfn>) {</td></tr>
+<tr><th id="337">337</th><td>        <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a> = <a class="type" href="MemoryManager.h.html#G3D::MemoryManager" title='G3D::MemoryManager' data-ref="G3D::MemoryManager" >MemoryManager</a>::<a class="ref" href="MemoryManager.h.html#_ZN3G3D13MemoryManager6createEv" title='G3D::MemoryManager::create' data-ref="_ZN3G3D13MemoryManager6createEv" id="_ZN3G3D13MemoryManager6createEv" >create</a>();</td></tr>
+<tr><th id="338">338</th><td>        <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> = <var>0</var>;</td></tr>
+<tr><th id="339">339</th><td>        <a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> = <var>0</var>;</td></tr>
+<tr><th id="340">340</th><td>        <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="341">341</th><td>        <b>this</b>-&gt;copyFrom(<a class="local col3 ref" href="#4103h" title='h' data-ref="4103h" >h</a>);</td></tr>
+<tr><th id="342">342</th><td>        <a class="member" href="#_ZNK3G3D5Table14checkIntegrityEv" title='G3D::Table::checkIntegrity' data-ref="_ZNK3G3D5Table14checkIntegrityEv" >checkIntegrity</a>();</td></tr>
+<tr><th id="343">343</th><td>    }</td></tr>
+<tr><th id="344">344</th><td></td></tr>
+<tr><th id="345">345</th><td></td></tr>
+<tr><th id="346">346</th><td>    Table&amp; <dfn class="decl def" id="_ZN3G3D5TableaSERKNS_5TableIT_T0_T1_T2_EE" title='G3D::Table::operator=' data-ref="_ZN3G3D5TableaSERKNS_5TableIT_T0_T1_T2_EE" ><b>operator</b>=</dfn>(<em>const</em> <a class="typedef" href="#G3D::Table::ThisType" title='G3D::Table::ThisType' data-type='Table&lt;Key, Value, HashFunc, EqualsFunc&gt;' data-ref="G3D::Table::ThisType" >ThisType</a>&amp; <dfn class="local col4 decl" id="4104h" title='h' data-type='const ThisType &amp;' data-ref="4104h" >h</dfn>) {</td></tr>
+<tr><th id="347">347</th><td>        <i>// No need to copy if the argument is this</i></td></tr>
+<tr><th id="348">348</th><td>        <b>if</b> (<b>this</b> != &amp;<a class="local col4 ref" href="#4104h" title='h' data-ref="4104h" >h</a>) {</td></tr>
+<tr><th id="349">349</th><td>            <i>// Free the existing nodes</i></td></tr>
+<tr><th id="350">350</th><td>            <a class="member" href="#_ZN3G3D5Table10freeMemoryEv" title='G3D::Table::freeMemory' data-ref="_ZN3G3D5Table10freeMemoryEv" >freeMemory</a>();</td></tr>
+<tr><th id="351">351</th><td>            <b>this</b>-&gt;copyFrom(<a class="local col4 ref" href="#4104h" title='h' data-ref="4104h" >h</a>);</td></tr>
+<tr><th id="352">352</th><td>            <a class="member" href="#_ZNK3G3D5Table14checkIntegrityEv" title='G3D::Table::checkIntegrity' data-ref="_ZNK3G3D5Table14checkIntegrityEv" >checkIntegrity</a>();</td></tr>
+<tr><th id="353">353</th><td>        }</td></tr>
+<tr><th id="354">354</th><td>        <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="355">355</th><td>    }</td></tr>
+<tr><th id="356">356</th><td></td></tr>
+<tr><th id="357">357</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="358">358</th><td><i class="doc">     Returns the length of the deepest m_bucket.</i></td></tr>
+<tr><th id="359">359</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="360">360</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZNK3G3D5Table25debugGetDeepestBucketSizeEv" title='G3D::Table::debugGetDeepestBucketSize' data-ref="_ZNK3G3D5Table25debugGetDeepestBucketSizeEv" >debugGetDeepestBucketSize</dfn>() <em>const</em> {</td></tr>
+<tr><th id="361">361</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="4105deepest" title='deepest' data-type='size_t' data-ref="4105deepest" >deepest</dfn> = <var>0</var>;</td></tr>
+<tr><th id="362">362</th><td></td></tr>
+<tr><th id="363">363</th><td>        <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="4106b" title='b' data-type='size_t' data-ref="4106b" >b</dfn> = <var>0</var>; <a class="local col6 ref" href="#4106b" title='b' data-ref="4106b" >b</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col6 ref" href="#4106b" title='b' data-ref="4106b" >b</a>) {</td></tr>
+<tr><th id="364">364</th><td>            <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>  <dfn class="local col7 decl" id="4107count" title='count' data-type='size_t' data-ref="4107count" >count</dfn> = <var>0</var>;</td></tr>
+<tr><th id="365">365</th><td>            <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*   <dfn class="local col8 decl" id="4108node" title='node' data-type='G3D::Table::Node *' data-ref="4108node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col6 ref" href="#4106b" title='b' data-ref="4106b" >b</a>];</td></tr>
+<tr><th id="366">366</th><td>            <b>while</b> (<a class="local col8 ref" href="#4108node" title='node' data-ref="4108node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="367">367</th><td>                <a class="local col8 ref" href="#4108node" title='node' data-ref="4108node" >node</a> = <a class="local col8 ref" href="#4108node" title='node' data-ref="4108node" >node</a>-&gt;next;</td></tr>
+<tr><th id="368">368</th><td>                ++<a class="local col7 ref" href="#4107count" title='count' data-ref="4107count" >count</a>;</td></tr>
+<tr><th id="369">369</th><td>            }</td></tr>
+<tr><th id="370">370</th><td></td></tr>
+<tr><th id="371">371</th><td>            <b>if</b> (<a class="local col7 ref" href="#4107count" title='count' data-ref="4107count" >count</a> &gt; <a class="local col5 ref" href="#4105deepest" title='deepest' data-ref="4105deepest" >deepest</a>) {</td></tr>
+<tr><th id="372">372</th><td>                <a class="local col5 ref" href="#4105deepest" title='deepest' data-ref="4105deepest" >deepest</a> = <a class="local col7 ref" href="#4107count" title='count' data-ref="4107count" >count</a>;</td></tr>
+<tr><th id="373">373</th><td>            }</td></tr>
+<tr><th id="374">374</th><td>        }</td></tr>
+<tr><th id="375">375</th><td></td></tr>
+<tr><th id="376">376</th><td>        <b>return</b> <a class="local col5 ref" href="#4105deepest" title='deepest' data-ref="4105deepest" >deepest</a>;</td></tr>
+<tr><th id="377">377</th><td>    }</td></tr>
+<tr><th id="378">378</th><td></td></tr>
+<tr><th id="379">379</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="380">380</th><td><i class="doc">       Returns the average size of non-empty buckets.</i></td></tr>
+<tr><th id="381">381</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="382">382</th><td>    <em>float</em> <dfn class="decl def" id="_ZNK3G3D5Table25debugGetAverageBucketSizeEv" title='G3D::Table::debugGetAverageBucketSize' data-ref="_ZNK3G3D5Table25debugGetAverageBucketSizeEv" >debugGetAverageBucketSize</dfn>() <em>const</em> {</td></tr>
+<tr><th id="383">383</th><td>        <a class="typedef" href="g3dmath.h.html#G3D::uint64" title='G3D::uint64' data-type='uint64_t' data-ref="G3D::uint64" >uint64</a> <dfn class="local col9 decl" id="4109num" title='num' data-type='uint64' data-ref="4109num" >num</dfn> = <var>0</var>;</td></tr>
+<tr><th id="384">384</th><td></td></tr>
+<tr><th id="385">385</th><td>        <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="4110b" title='b' data-type='size_t' data-ref="4110b" >b</dfn> = <var>0</var>; <a class="local col0 ref" href="#4110b" title='b' data-ref="4110b" >b</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col0 ref" href="#4110b" title='b' data-ref="4110b" >b</a>) {</td></tr>
+<tr><th id="386">386</th><td>            <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col1 decl" id="4111node" title='node' data-type='G3D::Table::Node *' data-ref="4111node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col0 ref" href="#4110b" title='b' data-ref="4110b" >b</a>];</td></tr>
+<tr><th id="387">387</th><td>            <b>if</b> (<a class="local col1 ref" href="#4111node" title='node' data-ref="4111node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="388">388</th><td>                ++<a class="local col9 ref" href="#4109num" title='num' data-ref="4109num" >num</a>;</td></tr>
+<tr><th id="389">389</th><td>            }</td></tr>
+<tr><th id="390">390</th><td>        }</td></tr>
+<tr><th id="391">391</th><td></td></tr>
+<tr><th id="392">392</th><td>        <b>return</b> (<em>float</em>)((<em>double</em>)<a class="member" href="#_ZNK3G3D5Table4sizeEv" title='G3D::Table::size' data-ref="_ZNK3G3D5Table4sizeEv" >size</a>() / <a class="local col9 ref" href="#4109num" title='num' data-ref="4109num" >num</a>);</td></tr>
+<tr><th id="393">393</th><td>    }</td></tr>
+<tr><th id="394">394</th><td></td></tr>
+<tr><th id="395">395</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="396">396</th><td><i class="doc">     A small load (close to zero) means the hash table is acting very</i></td></tr>
+<tr><th id="397">397</th><td><i class="doc">     efficiently most of the time.  A large load (close to 1) means </i></td></tr>
+<tr><th id="398">398</th><td><i class="doc">     the hash table is acting poorly-- all operations will be very slow.</i></td></tr>
+<tr><th id="399">399</th><td><i class="doc">     A large load will result from a bad hash function that maps too</i></td></tr>
+<tr><th id="400">400</th><td><i class="doc">     many keys to the same code.</i></td></tr>
+<tr><th id="401">401</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="402">402</th><td>    <em>double</em> <dfn class="decl def" id="_ZNK3G3D5Table12debugGetLoadEv" title='G3D::Table::debugGetLoad' data-ref="_ZNK3G3D5Table12debugGetLoadEv" >debugGetLoad</dfn>() <em>const</em> {</td></tr>
+<tr><th id="403">403</th><td>        <b>return</b> (<em>double</em>)<a class="member" href="#_ZNK3G3D5Table4sizeEv" title='G3D::Table::size' data-ref="_ZNK3G3D5Table4sizeEv" >size</a>() / <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="404">404</th><td>    }</td></tr>
+<tr><th id="405">405</th><td></td></tr>
+<tr><th id="406">406</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="407">407</th><td><i class="doc">     Returns the number of buckets.</i></td></tr>
+<tr><th id="408">408</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="409">409</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZNK3G3D5Table18debugGetNumBucketsEv" title='G3D::Table::debugGetNumBuckets' data-ref="_ZNK3G3D5Table18debugGetNumBucketsEv" >debugGetNumBuckets</dfn>() <em>const</em> {</td></tr>
+<tr><th id="410">410</th><td>        <b>return</b> <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="411">411</th><td>    }</td></tr>
+<tr><th id="412">412</th><td></td></tr>
+<tr><th id="413">413</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="414">414</th><td><i class="doc">     C++ STL style iterator variable.  See begin().</i></td></tr>
+<tr><th id="415">415</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="416">416</th><td>    <b>class</b> <dfn class="type def" id="G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</dfn> {</td></tr>
+<tr><th id="417">417</th><td>    <b>private</b>:</td></tr>
+<tr><th id="418">418</th><td>        <b>friend</b> <b>class</b> <a class="type" href="#G3D::Table" title='G3D::Table' data-ref="G3D::Table" >Table</a>&lt;Key, Value, HashFunc, EqualsFunc&gt;;</td></tr>
+<tr><th id="419">419</th><td></td></tr>
+<tr><th id="420">420</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="421">421</th><td><i class="doc">         Bucket index.</i></td></tr>
+<tr><th id="422">422</th><td><i class="doc">         */</i></td></tr>
+<tr><th id="423">423</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>              <dfn class="decl" id="G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</dfn>;</td></tr>
+<tr><th id="424">424</th><td></td></tr>
+<tr><th id="425">425</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="426">426</th><td><i class="doc">         Linked list node.</i></td></tr>
+<tr><th id="427">427</th><td><i class="doc">         */</i></td></tr>
+<tr><th id="428">428</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>*               <dfn class="decl" id="G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</dfn>;</td></tr>
+<tr><th id="429">429</th><td></td></tr>
+<tr><th id="430">430</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>              <dfn class="decl" id="G3D::Table::Iterator::m_numBuckets" title='G3D::Table::Iterator::m_numBuckets' data-ref="G3D::Table::Iterator::m_numBuckets" >m_numBuckets</dfn>;</td></tr>
+<tr><th id="431">431</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>**              <dfn class="decl" id="G3D::Table::Iterator::m_bucket" title='G3D::Table::Iterator::m_bucket' data-ref="G3D::Table::Iterator::m_bucket" >m_bucket</dfn>;</td></tr>
+<tr><th id="432">432</th><td>        <em>bool</em>                <dfn class="decl" id="G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</dfn>;</td></tr>
+<tr><th id="433">433</th><td></td></tr>
+<tr><th id="434">434</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="435">435</th><td><i class="doc">         Creates the end iterator.</i></td></tr>
+<tr><th id="436">436</th><td><i class="doc">         */</i></td></tr>
+<tr><th id="437">437</th><td>        <dfn class="decl def" id="_ZN3G3D5Table8IteratorC1Ev" title='G3D::Table::Iterator::Iterator' data-ref="_ZN3G3D5Table8IteratorC1Ev" >Iterator</dfn>() : <a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a>(<var>0</var>), <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>), <a class="member" href="#G3D::Table::Iterator::m_bucket" title='G3D::Table::Iterator::m_bucket' data-ref="G3D::Table::Iterator::m_bucket" >m_bucket</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="438">438</th><td>            <a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a> = <b>true</b>;</td></tr>
+<tr><th id="439">439</th><td>        }</td></tr>
+<tr><th id="440">440</th><td></td></tr>
+<tr><th id="441">441</th><td>        <dfn class="decl def" id="_ZN3G3D5Table8IteratorC1EmPPNS0_4NodeE" title='G3D::Table::Iterator::Iterator' data-ref="_ZN3G3D5Table8IteratorC1EmPPNS0_4NodeE" >Iterator</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="4112numBuckets" title='numBuckets' data-type='size_t' data-ref="4112numBuckets" >numBuckets</dfn>, <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>** <dfn class="local col3 decl" id="4113m_bucket" title='m_bucket' data-type='G3D::Table::Node **' data-ref="4113m_bucket" >m_bucket</dfn>) :</td></tr>
+<tr><th id="442">442</th><td>            <a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a>(<var>0</var>), </td></tr>
+<tr><th id="443">443</th><td>            <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>),</td></tr>
+<tr><th id="444">444</th><td>            <a class="member" href="#G3D::Table::Iterator::m_numBuckets" title='G3D::Table::Iterator::m_numBuckets' data-ref="G3D::Table::Iterator::m_numBuckets" >m_numBuckets</a>(<a class="local col2 ref" href="#4112numBuckets" title='numBuckets' data-ref="4112numBuckets" >numBuckets</a>),</td></tr>
+<tr><th id="445">445</th><td>            <a class="member" href="#G3D::Table::Iterator::m_bucket" title='G3D::Table::Iterator::m_bucket' data-ref="G3D::Table::Iterator::m_bucket" >m_bucket</a>(<a class="local col3 ref" href="#4113m_bucket" title='m_bucket' data-ref="4113m_bucket" >m_bucket</a>) {</td></tr>
+<tr><th id="446">446</th><td>            </td></tr>
+<tr><th id="447">447</th><td>            <b>if</b> (<a class="member" href="#G3D::Table::Iterator::m_numBuckets" title='G3D::Table::Iterator::m_numBuckets' data-ref="G3D::Table::Iterator::m_numBuckets" >m_numBuckets</a> == <var>0</var>) {</td></tr>
+<tr><th id="448">448</th><td>                <i>// Empty table</i></td></tr>
+<tr><th id="449">449</th><td>                <a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a> = <b>true</b>;</td></tr>
+<tr><th id="450">450</th><td>                <b>return</b>;</td></tr>
+<tr><th id="451">451</th><td>            }</td></tr>
+<tr><th id="452">452</th><td></td></tr>
+<tr><th id="453">453</th><td><u>#           <span data-ppcond="453">ifdef</span> <span class="macro" data-ref="_M/G3D_DEBUG">G3D_DEBUG</span></u></td></tr>
+<tr><th id="454">454</th><td>                <b>for</b> (<em>unsigned</em> <em>int</em> i = <var>0</var>; i &lt; m_numBuckets; ++i) {</td></tr>
+<tr><th id="455">455</th><td>                    debugAssert((m_bucket[i] == NULL) || isValidHeapPointer(m_bucket[i]));</td></tr>
+<tr><th id="456">456</th><td>                }</td></tr>
+<tr><th id="457">457</th><td><u>#           <span data-ppcond="453">endif</span></u></td></tr>
+<tr><th id="458">458</th><td></td></tr>
+<tr><th id="459">459</th><td>            <a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a> = <var>0</var>;</td></tr>
+<tr><th id="460">460</th><td>            <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a> = <a class="local col3 ref" href="#4113m_bucket" title='m_bucket' data-ref="4113m_bucket" >m_bucket</a>[<a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a>];</td></tr>
+<tr><th id="461">461</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>((node == NULL) || isValidHeapPointer(node));</td></tr>
+<tr><th id="462">462</th><td>            <a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a> = <b>false</b>;</td></tr>
+<tr><th id="463">463</th><td>            <a class="member" href="#_ZN3G3D5Table8Iterator8findNextEv" title='G3D::Table::Iterator::findNext' data-ref="_ZN3G3D5Table8Iterator8findNextEv" >findNext</a>();</td></tr>
+<tr><th id="464">464</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>((node == NULL) || isValidHeapPointer(node));</td></tr>
+<tr><th id="465">465</th><td>        }</td></tr>
+<tr><th id="466">466</th><td></td></tr>
+<tr><th id="467">467</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="468">468</th><td><i class="doc">         If node is NULL, then finds the next element by searching through the bucket array.</i></td></tr>
+<tr><th id="469">469</th><td><i class="doc">         Sets isDone if no more nodes are available.</i></td></tr>
+<tr><th id="470">470</th><td><i class="doc">         */</i></td></tr>
+<tr><th id="471">471</th><td>        <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table8Iterator8findNextEv" title='G3D::Table::Iterator::findNext' data-ref="_ZN3G3D5Table8Iterator8findNextEv" >findNext</dfn>() {</td></tr>
+<tr><th id="472">472</th><td>            <b>while</b> (<a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="473">473</th><td>                ++<a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a>;</td></tr>
+<tr><th id="474">474</th><td>                <b>if</b> (<a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a> &gt;= <a class="member" href="#G3D::Table::Iterator::m_numBuckets" title='G3D::Table::Iterator::m_numBuckets' data-ref="G3D::Table::Iterator::m_numBuckets" >m_numBuckets</a>) {</td></tr>
+<tr><th id="475">475</th><td>                    <a class="member" href="#G3D::Table::Iterator::m_bucket" title='G3D::Table::Iterator::m_bucket' data-ref="G3D::Table::Iterator::m_bucket" >m_bucket</a> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="476">476</th><td>                    <a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a> = <var>0</var>;</td></tr>
+<tr><th id="477">477</th><td>                    <a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a> = <b>true</b>;</td></tr>
+<tr><th id="478">478</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="479">479</th><td>                } <b>else</b> {</td></tr>
+<tr><th id="480">480</th><td>                    <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a> = <a class="member" href="#G3D::Table::Iterator::m_bucket" title='G3D::Table::Iterator::m_bucket' data-ref="G3D::Table::Iterator::m_bucket" >m_bucket</a>[<a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a>];</td></tr>
+<tr><th id="481">481</th><td>                    <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>((node == NULL) || isValidHeapPointer(node));</td></tr>
+<tr><th id="482">482</th><td>                }</td></tr>
+<tr><th id="483">483</th><td>            }</td></tr>
+<tr><th id="484">484</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(isValidHeapPointer(node));</td></tr>
+<tr><th id="485">485</th><td>        }</td></tr>
+<tr><th id="486">486</th><td></td></tr>
+<tr><th id="487">487</th><td>    <b>public</b>:</td></tr>
+<tr><th id="488">488</th><td>        <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table8IteratorneERKS1_" title='G3D::Table::Iterator::operator!=' data-ref="_ZNK3G3D5Table8IteratorneERKS1_" ><b>operator</b>!=</dfn>(<em>const</em> <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a>&amp; <dfn class="local col4 decl" id="4114other" title='other' data-type='const G3D::Table::Iterator &amp;' data-ref="4114other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="489">489</th><td>            <b>return</b> !(*<b>this</b> == <a class="local col4 ref" href="#4114other" title='other' data-ref="4114other" >other</a>);</td></tr>
+<tr><th id="490">490</th><td>        }</td></tr>
+<tr><th id="491">491</th><td></td></tr>
+<tr><th id="492">492</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table8IteratoreqERKS1_" title='G3D::Table::Iterator::operator==' data-ref="_ZNK3G3D5Table8IteratoreqERKS1_" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a>&amp; <dfn class="local col5 decl" id="4115other" title='other' data-type='const G3D::Table::Iterator &amp;' data-ref="4115other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="493">493</th><td>            <b>if</b> (<a class="local col5 ref" href="#4115other" title='other' data-ref="4115other" >other</a>.isDone || <a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a>) {</td></tr>
+<tr><th id="494">494</th><td>                <i>// Common case; check against isDone.</i></td></tr>
+<tr><th id="495">495</th><td>                <b>return</b> (<a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a> == <a class="local col5 ref" href="#4115other" title='other' data-ref="4115other" >other</a>.isDone);</td></tr>
+<tr><th id="496">496</th><td>            } <b>else</b> {</td></tr>
+<tr><th id="497">497</th><td>                <b>return</b> (<a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a> == <a class="local col5 ref" href="#4115other" title='other' data-ref="4115other" >other</a>.node) &amp;&amp; (<a class="member" href="#G3D::Table::Iterator::index" title='G3D::Table::Iterator::index' data-ref="G3D::Table::Iterator::index" >index</a> == <a class="local col5 ref" href="#4115other" title='other' data-ref="4115other" >other</a>.index);</td></tr>
+<tr><th id="498">498</th><td>            }</td></tr>
+<tr><th id="499">499</th><td>        }</td></tr>
+<tr><th id="500">500</th><td></td></tr>
+<tr><th id="501">501</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="502">502</th><td><i class="doc">         Pre increment.</i></td></tr>
+<tr><th id="503">503</th><td><i class="doc">         */</i></td></tr>
+<tr><th id="504">504</th><td>        <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a>&amp; <dfn class="decl def" id="_ZN3G3D5Table8IteratorppEv" title='G3D::Table::Iterator::operator++' data-ref="_ZN3G3D5Table8IteratorppEv" ><b>operator</b>++</dfn>() {</td></tr>
+<tr><th id="505">505</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(! isDone);</td></tr>
+<tr><th id="506">506</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(node != NULL);</td></tr>
+<tr><th id="507">507</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(isValidHeapPointer(node));</td></tr>
+<tr><th id="508">508</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>((node-&gt;next == NULL) || isValidHeapPointer(node-&gt;next));</td></tr>
+<tr><th id="509">509</th><td>            <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a> = <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>-&gt;next;</td></tr>
+<tr><th id="510">510</th><td>            <a class="member" href="#_ZN3G3D5Table8Iterator8findNextEv" title='G3D::Table::Iterator::findNext' data-ref="_ZN3G3D5Table8Iterator8findNextEv" >findNext</a>();</td></tr>
+<tr><th id="511">511</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(isDone || isValidHeapPointer(node));</td></tr>
+<tr><th id="512">512</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="513">513</th><td>        }</td></tr>
+<tr><th id="514">514</th><td></td></tr>
+<tr><th id="515">515</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="516">516</th><td><i class="doc">         Post increment (slower than preincrement).</i></td></tr>
+<tr><th id="517">517</th><td><i class="doc">         */</i></td></tr>
+<tr><th id="518">518</th><td>        <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a> <dfn class="decl def" id="_ZN3G3D5Table8IteratorppEi" title='G3D::Table::Iterator::operator++' data-ref="_ZN3G3D5Table8IteratorppEi" ><b>operator</b>++</dfn>(<em>int</em>) {</td></tr>
+<tr><th id="519">519</th><td>            <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a> <dfn class="local col6 decl" id="4116old" title='old' data-type='G3D::Table::Iterator' data-ref="4116old" >old</dfn> = *<b>this</b>;</td></tr>
+<tr><th id="520">520</th><td>            ++(*<b>this</b>);</td></tr>
+<tr><th id="521">521</th><td>            <b>return</b> <a class="local col6 ref" href="#4116old" title='old' data-ref="4116old" >old</a>;</td></tr>
+<tr><th id="522">522</th><td>        }</td></tr>
+<tr><th id="523">523</th><td></td></tr>
+<tr><th id="524">524</th><td>        <em>const</em> <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>&amp; <dfn class="decl def" id="_ZNK3G3D5Table8IteratordeEv" title='G3D::Table::Iterator::operator*' data-ref="_ZNK3G3D5Table8IteratordeEv" ><b>operator</b>*</dfn>() <em>const</em> {</td></tr>
+<tr><th id="525">525</th><td>            <b>return</b> <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>-&gt;entry;</td></tr>
+<tr><th id="526">526</th><td>        }</td></tr>
+<tr><th id="527">527</th><td></td></tr>
+<tr><th id="528">528</th><td>        <em>const</em> Value&amp; <dfn class="decl def" id="_ZNK3G3D5Table8Iterator5valueEv" title='G3D::Table::Iterator::value' data-ref="_ZNK3G3D5Table8Iterator5valueEv" >value</dfn>() <em>const</em> {</td></tr>
+<tr><th id="529">529</th><td>            <b>return</b> <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>-&gt;entry.value;</td></tr>
+<tr><th id="530">530</th><td>        }</td></tr>
+<tr><th id="531">531</th><td></td></tr>
+<tr><th id="532">532</th><td>        <em>const</em> Key&amp; <dfn class="decl def" id="_ZNK3G3D5Table8Iterator3keyEv" title='G3D::Table::Iterator::key' data-ref="_ZNK3G3D5Table8Iterator3keyEv" >key</dfn>() <em>const</em> {</td></tr>
+<tr><th id="533">533</th><td>            <b>return</b> <a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>-&gt;entry.key;</td></tr>
+<tr><th id="534">534</th><td>        }</td></tr>
+<tr><th id="535">535</th><td></td></tr>
+<tr><th id="536">536</th><td>        <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>* <dfn class="decl def" id="_ZNK3G3D5Table8IteratorptEv" title='G3D::Table::Iterator::operator-&gt;' data-ref="_ZNK3G3D5Table8IteratorptEv" ><b>operator</b>-&gt;</dfn>() <em>const</em> {</td></tr>
+<tr><th id="537">537</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(isValidHeapPointer(node));</td></tr>
+<tr><th id="538">538</th><td>            <b>return</b> &amp;(<a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>-&gt;entry);</td></tr>
+<tr><th id="539">539</th><td>        }</td></tr>
+<tr><th id="540">540</th><td></td></tr>
+<tr><th id="541">541</th><td>        <dfn class="decl def" id="_ZNK3G3D5Table8IteratorcvPNS0_5EntryEEv" title='G3D::Table::Iterator::operator G3D::Table::Entry *' data-ref="_ZNK3G3D5Table8IteratorcvPNS0_5EntryEEv" ><b>operator</b> <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>*</dfn>() <em>const</em> {</td></tr>
+<tr><th id="542">542</th><td>            <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(isValidHeapPointer(node));</td></tr>
+<tr><th id="543">543</th><td>            <b>return</b> &amp;(<a class="member" href="#G3D::Table::Iterator::node" title='G3D::Table::Iterator::node' data-ref="G3D::Table::Iterator::node" >node</a>-&gt;entry);</td></tr>
+<tr><th id="544">544</th><td>        }</td></tr>
+<tr><th id="545">545</th><td></td></tr>
+<tr><th id="546">546</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table8Iterator7isValidEv" title='G3D::Table::Iterator::isValid' data-ref="_ZNK3G3D5Table8Iterator7isValidEv" >isValid</dfn>() <em>const</em> {</td></tr>
+<tr><th id="547">547</th><td>            <b>return</b> ! <a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a>;</td></tr>
+<tr><th id="548">548</th><td>        }</td></tr>
+<tr><th id="549">549</th><td></td></tr>
+<tr><th id="550">550</th><td>        <i class="doc">/** <span class="command">@deprecated</span>  Use isValid */</i></td></tr>
+<tr><th id="551">551</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table8Iterator7hasMoreEv" title='G3D::Table::Iterator::hasMore' data-ref="_ZNK3G3D5Table8Iterator7hasMoreEv" >hasMore</dfn>() <em>const</em> {</td></tr>
+<tr><th id="552">552</th><td>            <b>return</b> ! <a class="member" href="#G3D::Table::Iterator::isDone" title='G3D::Table::Iterator::isDone' data-ref="G3D::Table::Iterator::isDone" >isDone</a>;</td></tr>
+<tr><th id="553">553</th><td>        }</td></tr>
+<tr><th id="554">554</th><td>    };</td></tr>
+<tr><th id="555">555</th><td></td></tr>
+<tr><th id="556">556</th><td></td></tr>
+<tr><th id="557">557</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="558">558</th><td><i class="doc">     C++ STL style iterator method.  Returns the first Entry, which </i></td></tr>
+<tr><th id="559">559</th><td><i class="doc">     contains a key and value.  Use preincrement (++entry) to get to</i></td></tr>
+<tr><th id="560">560</th><td><i class="doc">     the next element.  Do not modify the table while iterating.</i></td></tr>
+<tr><th id="561">561</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="562">562</th><td>    <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a> <dfn class="decl def" id="_ZNK3G3D5Table5beginEv" title='G3D::Table::begin' data-ref="_ZNK3G3D5Table5beginEv" >begin</dfn>() <em>const</em> {</td></tr>
+<tr><th id="563">563</th><td>        <b>return</b> <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a>(<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>, <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>);</td></tr>
+<tr><th id="564">564</th><td>    }</td></tr>
+<tr><th id="565">565</th><td></td></tr>
+<tr><th id="566">566</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="567">567</th><td><i class="doc">     C++ STL style iterator method.  Returns one after the last iterator</i></td></tr>
+<tr><th id="568">568</th><td><i class="doc">     element.</i></td></tr>
+<tr><th id="569">569</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="570">570</th><td>    <em>const</em> <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a> <dfn class="decl def" id="_ZNK3G3D5Table3endEv" title='G3D::Table::end' data-ref="_ZNK3G3D5Table3endEv" >end</dfn>() <em>const</em> {</td></tr>
+<tr><th id="571">571</th><td>        <b>return</b> <a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a>();</td></tr>
+<tr><th id="572">572</th><td>    }</td></tr>
+<tr><th id="573">573</th><td></td></tr>
+<tr><th id="574">574</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="575">575</th><td><i class="doc">     Removes all elements. Guaranteed to free all memory associated with</i></td></tr>
+<tr><th id="576">576</th><td><i class="doc">     the table.</i></td></tr>
+<tr><th id="577">577</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="578">578</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table5clearEv" title='G3D::Table::clear' data-ref="_ZN3G3D5Table5clearEv" >clear</dfn>() {</td></tr>
+<tr><th id="579">579</th><td>        <a class="member" href="#_ZN3G3D5Table10freeMemoryEv" title='G3D::Table::freeMemory' data-ref="_ZN3G3D5Table10freeMemoryEv" >freeMemory</a>();</td></tr>
+<tr><th id="580">580</th><td>        <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> = <var>0</var>;</td></tr>
+<tr><th id="581">581</th><td>        <a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> = <var>0</var>;</td></tr>
+<tr><th id="582">582</th><td>        <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="583">583</th><td>    }</td></tr>
+<tr><th id="584">584</th><td></td></tr>
+<tr><th id="585">585</th><td>   </td></tr>
+<tr><th id="586">586</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="587">587</th><td><i class="doc">     Returns the number of keys.</i></td></tr>
+<tr><th id="588">588</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="589">589</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZNK3G3D5Table4sizeEv" title='G3D::Table::size' data-ref="_ZNK3G3D5Table4sizeEv" >size</dfn>() <em>const</em> {</td></tr>
+<tr><th id="590">590</th><td>        <b>return</b> <a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a>;</td></tr>
+<tr><th id="591">591</th><td>    }</td></tr>
+<tr><th id="592">592</th><td></td></tr>
+<tr><th id="593">593</th><td></td></tr>
+<tr><th id="594">594</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="595">595</th><td><i class="doc">     If you insert a pointer into the key or value of a table, you are</i></td></tr>
+<tr><th id="596">596</th><td><i class="doc">     responsible for deallocating the object eventually.  Inserting </i></td></tr>
+<tr><th id="597">597</th><td><i class="doc">     key into a table is O(1), but may cause a potentially slow rehashing.</i></td></tr>
+<tr><th id="598">598</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="599">599</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table3setERKT_RKT0_" title='G3D::Table::set' data-ref="_ZN3G3D5Table3setERKT_RKT0_" >set</dfn>(<em>const</em> Key&amp; <dfn class="local col7 decl" id="4117key" title='key' data-type='const Key &amp;' data-ref="4117key" >key</dfn>, <em>const</em> Value&amp; <dfn class="local col8 decl" id="4118value" title='value' data-type='const Value &amp;' data-ref="4118value" >value</dfn>) {</td></tr>
+<tr><th id="600">600</th><td>        getCreateEntry(<a class="local col7 ref" href="#4117key" title='key' data-ref="4117key" >key</a>).value = <a class="local col8 ref" href="#4118value" title='value' data-ref="4118value" >value</a>;</td></tr>
+<tr><th id="601">601</th><td>    }</td></tr>
+<tr><th id="602">602</th><td></td></tr>
+<tr><th id="603">603</th><td><b>private</b>:</td></tr>
+<tr><th id="604">604</th><td></td></tr>
+<tr><th id="605">605</th><td>    <i class="doc">/** Helper for remove() and getRemove() */</i></td></tr>
+<tr><th id="606">606</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN3G3D5Table6removeERKT_RS1_RT0_b" title='G3D::Table::remove' data-ref="_ZN3G3D5Table6removeERKT_RS1_RT0_b" >remove</dfn>(<em>const</em> Key&amp; <dfn class="local col9 decl" id="4119key" title='key' data-type='const Key &amp;' data-ref="4119key" >key</dfn>, Key&amp; <dfn class="local col0 decl" id="4120removedKey" title='removedKey' data-type='Key &amp;' data-ref="4120removedKey" >removedKey</dfn>, Value&amp; <dfn class="local col1 decl" id="4121removedValue" title='removedValue' data-type='Value &amp;' data-ref="4121removedValue" >removedValue</dfn>, <em>bool</em> <dfn class="local col2 decl" id="4122updateRemoved" title='updateRemoved' data-type='bool' data-ref="4122updateRemoved" >updateRemoved</dfn>) {</td></tr>
+<tr><th id="607">607</th><td>        <b>if</b> (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> == <var>0</var>) {</td></tr>
+<tr><th id="608">608</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="609">609</th><td>        }</td></tr>
+<tr><th id="610">610</th><td>       </td></tr>
+<tr><th id="611">611</th><td>        <em>const</em> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="4123code" title='code' data-type='const size_t' data-ref="4123code" >code</dfn> = HashFunc::hashCode(<a class="local col9 ref" href="#4119key" title='key' data-ref="4119key" >key</a>);</td></tr>
+<tr><th id="612">612</th><td>        <em>const</em> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4124b" title='b' data-type='const size_t' data-ref="4124b" >b</dfn> = <a class="local col3 ref" href="#4123code" title='code' data-ref="4123code" >code</a> % <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="613">613</th><td></td></tr>
+<tr><th id="614">614</th><td>        <i>// Go to the m_bucket</i></td></tr>
+<tr><th id="615">615</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col5 decl" id="4125n" title='n' data-type='G3D::Table::Node *' data-ref="4125n" >n</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col4 ref" href="#4124b" title='b' data-ref="4124b" >b</a>];</td></tr>
+<tr><th id="616">616</th><td></td></tr>
+<tr><th id="617">617</th><td>        <b>if</b> (<a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="618">618</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="619">619</th><td>        }</td></tr>
+<tr><th id="620">620</th><td></td></tr>
+<tr><th id="621">621</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col6 decl" id="4126previous" title='previous' data-type='G3D::Table::Node *' data-ref="4126previous" >previous</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="622">622</th><td>      </td></tr>
+<tr><th id="623">623</th><td>        <i>// Try to find the node</i></td></tr>
+<tr><th id="624">624</th><td>        <b>do</b> {</td></tr>
+<tr><th id="625">625</th><td>          <b>if</b> ((<a class="local col3 ref" href="#4123code" title='code' data-ref="4123code" >code</a> == <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>-&gt;hashCode) &amp;&amp; EqualsFunc::equals(<a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>-&gt;entry.key, <a class="local col9 ref" href="#4119key" title='key' data-ref="4119key" >key</a>)) {</td></tr>
+<tr><th id="626">626</th><td>              <i>// This is the node; remove it</i></td></tr>
+<tr><th id="627">627</th><td><i></i></td></tr>
+<tr><th id="628">628</th><td><i>              // Replace the previous's next pointer</i></td></tr>
+<tr><th id="629">629</th><td>              <b>if</b> (<a class="local col6 ref" href="#4126previous" title='previous' data-ref="4126previous" >previous</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="630">630</th><td>                  <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col4 ref" href="#4124b" title='b' data-ref="4124b" >b</a>] = <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>-&gt;next;</td></tr>
+<tr><th id="631">631</th><td>              } <b>else</b> {</td></tr>
+<tr><th id="632">632</th><td>                  <a class="local col6 ref" href="#4126previous" title='previous' data-ref="4126previous" >previous</a>-&gt;next = <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>-&gt;next;</td></tr>
+<tr><th id="633">633</th><td>              }</td></tr>
+<tr><th id="634">634</th><td></td></tr>
+<tr><th id="635">635</th><td>              <b>if</b> (<a class="local col2 ref" href="#4122updateRemoved" title='updateRemoved' data-ref="4122updateRemoved" >updateRemoved</a>) {</td></tr>
+<tr><th id="636">636</th><td>                  <a class="local col0 ref" href="#4120removedKey" title='removedKey' data-ref="4120removedKey" >removedKey</a>   = <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>-&gt;entry.key;</td></tr>
+<tr><th id="637">637</th><td>                  <a class="local col1 ref" href="#4121removedValue" title='removedValue' data-ref="4121removedValue" >removedValue</a> = <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>-&gt;entry.value;</td></tr>
+<tr><th id="638">638</th><td>              }</td></tr>
+<tr><th id="639">639</th><td>              <i>// Delete the node</i></td></tr>
+<tr><th id="640">640</th><td>              <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>::destroy(<a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>, <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a>);</td></tr>
+<tr><th id="641">641</th><td>              --<a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a>;</td></tr>
+<tr><th id="642">642</th><td></td></tr>
+<tr><th id="643">643</th><td>              <i>//checkIntegrity();</i></td></tr>
+<tr><th id="644">644</th><td>              <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="645">645</th><td>          }</td></tr>
+<tr><th id="646">646</th><td></td></tr>
+<tr><th id="647">647</th><td>          <a class="local col6 ref" href="#4126previous" title='previous' data-ref="4126previous" >previous</a> = <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>;</td></tr>
+<tr><th id="648">648</th><td>          <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a> = <a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a>-&gt;next;</td></tr>
+<tr><th id="649">649</th><td>      } <b>while</b> (<a class="local col5 ref" href="#4125n" title='n' data-ref="4125n" >n</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="650">650</th><td></td></tr>
+<tr><th id="651">651</th><td>      <i>//checkIntegrity();</i></td></tr>
+<tr><th id="652">652</th><td>      <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="653">653</th><td>   }</td></tr>
+<tr><th id="654">654</th><td></td></tr>
+<tr><th id="655">655</th><td><b>public</b>:</td></tr>
+<tr><th id="656">656</th><td></td></tr>
+<tr><th id="657">657</th><td>   <i class="doc">/** If<span class="command"> @a</span> <span class="arg">member</span> is present, sets<span class="command"> @a</span> <span class="arg">removed</span> to the element</i></td></tr>
+<tr><th id="658">658</th><td><i class="doc">    being removed and returns true.  Otherwise returns false</i></td></tr>
+<tr><th id="659">659</th><td><i class="doc">    and does not write to<span class="command"> @a</span> <span class="arg">removed.</span> */</i></td></tr>
+<tr><th id="660">660</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN3G3D5Table9getRemoveERKT_RS1_RT0_" title='G3D::Table::getRemove' data-ref="_ZN3G3D5Table9getRemoveERKT_RS1_RT0_" >getRemove</dfn>(<em>const</em> Key&amp; <dfn class="local col7 decl" id="4127key" title='key' data-type='const Key &amp;' data-ref="4127key" >key</dfn>, Key&amp; <dfn class="local col8 decl" id="4128removedKey" title='removedKey' data-type='Key &amp;' data-ref="4128removedKey" >removedKey</dfn>, Value&amp; <dfn class="local col9 decl" id="4129removedValue" title='removedValue' data-type='Value &amp;' data-ref="4129removedValue" >removedValue</dfn>) {</td></tr>
+<tr><th id="661">661</th><td>       <b>return</b> remove(<a class="local col7 ref" href="#4127key" title='key' data-ref="4127key" >key</a>, <a class="local col8 ref" href="#4128removedKey" title='removedKey' data-ref="4128removedKey" >removedKey</a>, <a class="local col9 ref" href="#4129removedValue" title='removedValue' data-ref="4129removedValue" >removedValue</a>, <b>true</b>);</td></tr>
+<tr><th id="662">662</th><td>    }</td></tr>
+<tr><th id="663">663</th><td></td></tr>
+<tr><th id="664">664</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="665">665</th><td><i class="doc">    Removes an element from the table if it is present.  </i></td></tr>
+<tr><th id="666">666</th><td><i class="doc">    <span class="command">@return</span> true if the element was found and removed, otherwise  false</i></td></tr>
+<tr><th id="667">667</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="668">668</th><td>   <em>bool</em> <dfn class="decl def" id="_ZN3G3D5Table6removeERKT_" title='G3D::Table::remove' data-ref="_ZN3G3D5Table6removeERKT_" >remove</dfn>(<em>const</em> Key&amp; <dfn class="local col0 decl" id="4130key" title='key' data-type='const Key &amp;' data-ref="4130key" >key</dfn>) {</td></tr>
+<tr><th id="669">669</th><td>       Key <dfn class="local col1 decl" id="4131x" title='x' data-type='Key' data-ref="4131x" >x</dfn>;</td></tr>
+<tr><th id="670">670</th><td>       Value <dfn class="local col2 decl" id="4132v" title='v' data-type='Value' data-ref="4132v" >v</dfn>;</td></tr>
+<tr><th id="671">671</th><td>       <b>return</b> remove(<a class="local col0 ref" href="#4130key" title='key' data-ref="4130key" >key</a>, <a class="local col1 ref" href="#4131x" title='x' data-ref="4131x" >x</a>, <a class="local col2 ref" href="#4132v" title='v' data-ref="4132v" >v</a>, <b>false</b>);</td></tr>
+<tr><th id="672">672</th><td>   }</td></tr>
+<tr><th id="673">673</th><td></td></tr>
+<tr><th id="674">674</th><td><b>private</b>:</td></tr>
+<tr><th id="675">675</th><td></td></tr>
+<tr><th id="676">676</th><td>   <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>* <dfn class="decl def" id="_ZNK3G3D5Table15getEntryPointerERKT_" title='G3D::Table::getEntryPointer' data-ref="_ZNK3G3D5Table15getEntryPointerERKT_" >getEntryPointer</dfn>(<em>const</em> Key&amp; <dfn class="local col3 decl" id="4133key" title='key' data-type='const Key &amp;' data-ref="4133key" >key</dfn>) <em>const</em> {</td></tr>
+<tr><th id="677">677</th><td>       <b>if</b> (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> == <var>0</var>) {</td></tr>
+<tr><th id="678">678</th><td>           <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="679">679</th><td>       }</td></tr>
+<tr><th id="680">680</th><td></td></tr>
+<tr><th id="681">681</th><td>       <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>  <dfn class="local col4 decl" id="4134code" title='code' data-type='size_t' data-ref="4134code" >code</dfn> = HashFunc::hashCode(<a class="local col3 ref" href="#4133key" title='key' data-ref="4133key" >key</a>);</td></tr>
+<tr><th id="682">682</th><td>       <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="4135b" title='b' data-type='size_t' data-ref="4135b" >b</dfn> = <a class="local col4 ref" href="#4134code" title='code' data-ref="4134code" >code</a> % <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="683">683</th><td></td></tr>
+<tr><th id="684">684</th><td>       <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col6 decl" id="4136node" title='node' data-type='G3D::Table::Node *' data-ref="4136node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col5 ref" href="#4135b" title='b' data-ref="4135b" >b</a>];</td></tr>
+<tr><th id="685">685</th><td></td></tr>
+<tr><th id="686">686</th><td>       <b>while</b> (<a class="local col6 ref" href="#4136node" title='node' data-ref="4136node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="687">687</th><td>           <b>if</b> ((<a class="local col6 ref" href="#4136node" title='node' data-ref="4136node" >node</a>-&gt;hashCode == <a class="local col4 ref" href="#4134code" title='code' data-ref="4134code" >code</a>) &amp;&amp; EqualsFunc::equals(<a class="local col6 ref" href="#4136node" title='node' data-ref="4136node" >node</a>-&gt;entry.key, <a class="local col3 ref" href="#4133key" title='key' data-ref="4133key" >key</a>)) {</td></tr>
+<tr><th id="688">688</th><td>               <b>return</b> &amp;(<a class="local col6 ref" href="#4136node" title='node' data-ref="4136node" >node</a>-&gt;entry);</td></tr>
+<tr><th id="689">689</th><td>           }</td></tr>
+<tr><th id="690">690</th><td>           <a class="local col6 ref" href="#4136node" title='node' data-ref="4136node" >node</a> = <a class="local col6 ref" href="#4136node" title='node' data-ref="4136node" >node</a>-&gt;next;</td></tr>
+<tr><th id="691">691</th><td>       }</td></tr>
+<tr><th id="692">692</th><td></td></tr>
+<tr><th id="693">693</th><td>       <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="694">694</th><td>   }</td></tr>
+<tr><th id="695">695</th><td></td></tr>
+<tr><th id="696">696</th><td><b>public</b>:</td></tr>
+<tr><th id="697">697</th><td>   </td></tr>
+<tr><th id="698">698</th><td>    <i class="doc">/** If a value that is EqualsFunc to<span class="command"> @a</span> <span class="arg">member</span> is present, returns a pointer to the </i></td></tr>
+<tr><th id="699">699</th><td><i class="doc">        version stored in the data structure, otherwise returns NULL.</i></td></tr>
+<tr><th id="700">700</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="701">701</th><td>   <em>const</em> Key* <dfn class="decl def" id="_ZNK3G3D5Table13getKeyPointerERKT_" title='G3D::Table::getKeyPointer' data-ref="_ZNK3G3D5Table13getKeyPointerERKT_" >getKeyPointer</dfn>(<em>const</em> Key&amp; <dfn class="local col7 decl" id="4137key" title='key' data-type='const Key &amp;' data-ref="4137key" >key</dfn>) <em>const</em> {</td></tr>
+<tr><th id="702">702</th><td>       <em>const</em> <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>* <dfn class="local col8 decl" id="4138e" title='e' data-type='const G3D::Table::Entry *' data-ref="4138e" >e</dfn> = <a class="member" href="#_ZNK3G3D5Table15getEntryPointerERKT_" title='G3D::Table::getEntryPointer' data-ref="_ZNK3G3D5Table15getEntryPointerERKT_" >getEntryPointer</a>(<a class="local col7 ref" href="#4137key" title='key' data-ref="4137key" >key</a>);</td></tr>
+<tr><th id="703">703</th><td>       <b>if</b> (<a class="local col8 ref" href="#4138e" title='e' data-ref="4138e" >e</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="704">704</th><td>           <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="705">705</th><td>       } <b>else</b> {</td></tr>
+<tr><th id="706">706</th><td>           <b>return</b> &amp;(<a class="local col8 ref" href="#4138e" title='e' data-ref="4138e" >e</a>-&gt;key);</td></tr>
+<tr><th id="707">707</th><td>       }</td></tr>
+<tr><th id="708">708</th><td>   }</td></tr>
+<tr><th id="709">709</th><td></td></tr>
+<tr><th id="710">710</th><td>   <i class="doc">/**</i></td></tr>
+<tr><th id="711">711</th><td><i class="doc">    Returns the value associated with key.</i></td></tr>
+<tr><th id="712">712</th><td><i class="doc">    <span class="command">@deprecated</span> Use get(key, val) or getPointer(key) </i></td></tr>
+<tr><th id="713">713</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="714">714</th><td>   Value&amp; <dfn class="decl def" id="_ZNK3G3D5Table3getERKT_" title='G3D::Table::get' data-ref="_ZNK3G3D5Table3getERKT_" >get</dfn>(<em>const</em> Key&amp; <dfn class="local col9 decl" id="4139key" title='key' data-type='const Key &amp;' data-ref="4139key" >key</dfn>) <em>const</em> {</td></tr>
+<tr><th id="715">715</th><td>       <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>* <dfn class="local col0 decl" id="4140e" title='e' data-type='G3D::Table::Entry *' data-ref="4140e" >e</dfn> = <a class="member" href="#_ZNK3G3D5Table15getEntryPointerERKT_" title='G3D::Table::getEntryPointer' data-ref="_ZNK3G3D5Table15getEntryPointerERKT_" >getEntryPointer</a>(<a class="local col9 ref" href="#4139key" title='key' data-ref="4139key" >key</a>);</td></tr>
+<tr><th id="716">716</th><td>       <a class="macro" href="debugAssert.h.html#161" title="do {} while (0)" data-ref="_M/debugAssertM">debugAssertM</a>(e != NULL, <q>"Key not found"</q>);</td></tr>
+<tr><th id="717">717</th><td>       <b>return</b> <a class="local col0 ref" href="#4140e" title='e' data-ref="4140e" >e</a>-&gt;value;</td></tr>
+<tr><th id="718">718</th><td>   }</td></tr>
+<tr><th id="719">719</th><td></td></tr>
+<tr><th id="720">720</th><td></td></tr>
+<tr><th id="721">721</th><td>   <i class="doc">/** Returns a pointer to the element if it exists, or NULL if it does not.</i></td></tr>
+<tr><th id="722">722</th><td><i class="doc">       Note that if your value type <span class="tag">&lt;i&gt;</span>is<span class="tag">&lt;/i&gt;</span> a pointer, the return value is </i></td></tr>
+<tr><th id="723">723</th><td><i class="doc">       a pointer to a pointer.  Do not remove the element while holding this </i></td></tr>
+<tr><th id="724">724</th><td><i class="doc">       pointer.</i></td></tr>
+<tr><th id="725">725</th><td><i class="doc"></i></td></tr>
+<tr><th id="726">726</th><td><i class="doc">       It is easy to accidentally mis-use this method.  Consider making </i></td></tr>
+<tr><th id="727">727</th><td><i class="doc">       a Table&lt;Value*&gt; and using get(key, val) instead, which makes you manage</i></td></tr>
+<tr><th id="728">728</th><td><i class="doc">       the memory for the values yourself and is less likely to result in </i></td></tr>
+<tr><th id="729">729</th><td><i class="doc">       pointer errors.</i></td></tr>
+<tr><th id="730">730</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="731">731</th><td>   Value* <dfn class="decl def" id="_ZNK3G3D5Table10getPointerERKT_" title='G3D::Table::getPointer' data-ref="_ZNK3G3D5Table10getPointerERKT_" >getPointer</dfn>(<em>const</em> Key&amp; <dfn class="local col1 decl" id="4141key" title='key' data-type='const Key &amp;' data-ref="4141key" >key</dfn>) <em>const</em> {</td></tr>
+<tr><th id="732">732</th><td>       <b>if</b> (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> == <var>0</var>) {</td></tr>
+<tr><th id="733">733</th><td>           <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="734">734</th><td>       }</td></tr>
+<tr><th id="735">735</th><td></td></tr>
+<tr><th id="736">736</th><td>       <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="4142code" title='code' data-type='size_t' data-ref="4142code" >code</dfn> = HashFunc::hashCode(<a class="local col1 ref" href="#4141key" title='key' data-ref="4141key" >key</a>);</td></tr>
+<tr><th id="737">737</th><td>       <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="4143b" title='b' data-type='size_t' data-ref="4143b" >b</dfn> = <a class="local col2 ref" href="#4142code" title='code' data-ref="4142code" >code</a> % <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="738">738</th><td></td></tr>
+<tr><th id="739">739</th><td>       <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col4 decl" id="4144node" title='node' data-type='G3D::Table::Node *' data-ref="4144node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col3 ref" href="#4143b" title='b' data-ref="4143b" >b</a>];</td></tr>
+<tr><th id="740">740</th><td></td></tr>
+<tr><th id="741">741</th><td>       <b>while</b> (<a class="local col4 ref" href="#4144node" title='node' data-ref="4144node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="742">742</th><td>          <b>if</b> ((<a class="local col4 ref" href="#4144node" title='node' data-ref="4144node" >node</a>-&gt;hashCode == <a class="local col2 ref" href="#4142code" title='code' data-ref="4142code" >code</a>) &amp;&amp; EqualsFunc::equals(<a class="local col4 ref" href="#4144node" title='node' data-ref="4144node" >node</a>-&gt;entry.key, <a class="local col1 ref" href="#4141key" title='key' data-ref="4141key" >key</a>)) {</td></tr>
+<tr><th id="743">743</th><td>             <i>// found key</i></td></tr>
+<tr><th id="744">744</th><td>             <b>return</b> &amp;(<a class="local col4 ref" href="#4144node" title='node' data-ref="4144node" >node</a>-&gt;entry.value);</td></tr>
+<tr><th id="745">745</th><td>          }</td></tr>
+<tr><th id="746">746</th><td>          <a class="local col4 ref" href="#4144node" title='node' data-ref="4144node" >node</a> = <a class="local col4 ref" href="#4144node" title='node' data-ref="4144node" >node</a>-&gt;next;</td></tr>
+<tr><th id="747">747</th><td>      }</td></tr>
+<tr><th id="748">748</th><td></td></tr>
+<tr><th id="749">749</th><td>      <i>// Failed to find key</i></td></tr>
+<tr><th id="750">750</th><td>      <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="751">751</th><td>   }</td></tr>
+<tr><th id="752">752</th><td></td></tr>
+<tr><th id="753">753</th><td>   <i class="doc">/**</i></td></tr>
+<tr><th id="754">754</th><td><i class="doc">    If the key is present in the table, val is set to the associated value and returns true.</i></td></tr>
+<tr><th id="755">755</th><td><i class="doc">    If the key is not present, returns false.</i></td></tr>
+<tr><th id="756">756</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="757">757</th><td>   <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table3getERKT_RT0_" title='G3D::Table::get' data-ref="_ZNK3G3D5Table3getERKT_RT0_" >get</dfn>(<em>const</em> Key&amp; <dfn class="local col5 decl" id="4145key" title='key' data-type='const Key &amp;' data-ref="4145key" >key</dfn>, Value&amp; <dfn class="local col6 decl" id="4146val" title='val' data-type='Value &amp;' data-ref="4146val" >val</dfn>) <em>const</em> {</td></tr>
+<tr><th id="758">758</th><td>       Value* <dfn class="local col7 decl" id="4147v" title='v' data-type='Value *' data-ref="4147v" >v</dfn> = <a class="member" href="#_ZNK3G3D5Table10getPointerERKT_" title='G3D::Table::getPointer' data-ref="_ZNK3G3D5Table10getPointerERKT_" >getPointer</a>(<a class="local col5 ref" href="#4145key" title='key' data-ref="4145key" >key</a>);</td></tr>
+<tr><th id="759">759</th><td>       <b>if</b> (<a class="local col7 ref" href="#4147v" title='v' data-ref="4147v" >v</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="760">760</th><td>           <a class="local col6 ref" href="#4146val" title='val' data-ref="4146val" >val</a> = *<a class="local col7 ref" href="#4147v" title='v' data-ref="4147v" >v</a>;</td></tr>
+<tr><th id="761">761</th><td>           <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="762">762</th><td>       } <b>else</b> {</td></tr>
+<tr><th id="763">763</th><td>           <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="764">764</th><td>       }</td></tr>
+<tr><th id="765">765</th><td>   }</td></tr>
+<tr><th id="766">766</th><td></td></tr>
+<tr><th id="767">767</th><td></td></tr>
+<tr><th id="768">768</th><td>    <i class="doc">/** Called by getCreate() and set() </i></td></tr>
+<tr><th id="769">769</th><td><i class="doc">        </i></td></tr>
+<tr><th id="770">770</th><td><i class="doc">        <span class="command">\param</span> <span class="arg">created</span> Set to true if the entry was created by this method.</i></td></tr>
+<tr><th id="771">771</th><td><i class="doc">    */</i>  </td></tr>
+<tr><th id="772">772</th><td>    <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>&amp; <dfn class="decl def" id="_ZN3G3D5Table14getCreateEntryERKT_Rb" title='G3D::Table::getCreateEntry' data-ref="_ZN3G3D5Table14getCreateEntryERKT_Rb" >getCreateEntry</dfn>(<em>const</em> Key&amp; <dfn class="local col8 decl" id="4148key" title='key' data-type='const Key &amp;' data-ref="4148key" >key</dfn>, <em>bool</em>&amp; <dfn class="local col9 decl" id="4149created" title='created' data-type='bool &amp;' data-ref="4149created" >created</dfn>) {</td></tr>
+<tr><th id="773">773</th><td>        <a class="local col9 ref" href="#4149created" title='created' data-ref="4149created" >created</a> = <b>false</b>;</td></tr>
+<tr><th id="774">774</th><td></td></tr>
+<tr><th id="775">775</th><td>        <b>if</b> (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> == <var>0</var>) {</td></tr>
+<tr><th id="776">776</th><td>            <a class="member" href="#_ZN3G3D5Table6resizeEm" title='G3D::Table::resize' data-ref="_ZN3G3D5Table6resizeEm" >resize</a>(<var>10</var>);</td></tr>
+<tr><th id="777">777</th><td>        }</td></tr>
+<tr><th id="778">778</th><td></td></tr>
+<tr><th id="779">779</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="4150code" title='code' data-type='size_t' data-ref="4150code" >code</dfn> = HashFunc::hashCode(<a class="local col8 ref" href="#4148key" title='key' data-ref="4148key" >key</a>);</td></tr>
+<tr><th id="780">780</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="4151b" title='b' data-type='size_t' data-ref="4151b" >b</dfn> = <a class="local col0 ref" href="#4150code" title='code' data-ref="4150code" >code</a> % <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="781">781</th><td>        </td></tr>
+<tr><th id="782">782</th><td>        <i>// Go to the m_bucket</i></td></tr>
+<tr><th id="783">783</th><td>        <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col2 decl" id="4152n" title='n' data-type='G3D::Table::Node *' data-ref="4152n" >n</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col1 ref" href="#4151b" title='b' data-ref="4151b" >b</a>];</td></tr>
+<tr><th id="784">784</th><td></td></tr>
+<tr><th id="785">785</th><td>        <i>// No m_bucket, so this must be the first</i></td></tr>
+<tr><th id="786">786</th><td>        <b>if</b> (<a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="787">787</th><td>            <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col1 ref" href="#4151b" title='b' data-ref="4151b" >b</a>] = <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>::create(<a class="local col8 ref" href="#4148key" title='key' data-ref="4148key" >key</a>, <a class="local col0 ref" href="#4150code" title='code' data-ref="4150code" >code</a>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a>);</td></tr>
+<tr><th id="788">788</th><td>            ++<a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a>;</td></tr>
+<tr><th id="789">789</th><td>            <a class="local col9 ref" href="#4149created" title='created' data-ref="4149created" >created</a> = <b>true</b>;</td></tr>
+<tr><th id="790">790</th><td>            <i>//checkIntegrity();</i></td></tr>
+<tr><th id="791">791</th><td>            <b>return</b> <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col1 ref" href="#4151b" title='b' data-ref="4151b" >b</a>]-&gt;entry;</td></tr>
+<tr><th id="792">792</th><td>        }</td></tr>
+<tr><th id="793">793</th><td></td></tr>
+<tr><th id="794">794</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="4153bucketLength" title='bucketLength' data-type='size_t' data-ref="4153bucketLength" >bucketLength</dfn> = <var>1</var>;</td></tr>
+<tr><th id="795">795</th><td></td></tr>
+<tr><th id="796">796</th><td>        <i>// Sometimes a bad hash code will cause all elements</i></td></tr>
+<tr><th id="797">797</th><td><i>        // to collide.  Detect this case and don't rehash when </i></td></tr>
+<tr><th id="798">798</th><td><i>        // it occurs; nothing good will come from the rehashing.</i></td></tr>
+<tr><th id="799">799</th><td>        <em>bool</em> <dfn class="local col4 decl" id="4154allSameCode" title='allSameCode' data-type='bool' data-ref="4154allSameCode" >allSameCode</dfn> = <b>true</b>;</td></tr>
+<tr><th id="800">800</th><td></td></tr>
+<tr><th id="801">801</th><td>        <i>// Try to find the node</i></td></tr>
+<tr><th id="802">802</th><td>        <b>do</b> {</td></tr>
+<tr><th id="803">803</th><td>            <a class="local col4 ref" href="#4154allSameCode" title='allSameCode' data-ref="4154allSameCode" >allSameCode</a> = <a class="local col4 ref" href="#4154allSameCode" title='allSameCode' data-ref="4154allSameCode" >allSameCode</a> &amp;&amp; (<a class="local col0 ref" href="#4150code" title='code' data-ref="4150code" >code</a> == <a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a>-&gt;hashCode);</td></tr>
+<tr><th id="804">804</th><td></td></tr>
+<tr><th id="805">805</th><td>            <b>if</b> ((<a class="local col0 ref" href="#4150code" title='code' data-ref="4150code" >code</a> == <a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a>-&gt;hashCode) &amp;&amp; EqualsFunc::equals(<a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a>-&gt;entry.key, <a class="local col8 ref" href="#4148key" title='key' data-ref="4148key" >key</a>)) {</td></tr>
+<tr><th id="806">806</th><td>               <i>// This is the a pre-existing node</i></td></tr>
+<tr><th id="807">807</th><td><i>               //checkIntegrity();</i></td></tr>
+<tr><th id="808">808</th><td>               <b>return</b> <a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a>-&gt;entry;</td></tr>
+<tr><th id="809">809</th><td>            }</td></tr>
+<tr><th id="810">810</th><td></td></tr>
+<tr><th id="811">811</th><td>            <a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a> = <a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a>-&gt;next;</td></tr>
+<tr><th id="812">812</th><td>            ++<a class="local col3 ref" href="#4153bucketLength" title='bucketLength' data-ref="4153bucketLength" >bucketLength</a>;</td></tr>
+<tr><th id="813">813</th><td>        } <b>while</b> (<a class="local col2 ref" href="#4152n" title='n' data-ref="4152n" >n</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="814">814</th><td></td></tr>
+<tr><th id="815">815</th><td>        <i>// Allow the load factor to rise as the table gets huge</i></td></tr>
+<tr><th id="816">816</th><td>        <em>const</em> <em>int</em> <dfn class="local col5 decl" id="4155bucketsPerElement" title='bucketsPerElement' data-type='const int' data-ref="4155bucketsPerElement" >bucketsPerElement</dfn> = </td></tr>
+<tr><th id="817">817</th><td>            (<a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> &gt; <var>50000</var>) ? <var>3</var> :</td></tr>
+<tr><th id="818">818</th><td>                ((<a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> &gt; <var>10000</var>) ? <var>5</var> :</td></tr>
+<tr><th id="819">819</th><td>                 ((<a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> &gt; <var>5000</var>) ? <var>10</var> : <var>15</var>));</td></tr>
+<tr><th id="820">820</th><td></td></tr>
+<tr><th id="821">821</th><td>        <em>const</em> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="4156maxBucketLength" title='maxBucketLength' data-type='const size_t' data-ref="4156maxBucketLength" >maxBucketLength</dfn> = <var>3</var>;</td></tr>
+<tr><th id="822">822</th><td>        <i>// (Don't bother changing the size of the table if all entries</i></td></tr>
+<tr><th id="823">823</th><td><i>        // have the same hashcode--they'll still collide)</i></td></tr>
+<tr><th id="824">824</th><td>        <b>if</b> ((<a class="local col3 ref" href="#4153bucketLength" title='bucketLength' data-ref="4153bucketLength" >bucketLength</a> &gt; <a class="local col6 ref" href="#4156maxBucketLength" title='maxBucketLength' data-ref="4156maxBucketLength" >maxBucketLength</a>) &amp;&amp; </td></tr>
+<tr><th id="825">825</th><td>            ! <a class="local col4 ref" href="#4154allSameCode" title='allSameCode' data-ref="4154allSameCode" >allSameCode</a> &amp;&amp; </td></tr>
+<tr><th id="826">826</th><td>            (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> &lt; <a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> * <a class="local col5 ref" href="#4155bucketsPerElement" title='bucketsPerElement' data-ref="4155bucketsPerElement" >bucketsPerElement</a>)) {</td></tr>
+<tr><th id="827">827</th><td></td></tr>
+<tr><th id="828">828</th><td>            <i>// This m_bucket was really large; rehash if all elements</i></td></tr>
+<tr><th id="829">829</th><td><i>            // don't have the same hashcode the number of buckets is</i></td></tr>
+<tr><th id="830">830</th><td><i>            // reasonable.</i></td></tr>
+<tr><th id="831">831</th><td><i></i></td></tr>
+<tr><th id="832">832</th><td><i>            // Back off the scale factor as the number of buckets gets </i></td></tr>
+<tr><th id="833">833</th><td><i>            // large</i></td></tr>
+<tr><th id="834">834</th><td>            <em>float</em> <dfn class="local col7 decl" id="4157f" title='f' data-type='float' data-ref="4157f" >f</dfn> = <var>3.0f</var>;</td></tr>
+<tr><th id="835">835</th><td>            <b>if</b> (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> &gt; <var>1000000</var>) {</td></tr>
+<tr><th id="836">836</th><td>                <a class="local col7 ref" href="#4157f" title='f' data-ref="4157f" >f</a> = <var>1.5f</var>;</td></tr>
+<tr><th id="837">837</th><td>            } <b>else</b> <b>if</b> (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> &gt; <var>100000</var>) {</td></tr>
+<tr><th id="838">838</th><td>                <a class="local col7 ref" href="#4157f" title='f' data-ref="4157f" >f</a> = <var>2.0f</var>;</td></tr>
+<tr><th id="839">839</th><td>            }</td></tr>
+<tr><th id="840">840</th><td>            <em>int</em> <dfn class="local col8 decl" id="4158newSize" title='newSize' data-type='int' data-ref="4158newSize" >newSize</dfn> = <a class="ref" href="g3dmath.h.html#_ZN3G3D4iMaxEii" title='G3D::iMax' data-ref="_ZN3G3D4iMaxEii" id="_ZN3G3D4iMaxEii" >iMax</a>((<em>int</em>)(<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> * <a class="local col7 ref" href="#4157f" title='f' data-ref="4157f" >f</a>) + <var>1</var>, (<em>int</em>)(<a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a> * <a class="local col7 ref" href="#4157f" title='f' data-ref="4157f" >f</a>));</td></tr>
+<tr><th id="841">841</th><td>            <a class="member" href="#_ZN3G3D5Table6resizeEm" title='G3D::Table::resize' data-ref="_ZN3G3D5Table6resizeEm" >resize</a>(<a class="local col8 ref" href="#4158newSize" title='newSize' data-ref="4158newSize" >newSize</a>);</td></tr>
+<tr><th id="842">842</th><td>        }</td></tr>
+<tr><th id="843">843</th><td></td></tr>
+<tr><th id="844">844</th><td>        <i>// Not found; insert at the head.</i></td></tr>
+<tr><th id="845">845</th><td>        <a class="local col1 ref" href="#4151b" title='b' data-ref="4151b" >b</a> = <a class="local col0 ref" href="#4150code" title='code' data-ref="4150code" >code</a> % <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="846">846</th><td>        <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col1 ref" href="#4151b" title='b' data-ref="4151b" >b</a>] = <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>::create(<a class="local col8 ref" href="#4148key" title='key' data-ref="4148key" >key</a>, <a class="local col0 ref" href="#4150code" title='code' data-ref="4150code" >code</a>, <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col1 ref" href="#4151b" title='b' data-ref="4151b" >b</a>], <a class="member" href="#G3D::Table::m_memoryManager" title='G3D::Table::m_memoryManager' data-ref="G3D::Table::m_memoryManager" >m_memoryManager</a>);</td></tr>
+<tr><th id="847">847</th><td>        ++<a class="member" href="#G3D::Table::m_size" title='G3D::Table::m_size' data-ref="G3D::Table::m_size" >m_size</a>;</td></tr>
+<tr><th id="848">848</th><td>        <a class="local col9 ref" href="#4149created" title='created' data-ref="4149created" >created</a> = <b>true</b>;</td></tr>
+<tr><th id="849">849</th><td></td></tr>
+<tr><th id="850">850</th><td>        <i>//checkIntegrity();</i></td></tr>
+<tr><th id="851">851</th><td>        <b>return</b> <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col1 ref" href="#4151b" title='b' data-ref="4151b" >b</a>]-&gt;entry;</td></tr>
+<tr><th id="852">852</th><td>    }</td></tr>
+<tr><th id="853">853</th><td></td></tr>
+<tr><th id="854">854</th><td>    <a class="type" href="#G3D::Table::Entry" title='G3D::Table::Entry' data-ref="G3D::Table::Entry" >Entry</a>&amp; <dfn class="decl def" id="_ZN3G3D5Table14getCreateEntryERKT_" title='G3D::Table::getCreateEntry' data-ref="_ZN3G3D5Table14getCreateEntryERKT_" >getCreateEntry</dfn>(<em>const</em> Key&amp; <dfn class="local col9 decl" id="4159key" title='key' data-type='const Key &amp;' data-ref="4159key" >key</dfn>) {</td></tr>
+<tr><th id="855">855</th><td>        <em>bool</em> <dfn class="local col0 decl" id="4160ignore" title='ignore' data-type='bool' data-ref="4160ignore" >ignore</dfn>;</td></tr>
+<tr><th id="856">856</th><td>        <b>return</b> getCreateEntry(<a class="local col9 ref" href="#4159key" title='key' data-ref="4159key" >key</a>, <a class="local col0 ref" href="#4160ignore" title='ignore' data-ref="4160ignore" >ignore</a>);</td></tr>
+<tr><th id="857">857</th><td>    }</td></tr>
+<tr><th id="858">858</th><td>    </td></tr>
+<tr><th id="859">859</th><td></td></tr>
+<tr><th id="860">860</th><td>    <i class="doc">/** Returns the current value that key maps to, creating it if necessary.*/</i></td></tr>
+<tr><th id="861">861</th><td>    Value&amp; <dfn class="decl def" id="_ZN3G3D5Table9getCreateERKT_" title='G3D::Table::getCreate' data-ref="_ZN3G3D5Table9getCreateERKT_" >getCreate</dfn>(<em>const</em> Key&amp; <dfn class="local col1 decl" id="4161key" title='key' data-type='const Key &amp;' data-ref="4161key" >key</dfn>) {</td></tr>
+<tr><th id="862">862</th><td>        <b>return</b> getCreateEntry(<a class="local col1 ref" href="#4161key" title='key' data-ref="4161key" >key</a>).value;</td></tr>
+<tr><th id="863">863</th><td>    }</td></tr>
+<tr><th id="864">864</th><td></td></tr>
+<tr><th id="865">865</th><td>    <i class="doc">/** <span class="command">\param</span> <span class="arg">created</span> True if the element was created. */</i></td></tr>
+<tr><th id="866">866</th><td>    Value&amp; <dfn class="decl def" id="_ZN3G3D5Table9getCreateERKT_Rb" title='G3D::Table::getCreate' data-ref="_ZN3G3D5Table9getCreateERKT_Rb" >getCreate</dfn>(<em>const</em> Key&amp; <dfn class="local col2 decl" id="4162key" title='key' data-type='const Key &amp;' data-ref="4162key" >key</dfn>, <em>bool</em>&amp; <dfn class="local col3 decl" id="4163created" title='created' data-type='bool &amp;' data-ref="4163created" >created</dfn>) {</td></tr>
+<tr><th id="867">867</th><td>        <b>return</b> getCreateEntry(<a class="local col2 ref" href="#4162key" title='key' data-ref="4162key" >key</a>, <a class="local col3 ref" href="#4163created" title='created' data-ref="4163created" >created</a>).value;</td></tr>
+<tr><th id="868">868</th><td>    }</td></tr>
+<tr><th id="869">869</th><td></td></tr>
+<tr><th id="870">870</th><td></td></tr>
+<tr><th id="871">871</th><td>   <i class="doc">/**</i></td></tr>
+<tr><th id="872">872</th><td><i class="doc">    Returns true if key is in the table.</i></td></tr>
+<tr><th id="873">873</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="874">874</th><td>   <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Table11containsKeyERKT_" title='G3D::Table::containsKey' data-ref="_ZNK3G3D5Table11containsKeyERKT_" >containsKey</dfn>(<em>const</em> Key&amp; <dfn class="local col4 decl" id="4164key" title='key' data-type='const Key &amp;' data-ref="4164key" >key</dfn>) <em>const</em> {</td></tr>
+<tr><th id="875">875</th><td>       <b>if</b> (<a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a> == <var>0</var>) {</td></tr>
+<tr><th id="876">876</th><td>           <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="877">877</th><td>       }</td></tr>
+<tr><th id="878">878</th><td></td></tr>
+<tr><th id="879">879</th><td>       <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="4165code" title='code' data-type='size_t' data-ref="4165code" >code</dfn> = HashFunc::hashCode(<a class="local col4 ref" href="#4164key" title='key' data-ref="4164key" >key</a>);</td></tr>
+<tr><th id="880">880</th><td>       <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="4166b" title='b' data-type='size_t' data-ref="4166b" >b</dfn> = <a class="local col5 ref" href="#4165code" title='code' data-ref="4165code" >code</a> % <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>;</td></tr>
+<tr><th id="881">881</th><td></td></tr>
+<tr><th id="882">882</th><td>       <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col7 decl" id="4167node" title='node' data-type='G3D::Table::Node *' data-ref="4167node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col6 ref" href="#4166b" title='b' data-ref="4166b" >b</a>];</td></tr>
+<tr><th id="883">883</th><td></td></tr>
+<tr><th id="884">884</th><td>       <b>while</b> (<a class="local col7 ref" href="#4167node" title='node' data-ref="4167node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="885">885</th><td>           <b>if</b> ((<a class="local col7 ref" href="#4167node" title='node' data-ref="4167node" >node</a>-&gt;hashCode == <a class="local col5 ref" href="#4165code" title='code' data-ref="4165code" >code</a>) &amp;&amp; EqualsFunc::equals(<a class="local col7 ref" href="#4167node" title='node' data-ref="4167node" >node</a>-&gt;entry.key, <a class="local col4 ref" href="#4164key" title='key' data-ref="4164key" >key</a>)) {</td></tr>
+<tr><th id="886">886</th><td>              <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="887">887</th><td>           }</td></tr>
+<tr><th id="888">888</th><td>           <a class="local col7 ref" href="#4167node" title='node' data-ref="4167node" >node</a> = <a class="local col7 ref" href="#4167node" title='node' data-ref="4167node" >node</a>-&gt;next;</td></tr>
+<tr><th id="889">889</th><td>       }</td></tr>
+<tr><th id="890">890</th><td></td></tr>
+<tr><th id="891">891</th><td>       <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="892">892</th><td>   }</td></tr>
+<tr><th id="893">893</th><td></td></tr>
+<tr><th id="894">894</th><td></td></tr>
+<tr><th id="895">895</th><td>   <i class="doc">/**</i></td></tr>
+<tr><th id="896">896</th><td><i class="doc">    Short syntax for get.</i></td></tr>
+<tr><th id="897">897</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="898">898</th><td>   <b>inline</b> Value&amp; <dfn class="decl def" id="_ZNK3G3D5TableixERKT_" title='G3D::Table::operator[]' data-ref="_ZNK3G3D5TableixERKT_" ><b>operator</b>[]</dfn>(<em>const</em> Key &amp;<dfn class="local col8 decl" id="4168key" title='key' data-type='const Key &amp;' data-ref="4168key" >key</dfn>) <em>const</em> {</td></tr>
+<tr><th id="899">899</th><td>      <b>return</b> get(<a class="local col8 ref" href="#4168key" title='key' data-ref="4168key" >key</a>);</td></tr>
+<tr><th id="900">900</th><td>   }</td></tr>
+<tr><th id="901">901</th><td></td></tr>
+<tr><th id="902">902</th><td>   <i class="doc">/**</i></td></tr>
+<tr><th id="903">903</th><td><i class="doc">    Returns an array of all of the keys in the table.</i></td></tr>
+<tr><th id="904">904</th><td><i class="doc">    You can iterate over the keys to get the values.</i></td></tr>
+<tr><th id="905">905</th><td><i class="doc">    <span class="command">@deprecated</span></i></td></tr>
+<tr><th id="906">906</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="907">907</th><td>   <a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;Key&gt; <dfn class="decl def" id="_ZNK3G3D5Table7getKeysEv" title='G3D::Table::getKeys' data-ref="_ZNK3G3D5Table7getKeysEv" >getKeys</dfn>() <em>const</em> {</td></tr>
+<tr><th id="908">908</th><td>       <a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;Key&gt; <dfn class="local col9 decl" id="4169keyArray" title='keyArray' data-type='Array&lt;Key&gt;' data-ref="4169keyArray" >keyArray</dfn>;</td></tr>
+<tr><th id="909">909</th><td>       getKeys(<a class="local col9 ref" href="#4169keyArray" title='keyArray' data-ref="4169keyArray" >keyArray</a>);</td></tr>
+<tr><th id="910">910</th><td>       <b>return</b> <a class="local col9 ref" href="#4169keyArray" title='keyArray' data-ref="4169keyArray" >keyArray</a>;</td></tr>
+<tr><th id="911">911</th><td>   }</td></tr>
+<tr><th id="912">912</th><td></td></tr>
+<tr><th id="913">913</th><td>   <em>void</em> <dfn class="decl def" id="_ZNK3G3D5Table7getKeysERNS_5ArrayIT_Lm10EEE" title='G3D::Table::getKeys' data-ref="_ZNK3G3D5Table7getKeysERNS_5ArrayIT_Lm10EEE" >getKeys</dfn>(<a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;Key&gt;&amp; <dfn class="local col0 decl" id="4170keyArray" title='keyArray' data-type='Array&lt;Key&gt; &amp;' data-ref="4170keyArray" >keyArray</dfn>) <em>const</em> {</td></tr>
+<tr><th id="914">914</th><td>       <a class="local col0 ref" href="#4170keyArray" title='keyArray' data-ref="4170keyArray" >keyArray</a>.resize(<var>0</var>, <a class="ref" href="Array.h.html#_ZN3G3DL28DONT_SHRINK_UNDERLYING_ARRAYE" title='G3D::DONT_SHRINK_UNDERLYING_ARRAY' data-ref="_ZN3G3DL28DONT_SHRINK_UNDERLYING_ARRAYE" >DONT_SHRINK_UNDERLYING_ARRAY</a>);</td></tr>
+<tr><th id="915">915</th><td>       <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="4171i" title='i' data-type='size_t' data-ref="4171i" >i</dfn> = <var>0</var>; <a class="local col1 ref" href="#4171i" title='i' data-ref="4171i" >i</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col1 ref" href="#4171i" title='i' data-ref="4171i" >i</a>) {</td></tr>
+<tr><th id="916">916</th><td>           <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col2 decl" id="4172node" title='node' data-type='G3D::Table::Node *' data-ref="4172node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col1 ref" href="#4171i" title='i' data-ref="4171i" >i</a>];</td></tr>
+<tr><th id="917">917</th><td>           <b>while</b> (<a class="local col2 ref" href="#4172node" title='node' data-ref="4172node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="918">918</th><td>               <a class="local col0 ref" href="#4170keyArray" title='keyArray' data-ref="4170keyArray" >keyArray</a>.append(<a class="local col2 ref" href="#4172node" title='node' data-ref="4172node" >node</a>-&gt;entry.key);</td></tr>
+<tr><th id="919">919</th><td>               <a class="local col2 ref" href="#4172node" title='node' data-ref="4172node" >node</a> = <a class="local col2 ref" href="#4172node" title='node' data-ref="4172node" >node</a>-&gt;next;</td></tr>
+<tr><th id="920">920</th><td>           }</td></tr>
+<tr><th id="921">921</th><td>       }</td></tr>
+<tr><th id="922">922</th><td>   }</td></tr>
+<tr><th id="923">923</th><td></td></tr>
+<tr><th id="924">924</th><td>   <i class="doc">/** Will contain duplicate values if they exist in the table.  This array is parallel to the one returned by getKeys() if the table has not been modified. */</i></td></tr>
+<tr><th id="925">925</th><td>   <em>void</em> <dfn class="decl def" id="_ZNK3G3D5Table9getValuesERNS_5ArrayIT0_Lm10EEE" title='G3D::Table::getValues' data-ref="_ZNK3G3D5Table9getValuesERNS_5ArrayIT0_Lm10EEE" >getValues</dfn>(<a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;Value&gt;&amp; <dfn class="local col3 decl" id="4173valueArray" title='valueArray' data-type='Array&lt;Value&gt; &amp;' data-ref="4173valueArray" >valueArray</dfn>) <em>const</em> {</td></tr>
+<tr><th id="926">926</th><td>       <a class="local col3 ref" href="#4173valueArray" title='valueArray' data-ref="4173valueArray" >valueArray</a>.resize(<var>0</var>, <a class="ref" href="Array.h.html#_ZN3G3DL28DONT_SHRINK_UNDERLYING_ARRAYE" title='G3D::DONT_SHRINK_UNDERLYING_ARRAY' data-ref="_ZN3G3DL28DONT_SHRINK_UNDERLYING_ARRAYE" >DONT_SHRINK_UNDERLYING_ARRAY</a>);</td></tr>
+<tr><th id="927">927</th><td>       <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4174i" title='i' data-type='size_t' data-ref="4174i" >i</dfn> = <var>0</var>; <a class="local col4 ref" href="#4174i" title='i' data-ref="4174i" >i</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col4 ref" href="#4174i" title='i' data-ref="4174i" >i</a>) {</td></tr>
+<tr><th id="928">928</th><td>           <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col5 decl" id="4175node" title='node' data-type='G3D::Table::Node *' data-ref="4175node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col4 ref" href="#4174i" title='i' data-ref="4174i" >i</a>];</td></tr>
+<tr><th id="929">929</th><td>           <b>while</b> (<a class="local col5 ref" href="#4175node" title='node' data-ref="4175node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="930">930</th><td>               <a class="local col3 ref" href="#4173valueArray" title='valueArray' data-ref="4173valueArray" >valueArray</a>.append(<a class="local col5 ref" href="#4175node" title='node' data-ref="4175node" >node</a>-&gt;entry.value);</td></tr>
+<tr><th id="931">931</th><td>               <a class="local col5 ref" href="#4175node" title='node' data-ref="4175node" >node</a> = <a class="local col5 ref" href="#4175node" title='node' data-ref="4175node" >node</a>-&gt;next;</td></tr>
+<tr><th id="932">932</th><td>           }</td></tr>
+<tr><th id="933">933</th><td>       }</td></tr>
+<tr><th id="934">934</th><td>   }</td></tr>
+<tr><th id="935">935</th><td></td></tr>
+<tr><th id="936">936</th><td>   <i class="doc">/**</i></td></tr>
+<tr><th id="937">937</th><td><i class="doc">    Calls delete on all of the keys and then clears the table.</i></td></tr>
+<tr><th id="938">938</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="939">939</th><td>   <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table10deleteKeysEv" title='G3D::Table::deleteKeys' data-ref="_ZN3G3D5Table10deleteKeysEv" >deleteKeys</dfn>() {</td></tr>
+<tr><th id="940">940</th><td>       <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="4176i" title='i' data-type='size_t' data-ref="4176i" >i</dfn> = <var>0</var>; <a class="local col6 ref" href="#4176i" title='i' data-ref="4176i" >i</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col6 ref" href="#4176i" title='i' data-ref="4176i" >i</a>) {</td></tr>
+<tr><th id="941">941</th><td>           <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col7 decl" id="4177node" title='node' data-type='G3D::Table::Node *' data-ref="4177node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col6 ref" href="#4176i" title='i' data-ref="4176i" >i</a>];</td></tr>
+<tr><th id="942">942</th><td>           <b>while</b> (<a class="local col7 ref" href="#4177node" title='node' data-ref="4177node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="943">943</th><td>               <b>delete</b> <a class="local col7 ref" href="#4177node" title='node' data-ref="4177node" >node</a>-&gt;entry.key;</td></tr>
+<tr><th id="944">944</th><td>               <a class="local col7 ref" href="#4177node" title='node' data-ref="4177node" >node</a>-&gt;entry.key = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="945">945</th><td>               <a class="local col7 ref" href="#4177node" title='node' data-ref="4177node" >node</a> = <a class="local col7 ref" href="#4177node" title='node' data-ref="4177node" >node</a>-&gt;next;</td></tr>
+<tr><th id="946">946</th><td>           }</td></tr>
+<tr><th id="947">947</th><td>       }</td></tr>
+<tr><th id="948">948</th><td>       <a class="member" href="#_ZN3G3D5Table5clearEv" title='G3D::Table::clear' data-ref="_ZN3G3D5Table5clearEv" >clear</a>();</td></tr>
+<tr><th id="949">949</th><td>   }</td></tr>
+<tr><th id="950">950</th><td></td></tr>
+<tr><th id="951">951</th><td>   <i class="doc">/**</i></td></tr>
+<tr><th id="952">952</th><td><i class="doc">    Calls delete on all of the values.  This is unsafe--</i></td></tr>
+<tr><th id="953">953</th><td><i class="doc">    do not call unless you know that each value appears</i></td></tr>
+<tr><th id="954">954</th><td><i class="doc">    at most once.</i></td></tr>
+<tr><th id="955">955</th><td><i class="doc"></i></td></tr>
+<tr><th id="956">956</th><td><i class="doc">    Does not clear the table, so you are left with a table</i></td></tr>
+<tr><th id="957">957</th><td><i class="doc">    of NULL pointers.</i></td></tr>
+<tr><th id="958">958</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="959">959</th><td>   <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table12deleteValuesEv" title='G3D::Table::deleteValues' data-ref="_ZN3G3D5Table12deleteValuesEv" >deleteValues</dfn>() {</td></tr>
+<tr><th id="960">960</th><td>       <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="4178i" title='i' data-type='size_t' data-ref="4178i" >i</dfn> = <var>0</var>; <a class="local col8 ref" href="#4178i" title='i' data-ref="4178i" >i</a> &lt; <a class="member" href="#G3D::Table::m_numBuckets" title='G3D::Table::m_numBuckets' data-ref="G3D::Table::m_numBuckets" >m_numBuckets</a>; ++<a class="local col8 ref" href="#4178i" title='i' data-ref="4178i" >i</a>) {</td></tr>
+<tr><th id="961">961</th><td>           <a class="type" href="#G3D::Table::Node" title='G3D::Table::Node' data-ref="G3D::Table::Node" >Node</a>* <dfn class="local col9 decl" id="4179node" title='node' data-type='G3D::Table::Node *' data-ref="4179node" >node</dfn> = <a class="member" href="#G3D::Table::m_bucket" title='G3D::Table::m_bucket' data-ref="G3D::Table::m_bucket" >m_bucket</a>[<a class="local col8 ref" href="#4178i" title='i' data-ref="4178i" >i</a>];</td></tr>
+<tr><th id="962">962</th><td>           <b>while</b> (<a class="local col9 ref" href="#4179node" title='node' data-ref="4179node" >node</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) {</td></tr>
+<tr><th id="963">963</th><td>               <b>delete</b> <a class="local col9 ref" href="#4179node" title='node' data-ref="4179node" >node</a>-&gt;entry.value;</td></tr>
+<tr><th id="964">964</th><td>               <a class="local col9 ref" href="#4179node" title='node' data-ref="4179node" >node</a>-&gt;entry.value = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="965">965</th><td>               <a class="local col9 ref" href="#4179node" title='node' data-ref="4179node" >node</a> = <a class="local col9 ref" href="#4179node" title='node' data-ref="4179node" >node</a>-&gt;next;</td></tr>
+<tr><th id="966">966</th><td>           }</td></tr>
+<tr><th id="967">967</th><td>       }</td></tr>
+<tr><th id="968">968</th><td>   }</td></tr>
+<tr><th id="969">969</th><td></td></tr>
+<tr><th id="970">970</th><td>    <b>template</b>&lt;<b>class</b> H, <b>class</b> E&gt;</td></tr>
+<tr><th id="971">971</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5TableeqERKNS_5TableIT_T0_T_T0_EE" title='G3D::Table::operator==' data-ref="_ZNK3G3D5TableeqERKNS_5TableIT_T0_T_T0_EE" ><b>operator</b>==</dfn>(<em>const</em> <a class="type" href="#G3D::Table" title='G3D::Table' data-ref="G3D::Table" >Table</a>&lt;Key, Value, H, E&gt;&amp; <dfn class="local col0 decl" id="4180other" title='other' data-type='const Table&lt;Key, Value, H, E&gt; &amp;' data-ref="4180other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="972">972</th><td>        <b>if</b> (<a class="member" href="#_ZNK3G3D5Table4sizeEv" title='G3D::Table::size' data-ref="_ZNK3G3D5Table4sizeEv" >size</a>() != <a class="local col0 ref" href="#4180other" title='other' data-ref="4180other" >other</a>.size()) {</td></tr>
+<tr><th id="973">973</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="974">974</th><td>        }</td></tr>
+<tr><th id="975">975</th><td></td></tr>
+<tr><th id="976">976</th><td>        <b>for</b> (<a class="type" href="#G3D::Table::Iterator" title='G3D::Table::Iterator' data-ref="G3D::Table::Iterator" >Iterator</a> <dfn class="local col1 decl" id="4181it" title='it' data-type='G3D::Table::Iterator' data-ref="4181it" >it</dfn> = <a class="member" href="#_ZNK3G3D5Table5beginEv" title='G3D::Table::begin' data-ref="_ZNK3G3D5Table5beginEv" >begin</a>(); <a class="local col1 ref" href="#4181it" title='it' data-ref="4181it" >it</a>.hasMore(); ++<a class="local col1 ref" href="#4181it" title='it' data-ref="4181it" >it</a>) {</td></tr>
+<tr><th id="977">977</th><td>            <em>const</em> Value* <dfn class="local col2 decl" id="4182v" title='v' data-type='const Value *' data-ref="4182v" >v</dfn> = <a class="local col0 ref" href="#4180other" title='other' data-ref="4180other" >other</a>.getPointer(<a class="local col1 ref" href="#4181it" title='it' data-ref="4181it" >it</a>-&gt;key);</td></tr>
+<tr><th id="978">978</th><td>            <b>if</b> ((<a class="local col2 ref" href="#4182v" title='v' data-ref="4182v" >v</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) || (*<a class="local col2 ref" href="#4182v" title='v' data-ref="4182v" >v</a> != <a class="local col1 ref" href="#4181it" title='it' data-ref="4181it" >it</a>-&gt;value)) {</td></tr>
+<tr><th id="979">979</th><td>                <i>// Either the key did not exist or the value was not the same</i></td></tr>
+<tr><th id="980">980</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="981">981</th><td>            }</td></tr>
+<tr><th id="982">982</th><td>        }</td></tr>
+<tr><th id="983">983</th><td></td></tr>
+<tr><th id="984">984</th><td>        <i>// this and other have the same number of keys, so we don't</i></td></tr>
+<tr><th id="985">985</th><td><i>        // have to check for extra keys in other.</i></td></tr>
+<tr><th id="986">986</th><td></td></tr>
+<tr><th id="987">987</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="988">988</th><td>    }</td></tr>
+<tr><th id="989">989</th><td></td></tr>
+<tr><th id="990">990</th><td>    <b>template</b>&lt;<b>class</b> H, <b>class</b> E&gt;</td></tr>
+<tr><th id="991">991</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5TableneERKNS_5TableIT_T0_T_T0_EE" title='G3D::Table::operator!=' data-ref="_ZNK3G3D5TableneERKNS_5TableIT_T0_T_T0_EE" ><b>operator</b>!=</dfn>(<em>const</em> <a class="type" href="#G3D::Table" title='G3D::Table' data-ref="G3D::Table" >Table</a>&lt;Key, Value, H, E&gt;&amp; <dfn class="local col3 decl" id="4183other" title='other' data-type='const Table&lt;Key, Value, H, E&gt; &amp;' data-ref="4183other" >other</dfn>) <em>const</em> {</td></tr>
+<tr><th id="992">992</th><td>        <b>return</b> ! (*<b>this</b> == <a class="local col3 ref" href="#4183other" title='other' data-ref="4183other" >other</a>);</td></tr>
+<tr><th id="993">993</th><td>    }</td></tr>
+<tr><th id="994">994</th><td></td></tr>
+<tr><th id="995">995</th><td>    <em>void</em> <dfn class="decl def" id="_ZN3G3D5Table16debugPrintStatusEv" title='G3D::Table::debugPrintStatus' data-ref="_ZN3G3D5Table16debugPrintStatusEv" >debugPrintStatus</dfn>() {</td></tr>
+<tr><th id="996">996</th><td>        <a class="ref" href="debugPrintf.h.html#_ZN3G3D11debugPrintfEPKcz" title='G3D::debugPrintf' data-ref="_ZN3G3D11debugPrintfEPKcz" id="_ZN3G3D11debugPrintfEPKcz" >debugPrintf</a>(<q>"Deepest bucket size    = %d\n"</q>, (<em>int</em>)<a class="member" href="#_ZNK3G3D5Table25debugGetDeepestBucketSizeEv" title='G3D::Table::debugGetDeepestBucketSize' data-ref="_ZNK3G3D5Table25debugGetDeepestBucketSizeEv" >debugGetDeepestBucketSize</a>());</td></tr>
+<tr><th id="997">997</th><td>        debugPrintf(<q>"Average bucket size    = %g\n"</q>, <a class="member" href="#_ZNK3G3D5Table25debugGetAverageBucketSizeEv" title='G3D::Table::debugGetAverageBucketSize' data-ref="_ZNK3G3D5Table25debugGetAverageBucketSizeEv" >debugGetAverageBucketSize</a>());</td></tr>
+<tr><th id="998">998</th><td>        debugPrintf(<q>"Load factor            = %g\n"</q>, <a class="member" href="#_ZNK3G3D5Table12debugGetLoadEv" title='G3D::Table::debugGetLoad' data-ref="_ZNK3G3D5Table12debugGetLoadEv" >debugGetLoad</a>());</td></tr>
+<tr><th id="999">999</th><td>    }</td></tr>
+<tr><th id="1000">1000</th><td>};</td></tr>
+<tr><th id="1001">1001</th><td></td></tr>
+<tr><th id="1002">1002</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="1003">1003</th><td></td></tr>
+<tr><th id="1004">1004</th><td><u>#<span data-ppcond="1004">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="1005">1005</th><td><u>#   pragma warning (pop)</u></td></tr>
+<tr><th id="1006">1006</th><td><u>#<span data-ppcond="1004">endif</span></u></td></tr>
+<tr><th id="1007">1007</th><td></td></tr>
+<tr><th id="1008">1008</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="1009">1009</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

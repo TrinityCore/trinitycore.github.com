@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+<head>
+<title>Timer.h [TrinityCore3.3.5/src/common/Utilities/Timer.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Utilities/Timer.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Utilities</a>/Timer.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_TIMER_H">TRINITY_TIMER_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_TIMER_H" data-ref="_M/TRINITY_TIMER_H">TRINITY_TIMER_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../include/c++/4.9/chrono.html">&lt;chrono&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>inline</b> <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_Z9getMSTimev" title='getMSTime' data-ref="_Z9getMSTimev" >getMSTime</dfn>()</td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td>    <b>using</b> <b>namespace</b> <span class="namespace">std::chrono</span>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td>    <em>static</em> <em>const</em> <a class="type" href="../../../../include/c++/4.9/chrono.html#std::chrono::_V2::system_clock" title='std::chrono::_V2::system_clock' data-ref="std::chrono::_V2::system_clock" >system_clock</a>::<a class="typedef" href="../../../../include/c++/4.9/chrono.html#std::chrono::_V2::system_clock::time_point" title='std::chrono::_V2::system_clock::time_point' data-type='chrono::time_point&lt;system_clock, duration&gt;' data-ref="std::chrono::_V2::system_clock::time_point" >time_point</a> <dfn class="local col3 decl" id="3673ApplicationStartTime" title='ApplicationStartTime' data-type='const system_clock::time_point' data-ref="3673ApplicationStartTime" >ApplicationStartTime</dfn> = <a class="type" href="../../../../include/c++/4.9/chrono.html#std::chrono::_V2::system_clock" title='std::chrono::_V2::system_clock' data-ref="std::chrono::_V2::system_clock" >system_clock</a>::<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNSt6chrono3_V212system_clock3nowEv" title='std::chrono::_V2::system_clock::now' data-ref="_ZNSt6chrono3_V212system_clock3nowEv" id="_ZNSt6chrono3_V212system_clock3nowEv" >now</a>();</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td>    <b>return</b> <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNSt6chrono13duration_castERKNS_8durationIT0_T1_EE" title='std::chrono::duration_cast' data-ref="_ZNSt6chrono13duration_castERKNS_8durationIT0_T1_EE" id="_ZNSt6chrono13duration_castERKNS_8durationIT0_T1_EE" >duration_cast</a>&lt;<a class="typedef" href="../../../../include/c++/4.9/chrono.html#std::chrono::milliseconds" title='std::chrono::milliseconds' data-type='duration&lt;int64_t, milli&gt;' data-ref="std::chrono::milliseconds" >milliseconds</a>&gt;(<a class="type" href="../../../../include/c++/4.9/chrono.html#std::chrono::_V2::system_clock" title='std::chrono::_V2::system_clock' data-ref="std::chrono::_V2::system_clock" >system_clock</a>::<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNSt6chrono3_V212system_clock3nowEv" title='std::chrono::_V2::system_clock::now' data-ref="_ZNSt6chrono3_V212system_clock3nowEv" id="_ZNSt6chrono3_V212system_clock3nowEv" >now</a>() <a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNSt6chronomiERKNS_10time_pointIT_T0_EERKNS0_IS1_T1_EE" title='std::chrono::operator-' data-ref="_ZNSt6chronomiERKNS_10time_pointIT_T0_EERKNS0_IS1_T1_EE" id="_ZNSt6chronomiERKNS_10time_pointIT_T0_EERKNS0_IS1_T1_EE" >-</a> <a class="local col3 ref" href="#3673ApplicationStartTime" title='ApplicationStartTime' data-ref="3673ApplicationStartTime" >ApplicationStartTime</a>).<a class="ref" href="../../../../include/c++/4.9/chrono.html#_ZNKSt6chrono8duration5countEv" title='std::chrono::duration::count' data-ref="_ZNKSt6chrono8duration5countEv" id="_ZNKSt6chrono8duration5countEv" >count</a>());</td></tr>
+<tr><th id="31">31</th><td>}</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><b>inline</b> <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_Z13getMSTimeDiffjj" title='getMSTimeDiff' data-ref="_Z13getMSTimeDiffjj" >getMSTimeDiff</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="3674oldMSTime" title='oldMSTime' data-type='uint32' data-ref="3674oldMSTime" >oldMSTime</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="3675newMSTime" title='newMSTime' data-type='uint32' data-ref="3675newMSTime" >newMSTime</dfn>)</td></tr>
+<tr><th id="34">34</th><td>{</td></tr>
+<tr><th id="35">35</th><td>    <i>// getMSTime() have limited data range and this is case when it overflow in this tick</i></td></tr>
+<tr><th id="36">36</th><td>    <b>if</b> (<a class="local col4 ref" href="#3674oldMSTime" title='oldMSTime' data-ref="3674oldMSTime" >oldMSTime</a> &gt; <a class="local col5 ref" href="#3675newMSTime" title='newMSTime' data-ref="3675newMSTime" >newMSTime</a>)</td></tr>
+<tr><th id="37">37</th><td>        <b>return</b> (<var>0xFFFFFFFF</var> - <a class="local col4 ref" href="#3674oldMSTime" title='oldMSTime' data-ref="3674oldMSTime" >oldMSTime</a>) + <a class="local col5 ref" href="#3675newMSTime" title='newMSTime' data-ref="3675newMSTime" >newMSTime</a>;</td></tr>
+<tr><th id="38">38</th><td>    <b>else</b></td></tr>
+<tr><th id="39">39</th><td>        <b>return</b> <a class="local col5 ref" href="#3675newMSTime" title='newMSTime' data-ref="3675newMSTime" >newMSTime</a> - <a class="local col4 ref" href="#3674oldMSTime" title='oldMSTime' data-ref="3674oldMSTime" >oldMSTime</a>;</td></tr>
+<tr><th id="40">40</th><td>}</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>inline</b> <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_Z18GetMSTimeDiffToNowj" title='GetMSTimeDiffToNow' data-ref="_Z18GetMSTimeDiffToNowj" >GetMSTimeDiffToNow</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="3676oldMSTime" title='oldMSTime' data-type='uint32' data-ref="3676oldMSTime" >oldMSTime</dfn>)</td></tr>
+<tr><th id="43">43</th><td>{</td></tr>
+<tr><th id="44">44</th><td>    <b>return</b> <a class="ref" href="#_Z13getMSTimeDiffjj" title='getMSTimeDiff' data-ref="_Z13getMSTimeDiffjj" >getMSTimeDiff</a>(<a class="local col6 ref" href="#3676oldMSTime" title='oldMSTime' data-ref="3676oldMSTime" >oldMSTime</a>, <a class="ref" href="#_Z9getMSTimev" title='getMSTime' data-ref="_Z9getMSTimev" >getMSTime</a>());</td></tr>
+<tr><th id="45">45</th><td>}</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><b>struct</b> <dfn class="type def" id="IntervalTimer" title='IntervalTimer' data-ref="IntervalTimer" >IntervalTimer</dfn></td></tr>
+<tr><th id="48">48</th><td>{</td></tr>
+<tr><th id="49">49</th><td><b>public</b>:</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <dfn class="decl def" id="_ZN13IntervalTimerC1Ev" title='IntervalTimer::IntervalTimer' data-ref="_ZN13IntervalTimerC1Ev" >IntervalTimer</dfn>()</td></tr>
+<tr><th id="52">52</th><td>        : <a class="member" href="#IntervalTimer::_interval" title='IntervalTimer::_interval' data-ref="IntervalTimer::_interval" >_interval</a>(<var>0</var>), <a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a>(<var>0</var>)</td></tr>
+<tr><th id="53">53</th><td>    {</td></tr>
+<tr><th id="54">54</th><td>    }</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <em>void</em> <dfn class="decl def" id="_ZN13IntervalTimer6UpdateEl" title='IntervalTimer::Update' data-ref="_ZN13IntervalTimer6UpdateEl" >Update</dfn>(<a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="local col7 decl" id="3677diff" title='diff' data-type='time_t' data-ref="3677diff" >diff</dfn>)</td></tr>
+<tr><th id="57">57</th><td>    {</td></tr>
+<tr><th id="58">58</th><td>        <a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a> += <a class="local col7 ref" href="#3677diff" title='diff' data-ref="3677diff" >diff</a>;</td></tr>
+<tr><th id="59">59</th><td>        <b>if</b> (<a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a> &lt; <var>0</var>)</td></tr>
+<tr><th id="60">60</th><td>            <a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a> = <var>0</var>;</td></tr>
+<tr><th id="61">61</th><td>    }</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN13IntervalTimer6PassedEv" title='IntervalTimer::Passed' data-ref="_ZN13IntervalTimer6PassedEv" >Passed</dfn>()</td></tr>
+<tr><th id="64">64</th><td>    {</td></tr>
+<tr><th id="65">65</th><td>        <b>return</b> <a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a> &gt;= <a class="member" href="#IntervalTimer::_interval" title='IntervalTimer::_interval' data-ref="IntervalTimer::_interval" >_interval</a>;</td></tr>
+<tr><th id="66">66</th><td>    }</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <em>void</em> <dfn class="decl def" id="_ZN13IntervalTimer5ResetEv" title='IntervalTimer::Reset' data-ref="_ZN13IntervalTimer5ResetEv" >Reset</dfn>()</td></tr>
+<tr><th id="69">69</th><td>    {</td></tr>
+<tr><th id="70">70</th><td>        <b>if</b> (<a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a> &gt;= <a class="member" href="#IntervalTimer::_interval" title='IntervalTimer::_interval' data-ref="IntervalTimer::_interval" >_interval</a>)</td></tr>
+<tr><th id="71">71</th><td>            <a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a> %= <a class="member" href="#IntervalTimer::_interval" title='IntervalTimer::_interval' data-ref="IntervalTimer::_interval" >_interval</a>;</td></tr>
+<tr><th id="72">72</th><td>    }</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>    <em>void</em> <dfn class="decl def" id="_ZN13IntervalTimer10SetCurrentEl" title='IntervalTimer::SetCurrent' data-ref="_ZN13IntervalTimer10SetCurrentEl" >SetCurrent</dfn>(<a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="local col8 decl" id="3678current" title='current' data-type='time_t' data-ref="3678current" >current</dfn>)</td></tr>
+<tr><th id="75">75</th><td>    {</td></tr>
+<tr><th id="76">76</th><td>        <a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a> = <a class="local col8 ref" href="#3678current" title='current' data-ref="3678current" >current</a>;</td></tr>
+<tr><th id="77">77</th><td>    }</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>    <em>void</em> <dfn class="decl def" id="_ZN13IntervalTimer11SetIntervalEl" title='IntervalTimer::SetInterval' data-ref="_ZN13IntervalTimer11SetIntervalEl" >SetInterval</dfn>(<a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="local col9 decl" id="3679interval" title='interval' data-type='time_t' data-ref="3679interval" >interval</dfn>)</td></tr>
+<tr><th id="80">80</th><td>    {</td></tr>
+<tr><th id="81">81</th><td>        <a class="member" href="#IntervalTimer::_interval" title='IntervalTimer::_interval' data-ref="IntervalTimer::_interval" >_interval</a> = <a class="local col9 ref" href="#3679interval" title='interval' data-ref="3679interval" >interval</a>;</td></tr>
+<tr><th id="82">82</th><td>    }</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>    <a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="decl def" id="_ZNK13IntervalTimer11GetIntervalEv" title='IntervalTimer::GetInterval' data-ref="_ZNK13IntervalTimer11GetIntervalEv" >GetInterval</dfn>() <em>const</em></td></tr>
+<tr><th id="85">85</th><td>    {</td></tr>
+<tr><th id="86">86</th><td>        <b>return</b> <a class="member" href="#IntervalTimer::_interval" title='IntervalTimer::_interval' data-ref="IntervalTimer::_interval" >_interval</a>;</td></tr>
+<tr><th id="87">87</th><td>    }</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td>    <a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="decl def" id="_ZNK13IntervalTimer10GetCurrentEv" title='IntervalTimer::GetCurrent' data-ref="_ZNK13IntervalTimer10GetCurrentEv" >GetCurrent</dfn>() <em>const</em></td></tr>
+<tr><th id="90">90</th><td>    {</td></tr>
+<tr><th id="91">91</th><td>        <b>return</b> <a class="member" href="#IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</a>;</td></tr>
+<tr><th id="92">92</th><td>    }</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td><b>private</b>:</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>    <a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="decl" id="IntervalTimer::_interval" title='IntervalTimer::_interval' data-ref="IntervalTimer::_interval" >_interval</dfn>;</td></tr>
+<tr><th id="97">97</th><td>    <a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="decl" id="IntervalTimer::_current" title='IntervalTimer::_current' data-ref="IntervalTimer::_current" >_current</dfn>;</td></tr>
+<tr><th id="98">98</th><td>};</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td><b>struct</b> <dfn class="type def" id="TimeTracker" title='TimeTracker' data-ref="TimeTracker" >TimeTracker</dfn></td></tr>
+<tr><th id="101">101</th><td>{</td></tr>
+<tr><th id="102">102</th><td><b>public</b>:</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>    <dfn class="decl def" id="_ZN11TimeTrackerC1El" title='TimeTracker::TimeTracker' data-ref="_ZN11TimeTrackerC1El" >TimeTracker</dfn>(<a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="local col0 decl" id="3680expiry" title='expiry' data-type='time_t' data-ref="3680expiry" >expiry</dfn>)</td></tr>
+<tr><th id="105">105</th><td>        : <a class="member" href="#TimeTracker::i_expiryTime" title='TimeTracker::i_expiryTime' data-ref="TimeTracker::i_expiryTime" >i_expiryTime</a>(<a class="local col0 ref" href="#3680expiry" title='expiry' data-ref="3680expiry" >expiry</a>)</td></tr>
+<tr><th id="106">106</th><td>    {</td></tr>
+<tr><th id="107">107</th><td>    }</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>    <em>void</em> <dfn class="decl def" id="_ZN11TimeTracker6UpdateEl" title='TimeTracker::Update' data-ref="_ZN11TimeTracker6UpdateEl" >Update</dfn>(<a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="local col1 decl" id="3681diff" title='diff' data-type='time_t' data-ref="3681diff" >diff</dfn>)</td></tr>
+<tr><th id="110">110</th><td>    {</td></tr>
+<tr><th id="111">111</th><td>        <a class="member" href="#TimeTracker::i_expiryTime" title='TimeTracker::i_expiryTime' data-ref="TimeTracker::i_expiryTime" >i_expiryTime</a> -= <a class="local col1 ref" href="#3681diff" title='diff' data-ref="3681diff" >diff</a>;</td></tr>
+<tr><th id="112">112</th><td>    }</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK11TimeTracker6PassedEv" title='TimeTracker::Passed' data-ref="_ZNK11TimeTracker6PassedEv" >Passed</dfn>() <em>const</em></td></tr>
+<tr><th id="115">115</th><td>    {</td></tr>
+<tr><th id="116">116</th><td>        <b>return</b> <a class="member" href="#TimeTracker::i_expiryTime" title='TimeTracker::i_expiryTime' data-ref="TimeTracker::i_expiryTime" >i_expiryTime</a> &lt;= <var>0</var>;</td></tr>
+<tr><th id="117">117</th><td>    }</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>    <em>void</em> <dfn class="decl def" id="_ZN11TimeTracker5ResetEl" title='TimeTracker::Reset' data-ref="_ZN11TimeTracker5ResetEl" >Reset</dfn>(<a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="local col2 decl" id="3682interval" title='interval' data-type='time_t' data-ref="3682interval" >interval</dfn>)</td></tr>
+<tr><th id="120">120</th><td>    {</td></tr>
+<tr><th id="121">121</th><td>        <a class="member" href="#TimeTracker::i_expiryTime" title='TimeTracker::i_expiryTime' data-ref="TimeTracker::i_expiryTime" >i_expiryTime</a> = <a class="local col2 ref" href="#3682interval" title='interval' data-ref="3682interval" >interval</a>;</td></tr>
+<tr><th id="122">122</th><td>    }</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>    <a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="decl def" id="_ZNK11TimeTracker9GetExpiryEv" title='TimeTracker::GetExpiry' data-ref="_ZNK11TimeTracker9GetExpiryEv" >GetExpiry</dfn>() <em>const</em></td></tr>
+<tr><th id="125">125</th><td>    {</td></tr>
+<tr><th id="126">126</th><td>        <b>return</b> <a class="member" href="#TimeTracker::i_expiryTime" title='TimeTracker::i_expiryTime' data-ref="TimeTracker::i_expiryTime" >i_expiryTime</a>;</td></tr>
+<tr><th id="127">127</th><td>    }</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td><b>private</b>:</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>    <a class="typedef" href="../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="decl" id="TimeTracker::i_expiryTime" title='TimeTracker::i_expiryTime' data-ref="TimeTracker::i_expiryTime" >i_expiryTime</dfn>;</td></tr>
+<tr><th id="132">132</th><td>};</td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><b>struct</b> <dfn class="type def" id="TimeTrackerSmall" title='TimeTrackerSmall' data-ref="TimeTrackerSmall" >TimeTrackerSmall</dfn></td></tr>
+<tr><th id="135">135</th><td>{</td></tr>
+<tr><th id="136">136</th><td><b>public</b>:</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>    <dfn class="decl def" id="_ZN16TimeTrackerSmallC1Ej" title='TimeTrackerSmall::TimeTrackerSmall' data-ref="_ZN16TimeTrackerSmallC1Ej" >TimeTrackerSmall</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3683expiry" title='expiry' data-type='uint32' data-ref="3683expiry" >expiry</dfn> = <var>0</var>)</td></tr>
+<tr><th id="139">139</th><td>        : <a class="member" href="#TimeTrackerSmall::i_expiryTime" title='TimeTrackerSmall::i_expiryTime' data-ref="TimeTrackerSmall::i_expiryTime" >i_expiryTime</a>(<a class="local col3 ref" href="#3683expiry" title='expiry' data-ref="3683expiry" >expiry</a>)</td></tr>
+<tr><th id="140">140</th><td>    {</td></tr>
+<tr><th id="141">141</th><td>    }</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td>    <em>void</em> <dfn class="decl def" id="_ZN16TimeTrackerSmall6UpdateEi" title='TimeTrackerSmall::Update' data-ref="_ZN16TimeTrackerSmall6UpdateEi" >Update</dfn>(<a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col4 decl" id="3684diff" title='diff' data-type='int32' data-ref="3684diff" >diff</dfn>)</td></tr>
+<tr><th id="144">144</th><td>    {</td></tr>
+<tr><th id="145">145</th><td>        <a class="member" href="#TimeTrackerSmall::i_expiryTime" title='TimeTrackerSmall::i_expiryTime' data-ref="TimeTrackerSmall::i_expiryTime" >i_expiryTime</a> -= <a class="local col4 ref" href="#3684diff" title='diff' data-ref="3684diff" >diff</a>;</td></tr>
+<tr><th id="146">146</th><td>    }</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK16TimeTrackerSmall6PassedEv" title='TimeTrackerSmall::Passed' data-ref="_ZNK16TimeTrackerSmall6PassedEv" >Passed</dfn>() <em>const</em></td></tr>
+<tr><th id="149">149</th><td>    {</td></tr>
+<tr><th id="150">150</th><td>        <b>return</b> <a class="member" href="#TimeTrackerSmall::i_expiryTime" title='TimeTrackerSmall::i_expiryTime' data-ref="TimeTrackerSmall::i_expiryTime" >i_expiryTime</a> &lt;= <var>0</var>;</td></tr>
+<tr><th id="151">151</th><td>    }</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>    <em>void</em> <dfn class="decl def" id="_ZN16TimeTrackerSmall5ResetEj" title='TimeTrackerSmall::Reset' data-ref="_ZN16TimeTrackerSmall5ResetEj" >Reset</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="3685interval" title='interval' data-type='uint32' data-ref="3685interval" >interval</dfn>)</td></tr>
+<tr><th id="154">154</th><td>    {</td></tr>
+<tr><th id="155">155</th><td>        <a class="member" href="#TimeTrackerSmall::i_expiryTime" title='TimeTrackerSmall::i_expiryTime' data-ref="TimeTrackerSmall::i_expiryTime" >i_expiryTime</a> = <a class="local col5 ref" href="#3685interval" title='interval' data-ref="3685interval" >interval</a>;</td></tr>
+<tr><th id="156">156</th><td>    }</td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td>    <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="decl def" id="_ZNK16TimeTrackerSmall9GetExpiryEv" title='TimeTrackerSmall::GetExpiry' data-ref="_ZNK16TimeTrackerSmall9GetExpiryEv" >GetExpiry</dfn>() <em>const</em></td></tr>
+<tr><th id="159">159</th><td>    {</td></tr>
+<tr><th id="160">160</th><td>        <b>return</b> <a class="member" href="#TimeTrackerSmall::i_expiryTime" title='TimeTrackerSmall::i_expiryTime' data-ref="TimeTrackerSmall::i_expiryTime" >i_expiryTime</a>;</td></tr>
+<tr><th id="161">161</th><td>    }</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td><b>private</b>:</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>    <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="decl" id="TimeTrackerSmall::i_expiryTime" title='TimeTrackerSmall::i_expiryTime' data-ref="TimeTrackerSmall::i_expiryTime" >i_expiryTime</dfn>;</td></tr>
+<tr><th id="166">166</th><td>};</td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><b>struct</b> <dfn class="type def" id="PeriodicTimer" title='PeriodicTimer' data-ref="PeriodicTimer" >PeriodicTimer</dfn></td></tr>
+<tr><th id="169">169</th><td>{</td></tr>
+<tr><th id="170">170</th><td><b>public</b>:</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>    <dfn class="decl def" id="_ZN13PeriodicTimerC1Eii" title='PeriodicTimer::PeriodicTimer' data-ref="_ZN13PeriodicTimerC1Eii" >PeriodicTimer</dfn>(<a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col6 decl" id="3686period" title='period' data-type='int32' data-ref="3686period" >period</dfn>, <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col7 decl" id="3687start_time" title='start_time' data-type='int32' data-ref="3687start_time" >start_time</dfn>)</td></tr>
+<tr><th id="173">173</th><td>        : <a class="member" href="#PeriodicTimer::i_period" title='PeriodicTimer::i_period' data-ref="PeriodicTimer::i_period" >i_period</a>(<a class="local col6 ref" href="#3686period" title='period' data-ref="3686period" >period</a>), <a class="member" href="#PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</a>(<a class="local col7 ref" href="#3687start_time" title='start_time' data-ref="3687start_time" >start_time</a>)</td></tr>
+<tr><th id="174">174</th><td>    {</td></tr>
+<tr><th id="175">175</th><td>    }</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN13PeriodicTimer6UpdateEj" title='PeriodicTimer::Update' data-ref="_ZN13PeriodicTimer6UpdateEj" >Update</dfn>(<em>const</em> <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="3688diff" title='diff' data-type='const uint32' data-ref="3688diff" >diff</dfn>)</td></tr>
+<tr><th id="178">178</th><td>    {</td></tr>
+<tr><th id="179">179</th><td>        <b>if</b> ((<a class="member" href="#PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</a> -= <a class="local col8 ref" href="#3688diff" title='diff' data-ref="3688diff" >diff</a>) &gt; <var>0</var>)</td></tr>
+<tr><th id="180">180</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>        <a class="member" href="#PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</a> += <a class="member" href="#PeriodicTimer::i_period" title='PeriodicTimer::i_period' data-ref="PeriodicTimer::i_period" >i_period</a> &gt; <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a>(<a class="local col8 ref" href="#3688diff" title='diff' data-ref="3688diff" >diff</a>) ? <a class="member" href="#PeriodicTimer::i_period" title='PeriodicTimer::i_period' data-ref="PeriodicTimer::i_period" >i_period</a> : <a class="local col8 ref" href="#3688diff" title='diff' data-ref="3688diff" >diff</a>;</td></tr>
+<tr><th id="183">183</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="184">184</th><td>    }</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>    <em>void</em> <dfn class="decl def" id="_ZN13PeriodicTimer11SetPeriodicEii" title='PeriodicTimer::SetPeriodic' data-ref="_ZN13PeriodicTimer11SetPeriodicEii" >SetPeriodic</dfn>(<a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col9 decl" id="3689period" title='period' data-type='int32' data-ref="3689period" >period</dfn>, <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col0 decl" id="3690start_time" title='start_time' data-type='int32' data-ref="3690start_time" >start_time</dfn>)</td></tr>
+<tr><th id="187">187</th><td>    {</td></tr>
+<tr><th id="188">188</th><td>        <a class="member" href="#PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</a> = <a class="local col0 ref" href="#3690start_time" title='start_time' data-ref="3690start_time" >start_time</a>;</td></tr>
+<tr><th id="189">189</th><td>        <a class="member" href="#PeriodicTimer::i_period" title='PeriodicTimer::i_period' data-ref="PeriodicTimer::i_period" >i_period</a> = <a class="local col9 ref" href="#3689period" title='period' data-ref="3689period" >period</a>;</td></tr>
+<tr><th id="190">190</th><td>    }</td></tr>
+<tr><th id="191">191</th><td></td></tr>
+<tr><th id="192">192</th><td>    <i>// Tracker interface</i></td></tr>
+<tr><th id="193">193</th><td>    <em>void</em> <dfn class="decl def" id="_ZN13PeriodicTimer7TUpdateEi" title='PeriodicTimer::TUpdate' data-ref="_ZN13PeriodicTimer7TUpdateEi" >TUpdate</dfn>(<a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col1 decl" id="3691diff" title='diff' data-type='int32' data-ref="3691diff" >diff</dfn>) { <a class="member" href="#PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</a> -= <a class="local col1 ref" href="#3691diff" title='diff' data-ref="3691diff" >diff</a>; }</td></tr>
+<tr><th id="194">194</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK13PeriodicTimer7TPassedEv" title='PeriodicTimer::TPassed' data-ref="_ZNK13PeriodicTimer7TPassedEv" >TPassed</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</a> &lt;= <var>0</var>; }</td></tr>
+<tr><th id="195">195</th><td>    <em>void</em> <dfn class="decl def" id="_ZN13PeriodicTimer6TResetEii" title='PeriodicTimer::TReset' data-ref="_ZN13PeriodicTimer6TResetEii" >TReset</dfn>(<a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col2 decl" id="3692diff" title='diff' data-type='int32' data-ref="3692diff" >diff</dfn>, <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col3 decl" id="3693period" title='period' data-type='int32' data-ref="3693period" >period</dfn>)  { <a class="member" href="#PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</a> += <a class="local col3 ref" href="#3693period" title='period' data-ref="3693period" >period</a> &gt; <a class="local col2 ref" href="#3692diff" title='diff' data-ref="3692diff" >diff</a> ? <a class="local col3 ref" href="#3693period" title='period' data-ref="3693period" >period</a> : <a class="local col2 ref" href="#3692diff" title='diff' data-ref="3692diff" >diff</a>; }</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td><b>private</b>:</td></tr>
+<tr><th id="198">198</th><td></td></tr>
+<tr><th id="199">199</th><td>    <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="decl" id="PeriodicTimer::i_period" title='PeriodicTimer::i_period' data-ref="PeriodicTimer::i_period" >i_period</dfn>;</td></tr>
+<tr><th id="200">200</th><td>    <a class="typedef" href="../Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="decl" id="PeriodicTimer::i_expireTime" title='PeriodicTimer::i_expireTime' data-ref="PeriodicTimer::i_expireTime" >i_expireTime</dfn>;</td></tr>
+<tr><th id="201">201</th><td>};</td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="204">204</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

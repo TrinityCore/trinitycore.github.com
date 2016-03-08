@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<title>mpqfile.cpp [TrinityCore6.x/src/tools/vmap4_extractor/mpqfile.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/tools/vmap4_extractor/mpqfile.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>tools</a>/<a href='./'>vmap4_extractor</a>/mpqfile.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#include <a href="mpqfile.h.html">"mpqfile.h"</a></u></td></tr>
+<tr><th id="2">2</th><td><u>#include <a href="../../../../include/c++/4.9/deque.html">&lt;deque&gt;</a></u></td></tr>
+<tr><th id="3">3</th><td><u>#include <a href="../../../../include/c++/4.9/cstdio.html">&lt;cstdio&gt;</a></u></td></tr>
+<tr><th id="4">4</th><td></td></tr>
+<tr><th id="5">5</th><td><a class="type" href="mpqfile.h.html#MPQFile" title='MPQFile' data-ref="MPQFile" >MPQFile</a>::<dfn class="decl def" id="_ZN7MPQFileC1EPvPKcb" title='MPQFile::MPQFile' data-ref="_ZN7MPQFileC1EPvPKcb" >MPQFile</dfn>(<a class="typedef" href="../../../dep/CascLib/src/CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col1 decl" id="1mpq" title='mpq' data-type='HANDLE' data-ref="1mpq" >mpq</dfn>, <em>const</em> <em>char</em>* <dfn class="local col2 decl" id="2filename" title='filename' data-type='const char *' data-ref="2filename" >filename</dfn>, <em>bool</em> <dfn class="local col3 decl" id="3warnNoExist" title='warnNoExist' data-type='bool' data-ref="3warnNoExist" >warnNoExist</dfn> <i>/*= true*/</i>) :</td></tr>
+<tr><th id="6">6</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a>(<b>false</b>),</td></tr>
+<tr><th id="7">7</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::buffer" title='MPQFile::buffer' data-ref="MPQFile::buffer" id="MPQFile::buffer" >buffer</a>(<var>0</var>),</td></tr>
+<tr><th id="8">8</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a>(<var>0</var>),</td></tr>
+<tr><th id="9">9</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a>(<var>0</var>)</td></tr>
+<tr><th id="10">10</th><td>{</td></tr>
+<tr><th id="11">11</th><td>    <a class="typedef" href="../../../dep/CascLib/src/CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col4 decl" id="4file" title='file' data-type='HANDLE' data-ref="4file" >file</dfn>;</td></tr>
+<tr><th id="12">12</th><td>    <b>if</b> (!<a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#CascOpenFile" title='CascOpenFile' data-ref="CascOpenFile" id="CascOpenFile" >CascOpenFile</a>(<a class="local col1 ref" href="#1mpq" title='mpq' data-ref="1mpq" >mpq</a>, <a class="local col2 ref" href="#2filename" title='filename' data-ref="2filename" >filename</a>, <a class="macro" href="../../../dep/CascLib/src/CascLib.h.html#64" title="0xFFFFFFFF" data-ref="_M/CASC_LOCALE_ALL">CASC_LOCALE_ALL</a>, <var>0</var>, &amp;<a class="local col4 ref" href="#4file" title='file' data-ref="4file" >file</a>))</td></tr>
+<tr><th id="13">13</th><td>    {</td></tr>
+<tr><th id="14">14</th><td>        <b>if</b> (<a class="local col3 ref" href="#3warnNoExist" title='warnNoExist' data-ref="3warnNoExist" >warnNoExist</a> || <a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#GetLastError" title='GetLastError' data-ref="GetLastError" id="GetLastError" >GetLastError</a>() != <a class="macro" href="../../../dep/CascLib/src/CascPort.h.html#205" title="2" data-ref="_M/ERROR_FILE_NOT_FOUND">ERROR_FILE_NOT_FOUND</a>)</td></tr>
+<tr><th id="15">15</th><td>            <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>(<a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"Can't open %s, err=%u!\n"</q>, <a class="local col2 ref" href="#2filename" title='filename' data-ref="2filename" >filename</a>, <a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#GetLastError" title='GetLastError' data-ref="GetLastError" id="GetLastError" >GetLastError</a>());</td></tr>
+<tr><th id="16">16</th><td>        <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = <b>true</b>;</td></tr>
+<tr><th id="17">17</th><td>        <b>return</b>;</td></tr>
+<tr><th id="18">18</th><td>    }</td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td>    <a class="typedef" href="../../../dep/CascLib/src/CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col5 decl" id="5hi" title='hi' data-type='DWORD' data-ref="5hi" >hi</dfn> = <var>0</var>;</td></tr>
+<tr><th id="21">21</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a> = <a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#CascGetFileSize" title='CascGetFileSize' data-ref="CascGetFileSize" id="CascGetFileSize" >CascGetFileSize</a>(<a class="local col4 ref" href="#4file" title='file' data-ref="4file" >file</a>, &amp;<a class="local col5 ref" href="#5hi" title='hi' data-ref="5hi" >hi</a>);</td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td>    <b>if</b> (<a class="local col5 ref" href="#5hi" title='hi' data-ref="5hi" >hi</a>)</td></tr>
+<tr><th id="24">24</th><td>    {</td></tr>
+<tr><th id="25">25</th><td>        <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>(<a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"Can't open %s, size[hi] = %u!\n"</q>, <a class="local col2 ref" href="#2filename" title='filename' data-ref="2filename" >filename</a>, <a class="typedef" href="mpqfile.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="local col5 ref" href="#5hi" title='hi' data-ref="5hi" >hi</a>));</td></tr>
+<tr><th id="26">26</th><td>        <a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#CascCloseFile" title='CascCloseFile' data-ref="CascCloseFile" id="CascCloseFile" >CascCloseFile</a>(<a class="local col4 ref" href="#4file" title='file' data-ref="4file" >file</a>);</td></tr>
+<tr><th id="27">27</th><td>        <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = <b>true</b>;</td></tr>
+<tr><th id="28">28</th><td>        <b>return</b>;</td></tr>
+<tr><th id="29">29</th><td>    }</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>    <b>if</b> (<a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a> &lt;= <var>1</var>)</td></tr>
+<tr><th id="32">32</th><td>    {</td></tr>
+<tr><th id="33">33</th><td>        <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>(<a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"Can't open %s, size = %u!\n"</q>, <a class="local col2 ref" href="#2filename" title='filename' data-ref="2filename" >filename</a>, <a class="typedef" href="mpqfile.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" >size</a>));</td></tr>
+<tr><th id="34">34</th><td>        <a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#CascCloseFile" title='CascCloseFile' data-ref="CascCloseFile" id="CascCloseFile" >CascCloseFile</a>(<a class="local col4 ref" href="#4file" title='file' data-ref="4file" >file</a>);</td></tr>
+<tr><th id="35">35</th><td>        <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = <b>true</b>;</td></tr>
+<tr><th id="36">36</th><td>        <b>return</b>;</td></tr>
+<tr><th id="37">37</th><td>    }</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>    <a class="typedef" href="../../../dep/CascLib/src/CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col6 decl" id="6read" title='read' data-type='DWORD' data-ref="6read" >read</dfn> = <var>0</var>;</td></tr>
+<tr><th id="40">40</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::buffer" title='MPQFile::buffer' data-ref="MPQFile::buffer" id="MPQFile::buffer" >buffer</a> = <b>new</b> <em>char</em>[<a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a>];</td></tr>
+<tr><th id="41">41</th><td>    <b>if</b> (!<a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#CascReadFile" title='CascReadFile' data-ref="CascReadFile" id="CascReadFile" >CascReadFile</a>(<a class="local col4 ref" href="#4file" title='file' data-ref="4file" >file</a>, <a class="member" href="mpqfile.h.html#MPQFile::buffer" title='MPQFile::buffer' data-ref="MPQFile::buffer" id="MPQFile::buffer" >buffer</a>, <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a>, &amp;<a class="local col6 ref" href="#6read" title='read' data-ref="6read" >read</a>) || <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a> != <a class="local col6 ref" href="#6read" title='read' data-ref="6read" >read</a>)</td></tr>
+<tr><th id="42">42</th><td>    {</td></tr>
+<tr><th id="43">43</th><td>        <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>(<a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"Can't read %s, size=%u read=%u!\n"</q>, <a class="local col2 ref" href="#2filename" title='filename' data-ref="2filename" >filename</a>, <a class="typedef" href="mpqfile.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" >size</a>), <a class="typedef" href="mpqfile.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="local col6 ref" href="#6read" title='read' data-ref="6read" >read</a>));</td></tr>
+<tr><th id="44">44</th><td>        <a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#CascCloseFile" title='CascCloseFile' data-ref="CascCloseFile" id="CascCloseFile" >CascCloseFile</a>(<a class="local col4 ref" href="#4file" title='file' data-ref="4file" >file</a>);</td></tr>
+<tr><th id="45">45</th><td>        <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = <b>true</b>;</td></tr>
+<tr><th id="46">46</th><td>        <b>return</b>;</td></tr>
+<tr><th id="47">47</th><td>    }</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <a class="ref" href="../../../dep/CascLib/src/CascLib.h.html#CascCloseFile" title='CascCloseFile' data-ref="CascCloseFile" id="CascCloseFile" >CascCloseFile</a>(<a class="local col4 ref" href="#4file" title='file' data-ref="4file" >file</a>);</td></tr>
+<tr><th id="50">50</th><td>}</td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <a class="type" href="mpqfile.h.html#MPQFile" title='MPQFile' data-ref="MPQFile" >MPQFile</a>::<dfn class="decl def" id="_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" >read</dfn>(<em>void</em>* <dfn class="local col7 decl" id="7dest" title='dest' data-type='void *' data-ref="7dest" >dest</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="8bytes" title='bytes' data-type='size_t' data-ref="8bytes" >bytes</dfn>)</td></tr>
+<tr><th id="53">53</th><td>{</td></tr>
+<tr><th id="54">54</th><td>    <b>if</b> (<a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a>) <b>return</b> <var>0</var>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="9rpos" title='rpos' data-type='size_t' data-ref="9rpos" >rpos</dfn> = <a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a> + <a class="local col8 ref" href="#8bytes" title='bytes' data-ref="8bytes" >bytes</a>;</td></tr>
+<tr><th id="57">57</th><td>    <b>if</b> (<a class="local col9 ref" href="#9rpos" title='rpos' data-ref="9rpos" >rpos</a> &gt; <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a>) {</td></tr>
+<tr><th id="58">58</th><td>        <a class="local col8 ref" href="#8bytes" title='bytes' data-ref="8bytes" >bytes</a> = <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a> - <a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a>;</td></tr>
+<tr><th id="59">59</th><td>        <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = <b>true</b>;</td></tr>
+<tr><th id="60">60</th><td>    }</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>    <a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="local col7 ref" href="#7dest" title='dest' data-ref="7dest" >dest</a>, &amp;(<a class="member" href="mpqfile.h.html#MPQFile::buffer" title='MPQFile::buffer' data-ref="MPQFile::buffer" id="MPQFile::buffer" >buffer</a>[<a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a>]), <a class="local col8 ref" href="#8bytes" title='bytes' data-ref="8bytes" >bytes</a>);</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a> = <a class="local col9 ref" href="#9rpos" title='rpos' data-ref="9rpos" >rpos</a>;</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <b>return</b> <a class="local col8 ref" href="#8bytes" title='bytes' data-ref="8bytes" >bytes</a>;</td></tr>
+<tr><th id="67">67</th><td>}</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><em>void</em> <a class="type" href="mpqfile.h.html#MPQFile" title='MPQFile' data-ref="MPQFile" >MPQFile</a>::<dfn class="decl def" id="_ZN7MPQFile4seekEi" title='MPQFile::seek' data-ref="_ZN7MPQFile4seekEi" >seek</dfn>(<em>int</em> <dfn class="local col0 decl" id="10offset" title='offset' data-type='int' data-ref="10offset" >offset</dfn>)</td></tr>
+<tr><th id="70">70</th><td>{</td></tr>
+<tr><th id="71">71</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a> = <a class="local col0 ref" href="#10offset" title='offset' data-ref="10offset" >offset</a>;</td></tr>
+<tr><th id="72">72</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = (<a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a> &gt;= <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a>);</td></tr>
+<tr><th id="73">73</th><td>}</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><em>void</em> <a class="type" href="mpqfile.h.html#MPQFile" title='MPQFile' data-ref="MPQFile" >MPQFile</a>::<dfn class="decl def" id="_ZN7MPQFile12seekRelativeEi" title='MPQFile::seekRelative' data-ref="_ZN7MPQFile12seekRelativeEi" >seekRelative</dfn>(<em>int</em> <dfn class="local col1 decl" id="11offset" title='offset' data-type='int' data-ref="11offset" >offset</dfn>)</td></tr>
+<tr><th id="76">76</th><td>{</td></tr>
+<tr><th id="77">77</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a> += <a class="local col1 ref" href="#11offset" title='offset' data-ref="11offset" >offset</a>;</td></tr>
+<tr><th id="78">78</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = (<a class="member" href="mpqfile.h.html#MPQFile::pointer" title='MPQFile::pointer' data-ref="MPQFile::pointer" id="MPQFile::pointer" >pointer</a> &gt;= <a class="member" href="mpqfile.h.html#MPQFile::size" title='MPQFile::size' data-ref="MPQFile::size" id="MPQFile::size" >size</a>);</td></tr>
+<tr><th id="79">79</th><td>}</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><em>void</em> <a class="type" href="mpqfile.h.html#MPQFile" title='MPQFile' data-ref="MPQFile" >MPQFile</a>::<dfn class="decl def" id="_ZN7MPQFile5closeEv" title='MPQFile::close' data-ref="_ZN7MPQFile5closeEv" >close</dfn>()</td></tr>
+<tr><th id="82">82</th><td>{</td></tr>
+<tr><th id="83">83</th><td>    <b>if</b> (<a class="member" href="mpqfile.h.html#MPQFile::buffer" title='MPQFile::buffer' data-ref="MPQFile::buffer" id="MPQFile::buffer" >buffer</a>) <b>delete</b>[] <a class="member" href="mpqfile.h.html#MPQFile::buffer" title='MPQFile::buffer' data-ref="MPQFile::buffer" >buffer</a>;</td></tr>
+<tr><th id="84">84</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::buffer" title='MPQFile::buffer' data-ref="MPQFile::buffer" id="MPQFile::buffer" >buffer</a> = <var>0</var>;</td></tr>
+<tr><th id="85">85</th><td>    <a class="member" href="mpqfile.h.html#MPQFile::eof" title='MPQFile::eof' data-ref="MPQFile::eof" id="MPQFile::eof" >eof</a> = <b>true</b>;</td></tr>
+<tr><th id="86">86</th><td>}</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

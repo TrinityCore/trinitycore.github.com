@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<title>huffman.h [TrinityCore3.3.5/dep/libmpq/libmpq/huffman.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/libmpq/libmpq/huffman.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>dep</a>/<a href='..'>libmpq</a>/<a href='./'>libmpq</a>/huffman.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> *  huffman.h -- structures used for huffman compression.</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> *  Copyright (c) 2003-2011 Maik Broemme &lt;mbroemme@libmpq.org&gt;</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> *  This source was adepted from the C++ version of huffman.h included</i></td></tr>
+<tr><th id="7">7</th><td><i> *  in stormlib. The C++ version belongs to the following authors:</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> *  Ladislav Zezula &lt;ladik@zezula.net&gt;</i></td></tr>
+<tr><th id="10">10</th><td><i> *  ShadowFlare &lt;BlakFlare@hotmail.com&gt;</i></td></tr>
+<tr><th id="11">11</th><td><i> *</i></td></tr>
+<tr><th id="12">12</th><td><i> *  This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="13">13</th><td><i> *  it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="14">14</th><td><i> *  the Free Software Foundation; either version 2 of the License, or</i></td></tr>
+<tr><th id="15">15</th><td><i> *  (at your option) any later version.</i></td></tr>
+<tr><th id="16">16</th><td><i> *</i></td></tr>
+<tr><th id="17">17</th><td><i> *  This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="18">18</th><td><i> *  but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="19">19</th><td><i> *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="20">20</th><td><i> *  GNU General Public License for more details.</i></td></tr>
+<tr><th id="21">21</th><td><i> *</i></td></tr>
+<tr><th id="22">22</th><td><i> *  You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="23">23</th><td><i> *  along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="24">24</th><td><i> *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.</i></td></tr>
+<tr><th id="25">25</th><td><i> */</i></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="27">ifndef</span> <span class="macro" data-ref="_M/_HUFFMAN_H">_HUFFMAN_H</span></u></td></tr>
+<tr><th id="28">28</th><td><u>#define <dfn class="macro" id="_M/_HUFFMAN_H" data-ref="_M/_HUFFMAN_H">_HUFFMAN_H</dfn></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i>/* define huffman compression and decompression values. */</i></td></tr>
+<tr><th id="31">31</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_HUFF_DECOMPRESS" data-ref="_M/LIBMPQ_HUFF_DECOMPRESS">LIBMPQ_HUFF_DECOMPRESS</dfn>			0		/* we want to decompress using huffman trees. */</u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><i>/* define pointer conversions. */</i></td></tr>
+<tr><th id="34">34</th><td><u>#define <dfn class="macro" id="_M/PTR_NOT" data-ref="_M/PTR_NOT">PTR_NOT</dfn>(ptr)				(struct huffman_tree_item_s *)(~(unsigned long)(ptr))</u></td></tr>
+<tr><th id="35">35</th><td><u>#define <dfn class="macro" id="_M/PTR_PTR" data-ref="_M/PTR_PTR">PTR_PTR</dfn>(ptr)				((struct huffman_tree_item_s *)(ptr))</u></td></tr>
+<tr><th id="36">36</th><td><u>#define <dfn class="macro" id="_M/PTR_INT" data-ref="_M/PTR_INT">PTR_INT</dfn>(ptr)				(long)(ptr)</u></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><i>/* define item handling. */</i></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/INSERT_ITEM" data-ref="_M/INSERT_ITEM">INSERT_ITEM</dfn>				1		/* insert item into huffman tree. */</u></td></tr>
+<tr><th id="40">40</th><td><u>#define <dfn class="macro" id="_M/SWITCH_ITEMS" data-ref="_M/SWITCH_ITEMS">SWITCH_ITEMS</dfn>				2		/* switch items isnide huffman tree. */</u></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><i>/* input stream for huffman decompression. */</i></td></tr>
+<tr><th id="43">43</th><td><b>struct</b> <dfn class="type def" id="huffman_input_stream_s" title='huffman_input_stream_s' data-ref="huffman_input_stream_s" >huffman_input_stream_s</dfn> {</td></tr>
+<tr><th id="44">44</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		*<dfn class="decl" id="huffman_input_stream_s::in_buf" title='huffman_input_stream_s::in_buf' data-ref="huffman_input_stream_s::in_buf" >in_buf</dfn>;				<i>/* 00 - input data. */</i></td></tr>
+<tr><th id="45">45</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_input_stream_s::bit_buf" title='huffman_input_stream_s::bit_buf' data-ref="huffman_input_stream_s::bit_buf" >bit_buf</dfn>;				<i>/* 04 - input bit buffer. */</i></td></tr>
+<tr><th id="46">46</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_input_stream_s::bits" title='huffman_input_stream_s::bits' data-ref="huffman_input_stream_s::bits" >bits</dfn>;					<i>/* 08 - number of bits remaining in byte. */</i></td></tr>
+<tr><th id="47">47</th><td>};</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><i>/* huffman tree item. */</i></td></tr>
+<tr><th id="50">50</th><td><b>struct</b> <dfn class="type def" id="huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</dfn> {</td></tr>
+<tr><th id="51">51</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_item_s::next" title='huffman_tree_item_s::next' data-ref="huffman_tree_item_s::next" >next</dfn>;		<i>/* 00 - pointer to next huffman tree item. */</i></td></tr>
+<tr><th id="52">52</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_item_s::prev" title='huffman_tree_item_s::prev' data-ref="huffman_tree_item_s::prev" >prev</dfn>;		<i>/* 04 - pointer to prev huffman tree item (&lt; 0 if none). */</i></td></tr>
+<tr><th id="53">53</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_tree_item_s::dcmp_byte" title='huffman_tree_item_s::dcmp_byte' data-ref="huffman_tree_item_s::dcmp_byte" >dcmp_byte</dfn>;				<i>/* 08 - index of this item in item pointer array, decompressed byte value. */</i></td></tr>
+<tr><th id="54">54</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_tree_item_s::byte_value" title='huffman_tree_item_s::byte_value' data-ref="huffman_tree_item_s::byte_value" >byte_value</dfn>;				<i>/* 0C - some byte value. */</i></td></tr>
+<tr><th id="55">55</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_item_s::parent" title='huffman_tree_item_s::parent' data-ref="huffman_tree_item_s::parent" >parent</dfn>;		<i>/* 10 - pointer to parent huffman tree item (NULL if none). */</i></td></tr>
+<tr><th id="56">56</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_item_s::child" title='huffman_tree_item_s::child' data-ref="huffman_tree_item_s::child" >child</dfn>;		<i>/* 14 - pointer to child huffman tree item. */</i></td></tr>
+<tr><th id="57">57</th><td>};</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><i>/* structure used for quick decompression. */</i></td></tr>
+<tr><th id="60">60</th><td><b>struct</b> <dfn class="type def" id="huffman_decompress_s" title='huffman_decompress_s' data-ref="huffman_decompress_s" >huffman_decompress_s</dfn> {</td></tr>
+<tr><th id="61">61</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_decompress_s::offs00" title='huffman_decompress_s::offs00' data-ref="huffman_decompress_s::offs00" >offs00</dfn>;					<i>/* 00 - 1 if resolved. */</i></td></tr>
+<tr><th id="62">62</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_decompress_s::bits" title='huffman_decompress_s::bits' data-ref="huffman_decompress_s::bits" >bits</dfn>;					<i>/* 04 - bit count. */</i></td></tr>
+<tr><th id="63">63</th><td>	<b>union</b> {</td></tr>
+<tr><th id="64">64</th><td>		<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_decompress_s::(anonymous)::dcmp_byte" title='huffman_decompress_s::(anonymous union)::dcmp_byte' data-ref="huffman_decompress_s::(anonymous)::dcmp_byte" >dcmp_byte</dfn>;			<i>/* 08 - byte value for decompress (if bitCount &lt;= 7). */</i></td></tr>
+<tr><th id="65">65</th><td>		<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_decompress_s::(anonymous)::p_item" title='huffman_decompress_s::(anonymous union)::p_item' data-ref="huffman_decompress_s::(anonymous)::p_item" >p_item</dfn>;	<i>/* 08 - huffman tree item (if number of bits is greater than 7). */</i></td></tr>
+<tr><th id="66">66</th><td>	};</td></tr>
+<tr><th id="67">67</th><td>};</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><i>/* structure for huffman tree. */</i></td></tr>
+<tr><th id="70">70</th><td><b>struct</b> <dfn class="type def" id="huffman_tree_s" title='huffman_tree_s' data-ref="huffman_tree_s" >huffman_tree_s</dfn> {</td></tr>
+<tr><th id="71">71</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_tree_s::cmp0" title='huffman_tree_s::cmp0' data-ref="huffman_tree_s::cmp0" >cmp0</dfn>;					<i>/* 0000 - 1 if compression type 0. */</i></td></tr>
+<tr><th id="72">72</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_tree_s::offs0004" title='huffman_tree_s::offs0004' data-ref="huffman_tree_s::offs0004" >offs0004</dfn>;				<i>/* 0004 - some flag. */</i></td></tr>
+<tr><th id="73">73</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> <dfn class="decl" id="huffman_tree_s::items0008" title='huffman_tree_s::items0008' data-ref="huffman_tree_s::items0008" >items0008</dfn>[<var>0x203</var>];	<i>/* 0008 - huffman tree items. */</i></td></tr>
+<tr><th id="74">74</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_s::item3050" title='huffman_tree_s::item3050' data-ref="huffman_tree_s::item3050" >item3050</dfn>;		<i>/* 3050 - always NULL? */</i></td></tr>
+<tr><th id="75">75</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_s::item3054" title='huffman_tree_s::item3054' data-ref="huffman_tree_s::item3054" >item3054</dfn>;		<i>/* 3054 - pointer to huffman tree item. */</i></td></tr>
+<tr><th id="76">76</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_s::item3058" title='huffman_tree_s::item3058' data-ref="huffman_tree_s::item3058" >item3058</dfn>;		<i>/* 3058 - pointer to huffman tree item (&lt; 0 if invalid). */</i></td></tr>
+<tr><th id="77">77</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_s::item305C" title='huffman_tree_s::item305C' data-ref="huffman_tree_s::item305C" >item305C</dfn>;		<i>/* 305C - usually NULL. */</i></td></tr>
+<tr><th id="78">78</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_s::first" title='huffman_tree_s::first' data-ref="huffman_tree_s::first" >first</dfn>;		<i>/* 3060 - pointer to top (first) huffman tree item. */</i></td></tr>
+<tr><th id="79">79</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_s::last" title='huffman_tree_s::last' data-ref="huffman_tree_s::last" >last</dfn>;		<i>/* 3064 - pointer to bottom (last) huffman tree item (&lt; 0 if invalid). */</i></td></tr>
+<tr><th id="80">80</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="huffman_tree_s::items" title='huffman_tree_s::items' data-ref="huffman_tree_s::items" >items</dfn>;					<i>/* 3068 - number of used huffman tree items. */</i></td></tr>
+<tr><th id="81">81</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="huffman_tree_s::items306C" title='huffman_tree_s::items306C' data-ref="huffman_tree_s::items306C" >items306C</dfn>[<var>0x102</var>];	<i>/* 306C - huffman tree item pointer array. */</i></td></tr>
+<tr><th id="82">82</th><td>	<b>struct</b>		<a class="type" href="#huffman_decompress_s" title='huffman_decompress_s' data-ref="huffman_decompress_s" >huffman_decompress_s</a> <dfn class="decl" id="huffman_tree_s::qd3474" title='huffman_tree_s::qd3474' data-ref="huffman_tree_s::qd3474" >qd3474</dfn>[<var>0x80</var>];	<i>/* 3474 - array for quick decompression. */</i></td></tr>
+<tr><th id="83">83</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="huffman_tree_s::table_1502A630" title='huffman_tree_s::table_1502A630' data-ref="huffman_tree_s::table_1502A630" >table_1502A630</dfn>[];			<i>/* some table to make struct size flexible. */</i></td></tr>
+<tr><th id="84">84</th><td>};</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><i>/* insert a new item into huffman tree. */</i></td></tr>
+<tr><th id="87">87</th><td><em>void</em> <dfn class="decl" id="libmpq__huffman_insert_item" title='libmpq__huffman_insert_item' data-ref="libmpq__huffman_insert_item" >libmpq__huffman_insert_item</dfn>(</td></tr>
+<tr><th id="88">88</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> **<dfn class="local col0 decl" id="220p_item" title='p_item' data-type='struct huffman_tree_item_s **' data-ref="220p_item" >p_item</dfn>,</td></tr>
+<tr><th id="89">89</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="local col1 decl" id="221item" title='item' data-type='struct huffman_tree_item_s *' data-ref="221item" >item</dfn>,</td></tr>
+<tr><th id="90">90</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="local col2 decl" id="222where" title='where' data-type='uint32_t' data-ref="222where" >where</dfn>,</td></tr>
+<tr><th id="91">91</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="local col3 decl" id="223item2" title='item2' data-type='struct huffman_tree_item_s *' data-ref="223item2" >item2</dfn></td></tr>
+<tr><th id="92">92</th><td>);</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td><i>/* remove item from huffman tree. */</i></td></tr>
+<tr><th id="95">95</th><td><em>void</em> <dfn class="decl" id="libmpq__huffman_remove_item" title='libmpq__huffman_remove_item' data-ref="libmpq__huffman_remove_item" >libmpq__huffman_remove_item</dfn>(</td></tr>
+<tr><th id="96">96</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="local col4 decl" id="224hi" title='hi' data-type='struct huffman_tree_item_s *' data-ref="224hi" >hi</dfn></td></tr>
+<tr><th id="97">97</th><td>);</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td><i>/* get previous item from huffman tree. */</i></td></tr>
+<tr><th id="100">100</th><td><b>struct</b> <a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="libmpq__huffman_previous_item" title='libmpq__huffman_previous_item' data-ref="libmpq__huffman_previous_item" >libmpq__huffman_previous_item</dfn>(</td></tr>
+<tr><th id="101">101</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="local col5 decl" id="225hi" title='hi' data-type='struct huffman_tree_item_s *' data-ref="225hi" >hi</dfn>,</td></tr>
+<tr><th id="102">102</th><td>	<em>long</em>		<dfn class="local col6 decl" id="226value" title='value' data-type='long' data-ref="226value" >value</dfn></td></tr>
+<tr><th id="103">103</th><td>);</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><i>/* get one bit from stream. */</i></td></tr>
+<tr><th id="106">106</th><td><a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <dfn class="decl" id="libmpq__huffman_get_1bit" title='libmpq__huffman_get_1bit' data-ref="libmpq__huffman_get_1bit" >libmpq__huffman_get_1bit</dfn>(</td></tr>
+<tr><th id="107">107</th><td>	<b>struct</b>		<a class="type" href="#huffman_input_stream_s" title='huffman_input_stream_s' data-ref="huffman_input_stream_s" >huffman_input_stream_s</a> *<dfn class="local col7 decl" id="227is" title='is' data-type='struct huffman_input_stream_s *' data-ref="227is" >is</dfn></td></tr>
+<tr><th id="108">108</th><td>);</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td><i>/* get seven bit from stream. */</i></td></tr>
+<tr><th id="111">111</th><td><a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <dfn class="decl" id="libmpq__huffman_get_7bit" title='libmpq__huffman_get_7bit' data-ref="libmpq__huffman_get_7bit" >libmpq__huffman_get_7bit</dfn>(</td></tr>
+<tr><th id="112">112</th><td>	<b>struct</b>		<a class="type" href="#huffman_input_stream_s" title='huffman_input_stream_s' data-ref="huffman_input_stream_s" >huffman_input_stream_s</a> *<dfn class="local col8 decl" id="228is" title='is' data-type='struct huffman_input_stream_s *' data-ref="228is" >is</dfn></td></tr>
+<tr><th id="113">113</th><td>);</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td><i>/* get eight bit from stream. */</i></td></tr>
+<tr><th id="116">116</th><td><a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <dfn class="decl" id="libmpq__huffman_get_8bit" title='libmpq__huffman_get_8bit' data-ref="libmpq__huffman_get_8bit" >libmpq__huffman_get_8bit</dfn>(</td></tr>
+<tr><th id="117">117</th><td>	<b>struct</b>		<a class="type" href="#huffman_input_stream_s" title='huffman_input_stream_s' data-ref="huffman_input_stream_s" >huffman_input_stream_s</a> *<dfn class="local col9 decl" id="229is" title='is' data-type='struct huffman_input_stream_s *' data-ref="229is" >is</dfn></td></tr>
+<tr><th id="118">118</th><td>);</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><i>/* call 1500E740. */</i></td></tr>
+<tr><th id="121">121</th><td><b>struct</b> <a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="decl" id="libmpq__huffman_call_1500E740" title='libmpq__huffman_call_1500E740' data-ref="libmpq__huffman_call_1500E740" >libmpq__huffman_call_1500E740</dfn>(</td></tr>
+<tr><th id="122">122</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_s" title='huffman_tree_s' data-ref="huffman_tree_s" >huffman_tree_s</a> *<dfn class="local col0 decl" id="230ht" title='ht' data-type='struct huffman_tree_s *' data-ref="230ht" >ht</dfn></td></tr>
+<tr><th id="123">123</th><td>);</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><i>/* call 1500E820- */</i></td></tr>
+<tr><th id="126">126</th><td><em>void</em> <dfn class="decl" id="libmpq__huffman_call_1500E820" title='libmpq__huffman_call_1500E820' data-ref="libmpq__huffman_call_1500E820" >libmpq__huffman_call_1500E820</dfn>(</td></tr>
+<tr><th id="127">127</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_s" title='huffman_tree_s' data-ref="huffman_tree_s" >huffman_tree_s</a> *<dfn class="local col1 decl" id="231ht" title='ht' data-type='struct huffman_tree_s *' data-ref="231ht" >ht</dfn>,</td></tr>
+<tr><th id="128">128</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_item_s" title='huffman_tree_item_s' data-ref="huffman_tree_item_s" >huffman_tree_item_s</a> *<dfn class="local col2 decl" id="232p_item" title='p_item' data-type='struct huffman_tree_item_s *' data-ref="232p_item" >p_item</dfn></td></tr>
+<tr><th id="129">129</th><td>);</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><i>/* initialize the huffman tree. */</i></td></tr>
+<tr><th id="132">132</th><td><em>void</em> <dfn class="decl" id="libmpq__huffman_tree_init" title='libmpq__huffman_tree_init' data-ref="libmpq__huffman_tree_init" >libmpq__huffman_tree_init</dfn>(</td></tr>
+<tr><th id="133">133</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_s" title='huffman_tree_s' data-ref="huffman_tree_s" >huffman_tree_s</a> *<dfn class="local col3 decl" id="233ht" title='ht' data-type='struct huffman_tree_s *' data-ref="233ht" >ht</dfn>,</td></tr>
+<tr><th id="134">134</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="local col4 decl" id="234cmp" title='cmp' data-type='uint32_t' data-ref="234cmp" >cmp</dfn></td></tr>
+<tr><th id="135">135</th><td>);</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><i>/* build the huffman tree. */</i></td></tr>
+<tr><th id="138">138</th><td><em>void</em> <dfn class="decl" id="libmpq__huffman_tree_build" title='libmpq__huffman_tree_build' data-ref="libmpq__huffman_tree_build" >libmpq__huffman_tree_build</dfn>(</td></tr>
+<tr><th id="139">139</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_s" title='huffman_tree_s' data-ref="huffman_tree_s" >huffman_tree_s</a> *<dfn class="local col5 decl" id="235ht" title='ht' data-type='struct huffman_tree_s *' data-ref="235ht" >ht</dfn>,</td></tr>
+<tr><th id="140">140</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="local col6 decl" id="236cmp_type" title='cmp_type' data-type='uint32_t' data-ref="236cmp_type" >cmp_type</dfn></td></tr>
+<tr><th id="141">141</th><td>);</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><i>/* decompress the stream using huffman compression. */</i></td></tr>
+<tr><th id="144">144</th><td><a class="typedef" href="../../../../include/x86_64-linux-gnu/sys/types.h.html#196" title='int32_t' data-type='int' data-ref="int32_t" >int32_t</a> <dfn class="decl" id="libmpq__do_decompress_huffman" title='libmpq__do_decompress_huffman' data-ref="libmpq__do_decompress_huffman" >libmpq__do_decompress_huffman</dfn>(</td></tr>
+<tr><th id="145">145</th><td>	<b>struct</b>		<a class="type" href="#huffman_tree_s" title='huffman_tree_s' data-ref="huffman_tree_s" >huffman_tree_s</a> *<dfn class="local col7 decl" id="237ht" title='ht' data-type='struct huffman_tree_s *' data-ref="237ht" >ht</dfn>,</td></tr>
+<tr><th id="146">146</th><td>	<b>struct</b>		<a class="type" href="#huffman_input_stream_s" title='huffman_input_stream_s' data-ref="huffman_input_stream_s" >huffman_input_stream_s</a> *<dfn class="local col8 decl" id="238is" title='is' data-type='struct huffman_input_stream_s *' data-ref="238is" >is</dfn>,</td></tr>
+<tr><th id="147">147</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		*<dfn class="local col9 decl" id="239out_buf" title='out_buf' data-type='uint8_t *' data-ref="239out_buf" >out_buf</dfn>,</td></tr>
+<tr><th id="148">148</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="local col0 decl" id="240out_length" title='out_length' data-type='uint32_t' data-ref="240out_length" >out_length</dfn></td></tr>
+<tr><th id="149">149</th><td>);</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><u>#<span data-ppcond="27">endif</span>						/* _HUFFMAN_H */</u></td></tr>
+<tr><th id="152">152</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='extract.c.html'>TrinityCore3.3.5/dep/libmpq/libmpq/extract.c</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

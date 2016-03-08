@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+<head>
+<title>Map.cpp [TrinityCore6.x/dep/CascLib/src/common/Map.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/common/Map.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>CascLib</a>/<a href='..'>src</a>/<a href='./'>common</a>/Map.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><i>/* Map.cpp                                Copyright (c) Ladislav Zezula 2014 */</i></td></tr>
+<tr><th id="3">3</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="4">4</th><td><i>/* Implementation of map for CascLib                                         */</i></td></tr>
+<tr><th id="5">5</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="6">6</th><td><i>/*   Date    Ver   Who  Comment                                              */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* --------  ----  ---  -------                                              */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* 10.06.14  1.00  Lad  The first version of Map.cpp                         */</i></td></tr>
+<tr><th id="9">9</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#define <dfn class="macro" id="_M/__CASCLIB_SELF__" data-ref="_M/__CASCLIB_SELF__">__CASCLIB_SELF__</dfn></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../CascLib.h.html">"../CascLib.h"</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../CascCommon.h.html">"../CascCommon.h"</a></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><i  data-doc="_ZL19String_GetExtensionPKc">//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="16">16</th><td><i  data-doc="_ZL19String_GetExtensionPKc">// Local functions</i></td></tr>
+<tr><th id="17">17</th><td><i  data-doc="_ZL19String_GetExtensionPKc"></i></td></tr>
+<tr><th id="18">18</th><td><i  data-doc="_ZL19String_GetExtensionPKc">// Returns the extension, right after "."</i></td></tr>
+<tr><th id="19">19</th><td><em>static</em> <em>const</em> <em>char</em> * <dfn class="tu decl def" id="_ZL19String_GetExtensionPKc" title='String_GetExtension' data-type='const char * String_GetExtension(const char * szString)' data-ref="_ZL19String_GetExtensionPKc" >String_GetExtension</dfn>(<em>const</em> <em>char</em> * <dfn class="local col1 decl" id="1szString" title='szString' data-type='const char *' data-ref="1szString" >szString</dfn>)</td></tr>
+<tr><th id="20">20</th><td>{</td></tr>
+<tr><th id="21">21</th><td>    <em>const</em> <em>char</em> * <dfn class="local col2 decl" id="2szExtension" title='szExtension' data-type='const char *' data-ref="2szExtension" >szExtension</dfn> = <a class="ref" href="../../../../../include/string.h.html#strrchr" title='strrchr' data-ref="strrchr" id="strrchr" >strrchr</a>(<a class="local col1 ref" href="#1szString" title='szString' data-ref="1szString" >szString</a>, <kdb>'.'</kdb>);</td></tr>
+<tr><th id="22">22</th><td>    <b>return</b> (<a class="local col2 ref" href="#2szExtension" title='szExtension' data-ref="2szExtension" >szExtension</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) ? <a class="local col2 ref" href="#2szExtension" title='szExtension' data-ref="2szExtension" >szExtension</a> + <var>1</var> : <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="23">23</th><td>}</td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><em>static</em> <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="tu decl def" id="_ZL17CalcHashIndex_KeyP9_CASC_MAPPv" title='CalcHashIndex_Key' data-type='DWORD CalcHashIndex_Key(PCASC_MAP pMap, void * pvKey)' data-ref="_ZL17CalcHashIndex_KeyP9_CASC_MAPPv" >CalcHashIndex_Key</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col3 decl" id="3pMap" title='pMap' data-type='PCASC_MAP' data-ref="3pMap" >pMap</dfn>, <em>void</em> * <dfn class="local col4 decl" id="4pvKey" title='pvKey' data-type='void *' data-ref="4pvKey" >pvKey</dfn>)</td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col5 decl" id="5pbKey" title='pbKey' data-type='LPBYTE' data-ref="5pbKey" >pbKey</dfn> = (<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a>)<a class="local col4 ref" href="#4pvKey" title='pvKey' data-ref="4pvKey" >pvKey</a>;</td></tr>
+<tr><th id="28">28</th><td>    <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col6 decl" id="6dwHash" title='dwHash' data-type='DWORD' data-ref="6dwHash" >dwHash</dfn> = <var>0x7EEE7EEE</var>;</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td>    <i>// Construct the hash from the first 8 digits</i></td></tr>
+<tr><th id="31">31</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>0</var>];</td></tr>
+<tr><th id="32">32</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>1</var>];</td></tr>
+<tr><th id="33">33</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>2</var>];</td></tr>
+<tr><th id="34">34</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>3</var>];</td></tr>
+<tr><th id="35">35</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>4</var>];</td></tr>
+<tr><th id="36">36</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>5</var>];</td></tr>
+<tr><th id="37">37</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>6</var>];</td></tr>
+<tr><th id="38">38</th><td>    <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> = (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> ^ <a class="local col5 ref" href="#5pbKey" title='pbKey' data-ref="5pbKey" >pbKey</a>[<var>7</var>];</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <i>// Return the hash limited by the table size</i></td></tr>
+<tr><th id="41">41</th><td>    <b>return</b> (<a class="local col6 ref" href="#6dwHash" title='dwHash' data-ref="6dwHash" >dwHash</a> % <a class="local col3 ref" href="#3pMap" title='pMap' data-ref="3pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>);</td></tr>
+<tr><th id="42">42</th><td>}</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><em>static</em> <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="tu decl def" id="_ZL20CalcHashIndex_StringP9_CASC_MAPPKcS2_" title='CalcHashIndex_String' data-type='DWORD CalcHashIndex_String(PCASC_MAP pMap, const char * szString, const char * szStringEnd)' data-ref="_ZL20CalcHashIndex_StringP9_CASC_MAPPKcS2_" >CalcHashIndex_String</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col7 decl" id="7pMap" title='pMap' data-type='PCASC_MAP' data-ref="7pMap" >pMap</dfn>, <em>const</em> <em>char</em> * <dfn class="local col8 decl" id="8szString" title='szString' data-type='const char *' data-ref="8szString" >szString</dfn>, <em>const</em> <em>char</em> * <dfn class="local col9 decl" id="9szStringEnd" title='szStringEnd' data-type='const char *' data-ref="9szStringEnd" >szStringEnd</dfn>)</td></tr>
+<tr><th id="45">45</th><td>{</td></tr>
+<tr><th id="46">46</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col0 decl" id="10pbKeyEnd" title='pbKeyEnd' data-type='LPBYTE' data-ref="10pbKeyEnd" >pbKeyEnd</dfn> = (<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a>)<a class="local col9 ref" href="#9szStringEnd" title='szStringEnd' data-ref="9szStringEnd" >szStringEnd</a>;</td></tr>
+<tr><th id="47">47</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col1 decl" id="11pbKey" title='pbKey' data-type='LPBYTE' data-ref="11pbKey" >pbKey</dfn> = (<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a>)<a class="local col8 ref" href="#8szString" title='szString' data-ref="8szString" >szString</a>;</td></tr>
+<tr><th id="48">48</th><td>    <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col2 decl" id="12dwHash" title='dwHash' data-type='DWORD' data-ref="12dwHash" >dwHash</dfn> = <var>0x7EEE7EEE</var>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <i>// Hash the string itself</i></td></tr>
+<tr><th id="51">51</th><td>    <b>while</b>(<a class="local col1 ref" href="#11pbKey" title='pbKey' data-ref="11pbKey" >pbKey</a> &lt; <a class="local col0 ref" href="#10pbKeyEnd" title='pbKeyEnd' data-ref="10pbKeyEnd" >pbKeyEnd</a>)</td></tr>
+<tr><th id="52">52</th><td>    {</td></tr>
+<tr><th id="53">53</th><td>        <a class="local col2 ref" href="#12dwHash" title='dwHash' data-ref="12dwHash" >dwHash</a> = (<a class="local col2 ref" href="#12dwHash" title='dwHash' data-ref="12dwHash" >dwHash</a> &gt;&gt; <var>24</var>) ^ (<a class="local col2 ref" href="#12dwHash" title='dwHash' data-ref="12dwHash" >dwHash</a> &lt;&lt; <var>5</var>) ^ <a class="local col2 ref" href="#12dwHash" title='dwHash' data-ref="12dwHash" >dwHash</a> ^ <a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col1 ref" href="#11pbKey" title='pbKey' data-ref="11pbKey" >pbKey</a>[<var>0</var>]];</td></tr>
+<tr><th id="54">54</th><td>        <a class="local col1 ref" href="#11pbKey" title='pbKey' data-ref="11pbKey" >pbKey</a>++;</td></tr>
+<tr><th id="55">55</th><td>    }</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>    <i>// Return the hash limited by the table size</i></td></tr>
+<tr><th id="58">58</th><td>    <b>return</b> (<a class="local col2 ref" href="#12dwHash" title='dwHash' data-ref="12dwHash" >dwHash</a> % <a class="local col7 ref" href="#7pMap" title='pMap' data-ref="7pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>);</td></tr>
+<tr><th id="59">59</th><td>}</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><em>static</em> <em>bool</em> <dfn class="tu decl def" id="_ZL17CompareObject_KeyP9_CASC_MAPPvS1_" title='CompareObject_Key' data-type='bool CompareObject_Key(PCASC_MAP pMap, void * pvObject, void * pvKey)' data-ref="_ZL17CompareObject_KeyP9_CASC_MAPPvS1_" >CompareObject_Key</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col3 decl" id="13pMap" title='pMap' data-type='PCASC_MAP' data-ref="13pMap" >pMap</dfn>, <em>void</em> * <dfn class="local col4 decl" id="14pvObject" title='pvObject' data-type='void *' data-ref="14pvObject" >pvObject</dfn>, <em>void</em> * <dfn class="local col5 decl" id="15pvKey" title='pvKey' data-type='void *' data-ref="15pvKey" >pvKey</dfn>)</td></tr>
+<tr><th id="62">62</th><td>{</td></tr>
+<tr><th id="63">63</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col6 decl" id="16pbObjectKey" title='pbObjectKey' data-type='LPBYTE' data-ref="16pbObjectKey" >pbObjectKey</dfn> = (<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a>)<a class="local col4 ref" href="#14pvObject" title='pvObject' data-ref="14pvObject" >pvObject</a> + <a class="local col3 ref" href="#13pMap" title='pMap' data-ref="13pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::KeyOffset" title='_CASC_MAP::KeyOffset' data-ref="_CASC_MAP::KeyOffset" id="_CASC_MAP::KeyOffset" >KeyOffset</a>;</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <b>return</b> (<a class="ref" href="../../../../../include/string.h.html#memcmp" title='memcmp' data-ref="memcmp" id="memcmp" >memcmp</a>(<a class="local col6 ref" href="#16pbObjectKey" title='pbObjectKey' data-ref="16pbObjectKey" >pbObjectKey</a>, <a class="local col5 ref" href="#15pvKey" title='pvKey' data-ref="15pvKey" >pvKey</a>, <a class="local col3 ref" href="#13pMap" title='pMap' data-ref="13pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::KeyLength" title='_CASC_MAP::KeyLength' data-ref="_CASC_MAP::KeyLength" id="_CASC_MAP::KeyLength" >KeyLength</a>) == <var>0</var>);</td></tr>
+<tr><th id="66">66</th><td>}</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><em>static</em> <em>bool</em> <dfn class="tu decl def" id="_ZL20CompareObject_StringP9_CASC_MAPPKcS2_S2_" title='CompareObject_String' data-type='bool CompareObject_String(PCASC_MAP pMap, const char * szExistingString, const char * szString, const char * szStringEnd)' data-ref="_ZL20CompareObject_StringP9_CASC_MAPPKcS2_S2_" >CompareObject_String</dfn>(</td></tr>
+<tr><th id="69">69</th><td>    <a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col7 decl" id="17pMap" title='pMap' data-type='PCASC_MAP' data-ref="17pMap" >pMap</dfn>,</td></tr>
+<tr><th id="70">70</th><td>    <em>const</em> <em>char</em> * <dfn class="local col8 decl" id="18szExistingString" title='szExistingString' data-type='const char *' data-ref="18szExistingString" >szExistingString</dfn>,</td></tr>
+<tr><th id="71">71</th><td>    <em>const</em> <em>char</em> * <dfn class="local col9 decl" id="19szString" title='szString' data-type='const char *' data-ref="19szString" >szString</dfn>,</td></tr>
+<tr><th id="72">72</th><td>    <em>const</em> <em>char</em> * <dfn class="local col0 decl" id="20szStringEnd" title='szStringEnd' data-type='const char *' data-ref="20szStringEnd" >szStringEnd</dfn>)</td></tr>
+<tr><th id="73">73</th><td>{</td></tr>
+<tr><th id="74">74</th><td>    <i>// Keep compiler happy</i></td></tr>
+<tr><th id="75">75</th><td>    <a class="macro" href="../CascCommon.h.html#75" title="((void)(pMap))" data-ref="_M/CASCLIB_UNUSED">CASCLIB_UNUSED</a>(<a class="local col7 ref" href="#17pMap" title='pMap' data-ref="17pMap" >pMap</a>);</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <i>// Compare the whole part, case insensitive</i></td></tr>
+<tr><th id="78">78</th><td>    <b>while</b>(<a class="local col9 ref" href="#19szString" title='szString' data-ref="19szString" >szString</a> &lt; <a class="local col0 ref" href="#20szStringEnd" title='szStringEnd' data-ref="20szStringEnd" >szStringEnd</a>)</td></tr>
+<tr><th id="79">79</th><td>    {</td></tr>
+<tr><th id="80">80</th><td>        <b>if</b>(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[*<a class="local col8 ref" href="#18szExistingString" title='szExistingString' data-ref="18szExistingString" >szExistingString</a>] != <a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[*<a class="local col9 ref" href="#19szString" title='szString' data-ref="19szString" >szString</a>])</td></tr>
+<tr><th id="81">81</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>        <a class="local col8 ref" href="#18szExistingString" title='szExistingString' data-ref="18szExistingString" >szExistingString</a>++;</td></tr>
+<tr><th id="84">84</th><td>        <a class="local col9 ref" href="#19szString" title='szString' data-ref="19szString" >szString</a>++;</td></tr>
+<tr><th id="85">85</th><td>    }</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="88">88</th><td>}</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="91">91</th><td><i>// Public functions</i></td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="decl def" id="_Z10Map_Createjjj" title='Map_Create' data-ref="_Z10Map_Createjjj" >Map_Create</dfn>(<a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col1 decl" id="21dwMaxItems" title='dwMaxItems' data-type='DWORD' data-ref="21dwMaxItems" >dwMaxItems</dfn>, <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col2 decl" id="22dwKeyLength" title='dwKeyLength' data-type='DWORD' data-ref="22dwKeyLength" >dwKeyLength</dfn>, <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col3 decl" id="23dwKeyOffset" title='dwKeyOffset' data-type='DWORD' data-ref="23dwKeyOffset" >dwKeyOffset</dfn>)</td></tr>
+<tr><th id="94">94</th><td>{</td></tr>
+<tr><th id="95">95</th><td>    <a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col4 decl" id="24pMap" title='pMap' data-type='PCASC_MAP' data-ref="24pMap" >pMap</dfn>;</td></tr>
+<tr><th id="96">96</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="25cbToAllocate" title='cbToAllocate' data-type='size_t' data-ref="25cbToAllocate" >cbToAllocate</dfn>;</td></tr>
+<tr><th id="97">97</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="26dwTableSize" title='dwTableSize' data-type='size_t' data-ref="26dwTableSize" >dwTableSize</dfn>;</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>    <i>// Calculate the size of the table</i></td></tr>
+<tr><th id="100">100</th><td>    <a class="local col6 ref" href="#26dwTableSize" title='dwTableSize' data-ref="26dwTableSize" >dwTableSize</a> = (<a class="local col1 ref" href="#21dwMaxItems" title='dwMaxItems' data-ref="21dwMaxItems" >dwMaxItems</a> * <var>3</var> / <var>2</var>) | <var>0x01</var>;</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td>    <i>// Allocate new map for the objects</i></td></tr>
+<tr><th id="103">103</th><td>    <a class="local col5 ref" href="#25cbToAllocate" title='cbToAllocate' data-ref="25cbToAllocate" >cbToAllocate</a> = <b>sizeof</b>(<a class="typedef" href="Map.h.html#CASC_MAP" title='CASC_MAP' data-type='struct _CASC_MAP' data-ref="CASC_MAP" >CASC_MAP</a>) + (<a class="local col6 ref" href="#26dwTableSize" title='dwTableSize' data-ref="26dwTableSize" >dwTableSize</a> * <b>sizeof</b>(<em>void</em> *));</td></tr>
+<tr><th id="104">104</th><td>    <a class="local col4 ref" href="#24pMap" title='pMap' data-ref="24pMap" >pMap</a> = (<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a>)<a class="macro" href="../CascCommon.h.html#302" title="(LPBYTE *)malloc((cbToAllocate) * sizeof(LPBYTE))" data-ref="_M/CASC_ALLOC">CASC_ALLOC</a>(<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" ><a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a></a>, <a class="local col5 ref" href="#25cbToAllocate" title='cbToAllocate' data-ref="25cbToAllocate" >cbToAllocate</a>);</td></tr>
+<tr><th id="105">105</th><td>    <b>if</b>(<a class="local col4 ref" href="#24pMap" title='pMap' data-ref="24pMap" >pMap</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="106">106</th><td>    {</td></tr>
+<tr><th id="107">107</th><td>        <a class="ref" href="../../../../../include/string.h.html#memset" title='memset' data-ref="memset" id="memset" >memset</a>(<a class="local col4 ref" href="#24pMap" title='pMap' data-ref="24pMap" >pMap</a>, <var>0</var>, <a class="local col5 ref" href="#25cbToAllocate" title='cbToAllocate' data-ref="25cbToAllocate" >cbToAllocate</a>);</td></tr>
+<tr><th id="108">108</th><td>        <a class="local col4 ref" href="#24pMap" title='pMap' data-ref="24pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::KeyLength" title='_CASC_MAP::KeyLength' data-ref="_CASC_MAP::KeyLength" id="_CASC_MAP::KeyLength" >KeyLength</a> = <a class="local col2 ref" href="#22dwKeyLength" title='dwKeyLength' data-ref="22dwKeyLength" >dwKeyLength</a>;</td></tr>
+<tr><th id="109">109</th><td>        <a class="local col4 ref" href="#24pMap" title='pMap' data-ref="24pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a> = <a class="local col6 ref" href="#26dwTableSize" title='dwTableSize' data-ref="26dwTableSize" >dwTableSize</a>;</td></tr>
+<tr><th id="110">110</th><td>        <a class="local col4 ref" href="#24pMap" title='pMap' data-ref="24pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::KeyOffset" title='_CASC_MAP::KeyOffset' data-ref="_CASC_MAP::KeyOffset" id="_CASC_MAP::KeyOffset" >KeyOffset</a> = <a class="local col3 ref" href="#23dwKeyOffset" title='dwKeyOffset' data-ref="23dwKeyOffset" >dwKeyOffset</a>;</td></tr>
+<tr><th id="111">111</th><td>    }</td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td>    <i>// Return the allocated map</i></td></tr>
+<tr><th id="114">114</th><td>    <b>return</b> <a class="local col4 ref" href="#24pMap" title='pMap' data-ref="24pMap" >pMap</a>;</td></tr>
+<tr><th id="115">115</th><td>}</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_Z15Map_EnumObjectsP9_CASC_MAPPPv" title='Map_EnumObjects' data-ref="_Z15Map_EnumObjectsP9_CASC_MAPPPv" >Map_EnumObjects</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col7 decl" id="27pMap" title='pMap' data-type='PCASC_MAP' data-ref="27pMap" >pMap</dfn>, <em>void</em> **<dfn class="local col8 decl" id="28ppvArray" title='ppvArray' data-type='void **' data-ref="28ppvArray" >ppvArray</dfn>)</td></tr>
+<tr><th id="118">118</th><td>{</td></tr>
+<tr><th id="119">119</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="29nIndex" title='nIndex' data-type='size_t' data-ref="29nIndex" >nIndex</dfn> = <var>0</var>;</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>    <i>// Verify pointer to the map</i></td></tr>
+<tr><th id="122">122</th><td>    <b>if</b>(<a class="local col7 ref" href="#27pMap" title='pMap' data-ref="27pMap" >pMap</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span> &amp;&amp; <a class="local col8 ref" href="#28ppvArray" title='ppvArray' data-ref="28ppvArray" >ppvArray</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="123">123</th><td>    {</td></tr>
+<tr><th id="124">124</th><td>        <i>// Enumerate all items in main table</i></td></tr>
+<tr><th id="125">125</th><td>        <b>for</b>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="30i" title='i' data-type='size_t' data-ref="30i" >i</dfn> = <var>0</var>; <a class="local col0 ref" href="#30i" title='i' data-ref="30i" >i</a> &lt; <a class="local col7 ref" href="#27pMap" title='pMap' data-ref="27pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>; <a class="local col0 ref" href="#30i" title='i' data-ref="30i" >i</a>++)</td></tr>
+<tr><th id="126">126</th><td>        {</td></tr>
+<tr><th id="127">127</th><td>            <i>// Is that cell valid?</i></td></tr>
+<tr><th id="128">128</th><td>            <b>if</b>(<a class="local col7 ref" href="#27pMap" title='pMap' data-ref="27pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col0 ref" href="#30i" title='i' data-ref="30i" >i</a>] != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="129">129</th><td>            {</td></tr>
+<tr><th id="130">130</th><td>                <a class="local col8 ref" href="#28ppvArray" title='ppvArray' data-ref="28ppvArray" >ppvArray</a>[<a class="local col9 ref" href="#29nIndex" title='nIndex' data-ref="29nIndex" >nIndex</a>++] = <a class="local col7 ref" href="#27pMap" title='pMap' data-ref="27pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col0 ref" href="#30i" title='i' data-ref="30i" >i</a>];</td></tr>
+<tr><th id="131">131</th><td>            }</td></tr>
+<tr><th id="132">132</th><td>        }</td></tr>
+<tr><th id="133">133</th><td>    }</td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td>    <b>return</b> <a class="local col7 ref" href="#27pMap" title='pMap' data-ref="27pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::ItemCount" title='_CASC_MAP::ItemCount' data-ref="_CASC_MAP::ItemCount" id="_CASC_MAP::ItemCount" >ItemCount</a>;</td></tr>
+<tr><th id="136">136</th><td>}</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td><em>void</em> * <dfn class="decl def" id="_Z14Map_FindObjectP9_CASC_MAPPvPj" title='Map_FindObject' data-ref="_Z14Map_FindObjectP9_CASC_MAPPvPj" >Map_FindObject</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col1 decl" id="31pMap" title='pMap' data-type='PCASC_MAP' data-ref="31pMap" >pMap</dfn>, <em>void</em> * <dfn class="local col2 decl" id="32pvKey" title='pvKey' data-type='void *' data-ref="32pvKey" >pvKey</dfn>, <a class="typedef" href="../CascPort.h.html#PDWORD" title='PDWORD' data-type='DWORD *' data-ref="PDWORD" >PDWORD</a> <dfn class="local col3 decl" id="33PtrIndex" title='PtrIndex' data-type='PDWORD' data-ref="33PtrIndex" >PtrIndex</dfn>)</td></tr>
+<tr><th id="139">139</th><td>{</td></tr>
+<tr><th id="140">140</th><td>    <em>void</em> * <dfn class="local col4 decl" id="34pvObject" title='pvObject' data-type='void *' data-ref="34pvObject" >pvObject</dfn>;</td></tr>
+<tr><th id="141">141</th><td>    <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col5 decl" id="35dwHashIndex" title='dwHashIndex' data-type='DWORD' data-ref="35dwHashIndex" >dwHashIndex</dfn>;</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td>    <i>// Verify pointer to the map</i></td></tr>
+<tr><th id="144">144</th><td>    <b>if</b>(<a class="local col1 ref" href="#31pMap" title='pMap' data-ref="31pMap" >pMap</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="145">145</th><td>    {</td></tr>
+<tr><th id="146">146</th><td>        <i>// Construct the main index</i></td></tr>
+<tr><th id="147">147</th><td>        <a class="local col5 ref" href="#35dwHashIndex" title='dwHashIndex' data-ref="35dwHashIndex" >dwHashIndex</a> = <a class="tu ref" href="#_ZL17CalcHashIndex_KeyP9_CASC_MAPPv" title='CalcHashIndex_Key' data-use='c' data-ref="_ZL17CalcHashIndex_KeyP9_CASC_MAPPv" >CalcHashIndex_Key</a>(<a class="local col1 ref" href="#31pMap" title='pMap' data-ref="31pMap" >pMap</a>, <a class="local col2 ref" href="#32pvKey" title='pvKey' data-ref="32pvKey" >pvKey</a>);</td></tr>
+<tr><th id="148">148</th><td>        <b>while</b>(<a class="local col1 ref" href="#31pMap" title='pMap' data-ref="31pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col5 ref" href="#35dwHashIndex" title='dwHashIndex' data-ref="35dwHashIndex" >dwHashIndex</a>] != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="149">149</th><td>        {</td></tr>
+<tr><th id="150">150</th><td>            <i>// Get the pointer at that position</i></td></tr>
+<tr><th id="151">151</th><td>            <a class="local col4 ref" href="#34pvObject" title='pvObject' data-ref="34pvObject" >pvObject</a> = <a class="local col1 ref" href="#31pMap" title='pMap' data-ref="31pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col5 ref" href="#35dwHashIndex" title='dwHashIndex' data-ref="35dwHashIndex" >dwHashIndex</a>];</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>            <i>// Compare the hash</i></td></tr>
+<tr><th id="154">154</th><td>            <b>if</b>(<a class="tu ref" href="#_ZL17CompareObject_KeyP9_CASC_MAPPvS1_" title='CompareObject_Key' data-use='c' data-ref="_ZL17CompareObject_KeyP9_CASC_MAPPvS1_" >CompareObject_Key</a>(<a class="local col1 ref" href="#31pMap" title='pMap' data-ref="31pMap" >pMap</a>, <a class="local col4 ref" href="#34pvObject" title='pvObject' data-ref="34pvObject" >pvObject</a>, <a class="local col2 ref" href="#32pvKey" title='pvKey' data-ref="32pvKey" >pvKey</a>))</td></tr>
+<tr><th id="155">155</th><td>            {</td></tr>
+<tr><th id="156">156</th><td>                <b>if</b>(<a class="local col3 ref" href="#33PtrIndex" title='PtrIndex' data-ref="33PtrIndex" >PtrIndex</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="157">157</th><td>                    <a class="local col3 ref" href="#33PtrIndex" title='PtrIndex' data-ref="33PtrIndex" >PtrIndex</a>[<var>0</var>] = <a class="local col5 ref" href="#35dwHashIndex" title='dwHashIndex' data-ref="35dwHashIndex" >dwHashIndex</a>;</td></tr>
+<tr><th id="158">158</th><td>                <b>return</b> <a class="local col4 ref" href="#34pvObject" title='pvObject' data-ref="34pvObject" >pvObject</a>;</td></tr>
+<tr><th id="159">159</th><td>            }</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>            <i>// Move to the next entry</i></td></tr>
+<tr><th id="162">162</th><td>            <a class="local col5 ref" href="#35dwHashIndex" title='dwHashIndex' data-ref="35dwHashIndex" >dwHashIndex</a> = (<a class="local col5 ref" href="#35dwHashIndex" title='dwHashIndex' data-ref="35dwHashIndex" >dwHashIndex</a> + <var>1</var>) % <a class="local col1 ref" href="#31pMap" title='pMap' data-ref="31pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>;</td></tr>
+<tr><th id="163">163</th><td>        }</td></tr>
+<tr><th id="164">164</th><td>    }</td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td>    <i>// Not found, sorry</i></td></tr>
+<tr><th id="167">167</th><td>    <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="168">168</th><td>}</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td><em>bool</em> <dfn class="decl def" id="_Z16Map_InsertObjectP9_CASC_MAPPvS1_" title='Map_InsertObject' data-ref="_Z16Map_InsertObjectP9_CASC_MAPPvS1_" >Map_InsertObject</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col6 decl" id="36pMap" title='pMap' data-type='PCASC_MAP' data-ref="36pMap" >pMap</dfn>, <em>void</em> * <dfn class="local col7 decl" id="37pvNewObject" title='pvNewObject' data-type='void *' data-ref="37pvNewObject" >pvNewObject</dfn>, <em>void</em> * <dfn class="local col8 decl" id="38pvKey" title='pvKey' data-type='void *' data-ref="38pvKey" >pvKey</dfn>)</td></tr>
+<tr><th id="171">171</th><td>{</td></tr>
+<tr><th id="172">172</th><td>    <em>void</em> * <dfn class="local col9 decl" id="39pvExistingObject" title='pvExistingObject' data-type='void *' data-ref="39pvExistingObject" >pvExistingObject</dfn>;</td></tr>
+<tr><th id="173">173</th><td>    <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col0 decl" id="40dwHashIndex" title='dwHashIndex' data-type='DWORD' data-ref="40dwHashIndex" >dwHashIndex</dfn>;</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td>    <i>// Verify pointer to the map</i></td></tr>
+<tr><th id="176">176</th><td>    <b>if</b>(<a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="177">177</th><td>    {</td></tr>
+<tr><th id="178">178</th><td>        <i>// Limit check</i></td></tr>
+<tr><th id="179">179</th><td>        <b>if</b>((<a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::ItemCount" title='_CASC_MAP::ItemCount' data-ref="_CASC_MAP::ItemCount" id="_CASC_MAP::ItemCount" >ItemCount</a> + <var>1</var>) &gt;= <a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>)</td></tr>
+<tr><th id="180">180</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>        <i>// Construct the hash index</i></td></tr>
+<tr><th id="183">183</th><td>        <a class="local col0 ref" href="#40dwHashIndex" title='dwHashIndex' data-ref="40dwHashIndex" >dwHashIndex</a> = <a class="tu ref" href="#_ZL17CalcHashIndex_KeyP9_CASC_MAPPv" title='CalcHashIndex_Key' data-use='c' data-ref="_ZL17CalcHashIndex_KeyP9_CASC_MAPPv" >CalcHashIndex_Key</a>(<a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>, <a class="local col8 ref" href="#38pvKey" title='pvKey' data-ref="38pvKey" >pvKey</a>);</td></tr>
+<tr><th id="184">184</th><td>        <b>while</b>(<a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col0 ref" href="#40dwHashIndex" title='dwHashIndex' data-ref="40dwHashIndex" >dwHashIndex</a>] != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="185">185</th><td>        {</td></tr>
+<tr><th id="186">186</th><td>            <i>// Get the pointer at that position</i></td></tr>
+<tr><th id="187">187</th><td>            <a class="local col9 ref" href="#39pvExistingObject" title='pvExistingObject' data-ref="39pvExistingObject" >pvExistingObject</a> = <a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col0 ref" href="#40dwHashIndex" title='dwHashIndex' data-ref="40dwHashIndex" >dwHashIndex</a>];</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td>            <i>// Check if hash being inserted conflicts with an existing hash</i></td></tr>
+<tr><th id="190">190</th><td>            <b>if</b>(<a class="tu ref" href="#_ZL17CompareObject_KeyP9_CASC_MAPPvS1_" title='CompareObject_Key' data-use='c' data-ref="_ZL17CompareObject_KeyP9_CASC_MAPPvS1_" >CompareObject_Key</a>(<a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>, <a class="local col9 ref" href="#39pvExistingObject" title='pvExistingObject' data-ref="39pvExistingObject" >pvExistingObject</a>, <a class="local col8 ref" href="#38pvKey" title='pvKey' data-ref="38pvKey" >pvKey</a>))</td></tr>
+<tr><th id="191">191</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td>            <i>// Move to the next entry</i></td></tr>
+<tr><th id="194">194</th><td>            <a class="local col0 ref" href="#40dwHashIndex" title='dwHashIndex' data-ref="40dwHashIndex" >dwHashIndex</a> = (<a class="local col0 ref" href="#40dwHashIndex" title='dwHashIndex' data-ref="40dwHashIndex" >dwHashIndex</a> + <var>1</var>) % <a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>;</td></tr>
+<tr><th id="195">195</th><td>        }</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td>        <i>// Insert at that position</i></td></tr>
+<tr><th id="198">198</th><td>        <a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col0 ref" href="#40dwHashIndex" title='dwHashIndex' data-ref="40dwHashIndex" >dwHashIndex</a>] = <a class="local col7 ref" href="#37pvNewObject" title='pvNewObject' data-ref="37pvNewObject" >pvNewObject</a>;</td></tr>
+<tr><th id="199">199</th><td>        <a class="local col6 ref" href="#36pMap" title='pMap' data-ref="36pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::ItemCount" title='_CASC_MAP::ItemCount' data-ref="_CASC_MAP::ItemCount" id="_CASC_MAP::ItemCount" >ItemCount</a>++;</td></tr>
+<tr><th id="200">200</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="201">201</th><td>    }</td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td>    <i>// Failed</i></td></tr>
+<tr><th id="204">204</th><td>    <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="205">205</th><td>}</td></tr>
+<tr><th id="206">206</th><td></td></tr>
+<tr><th id="207">207</th><td><em>bool</em> <dfn class="decl def" id="_Z16Map_InsertStringP9_CASC_MAPPKcb" title='Map_InsertString' data-ref="_Z16Map_InsertStringP9_CASC_MAPPKcb" >Map_InsertString</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col1 decl" id="41pMap" title='pMap' data-type='PCASC_MAP' data-ref="41pMap" >pMap</dfn>, <em>const</em> <em>char</em> * <dfn class="local col2 decl" id="42szString" title='szString' data-type='const char *' data-ref="42szString" >szString</dfn>, <em>bool</em> <dfn class="local col3 decl" id="43bCutExtension" title='bCutExtension' data-type='bool' data-ref="43bCutExtension" >bCutExtension</dfn>)</td></tr>
+<tr><th id="208">208</th><td>{</td></tr>
+<tr><th id="209">209</th><td>    <em>const</em> <em>char</em> * <dfn class="local col4 decl" id="44szExistingString" title='szExistingString' data-type='const char *' data-ref="44szExistingString" >szExistingString</dfn>;</td></tr>
+<tr><th id="210">210</th><td>    <em>const</em> <em>char</em> * <dfn class="local col5 decl" id="45szStringEnd" title='szStringEnd' data-type='const char *' data-ref="45szStringEnd" >szStringEnd</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="211">211</th><td>    <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col6 decl" id="46dwHashIndex" title='dwHashIndex' data-type='DWORD' data-ref="46dwHashIndex" >dwHashIndex</dfn>;</td></tr>
+<tr><th id="212">212</th><td></td></tr>
+<tr><th id="213">213</th><td>    <i>// Verify pointer to the map</i></td></tr>
+<tr><th id="214">214</th><td>    <b>if</b>(<a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="215">215</th><td>    {</td></tr>
+<tr><th id="216">216</th><td>        <i>// Limit check</i></td></tr>
+<tr><th id="217">217</th><td>        <b>if</b>((<a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::ItemCount" title='_CASC_MAP::ItemCount' data-ref="_CASC_MAP::ItemCount" id="_CASC_MAP::ItemCount" >ItemCount</a> + <var>1</var>) &gt;= <a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>)</td></tr>
+<tr><th id="218">218</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="219">219</th><td></td></tr>
+<tr><th id="220">220</th><td>        <i>// Retrieve the length of the string without extension</i></td></tr>
+<tr><th id="221">221</th><td>        <b>if</b>(<a class="local col3 ref" href="#43bCutExtension" title='bCutExtension' data-ref="43bCutExtension" >bCutExtension</a>)</td></tr>
+<tr><th id="222">222</th><td>            <a class="local col5 ref" href="#45szStringEnd" title='szStringEnd' data-ref="45szStringEnd" >szStringEnd</a> = <a class="tu ref" href="#_ZL19String_GetExtensionPKc" title='String_GetExtension' data-use='c' data-ref="_ZL19String_GetExtensionPKc" >String_GetExtension</a>(<a class="local col2 ref" href="#42szString" title='szString' data-ref="42szString" >szString</a>);</td></tr>
+<tr><th id="223">223</th><td>        <b>if</b>(<a class="local col5 ref" href="#45szStringEnd" title='szStringEnd' data-ref="45szStringEnd" >szStringEnd</a> == <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="224">224</th><td>            <a class="local col5 ref" href="#45szStringEnd" title='szStringEnd' data-ref="45szStringEnd" >szStringEnd</a> = <a class="local col2 ref" href="#42szString" title='szString' data-ref="42szString" >szString</a> + <a class="ref" href="../../../../../include/string.h.html#strlen" title='strlen' data-ref="strlen" id="strlen" >strlen</a>(<a class="local col2 ref" href="#42szString" title='szString' data-ref="42szString" >szString</a>);</td></tr>
+<tr><th id="225">225</th><td></td></tr>
+<tr><th id="226">226</th><td>        <i>// Construct the hash index</i></td></tr>
+<tr><th id="227">227</th><td>        <a class="local col6 ref" href="#46dwHashIndex" title='dwHashIndex' data-ref="46dwHashIndex" >dwHashIndex</a> = <a class="tu ref" href="#_ZL20CalcHashIndex_StringP9_CASC_MAPPKcS2_" title='CalcHashIndex_String' data-use='c' data-ref="_ZL20CalcHashIndex_StringP9_CASC_MAPPKcS2_" >CalcHashIndex_String</a>(<a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>, <a class="local col2 ref" href="#42szString" title='szString' data-ref="42szString" >szString</a>, <a class="local col5 ref" href="#45szStringEnd" title='szStringEnd' data-ref="45szStringEnd" >szStringEnd</a>);</td></tr>
+<tr><th id="228">228</th><td>        <b>while</b>(<a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col6 ref" href="#46dwHashIndex" title='dwHashIndex' data-ref="46dwHashIndex" >dwHashIndex</a>] != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="229">229</th><td>        {</td></tr>
+<tr><th id="230">230</th><td>            <i>// Get the pointer at that position</i></td></tr>
+<tr><th id="231">231</th><td>            <a class="local col4 ref" href="#44szExistingString" title='szExistingString' data-ref="44szExistingString" >szExistingString</a> = (<em>const</em> <em>char</em> *)<a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col6 ref" href="#46dwHashIndex" title='dwHashIndex' data-ref="46dwHashIndex" >dwHashIndex</a>];</td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td>            <i>// Check if hash being inserted conflicts with an existing hash</i></td></tr>
+<tr><th id="234">234</th><td>            <b>if</b>(<a class="tu ref" href="#_ZL20CompareObject_StringP9_CASC_MAPPKcS2_S2_" title='CompareObject_String' data-use='c' data-ref="_ZL20CompareObject_StringP9_CASC_MAPPKcS2_S2_" >CompareObject_String</a>(<a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>, <a class="local col4 ref" href="#44szExistingString" title='szExistingString' data-ref="44szExistingString" >szExistingString</a>, <a class="local col2 ref" href="#42szString" title='szString' data-ref="42szString" >szString</a>, <a class="local col5 ref" href="#45szStringEnd" title='szStringEnd' data-ref="45szStringEnd" >szStringEnd</a>))</td></tr>
+<tr><th id="235">235</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td>            <i>// Move to the next entry</i></td></tr>
+<tr><th id="238">238</th><td>            <a class="local col6 ref" href="#46dwHashIndex" title='dwHashIndex' data-ref="46dwHashIndex" >dwHashIndex</a> = (<a class="local col6 ref" href="#46dwHashIndex" title='dwHashIndex' data-ref="46dwHashIndex" >dwHashIndex</a> + <var>1</var>) % <a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>;</td></tr>
+<tr><th id="239">239</th><td>        }</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>        <i>// Insert at that position</i></td></tr>
+<tr><th id="242">242</th><td>        <a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col6 ref" href="#46dwHashIndex" title='dwHashIndex' data-ref="46dwHashIndex" >dwHashIndex</a>] = (<em>void</em> *)<a class="local col2 ref" href="#42szString" title='szString' data-ref="42szString" >szString</a>;</td></tr>
+<tr><th id="243">243</th><td>        <a class="local col1 ref" href="#41pMap" title='pMap' data-ref="41pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::ItemCount" title='_CASC_MAP::ItemCount' data-ref="_CASC_MAP::ItemCount" id="_CASC_MAP::ItemCount" >ItemCount</a>++;</td></tr>
+<tr><th id="244">244</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="245">245</th><td>    }</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td>    <i>// Failed</i></td></tr>
+<tr><th id="248">248</th><td>    <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="249">249</th><td>}</td></tr>
+<tr><th id="250">250</th><td></td></tr>
+<tr><th id="251">251</th><td><em>const</em> <em>char</em> * <dfn class="decl def" id="_Z14Map_FindStringP9_CASC_MAPPKcS2_" title='Map_FindString' data-ref="_Z14Map_FindStringP9_CASC_MAPPKcS2_" >Map_FindString</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col7 decl" id="47pMap" title='pMap' data-type='PCASC_MAP' data-ref="47pMap" >pMap</dfn>, <em>const</em> <em>char</em> * <dfn class="local col8 decl" id="48szString" title='szString' data-type='const char *' data-ref="48szString" >szString</dfn>, <em>const</em> <em>char</em> * <dfn class="local col9 decl" id="49szStringEnd" title='szStringEnd' data-type='const char *' data-ref="49szStringEnd" >szStringEnd</dfn>)</td></tr>
+<tr><th id="252">252</th><td>{</td></tr>
+<tr><th id="253">253</th><td>    <em>const</em> <em>char</em> * <dfn class="local col0 decl" id="50szExistingString" title='szExistingString' data-type='const char *' data-ref="50szExistingString" >szExistingString</dfn>;</td></tr>
+<tr><th id="254">254</th><td>    <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col1 decl" id="51dwHashIndex" title='dwHashIndex' data-type='DWORD' data-ref="51dwHashIndex" >dwHashIndex</dfn>;</td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td>    <i>// Verify pointer to the map</i></td></tr>
+<tr><th id="257">257</th><td>    <b>if</b>(<a class="local col7 ref" href="#47pMap" title='pMap' data-ref="47pMap" >pMap</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="258">258</th><td>    {</td></tr>
+<tr><th id="259">259</th><td>        <i>// Construct the main index</i></td></tr>
+<tr><th id="260">260</th><td>        <a class="local col1 ref" href="#51dwHashIndex" title='dwHashIndex' data-ref="51dwHashIndex" >dwHashIndex</a> = <a class="tu ref" href="#_ZL20CalcHashIndex_StringP9_CASC_MAPPKcS2_" title='CalcHashIndex_String' data-use='c' data-ref="_ZL20CalcHashIndex_StringP9_CASC_MAPPKcS2_" >CalcHashIndex_String</a>(<a class="local col7 ref" href="#47pMap" title='pMap' data-ref="47pMap" >pMap</a>, <a class="local col8 ref" href="#48szString" title='szString' data-ref="48szString" >szString</a>, <a class="local col9 ref" href="#49szStringEnd" title='szStringEnd' data-ref="49szStringEnd" >szStringEnd</a>);</td></tr>
+<tr><th id="261">261</th><td>        <b>while</b>(<a class="local col7 ref" href="#47pMap" title='pMap' data-ref="47pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col1 ref" href="#51dwHashIndex" title='dwHashIndex' data-ref="51dwHashIndex" >dwHashIndex</a>] != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="262">262</th><td>        {</td></tr>
+<tr><th id="263">263</th><td>            <i>// Get the pointer at that position</i></td></tr>
+<tr><th id="264">264</th><td>            <a class="local col0 ref" href="#50szExistingString" title='szExistingString' data-ref="50szExistingString" >szExistingString</a> = (<em>const</em> <em>char</em> *)<a class="local col7 ref" href="#47pMap" title='pMap' data-ref="47pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::HashTable" title='_CASC_MAP::HashTable' data-ref="_CASC_MAP::HashTable" id="_CASC_MAP::HashTable" >HashTable</a>[<a class="local col1 ref" href="#51dwHashIndex" title='dwHashIndex' data-ref="51dwHashIndex" >dwHashIndex</a>];</td></tr>
+<tr><th id="265">265</th><td></td></tr>
+<tr><th id="266">266</th><td>            <i>// Compare the hash</i></td></tr>
+<tr><th id="267">267</th><td>            <b>if</b>(<a class="tu ref" href="#_ZL20CompareObject_StringP9_CASC_MAPPKcS2_S2_" title='CompareObject_String' data-use='c' data-ref="_ZL20CompareObject_StringP9_CASC_MAPPKcS2_S2_" >CompareObject_String</a>(<a class="local col7 ref" href="#47pMap" title='pMap' data-ref="47pMap" >pMap</a>, <a class="local col0 ref" href="#50szExistingString" title='szExistingString' data-ref="50szExistingString" >szExistingString</a>, <a class="local col8 ref" href="#48szString" title='szString' data-ref="48szString" >szString</a>, <a class="local col9 ref" href="#49szStringEnd" title='szStringEnd' data-ref="49szStringEnd" >szStringEnd</a>))</td></tr>
+<tr><th id="268">268</th><td>                <b>return</b> <a class="local col0 ref" href="#50szExistingString" title='szExistingString' data-ref="50szExistingString" >szExistingString</a>;</td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td>            <i>// Move to the next entry</i></td></tr>
+<tr><th id="271">271</th><td>            <a class="local col1 ref" href="#51dwHashIndex" title='dwHashIndex' data-ref="51dwHashIndex" >dwHashIndex</a> = (<a class="local col1 ref" href="#51dwHashIndex" title='dwHashIndex' data-ref="51dwHashIndex" >dwHashIndex</a> + <var>1</var>) % <a class="local col7 ref" href="#47pMap" title='pMap' data-ref="47pMap" >pMap</a>-&gt;<a class="ref" href="Map.h.html#_CASC_MAP::TableSize" title='_CASC_MAP::TableSize' data-ref="_CASC_MAP::TableSize" id="_CASC_MAP::TableSize" >TableSize</a>;</td></tr>
+<tr><th id="272">272</th><td>        }</td></tr>
+<tr><th id="273">273</th><td>    }</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td>    <i>// Not found, sorry</i></td></tr>
+<tr><th id="276">276</th><td>    <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="277">277</th><td>}</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td><em>void</em> <dfn class="decl def" id="_Z8Map_FreeP9_CASC_MAP" title='Map_Free' data-ref="_Z8Map_FreeP9_CASC_MAP" >Map_Free</dfn>(<a class="typedef" href="Map.h.html#PCASC_MAP" title='PCASC_MAP' data-type='struct _CASC_MAP *' data-ref="PCASC_MAP" >PCASC_MAP</a> <dfn class="local col2 decl" id="52pMap" title='pMap' data-type='PCASC_MAP' data-ref="52pMap" >pMap</dfn>)</td></tr>
+<tr><th id="280">280</th><td>{</td></tr>
+<tr><th id="281">281</th><td>    <b>if</b>(<a class="local col2 ref" href="#52pMap" title='pMap' data-ref="52pMap" >pMap</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="282">282</th><td>    {</td></tr>
+<tr><th id="283">283</th><td>        <a class="macro" href="../CascCommon.h.html#303" title="free(pMap)" data-ref="_M/CASC_FREE">CASC_FREE</a>(<a class="local col2 ref" href="#52pMap" title='pMap' data-ref="52pMap" >pMap</a>);</td></tr>
+<tr><th id="284">284</th><td>    }</td></tr>
+<tr><th id="285">285</th><td>}</td></tr>
+<tr><th id="286">286</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,330 @@
+<!doctype html>
+<html>
+<head>
+<title>any.hpp [include/boost/any.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/any.hpp'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>boost</a>/any.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// See <a href="http://www.boost.org/libs/any">http://www.boost.org/libs/any</a> for Documentation.</i></td></tr>
+<tr><th id="2">2</th><td></td></tr>
+<tr><th id="3">3</th><td><u>#<span data-ppcond="3">ifndef</span> <span class="macro" data-ref="_M/BOOST_ANY_INCLUDED">BOOST_ANY_INCLUDED</span></u></td></tr>
+<tr><th id="4">4</th><td><u>#define <dfn class="macro" id="_M/BOOST_ANY_INCLUDED" data-ref="_M/BOOST_ANY_INCLUDED">BOOST_ANY_INCLUDED</dfn></u></td></tr>
+<tr><th id="5">5</th><td></td></tr>
+<tr><th id="6">6</th><td><u>#<span data-ppcond="6">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1020)</u></td></tr>
+<tr><th id="7">7</th><td><u># pragma once</u></td></tr>
+<tr><th id="8">8</th><td><u>#<span data-ppcond="6">endif</span></u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><i>// what:  variant type boost::any</i></td></tr>
+<tr><th id="11">11</th><td><i>// who:   contributed by Kevlin Henney,</i></td></tr>
+<tr><th id="12">12</th><td><i>//        with features contributed and bugs found by</i></td></tr>
+<tr><th id="13">13</th><td><i>//        Antony Polukhin, Ed Brey, Mark Rodgers, </i></td></tr>
+<tr><th id="14">14</th><td><i>//        Peter Dimov, and James Curran</i></td></tr>
+<tr><th id="15">15</th><td><i>// when:  July 2001, Aplril 2013</i></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../c++/4.9/algorithm.html">&lt;algorithm&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../c++/4.9/typeinfo.html">&lt;typeinfo&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="config.hpp.html">"boost/config.hpp"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="type_traits/remove_reference.hpp.html">&lt;boost/type_traits/remove_reference.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="type_traits/is_reference.hpp.html">&lt;boost/type_traits/is_reference.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="throw_exception.hpp.html">&lt;boost/throw_exception.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="static_assert.hpp.html">&lt;boost/static_assert.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="utility/enable_if.hpp.html">&lt;boost/utility/enable_if.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="type_traits/is_same.hpp.html">&lt;boost/type_traits/is_same.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><i>// See boost/python/type_id.hpp</i></td></tr>
+<tr><th id="29">29</th><td><i>// TODO: add BOOST_TYPEID_COMPARE_BY_NAME to config.hpp</i></td></tr>
+<tr><th id="30">30</th><td><u># <span data-ppcond="30">if</span> (defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &gt;= 3) \</u></td></tr>
+<tr><th id="31">31</th><td><u> || defined(<span class="macro" data-ref="_M/_AIX">_AIX</span>) \</u></td></tr>
+<tr><th id="32">32</th><td><u> || (   defined(<span class="macro" data-ref="_M/__sgi">__sgi</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__host_mips">__host_mips</span>)) \</u></td></tr>
+<tr><th id="33">33</th><td><u> || (defined(<span class="macro" data-ref="_M/__hpux">__hpux</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__HP_aCC">__HP_aCC</span>)) \</u></td></tr>
+<tr><th id="34">34</th><td><u> || (defined(<span class="macro" data-ref="_M/linux">linux</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__INTEL_COMPILER">__INTEL_COMPILER</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/__ICC">__ICC</span>))</u></td></tr>
+<tr><th id="35">35</th><td><u>#  define <dfn class="macro" id="_M/BOOST_AUX_ANY_TYPE_ID_NAME" data-ref="_M/BOOST_AUX_ANY_TYPE_ID_NAME">BOOST_AUX_ANY_TYPE_ID_NAME</dfn></u></td></tr>
+<tr><th id="36">36</th><td><u>#include <a href="../c++/4.9/cstring.html">&lt;cstring&gt;</a></u></td></tr>
+<tr><th id="37">37</th><td><u># <span data-ppcond="30">endif</span></u> </td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><b>namespace</b> <span class="namespace">boost</span></td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <b>class</b> <dfn class="type def" id="boost::any" title='boost::any' data-ref="boost::any" >any</dfn></td></tr>
+<tr><th id="42">42</th><td>    {</td></tr>
+<tr><th id="43">43</th><td>    <b>public</b>: <i>// structors</i></td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>        <dfn class="decl def" id="_ZN5boost3anyC1Ev" title='boost::any::any' data-ref="_ZN5boost3anyC1Ev" >any</dfn>() <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="46">46</th><td>          : <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>(<var>0</var>)</td></tr>
+<tr><th id="47">47</th><td>        {</td></tr>
+<tr><th id="48">48</th><td>        }</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>        <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="51">51</th><td>        <dfn class="decl def" id="_ZN5boost3anyC1ERKT_" title='boost::any::any' data-ref="_ZN5boost3anyC1ERKT_" >any</dfn>(<em>const</em> ValueType &amp; <dfn class="local col2 decl" id="222value" title='value' data-type='const ValueType &amp;' data-ref="222value" >value</dfn>)</td></tr>
+<tr><th id="52">52</th><td>          : <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>(<b>new</b> <a class="type" href="#boost::any::holder" title='boost::any::holder' data-ref="boost::any::holder" >holder</a>&lt;ValueType&gt;(<a class="local col2 ref" href="#222value" title='value' data-ref="222value" >value</a>))</td></tr>
+<tr><th id="53">53</th><td>        {</td></tr>
+<tr><th id="54">54</th><td>        }</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>        <dfn class="decl def" id="_ZN5boost3anyC1ERKS0_" title='boost::any::any' data-ref="_ZN5boost3anyC1ERKS0_" >any</dfn>(<em>const</em> <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="local col3 decl" id="223other" title='other' data-type='const boost::any &amp;' data-ref="223other" >other</dfn>)</td></tr>
+<tr><th id="57">57</th><td>          : <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>(<a class="local col3 ref" href="#223other" title='other' data-ref="223other" >other</a>.<a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a> ? <a class="local col3 ref" href="#223other" title='other' data-ref="223other" >other</a>.<a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>-&gt;<a class="virtual ref" href="#_ZNK5boost3any11placeholder5cloneEv" title='boost::any::placeholder::clone' data-ref="_ZNK5boost3any11placeholder5cloneEv" >clone</a>() : <var>0</var>)</td></tr>
+<tr><th id="58">58</th><td>        {</td></tr>
+<tr><th id="59">59</th><td>        }</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="61">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="62">62</th><td>        <i>// Move constructor</i></td></tr>
+<tr><th id="63">63</th><td>        <dfn class="decl def" id="_ZN5boost3anyC1EOS0_" title='boost::any::any' data-ref="_ZN5boost3anyC1EOS0_" >any</dfn>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a>&amp;&amp; <dfn class="local col4 decl" id="224other" title='other' data-type='boost::any &amp;&amp;' data-ref="224other" >other</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="64">64</th><td>          : <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>(<a class="local col4 ref" href="#224other" title='other' data-ref="224other" >other</a>.<a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>)</td></tr>
+<tr><th id="65">65</th><td>        {</td></tr>
+<tr><th id="66">66</th><td>            <a class="local col4 ref" href="#224other" title='other' data-ref="224other" >other</a>.<a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a> = <var>0</var>;</td></tr>
+<tr><th id="67">67</th><td>        }</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>        <i>// Perfect forwarding of ValueType</i></td></tr>
+<tr><th id="70">70</th><td>        <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="71">71</th><td>        <dfn class="decl def" id="_ZN5boost3anyC1EOT_PNS_10disable_ifINS_7is_sameIRS0_S1_EEvE4typeE" title='boost::any::any' data-ref="_ZN5boost3anyC1EOT_PNS_10disable_ifINS_7is_sameIRS0_S1_EEvE4typeE" >any</dfn>(ValueType&amp;&amp; <dfn class="local col5 decl" id="225value" title='value' data-type='ValueType &amp;&amp;' data-ref="225value" >value</dfn>, <b>typename</b> <span class="namespace">boost::</span><a class="type" href="utility/enable_if.hpp.html#boost::disable_if" title='boost::disable_if' data-ref="boost::disable_if" >disable_if</a>&lt;<span class="namespace">boost::</span><a class="type" href="type_traits/is_same.hpp.html#37" title='boost::is_same' data-ref="boost::is_same" >is_same</a>&lt;<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a>&amp;, ValueType&gt; &gt;::type* = <var>0</var>)</td></tr>
+<tr><th id="72">72</th><td>          : <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>(<b>new</b> <a class="type" href="#boost::any::holder" title='boost::any::holder' data-ref="boost::any::holder" >holder</a>&lt; <b>typename</b> <a class="type" href="type_traits/remove_reference.hpp.html#47" title='boost::remove_reference' data-ref="boost::remove_reference" >remove_reference</a>&lt;ValueType&gt;::type &gt;(<b>static_cast</b>&lt;ValueType&amp;&amp;&gt;(<a class="local col5 ref" href="#225value" title='value' data-ref="225value" >value</a>)))</td></tr>
+<tr><th id="73">73</th><td>        {</td></tr>
+<tr><th id="74">74</th><td>        }</td></tr>
+<tr><th id="75">75</th><td><u>#<span data-ppcond="61">endif</span></u></td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>        <dfn class="decl def" id="_ZN5boost3anyD1Ev" title='boost::any::~any' data-ref="_ZN5boost3anyD1Ev" >~any</dfn>() <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="78">78</th><td>        {</td></tr>
+<tr><th id="79">79</th><td>            <b>delete</b> <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>;</td></tr>
+<tr><th id="80">80</th><td>        }</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>    <b>public</b>: <i>// modifiers</i></td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>        <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="decl def" id="_ZN5boost3any4swapERS0_" title='boost::any::swap' data-ref="_ZN5boost3any4swapERS0_" >swap</dfn>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="local col6 decl" id="226rhs" title='rhs' data-type='boost::any &amp;' data-ref="226rhs" >rhs</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="85">85</th><td>        {</td></tr>
+<tr><th id="86">86</th><td>            <span class="namespace">std::</span><a class="ref" href="../c++/4.9/bits/algorithmfwd.h.html#_ZSt4swapRT_S0_" title='std::swap' data-ref="_ZSt4swapRT_S0_" id="_ZSt4swapRT_S0_" >swap</a>(<a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>, <a class="local col6 ref" href="#226rhs" title='rhs' data-ref="226rhs" >rhs</a>.<a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>);</td></tr>
+<tr><th id="87">87</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="88">88</th><td>        }</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><u>#<span data-ppcond="91">ifdef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="92">92</th><td>        <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="93">93</th><td>        any &amp; <b>operator</b>=(<em>const</em> ValueType &amp; rhs)</td></tr>
+<tr><th id="94">94</th><td>        {</td></tr>
+<tr><th id="95">95</th><td>            any(rhs).swap(*<b>this</b>);</td></tr>
+<tr><th id="96">96</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="97">97</th><td>        }</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>        any &amp; <b>operator</b>=(any rhs)</td></tr>
+<tr><th id="100">100</th><td>        {</td></tr>
+<tr><th id="101">101</th><td>            any(rhs).swap(*<b>this</b>);</td></tr>
+<tr><th id="102">102</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="103">103</th><td>        }</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><u>#<span data-ppcond="91">else</span></u> </td></tr>
+<tr><th id="106">106</th><td>        <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="decl def" id="_ZN5boost3anyaSERKS0_" title='boost::any::operator=' data-ref="_ZN5boost3anyaSERKS0_" ><b>operator</b>=</dfn>(<em>const</em> <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a>&amp; <dfn class="local col7 decl" id="227rhs" title='rhs' data-type='const boost::any &amp;' data-ref="227rhs" >rhs</dfn>)</td></tr>
+<tr><th id="107">107</th><td>        {</td></tr>
+<tr><th id="108">108</th><td>            <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" ><a class="ref" href="#_ZN5boost3anyC1ERKS0_" title='boost::any::any' data-ref="_ZN5boost3anyC1ERKS0_" >any</a></a>(<a class="local col7 ref" href="#227rhs" title='rhs' data-ref="227rhs" >rhs</a>).<a class="member" href="#_ZN5boost3any4swapERS0_" title='boost::any::swap' data-ref="_ZN5boost3any4swapERS0_" >swap</a>(*<b>this</b>);</td></tr>
+<tr><th id="109">109</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="110">110</th><td>        }</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>        <i>// move assignement</i></td></tr>
+<tr><th id="113">113</th><td>        <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="decl def" id="_ZN5boost3anyaSEOS0_" title='boost::any::operator=' data-ref="_ZN5boost3anyaSEOS0_" ><b>operator</b>=</dfn>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a>&amp;&amp; <dfn class="local col8 decl" id="228rhs" title='rhs' data-type='boost::any &amp;&amp;' data-ref="228rhs" >rhs</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="114">114</th><td>        {</td></tr>
+<tr><th id="115">115</th><td>            <a class="local col8 ref" href="#228rhs" title='rhs' data-ref="228rhs" >rhs</a>.<a class="member" href="#_ZN5boost3any4swapERS0_" title='boost::any::swap' data-ref="_ZN5boost3any4swapERS0_" >swap</a>(*<b>this</b>);</td></tr>
+<tr><th id="116">116</th><td>            <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a><a class="ref" href="#_ZN5boost3anyC1Ev" title='boost::any::any' data-ref="_ZN5boost3anyC1Ev" >(</a>).<a class="member" href="#_ZN5boost3any4swapERS0_" title='boost::any::swap' data-ref="_ZN5boost3any4swapERS0_" >swap</a>(<a class="local col8 ref" href="#228rhs" title='rhs' data-ref="228rhs" >rhs</a>);</td></tr>
+<tr><th id="117">117</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="118">118</th><td>        }</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>        <i>// Perfect forwarding of ValueType</i></td></tr>
+<tr><th id="121">121</th><td>        <b>template</b> &lt;<b>class</b> ValueType&gt;</td></tr>
+<tr><th id="122">122</th><td>        <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="decl def" id="_ZN5boost3anyaSEOT_" title='boost::any::operator=' data-ref="_ZN5boost3anyaSEOT_" ><b>operator</b>=</dfn>(ValueType&amp;&amp; <dfn class="local col9 decl" id="229rhs" title='rhs' data-type='ValueType &amp;&amp;' data-ref="229rhs" >rhs</dfn>)</td></tr>
+<tr><th id="123">123</th><td>        {</td></tr>
+<tr><th id="124">124</th><td>            <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a>(<b>static_cast</b>&lt;ValueType&amp;&amp;&gt;(<a class="local col9 ref" href="#229rhs" title='rhs' data-ref="229rhs" >rhs</a>)).<a class="member" href="#_ZN5boost3any4swapERS0_" title='boost::any::swap' data-ref="_ZN5boost3any4swapERS0_" >swap</a>(*<b>this</b>);</td></tr>
+<tr><th id="125">125</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="126">126</th><td>        }</td></tr>
+<tr><th id="127">127</th><td><u>#<span data-ppcond="91">endif</span></u></td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>    <b>public</b>: <i>// queries</i></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK5boost3any5emptyEv" title='boost::any::empty' data-ref="_ZNK5boost3any5emptyEv" >empty</dfn>() <em>const</em> <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="132">132</th><td>        {</td></tr>
+<tr><th id="133">133</th><td>            <b>return</b> !<a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>;</td></tr>
+<tr><th id="134">134</th><td>        }</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>        <em>const</em> <span class="namespace">std::</span><a class="type" href="../c++/4.9/typeinfo.html#std::type_info" title='std::type_info' data-ref="std::type_info" >type_info</a> &amp; <dfn class="decl def" id="_ZNK5boost3any4typeEv" title='boost::any::type' data-ref="_ZNK5boost3any4typeEv" >type</dfn>() <em>const</em></td></tr>
+<tr><th id="137">137</th><td>        {</td></tr>
+<tr><th id="138">138</th><td>            <b>return</b> <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a> ? <a class="member" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>-&gt;<a class="virtual ref" href="#_ZNK5boost3any11placeholder4typeEv" title='boost::any::placeholder::type' data-ref="_ZNK5boost3any11placeholder4typeEv" >type</a>() : <b>typeid</b>(<em>void</em>);</td></tr>
+<tr><th id="139">139</th><td>        }</td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><u>#<span data-ppcond="141">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_MEMBER_TEMPLATE_FRIENDS">BOOST_NO_MEMBER_TEMPLATE_FRIENDS</span></u></td></tr>
+<tr><th id="142">142</th><td>    <b>private</b>: <i>// types</i></td></tr>
+<tr><th id="143">143</th><td><u>#<span data-ppcond="141">else</span></u></td></tr>
+<tr><th id="144">144</th><td>    <b>public</b>: <i>// types (public so any_cast can be non-friend)</i></td></tr>
+<tr><th id="145">145</th><td><u>#<span data-ppcond="141">endif</span></u></td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td>        <b>class</b> <dfn class="type def" id="boost::any::placeholder" title='boost::any::placeholder' data-ref="boost::any::placeholder" >placeholder</dfn></td></tr>
+<tr><th id="148">148</th><td>        {</td></tr>
+<tr><th id="149">149</th><td>        <b>public</b>: <i>// structors</i></td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>            <b>virtual</b> <dfn class="virtual decl def" id="_ZN5boost3any11placeholderD1Ev" title='boost::any::placeholder::~placeholder' data-ref="_ZN5boost3any11placeholderD1Ev" >~placeholder</dfn>()</td></tr>
+<tr><th id="152">152</th><td>            {</td></tr>
+<tr><th id="153">153</th><td>            }</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td>        <b>public</b>: <i>// queries</i></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>            <b>virtual</b> <em>const</em> <span class="namespace">std::</span><a class="type" href="../c++/4.9/typeinfo.html#std::type_info" title='std::type_info' data-ref="std::type_info" >type_info</a> &amp; <dfn class="virtual decl" id="_ZNK5boost3any11placeholder4typeEv" title='boost::any::placeholder::type' data-ref="_ZNK5boost3any11placeholder4typeEv" >type</dfn>() <em>const</em> = <var>0</var>;</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>            <b>virtual</b> <a class="type" href="#boost::any::placeholder" title='boost::any::placeholder' data-ref="boost::any::placeholder" >placeholder</a> * <dfn class="virtual decl" id="_ZNK5boost3any11placeholder5cloneEv" title='boost::any::placeholder::clone' data-ref="_ZNK5boost3any11placeholder5cloneEv" >clone</dfn>() <em>const</em> = <var>0</var>;</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>        };</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td>        <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="164">164</th><td>        <b>class</b> <dfn class="type def" id="boost::any::holder" title='boost::any::holder' data-ref="boost::any::holder" >holder</dfn> : <b>public</b> <a class="type" href="#boost::any::placeholder" title='boost::any::placeholder' data-ref="boost::any::placeholder" >placeholder</a></td></tr>
+<tr><th id="165">165</th><td>        {</td></tr>
+<tr><th id="166">166</th><td>        <b>public</b>: <i>// structors</i></td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td>            <dfn class="decl def" id="_ZN5boost3any6holderC1ERKT_" title='boost::any::holder::holder&lt;ValueType&gt;' data-ref="_ZN5boost3any6holderC1ERKT_" >holder</dfn>(<em>const</em> ValueType &amp; <dfn class="local col0 decl" id="230value" title='value' data-type='const ValueType &amp;' data-ref="230value" >value</dfn>)</td></tr>
+<tr><th id="169">169</th><td>              : <a class="member" href="#boost::any::holder::held" title='boost::any::holder::held' data-ref="boost::any::holder::held" >held</a>(<a class="local col0 ref" href="#230value" title='value' data-ref="230value" >value</a>)</td></tr>
+<tr><th id="170">170</th><td>            {</td></tr>
+<tr><th id="171">171</th><td>            }</td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td><u>#<span data-ppcond="173">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="174">174</th><td>            <dfn class="decl def" id="_ZN5boost3any6holderC1EOT_" title='boost::any::holder::holder&lt;ValueType&gt;' data-ref="_ZN5boost3any6holderC1EOT_" >holder</dfn>(ValueType&amp;&amp; <dfn class="local col1 decl" id="231value" title='value' data-type='ValueType &amp;&amp;' data-ref="231value" >value</dfn>)</td></tr>
+<tr><th id="175">175</th><td>              : <a class="member" href="#boost::any::holder::held" title='boost::any::holder::held' data-ref="boost::any::holder::held" >held</a>(<b>static_cast</b>&lt; ValueType&amp;&amp; &gt;(<a class="local col1 ref" href="#231value" title='value' data-ref="231value" >value</a>))</td></tr>
+<tr><th id="176">176</th><td>            {</td></tr>
+<tr><th id="177">177</th><td>            }</td></tr>
+<tr><th id="178">178</th><td><u>#<span data-ppcond="173">endif</span></u></td></tr>
+<tr><th id="179">179</th><td>        <b>public</b>: <i>// queries</i></td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>            <b>virtual</b> <em>const</em> <span class="namespace">std::</span><a class="type" href="../c++/4.9/typeinfo.html#std::type_info" title='std::type_info' data-ref="std::type_info" >type_info</a> &amp; <dfn class="virtual decl def" id="_ZNK5boost3any6holder4typeEv" title='boost::any::holder::type' data-ref="_ZNK5boost3any6holder4typeEv" >type</dfn>() <em>const</em></td></tr>
+<tr><th id="182">182</th><td>            {</td></tr>
+<tr><th id="183">183</th><td>                <b>return</b> <b>typeid</b>(ValueType);</td></tr>
+<tr><th id="184">184</th><td>            }</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>            <b>virtual</b> <a class="type" href="#boost::any::placeholder" title='boost::any::placeholder' data-ref="boost::any::placeholder" >placeholder</a> * <dfn class="virtual decl def" id="_ZNK5boost3any6holder5cloneEv" title='boost::any::holder::clone' data-ref="_ZNK5boost3any6holder5cloneEv" >clone</dfn>() <em>const</em></td></tr>
+<tr><th id="187">187</th><td>            {</td></tr>
+<tr><th id="188">188</th><td>                <b>return</b> <b>new</b> holder(<a class="member" href="#boost::any::holder::held" title='boost::any::holder::held' data-ref="boost::any::holder::held" >held</a>);</td></tr>
+<tr><th id="189">189</th><td>            }</td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td>        <b>public</b>: <i>// representation</i></td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td>            ValueType <dfn class="decl" id="boost::any::holder::held" title='boost::any::holder::held' data-ref="boost::any::holder::held" >held</dfn>;</td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td>        <b>private</b>: <i>// intentionally left unimplemented</i></td></tr>
+<tr><th id="196">196</th><td>            holder &amp; <dfn class="decl" id="_ZN5boost3any6holderaSERKNS0_6holderIT_EE" title='boost::any::holder::operator=' data-ref="_ZN5boost3any6holderaSERKNS0_6holderIT_EE" ><b>operator</b>=</dfn>(<em>const</em> holder &amp;);</td></tr>
+<tr><th id="197">197</th><td>        };</td></tr>
+<tr><th id="198">198</th><td></td></tr>
+<tr><th id="199">199</th><td><u>#<span data-ppcond="199">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_MEMBER_TEMPLATE_FRIENDS">BOOST_NO_MEMBER_TEMPLATE_FRIENDS</span></u></td></tr>
+<tr><th id="200">200</th><td></td></tr>
+<tr><th id="201">201</th><td>    <b>private</b>: <i>// representation</i></td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td>        <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="204">204</th><td>        <b>friend</b> ValueType * <a class="decl" href="#_ZN5boost8any_castEPNS_3anyE" title='boost::any_cast' data-ref="_ZN5boost8any_castEPNS_3anyE" >any_cast</a>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> *) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a>;</td></tr>
+<tr><th id="205">205</th><td></td></tr>
+<tr><th id="206">206</th><td>        <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="207">207</th><td>        <b>friend</b> ValueType * <a class="decl" href="#_ZN5boost15unsafe_any_castEPNS_3anyE" title='boost::unsafe_any_cast' data-ref="_ZN5boost15unsafe_any_castEPNS_3anyE" >unsafe_any_cast</a>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> *) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a>;</td></tr>
+<tr><th id="208">208</th><td></td></tr>
+<tr><th id="209">209</th><td><u>#<span data-ppcond="199">else</span></u></td></tr>
+<tr><th id="210">210</th><td></td></tr>
+<tr><th id="211">211</th><td>    <b>public</b>: <i>// representation (public so any_cast can be non-friend)</i></td></tr>
+<tr><th id="212">212</th><td></td></tr>
+<tr><th id="213">213</th><td><u>#<span data-ppcond="199">endif</span></u></td></tr>
+<tr><th id="214">214</th><td></td></tr>
+<tr><th id="215">215</th><td>        <a class="type" href="#boost::any::placeholder" title='boost::any::placeholder' data-ref="boost::any::placeholder" >placeholder</a> * <dfn class="decl" id="boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</dfn>;</td></tr>
+<tr><th id="216">216</th><td></td></tr>
+<tr><th id="217">217</th><td>    };</td></tr>
+<tr><th id="218">218</th><td> </td></tr>
+<tr><th id="219">219</th><td>    <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost4swapERNS_3anyES1_" title='boost::swap' data-ref="_ZN5boost4swapERNS_3anyES1_" >swap</dfn>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="local col2 decl" id="232lhs" title='lhs' data-type='boost::any &amp;' data-ref="232lhs" >lhs</dfn>, <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="local col3 decl" id="233rhs" title='rhs' data-type='boost::any &amp;' data-ref="233rhs" >rhs</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="220">220</th><td>    {</td></tr>
+<tr><th id="221">221</th><td>        <a class="local col2 ref" href="#232lhs" title='lhs' data-ref="232lhs" >lhs</a>.<a class="ref" href="#_ZN5boost3any4swapERS0_" title='boost::any::swap' data-ref="_ZN5boost3any4swapERS0_" >swap</a>(<a class="local col3 ref" href="#233rhs" title='rhs' data-ref="233rhs" >rhs</a>);</td></tr>
+<tr><th id="222">222</th><td>    }</td></tr>
+<tr><th id="223">223</th><td></td></tr>
+<tr><th id="224">224</th><td>    <b>class</b> <dfn class="type def" id="boost::bad_any_cast" title='boost::bad_any_cast' data-ref="boost::bad_any_cast" >bad_any_cast</dfn> : <b>public</b> <span class="namespace">std::</span><a class="type" href="../c++/4.9/typeinfo.html#std::bad_cast" title='std::bad_cast' data-ref="std::bad_cast" >bad_cast</a></td></tr>
+<tr><th id="225">225</th><td>    {</td></tr>
+<tr><th id="226">226</th><td>    <b>public</b>:</td></tr>
+<tr><th id="227">227</th><td>        <b>virtual</b> <em>const</em> <em>char</em> * <dfn class="virtual decl def" id="_ZNK5boost12bad_any_cast4whatEv" title='boost::bad_any_cast::what' data-ref="_ZNK5boost12bad_any_cast4whatEv" >what</dfn>() <em>const</em> <b>throw</b>()</td></tr>
+<tr><th id="228">228</th><td>        {</td></tr>
+<tr><th id="229">229</th><td>            <b>return</b> <q>"boost::bad_any_cast: "</q></td></tr>
+<tr><th id="230">230</th><td>                   <q>"failed conversion using boost::any_cast"</q>;</td></tr>
+<tr><th id="231">231</th><td>        }</td></tr>
+<tr><th id="232">232</th><td>    };</td></tr>
+<tr><th id="233">233</th><td></td></tr>
+<tr><th id="234">234</th><td>    <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="235">235</th><td>    ValueType * <dfn class="decl def" id="_ZN5boost8any_castEPNS_3anyE" title='boost::any_cast' data-ref="_ZN5boost8any_castEPNS_3anyE" >any_cast</dfn>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> * <dfn class="local col4 decl" id="234operand" title='operand' data-type='boost::any *' data-ref="234operand" >operand</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="236">236</th><td>    {</td></tr>
+<tr><th id="237">237</th><td>        <b>return</b> <a class="local col4 ref" href="#234operand" title='operand' data-ref="234operand" >operand</a> &amp;&amp; </td></tr>
+<tr><th id="238">238</th><td><u>#<span data-ppcond="238">ifdef</span> <a class="macro" href="#35" data-ref="_M/BOOST_AUX_ANY_TYPE_ID_NAME">BOOST_AUX_ANY_TYPE_ID_NAME</a></u></td></tr>
+<tr><th id="239">239</th><td>            <span class="namespace">std::</span><a class="ref" href="../string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col4 ref" href="#234operand" title='operand' data-ref="234operand" >operand</a>-&gt;<a class="ref" href="#_ZNK5boost3any4typeEv" title='boost::any::type' data-ref="_ZNK5boost3any4typeEv" >type</a>().<a class="ref" href="../c++/4.9/typeinfo.html#_ZNKSt9type_info4nameEv" title='std::type_info::name' data-ref="_ZNKSt9type_info4nameEv" id="_ZNKSt9type_info4nameEv" >name</a>(), <b>typeid</b>(ValueType).<a class="ref" href="../c++/4.9/typeinfo.html#_ZNKSt9type_info4nameEv" title='std::type_info::name' data-ref="_ZNKSt9type_info4nameEv" id="_ZNKSt9type_info4nameEv" >name</a>()) == <var>0</var></td></tr>
+<tr><th id="240">240</th><td><u>#<span data-ppcond="238">else</span></u></td></tr>
+<tr><th id="241">241</th><td>            operand-&gt;type() == <b>typeid</b>(ValueType)</td></tr>
+<tr><th id="242">242</th><td><u>#<span data-ppcond="238">endif</span></u></td></tr>
+<tr><th id="243">243</th><td>            ? &amp;<b>static_cast</b>&lt;<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a>::<a class="type" href="#boost::any::holder" title='boost::any::holder' data-ref="boost::any::holder" >holder</a>&lt;ValueType&gt; *&gt;(<a class="local col4 ref" href="#234operand" title='operand' data-ref="234operand" >operand</a>-&gt;<a class="ref" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>)-&gt;held</td></tr>
+<tr><th id="244">244</th><td>            : <var>0</var>;</td></tr>
+<tr><th id="245">245</th><td>    }</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td>    <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="248">248</th><td>    <b>inline</b> <em>const</em> ValueType * <dfn class="decl def" id="_ZN5boost8any_castEPKNS_3anyE" title='boost::any_cast' data-ref="_ZN5boost8any_castEPKNS_3anyE" >any_cast</dfn>(<em>const</em> <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> * <dfn class="local col5 decl" id="235operand" title='operand' data-type='const boost::any *' data-ref="235operand" >operand</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="249">249</th><td>    {</td></tr>
+<tr><th id="250">250</th><td>        <b>return</b> any_cast&lt;ValueType&gt;(<b>const_cast</b>&lt;<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> *&gt;(<a class="local col5 ref" href="#235operand" title='operand' data-ref="235operand" >operand</a>));</td></tr>
+<tr><th id="251">251</th><td>    }</td></tr>
+<tr><th id="252">252</th><td></td></tr>
+<tr><th id="253">253</th><td>    <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="254">254</th><td>    ValueType <dfn class="decl def" id="_ZN5boost8any_castERNS_3anyE" title='boost::any_cast' data-ref="_ZN5boost8any_castERNS_3anyE" >any_cast</dfn>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="local col6 decl" id="236operand" title='operand' data-type='boost::any &amp;' data-ref="236operand" >operand</dfn>)</td></tr>
+<tr><th id="255">255</th><td>    {</td></tr>
+<tr><th id="256">256</th><td>        <b>typedef</b> <a class="macro" href="config/suffix.hpp.html#465" title="typename" data-ref="_M/BOOST_DEDUCED_TYPENAME">BOOST_DEDUCED_TYPENAME</a> <a class="type" href="type_traits/remove_reference.hpp.html#47" title='boost::remove_reference' data-ref="boost::remove_reference" >remove_reference</a>&lt;ValueType&gt;::type <dfn class="local col7 typedef" id="237nonref" title='nonref' data-type='typename remove_reference&lt;ValueType&gt;::type' data-ref="237nonref" >nonref</dfn>;</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td><u>#<span data-ppcond="258">ifdef</span> <span class="macro" data-ref="_M/BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION">BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION</span></u></td></tr>
+<tr><th id="259">259</th><td>        <i>// If 'nonref' is still reference type, it means the user has not</i></td></tr>
+<tr><th id="260">260</th><td><i>        // specialized 'remove_reference'.</i></td></tr>
+<tr><th id="261">261</th><td><i></i></td></tr>
+<tr><th id="262">262</th><td><i>        // Please use BOOST_BROKEN_COMPILER_TYPE_TRAITS_SPECIALIZATION macro</i></td></tr>
+<tr><th id="263">263</th><td><i>        // to generate specialization of remove_reference for your class</i></td></tr>
+<tr><th id="264">264</th><td><i>        // See type traits library documentation for details</i></td></tr>
+<tr><th id="265">265</th><td>        BOOST_STATIC_ASSERT(!is_reference&lt;nonref&gt;::value);</td></tr>
+<tr><th id="266">266</th><td><u>#<span data-ppcond="258">endif</span></u></td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td>        <a class="local col7 typedef" href="#237nonref" title='nonref' data-type='typename remove_reference&lt;ValueType&gt;::type' data-ref="237nonref" >nonref</a> * <dfn class="local col8 decl" id="238result" title='result' data-type='nonref *' data-ref="238result" >result</dfn> = any_cast&lt;<a class="local col7 typedef" href="#237nonref" title='nonref' data-type='typename remove_reference&lt;ValueType&gt;::type' data-ref="237nonref" >nonref</a>&gt;(&amp;<a class="local col6 ref" href="#236operand" title='operand' data-ref="236operand" >operand</a>);</td></tr>
+<tr><th id="269">269</th><td>        <b>if</b>(!<a class="local col8 ref" href="#238result" title='result' data-ref="238result" >result</a>)</td></tr>
+<tr><th id="270">270</th><td>            <span class="namespace">boost::</span><a class="ref" href="throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="type" href="#boost::bad_any_cast" title='boost::bad_any_cast' data-ref="boost::bad_any_cast" >bad_any_cast</a><a class="ref" href="#_ZN5boost12bad_any_castC1Ev" title='boost::bad_any_cast::bad_any_cast' data-ref="_ZN5boost12bad_any_castC1Ev" >(</a>));</td></tr>
+<tr><th id="271">271</th><td>        <b>return</b> *<a class="local col8 ref" href="#238result" title='result' data-ref="238result" >result</a>;</td></tr>
+<tr><th id="272">272</th><td>    }</td></tr>
+<tr><th id="273">273</th><td></td></tr>
+<tr><th id="274">274</th><td>    <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="275">275</th><td>    <b>inline</b> ValueType <dfn class="decl def" id="_ZN5boost8any_castERKNS_3anyE" title='boost::any_cast' data-ref="_ZN5boost8any_castERKNS_3anyE" >any_cast</dfn>(<em>const</em> <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp; <dfn class="local col9 decl" id="239operand" title='operand' data-type='const boost::any &amp;' data-ref="239operand" >operand</dfn>)</td></tr>
+<tr><th id="276">276</th><td>    {</td></tr>
+<tr><th id="277">277</th><td>        <b>typedef</b> <a class="macro" href="config/suffix.hpp.html#465" title="typename" data-ref="_M/BOOST_DEDUCED_TYPENAME">BOOST_DEDUCED_TYPENAME</a> <a class="type" href="type_traits/remove_reference.hpp.html#47" title='boost::remove_reference' data-ref="boost::remove_reference" >remove_reference</a>&lt;ValueType&gt;::type <dfn class="local col0 typedef" id="240nonref" title='nonref' data-type='typename remove_reference&lt;ValueType&gt;::type' data-ref="240nonref" >nonref</dfn>;</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td><u>#<span data-ppcond="279">ifdef</span> <span class="macro" data-ref="_M/BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION">BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION</span></u></td></tr>
+<tr><th id="280">280</th><td>        <i>// The comment in the above version of 'any_cast' explains when this</i></td></tr>
+<tr><th id="281">281</th><td><i>        // assert is fired and what to do.</i></td></tr>
+<tr><th id="282">282</th><td>        BOOST_STATIC_ASSERT(!is_reference&lt;nonref&gt;::value);</td></tr>
+<tr><th id="283">283</th><td><u>#<span data-ppcond="279">endif</span></u></td></tr>
+<tr><th id="284">284</th><td></td></tr>
+<tr><th id="285">285</th><td>        <b>return</b> any_cast&lt;<em>const</em> <a class="local col0 typedef" href="#240nonref" title='nonref' data-type='typename remove_reference&lt;ValueType&gt;::type' data-ref="240nonref" >nonref</a> &amp;&gt;(<b>const_cast</b>&lt;<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> &amp;&gt;(<a class="local col9 ref" href="#239operand" title='operand' data-ref="239operand" >operand</a>));</td></tr>
+<tr><th id="286">286</th><td>    }</td></tr>
+<tr><th id="287">287</th><td></td></tr>
+<tr><th id="288">288</th><td>    <i>// Note: The "unsafe" versions of any_cast are not part of the</i></td></tr>
+<tr><th id="289">289</th><td><i>    // public interface and may be removed at any time. They are</i></td></tr>
+<tr><th id="290">290</th><td><i>    // required where we know what type is stored in the any and can't</i></td></tr>
+<tr><th id="291">291</th><td><i>    // use typeid() comparison, e.g., when our types may travel across</i></td></tr>
+<tr><th id="292">292</th><td><i>    // different shared libraries.</i></td></tr>
+<tr><th id="293">293</th><td>    <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="294">294</th><td>    <b>inline</b> ValueType * <dfn class="decl def" id="_ZN5boost15unsafe_any_castEPNS_3anyE" title='boost::unsafe_any_cast' data-ref="_ZN5boost15unsafe_any_castEPNS_3anyE" >unsafe_any_cast</dfn>(<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> * <dfn class="local col1 decl" id="241operand" title='operand' data-type='boost::any *' data-ref="241operand" >operand</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="295">295</th><td>    {</td></tr>
+<tr><th id="296">296</th><td>        <b>return</b> &amp;<b>static_cast</b>&lt;<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a>::<a class="type" href="#boost::any::holder" title='boost::any::holder' data-ref="boost::any::holder" >holder</a>&lt;ValueType&gt; *&gt;(<a class="local col1 ref" href="#241operand" title='operand' data-ref="241operand" >operand</a>-&gt;<a class="ref" href="#boost::any::content" title='boost::any::content' data-ref="boost::any::content" >content</a>)-&gt;held;</td></tr>
+<tr><th id="297">297</th><td>    }</td></tr>
+<tr><th id="298">298</th><td></td></tr>
+<tr><th id="299">299</th><td>    <b>template</b>&lt;<b>typename</b> ValueType&gt;</td></tr>
+<tr><th id="300">300</th><td>    <b>inline</b> <em>const</em> ValueType * <dfn class="decl def" id="_ZN5boost15unsafe_any_castEPKNS_3anyE" title='boost::unsafe_any_cast' data-ref="_ZN5boost15unsafe_any_castEPKNS_3anyE" >unsafe_any_cast</dfn>(<em>const</em> <a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> * <dfn class="local col2 decl" id="242operand" title='operand' data-type='const boost::any *' data-ref="242operand" >operand</dfn>) <a class="macro" href="config/suffix.hpp.html#882" title="noexcept" data-ref="_M/BOOST_NOEXCEPT">BOOST_NOEXCEPT</a></td></tr>
+<tr><th id="301">301</th><td>    {</td></tr>
+<tr><th id="302">302</th><td>        <b>return</b> unsafe_any_cast&lt;ValueType&gt;(<b>const_cast</b>&lt;<a class="type" href="#boost::any" title='boost::any' data-ref="boost::any" >any</a> *&gt;(<a class="local col2 ref" href="#242operand" title='operand' data-ref="242operand" >operand</a>));</td></tr>
+<tr><th id="303">303</th><td>    }</td></tr>
+<tr><th id="304">304</th><td>}</td></tr>
+<tr><th id="305">305</th><td></td></tr>
+<tr><th id="306">306</th><td><i>// Copyright Kevlin Henney, 2000, 2001, 2002. All rights reserved.</i></td></tr>
+<tr><th id="307">307</th><td><i>//</i></td></tr>
+<tr><th id="308">308</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See</i></td></tr>
+<tr><th id="309">309</th><td><i>// accompanying file LICENSE_1_0.txt or copy at</i></td></tr>
+<tr><th id="310">310</th><td><i>// <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="311">311</th><td></td></tr>
+<tr><th id="312">312</th><td><u>#<span data-ppcond="3">endif</span></u></td></tr>
+<tr><th id="313">313</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore3.3.5/src/common/Collision/Management/MMapFactory.cpp.html'>TrinityCore3.3.5/src/common/Collision/Management/MMapFactory.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

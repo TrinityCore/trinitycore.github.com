@@ -1,0 +1,909 @@
+<!doctype html>
+<html>
+<head>
+<title>tomcrypt_cipher.h [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_cipher.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_cipher.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>headers</a>/tomcrypt_cipher.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* ---- SYMMETRIC KEY STUFF -----</i></td></tr>
+<tr><th id="2">2</th><td><i> *</i></td></tr>
+<tr><th id="3">3</th><td><i> * We put each of the ciphers scheduled keys in their own structs then we put all of </i></td></tr>
+<tr><th id="4">4</th><td><i> * the key formats in one union.  This makes the function prototypes easier to use.</i></td></tr>
+<tr><th id="5">5</th><td><i> */</i></td></tr>
+<tr><th id="6">6</th><td><u>#<span data-ppcond="6">ifdef</span> <span class="macro" data-ref="_M/LTC_BLOWFISH">LTC_BLOWFISH</span></u></td></tr>
+<tr><th id="7">7</th><td><b>struct</b> blowfish_key {</td></tr>
+<tr><th id="8">8</th><td>   ulong32 S[<var>4</var>][<var>256</var>];</td></tr>
+<tr><th id="9">9</th><td>   ulong32 K[<var>18</var>];</td></tr>
+<tr><th id="10">10</th><td>};</td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="6">endif</span></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">ifdef</span> <span class="macro" data-ref="_M/LTC_RC5">LTC_RC5</span></u></td></tr>
+<tr><th id="14">14</th><td><b>struct</b> rc5_key {</td></tr>
+<tr><th id="15">15</th><td>   <em>int</em> rounds;</td></tr>
+<tr><th id="16">16</th><td>   ulong32 K[<var>50</var>];</td></tr>
+<tr><th id="17">17</th><td>};</td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">ifdef</span> <span class="macro" data-ref="_M/LTC_RC6">LTC_RC6</span></u></td></tr>
+<tr><th id="21">21</th><td><b>struct</b> rc6_key {</td></tr>
+<tr><th id="22">22</th><td>   ulong32 K[<var>44</var>];</td></tr>
+<tr><th id="23">23</th><td>};</td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="20">endif</span></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#<span data-ppcond="26">ifdef</span> <span class="macro" data-ref="_M/LTC_SAFERP">LTC_SAFERP</span></u></td></tr>
+<tr><th id="27">27</th><td><b>struct</b> saferp_key {</td></tr>
+<tr><th id="28">28</th><td>   <em>unsigned</em> <em>char</em> K[<var>33</var>][<var>16</var>];</td></tr>
+<tr><th id="29">29</th><td>   <em>long</em> rounds;</td></tr>
+<tr><th id="30">30</th><td>};</td></tr>
+<tr><th id="31">31</th><td><u>#<span data-ppcond="26">endif</span></u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="33">ifdef</span> <span class="macro" data-ref="_M/LTC_RIJNDAEL">LTC_RIJNDAEL</span></u></td></tr>
+<tr><th id="34">34</th><td><b>struct</b> rijndael_key {</td></tr>
+<tr><th id="35">35</th><td>   ulong32 eK[<var>60</var>], dK[<var>60</var>];</td></tr>
+<tr><th id="36">36</th><td>   <em>int</em> Nr;</td></tr>
+<tr><th id="37">37</th><td>};</td></tr>
+<tr><th id="38">38</th><td><u>#<span data-ppcond="33">endif</span></u></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><u>#<span data-ppcond="40">ifdef</span> <span class="macro" data-ref="_M/LTC_KSEED">LTC_KSEED</span></u></td></tr>
+<tr><th id="41">41</th><td><b>struct</b> kseed_key {</td></tr>
+<tr><th id="42">42</th><td>    ulong32 K[<var>32</var>], dK[<var>32</var>];</td></tr>
+<tr><th id="43">43</th><td>};</td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="40">endif</span></u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><u>#<span data-ppcond="46">ifdef</span> <span class="macro" data-ref="_M/LTC_KASUMI">LTC_KASUMI</span></u></td></tr>
+<tr><th id="47">47</th><td><b>struct</b> kasumi_key {</td></tr>
+<tr><th id="48">48</th><td>    ulong32 KLi1[<var>8</var>], KLi2[<var>8</var>],</td></tr>
+<tr><th id="49">49</th><td>            KOi1[<var>8</var>], KOi2[<var>8</var>], KOi3[<var>8</var>],</td></tr>
+<tr><th id="50">50</th><td>            KIi1[<var>8</var>], KIi2[<var>8</var>], KIi3[<var>8</var>];</td></tr>
+<tr><th id="51">51</th><td>};</td></tr>
+<tr><th id="52">52</th><td><u>#<span data-ppcond="46">endif</span></u></td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><u>#<span data-ppcond="54">ifdef</span> <span class="macro" data-ref="_M/LTC_XTEA">LTC_XTEA</span></u></td></tr>
+<tr><th id="55">55</th><td><b>struct</b> xtea_key {</td></tr>
+<tr><th id="56">56</th><td>   <em>unsigned</em> <em>long</em> A[<var>32</var>], B[<var>32</var>];</td></tr>
+<tr><th id="57">57</th><td>};</td></tr>
+<tr><th id="58">58</th><td><u>#<span data-ppcond="54">endif</span></u></td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><u>#<span data-ppcond="60">ifdef</span> <span class="macro" data-ref="_M/LTC_TWOFISH">LTC_TWOFISH</span></u></td></tr>
+<tr><th id="61">61</th><td><u>#ifndef LTC_TWOFISH_SMALL</u></td></tr>
+<tr><th id="62">62</th><td>   <b>struct</b> twofish_key {</td></tr>
+<tr><th id="63">63</th><td>      ulong32 S[<var>4</var>][<var>256</var>], K[<var>40</var>];</td></tr>
+<tr><th id="64">64</th><td>   };</td></tr>
+<tr><th id="65">65</th><td><u>#else</u></td></tr>
+<tr><th id="66">66</th><td>   <b>struct</b> twofish_key {</td></tr>
+<tr><th id="67">67</th><td>      ulong32 K[<var>40</var>];</td></tr>
+<tr><th id="68">68</th><td>      <em>unsigned</em> <em>char</em> S[<var>32</var>], start;</td></tr>
+<tr><th id="69">69</th><td>   };</td></tr>
+<tr><th id="70">70</th><td><u>#endif</u></td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="60">endif</span></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><u>#<span data-ppcond="73">ifdef</span> <span class="macro" data-ref="_M/LTC_SAFER">LTC_SAFER</span></u></td></tr>
+<tr><th id="74">74</th><td><u>#define LTC_SAFER_K64_DEFAULT_NOF_ROUNDS     6</u></td></tr>
+<tr><th id="75">75</th><td><u>#define LTC_SAFER_K128_DEFAULT_NOF_ROUNDS   10</u></td></tr>
+<tr><th id="76">76</th><td><u>#define LTC_SAFER_SK64_DEFAULT_NOF_ROUNDS    8</u></td></tr>
+<tr><th id="77">77</th><td><u>#define LTC_SAFER_SK128_DEFAULT_NOF_ROUNDS  10</u></td></tr>
+<tr><th id="78">78</th><td><u>#define LTC_SAFER_MAX_NOF_ROUNDS            13</u></td></tr>
+<tr><th id="79">79</th><td><u>#define LTC_SAFER_BLOCK_LEN                  8</u></td></tr>
+<tr><th id="80">80</th><td><u>#define LTC_SAFER_KEY_LEN     (1 + LTC_SAFER_BLOCK_LEN * (1 + 2 * LTC_SAFER_MAX_NOF_ROUNDS))</u></td></tr>
+<tr><th id="81">81</th><td><b>typedef</b> <em>unsigned</em> <em>char</em> safer_block_t[LTC_SAFER_BLOCK_LEN];</td></tr>
+<tr><th id="82">82</th><td><b>typedef</b> <em>unsigned</em> <em>char</em> safer_key_t[LTC_SAFER_KEY_LEN];</td></tr>
+<tr><th id="83">83</th><td><b>struct</b> safer_key { safer_key_t key; };</td></tr>
+<tr><th id="84">84</th><td><u>#<span data-ppcond="73">endif</span></u></td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><u>#<span data-ppcond="86">ifdef</span> <span class="macro" data-ref="_M/LTC_RC2">LTC_RC2</span></u></td></tr>
+<tr><th id="87">87</th><td><b>struct</b> rc2_key { <em>unsigned</em> xkey[<var>64</var>]; };</td></tr>
+<tr><th id="88">88</th><td><u>#<span data-ppcond="86">endif</span></u></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td><u>#<span data-ppcond="90">ifdef</span> <span class="macro" data-ref="_M/LTC_DES">LTC_DES</span></u></td></tr>
+<tr><th id="91">91</th><td><b>struct</b> des_key {</td></tr>
+<tr><th id="92">92</th><td>    ulong32 ek[<var>32</var>], dk[<var>32</var>];</td></tr>
+<tr><th id="93">93</th><td>};</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td><b>struct</b> des3_key {</td></tr>
+<tr><th id="96">96</th><td>    ulong32 ek[<var>3</var>][<var>32</var>], dk[<var>3</var>][<var>32</var>];</td></tr>
+<tr><th id="97">97</th><td>};</td></tr>
+<tr><th id="98">98</th><td><u>#<span data-ppcond="90">endif</span></u></td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td><u>#<span data-ppcond="100">ifdef</span> <span class="macro" data-ref="_M/LTC_CAST5">LTC_CAST5</span></u></td></tr>
+<tr><th id="101">101</th><td><b>struct</b> cast5_key {</td></tr>
+<tr><th id="102">102</th><td>    ulong32 K[<var>32</var>], keylen;</td></tr>
+<tr><th id="103">103</th><td>};</td></tr>
+<tr><th id="104">104</th><td><u>#<span data-ppcond="100">endif</span></u></td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td><u>#<span data-ppcond="106">ifdef</span> <span class="macro" data-ref="_M/LTC_NOEKEON">LTC_NOEKEON</span></u></td></tr>
+<tr><th id="107">107</th><td><b>struct</b> noekeon_key {</td></tr>
+<tr><th id="108">108</th><td>    ulong32 K[<var>4</var>], dK[<var>4</var>];</td></tr>
+<tr><th id="109">109</th><td>};</td></tr>
+<tr><th id="110">110</th><td><u>#<span data-ppcond="106">endif</span></u></td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td><u>#<span data-ppcond="112">ifdef</span> <span class="macro" data-ref="_M/LTC_SKIPJACK">LTC_SKIPJACK</span></u> </td></tr>
+<tr><th id="113">113</th><td><b>struct</b> skipjack_key {</td></tr>
+<tr><th id="114">114</th><td>    <em>unsigned</em> <em>char</em> key[<var>10</var>];</td></tr>
+<tr><th id="115">115</th><td>};</td></tr>
+<tr><th id="116">116</th><td><u>#<span data-ppcond="112">endif</span></u></td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><u>#<span data-ppcond="118">ifdef</span> <span class="macro" data-ref="_M/LTC_KHAZAD">LTC_KHAZAD</span></u></td></tr>
+<tr><th id="119">119</th><td><b>struct</b> khazad_key {</td></tr>
+<tr><th id="120">120</th><td>   ulong64 roundKeyEnc[<var>8</var> + <var>1</var>]; </td></tr>
+<tr><th id="121">121</th><td>   ulong64 roundKeyDec[<var>8</var> + <var>1</var>]; </td></tr>
+<tr><th id="122">122</th><td>};</td></tr>
+<tr><th id="123">123</th><td><u>#<span data-ppcond="118">endif</span></u></td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="125">ifdef</span> <span class="macro" data-ref="_M/LTC_ANUBIS">LTC_ANUBIS</span></u></td></tr>
+<tr><th id="126">126</th><td><b>struct</b> anubis_key { </td></tr>
+<tr><th id="127">127</th><td>   <em>int</em> keyBits; </td></tr>
+<tr><th id="128">128</th><td>   <em>int</em> R; </td></tr>
+<tr><th id="129">129</th><td>   ulong32 roundKeyEnc[<var>18</var> + <var>1</var>][<var>4</var>]; </td></tr>
+<tr><th id="130">130</th><td>   ulong32 roundKeyDec[<var>18</var> + <var>1</var>][<var>4</var>]; </td></tr>
+<tr><th id="131">131</th><td>}; </td></tr>
+<tr><th id="132">132</th><td><u>#<span data-ppcond="125">endif</span></u></td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><u>#<span data-ppcond="134">ifdef</span> <span class="macro" data-ref="_M/LTC_MULTI2">LTC_MULTI2</span></u></td></tr>
+<tr><th id="135">135</th><td><b>struct</b> multi2_key {</td></tr>
+<tr><th id="136">136</th><td>    <em>int</em> N;</td></tr>
+<tr><th id="137">137</th><td>    ulong32 uk[<var>8</var>];</td></tr>
+<tr><th id="138">138</th><td>};</td></tr>
+<tr><th id="139">139</th><td><u>#<span data-ppcond="134">endif</span></u></td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><b>typedef</b> <b>union</b> <dfn class="type def" id="Symmetric_key" title='Symmetric_key' data-ref="Symmetric_key" ><a class="type" href="#Symmetric_key" title='Symmetric_key' data-ref="Symmetric_key" >Symmetric_key</a></dfn> {</td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="142">ifdef</span> <span class="macro" data-ref="_M/LTC_DES">LTC_DES</span></u></td></tr>
+<tr><th id="143">143</th><td>   <b>struct</b> des_key des;</td></tr>
+<tr><th id="144">144</th><td>   <b>struct</b> des3_key des3;</td></tr>
+<tr><th id="145">145</th><td><u>#<span data-ppcond="142">endif</span></u></td></tr>
+<tr><th id="146">146</th><td><u>#<span data-ppcond="146">ifdef</span> <span class="macro" data-ref="_M/LTC_RC2">LTC_RC2</span></u></td></tr>
+<tr><th id="147">147</th><td>   <b>struct</b> rc2_key rc2;</td></tr>
+<tr><th id="148">148</th><td><u>#<span data-ppcond="146">endif</span></u></td></tr>
+<tr><th id="149">149</th><td><u>#<span data-ppcond="149">ifdef</span> <span class="macro" data-ref="_M/LTC_SAFER">LTC_SAFER</span></u></td></tr>
+<tr><th id="150">150</th><td>   <b>struct</b> safer_key safer;</td></tr>
+<tr><th id="151">151</th><td><u>#<span data-ppcond="149">endif</span></u></td></tr>
+<tr><th id="152">152</th><td><u>#<span data-ppcond="152">ifdef</span> <span class="macro" data-ref="_M/LTC_TWOFISH">LTC_TWOFISH</span></u></td></tr>
+<tr><th id="153">153</th><td>   <b>struct</b> twofish_key  twofish;</td></tr>
+<tr><th id="154">154</th><td><u>#<span data-ppcond="152">endif</span></u></td></tr>
+<tr><th id="155">155</th><td><u>#<span data-ppcond="155">ifdef</span> <span class="macro" data-ref="_M/LTC_BLOWFISH">LTC_BLOWFISH</span></u></td></tr>
+<tr><th id="156">156</th><td>   <b>struct</b> blowfish_key blowfish;</td></tr>
+<tr><th id="157">157</th><td><u>#<span data-ppcond="155">endif</span></u></td></tr>
+<tr><th id="158">158</th><td><u>#<span data-ppcond="158">ifdef</span> <span class="macro" data-ref="_M/LTC_RC5">LTC_RC5</span></u></td></tr>
+<tr><th id="159">159</th><td>   <b>struct</b> rc5_key      rc5;</td></tr>
+<tr><th id="160">160</th><td><u>#<span data-ppcond="158">endif</span></u></td></tr>
+<tr><th id="161">161</th><td><u>#<span data-ppcond="161">ifdef</span> <span class="macro" data-ref="_M/LTC_RC6">LTC_RC6</span></u></td></tr>
+<tr><th id="162">162</th><td>   <b>struct</b> rc6_key      rc6;</td></tr>
+<tr><th id="163">163</th><td><u>#<span data-ppcond="161">endif</span></u></td></tr>
+<tr><th id="164">164</th><td><u>#<span data-ppcond="164">ifdef</span> <span class="macro" data-ref="_M/LTC_SAFERP">LTC_SAFERP</span></u></td></tr>
+<tr><th id="165">165</th><td>   <b>struct</b> saferp_key   saferp;</td></tr>
+<tr><th id="166">166</th><td><u>#<span data-ppcond="164">endif</span></u></td></tr>
+<tr><th id="167">167</th><td><u>#<span data-ppcond="167">ifdef</span> <span class="macro" data-ref="_M/LTC_RIJNDAEL">LTC_RIJNDAEL</span></u></td></tr>
+<tr><th id="168">168</th><td>   <b>struct</b> rijndael_key rijndael;</td></tr>
+<tr><th id="169">169</th><td><u>#<span data-ppcond="167">endif</span></u></td></tr>
+<tr><th id="170">170</th><td><u>#<span data-ppcond="170">ifdef</span> <span class="macro" data-ref="_M/LTC_XTEA">LTC_XTEA</span></u></td></tr>
+<tr><th id="171">171</th><td>   <b>struct</b> xtea_key     xtea;</td></tr>
+<tr><th id="172">172</th><td><u>#<span data-ppcond="170">endif</span></u></td></tr>
+<tr><th id="173">173</th><td><u>#<span data-ppcond="173">ifdef</span> <span class="macro" data-ref="_M/LTC_CAST5">LTC_CAST5</span></u></td></tr>
+<tr><th id="174">174</th><td>   <b>struct</b> cast5_key    cast5;</td></tr>
+<tr><th id="175">175</th><td><u>#<span data-ppcond="173">endif</span></u></td></tr>
+<tr><th id="176">176</th><td><u>#<span data-ppcond="176">ifdef</span> <span class="macro" data-ref="_M/LTC_NOEKEON">LTC_NOEKEON</span></u></td></tr>
+<tr><th id="177">177</th><td>   <b>struct</b> noekeon_key  noekeon;</td></tr>
+<tr><th id="178">178</th><td><u>#<span data-ppcond="176">endif</span></u>   </td></tr>
+<tr><th id="179">179</th><td><u>#<span data-ppcond="179">ifdef</span> <span class="macro" data-ref="_M/LTC_SKIPJACK">LTC_SKIPJACK</span></u></td></tr>
+<tr><th id="180">180</th><td>   <b>struct</b> skipjack_key skipjack;</td></tr>
+<tr><th id="181">181</th><td><u>#<span data-ppcond="179">endif</span></u></td></tr>
+<tr><th id="182">182</th><td><u>#<span data-ppcond="182">ifdef</span> <span class="macro" data-ref="_M/LTC_KHAZAD">LTC_KHAZAD</span></u></td></tr>
+<tr><th id="183">183</th><td>   <b>struct</b> khazad_key   khazad;</td></tr>
+<tr><th id="184">184</th><td><u>#<span data-ppcond="182">endif</span></u></td></tr>
+<tr><th id="185">185</th><td><u>#<span data-ppcond="185">ifdef</span> <span class="macro" data-ref="_M/LTC_ANUBIS">LTC_ANUBIS</span></u></td></tr>
+<tr><th id="186">186</th><td>   <b>struct</b> anubis_key   anubis;</td></tr>
+<tr><th id="187">187</th><td><u>#<span data-ppcond="185">endif</span></u></td></tr>
+<tr><th id="188">188</th><td><u>#<span data-ppcond="188">ifdef</span> <span class="macro" data-ref="_M/LTC_KSEED">LTC_KSEED</span></u></td></tr>
+<tr><th id="189">189</th><td>   <b>struct</b> kseed_key    kseed;</td></tr>
+<tr><th id="190">190</th><td><u>#<span data-ppcond="188">endif</span></u></td></tr>
+<tr><th id="191">191</th><td><u>#<span data-ppcond="191">ifdef</span> <span class="macro" data-ref="_M/LTC_KASUMI">LTC_KASUMI</span></u></td></tr>
+<tr><th id="192">192</th><td>   <b>struct</b> kasumi_key   kasumi;</td></tr>
+<tr><th id="193">193</th><td><u>#<span data-ppcond="191">endif</span></u>  </td></tr>
+<tr><th id="194">194</th><td><u>#<span data-ppcond="194">ifdef</span> <span class="macro" data-ref="_M/LTC_MULTI2">LTC_MULTI2</span></u></td></tr>
+<tr><th id="195">195</th><td>   <b>struct</b> multi2_key   multi2;</td></tr>
+<tr><th id="196">196</th><td><u>#<span data-ppcond="194">endif</span></u></td></tr>
+<tr><th id="197">197</th><td>   <em>void</em>   *<dfn class="decl" id="Symmetric_key::data" title='Symmetric_key::data' data-ref="Symmetric_key::data" >data</dfn>;</td></tr>
+<tr><th id="198">198</th><td>} <dfn class="typedef" id="symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</dfn>;</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td><u>#<span data-ppcond="200">ifdef</span> <span class="macro" data-ref="_M/LTC_ECB_MODE">LTC_ECB_MODE</span></u></td></tr>
+<tr><th id="201">201</th><td><i class="doc">/** A block cipher ECB structure */</i></td></tr>
+<tr><th id="202">202</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="203">203</th><td>   <i class="doc">/** The index of the cipher chosen */</i></td></tr>
+<tr><th id="204">204</th><td>   <em>int</em>                 cipher, </td></tr>
+<tr><th id="205">205</th><td>   <i class="doc">/** The block size of the given cipher */</i></td></tr>
+<tr><th id="206">206</th><td>                       blocklen;</td></tr>
+<tr><th id="207">207</th><td>   <i class="doc">/** The scheduled key */</i>                       </td></tr>
+<tr><th id="208">208</th><td>   symmetric_key       key;</td></tr>
+<tr><th id="209">209</th><td>} symmetric_ECB;</td></tr>
+<tr><th id="210">210</th><td><u>#<span data-ppcond="200">endif</span></u></td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td><u>#<span data-ppcond="212">ifdef</span> <span class="macro" data-ref="_M/LTC_CFB_MODE">LTC_CFB_MODE</span></u></td></tr>
+<tr><th id="213">213</th><td><i class="doc">/** A block cipher CFB structure */</i></td></tr>
+<tr><th id="214">214</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="215">215</th><td>   <i class="doc">/** The index of the cipher chosen */</i></td></tr>
+<tr><th id="216">216</th><td>   <em>int</em>                 cipher, </td></tr>
+<tr><th id="217">217</th><td>   <i class="doc">/** The block size of the given cipher */</i>                        </td></tr>
+<tr><th id="218">218</th><td>                       blocklen, </td></tr>
+<tr><th id="219">219</th><td>   <i class="doc">/** The padding offset */</i></td></tr>
+<tr><th id="220">220</th><td>                       padlen;</td></tr>
+<tr><th id="221">221</th><td>   <i class="doc">/** The current IV */</i></td></tr>
+<tr><th id="222">222</th><td>   <em>unsigned</em> <em>char</em>       IV[MAXBLOCKSIZE], </td></tr>
+<tr><th id="223">223</th><td>   <i class="doc">/** The pad used to encrypt/decrypt */</i> </td></tr>
+<tr><th id="224">224</th><td>                       pad[MAXBLOCKSIZE];</td></tr>
+<tr><th id="225">225</th><td>   <i class="doc">/** The scheduled key */</i></td></tr>
+<tr><th id="226">226</th><td>   symmetric_key       key;</td></tr>
+<tr><th id="227">227</th><td>} symmetric_CFB;</td></tr>
+<tr><th id="228">228</th><td><u>#<span data-ppcond="212">endif</span></u></td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td><u>#<span data-ppcond="230">ifdef</span> <span class="macro" data-ref="_M/LTC_OFB_MODE">LTC_OFB_MODE</span></u></td></tr>
+<tr><th id="231">231</th><td><i class="doc">/** A block cipher OFB structure */</i></td></tr>
+<tr><th id="232">232</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="233">233</th><td>   <i class="doc">/** The index of the cipher chosen */</i></td></tr>
+<tr><th id="234">234</th><td>   <em>int</em>                 cipher, </td></tr>
+<tr><th id="235">235</th><td>   <i class="doc">/** The block size of the given cipher */</i>                        </td></tr>
+<tr><th id="236">236</th><td>                       blocklen, </td></tr>
+<tr><th id="237">237</th><td>   <i class="doc">/** The padding offset */</i></td></tr>
+<tr><th id="238">238</th><td>                       padlen;</td></tr>
+<tr><th id="239">239</th><td>   <i class="doc">/** The current IV */</i></td></tr>
+<tr><th id="240">240</th><td>   <em>unsigned</em> <em>char</em>       IV[MAXBLOCKSIZE];</td></tr>
+<tr><th id="241">241</th><td>   <i class="doc">/** The scheduled key */</i></td></tr>
+<tr><th id="242">242</th><td>   symmetric_key       key;</td></tr>
+<tr><th id="243">243</th><td>} symmetric_OFB;</td></tr>
+<tr><th id="244">244</th><td><u>#<span data-ppcond="230">endif</span></u></td></tr>
+<tr><th id="245">245</th><td></td></tr>
+<tr><th id="246">246</th><td><u>#<span data-ppcond="246">ifdef</span> <span class="macro" data-ref="_M/LTC_CBC_MODE">LTC_CBC_MODE</span></u></td></tr>
+<tr><th id="247">247</th><td><i class="doc">/** A block cipher CBC structure */</i></td></tr>
+<tr><th id="248">248</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="249">249</th><td>   <i class="doc">/** The index of the cipher chosen */</i></td></tr>
+<tr><th id="250">250</th><td>   <em>int</em>                 cipher, </td></tr>
+<tr><th id="251">251</th><td>   <i class="doc">/** The block size of the given cipher */</i>                        </td></tr>
+<tr><th id="252">252</th><td>                       blocklen;</td></tr>
+<tr><th id="253">253</th><td>   <i class="doc">/** The current IV */</i></td></tr>
+<tr><th id="254">254</th><td>   <em>unsigned</em> <em>char</em>       IV[MAXBLOCKSIZE];</td></tr>
+<tr><th id="255">255</th><td>   <i class="doc">/** The scheduled key */</i></td></tr>
+<tr><th id="256">256</th><td>   symmetric_key       key;</td></tr>
+<tr><th id="257">257</th><td>} symmetric_CBC;</td></tr>
+<tr><th id="258">258</th><td><u>#<span data-ppcond="246">endif</span></u></td></tr>
+<tr><th id="259">259</th><td></td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td><u>#<span data-ppcond="261">ifdef</span> <span class="macro" data-ref="_M/LTC_CTR_MODE">LTC_CTR_MODE</span></u></td></tr>
+<tr><th id="262">262</th><td><i class="doc">/** A block cipher CTR structure */</i></td></tr>
+<tr><th id="263">263</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="264">264</th><td>   <i class="doc">/** The index of the cipher chosen */</i></td></tr>
+<tr><th id="265">265</th><td>   <em>int</em>                 cipher,</td></tr>
+<tr><th id="266">266</th><td>   <i class="doc">/** The block size of the given cipher */</i>                        </td></tr>
+<tr><th id="267">267</th><td>                       blocklen, </td></tr>
+<tr><th id="268">268</th><td>   <i class="doc">/** The padding offset */</i></td></tr>
+<tr><th id="269">269</th><td>                       padlen, </td></tr>
+<tr><th id="270">270</th><td>   <i class="doc">/** The mode (endianess) of the CTR, 0==little, 1==big */</i></td></tr>
+<tr><th id="271">271</th><td>                       mode,</td></tr>
+<tr><th id="272">272</th><td>   <i class="doc">/** counter width */</i></td></tr>
+<tr><th id="273">273</th><td>                       ctrlen;</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td>   <i class="doc">/** The counter */</i>                       </td></tr>
+<tr><th id="276">276</th><td>   <em>unsigned</em> <em>char</em>       ctr[MAXBLOCKSIZE], </td></tr>
+<tr><th id="277">277</th><td>   <i class="doc">/** The pad used to encrypt/decrypt */</i>                       </td></tr>
+<tr><th id="278">278</th><td>                       pad[MAXBLOCKSIZE];</td></tr>
+<tr><th id="279">279</th><td>   <i class="doc">/** The scheduled key */</i></td></tr>
+<tr><th id="280">280</th><td>   symmetric_key       key;</td></tr>
+<tr><th id="281">281</th><td>} symmetric_CTR;</td></tr>
+<tr><th id="282">282</th><td><u>#<span data-ppcond="261">endif</span></u></td></tr>
+<tr><th id="283">283</th><td></td></tr>
+<tr><th id="284">284</th><td></td></tr>
+<tr><th id="285">285</th><td><u>#<span data-ppcond="285">ifdef</span> <span class="macro" data-ref="_M/LTC_LRW_MODE">LTC_LRW_MODE</span></u></td></tr>
+<tr><th id="286">286</th><td><i class="doc">/** A LRW structure */</i></td></tr>
+<tr><th id="287">287</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="288">288</th><td>    <i class="doc">/** The index of the cipher chosen (must be a 128-bit block cipher) */</i></td></tr>
+<tr><th id="289">289</th><td>    <em>int</em>               cipher;</td></tr>
+<tr><th id="290">290</th><td></td></tr>
+<tr><th id="291">291</th><td>    <i class="doc">/** The current IV */</i></td></tr>
+<tr><th id="292">292</th><td>    <em>unsigned</em> <em>char</em>     IV[<var>16</var>],</td></tr>
+<tr><th id="293">293</th><td> </td></tr>
+<tr><th id="294">294</th><td>    <i class="doc">/** the tweak key */</i></td></tr>
+<tr><th id="295">295</th><td>                      tweak[<var>16</var>],</td></tr>
+<tr><th id="296">296</th><td></td></tr>
+<tr><th id="297">297</th><td>    <i class="doc">/** The current pad, it's the product of the first 15 bytes against the tweak key */</i></td></tr>
+<tr><th id="298">298</th><td>                      pad[<var>16</var>];</td></tr>
+<tr><th id="299">299</th><td></td></tr>
+<tr><th id="300">300</th><td>    <i class="doc">/** The scheduled symmetric key */</i></td></tr>
+<tr><th id="301">301</th><td>    symmetric_key     key;</td></tr>
+<tr><th id="302">302</th><td></td></tr>
+<tr><th id="303">303</th><td><u>#ifdef LRW_TABLES</u></td></tr>
+<tr><th id="304">304</th><td>    <i class="doc">/** The pre-computed multiplication table */</i></td></tr>
+<tr><th id="305">305</th><td>    <em>unsigned</em> <em>char</em>     PC[<var>16</var>][<var>256</var>][<var>16</var>];</td></tr>
+<tr><th id="306">306</th><td><u>#endif</u></td></tr>
+<tr><th id="307">307</th><td>} symmetric_LRW;</td></tr>
+<tr><th id="308">308</th><td><u>#<span data-ppcond="285">endif</span></u></td></tr>
+<tr><th id="309">309</th><td></td></tr>
+<tr><th id="310">310</th><td><u>#<span data-ppcond="310">ifdef</span> <span class="macro" data-ref="_M/LTC_F8_MODE">LTC_F8_MODE</span></u></td></tr>
+<tr><th id="311">311</th><td><i class="doc">/** A block cipher F8 structure */</i></td></tr>
+<tr><th id="312">312</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="313">313</th><td>   <i class="doc">/** The index of the cipher chosen */</i></td></tr>
+<tr><th id="314">314</th><td>   <em>int</em>                 cipher, </td></tr>
+<tr><th id="315">315</th><td>   <i class="doc">/** The block size of the given cipher */</i>                        </td></tr>
+<tr><th id="316">316</th><td>                       blocklen, </td></tr>
+<tr><th id="317">317</th><td>   <i class="doc">/** The padding offset */</i></td></tr>
+<tr><th id="318">318</th><td>                       padlen;</td></tr>
+<tr><th id="319">319</th><td>   <i class="doc">/** The current IV */</i></td></tr>
+<tr><th id="320">320</th><td>   <em>unsigned</em> <em>char</em>       IV[MAXBLOCKSIZE],</td></tr>
+<tr><th id="321">321</th><td>                       MIV[MAXBLOCKSIZE];</td></tr>
+<tr><th id="322">322</th><td>   <i class="doc">/** Current block count */</i></td></tr>
+<tr><th id="323">323</th><td>   ulong32             blockcnt;</td></tr>
+<tr><th id="324">324</th><td>   <i class="doc">/** The scheduled key */</i></td></tr>
+<tr><th id="325">325</th><td>   symmetric_key       key;</td></tr>
+<tr><th id="326">326</th><td>} symmetric_F8;</td></tr>
+<tr><th id="327">327</th><td><u>#<span data-ppcond="310">endif</span></u></td></tr>
+<tr><th id="328">328</th><td></td></tr>
+<tr><th id="329">329</th><td></td></tr>
+<tr><th id="330">330</th><td><i class="doc">/** cipher descriptor table, last entry has "name == NULL" to mark the end of table */</i></td></tr>
+<tr><th id="331">331</th><td><b>extern</b> <b>struct</b> <dfn class="type def" id="ltc_cipher_descriptor" title='ltc_cipher_descriptor' data-ref="ltc_cipher_descriptor" ><a class="type" href="#ltc_cipher_descriptor" title='ltc_cipher_descriptor' data-ref="ltc_cipher_descriptor" >ltc_cipher_descriptor</a></dfn> {</td></tr>
+<tr><th id="332">332</th><td>   <i class="doc">/** name of cipher */</i></td></tr>
+<tr><th id="333">333</th><td>   <em>char</em> *<dfn class="decl" id="ltc_cipher_descriptor::name" title='ltc_cipher_descriptor::name' data-ref="ltc_cipher_descriptor::name" >name</dfn>;</td></tr>
+<tr><th id="334">334</th><td>   <i class="doc">/** internal ID */</i></td></tr>
+<tr><th id="335">335</th><td>   <em>unsigned</em> <em>char</em> <dfn class="decl" id="ltc_cipher_descriptor::ID" title='ltc_cipher_descriptor::ID' data-ref="ltc_cipher_descriptor::ID" >ID</dfn>;</td></tr>
+<tr><th id="336">336</th><td>   <i class="doc">/** min keysize (octets) */</i></td></tr>
+<tr><th id="337">337</th><td>   <em>int</em>  <dfn class="decl" id="ltc_cipher_descriptor::min_key_length" title='ltc_cipher_descriptor::min_key_length' data-ref="ltc_cipher_descriptor::min_key_length" >min_key_length</dfn>, </td></tr>
+<tr><th id="338">338</th><td>   <i class="doc">/** max keysize (octets) */</i></td></tr>
+<tr><th id="339">339</th><td>        <dfn class="decl" id="ltc_cipher_descriptor::max_key_length" title='ltc_cipher_descriptor::max_key_length' data-ref="ltc_cipher_descriptor::max_key_length" >max_key_length</dfn>, </td></tr>
+<tr><th id="340">340</th><td>   <i class="doc">/** block size (octets) */</i></td></tr>
+<tr><th id="341">341</th><td>        <dfn class="decl" id="ltc_cipher_descriptor::block_length" title='ltc_cipher_descriptor::block_length' data-ref="ltc_cipher_descriptor::block_length" >block_length</dfn>, </td></tr>
+<tr><th id="342">342</th><td>   <i class="doc">/** default number of rounds */</i></td></tr>
+<tr><th id="343">343</th><td>        <dfn class="decl" id="ltc_cipher_descriptor::default_rounds" title='ltc_cipher_descriptor::default_rounds' data-ref="ltc_cipher_descriptor::default_rounds" >default_rounds</dfn>;</td></tr>
+<tr><th id="344">344</th><td>   <i class="doc">/** Setup the cipher </i></td></tr>
+<tr><th id="345">345</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">key</span>         The input symmetric key</i></td></tr>
+<tr><th id="346">346</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">keylen</span>      The length of the input key (octets)</i></td></tr>
+<tr><th id="347">347</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">num_rounds</span>  The requested number of rounds (0==default)</i></td></tr>
+<tr><th id="348">348</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">skey</span>        [out] The destination of the scheduled key</i></td></tr>
+<tr><th id="349">349</th><td><i class="doc">      <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="350">350</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="351">351</th><td>   <em>int</em>  (*<dfn class="decl" id="ltc_cipher_descriptor::setup" title='ltc_cipher_descriptor::setup' data-ref="ltc_cipher_descriptor::setup" >setup</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="487key" title='key' data-type='const unsigned char *' data-ref="487key" >key</dfn>, <em>int</em> <dfn class="local col8 decl" id="488keylen" title='keylen' data-type='int' data-ref="488keylen" >keylen</dfn>, <em>int</em> <dfn class="local col9 decl" id="489num_rounds" title='num_rounds' data-type='int' data-ref="489num_rounds" >num_rounds</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col0 decl" id="490skey" title='skey' data-type='symmetric_key *' data-ref="490skey" >skey</dfn>);</td></tr>
+<tr><th id="352">352</th><td>   <i class="doc">/** Encrypt a block</i></td></tr>
+<tr><th id="353">353</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">pt</span>      The plaintext</i></td></tr>
+<tr><th id="354">354</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">ct</span>      [out] The ciphertext</i></td></tr>
+<tr><th id="355">355</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key</i></td></tr>
+<tr><th id="356">356</th><td><i class="doc">      <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="357">357</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="358">358</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::ecb_encrypt" title='ltc_cipher_descriptor::ecb_encrypt' data-ref="ltc_cipher_descriptor::ecb_encrypt" >ecb_encrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col1 decl" id="491pt" title='pt' data-type='const unsigned char *' data-ref="491pt" >pt</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="492ct" title='ct' data-type='unsigned char *' data-ref="492ct" >ct</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col3 decl" id="493skey" title='skey' data-type='symmetric_key *' data-ref="493skey" >skey</dfn>);</td></tr>
+<tr><th id="359">359</th><td>   <i class="doc">/** Decrypt a block</i></td></tr>
+<tr><th id="360">360</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">ct</span>      The ciphertext</i></td></tr>
+<tr><th id="361">361</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">pt</span>      [out] The plaintext</i></td></tr>
+<tr><th id="362">362</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key</i></td></tr>
+<tr><th id="363">363</th><td><i class="doc">      <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="364">364</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="365">365</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::ecb_decrypt" title='ltc_cipher_descriptor::ecb_decrypt' data-ref="ltc_cipher_descriptor::ecb_decrypt" >ecb_decrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="494ct" title='ct' data-type='const unsigned char *' data-ref="494ct" >ct</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="495pt" title='pt' data-type='unsigned char *' data-ref="495pt" >pt</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col6 decl" id="496skey" title='skey' data-type='symmetric_key *' data-ref="496skey" >skey</dfn>);</td></tr>
+<tr><th id="366">366</th><td>   <i class="doc">/** Test the block cipher</i></td></tr>
+<tr><th id="367">367</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful, CRYPT_NOP if self-testing has been disabled</i></td></tr>
+<tr><th id="368">368</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="369">369</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::test" title='ltc_cipher_descriptor::test' data-ref="ltc_cipher_descriptor::test" >test</dfn>)(<em>void</em>);</td></tr>
+<tr><th id="370">370</th><td></td></tr>
+<tr><th id="371">371</th><td>   <i class="doc">/** Terminate the context </i></td></tr>
+<tr><th id="372">372</th><td><i class="doc">      <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key</i></td></tr>
+<tr><th id="373">373</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="374">374</th><td>   <em>void</em> (*<dfn class="decl" id="ltc_cipher_descriptor::done" title='ltc_cipher_descriptor::done' data-ref="ltc_cipher_descriptor::done" >done</dfn>)(<a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col7 decl" id="497skey" title='skey' data-type='symmetric_key *' data-ref="497skey" >skey</dfn>);      </td></tr>
+<tr><th id="375">375</th><td></td></tr>
+<tr><th id="376">376</th><td>   <i class="doc">/** Determine a key size</i></td></tr>
+<tr><th id="377">377</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">keysize</span>    [in/out] The size of the key desired and the suggested size</i></td></tr>
+<tr><th id="378">378</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="379">379</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="380">380</th><td>   <em>int</em>  (*<dfn class="decl" id="ltc_cipher_descriptor::keysize" title='ltc_cipher_descriptor::keysize' data-ref="ltc_cipher_descriptor::keysize" >keysize</dfn>)(<em>int</em> *<dfn class="local col8 decl" id="498keysize" title='keysize' data-type='int *' data-ref="498keysize" >keysize</dfn>);</td></tr>
+<tr><th id="381">381</th><td></td></tr>
+<tr><th id="382">382</th><td><i class="doc">/** Accelerators **/</i></td></tr>
+<tr><th id="383">383</th><td>   <i class="doc">/** Accelerated ECB encryption </i></td></tr>
+<tr><th id="384">384</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>      Plaintext</i></td></tr>
+<tr><th id="385">385</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>      Ciphertext</i></td></tr>
+<tr><th id="386">386</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">blocks</span>  The number of complete blocks to process</i></td></tr>
+<tr><th id="387">387</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key context</i></td></tr>
+<tr><th id="388">388</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="389">389</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="390">390</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_ecb_encrypt" title='ltc_cipher_descriptor::accel_ecb_encrypt' data-ref="ltc_cipher_descriptor::accel_ecb_encrypt" >accel_ecb_encrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col9 decl" id="499pt" title='pt' data-type='const unsigned char *' data-ref="499pt" >pt</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="500ct" title='ct' data-type='unsigned char *' data-ref="500ct" >ct</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="501blocks" title='blocks' data-type='unsigned long' data-ref="501blocks" >blocks</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col2 decl" id="502skey" title='skey' data-type='symmetric_key *' data-ref="502skey" >skey</dfn>);</td></tr>
+<tr><th id="391">391</th><td></td></tr>
+<tr><th id="392">392</th><td>   <i class="doc">/** Accelerated ECB decryption </i></td></tr>
+<tr><th id="393">393</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>      Plaintext</i></td></tr>
+<tr><th id="394">394</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>      Ciphertext</i></td></tr>
+<tr><th id="395">395</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">blocks</span>  The number of complete blocks to process</i></td></tr>
+<tr><th id="396">396</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key context</i></td></tr>
+<tr><th id="397">397</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="398">398</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="399">399</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_ecb_decrypt" title='ltc_cipher_descriptor::accel_ecb_decrypt' data-ref="ltc_cipher_descriptor::accel_ecb_decrypt" >accel_ecb_decrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="503ct" title='ct' data-type='const unsigned char *' data-ref="503ct" >ct</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="504pt" title='pt' data-type='unsigned char *' data-ref="504pt" >pt</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col5 decl" id="505blocks" title='blocks' data-type='unsigned long' data-ref="505blocks" >blocks</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col6 decl" id="506skey" title='skey' data-type='symmetric_key *' data-ref="506skey" >skey</dfn>);</td></tr>
+<tr><th id="400">400</th><td></td></tr>
+<tr><th id="401">401</th><td>   <i class="doc">/** Accelerated CBC encryption </i></td></tr>
+<tr><th id="402">402</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>      Plaintext</i></td></tr>
+<tr><th id="403">403</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>      Ciphertext</i></td></tr>
+<tr><th id="404">404</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">blocks</span>  The number of complete blocks to process</i></td></tr>
+<tr><th id="405">405</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">IV</span>      The initial value (input/output)</i></td></tr>
+<tr><th id="406">406</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key context</i></td></tr>
+<tr><th id="407">407</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="408">408</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="409">409</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_cbc_encrypt" title='ltc_cipher_descriptor::accel_cbc_encrypt' data-ref="ltc_cipher_descriptor::accel_cbc_encrypt" >accel_cbc_encrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="507pt" title='pt' data-type='const unsigned char *' data-ref="507pt" >pt</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="508ct" title='ct' data-type='unsigned char *' data-ref="508ct" >ct</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="509blocks" title='blocks' data-type='unsigned long' data-ref="509blocks" >blocks</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="510IV" title='IV' data-type='unsigned char *' data-ref="510IV" >IV</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col1 decl" id="511skey" title='skey' data-type='symmetric_key *' data-ref="511skey" >skey</dfn>);</td></tr>
+<tr><th id="410">410</th><td></td></tr>
+<tr><th id="411">411</th><td>   <i class="doc">/** Accelerated CBC decryption </i></td></tr>
+<tr><th id="412">412</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>      Plaintext</i></td></tr>
+<tr><th id="413">413</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>      Ciphertext</i></td></tr>
+<tr><th id="414">414</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">blocks</span>  The number of complete blocks to process</i></td></tr>
+<tr><th id="415">415</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">IV</span>      The initial value (input/output)</i></td></tr>
+<tr><th id="416">416</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key context</i></td></tr>
+<tr><th id="417">417</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="418">418</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="419">419</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_cbc_decrypt" title='ltc_cipher_descriptor::accel_cbc_decrypt' data-ref="ltc_cipher_descriptor::accel_cbc_decrypt" >accel_cbc_decrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="512ct" title='ct' data-type='const unsigned char *' data-ref="512ct" >ct</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="513pt" title='pt' data-type='unsigned char *' data-ref="513pt" >pt</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col4 decl" id="514blocks" title='blocks' data-type='unsigned long' data-ref="514blocks" >blocks</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="515IV" title='IV' data-type='unsigned char *' data-ref="515IV" >IV</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col6 decl" id="516skey" title='skey' data-type='symmetric_key *' data-ref="516skey" >skey</dfn>);</td></tr>
+<tr><th id="420">420</th><td></td></tr>
+<tr><th id="421">421</th><td>   <i class="doc">/** Accelerated CTR encryption </i></td></tr>
+<tr><th id="422">422</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>      Plaintext</i></td></tr>
+<tr><th id="423">423</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>      Ciphertext</i></td></tr>
+<tr><th id="424">424</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">blocks</span>  The number of complete blocks to process</i></td></tr>
+<tr><th id="425">425</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">IV</span>      The initial value (input/output)</i></td></tr>
+<tr><th id="426">426</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">mode</span>    little or big endian counter (mode=0 or mode=1)</i></td></tr>
+<tr><th id="427">427</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key context</i></td></tr>
+<tr><th id="428">428</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="429">429</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="430">430</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_ctr_encrypt" title='ltc_cipher_descriptor::accel_ctr_encrypt' data-ref="ltc_cipher_descriptor::accel_ctr_encrypt" >accel_ctr_encrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="517pt" title='pt' data-type='const unsigned char *' data-ref="517pt" >pt</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="518ct" title='ct' data-type='unsigned char *' data-ref="518ct" >ct</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="519blocks" title='blocks' data-type='unsigned long' data-ref="519blocks" >blocks</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="520IV" title='IV' data-type='unsigned char *' data-ref="520IV" >IV</dfn>, <em>int</em> <dfn class="local col1 decl" id="521mode" title='mode' data-type='int' data-ref="521mode" >mode</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col2 decl" id="522skey" title='skey' data-type='symmetric_key *' data-ref="522skey" >skey</dfn>);</td></tr>
+<tr><th id="431">431</th><td></td></tr>
+<tr><th id="432">432</th><td>   <i class="doc">/** Accelerated LRW </i></td></tr>
+<tr><th id="433">433</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>      Plaintext</i></td></tr>
+<tr><th id="434">434</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>      Ciphertext</i></td></tr>
+<tr><th id="435">435</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">blocks</span>  The number of complete blocks to process</i></td></tr>
+<tr><th id="436">436</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">IV</span>      The initial value (input/output)</i></td></tr>
+<tr><th id="437">437</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">tweak</span>   The LRW tweak</i></td></tr>
+<tr><th id="438">438</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key context</i></td></tr>
+<tr><th id="439">439</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="440">440</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="441">441</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_lrw_encrypt" title='ltc_cipher_descriptor::accel_lrw_encrypt' data-ref="ltc_cipher_descriptor::accel_lrw_encrypt" >accel_lrw_encrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="523pt" title='pt' data-type='const unsigned char *' data-ref="523pt" >pt</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="524ct" title='ct' data-type='unsigned char *' data-ref="524ct" >ct</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col5 decl" id="525blocks" title='blocks' data-type='unsigned long' data-ref="525blocks" >blocks</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="526IV" title='IV' data-type='unsigned char *' data-ref="526IV" >IV</dfn>, <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="527tweak" title='tweak' data-type='const unsigned char *' data-ref="527tweak" >tweak</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col8 decl" id="528skey" title='skey' data-type='symmetric_key *' data-ref="528skey" >skey</dfn>);</td></tr>
+<tr><th id="442">442</th><td></td></tr>
+<tr><th id="443">443</th><td>   <i class="doc">/** Accelerated LRW </i></td></tr>
+<tr><th id="444">444</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>      Ciphertext</i></td></tr>
+<tr><th id="445">445</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>      Plaintext</i></td></tr>
+<tr><th id="446">446</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">blocks</span>  The number of complete blocks to process</i></td></tr>
+<tr><th id="447">447</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">IV</span>      The initial value (input/output)</i></td></tr>
+<tr><th id="448">448</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">tweak</span>   The LRW tweak</i></td></tr>
+<tr><th id="449">449</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">skey</span>    The scheduled key context</i></td></tr>
+<tr><th id="450">450</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="451">451</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="452">452</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_lrw_decrypt" title='ltc_cipher_descriptor::accel_lrw_decrypt' data-ref="ltc_cipher_descriptor::accel_lrw_decrypt" >accel_lrw_decrypt</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col9 decl" id="529ct" title='ct' data-type='const unsigned char *' data-ref="529ct" >ct</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="530pt" title='pt' data-type='unsigned char *' data-ref="530pt" >pt</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="531blocks" title='blocks' data-type='unsigned long' data-ref="531blocks" >blocks</dfn>, <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="532IV" title='IV' data-type='unsigned char *' data-ref="532IV" >IV</dfn>, <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="533tweak" title='tweak' data-type='const unsigned char *' data-ref="533tweak" >tweak</dfn>, <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a> *<dfn class="local col4 decl" id="534skey" title='skey' data-type='symmetric_key *' data-ref="534skey" >skey</dfn>);</td></tr>
+<tr><th id="453">453</th><td></td></tr>
+<tr><th id="454">454</th><td>   <i class="doc">/** Accelerated CCM packet (one-shot)</i></td></tr>
+<tr><th id="455">455</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">key</span>        The secret key to use</i></td></tr>
+<tr><th id="456">456</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">keylen</span>     The length of the secret key (octets)</i></td></tr>
+<tr><th id="457">457</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">uskey</span>      A previously scheduled key [optional can be NULL]</i></td></tr>
+<tr><th id="458">458</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">nonce</span>      The session nonce [use once]</i></td></tr>
+<tr><th id="459">459</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">noncelen</span>   The length of the nonce</i></td></tr>
+<tr><th id="460">460</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">header</span>     The header for the session</i></td></tr>
+<tr><th id="461">461</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">headerlen</span>  The length of the header (octets)</i></td></tr>
+<tr><th id="462">462</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>         [out] The plaintext</i></td></tr>
+<tr><th id="463">463</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ptlen</span>      The length of the plaintext (octets)</i></td></tr>
+<tr><th id="464">464</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>         [out] The ciphertext</i></td></tr>
+<tr><th id="465">465</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">tag</span>        [out] The destination tag</i></td></tr>
+<tr><th id="466">466</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">taglen</span>     [in/out] The max size and resulting size of the authentication tag</i></td></tr>
+<tr><th id="467">467</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">direction</span>  Encrypt or Decrypt direction (0 or 1)</i></td></tr>
+<tr><th id="468">468</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="469">469</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="470">470</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_ccm_memory" title='ltc_cipher_descriptor::accel_ccm_memory' data-ref="ltc_cipher_descriptor::accel_ccm_memory" >accel_ccm_memory</dfn>)(</td></tr>
+<tr><th id="471">471</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="535key" title='key' data-type='const unsigned char *' data-ref="535key" >key</dfn>,    <em>unsigned</em> <em>long</em> <dfn class="local col6 decl" id="536keylen" title='keylen' data-type='unsigned long' data-ref="536keylen" >keylen</dfn>,</td></tr>
+<tr><th id="472">472</th><td>       <a class="typedef" href="#symmetric_key" title='symmetric_key' data-type='union Symmetric_key' data-ref="symmetric_key" >symmetric_key</a>       *<dfn class="local col7 decl" id="537uskey" title='uskey' data-type='symmetric_key *' data-ref="537uskey" >uskey</dfn>,</td></tr>
+<tr><th id="473">473</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="538nonce" title='nonce' data-type='const unsigned char *' data-ref="538nonce" >nonce</dfn>,  <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="539noncelen" title='noncelen' data-type='unsigned long' data-ref="539noncelen" >noncelen</dfn>,</td></tr>
+<tr><th id="474">474</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="540header" title='header' data-type='const unsigned char *' data-ref="540header" >header</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="541headerlen" title='headerlen' data-type='unsigned long' data-ref="541headerlen" >headerlen</dfn>,</td></tr>
+<tr><th id="475">475</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="542pt" title='pt' data-type='unsigned char *' data-ref="542pt" >pt</dfn>,     <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="543ptlen" title='ptlen' data-type='unsigned long' data-ref="543ptlen" >ptlen</dfn>,</td></tr>
+<tr><th id="476">476</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="544ct" title='ct' data-type='unsigned char *' data-ref="544ct" >ct</dfn>,</td></tr>
+<tr><th id="477">477</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col5 decl" id="545tag" title='tag' data-type='unsigned char *' data-ref="545tag" >tag</dfn>,    <em>unsigned</em> <em>long</em> *<dfn class="local col6 decl" id="546taglen" title='taglen' data-type='unsigned long *' data-ref="546taglen" >taglen</dfn>,</td></tr>
+<tr><th id="478">478</th><td>                       <em>int</em>  <dfn class="local col7 decl" id="547direction" title='direction' data-type='int' data-ref="547direction" >direction</dfn>);</td></tr>
+<tr><th id="479">479</th><td></td></tr>
+<tr><th id="480">480</th><td>   <i class="doc">/** Accelerated GCM packet (one shot)</i></td></tr>
+<tr><th id="481">481</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">key</span>        The secret key</i></td></tr>
+<tr><th id="482">482</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">keylen</span>     The length of the secret key</i></td></tr>
+<tr><th id="483">483</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">IV</span>         The initial vector </i></td></tr>
+<tr><th id="484">484</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">IVlen</span>      The length of the initial vector</i></td></tr>
+<tr><th id="485">485</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">adata</span>      The additional authentication data (header)</i></td></tr>
+<tr><th id="486">486</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">adatalen</span>   The length of the adata</i></td></tr>
+<tr><th id="487">487</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">pt</span>         The plaintext</i></td></tr>
+<tr><th id="488">488</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ptlen</span>      The length of the plaintext (ciphertext length is the same)</i></td></tr>
+<tr><th id="489">489</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">ct</span>         The ciphertext</i></td></tr>
+<tr><th id="490">490</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">tag</span>        [out] The MAC tag</i></td></tr>
+<tr><th id="491">491</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">taglen</span>     [in/out] The MAC tag length</i></td></tr>
+<tr><th id="492">492</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">direction</span>  Encrypt or Decrypt mode (GCM_ENCRYPT or GCM_DECRYPT)</i></td></tr>
+<tr><th id="493">493</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK on success</i></td></tr>
+<tr><th id="494">494</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="495">495</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::accel_gcm_memory" title='ltc_cipher_descriptor::accel_gcm_memory' data-ref="ltc_cipher_descriptor::accel_gcm_memory" >accel_gcm_memory</dfn>)(</td></tr>
+<tr><th id="496">496</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="548key" title='key' data-type='const unsigned char *' data-ref="548key" >key</dfn>,    <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="549keylen" title='keylen' data-type='unsigned long' data-ref="549keylen" >keylen</dfn>,</td></tr>
+<tr><th id="497">497</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="550IV" title='IV' data-type='const unsigned char *' data-ref="550IV" >IV</dfn>,     <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="551IVlen" title='IVlen' data-type='unsigned long' data-ref="551IVlen" >IVlen</dfn>,</td></tr>
+<tr><th id="498">498</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="552adata" title='adata' data-type='const unsigned char *' data-ref="552adata" >adata</dfn>,  <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="553adatalen" title='adatalen' data-type='unsigned long' data-ref="553adatalen" >adatalen</dfn>,</td></tr>
+<tr><th id="499">499</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="554pt" title='pt' data-type='unsigned char *' data-ref="554pt" >pt</dfn>,     <em>unsigned</em> <em>long</em> <dfn class="local col5 decl" id="555ptlen" title='ptlen' data-type='unsigned long' data-ref="555ptlen" >ptlen</dfn>,</td></tr>
+<tr><th id="500">500</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="556ct" title='ct' data-type='unsigned char *' data-ref="556ct" >ct</dfn>, </td></tr>
+<tr><th id="501">501</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="557tag" title='tag' data-type='unsigned char *' data-ref="557tag" >tag</dfn>,    <em>unsigned</em> <em>long</em> *<dfn class="local col8 decl" id="558taglen" title='taglen' data-type='unsigned long *' data-ref="558taglen" >taglen</dfn>,</td></tr>
+<tr><th id="502">502</th><td>                       <em>int</em> <dfn class="local col9 decl" id="559direction" title='direction' data-type='int' data-ref="559direction" >direction</dfn>);</td></tr>
+<tr><th id="503">503</th><td></td></tr>
+<tr><th id="504">504</th><td>   <i class="doc">/** Accelerated one shot LTC_OMAC </i></td></tr>
+<tr><th id="505">505</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">key</span>            The secret key</i></td></tr>
+<tr><th id="506">506</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">keylen</span>         The key length (octets) </i></td></tr>
+<tr><th id="507">507</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">in</span>             The message </i></td></tr>
+<tr><th id="508">508</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">inlen</span>          Length of message (octets)</i></td></tr>
+<tr><th id="509">509</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">out</span>            [out] Destination for tag</i></td></tr>
+<tr><th id="510">510</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">outlen</span>         [in/out] Initial and final size of out</i></td></tr>
+<tr><th id="511">511</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK on success</i></td></tr>
+<tr><th id="512">512</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="513">513</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::omac_memory" title='ltc_cipher_descriptor::omac_memory' data-ref="ltc_cipher_descriptor::omac_memory" >omac_memory</dfn>)(</td></tr>
+<tr><th id="514">514</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="560key" title='key' data-type='const unsigned char *' data-ref="560key" >key</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col1 decl" id="561keylen" title='keylen' data-type='unsigned long' data-ref="561keylen" >keylen</dfn>,</td></tr>
+<tr><th id="515">515</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="562in" title='in' data-type='const unsigned char *' data-ref="562in" >in</dfn>,  <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="563inlen" title='inlen' data-type='unsigned long' data-ref="563inlen" >inlen</dfn>,</td></tr>
+<tr><th id="516">516</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="564out" title='out' data-type='unsigned char *' data-ref="564out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col5 decl" id="565outlen" title='outlen' data-type='unsigned long *' data-ref="565outlen" >outlen</dfn>);</td></tr>
+<tr><th id="517">517</th><td></td></tr>
+<tr><th id="518">518</th><td>   <i class="doc">/** Accelerated one shot XCBC </i></td></tr>
+<tr><th id="519">519</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">key</span>            The secret key</i></td></tr>
+<tr><th id="520">520</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">keylen</span>         The key length (octets) </i></td></tr>
+<tr><th id="521">521</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">in</span>             The message </i></td></tr>
+<tr><th id="522">522</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">inlen</span>          Length of message (octets)</i></td></tr>
+<tr><th id="523">523</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">out</span>            [out] Destination for tag</i></td></tr>
+<tr><th id="524">524</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">outlen</span>         [in/out] Initial and final size of out</i></td></tr>
+<tr><th id="525">525</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK on success</i></td></tr>
+<tr><th id="526">526</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="527">527</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::xcbc_memory" title='ltc_cipher_descriptor::xcbc_memory' data-ref="ltc_cipher_descriptor::xcbc_memory" >xcbc_memory</dfn>)(</td></tr>
+<tr><th id="528">528</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="566key" title='key' data-type='const unsigned char *' data-ref="566key" >key</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col7 decl" id="567keylen" title='keylen' data-type='unsigned long' data-ref="567keylen" >keylen</dfn>,</td></tr>
+<tr><th id="529">529</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="568in" title='in' data-type='const unsigned char *' data-ref="568in" >in</dfn>,  <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="569inlen" title='inlen' data-type='unsigned long' data-ref="569inlen" >inlen</dfn>,</td></tr>
+<tr><th id="530">530</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="570out" title='out' data-type='unsigned char *' data-ref="570out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col1 decl" id="571outlen" title='outlen' data-type='unsigned long *' data-ref="571outlen" >outlen</dfn>);</td></tr>
+<tr><th id="531">531</th><td></td></tr>
+<tr><th id="532">532</th><td>   <i class="doc">/** Accelerated one shot F9 </i></td></tr>
+<tr><th id="533">533</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">key</span>            The secret key</i></td></tr>
+<tr><th id="534">534</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">keylen</span>         The key length (octets) </i></td></tr>
+<tr><th id="535">535</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">in</span>             The message </i></td></tr>
+<tr><th id="536">536</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">inlen</span>          Length of message (octets)</i></td></tr>
+<tr><th id="537">537</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">out</span>            [out] Destination for tag</i></td></tr>
+<tr><th id="538">538</th><td><i class="doc">       <span class="command">@param</span> <span class="arg">outlen</span>         [in/out] Initial and final size of out</i></td></tr>
+<tr><th id="539">539</th><td><i class="doc">       <span class="command">@return</span> CRYPT_OK on success</i></td></tr>
+<tr><th id="540">540</th><td><i class="doc">       <span class="command">@remark</span> Requires manual padding</i></td></tr>
+<tr><th id="541">541</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="542">542</th><td>   <em>int</em> (*<dfn class="decl" id="ltc_cipher_descriptor::f9_memory" title='ltc_cipher_descriptor::f9_memory' data-ref="ltc_cipher_descriptor::f9_memory" >f9_memory</dfn>)(</td></tr>
+<tr><th id="543">543</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="572key" title='key' data-type='const unsigned char *' data-ref="572key" >key</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="573keylen" title='keylen' data-type='unsigned long' data-ref="573keylen" >keylen</dfn>,</td></tr>
+<tr><th id="544">544</th><td>       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="574in" title='in' data-type='const unsigned char *' data-ref="574in" >in</dfn>,  <em>unsigned</em> <em>long</em> <dfn class="local col5 decl" id="575inlen" title='inlen' data-type='unsigned long' data-ref="575inlen" >inlen</dfn>,</td></tr>
+<tr><th id="545">545</th><td>             <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="576out" title='out' data-type='unsigned char *' data-ref="576out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col7 decl" id="577outlen" title='outlen' data-type='unsigned long *' data-ref="577outlen" >outlen</dfn>);</td></tr>
+<tr><th id="546">546</th><td>} <dfn class="decl" id="cipher_descriptor" title='cipher_descriptor' data-ref="cipher_descriptor" >cipher_descriptor</dfn>[];</td></tr>
+<tr><th id="547">547</th><td></td></tr>
+<tr><th id="548">548</th><td><u>#<span data-ppcond="548">ifdef</span> <span class="macro" data-ref="_M/LTC_BLOWFISH">LTC_BLOWFISH</span></u></td></tr>
+<tr><th id="549">549</th><td><em>int</em> blowfish_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="550">550</th><td><em>int</em> blowfish_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="551">551</th><td><em>int</em> blowfish_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="552">552</th><td><em>int</em> blowfish_test(<em>void</em>);</td></tr>
+<tr><th id="553">553</th><td><em>void</em> blowfish_done(symmetric_key *skey);</td></tr>
+<tr><th id="554">554</th><td><em>int</em> blowfish_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="555">555</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor blowfish_desc;</td></tr>
+<tr><th id="556">556</th><td><u>#<span data-ppcond="548">endif</span></u></td></tr>
+<tr><th id="557">557</th><td></td></tr>
+<tr><th id="558">558</th><td><u>#<span data-ppcond="558">ifdef</span> <span class="macro" data-ref="_M/LTC_RC5">LTC_RC5</span></u></td></tr>
+<tr><th id="559">559</th><td><em>int</em> rc5_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="560">560</th><td><em>int</em> rc5_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="561">561</th><td><em>int</em> rc5_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="562">562</th><td><em>int</em> rc5_test(<em>void</em>);</td></tr>
+<tr><th id="563">563</th><td><em>void</em> rc5_done(symmetric_key *skey);</td></tr>
+<tr><th id="564">564</th><td><em>int</em> rc5_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="565">565</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor rc5_desc;</td></tr>
+<tr><th id="566">566</th><td><u>#<span data-ppcond="558">endif</span></u></td></tr>
+<tr><th id="567">567</th><td></td></tr>
+<tr><th id="568">568</th><td><u>#<span data-ppcond="568">ifdef</span> <span class="macro" data-ref="_M/LTC_RC6">LTC_RC6</span></u></td></tr>
+<tr><th id="569">569</th><td><em>int</em> rc6_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="570">570</th><td><em>int</em> rc6_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="571">571</th><td><em>int</em> rc6_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="572">572</th><td><em>int</em> rc6_test(<em>void</em>);</td></tr>
+<tr><th id="573">573</th><td><em>void</em> rc6_done(symmetric_key *skey);</td></tr>
+<tr><th id="574">574</th><td><em>int</em> rc6_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="575">575</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor rc6_desc;</td></tr>
+<tr><th id="576">576</th><td><u>#<span data-ppcond="568">endif</span></u></td></tr>
+<tr><th id="577">577</th><td></td></tr>
+<tr><th id="578">578</th><td><u>#<span data-ppcond="578">ifdef</span> <span class="macro" data-ref="_M/LTC_RC2">LTC_RC2</span></u></td></tr>
+<tr><th id="579">579</th><td><em>int</em> rc2_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="580">580</th><td><em>int</em> rc2_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="581">581</th><td><em>int</em> rc2_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="582">582</th><td><em>int</em> rc2_test(<em>void</em>);</td></tr>
+<tr><th id="583">583</th><td><em>void</em> rc2_done(symmetric_key *skey);</td></tr>
+<tr><th id="584">584</th><td><em>int</em> rc2_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="585">585</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor rc2_desc;</td></tr>
+<tr><th id="586">586</th><td><u>#<span data-ppcond="578">endif</span></u></td></tr>
+<tr><th id="587">587</th><td></td></tr>
+<tr><th id="588">588</th><td><u>#<span data-ppcond="588">ifdef</span> <span class="macro" data-ref="_M/LTC_SAFERP">LTC_SAFERP</span></u></td></tr>
+<tr><th id="589">589</th><td><em>int</em> saferp_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="590">590</th><td><em>int</em> saferp_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="591">591</th><td><em>int</em> saferp_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="592">592</th><td><em>int</em> saferp_test(<em>void</em>);</td></tr>
+<tr><th id="593">593</th><td><em>void</em> saferp_done(symmetric_key *skey);</td></tr>
+<tr><th id="594">594</th><td><em>int</em> saferp_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="595">595</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor saferp_desc;</td></tr>
+<tr><th id="596">596</th><td><u>#<span data-ppcond="588">endif</span></u></td></tr>
+<tr><th id="597">597</th><td></td></tr>
+<tr><th id="598">598</th><td><u>#<span data-ppcond="598">ifdef</span> <span class="macro" data-ref="_M/LTC_SAFER">LTC_SAFER</span></u></td></tr>
+<tr><th id="599">599</th><td><em>int</em> safer_k64_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="600">600</th><td><em>int</em> safer_sk64_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="601">601</th><td><em>int</em> safer_k128_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="602">602</th><td><em>int</em> safer_sk128_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="603">603</th><td><em>int</em> safer_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *key);</td></tr>
+<tr><th id="604">604</th><td><em>int</em> safer_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *key);</td></tr>
+<tr><th id="605">605</th><td><em>int</em> safer_k64_test(<em>void</em>);</td></tr>
+<tr><th id="606">606</th><td><em>int</em> safer_sk64_test(<em>void</em>);</td></tr>
+<tr><th id="607">607</th><td><em>int</em> safer_sk128_test(<em>void</em>);</td></tr>
+<tr><th id="608">608</th><td><em>void</em> safer_done(symmetric_key *skey);</td></tr>
+<tr><th id="609">609</th><td><em>int</em> safer_64_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="610">610</th><td><em>int</em> safer_128_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="611">611</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor safer_k64_desc, safer_k128_desc, safer_sk64_desc, safer_sk128_desc;</td></tr>
+<tr><th id="612">612</th><td><u>#<span data-ppcond="598">endif</span></u></td></tr>
+<tr><th id="613">613</th><td></td></tr>
+<tr><th id="614">614</th><td><u>#<span data-ppcond="614">ifdef</span> <span class="macro" data-ref="_M/LTC_RIJNDAEL">LTC_RIJNDAEL</span></u></td></tr>
+<tr><th id="615">615</th><td></td></tr>
+<tr><th id="616">616</th><td><i>/* make aes an alias */</i></td></tr>
+<tr><th id="617">617</th><td><u>#define aes_setup           rijndael_setup</u></td></tr>
+<tr><th id="618">618</th><td><u>#define aes_ecb_encrypt     rijndael_ecb_encrypt</u></td></tr>
+<tr><th id="619">619</th><td><u>#define aes_ecb_decrypt     rijndael_ecb_decrypt</u></td></tr>
+<tr><th id="620">620</th><td><u>#define aes_test            rijndael_test</u></td></tr>
+<tr><th id="621">621</th><td><u>#define aes_done            rijndael_done</u></td></tr>
+<tr><th id="622">622</th><td><u>#define aes_keysize         rijndael_keysize</u></td></tr>
+<tr><th id="623">623</th><td></td></tr>
+<tr><th id="624">624</th><td><u>#define aes_enc_setup           rijndael_enc_setup</u></td></tr>
+<tr><th id="625">625</th><td><u>#define aes_enc_ecb_encrypt     rijndael_enc_ecb_encrypt</u></td></tr>
+<tr><th id="626">626</th><td><u>#define aes_enc_keysize         rijndael_enc_keysize</u></td></tr>
+<tr><th id="627">627</th><td></td></tr>
+<tr><th id="628">628</th><td><em>int</em> rijndael_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="629">629</th><td><em>int</em> rijndael_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="630">630</th><td><em>int</em> rijndael_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="631">631</th><td><em>int</em> rijndael_test(<em>void</em>);</td></tr>
+<tr><th id="632">632</th><td><em>void</em> rijndael_done(symmetric_key *skey);</td></tr>
+<tr><th id="633">633</th><td><em>int</em> rijndael_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="634">634</th><td><em>int</em> rijndael_enc_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="635">635</th><td><em>int</em> rijndael_enc_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="636">636</th><td><em>void</em> rijndael_enc_done(symmetric_key *skey);</td></tr>
+<tr><th id="637">637</th><td><em>int</em> rijndael_enc_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="638">638</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor rijndael_desc, aes_desc;</td></tr>
+<tr><th id="639">639</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor rijndael_enc_desc, aes_enc_desc;</td></tr>
+<tr><th id="640">640</th><td><u>#<span data-ppcond="614">endif</span></u></td></tr>
+<tr><th id="641">641</th><td></td></tr>
+<tr><th id="642">642</th><td><u>#<span data-ppcond="642">ifdef</span> <span class="macro" data-ref="_M/LTC_XTEA">LTC_XTEA</span></u></td></tr>
+<tr><th id="643">643</th><td><em>int</em> xtea_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="644">644</th><td><em>int</em> xtea_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="645">645</th><td><em>int</em> xtea_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="646">646</th><td><em>int</em> xtea_test(<em>void</em>);</td></tr>
+<tr><th id="647">647</th><td><em>void</em> xtea_done(symmetric_key *skey);</td></tr>
+<tr><th id="648">648</th><td><em>int</em> xtea_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="649">649</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor xtea_desc;</td></tr>
+<tr><th id="650">650</th><td><u>#<span data-ppcond="642">endif</span></u></td></tr>
+<tr><th id="651">651</th><td></td></tr>
+<tr><th id="652">652</th><td><u>#<span data-ppcond="652">ifdef</span> <span class="macro" data-ref="_M/LTC_TWOFISH">LTC_TWOFISH</span></u></td></tr>
+<tr><th id="653">653</th><td><em>int</em> twofish_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="654">654</th><td><em>int</em> twofish_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="655">655</th><td><em>int</em> twofish_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="656">656</th><td><em>int</em> twofish_test(<em>void</em>);</td></tr>
+<tr><th id="657">657</th><td><em>void</em> twofish_done(symmetric_key *skey);</td></tr>
+<tr><th id="658">658</th><td><em>int</em> twofish_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="659">659</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor twofish_desc;</td></tr>
+<tr><th id="660">660</th><td><u>#<span data-ppcond="652">endif</span></u></td></tr>
+<tr><th id="661">661</th><td></td></tr>
+<tr><th id="662">662</th><td><u>#<span data-ppcond="662">ifdef</span> <span class="macro" data-ref="_M/LTC_DES">LTC_DES</span></u></td></tr>
+<tr><th id="663">663</th><td><em>int</em> des_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="664">664</th><td><em>int</em> des_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="665">665</th><td><em>int</em> des_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="666">666</th><td><em>int</em> des_test(<em>void</em>);</td></tr>
+<tr><th id="667">667</th><td><em>void</em> des_done(symmetric_key *skey);</td></tr>
+<tr><th id="668">668</th><td><em>int</em> des_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="669">669</th><td><em>int</em> des3_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="670">670</th><td><em>int</em> des3_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="671">671</th><td><em>int</em> des3_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="672">672</th><td><em>int</em> des3_test(<em>void</em>);</td></tr>
+<tr><th id="673">673</th><td><em>void</em> des3_done(symmetric_key *skey);</td></tr>
+<tr><th id="674">674</th><td><em>int</em> des3_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="675">675</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor des_desc, des3_desc;</td></tr>
+<tr><th id="676">676</th><td><u>#<span data-ppcond="662">endif</span></u></td></tr>
+<tr><th id="677">677</th><td></td></tr>
+<tr><th id="678">678</th><td><u>#<span data-ppcond="678">ifdef</span> <span class="macro" data-ref="_M/LTC_CAST5">LTC_CAST5</span></u></td></tr>
+<tr><th id="679">679</th><td><em>int</em> cast5_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="680">680</th><td><em>int</em> cast5_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="681">681</th><td><em>int</em> cast5_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="682">682</th><td><em>int</em> cast5_test(<em>void</em>);</td></tr>
+<tr><th id="683">683</th><td><em>void</em> cast5_done(symmetric_key *skey);</td></tr>
+<tr><th id="684">684</th><td><em>int</em> cast5_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="685">685</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor cast5_desc;</td></tr>
+<tr><th id="686">686</th><td><u>#<span data-ppcond="678">endif</span></u></td></tr>
+<tr><th id="687">687</th><td></td></tr>
+<tr><th id="688">688</th><td><u>#<span data-ppcond="688">ifdef</span> <span class="macro" data-ref="_M/LTC_NOEKEON">LTC_NOEKEON</span></u></td></tr>
+<tr><th id="689">689</th><td><em>int</em> noekeon_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="690">690</th><td><em>int</em> noekeon_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="691">691</th><td><em>int</em> noekeon_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="692">692</th><td><em>int</em> noekeon_test(<em>void</em>);</td></tr>
+<tr><th id="693">693</th><td><em>void</em> noekeon_done(symmetric_key *skey);</td></tr>
+<tr><th id="694">694</th><td><em>int</em> noekeon_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="695">695</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor noekeon_desc;</td></tr>
+<tr><th id="696">696</th><td><u>#<span data-ppcond="688">endif</span></u></td></tr>
+<tr><th id="697">697</th><td></td></tr>
+<tr><th id="698">698</th><td><u>#<span data-ppcond="698">ifdef</span> <span class="macro" data-ref="_M/LTC_SKIPJACK">LTC_SKIPJACK</span></u></td></tr>
+<tr><th id="699">699</th><td><em>int</em> skipjack_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="700">700</th><td><em>int</em> skipjack_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="701">701</th><td><em>int</em> skipjack_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="702">702</th><td><em>int</em> skipjack_test(<em>void</em>);</td></tr>
+<tr><th id="703">703</th><td><em>void</em> skipjack_done(symmetric_key *skey);</td></tr>
+<tr><th id="704">704</th><td><em>int</em> skipjack_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="705">705</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor skipjack_desc;</td></tr>
+<tr><th id="706">706</th><td><u>#<span data-ppcond="698">endif</span></u></td></tr>
+<tr><th id="707">707</th><td></td></tr>
+<tr><th id="708">708</th><td><u>#<span data-ppcond="708">ifdef</span> <span class="macro" data-ref="_M/LTC_KHAZAD">LTC_KHAZAD</span></u></td></tr>
+<tr><th id="709">709</th><td><em>int</em> khazad_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="710">710</th><td><em>int</em> khazad_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="711">711</th><td><em>int</em> khazad_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="712">712</th><td><em>int</em> khazad_test(<em>void</em>);</td></tr>
+<tr><th id="713">713</th><td><em>void</em> khazad_done(symmetric_key *skey);</td></tr>
+<tr><th id="714">714</th><td><em>int</em> khazad_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="715">715</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor khazad_desc;</td></tr>
+<tr><th id="716">716</th><td><u>#<span data-ppcond="708">endif</span></u></td></tr>
+<tr><th id="717">717</th><td></td></tr>
+<tr><th id="718">718</th><td><u>#<span data-ppcond="718">ifdef</span> <span class="macro" data-ref="_M/LTC_ANUBIS">LTC_ANUBIS</span></u></td></tr>
+<tr><th id="719">719</th><td><em>int</em> anubis_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="720">720</th><td><em>int</em> anubis_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="721">721</th><td><em>int</em> anubis_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="722">722</th><td><em>int</em> anubis_test(<em>void</em>);</td></tr>
+<tr><th id="723">723</th><td><em>void</em> anubis_done(symmetric_key *skey);</td></tr>
+<tr><th id="724">724</th><td><em>int</em> anubis_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="725">725</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor anubis_desc;</td></tr>
+<tr><th id="726">726</th><td><u>#<span data-ppcond="718">endif</span></u></td></tr>
+<tr><th id="727">727</th><td></td></tr>
+<tr><th id="728">728</th><td><u>#<span data-ppcond="728">ifdef</span> <span class="macro" data-ref="_M/LTC_KSEED">LTC_KSEED</span></u></td></tr>
+<tr><th id="729">729</th><td><em>int</em> kseed_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="730">730</th><td><em>int</em> kseed_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="731">731</th><td><em>int</em> kseed_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="732">732</th><td><em>int</em> kseed_test(<em>void</em>);</td></tr>
+<tr><th id="733">733</th><td><em>void</em> kseed_done(symmetric_key *skey);</td></tr>
+<tr><th id="734">734</th><td><em>int</em> kseed_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="735">735</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor kseed_desc;</td></tr>
+<tr><th id="736">736</th><td><u>#<span data-ppcond="728">endif</span></u></td></tr>
+<tr><th id="737">737</th><td></td></tr>
+<tr><th id="738">738</th><td><u>#<span data-ppcond="738">ifdef</span> <span class="macro" data-ref="_M/LTC_KASUMI">LTC_KASUMI</span></u></td></tr>
+<tr><th id="739">739</th><td><em>int</em> kasumi_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="740">740</th><td><em>int</em> kasumi_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="741">741</th><td><em>int</em> kasumi_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="742">742</th><td><em>int</em> kasumi_test(<em>void</em>);</td></tr>
+<tr><th id="743">743</th><td><em>void</em> kasumi_done(symmetric_key *skey);</td></tr>
+<tr><th id="744">744</th><td><em>int</em> kasumi_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="745">745</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor kasumi_desc;</td></tr>
+<tr><th id="746">746</th><td><u>#<span data-ppcond="738">endif</span></u></td></tr>
+<tr><th id="747">747</th><td></td></tr>
+<tr><th id="748">748</th><td></td></tr>
+<tr><th id="749">749</th><td><u>#<span data-ppcond="749">ifdef</span> <span class="macro" data-ref="_M/LTC_MULTI2">LTC_MULTI2</span></u></td></tr>
+<tr><th id="750">750</th><td><em>int</em> multi2_setup(<em>const</em> <em>unsigned</em> <em>char</em> *key, <em>int</em> keylen, <em>int</em> num_rounds, symmetric_key *skey);</td></tr>
+<tr><th id="751">751</th><td><em>int</em> multi2_ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, symmetric_key *skey);</td></tr>
+<tr><th id="752">752</th><td><em>int</em> multi2_ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, symmetric_key *skey);</td></tr>
+<tr><th id="753">753</th><td><em>int</em> multi2_test(<em>void</em>);</td></tr>
+<tr><th id="754">754</th><td><em>void</em> multi2_done(symmetric_key *skey);</td></tr>
+<tr><th id="755">755</th><td><em>int</em> multi2_keysize(<em>int</em> *keysize);</td></tr>
+<tr><th id="756">756</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_cipher_descriptor multi2_desc;</td></tr>
+<tr><th id="757">757</th><td><u>#<span data-ppcond="749">endif</span></u></td></tr>
+<tr><th id="758">758</th><td></td></tr>
+<tr><th id="759">759</th><td><u>#<span data-ppcond="759">ifdef</span> <span class="macro" data-ref="_M/LTC_ECB_MODE">LTC_ECB_MODE</span></u></td></tr>
+<tr><th id="760">760</th><td><em>int</em> ecb_start(<em>int</em> cipher, <em>const</em> <em>unsigned</em> <em>char</em> *key, </td></tr>
+<tr><th id="761">761</th><td>              <em>int</em> keylen, <em>int</em> num_rounds, symmetric_ECB *ecb);</td></tr>
+<tr><th id="762">762</th><td><em>int</em> ecb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, symmetric_ECB *ecb);</td></tr>
+<tr><th id="763">763</th><td><em>int</em> ecb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> len, symmetric_ECB *ecb);</td></tr>
+<tr><th id="764">764</th><td><em>int</em> ecb_done(symmetric_ECB *ecb);</td></tr>
+<tr><th id="765">765</th><td><u>#<span data-ppcond="759">endif</span></u></td></tr>
+<tr><th id="766">766</th><td></td></tr>
+<tr><th id="767">767</th><td><u>#<span data-ppcond="767">ifdef</span> <span class="macro" data-ref="_M/LTC_CFB_MODE">LTC_CFB_MODE</span></u></td></tr>
+<tr><th id="768">768</th><td><em>int</em> cfb_start(<em>int</em> cipher, <em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>const</em> <em>unsigned</em> <em>char</em> *key, </td></tr>
+<tr><th id="769">769</th><td>              <em>int</em> keylen, <em>int</em> num_rounds, symmetric_CFB *cfb);</td></tr>
+<tr><th id="770">770</th><td><em>int</em> cfb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, symmetric_CFB *cfb);</td></tr>
+<tr><th id="771">771</th><td><em>int</em> cfb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> len, symmetric_CFB *cfb);</td></tr>
+<tr><th id="772">772</th><td><em>int</em> cfb_getiv(<em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> *len, symmetric_CFB *cfb);</td></tr>
+<tr><th id="773">773</th><td><em>int</em> cfb_setiv(<em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> len, symmetric_CFB *cfb);</td></tr>
+<tr><th id="774">774</th><td><em>int</em> cfb_done(symmetric_CFB *cfb);</td></tr>
+<tr><th id="775">775</th><td><u>#<span data-ppcond="767">endif</span></u></td></tr>
+<tr><th id="776">776</th><td></td></tr>
+<tr><th id="777">777</th><td><u>#<span data-ppcond="777">ifdef</span> <span class="macro" data-ref="_M/LTC_OFB_MODE">LTC_OFB_MODE</span></u></td></tr>
+<tr><th id="778">778</th><td><em>int</em> ofb_start(<em>int</em> cipher, <em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>const</em> <em>unsigned</em> <em>char</em> *key, </td></tr>
+<tr><th id="779">779</th><td>              <em>int</em> keylen, <em>int</em> num_rounds, symmetric_OFB *ofb);</td></tr>
+<tr><th id="780">780</th><td><em>int</em> ofb_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, symmetric_OFB *ofb);</td></tr>
+<tr><th id="781">781</th><td><em>int</em> ofb_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> len, symmetric_OFB *ofb);</td></tr>
+<tr><th id="782">782</th><td><em>int</em> ofb_getiv(<em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> *len, symmetric_OFB *ofb);</td></tr>
+<tr><th id="783">783</th><td><em>int</em> ofb_setiv(<em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> len, symmetric_OFB *ofb);</td></tr>
+<tr><th id="784">784</th><td><em>int</em> ofb_done(symmetric_OFB *ofb);</td></tr>
+<tr><th id="785">785</th><td><u>#<span data-ppcond="777">endif</span></u></td></tr>
+<tr><th id="786">786</th><td></td></tr>
+<tr><th id="787">787</th><td><u>#<span data-ppcond="787">ifdef</span> <span class="macro" data-ref="_M/LTC_CBC_MODE">LTC_CBC_MODE</span></u></td></tr>
+<tr><th id="788">788</th><td><em>int</em> cbc_start(<em>int</em> cipher, <em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>const</em> <em>unsigned</em> <em>char</em> *key,</td></tr>
+<tr><th id="789">789</th><td>               <em>int</em> keylen, <em>int</em> num_rounds, symmetric_CBC *cbc);</td></tr>
+<tr><th id="790">790</th><td><em>int</em> cbc_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, symmetric_CBC *cbc);</td></tr>
+<tr><th id="791">791</th><td><em>int</em> cbc_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> len, symmetric_CBC *cbc);</td></tr>
+<tr><th id="792">792</th><td><em>int</em> cbc_getiv(<em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> *len, symmetric_CBC *cbc);</td></tr>
+<tr><th id="793">793</th><td><em>int</em> cbc_setiv(<em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> len, symmetric_CBC *cbc);</td></tr>
+<tr><th id="794">794</th><td><em>int</em> cbc_done(symmetric_CBC *cbc);</td></tr>
+<tr><th id="795">795</th><td><u>#<span data-ppcond="787">endif</span></u></td></tr>
+<tr><th id="796">796</th><td></td></tr>
+<tr><th id="797">797</th><td><u>#<span data-ppcond="797">ifdef</span> <span class="macro" data-ref="_M/LTC_CTR_MODE">LTC_CTR_MODE</span></u></td></tr>
+<tr><th id="798">798</th><td></td></tr>
+<tr><th id="799">799</th><td><u>#define CTR_COUNTER_LITTLE_ENDIAN    0x0000</u></td></tr>
+<tr><th id="800">800</th><td><u>#define CTR_COUNTER_BIG_ENDIAN       0x1000</u></td></tr>
+<tr><th id="801">801</th><td><u>#define LTC_CTR_RFC3686              0x2000</u></td></tr>
+<tr><th id="802">802</th><td></td></tr>
+<tr><th id="803">803</th><td><em>int</em> ctr_start(               <em>int</em>   cipher,</td></tr>
+<tr><th id="804">804</th><td>              <em>const</em> <em>unsigned</em> <em>char</em> *IV,</td></tr>
+<tr><th id="805">805</th><td>              <em>const</em> <em>unsigned</em> <em>char</em> *key,       <em>int</em> keylen,</td></tr>
+<tr><th id="806">806</th><td>                             <em>int</em>  num_rounds, <em>int</em> ctr_mode,</td></tr>
+<tr><th id="807">807</th><td>                   symmetric_CTR *ctr);</td></tr>
+<tr><th id="808">808</th><td><em>int</em> ctr_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, symmetric_CTR *ctr);</td></tr>
+<tr><th id="809">809</th><td><em>int</em> ctr_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> len, symmetric_CTR *ctr);</td></tr>
+<tr><th id="810">810</th><td><em>int</em> ctr_getiv(<em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> *len, symmetric_CTR *ctr);</td></tr>
+<tr><th id="811">811</th><td><em>int</em> ctr_setiv(<em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> len, symmetric_CTR *ctr);</td></tr>
+<tr><th id="812">812</th><td><em>int</em> ctr_done(symmetric_CTR *ctr);</td></tr>
+<tr><th id="813">813</th><td><em>int</em> ctr_test(<em>void</em>);</td></tr>
+<tr><th id="814">814</th><td><u>#<span data-ppcond="797">endif</span></u></td></tr>
+<tr><th id="815">815</th><td></td></tr>
+<tr><th id="816">816</th><td><u>#<span data-ppcond="816">ifdef</span> <span class="macro" data-ref="_M/LTC_LRW_MODE">LTC_LRW_MODE</span></u></td></tr>
+<tr><th id="817">817</th><td></td></tr>
+<tr><th id="818">818</th><td><u>#define LRW_ENCRYPT 0</u></td></tr>
+<tr><th id="819">819</th><td><u>#define LRW_DECRYPT 1</u></td></tr>
+<tr><th id="820">820</th><td></td></tr>
+<tr><th id="821">821</th><td><em>int</em> lrw_start(               <em>int</em>   cipher,</td></tr>
+<tr><th id="822">822</th><td>              <em>const</em> <em>unsigned</em> <em>char</em> *IV,</td></tr>
+<tr><th id="823">823</th><td>              <em>const</em> <em>unsigned</em> <em>char</em> *key,       <em>int</em> keylen,</td></tr>
+<tr><th id="824">824</th><td>              <em>const</em> <em>unsigned</em> <em>char</em> *tweak,</td></tr>
+<tr><th id="825">825</th><td>                             <em>int</em>  num_rounds, </td></tr>
+<tr><th id="826">826</th><td>                   symmetric_LRW *lrw);</td></tr>
+<tr><th id="827">827</th><td><em>int</em> lrw_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, symmetric_LRW *lrw);</td></tr>
+<tr><th id="828">828</th><td><em>int</em> lrw_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> len, symmetric_LRW *lrw);</td></tr>
+<tr><th id="829">829</th><td><em>int</em> lrw_getiv(<em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> *len, symmetric_LRW *lrw);</td></tr>
+<tr><th id="830">830</th><td><em>int</em> lrw_setiv(<em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> len, symmetric_LRW *lrw);</td></tr>
+<tr><th id="831">831</th><td><em>int</em> lrw_done(symmetric_LRW *lrw);</td></tr>
+<tr><th id="832">832</th><td><em>int</em> lrw_test(<em>void</em>);</td></tr>
+<tr><th id="833">833</th><td></td></tr>
+<tr><th id="834">834</th><td><i>/* don't call */</i></td></tr>
+<tr><th id="835">835</th><td><em>int</em> lrw_process(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, <em>int</em> mode, symmetric_LRW *lrw);</td></tr>
+<tr><th id="836">836</th><td><u>#<span data-ppcond="816">endif</span></u>    </td></tr>
+<tr><th id="837">837</th><td></td></tr>
+<tr><th id="838">838</th><td><u>#<span data-ppcond="838">ifdef</span> <span class="macro" data-ref="_M/LTC_F8_MODE">LTC_F8_MODE</span></u></td></tr>
+<tr><th id="839">839</th><td><em>int</em> f8_start(                <em>int</em>  cipher, <em>const</em> <em>unsigned</em> <em>char</em> *IV, </td></tr>
+<tr><th id="840">840</th><td>             <em>const</em> <em>unsigned</em> <em>char</em> *key,                    <em>int</em>  keylen, </td></tr>
+<tr><th id="841">841</th><td>             <em>const</em> <em>unsigned</em> <em>char</em> *salt_key,               <em>int</em>  skeylen,</td></tr>
+<tr><th id="842">842</th><td>                             <em>int</em>  num_rounds,   symmetric_F8  *f8);</td></tr>
+<tr><th id="843">843</th><td><em>int</em> f8_encrypt(<em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> len, symmetric_F8 *f8);</td></tr>
+<tr><th id="844">844</th><td><em>int</em> f8_decrypt(<em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> len, symmetric_F8 *f8);</td></tr>
+<tr><th id="845">845</th><td><em>int</em> f8_getiv(<em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> *len, symmetric_F8 *f8);</td></tr>
+<tr><th id="846">846</th><td><em>int</em> f8_setiv(<em>const</em> <em>unsigned</em> <em>char</em> *IV, <em>unsigned</em> <em>long</em> len, symmetric_F8 *f8);</td></tr>
+<tr><th id="847">847</th><td><em>int</em> f8_done(symmetric_F8 *f8);</td></tr>
+<tr><th id="848">848</th><td><em>int</em> f8_test_mode(<em>void</em>);</td></tr>
+<tr><th id="849">849</th><td><u>#<span data-ppcond="838">endif</span></u></td></tr>
+<tr><th id="850">850</th><td></td></tr>
+<tr><th id="851">851</th><td><u>#<span data-ppcond="851">ifdef</span> <span class="macro" data-ref="_M/LTC_XTS_MODE">LTC_XTS_MODE</span></u></td></tr>
+<tr><th id="852">852</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="853">853</th><td>   symmetric_key  key1, key2;</td></tr>
+<tr><th id="854">854</th><td>   <em>int</em>            cipher;</td></tr>
+<tr><th id="855">855</th><td>} symmetric_xts;</td></tr>
+<tr><th id="856">856</th><td></td></tr>
+<tr><th id="857">857</th><td><em>int</em> xts_start(                <em>int</em>  cipher,</td></tr>
+<tr><th id="858">858</th><td>              <em>const</em> <em>unsigned</em> <em>char</em> *key1, </td></tr>
+<tr><th id="859">859</th><td>              <em>const</em> <em>unsigned</em> <em>char</em> *key2, </td></tr>
+<tr><th id="860">860</th><td>                    <em>unsigned</em> <em>long</em>  keylen,</td></tr>
+<tr><th id="861">861</th><td>                              <em>int</em>  num_rounds, </td></tr>
+<tr><th id="862">862</th><td>                    symmetric_xts *xts);</td></tr>
+<tr><th id="863">863</th><td></td></tr>
+<tr><th id="864">864</th><td><em>int</em> xts_encrypt(</td></tr>
+<tr><th id="865">865</th><td>   <em>const</em> <em>unsigned</em> <em>char</em> *pt, <em>unsigned</em> <em>long</em> ptlen,</td></tr>
+<tr><th id="866">866</th><td>         <em>unsigned</em> <em>char</em> *ct,</td></tr>
+<tr><th id="867">867</th><td>   <em>const</em> <em>unsigned</em> <em>char</em> *tweak,</td></tr>
+<tr><th id="868">868</th><td>         symmetric_xts *xts);</td></tr>
+<tr><th id="869">869</th><td><em>int</em> xts_decrypt(</td></tr>
+<tr><th id="870">870</th><td>   <em>const</em> <em>unsigned</em> <em>char</em> *ct, <em>unsigned</em> <em>long</em> ptlen,</td></tr>
+<tr><th id="871">871</th><td>         <em>unsigned</em> <em>char</em> *pt,</td></tr>
+<tr><th id="872">872</th><td>   <em>const</em> <em>unsigned</em> <em>char</em> *tweak,</td></tr>
+<tr><th id="873">873</th><td>         symmetric_xts *xts);</td></tr>
+<tr><th id="874">874</th><td></td></tr>
+<tr><th id="875">875</th><td><em>void</em> xts_done(symmetric_xts *xts);</td></tr>
+<tr><th id="876">876</th><td><em>int</em>  xts_test(<em>void</em>);</td></tr>
+<tr><th id="877">877</th><td><em>void</em> xts_mult_x(<em>unsigned</em> <em>char</em> *I);</td></tr>
+<tr><th id="878">878</th><td><u>#<span data-ppcond="851">endif</span></u></td></tr>
+<tr><th id="879">879</th><td></td></tr>
+<tr><th id="880">880</th><td><em>int</em> <dfn class="decl" id="find_cipher" title='find_cipher' data-ref="find_cipher" >find_cipher</dfn>(<em>const</em> <em>char</em> *<dfn class="local col8 decl" id="578name" title='name' data-type='const char *' data-ref="578name" >name</dfn>);</td></tr>
+<tr><th id="881">881</th><td><em>int</em> <dfn class="decl" id="find_cipher_any" title='find_cipher_any' data-ref="find_cipher_any" >find_cipher_any</dfn>(<em>const</em> <em>char</em> *<dfn class="local col9 decl" id="579name" title='name' data-type='const char *' data-ref="579name" >name</dfn>, <em>int</em> <dfn class="local col0 decl" id="580blocklen" title='blocklen' data-type='int' data-ref="580blocklen" >blocklen</dfn>, <em>int</em> <dfn class="local col1 decl" id="581keylen" title='keylen' data-type='int' data-ref="581keylen" >keylen</dfn>);</td></tr>
+<tr><th id="882">882</th><td><em>int</em> <dfn class="decl" id="find_cipher_id" title='find_cipher_id' data-ref="find_cipher_id" >find_cipher_id</dfn>(<em>unsigned</em> <em>char</em> <dfn class="local col2 decl" id="582ID" title='ID' data-type='unsigned char' data-ref="582ID" >ID</dfn>);</td></tr>
+<tr><th id="883">883</th><td><em>int</em> <dfn class="decl" id="register_cipher" title='register_cipher' data-ref="register_cipher" >register_cipher</dfn>(<em>const</em> <b>struct</b> <a class="type" href="#ltc_cipher_descriptor" title='ltc_cipher_descriptor' data-ref="ltc_cipher_descriptor" >ltc_cipher_descriptor</a> *<dfn class="local col3 decl" id="583cipher" title='cipher' data-type='const struct ltc_cipher_descriptor *' data-ref="583cipher" >cipher</dfn>);</td></tr>
+<tr><th id="884">884</th><td><em>int</em> <dfn class="decl" id="unregister_cipher" title='unregister_cipher' data-ref="unregister_cipher" >unregister_cipher</dfn>(<em>const</em> <b>struct</b> <a class="type" href="#ltc_cipher_descriptor" title='ltc_cipher_descriptor' data-ref="ltc_cipher_descriptor" >ltc_cipher_descriptor</a> *<dfn class="local col4 decl" id="584cipher" title='cipher' data-type='const struct ltc_cipher_descriptor *' data-ref="584cipher" >cipher</dfn>);</td></tr>
+<tr><th id="885">885</th><td><em>int</em> <dfn class="decl" id="cipher_is_valid" title='cipher_is_valid' data-ref="cipher_is_valid" >cipher_is_valid</dfn>(<em>int</em> <dfn class="local col5 decl" id="585idx" title='idx' data-type='int' data-ref="585idx" >idx</dfn>);</td></tr>
+<tr><th id="886">886</th><td></td></tr>
+<tr><th id="887">887</th><td><a class="macro" href="tomcrypt_custom.h.html#405" title="" data-ref="_M/LTC_MUTEX_PROTO">LTC_MUTEX_PROTO</a>(ltc_cipher_mutex)</td></tr>
+<tr><th id="888">888</th><td></td></tr>
+<tr><th id="889">889</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_cipher.h,v $ */</i></td></tr>
+<tr><th id="890">890</th><td><i>/* $Revision: 1.54 $ */</i></td></tr>
+<tr><th id="891">891</th><td><i>/* $Date: 2007/05/12 14:37:41 $ */</i></td></tr>
+<tr><th id="892">892</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

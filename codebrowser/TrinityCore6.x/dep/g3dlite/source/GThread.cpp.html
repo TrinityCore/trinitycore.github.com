@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+<head>
+<title>GThread.cpp [TrinityCore6.x/dep/g3dlite/source/GThread.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/source/GThread.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>g3dlite</a>/<a href='./'>source</a>/GThread.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> @file</span> GThread.cpp</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> GThread class.</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"></i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> @created</span> 2005-09-24</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> @edited</span>  2010-09-22</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#include <a href="../include/G3D/GThread.h.html">"G3D/GThread.h"</a></u></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../include/G3D/System.h.html">"G3D/System.h"</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../include/G3D/debugAssert.h.html">"G3D/debugAssert.h"</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../include/G3D/GMutex.h.html">"G3D/GMutex.h"</a></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><b>namespace</b> <span class="namespace">_internal</span> {</td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>class</b> <dfn class="type def" id="G3D::_internal::BasicThread" title='G3D::_internal::BasicThread' data-ref="G3D::_internal::BasicThread" >BasicThread</dfn>: <b>public</b> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a> {</td></tr>
+<tr><th id="20">20</th><td><b>public</b>:</td></tr>
+<tr><th id="21">21</th><td>    <dfn class="tu decl def" id="_ZN3G3D9_internal11BasicThreadC1ERKSsPFvPvES4_" title='G3D::_internal::BasicThread::BasicThread' data-type='void G3D::_internal::BasicThread::BasicThread(const std::string &amp; name, void (*)(void *) proc, void * param)' data-ref="_ZN3G3D9_internal11BasicThreadC1ERKSsPFvPvES4_" >BasicThread</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col7 decl" id="87name" title='name' data-type='const std::string &amp;' data-ref="87name" >name</dfn>, <em>void</em> (*<dfn class="local col8 decl" id="88proc" title='proc' data-type='void (*)(void *)' data-ref="88proc" >proc</dfn>)(<em>void</em>*), <em>void</em>* <dfn class="local col9 decl" id="89param" title='param' data-type='void *' data-ref="89param" >param</dfn>):</td></tr>
+<tr><th id="22">22</th><td>        <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a><a class="ref" href="#_ZN3G3D7GThreadC1ERKSs" title='G3D::GThread::GThread' data-ref="_ZN3G3D7GThreadC1ERKSs" >(</a><a class="local col7 ref" href="#87name" title='name' data-ref="87name" >name</a>), <a class="tu member" href="#G3D::_internal::BasicThread::m_wrapperProc" title='G3D::_internal::BasicThread::m_wrapperProc' data-use='w' data-ref="G3D::_internal::BasicThread::m_wrapperProc" >m_wrapperProc</a>(<a class="local col8 ref" href="#88proc" title='proc' data-ref="88proc" >proc</a>), <a class="tu member" href="#G3D::_internal::BasicThread::m_param" title='G3D::_internal::BasicThread::m_param' data-use='w' data-ref="G3D::_internal::BasicThread::m_param" >m_param</a>(<a class="local col9 ref" href="#89param" title='param' data-ref="89param" >param</a>) { }</td></tr>
+<tr><th id="23">23</th><td><b>protected</b>:</td></tr>
+<tr><th id="24">24</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN3G3D9_internal11BasicThread10threadMainEv" title='G3D::_internal::BasicThread::threadMain' data-ref="_ZN3G3D9_internal11BasicThread10threadMainEv" >threadMain</dfn>() {</td></tr>
+<tr><th id="25">25</th><td>        <a class="tu member" href="#G3D::_internal::BasicThread::m_wrapperProc" title='G3D::_internal::BasicThread::m_wrapperProc' data-use='c' data-ref="G3D::_internal::BasicThread::m_wrapperProc" >m_wrapperProc</a>(<a class="tu member" href="#G3D::_internal::BasicThread::m_param" title='G3D::_internal::BasicThread::m_param' data-ref="G3D::_internal::BasicThread::m_param" >m_param</a>);</td></tr>
+<tr><th id="26">26</th><td>    }</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>private</b>:</td></tr>
+<tr><th id="29">29</th><td>    <em>void</em> (*<dfn class="tu decl" id="G3D::_internal::BasicThread::m_wrapperProc" title='G3D::_internal::BasicThread::m_wrapperProc' data-type='void (*)(void *)' data-ref="G3D::_internal::BasicThread::m_wrapperProc" >m_wrapperProc</dfn>)(<em>void</em>*);</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>    <em>void</em>* <dfn class="tu decl" id="G3D::_internal::BasicThread::m_param" title='G3D::_internal::BasicThread::m_param' data-type='void *' data-ref="G3D::_internal::BasicThread::m_param" >m_param</dfn>;</td></tr>
+<tr><th id="32">32</th><td>};</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>} <i>// namespace _internal</i></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZN3G3D7GThreadC1ERKSs" title='G3D::GThread::GThread' data-ref="_ZN3G3D7GThreadC1ERKSs" >GThread</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col0 decl" id="90name" title='name' data-type='const std::string &amp;' data-ref="90name" >name</dfn>):</td></tr>
+<tr><th id="38">38</th><td>    <a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a>(<a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_CREATED" title='G3D::GThread::GStatus::STATUS_CREATED' data-ref="G3D::GThread::GStatus::STATUS_CREATED" >STATUS_CREATED</a>),</td></tr>
+<tr><th id="39">39</th><td>    <a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_name" title='G3D::GThread::m_name' data-ref="G3D::GThread::m_name" id="G3D::GThread::m_name" >m_name</a><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" id="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" >(</a><a class="local col0 ref" href="#90name" title='name' data-ref="90name" >name</a>) {</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="41">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="42">42</th><td>    m_event = NULL;</td></tr>
+<tr><th id="43">43</th><td><u>#<span data-ppcond="41">endif</span></u></td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>    <i>// system-independent clear of handle</i></td></tr>
+<tr><th id="46">46</th><td>    <a class="type" href="../include/G3D/System.h.html#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<a class="ref" href="../include/G3D/System.h.html#_ZN3G3D6System6memsetEPvhm" title='G3D::System::memset' data-ref="_ZN3G3D6System6memsetEPvhm" id="_ZN3G3D6System6memsetEPvhm" >memset</a>(&amp;<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>, <var>0</var>, <b>sizeof</b>(<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>));</td></tr>
+<tr><th id="47">47</th><td>}</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="virtual decl def" id="_ZN3G3D7GThreadD1Ev" title='G3D::GThread::~GThread' data-ref="_ZN3G3D7GThreadD1Ev" >~GThread</dfn>() {</td></tr>
+<tr><th id="50">50</th><td><u>#<span data-ppcond="50">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="51">51</th><td><u>#   pragma warning( push )</u></td></tr>
+<tr><th id="52">52</th><td><u>#   pragma warning( disable : 4127 )</u></td></tr>
+<tr><th id="53">53</th><td><u>#<span data-ppcond="50">endif</span></u></td></tr>
+<tr><th id="54">54</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#165" title="{ if (!(m_status != STATUS_RUNNING)) { G3D::_internal::_releaseInputGrab_(); if ((G3D::_internal::_failureHook != __null) &amp;&amp; G3D::_internal::_failureHook(&quot;m_status != STATUS_RUNNING&quot;, &quot;Deleting thread while running.&quot;, &quot;/home/nayd/TrinityCore6x/dep/g3dlite/source/GThread.cpp&quot;, 54, true)) { ::exit(-1); } G3D::_internal::_restoreInputGrab_(); } }" data-ref="_M/alwaysAssertM">alwaysAssertM</a>(<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> != <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_RUNNING" title='G3D::GThread::GStatus::STATUS_RUNNING' data-ref="G3D::GThread::GStatus::STATUS_RUNNING" id="G3D::GThread::GStatus::STATUS_RUNNING" >STATUS_RUNNING</a>, <q>"Deleting thread while running."</q>);</td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="55">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="56">56</th><td><u>#   pragma warning( pop )</u></td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="55">endif</span></u></td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="59">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="60">60</th><td>    <b>if</b> (m_event) {</td></tr>
+<tr><th id="61">61</th><td>        ::CloseHandle(m_event);</td></tr>
+<tr><th id="62">62</th><td>    }</td></tr>
+<tr><th id="63">63</th><td><u>#<span data-ppcond="59">endif</span></u></td></tr>
+<tr><th id="64">64</th><td>}</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><a class="typedef" href="../include/G3D/GThread.h.html#G3D::GThreadRef" title='G3D::GThreadRef' data-type='shared_ptr&lt;class GThread&gt;' data-ref="G3D::GThreadRef" >GThreadRef</a> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZN3G3D7GThread6createERKSsPFvPvES3_" title='G3D::GThread::create' data-ref="_ZN3G3D7GThread6createERKSsPFvPvES3_" >create</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col1 decl" id="91name" title='name' data-type='const std::string &amp;' data-ref="91name" >name</dfn>, <em>void</em> (*<dfn class="local col2 decl" id="92proc" title='proc' data-type='void (*)(void *)' data-ref="92proc" >proc</dfn>)(<em>void</em>*), <em>void</em>* <dfn class="local col3 decl" id="93param" title='param' data-type='void *' data-ref="93param" >param</dfn>) {</td></tr>
+<tr><th id="68">68</th><td>    <b>return</b> <a class="type" href="../../../../include/c++/4.9/tr1/shared_ptr.h.html#std::tr1::shared_ptr" title='std::tr1::shared_ptr' data-ref="std::tr1::shared_ptr" ><a class="ref" href="../../../../include/c++/4.9/tr1/shared_ptr.h.html#_ZNSt3tr110shared_ptrIN3G3D7GThreadEEC1EPT_" title='std::tr1::shared_ptr&lt;G3D::GThread&gt;::shared_ptr' data-ref="_ZNSt3tr110shared_ptrIN3G3D7GThreadEEC1EPT_" id="_ZNSt3tr110shared_ptrIN3G3D7GThreadEEC1EPT_" >shared_ptr</a></a>&lt;<a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>&gt;(<b>new</b> <span class="namespace">_internal::</span><a class="type" href="#G3D::_internal::BasicThread" title='G3D::_internal::BasicThread' data-ref="G3D::_internal::BasicThread" >BasicThread</a><a class="tu ref" href="#_ZN3G3D9_internal11BasicThreadC1ERKSsPFvPvES4_" title='G3D::_internal::BasicThread::BasicThread' data-use='c' data-ref="_ZN3G3D9_internal11BasicThreadC1ERKSsPFvPvES4_" >(</a><a class="local col1 ref" href="#91name" title='name' data-ref="91name" >name</a>, <a class="local col2 ref" href="#92proc" title='proc' data-ref="92proc" >proc</a>, <a class="local col3 ref" href="#93param" title='param' data-ref="93param" >param</a>));</td></tr>
+<tr><th id="69">69</th><td>}</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><em>bool</em> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZNK3G3D7GThread7startedEv" title='G3D::GThread::started' data-ref="_ZNK3G3D7GThread7startedEv" >started</dfn>() <em>const</em> {</td></tr>
+<tr><th id="73">73</th><td>    <b>return</b> <a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> != <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_CREATED" title='G3D::GThread::GStatus::STATUS_CREATED' data-ref="G3D::GThread::GStatus::STATUS_CREATED" id="G3D::GThread::GStatus::STATUS_CREATED" >STATUS_CREATED</a>;</td></tr>
+<tr><th id="74">74</th><td>}</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><em>int</em> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZN3G3D7GThread8numCoresEv" title='G3D::GThread::numCores' data-ref="_ZN3G3D7GThread8numCoresEv" >numCores</dfn>() {</td></tr>
+<tr><th id="78">78</th><td>    <b>return</b> <a class="type" href="../include/G3D/System.h.html#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<a class="ref" href="../include/G3D/System.h.html#_ZN3G3D6System8numCoresEv" title='G3D::System::numCores' data-ref="_ZN3G3D6System8numCoresEv" id="_ZN3G3D6System8numCoresEv" >numCores</a>();</td></tr>
+<tr><th id="79">79</th><td>}</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><u>#<span data-ppcond="81">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="82">82</th><td><i>// From <a href="http://msdn.microsoft.com/en-us/library/xcb">http://msdn.microsoft.com/en-us/library/xcb</a>2z8hs.aspx</i></td></tr>
+<tr><th id="83">83</th><td><em>const</em> DWORD MS_VC_EXCEPTION=<var>0x406D1388</var>;</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><u>#pragma pack(push,8)</u></td></tr>
+<tr><th id="86">86</th><td><b>typedef</b> <b>struct</b> tagTHREADNAME_INFO {</td></tr>
+<tr><th id="87">87</th><td>   DWORD dwType; <i>// Must be 0x1000.</i></td></tr>
+<tr><th id="88">88</th><td>   LPCSTR szName; <i>// Pointer to name (in user addr space).</i></td></tr>
+<tr><th id="89">89</th><td>   DWORD dwThreadID; <i>// Thread ID (-1=caller thread).</i></td></tr>
+<tr><th id="90">90</th><td>   DWORD dwFlags; <i>// Reserved for future use, must be zero.</i></td></tr>
+<tr><th id="91">91</th><td>} THREADNAME_INFO;</td></tr>
+<tr><th id="92">92</th><td><u>#pragma pack(pop)</u></td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td><em>static</em> <em>void</em> SetThreadName(DWORD dwThreadID, <em>const</em> <em>char</em>* threadName) {</td></tr>
+<tr><th id="95">95</th><td>   THREADNAME_INFO info;</td></tr>
+<tr><th id="96">96</th><td>   info.dwType = <var>0x1000</var>;</td></tr>
+<tr><th id="97">97</th><td>   info.szName = threadName;</td></tr>
+<tr><th id="98">98</th><td>   info.dwThreadID = dwThreadID;</td></tr>
+<tr><th id="99">99</th><td>   info.dwFlags = <var>0</var>;</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>   __try {</td></tr>
+<tr><th id="102">102</th><td>      RaiseException( MS_VC_EXCEPTION, <var>0</var>, <b>sizeof</b>(info)/<b>sizeof</b>(ULONG_PTR), (ULONG_PTR*)&amp;info );</td></tr>
+<tr><th id="103">103</th><td>   } __except(EXCEPTION_EXECUTE_HANDLER) {}</td></tr>
+<tr><th id="104">104</th><td>}</td></tr>
+<tr><th id="105">105</th><td><u>#<span data-ppcond="81">endif</span></u></td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td><em>bool</em> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZN3G3D7GThread5startENS_13SpawnBehaviorE" title='G3D::GThread::start' data-ref="_ZN3G3D7GThread5startENS_13SpawnBehaviorE" >start</dfn>(<a class="type" href="../include/G3D/SpawnBehavior.h.html#G3D::SpawnBehavior" title='G3D::SpawnBehavior' data-ref="G3D::SpawnBehavior" >SpawnBehavior</a> <dfn class="local col4 decl" id="94behavior" title='behavior' data-type='G3D::SpawnBehavior' data-ref="94behavior" >behavior</dfn>) {</td></tr>
+<tr><th id="109">109</th><td>    </td></tr>
+<tr><th id="110">110</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#161" title="do {} while (0)" data-ref="_M/debugAssertM">debugAssertM</a>(! started(), <q>"Thread has already executed."</q>);</td></tr>
+<tr><th id="111">111</th><td>    <b>if</b> (<a class="member" href="#_ZNK3G3D7GThread7startedEv" title='G3D::GThread::started' data-ref="_ZNK3G3D7GThread7startedEv" >started</a>()) {</td></tr>
+<tr><th id="112">112</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="113">113</th><td>    }</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>    <a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> = <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_STARTED" title='G3D::GThread::GStatus::STATUS_STARTED' data-ref="G3D::GThread::GStatus::STATUS_STARTED" id="G3D::GThread::GStatus::STATUS_STARTED" >STATUS_STARTED</a>;</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td>    <b>if</b> (<a class="local col4 ref" href="#94behavior" title='behavior' data-ref="94behavior" >behavior</a> == <a class="member" href="../include/G3D/GThread.h.html#_ZN3G3D7GThread18USE_CURRENT_THREADE" title='G3D::GThread::USE_CURRENT_THREAD' data-ref="_ZN3G3D7GThread18USE_CURRENT_THREADE" id="_ZN3G3D7GThread18USE_CURRENT_THREADE" >USE_CURRENT_THREAD</a>) {</td></tr>
+<tr><th id="118">118</th><td>        <i>// Run on this thread</i></td></tr>
+<tr><th id="119">119</th><td>        <a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> = <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_RUNNING" title='G3D::GThread::GStatus::STATUS_RUNNING' data-ref="G3D::GThread::GStatus::STATUS_RUNNING" id="G3D::GThread::GStatus::STATUS_RUNNING" >STATUS_RUNNING</a>;</td></tr>
+<tr><th id="120">120</th><td>        <a class="virtual member" href="../include/G3D/GThread.h.html#_ZN3G3D7GThread10threadMainEv" title='G3D::GThread::threadMain' data-ref="_ZN3G3D7GThread10threadMainEv" id="_ZN3G3D7GThread10threadMainEv" >threadMain</a>();</td></tr>
+<tr><th id="121">121</th><td>        <a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> = <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_COMPLETED" title='G3D::GThread::GStatus::STATUS_COMPLETED' data-ref="G3D::GThread::GStatus::STATUS_COMPLETED" id="G3D::GThread::GStatus::STATUS_COMPLETED" >STATUS_COMPLETED</a>;</td></tr>
+<tr><th id="122">122</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="123">123</th><td>    }</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><u>#   <span data-ppcond="125">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="126">126</th><td>        DWORD threadId;</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>        m_event = ::CreateEvent(NULL, TRUE, FALSE, NULL);</td></tr>
+<tr><th id="129">129</th><td>        debugAssert(m_event);</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>        m_handle = ::CreateThread(NULL, <var>0</var>, &amp;internalThreadProc, <b>this</b>, <var>0</var>, &amp;threadId);</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>        <b>if</b> (m_handle == NULL) {</td></tr>
+<tr><th id="134">134</th><td>            ::CloseHandle(m_event);</td></tr>
+<tr><th id="135">135</th><td>            m_event = NULL;</td></tr>
+<tr><th id="136">136</th><td>        }</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>        SetThreadName(threadId, m_name.c_str());</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td>        <b>return</b> (m_handle != NULL);</td></tr>
+<tr><th id="141">141</th><td><u>#   <span data-ppcond="125">else</span></u></td></tr>
+<tr><th id="142">142</th><td>        <b>if</b> (!<a class="ref" href="../../../../include/pthread.h.html#pthread_create" title='pthread_create' data-ref="pthread_create" id="pthread_create" >pthread_create</a>(&amp;<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, &amp;<a class="member" href="#_ZN3G3D7GThread18internalThreadProcEPv" title='G3D::GThread::internalThreadProc' data-ref="_ZN3G3D7GThread18internalThreadProcEPv" >internalThreadProc</a>, <b>this</b>)) {</td></tr>
+<tr><th id="143">143</th><td>            <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="144">144</th><td>        } <b>else</b> {</td></tr>
+<tr><th id="145">145</th><td>            <i>// system-independent clear of handle</i></td></tr>
+<tr><th id="146">146</th><td>            <a class="type" href="../include/G3D/System.h.html#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<a class="ref" href="../include/G3D/System.h.html#_ZN3G3D6System6memsetEPvhm" title='G3D::System::memset' data-ref="_ZN3G3D6System6memsetEPvhm" id="_ZN3G3D6System6memsetEPvhm" >memset</a>(&amp;<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>, <var>0</var>, <b>sizeof</b>(<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>));</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="149">149</th><td>        }</td></tr>
+<tr><th id="150">150</th><td><u>#   <span data-ppcond="125">endif</span></u></td></tr>
+<tr><th id="151">151</th><td>}</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td><em>void</em> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZN3G3D7GThread9terminateEv" title='G3D::GThread::terminate' data-ref="_ZN3G3D7GThread9terminateEv" >terminate</dfn>() {</td></tr>
+<tr><th id="154">154</th><td>    <b>if</b> (<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>) {</td></tr>
+<tr><th id="155">155</th><td><u>#       <span data-ppcond="155">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="156">156</th><td>        ::TerminateThread(m_handle, <var>0</var>);</td></tr>
+<tr><th id="157">157</th><td><u>#       <span data-ppcond="155">else</span></u></td></tr>
+<tr><th id="158">158</th><td>        <a class="ref" href="../../../../include/x86_64-linux-gnu/bits/sigthread.h.html#pthread_kill" title='pthread_kill' data-ref="pthread_kill" id="pthread_kill" >pthread_kill</a>(<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>, <a class="macro" href="../../../../include/x86_64-linux-gnu/bits/signum.h.html#52" title="19" data-ref="_M/SIGSTOP">SIGSTOP</a>);</td></tr>
+<tr><th id="159">159</th><td><u>#       <span data-ppcond="155">endif</span></u></td></tr>
+<tr><th id="160">160</th><td>        <i>// system-independent clear of handle</i></td></tr>
+<tr><th id="161">161</th><td>        <a class="type" href="../include/G3D/System.h.html#G3D::System" title='G3D::System' data-ref="G3D::System" >System</a>::<a class="ref" href="../include/G3D/System.h.html#_ZN3G3D6System6memsetEPvhm" title='G3D::System::memset' data-ref="_ZN3G3D6System6memsetEPvhm" id="_ZN3G3D6System6memsetEPvhm" >memset</a>(&amp;<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>, <var>0</var>, <b>sizeof</b>(<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>));</td></tr>
+<tr><th id="162">162</th><td>    }</td></tr>
+<tr><th id="163">163</th><td>}</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td><em>bool</em> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZNK3G3D7GThread7runningEv" title='G3D::GThread::running' data-ref="_ZNK3G3D7GThread7runningEv" >running</dfn>() <em>const</em>{</td></tr>
+<tr><th id="167">167</th><td>    <b>return</b> (<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> == <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_RUNNING" title='G3D::GThread::GStatus::STATUS_RUNNING' data-ref="G3D::GThread::GStatus::STATUS_RUNNING" id="G3D::GThread::GStatus::STATUS_RUNNING" >STATUS_RUNNING</a>);</td></tr>
+<tr><th id="168">168</th><td>}</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td><em>bool</em> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZNK3G3D7GThread9completedEv" title='G3D::GThread::completed' data-ref="_ZNK3G3D7GThread9completedEv" >completed</dfn>() <em>const</em> {</td></tr>
+<tr><th id="172">172</th><td>    <b>return</b> (<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> == <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_COMPLETED" title='G3D::GThread::GStatus::STATUS_COMPLETED' data-ref="G3D::GThread::GStatus::STATUS_COMPLETED" id="G3D::GThread::GStatus::STATUS_COMPLETED" >STATUS_COMPLETED</a>);</td></tr>
+<tr><th id="173">173</th><td>}</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td><em>void</em> <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZN3G3D7GThread17waitForCompletionEv" title='G3D::GThread::waitForCompletion' data-ref="_ZN3G3D7GThread17waitForCompletionEv" >waitForCompletion</dfn>() {</td></tr>
+<tr><th id="177">177</th><td>    <b>if</b> (<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> == <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_COMPLETED" title='G3D::GThread::GStatus::STATUS_COMPLETED' data-ref="G3D::GThread::GStatus::STATUS_COMPLETED" id="G3D::GThread::GStatus::STATUS_COMPLETED" >STATUS_COMPLETED</a>) {</td></tr>
+<tr><th id="178">178</th><td>        <i>// Must be done</i></td></tr>
+<tr><th id="179">179</th><td>        <b>return</b>;</td></tr>
+<tr><th id="180">180</th><td>    }</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td><u>#   <span data-ppcond="182">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="183">183</th><td>        debugAssert(m_event);</td></tr>
+<tr><th id="184">184</th><td>        ::WaitForSingleObject(m_event, INFINITE);</td></tr>
+<tr><th id="185">185</th><td><u>#   <span data-ppcond="182">else</span></u></td></tr>
+<tr><th id="186">186</th><td>        <a class="macro" href="../include/G3D/debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(m_handle);</td></tr>
+<tr><th id="187">187</th><td>        <a class="ref" href="../../../../include/pthread.h.html#pthread_join" title='pthread_join' data-ref="pthread_join" id="pthread_join" >pthread_join</a>(<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_handle" title='G3D::GThread::m_handle' data-ref="G3D::GThread::m_handle" id="G3D::GThread::m_handle" >m_handle</a>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="188">188</th><td><u>#   <span data-ppcond="182">endif</span></u></td></tr>
+<tr><th id="189">189</th><td>}</td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td></td></tr>
+<tr><th id="192">192</th><td><u>#<span data-ppcond="192">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="193">193</th><td>DWORD WINAPI GThread::internalThreadProc(LPVOID param) {</td></tr>
+<tr><th id="194">194</th><td>    GThread* current = <b>reinterpret_cast</b>&lt;GThread*&gt;(param);</td></tr>
+<tr><th id="195">195</th><td>    debugAssert(current-&gt;m_event);</td></tr>
+<tr><th id="196">196</th><td>    current-&gt;m_status = STATUS_RUNNING;</td></tr>
+<tr><th id="197">197</th><td>    current-&gt;threadMain();</td></tr>
+<tr><th id="198">198</th><td>    current-&gt;m_status = STATUS_COMPLETED;</td></tr>
+<tr><th id="199">199</th><td>    ::SetEvent(current-&gt;m_event);</td></tr>
+<tr><th id="200">200</th><td>    <b>return</b> <var>0</var>;</td></tr>
+<tr><th id="201">201</th><td>}</td></tr>
+<tr><th id="202">202</th><td><u>#<span data-ppcond="192">else</span></u></td></tr>
+<tr><th id="203">203</th><td><em>void</em>* <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>::<dfn class="decl def" id="_ZN3G3D7GThread18internalThreadProcEPv" title='G3D::GThread::internalThreadProc' data-ref="_ZN3G3D7GThread18internalThreadProcEPv" >internalThreadProc</dfn>(<em>void</em>* <dfn class="local col5 decl" id="95param" title='param' data-type='void *' data-ref="95param" >param</dfn>) {</td></tr>
+<tr><th id="204">204</th><td>    <a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>* <dfn class="local col6 decl" id="96current" title='current' data-type='G3D::GThread *' data-ref="96current" >current</dfn> = <b>reinterpret_cast</b>&lt;<a class="type" href="../include/G3D/GThread.h.html#G3D::GThread" title='G3D::GThread' data-ref="G3D::GThread" >GThread</a>*&gt;(<a class="local col5 ref" href="#95param" title='param' data-ref="95param" >param</a>);</td></tr>
+<tr><th id="205">205</th><td>    <a class="local col6 ref" href="#96current" title='current' data-ref="96current" >current</a>-&gt;<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> = <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_RUNNING" title='G3D::GThread::GStatus::STATUS_RUNNING' data-ref="G3D::GThread::GStatus::STATUS_RUNNING" id="G3D::GThread::GStatus::STATUS_RUNNING" >STATUS_RUNNING</a>;</td></tr>
+<tr><th id="206">206</th><td>    <a class="local col6 ref" href="#96current" title='current' data-ref="96current" >current</a>-&gt;<a class="virtual member" href="../include/G3D/GThread.h.html#_ZN3G3D7GThread10threadMainEv" title='G3D::GThread::threadMain' data-ref="_ZN3G3D7GThread10threadMainEv" id="_ZN3G3D7GThread10threadMainEv" >threadMain</a>();</td></tr>
+<tr><th id="207">207</th><td>    <a class="local col6 ref" href="#96current" title='current' data-ref="96current" >current</a>-&gt;<a class="member" href="../include/G3D/GThread.h.html#G3D::GThread::m_status" title='G3D::GThread::m_status' data-ref="G3D::GThread::m_status" id="G3D::GThread::m_status" >m_status</a> = <a class="enum" href="../include/G3D/GThread.h.html#G3D::GThread::GStatus::STATUS_COMPLETED" title='G3D::GThread::GStatus::STATUS_COMPLETED' data-ref="G3D::GThread::GStatus::STATUS_COMPLETED" id="G3D::GThread::GStatus::STATUS_COMPLETED" >STATUS_COMPLETED</a>;</td></tr>
+<tr><th id="208">208</th><td>    <b>return</b> (<em>void</em>*)<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="209">209</th><td>}</td></tr>
+<tr><th id="210">210</th><td><u>#<span data-ppcond="192">endif</span></u></td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td></td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td><i>//GMutex implementation</i></td></tr>
+<tr><th id="215">215</th><td><a class="type" href="../include/G3D/GMutex.h.html#G3D::GMutex" title='G3D::GMutex' data-ref="G3D::GMutex" >GMutex</a>::<dfn class="decl def" id="_ZN3G3D6GMutexC1Ev" title='G3D::GMutex::GMutex' data-ref="_ZN3G3D6GMutexC1Ev" >GMutex</dfn>() {</td></tr>
+<tr><th id="216">216</th><td><u>#<span data-ppcond="216">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="217">217</th><td>    ::InitializeCriticalSection(&amp;m_handle);</td></tr>
+<tr><th id="218">218</th><td><u>#<span data-ppcond="216">else</span></u></td></tr>
+<tr><th id="219">219</th><td>    <em>int</em> <dfn class="local col7 decl" id="97ret" title='ret' data-type='int' data-ref="97ret" >ret</dfn> = <a class="ref" href="../../../../include/pthread.h.html#pthread_mutexattr_init" title='pthread_mutexattr_init' data-ref="pthread_mutexattr_init" id="pthread_mutexattr_init" >pthread_mutexattr_init</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_attr" title='G3D::GMutex::m_attr' data-ref="G3D::GMutex::m_attr" id="G3D::GMutex::m_attr" >m_attr</a>);</td></tr>
+<tr><th id="220">220</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(ret == <var>0</var>);</td></tr>
+<tr><th id="221">221</th><td>    <a class="local col7 ref" href="#97ret" title='ret' data-ref="97ret" >ret</a> = <a class="ref" href="../../../../include/pthread.h.html#pthread_mutexattr_settype" title='pthread_mutexattr_settype' data-ref="pthread_mutexattr_settype" id="pthread_mutexattr_settype" >pthread_mutexattr_settype</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_attr" title='G3D::GMutex::m_attr' data-ref="G3D::GMutex::m_attr" id="G3D::GMutex::m_attr" >m_attr</a>, <a class="enum" href="../../../../include/pthread.h.html#::PTHREAD_MUTEX_RECURSIVE" title='::PTHREAD_MUTEX_RECURSIVE' data-ref="::PTHREAD_MUTEX_RECURSIVE" id="::PTHREAD_MUTEX_RECURSIVE" >PTHREAD_MUTEX_RECURSIVE</a>);</td></tr>
+<tr><th id="222">222</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(ret == <var>0</var>);</td></tr>
+<tr><th id="223">223</th><td>    <a class="local col7 ref" href="#97ret" title='ret' data-ref="97ret" >ret</a> = <a class="ref" href="../../../../include/pthread.h.html#pthread_mutex_init" title='pthread_mutex_init' data-ref="pthread_mutex_init" id="pthread_mutex_init" >pthread_mutex_init</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_handle" title='G3D::GMutex::m_handle' data-ref="G3D::GMutex::m_handle" id="G3D::GMutex::m_handle" >m_handle</a>, &amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_attr" title='G3D::GMutex::m_attr' data-ref="G3D::GMutex::m_attr" id="G3D::GMutex::m_attr" >m_attr</a>);</td></tr>
+<tr><th id="224">224</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(ret == <var>0</var>);</td></tr>
+<tr><th id="225">225</th><td><u>#<span data-ppcond="216">endif</span></u></td></tr>
+<tr><th id="226">226</th><td>}</td></tr>
+<tr><th id="227">227</th><td></td></tr>
+<tr><th id="228">228</th><td><a class="type" href="../include/G3D/GMutex.h.html#G3D::GMutex" title='G3D::GMutex' data-ref="G3D::GMutex" >GMutex</a>::<dfn class="decl def" id="_ZN3G3D6GMutexD1Ev" title='G3D::GMutex::~GMutex' data-ref="_ZN3G3D6GMutexD1Ev" >~GMutex</dfn>() {</td></tr>
+<tr><th id="229">229</th><td>    <i>//TODO: Debug check for locked</i></td></tr>
+<tr><th id="230">230</th><td><u>#<span data-ppcond="230">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="231">231</th><td>    ::DeleteCriticalSection(&amp;m_handle);</td></tr>
+<tr><th id="232">232</th><td><u>#<span data-ppcond="230">else</span></u></td></tr>
+<tr><th id="233">233</th><td>    <em>int</em> <dfn class="local col8 decl" id="98ret" title='ret' data-type='int' data-ref="98ret" >ret</dfn> = <a class="ref" href="../../../../include/pthread.h.html#pthread_mutex_destroy" title='pthread_mutex_destroy' data-ref="pthread_mutex_destroy" id="pthread_mutex_destroy" >pthread_mutex_destroy</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_handle" title='G3D::GMutex::m_handle' data-ref="G3D::GMutex::m_handle" id="G3D::GMutex::m_handle" >m_handle</a>);</td></tr>
+<tr><th id="234">234</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(ret == <var>0</var>);</td></tr>
+<tr><th id="235">235</th><td>    <a class="local col8 ref" href="#98ret" title='ret' data-ref="98ret" >ret</a> = <a class="ref" href="../../../../include/pthread.h.html#pthread_mutexattr_destroy" title='pthread_mutexattr_destroy' data-ref="pthread_mutexattr_destroy" id="pthread_mutexattr_destroy" >pthread_mutexattr_destroy</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_attr" title='G3D::GMutex::m_attr' data-ref="G3D::GMutex::m_attr" id="G3D::GMutex::m_attr" >m_attr</a>);</td></tr>
+<tr><th id="236">236</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(ret == <var>0</var>);</td></tr>
+<tr><th id="237">237</th><td><u>#<span data-ppcond="230">endif</span></u></td></tr>
+<tr><th id="238">238</th><td>}</td></tr>
+<tr><th id="239">239</th><td></td></tr>
+<tr><th id="240">240</th><td><em>bool</em> <a class="type" href="../include/G3D/GMutex.h.html#G3D::GMutex" title='G3D::GMutex' data-ref="G3D::GMutex" >GMutex</a>::<dfn class="decl def" id="_ZN3G3D6GMutex7tryLockEv" title='G3D::GMutex::tryLock' data-ref="_ZN3G3D6GMutex7tryLockEv" >tryLock</dfn>() {</td></tr>
+<tr><th id="241">241</th><td><u>#<span data-ppcond="241">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="242">242</th><td>    <b>return</b> (::TryEnterCriticalSection(&amp;m_handle) != <var>0</var>);</td></tr>
+<tr><th id="243">243</th><td><u>#<span data-ppcond="241">else</span></u></td></tr>
+<tr><th id="244">244</th><td>    <b>return</b> (<a class="ref" href="../../../../include/pthread.h.html#pthread_mutex_trylock" title='pthread_mutex_trylock' data-ref="pthread_mutex_trylock" id="pthread_mutex_trylock" >pthread_mutex_trylock</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_handle" title='G3D::GMutex::m_handle' data-ref="G3D::GMutex::m_handle" id="G3D::GMutex::m_handle" >m_handle</a>) == <var>0</var>);</td></tr>
+<tr><th id="245">245</th><td><u>#<span data-ppcond="241">endif</span></u></td></tr>
+<tr><th id="246">246</th><td>}</td></tr>
+<tr><th id="247">247</th><td></td></tr>
+<tr><th id="248">248</th><td><em>void</em> <a class="type" href="../include/G3D/GMutex.h.html#G3D::GMutex" title='G3D::GMutex' data-ref="G3D::GMutex" >GMutex</a>::<dfn class="decl def" id="_ZN3G3D6GMutex4lockEv" title='G3D::GMutex::lock' data-ref="_ZN3G3D6GMutex4lockEv" >lock</dfn>() {</td></tr>
+<tr><th id="249">249</th><td><u>#<span data-ppcond="249">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="250">250</th><td>    ::EnterCriticalSection(&amp;m_handle);</td></tr>
+<tr><th id="251">251</th><td><u>#<span data-ppcond="249">else</span></u></td></tr>
+<tr><th id="252">252</th><td>    <a class="ref" href="../../../../include/pthread.h.html#pthread_mutex_lock" title='pthread_mutex_lock' data-ref="pthread_mutex_lock" id="pthread_mutex_lock" >pthread_mutex_lock</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_handle" title='G3D::GMutex::m_handle' data-ref="G3D::GMutex::m_handle" id="G3D::GMutex::m_handle" >m_handle</a>);</td></tr>
+<tr><th id="253">253</th><td><u>#<span data-ppcond="249">endif</span></u></td></tr>
+<tr><th id="254">254</th><td>}</td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td><em>void</em> <a class="type" href="../include/G3D/GMutex.h.html#G3D::GMutex" title='G3D::GMutex' data-ref="G3D::GMutex" >GMutex</a>::<dfn class="decl def" id="_ZN3G3D6GMutex6unlockEv" title='G3D::GMutex::unlock' data-ref="_ZN3G3D6GMutex6unlockEv" >unlock</dfn>() {</td></tr>
+<tr><th id="257">257</th><td><u>#<span data-ppcond="257">ifdef</span> <span class="macro" data-ref="_M/G3D_WINDOWS">G3D_WINDOWS</span></u></td></tr>
+<tr><th id="258">258</th><td>    ::LeaveCriticalSection(&amp;m_handle);</td></tr>
+<tr><th id="259">259</th><td><u>#<span data-ppcond="257">else</span></u></td></tr>
+<tr><th id="260">260</th><td>    <a class="ref" href="../../../../include/pthread.h.html#pthread_mutex_unlock" title='pthread_mutex_unlock' data-ref="pthread_mutex_unlock" id="pthread_mutex_unlock" >pthread_mutex_unlock</a>(&amp;<a class="member" href="../include/G3D/GMutex.h.html#G3D::GMutex::m_handle" title='G3D::GMutex::m_handle' data-ref="G3D::GMutex::m_handle" id="G3D::GMutex::m_handle" >m_handle</a>);</td></tr>
+<tr><th id="261">261</th><td><u>#<span data-ppcond="257">endif</span></u></td></tr>
+<tr><th id="262">262</th><td>}</td></tr>
+<tr><th id="263">263</th><td></td></tr>
+<tr><th id="264">264</th><td>} <i>// namespace G3D</i></td></tr>
+<tr><th id="265">265</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

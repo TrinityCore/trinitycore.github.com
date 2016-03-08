@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<title>gameobject_extract.cpp [TrinityCore3.3.5/src/tools/vmap4_extractor/gameobject_extract.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/tools/vmap4_extractor/gameobject_extract.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>tools</a>/<a href='./'>vmap4_extractor</a>/gameobject_extract.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="model.h.html">"model.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="dbcfile.h.html">"dbcfile.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="adtfile.h.html">"adtfile.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="vmapexport.h.html">"vmapexport.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../include/c++/4.9/algorithm.html">&lt;algorithm&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../../../include/stdio.h.html">&lt;stdio.h&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><em>bool</em> <dfn class="decl def" id="_Z18ExtractSingleModelRSs" title='ExtractSingleModel' data-ref="_Z18ExtractSingleModelRSs" >ExtractSingleModel</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col1 decl" id="1fname" title='fname' data-type='std::string &amp;' data-ref="1fname" >fname</dfn>)</td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td>    <em>char</em> * <dfn class="local col2 decl" id="2name" title='name' data-type='char *' data-ref="2name" >name</dfn> = <a class="ref" href="adtfile.h.html#_Z12GetPlainNamePc" title='GetPlainName' data-ref="_Z12GetPlainNamePc" id="_Z12GetPlainNamePc" >GetPlainName</a>((<em>char</em>*)<a class="local col1 ref" href="#1fname" title='fname' data-ref="1fname" >fname</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="30">30</th><td>    <em>char</em> * <dfn class="local col3 decl" id="3ext" title='ext' data-type='char *' data-ref="3ext" >ext</dfn> = <a class="ref" href="adtfile.h.html#_Z12GetExtensionPc" title='GetExtension' data-ref="_Z12GetExtensionPc" id="_Z12GetExtensionPc" >GetExtension</a>(<a class="local col2 ref" href="#2name" title='name' data-ref="2name" >name</a>);</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>    <i>// &lt; 3.1.0 ADT MMDX section store filename.mdx filenames for corresponded .m2 file</i></td></tr>
+<tr><th id="33">33</th><td>    <b>if</b> (!<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col3 ref" href="#3ext" title='ext' data-ref="3ext" >ext</a>, <q>".mdx"</q>))</td></tr>
+<tr><th id="34">34</th><td>    {</td></tr>
+<tr><th id="35">35</th><td>        <i>// replace .mdx -&gt; .m2</i></td></tr>
+<tr><th id="36">36</th><td>        <a class="local col1 ref" href="#1fname" title='fname' data-ref="1fname" >fname</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string5eraseENT1_6rebindIT_E5other9size_typeES4_" title='std::basic_string::erase' data-ref="_ZNSt12basic_string5eraseENT1_6rebindIT_E5other9size_typeES4_" id="_ZNSt12basic_string5eraseENT1_6rebindIT_E5other9size_typeES4_" >erase</a>(<a class="local col1 ref" href="#1fname" title='fname' data-ref="1fname" >fname</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string6lengthEv" title='std::basic_string::length' data-ref="_ZNKSt12basic_string6lengthEv" id="_ZNKSt12basic_string6lengthEv" >length</a>()-<var>2</var>,<var>2</var>);</td></tr>
+<tr><th id="37">37</th><td>        <a class="local col1 ref" href="#1fname" title='fname' data-ref="1fname" >fname</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string6appendEPKT_" title='std::basic_string::append' data-ref="_ZNSt12basic_string6appendEPKT_" id="_ZNSt12basic_string6appendEPKT_" >append</a>(<q>"2"</q>);</td></tr>
+<tr><th id="38">38</th><td>    }</td></tr>
+<tr><th id="39">39</th><td>    <i>// &gt;= 3.1.0 ADT MMDX section store filename.m2 filenames for corresponded .m2 file</i></td></tr>
+<tr><th id="40">40</th><td><i>    // nothing do</i></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col4 decl" id="4output" title='output' data-type='std::string' data-ref="4output" >output</dfn><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1EPKT_RKT1_" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1EPKT_RKT1_" id="_ZNSt12basic_stringC1EPKT_RKT1_" >(</a><a class="ref" href="vmapexport.h.html#szWorkDirWmo" title='szWorkDirWmo' data-ref="szWorkDirWmo" id="szWorkDirWmo" >szWorkDirWmo</a>);</td></tr>
+<tr><th id="43">43</th><td>    <a class="local col4 ref" href="#4output" title='output' data-ref="4output" >output</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringpLEPKT_" title='std::basic_string::operator+=' data-ref="_ZNSt12basic_stringpLEPKT_" id="_ZNSt12basic_stringpLEPKT_" >+=</a> <q>"/"</q>;</td></tr>
+<tr><th id="44">44</th><td>    <a class="local col4 ref" href="#4output" title='output' data-ref="4output" >output</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringpLEPKT_" title='std::basic_string::operator+=' data-ref="_ZNSt12basic_stringpLEPKT_" id="_ZNSt12basic_stringpLEPKT_" >+=</a> <a class="local col2 ref" href="#2name" title='name' data-ref="2name" >name</a>;</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <b>if</b> (<a class="ref" href="vmapexport.h.html#_Z10FileExistsPKc" title='FileExists' data-ref="_Z10FileExistsPKc" id="_Z10FileExistsPKc" >FileExists</a>(<a class="local col4 ref" href="#4output" title='output' data-ref="4output" >output</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>()))</td></tr>
+<tr><th id="47">47</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <a class="type" href="model.h.html#Model" title='Model' data-ref="Model" >Model</a> <dfn class="local col5 decl" id="5mdl" title='mdl' data-type='Model' data-ref="5mdl" >mdl</dfn><a class="ref" href="model.h.html#_ZN5ModelC1ERSs" title='Model::Model' data-ref="_ZN5ModelC1ERSs" id="_ZN5ModelC1ERSs" >(</a><a class="local col1 ref" href="#1fname" title='fname' data-ref="1fname" >fname</a>);</td></tr>
+<tr><th id="50">50</th><td>    <b>if</b> (!<a class="local col5 ref" href="#5mdl" title='mdl' data-ref="5mdl" >mdl</a>.<a class="ref" href="model.h.html#_ZN5Model4openEv" title='Model::open' data-ref="_ZN5Model4openEv" id="_ZN5Model4openEv" >open</a>())</td></tr>
+<tr><th id="51">51</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <b>return</b> <a class="local col5 ref" href="#5mdl" title='mdl' data-ref="5mdl" >mdl</a>.<a class="ref" href="model.h.html#_ZN5Model18ConvertToVMAPModelEPKc" title='Model::ConvertToVMAPModel' data-ref="_ZN5Model18ConvertToVMAPModelEPKc" id="_ZN5Model18ConvertToVMAPModelEPKc" >ConvertToVMAPModel</a>(<a class="local col4 ref" href="#4output" title='output' data-ref="4output" >output</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="54">54</th><td>}</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td><em>void</em> <dfn class="decl def" id="_Z23ExtractGameobjectModelsv" title='ExtractGameobjectModels' data-ref="_Z23ExtractGameobjectModelsv" >ExtractGameobjectModels</dfn>()</td></tr>
+<tr><th id="57">57</th><td>{</td></tr>
+<tr><th id="58">58</th><td>    <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Extracting GameObject models..."</q>);</td></tr>
+<tr><th id="59">59</th><td>    <a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a> <dfn class="local col6 decl" id="6dbc" title='dbc' data-type='DBCFile' data-ref="6dbc" >dbc</dfn><a class="ref" href="dbcfile.h.html#_ZN7DBCFileC1ERKSs" title='DBCFile::DBCFile' data-ref="_ZN7DBCFileC1ERKSs" id="_ZN7DBCFileC1ERKSs" >(</a><q>"DBFilesClient\\GameObjectDisplayInfo.dbc"</q>);</td></tr>
+<tr><th id="60">60</th><td>    <b>if</b>(!<a class="local col6 ref" href="#6dbc" title='dbc' data-ref="6dbc" >dbc</a>.<a class="ref" href="dbcfile.h.html#_ZN7DBCFile4openEv" title='DBCFile::open' data-ref="_ZN7DBCFile4openEv" id="_ZN7DBCFile4openEv" >open</a>())</td></tr>
+<tr><th id="61">61</th><td>    {</td></tr>
+<tr><th id="62">62</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Fatal error: Invalid GameObjectDisplayInfo.dbc file format!\n"</q>);</td></tr>
+<tr><th id="63">63</th><td>        <a class="ref" href="../../../../include/stdlib.h.html#exit" title='exit' data-ref="exit" id="exit" >exit</a>(<var>1</var>);</td></tr>
+<tr><th id="64">64</th><td>    }</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col7 decl" id="7basepath" title='basepath' data-type='std::string' data-ref="7basepath" >basepath</dfn> = <a class="ref" href="vmapexport.h.html#szWorkDirWmo" title='szWorkDirWmo' data-ref="szWorkDirWmo" id="szWorkDirWmo" >szWorkDirWmo</a>;</td></tr>
+<tr><th id="67">67</th><td>    <a class="local col7 ref" href="#7basepath" title='basepath' data-ref="7basepath" >basepath</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringpLEPKT_" title='std::basic_string::operator+=' data-ref="_ZNSt12basic_stringpLEPKT_" id="_ZNSt12basic_stringpLEPKT_" >+=</a> <q>"/"</q>;</td></tr>
+<tr><th id="68">68</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col8 decl" id="8path" title='path' data-type='std::string' data-ref="8path" >path</dfn>;</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col9 decl" id="9modelListPath" title='modelListPath' data-type='std::string' data-ref="9modelListPath" >modelListPath</dfn> = <a class="local col7 ref" href="#7basepath" title='basepath' data-ref="7basepath" >basepath</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplRKSbIT_T0_T1_EPKS_" title='std::operator+' data-ref="_ZStplRKSbIT_T0_T1_EPKS_" id="_ZStplRKSbIT_T0_T1_EPKS_" >+</a> <q>"temp_gameobject_models"</q>;</td></tr>
+<tr><th id="71">71</th><td>    <a class="typedef" href="../../../../include/stdio.h.html#FILE" title='FILE' data-type='struct _IO_FILE' data-ref="FILE" >FILE</a>* <dfn class="local col0 decl" id="10model_list" title='model_list' data-type='FILE *' data-ref="10model_list" >model_list</dfn> = <a class="ref" href="../../../../include/stdio.h.html#fopen" title='fopen' data-ref="fopen" id="fopen" >fopen</a>(<a class="local col9 ref" href="#9modelListPath" title='modelListPath' data-ref="9modelListPath" >modelListPath</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <q>"wb"</q>);</td></tr>
+<tr><th id="72">72</th><td>    <b>if</b> (!<a class="local col0 ref" href="#10model_list" title='model_list' data-ref="10model_list" >model_list</a>)</td></tr>
+<tr><th id="73">73</th><td>    {</td></tr>
+<tr><th id="74">74</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Fatal error: Could not open file %s\n"</q>, <a class="local col9 ref" href="#9modelListPath" title='modelListPath' data-ref="9modelListPath" >modelListPath</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="75">75</th><td>        <b>return</b>;</td></tr>
+<tr><th id="76">76</th><td>    }</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>    <b>for</b> (<a class="type" href="dbcfile.h.html#DBCFile" title='DBCFile' data-ref="DBCFile" >DBCFile</a>::<a class="type" href="dbcfile.h.html#DBCFile::Iterator" title='DBCFile::Iterator' data-ref="DBCFile::Iterator" >Iterator</a> <dfn class="local col1 decl" id="11it" title='it' data-type='DBCFile::Iterator' data-ref="11it" >it</dfn> = <a class="local col6 ref" href="#6dbc" title='dbc' data-ref="6dbc" >dbc</a>.<a class="ref" href="dbcfile.h.html#_ZN7DBCFile5beginEv" title='DBCFile::begin' data-ref="_ZN7DBCFile5beginEv" id="_ZN7DBCFile5beginEv" >begin</a>(); <a class="local col1 ref" href="#11it" title='it' data-ref="11it" >it</a> <a class="ref" href="dbcfile.h.html#_ZNK7DBCFile8IteratorneERKS0_" title='DBCFile::Iterator::operator!=' data-ref="_ZNK7DBCFile8IteratorneERKS0_" id="_ZNK7DBCFile8IteratorneERKS0_" >!=</a> <a class="local col6 ref" href="#6dbc" title='dbc' data-ref="6dbc" >dbc</a>.<a class="ref" href="dbcfile.h.html#_ZN7DBCFile3endEv" title='DBCFile::end' data-ref="_ZN7DBCFile3endEv" id="_ZN7DBCFile3endEv" >end</a>(); <a class="ref" href="dbcfile.h.html#_ZN7DBCFile8IteratorppEv" title='DBCFile::Iterator::operator++' data-ref="_ZN7DBCFile8IteratorppEv" id="_ZN7DBCFile8IteratorppEv" >++</a><a class="local col1 ref" href="#11it" title='it' data-ref="11it" >it</a>)</td></tr>
+<tr><th id="79">79</th><td>    {</td></tr>
+<tr><th id="80">80</th><td>        <a class="local col8 ref" href="#8path" title='path' data-ref="8path" >path</a> <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringaSEPKT_" title='std::basic_string::operator=' data-ref="_ZNSt12basic_stringaSEPKT_" id="_ZNSt12basic_stringaSEPKT_" >=</a> <a class="local col1 ref" href="#11it" title='it' data-ref="11it" >it</a><a class="ref" href="dbcfile.h.html#_ZNK7DBCFile8IteratorptEv" title='DBCFile::Iterator::operator-&gt;' data-ref="_ZNK7DBCFile8IteratorptEv" id="_ZNK7DBCFile8IteratorptEv" >-&gt;</a><a class="ref" href="dbcfile.h.html#_ZNK7DBCFile6Record9getStringEm" title='DBCFile::Record::getString' data-ref="_ZNK7DBCFile6Record9getStringEm" id="_ZNK7DBCFile6Record9getStringEm" >getString</a>(<var>1</var>);</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>        <b>if</b> (<a class="local col8 ref" href="#8path" title='path' data-ref="8path" >path</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string6lengthEv" title='std::basic_string::length' data-ref="_ZNKSt12basic_string6lengthEv" id="_ZNKSt12basic_string6lengthEv" >length</a>() &lt; <var>4</var>)</td></tr>
+<tr><th id="83">83</th><td>            <b>continue</b>;</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>        <a class="ref" href="adtfile.h.html#_Z8fixnamenPcm" title='fixnamen' data-ref="_Z8fixnamenPcm" id="_Z8fixnamenPcm" >fixnamen</a>((<em>char</em>*)<a class="local col8 ref" href="#8path" title='path' data-ref="8path" >path</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col8 ref" href="#8path" title='path' data-ref="8path" >path</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string4sizeEv" title='std::basic_string::size' data-ref="_ZNKSt12basic_string4sizeEv" id="_ZNKSt12basic_string4sizeEv" >size</a>());</td></tr>
+<tr><th id="86">86</th><td>        <em>char</em> * <dfn class="local col2 decl" id="12name" title='name' data-type='char *' data-ref="12name" >name</dfn> = <a class="ref" href="adtfile.h.html#_Z12GetPlainNamePc" title='GetPlainName' data-ref="_Z12GetPlainNamePc" id="_Z12GetPlainNamePc" >GetPlainName</a>((<em>char</em>*)<a class="local col8 ref" href="#8path" title='path' data-ref="8path" >path</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="87">87</th><td>        <a class="ref" href="adtfile.h.html#_Z8fixname2Pcm" title='fixname2' data-ref="_Z8fixname2Pcm" id="_Z8fixname2Pcm" >fixname2</a>(<a class="local col2 ref" href="#12name" title='name' data-ref="12name" >name</a>, <a class="ref" href="../../../../include/string.h.html#strlen" title='strlen' data-ref="strlen" id="strlen" >strlen</a>(<a class="local col2 ref" href="#12name" title='name' data-ref="12name" >name</a>));</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td>        <em>char</em> * <dfn class="local col3 decl" id="13ch_ext" title='ch_ext' data-type='char *' data-ref="13ch_ext" >ch_ext</dfn> = <a class="ref" href="adtfile.h.html#_Z12GetExtensionPc" title='GetExtension' data-ref="_Z12GetExtensionPc" id="_Z12GetExtensionPc" >GetExtension</a>(<a class="local col2 ref" href="#12name" title='name' data-ref="12name" >name</a>);</td></tr>
+<tr><th id="90">90</th><td>        <b>if</b> (!<a class="local col3 ref" href="#13ch_ext" title='ch_ext' data-ref="13ch_ext" >ch_ext</a>)</td></tr>
+<tr><th id="91">91</th><td>            <b>continue</b>;</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>        <a class="ref" href="vmapexport.h.html#_Z10strToLowerPc" title='strToLower' data-ref="_Z10strToLowerPc" id="_Z10strToLowerPc" >strToLower</a>(<a class="local col3 ref" href="#13ch_ext" title='ch_ext' data-ref="13ch_ext" >ch_ext</a>);</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>        <em>bool</em> <dfn class="local col4 decl" id="14result" title='result' data-type='bool' data-ref="14result" >result</dfn> = <b>false</b>;</td></tr>
+<tr><th id="96">96</th><td>        <b>if</b> (!<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col3 ref" href="#13ch_ext" title='ch_ext' data-ref="13ch_ext" >ch_ext</a>, <q>".wmo"</q>))</td></tr>
+<tr><th id="97">97</th><td>        {</td></tr>
+<tr><th id="98">98</th><td>            <a class="local col4 ref" href="#14result" title='result' data-ref="14result" >result</a> = <a class="ref" href="vmapexport.h.html#_Z16ExtractSingleWmoRSs" title='ExtractSingleWmo' data-ref="_Z16ExtractSingleWmoRSs" id="_Z16ExtractSingleWmoRSs" >ExtractSingleWmo</a>(<a class="local col8 ref" href="#8path" title='path' data-ref="8path" >path</a>);</td></tr>
+<tr><th id="99">99</th><td>        }</td></tr>
+<tr><th id="100">100</th><td>        <b>else</b> <b>if</b> (!<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col3 ref" href="#13ch_ext" title='ch_ext' data-ref="13ch_ext" >ch_ext</a>, <q>".mdl"</q>))</td></tr>
+<tr><th id="101">101</th><td>        {</td></tr>
+<tr><th id="102">102</th><td>            <i>// TODO: extract .mdl files, if needed</i></td></tr>
+<tr><th id="103">103</th><td>            <b>continue</b>;</td></tr>
+<tr><th id="104">104</th><td>        }</td></tr>
+<tr><th id="105">105</th><td>        <b>else</b> <i>//if (!strcmp(ch_ext, ".mdx") || !strcmp(ch_ext, ".m2"))</i></td></tr>
+<tr><th id="106">106</th><td>        {</td></tr>
+<tr><th id="107">107</th><td>            <a class="local col4 ref" href="#14result" title='result' data-ref="14result" >result</a> = <a class="ref" href="#_Z18ExtractSingleModelRSs" title='ExtractSingleModel' data-ref="_Z18ExtractSingleModelRSs" >ExtractSingleModel</a>(<a class="local col8 ref" href="#8path" title='path' data-ref="8path" >path</a>);</td></tr>
+<tr><th id="108">108</th><td>        }</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>        <b>if</b> (<a class="local col4 ref" href="#14result" title='result' data-ref="14result" >result</a>)</td></tr>
+<tr><th id="111">111</th><td>        {</td></tr>
+<tr><th id="112">112</th><td>            <a class="typedef" href="loadlib/loadlib.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="15displayId" title='displayId' data-type='uint32' data-ref="15displayId" >displayId</dfn> = <a class="local col1 ref" href="#11it" title='it' data-ref="11it" >it</a><a class="ref" href="dbcfile.h.html#_ZNK7DBCFile8IteratorptEv" title='DBCFile::Iterator::operator-&gt;' data-ref="_ZNK7DBCFile8IteratorptEv" id="_ZNK7DBCFile8IteratorptEv" >-&gt;</a><a class="ref" href="dbcfile.h.html#_ZNK7DBCFile6Record7getUIntEm" title='DBCFile::Record::getUInt' data-ref="_ZNK7DBCFile6Record7getUIntEm" id="_ZNK7DBCFile6Record7getUIntEm" >getUInt</a>(<var>0</var>);</td></tr>
+<tr><th id="113">113</th><td>            <a class="typedef" href="loadlib/loadlib.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="16path_length" title='path_length' data-type='uint32' data-ref="16path_length" >path_length</dfn> = <a class="ref" href="../../../../include/string.h.html#strlen" title='strlen' data-ref="strlen" id="strlen" >strlen</a>(<a class="local col2 ref" href="#12name" title='name' data-ref="12name" >name</a>);</td></tr>
+<tr><th id="114">114</th><td>            <a class="ref" href="../../../../include/stdio.h.html#fwrite" title='fwrite' data-ref="fwrite" id="fwrite" >fwrite</a>(&amp;<a class="local col5 ref" href="#15displayId" title='displayId' data-ref="15displayId" >displayId</a>, <b>sizeof</b>(<a class="typedef" href="loadlib/loadlib.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>), <var>1</var>, <a class="local col0 ref" href="#10model_list" title='model_list' data-ref="10model_list" >model_list</a>);</td></tr>
+<tr><th id="115">115</th><td>            <a class="ref" href="../../../../include/stdio.h.html#fwrite" title='fwrite' data-ref="fwrite" id="fwrite" >fwrite</a>(&amp;<a class="local col6 ref" href="#16path_length" title='path_length' data-ref="16path_length" >path_length</a>, <b>sizeof</b>(<a class="typedef" href="loadlib/loadlib.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>), <var>1</var>, <a class="local col0 ref" href="#10model_list" title='model_list' data-ref="10model_list" >model_list</a>);</td></tr>
+<tr><th id="116">116</th><td>            <a class="ref" href="../../../../include/stdio.h.html#fwrite" title='fwrite' data-ref="fwrite" id="fwrite" >fwrite</a>(<a class="local col2 ref" href="#12name" title='name' data-ref="12name" >name</a>, <b>sizeof</b>(<em>char</em>), <a class="local col6 ref" href="#16path_length" title='path_length' data-ref="16path_length" >path_length</a>, <a class="local col0 ref" href="#10model_list" title='model_list' data-ref="10model_list" >model_list</a>);</td></tr>
+<tr><th id="117">117</th><td>        }</td></tr>
+<tr><th id="118">118</th><td>    }</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>    <a class="ref" href="../../../../include/stdio.h.html#fclose" title='fclose' data-ref="fclose" id="fclose" >fclose</a>(<a class="local col0 ref" href="#10model_list" title='model_list' data-ref="10model_list" >model_list</a>);</td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td>    <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Done!\n"</q>);</td></tr>
+<tr><th id="123">123</th><td>}</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,24 @@
+<def f='include/boost/asio/basic_socket.hpp' l='384' type='boost::system::error_code boost::asio::basic_socket::close(boost::system::error_code &amp; ec)'/>
+<doc f='include/boost/asio/basic_socket.hpp' l='361'>/**
+   * This function is used to close the socket. Any asynchronous send, receive
+   * or connect operations will be cancelled immediately, and will complete
+   * with the boost::asio::error::operation_aborted error.
+   *
+   * @param ec Set to indicate what error occurred, if any. Note that, even if
+   * the function indicates an error, the underlying descriptor is closed.
+   *
+   * @par Example
+   * @code
+   * boost::asio::ip::tcp::socket socket(io_service);
+   * ...
+   * boost::system::error_code ec;
+   * socket.close(ec);
+   * if (ec)
+   * {
+   *   // An error occurred.
+   * }
+   * @endcode
+   *
+   * @note For portable behaviour with respect to graceful closure of a
+   * connected socket, call shutdown() before closing the socket.
+   */</doc>

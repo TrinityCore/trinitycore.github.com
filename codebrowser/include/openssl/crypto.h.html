@@ -1,0 +1,629 @@
+<!doctype html>
+<html>
+<head>
+<title>crypto.h [include/openssl/crypto.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/openssl/crypto.h'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>openssl</a>/crypto.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* crypto/crypto.h */</i></td></tr>
+<tr><th id="2">2</th><td><i>/* ====================================================================</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (c) 1998-2006 The OpenSSL Project.  All rights reserved.</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="6">6</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="7">7</th><td><i> * are met:</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * 1. Redistributions of source code must retain the above copyright</i></td></tr>
+<tr><th id="10">10</th><td><i> *    notice, this list of conditions and the following disclaimer. </i></td></tr>
+<tr><th id="11">11</th><td><i> *</i></td></tr>
+<tr><th id="12">12</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="13">13</th><td><i> *    notice, this list of conditions and the following disclaimer in</i></td></tr>
+<tr><th id="14">14</th><td><i> *    the documentation and/or other materials provided with the</i></td></tr>
+<tr><th id="15">15</th><td><i> *    distribution.</i></td></tr>
+<tr><th id="16">16</th><td><i> *</i></td></tr>
+<tr><th id="17">17</th><td><i> * 3. All advertising materials mentioning features or use of this</i></td></tr>
+<tr><th id="18">18</th><td><i> *    software must display the following acknowledgment:</i></td></tr>
+<tr><th id="19">19</th><td><i> *    "This product includes software developed by the OpenSSL Project</i></td></tr>
+<tr><th id="20">20</th><td><i> *    for use in the OpenSSL Toolkit. (<a href="http://www.openssl.org/">http://www.openssl.org/</a>)"</i></td></tr>
+<tr><th id="21">21</th><td><i> *</i></td></tr>
+<tr><th id="22">22</th><td><i> * 4. The names "OpenSSL Toolkit" and "OpenSSL Project" must not be used to</i></td></tr>
+<tr><th id="23">23</th><td><i> *    endorse or promote products derived from this software without</i></td></tr>
+<tr><th id="24">24</th><td><i> *    prior written permission. For written permission, please contact</i></td></tr>
+<tr><th id="25">25</th><td><i> *    openssl-core@openssl.org.</i></td></tr>
+<tr><th id="26">26</th><td><i> *</i></td></tr>
+<tr><th id="27">27</th><td><i> * 5. Products derived from this software may not be called "OpenSSL"</i></td></tr>
+<tr><th id="28">28</th><td><i> *    nor may "OpenSSL" appear in their names without prior written</i></td></tr>
+<tr><th id="29">29</th><td><i> *    permission of the OpenSSL Project.</i></td></tr>
+<tr><th id="30">30</th><td><i> *</i></td></tr>
+<tr><th id="31">31</th><td><i> * 6. Redistributions of any form whatsoever must retain the following</i></td></tr>
+<tr><th id="32">32</th><td><i> *    acknowledgment:</i></td></tr>
+<tr><th id="33">33</th><td><i> *    "This product includes software developed by the OpenSSL Project</i></td></tr>
+<tr><th id="34">34</th><td><i> *    for use in the OpenSSL Toolkit (<a href="http://www.openssl.org/">http://www.openssl.org/</a>)"</i></td></tr>
+<tr><th id="35">35</th><td><i> *</i></td></tr>
+<tr><th id="36">36</th><td><i> * THIS SOFTWARE IS PROVIDED BY THE OpenSSL PROJECT ``AS IS'' AND ANY</i></td></tr>
+<tr><th id="37">37</th><td><i> * EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="38">38</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR</i></td></tr>
+<tr><th id="39">39</th><td><i> * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE OpenSSL PROJECT OR</i></td></tr>
+<tr><th id="40">40</th><td><i> * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,</i></td></tr>
+<tr><th id="41">41</th><td><i> * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT</i></td></tr>
+<tr><th id="42">42</th><td><i> * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</i></td></tr>
+<tr><th id="43">43</th><td><i> * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="44">44</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,</i></td></tr>
+<tr><th id="45">45</th><td><i> * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)</i></td></tr>
+<tr><th id="46">46</th><td><i> * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED</i></td></tr>
+<tr><th id="47">47</th><td><i> * OF THE POSSIBILITY OF SUCH DAMAGE.</i></td></tr>
+<tr><th id="48">48</th><td><i> * ====================================================================</i></td></tr>
+<tr><th id="49">49</th><td><i> *</i></td></tr>
+<tr><th id="50">50</th><td><i> * This product includes cryptographic software written by Eric Young</i></td></tr>
+<tr><th id="51">51</th><td><i> * (eay@cryptsoft.com).  This product includes software written by Tim</i></td></tr>
+<tr><th id="52">52</th><td><i> * Hudson (tjh@cryptsoft.com).</i></td></tr>
+<tr><th id="53">53</th><td><i> *</i></td></tr>
+<tr><th id="54">54</th><td><i> */</i></td></tr>
+<tr><th id="55">55</th><td><i>/* Copyright (C) 1995-1998 Eric Young (eay@cryptsoft.com)</i></td></tr>
+<tr><th id="56">56</th><td><i> * All rights reserved.</i></td></tr>
+<tr><th id="57">57</th><td><i> *</i></td></tr>
+<tr><th id="58">58</th><td><i> * This package is an SSL implementation written</i></td></tr>
+<tr><th id="59">59</th><td><i> * by Eric Young (eay@cryptsoft.com).</i></td></tr>
+<tr><th id="60">60</th><td><i> * The implementation was written so as to conform with Netscapes SSL.</i></td></tr>
+<tr><th id="61">61</th><td><i> * </i></td></tr>
+<tr><th id="62">62</th><td><i> * This library is free for commercial and non-commercial use as long as</i></td></tr>
+<tr><th id="63">63</th><td><i> * the following conditions are aheared to.  The following conditions</i></td></tr>
+<tr><th id="64">64</th><td><i> * apply to all code found in this distribution, be it the RC4, RSA,</i></td></tr>
+<tr><th id="65">65</th><td><i> * lhash, DES, etc., code; not just the SSL code.  The SSL documentation</i></td></tr>
+<tr><th id="66">66</th><td><i> * included with this distribution is covered by the same copyright terms</i></td></tr>
+<tr><th id="67">67</th><td><i> * except that the holder is Tim Hudson (tjh@cryptsoft.com).</i></td></tr>
+<tr><th id="68">68</th><td><i> * </i></td></tr>
+<tr><th id="69">69</th><td><i> * Copyright remains Eric Young's, and as such any Copyright notices in</i></td></tr>
+<tr><th id="70">70</th><td><i> * the code are not to be removed.</i></td></tr>
+<tr><th id="71">71</th><td><i> * If this package is used in a product, Eric Young should be given attribution</i></td></tr>
+<tr><th id="72">72</th><td><i> * as the author of the parts of the library used.</i></td></tr>
+<tr><th id="73">73</th><td><i> * This can be in the form of a textual message at program startup or</i></td></tr>
+<tr><th id="74">74</th><td><i> * in documentation (online or textual) provided with the package.</i></td></tr>
+<tr><th id="75">75</th><td><i> * </i></td></tr>
+<tr><th id="76">76</th><td><i> * Redistribution and use in source and binary forms, with or without</i></td></tr>
+<tr><th id="77">77</th><td><i> * modification, are permitted provided that the following conditions</i></td></tr>
+<tr><th id="78">78</th><td><i> * are met:</i></td></tr>
+<tr><th id="79">79</th><td><i> * 1. Redistributions of source code must retain the copyright</i></td></tr>
+<tr><th id="80">80</th><td><i> *    notice, this list of conditions and the following disclaimer.</i></td></tr>
+<tr><th id="81">81</th><td><i> * 2. Redistributions in binary form must reproduce the above copyright</i></td></tr>
+<tr><th id="82">82</th><td><i> *    notice, this list of conditions and the following disclaimer in the</i></td></tr>
+<tr><th id="83">83</th><td><i> *    documentation and/or other materials provided with the distribution.</i></td></tr>
+<tr><th id="84">84</th><td><i> * 3. All advertising materials mentioning features or use of this software</i></td></tr>
+<tr><th id="85">85</th><td><i> *    must display the following acknowledgement:</i></td></tr>
+<tr><th id="86">86</th><td><i> *    "This product includes cryptographic software written by</i></td></tr>
+<tr><th id="87">87</th><td><i> *     Eric Young (eay@cryptsoft.com)"</i></td></tr>
+<tr><th id="88">88</th><td><i> *    The word 'cryptographic' can be left out if the rouines from the library</i></td></tr>
+<tr><th id="89">89</th><td><i> *    being used are not cryptographic related :-).</i></td></tr>
+<tr><th id="90">90</th><td><i> * 4. If you include any Windows specific code (or a derivative thereof) from </i></td></tr>
+<tr><th id="91">91</th><td><i> *    the apps directory (application code) you must include an acknowledgement:</i></td></tr>
+<tr><th id="92">92</th><td><i> *    "This product includes software written by Tim Hudson (tjh@cryptsoft.com)"</i></td></tr>
+<tr><th id="93">93</th><td><i> * </i></td></tr>
+<tr><th id="94">94</th><td><i> * THIS SOFTWARE IS PROVIDED BY ERIC YOUNG ``AS IS'' AND</i></td></tr>
+<tr><th id="95">95</th><td><i> * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</i></td></tr>
+<tr><th id="96">96</th><td><i> * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE</i></td></tr>
+<tr><th id="97">97</th><td><i> * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE</i></td></tr>
+<tr><th id="98">98</th><td><i> * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</i></td></tr>
+<tr><th id="99">99</th><td><i> * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS</i></td></tr>
+<tr><th id="100">100</th><td><i> * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)</i></td></tr>
+<tr><th id="101">101</th><td><i> * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT</i></td></tr>
+<tr><th id="102">102</th><td><i> * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY</i></td></tr>
+<tr><th id="103">103</th><td><i> * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF</i></td></tr>
+<tr><th id="104">104</th><td><i> * SUCH DAMAGE.</i></td></tr>
+<tr><th id="105">105</th><td><i> * </i></td></tr>
+<tr><th id="106">106</th><td><i> * The licence and distribution terms for any publically available version or</i></td></tr>
+<tr><th id="107">107</th><td><i> * derivative of this code cannot be changed.  i.e. this code cannot simply be</i></td></tr>
+<tr><th id="108">108</th><td><i> * copied and put under another distribution licence</i></td></tr>
+<tr><th id="109">109</th><td><i> * [including the GNU Public Licence.]</i></td></tr>
+<tr><th id="110">110</th><td><i> */</i></td></tr>
+<tr><th id="111">111</th><td><i>/* ====================================================================</i></td></tr>
+<tr><th id="112">112</th><td><i> * Copyright 2002 Sun Microsystems, Inc. ALL RIGHTS RESERVED.</i></td></tr>
+<tr><th id="113">113</th><td><i> * ECDH support in OpenSSL originally developed by </i></td></tr>
+<tr><th id="114">114</th><td><i> * SUN MICROSYSTEMS, INC., and contributed to the OpenSSL project.</i></td></tr>
+<tr><th id="115">115</th><td><i> */</i></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><u>#<span data-ppcond="117">ifndef</span> <span class="macro" data-ref="_M/HEADER_CRYPTO_H">HEADER_CRYPTO_H</span></u></td></tr>
+<tr><th id="118">118</th><td><u>#define <dfn class="macro" id="_M/HEADER_CRYPTO_H" data-ref="_M/HEADER_CRYPTO_H">HEADER_CRYPTO_H</dfn></u></td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><u>#include <a href="../stdlib.h.html">&lt;stdlib.h&gt;</a></u></td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td><u>#include <a href="e_os2.h.html">&lt;openssl/e_os2.h&gt;</a></u></td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="124">ifndef</span> <span class="macro" data-ref="_M/OPENSSL_NO_FP_API">OPENSSL_NO_FP_API</span></u></td></tr>
+<tr><th id="125">125</th><td><u>#include <a href="../stdio.h.html">&lt;stdio.h&gt;</a></u></td></tr>
+<tr><th id="126">126</th><td><u>#<span data-ppcond="124">endif</span></u></td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td><u>#include <a href="stack.h.html">&lt;openssl/stack.h&gt;</a></u></td></tr>
+<tr><th id="129">129</th><td><u>#include <a href="safestack.h.html">&lt;openssl/safestack.h&gt;</a></u></td></tr>
+<tr><th id="130">130</th><td><u>#include <a href="opensslv.h.html">&lt;openssl/opensslv.h&gt;</a></u></td></tr>
+<tr><th id="131">131</th><td><u>#include <a href="ossl_typ.h.html">&lt;openssl/ossl_typ.h&gt;</a></u></td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td><u>#<span data-ppcond="133">ifdef</span> <span class="macro" data-ref="_M/CHARSET_EBCDIC">CHARSET_EBCDIC</span></u></td></tr>
+<tr><th id="134">134</th><td><u>#include &lt;openssl/ebcdic.h&gt;</u></td></tr>
+<tr><th id="135">135</th><td><u>#<span data-ppcond="133">endif</span></u></td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><i>/* Resolve problems on some operating systems with symbol names that clash</i></td></tr>
+<tr><th id="138">138</th><td><i>   one way or another */</i></td></tr>
+<tr><th id="139">139</th><td><u>#include <a href="symhacks.h.html">&lt;openssl/symhacks.h&gt;</a></u></td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><u>#<span data-ppcond="141">ifdef</span>  <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="142">142</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="143">143</th><td><u>#<span data-ppcond="141">endif</span></u></td></tr>
+<tr><th id="144">144</th><td></td></tr>
+<tr><th id="145">145</th><td><i>/* Backward compatibility to SSLeay */</i></td></tr>
+<tr><th id="146">146</th><td><i>/* This is more to be used to check the correct DLL is being used</i></td></tr>
+<tr><th id="147">147</th><td><i> * in the MS world. */</i></td></tr>
+<tr><th id="148">148</th><td><u>#define <dfn class="macro" id="_M/SSLEAY_VERSION_NUMBER" data-ref="_M/SSLEAY_VERSION_NUMBER">SSLEAY_VERSION_NUMBER</dfn>	OPENSSL_VERSION_NUMBER</u></td></tr>
+<tr><th id="149">149</th><td><u>#define <dfn class="macro" id="_M/SSLEAY_VERSION" data-ref="_M/SSLEAY_VERSION">SSLEAY_VERSION</dfn>		0</u></td></tr>
+<tr><th id="150">150</th><td><i>/* #define SSLEAY_OPTIONS	1 no longer supported */</i></td></tr>
+<tr><th id="151">151</th><td><u>#define <dfn class="macro" id="_M/SSLEAY_CFLAGS" data-ref="_M/SSLEAY_CFLAGS">SSLEAY_CFLAGS</dfn>		2</u></td></tr>
+<tr><th id="152">152</th><td><u>#define <dfn class="macro" id="_M/SSLEAY_BUILT_ON" data-ref="_M/SSLEAY_BUILT_ON">SSLEAY_BUILT_ON</dfn>		3</u></td></tr>
+<tr><th id="153">153</th><td><u>#define <dfn class="macro" id="_M/SSLEAY_PLATFORM" data-ref="_M/SSLEAY_PLATFORM">SSLEAY_PLATFORM</dfn>		4</u></td></tr>
+<tr><th id="154">154</th><td><u>#define <dfn class="macro" id="_M/SSLEAY_DIR" data-ref="_M/SSLEAY_DIR">SSLEAY_DIR</dfn>		5</u></td></tr>
+<tr><th id="155">155</th><td></td></tr>
+<tr><th id="156">156</th><td><i>/* Already declared in ossl_typ.h */</i></td></tr>
+<tr><th id="157">157</th><td><u>#<span data-ppcond="157">if</span> 0</u></td></tr>
+<tr><th id="158">158</th><td><b>typedef</b> <b>struct</b> crypto_ex_data_st CRYPTO_EX_DATA;</td></tr>
+<tr><th id="159">159</th><td><i>/* Called when a new object is created */</i></td></tr>
+<tr><th id="160">160</th><td><b>typedef</b> <em>int</em> CRYPTO_EX_new(<em>void</em> *parent, <em>void</em> *ptr, CRYPTO_EX_DATA *ad,</td></tr>
+<tr><th id="161">161</th><td>					<em>int</em> idx, <em>long</em> argl, <em>void</em> *argp);</td></tr>
+<tr><th id="162">162</th><td><i>/* Called when an object is free()ed */</i></td></tr>
+<tr><th id="163">163</th><td><b>typedef</b> <em>void</em> CRYPTO_EX_free(<em>void</em> *parent, <em>void</em> *ptr, CRYPTO_EX_DATA *ad,</td></tr>
+<tr><th id="164">164</th><td>					<em>int</em> idx, <em>long</em> argl, <em>void</em> *argp);</td></tr>
+<tr><th id="165">165</th><td><i>/* Called when we need to dup an object */</i></td></tr>
+<tr><th id="166">166</th><td><b>typedef</b> <em>int</em> CRYPTO_EX_dup(CRYPTO_EX_DATA *to, CRYPTO_EX_DATA *from, <em>void</em> *from_d, </td></tr>
+<tr><th id="167">167</th><td>					<em>int</em> idx, <em>long</em> argl, <em>void</em> *argp);</td></tr>
+<tr><th id="168">168</th><td><u>#<span data-ppcond="157">endif</span></u></td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td><i>/* A generic structure to pass assorted data in a expandable way */</i></td></tr>
+<tr><th id="171">171</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="openssl_item_st" title='openssl_item_st' data-ref="openssl_item_st" ><a class="type" href="#openssl_item_st" title='openssl_item_st' data-ref="openssl_item_st" >openssl_item_st</a></dfn></td></tr>
+<tr><th id="172">172</th><td>	{</td></tr>
+<tr><th id="173">173</th><td>	<em>int</em> <dfn class="decl" id="openssl_item_st::code" title='openssl_item_st::code' data-ref="openssl_item_st::code" >code</dfn>;</td></tr>
+<tr><th id="174">174</th><td>	<em>void</em> *<dfn class="decl" id="openssl_item_st::value" title='openssl_item_st::value' data-ref="openssl_item_st::value" >value</dfn>;		<i>/* Not used for flag attributes */</i></td></tr>
+<tr><th id="175">175</th><td>	<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="openssl_item_st::value_size" title='openssl_item_st::value_size' data-ref="openssl_item_st::value_size" >value_size</dfn>;	<i>/* Max size of value for output, length for input */</i></td></tr>
+<tr><th id="176">176</th><td>	<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="decl" id="openssl_item_st::value_length" title='openssl_item_st::value_length' data-ref="openssl_item_st::value_length" >value_length</dfn>;	<i>/* Returned length of value for output */</i></td></tr>
+<tr><th id="177">177</th><td>	} <dfn class="typedef" id="OPENSSL_ITEM" title='OPENSSL_ITEM' data-type='struct openssl_item_st' data-ref="OPENSSL_ITEM" >OPENSSL_ITEM</dfn>;</td></tr>
+<tr><th id="178">178</th><td></td></tr>
+<tr><th id="179">179</th><td></td></tr>
+<tr><th id="180">180</th><td><i>/* When changing the CRYPTO_LOCK_* list, be sure to maintin the text lock</i></td></tr>
+<tr><th id="181">181</th><td><i> * names in cryptlib.c</i></td></tr>
+<tr><th id="182">182</th><td><i> */</i></td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td><u>#define	<dfn class="macro" id="_M/CRYPTO_LOCK_ERR" data-ref="_M/CRYPTO_LOCK_ERR">CRYPTO_LOCK_ERR</dfn>			1</u></td></tr>
+<tr><th id="185">185</th><td><u>#define	<dfn class="macro" id="_M/CRYPTO_LOCK_EX_DATA" data-ref="_M/CRYPTO_LOCK_EX_DATA">CRYPTO_LOCK_EX_DATA</dfn>		2</u></td></tr>
+<tr><th id="186">186</th><td><u>#define	<dfn class="macro" id="_M/CRYPTO_LOCK_X509" data-ref="_M/CRYPTO_LOCK_X509">CRYPTO_LOCK_X509</dfn>		3</u></td></tr>
+<tr><th id="187">187</th><td><u>#define	<dfn class="macro" id="_M/CRYPTO_LOCK_X509_INFO" data-ref="_M/CRYPTO_LOCK_X509_INFO">CRYPTO_LOCK_X509_INFO</dfn>		4</u></td></tr>
+<tr><th id="188">188</th><td><u>#define	<dfn class="macro" id="_M/CRYPTO_LOCK_X509_PKEY" data-ref="_M/CRYPTO_LOCK_X509_PKEY">CRYPTO_LOCK_X509_PKEY</dfn>		5</u></td></tr>
+<tr><th id="189">189</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_X509_CRL" data-ref="_M/CRYPTO_LOCK_X509_CRL">CRYPTO_LOCK_X509_CRL</dfn>		6</u></td></tr>
+<tr><th id="190">190</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_X509_REQ" data-ref="_M/CRYPTO_LOCK_X509_REQ">CRYPTO_LOCK_X509_REQ</dfn>		7</u></td></tr>
+<tr><th id="191">191</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_DSA" data-ref="_M/CRYPTO_LOCK_DSA">CRYPTO_LOCK_DSA</dfn>			8</u></td></tr>
+<tr><th id="192">192</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_RSA" data-ref="_M/CRYPTO_LOCK_RSA">CRYPTO_LOCK_RSA</dfn>			9</u></td></tr>
+<tr><th id="193">193</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_EVP_PKEY" data-ref="_M/CRYPTO_LOCK_EVP_PKEY">CRYPTO_LOCK_EVP_PKEY</dfn>		10</u></td></tr>
+<tr><th id="194">194</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_X509_STORE" data-ref="_M/CRYPTO_LOCK_X509_STORE">CRYPTO_LOCK_X509_STORE</dfn>		11</u></td></tr>
+<tr><th id="195">195</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_SSL_CTX" data-ref="_M/CRYPTO_LOCK_SSL_CTX">CRYPTO_LOCK_SSL_CTX</dfn>		12</u></td></tr>
+<tr><th id="196">196</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_SSL_CERT" data-ref="_M/CRYPTO_LOCK_SSL_CERT">CRYPTO_LOCK_SSL_CERT</dfn>		13</u></td></tr>
+<tr><th id="197">197</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_SSL_SESSION" data-ref="_M/CRYPTO_LOCK_SSL_SESSION">CRYPTO_LOCK_SSL_SESSION</dfn>		14</u></td></tr>
+<tr><th id="198">198</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_SSL_SESS_CERT" data-ref="_M/CRYPTO_LOCK_SSL_SESS_CERT">CRYPTO_LOCK_SSL_SESS_CERT</dfn>	15</u></td></tr>
+<tr><th id="199">199</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_SSL" data-ref="_M/CRYPTO_LOCK_SSL">CRYPTO_LOCK_SSL</dfn>			16</u></td></tr>
+<tr><th id="200">200</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_SSL_METHOD" data-ref="_M/CRYPTO_LOCK_SSL_METHOD">CRYPTO_LOCK_SSL_METHOD</dfn>		17</u></td></tr>
+<tr><th id="201">201</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_RAND" data-ref="_M/CRYPTO_LOCK_RAND">CRYPTO_LOCK_RAND</dfn>		18</u></td></tr>
+<tr><th id="202">202</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_RAND2" data-ref="_M/CRYPTO_LOCK_RAND2">CRYPTO_LOCK_RAND2</dfn>		19</u></td></tr>
+<tr><th id="203">203</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_MALLOC" data-ref="_M/CRYPTO_LOCK_MALLOC">CRYPTO_LOCK_MALLOC</dfn>		20</u></td></tr>
+<tr><th id="204">204</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_BIO" data-ref="_M/CRYPTO_LOCK_BIO">CRYPTO_LOCK_BIO</dfn>			21</u></td></tr>
+<tr><th id="205">205</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_GETHOSTBYNAME" data-ref="_M/CRYPTO_LOCK_GETHOSTBYNAME">CRYPTO_LOCK_GETHOSTBYNAME</dfn>	22</u></td></tr>
+<tr><th id="206">206</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_GETSERVBYNAME" data-ref="_M/CRYPTO_LOCK_GETSERVBYNAME">CRYPTO_LOCK_GETSERVBYNAME</dfn>	23</u></td></tr>
+<tr><th id="207">207</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_READDIR" data-ref="_M/CRYPTO_LOCK_READDIR">CRYPTO_LOCK_READDIR</dfn>		24</u></td></tr>
+<tr><th id="208">208</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_RSA_BLINDING" data-ref="_M/CRYPTO_LOCK_RSA_BLINDING">CRYPTO_LOCK_RSA_BLINDING</dfn>	25</u></td></tr>
+<tr><th id="209">209</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_DH" data-ref="_M/CRYPTO_LOCK_DH">CRYPTO_LOCK_DH</dfn>			26</u></td></tr>
+<tr><th id="210">210</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_MALLOC2" data-ref="_M/CRYPTO_LOCK_MALLOC2">CRYPTO_LOCK_MALLOC2</dfn>		27</u></td></tr>
+<tr><th id="211">211</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_DSO" data-ref="_M/CRYPTO_LOCK_DSO">CRYPTO_LOCK_DSO</dfn>			28</u></td></tr>
+<tr><th id="212">212</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_DYNLOCK" data-ref="_M/CRYPTO_LOCK_DYNLOCK">CRYPTO_LOCK_DYNLOCK</dfn>		29</u></td></tr>
+<tr><th id="213">213</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_ENGINE" data-ref="_M/CRYPTO_LOCK_ENGINE">CRYPTO_LOCK_ENGINE</dfn>		30</u></td></tr>
+<tr><th id="214">214</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_UI" data-ref="_M/CRYPTO_LOCK_UI">CRYPTO_LOCK_UI</dfn>			31</u></td></tr>
+<tr><th id="215">215</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_ECDSA" data-ref="_M/CRYPTO_LOCK_ECDSA">CRYPTO_LOCK_ECDSA</dfn>               32</u></td></tr>
+<tr><th id="216">216</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_EC" data-ref="_M/CRYPTO_LOCK_EC">CRYPTO_LOCK_EC</dfn>			33</u></td></tr>
+<tr><th id="217">217</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_ECDH" data-ref="_M/CRYPTO_LOCK_ECDH">CRYPTO_LOCK_ECDH</dfn>		34</u></td></tr>
+<tr><th id="218">218</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_BN" data-ref="_M/CRYPTO_LOCK_BN">CRYPTO_LOCK_BN</dfn>  		35</u></td></tr>
+<tr><th id="219">219</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_EC_PRE_COMP" data-ref="_M/CRYPTO_LOCK_EC_PRE_COMP">CRYPTO_LOCK_EC_PRE_COMP</dfn>		36</u></td></tr>
+<tr><th id="220">220</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_STORE" data-ref="_M/CRYPTO_LOCK_STORE">CRYPTO_LOCK_STORE</dfn>		37</u></td></tr>
+<tr><th id="221">221</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_COMP" data-ref="_M/CRYPTO_LOCK_COMP">CRYPTO_LOCK_COMP</dfn>		38</u></td></tr>
+<tr><th id="222">222</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_FIPS" data-ref="_M/CRYPTO_LOCK_FIPS">CRYPTO_LOCK_FIPS</dfn>		39</u></td></tr>
+<tr><th id="223">223</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK_FIPS2" data-ref="_M/CRYPTO_LOCK_FIPS2">CRYPTO_LOCK_FIPS2</dfn>		40</u></td></tr>
+<tr><th id="224">224</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_NUM_LOCKS" data-ref="_M/CRYPTO_NUM_LOCKS">CRYPTO_NUM_LOCKS</dfn>		41</u></td></tr>
+<tr><th id="225">225</th><td></td></tr>
+<tr><th id="226">226</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_LOCK" data-ref="_M/CRYPTO_LOCK">CRYPTO_LOCK</dfn>		1</u></td></tr>
+<tr><th id="227">227</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_UNLOCK" data-ref="_M/CRYPTO_UNLOCK">CRYPTO_UNLOCK</dfn>		2</u></td></tr>
+<tr><th id="228">228</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_READ" data-ref="_M/CRYPTO_READ">CRYPTO_READ</dfn>		4</u></td></tr>
+<tr><th id="229">229</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_WRITE" data-ref="_M/CRYPTO_WRITE">CRYPTO_WRITE</dfn>		8</u></td></tr>
+<tr><th id="230">230</th><td></td></tr>
+<tr><th id="231">231</th><td><u>#<span data-ppcond="231">ifndef</span> <span class="macro" data-ref="_M/OPENSSL_NO_LOCKING">OPENSSL_NO_LOCKING</span></u></td></tr>
+<tr><th id="232">232</th><td><u>#<span data-ppcond="232">ifndef</span> <span class="macro" data-ref="_M/CRYPTO_w_lock">CRYPTO_w_lock</span></u></td></tr>
+<tr><th id="233">233</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_w_lock" data-ref="_M/CRYPTO_w_lock">CRYPTO_w_lock</dfn>(type)	\</u></td></tr>
+<tr><th id="234">234</th><td><u>	CRYPTO_lock(CRYPTO_LOCK|CRYPTO_WRITE,type,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="235">235</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_w_unlock" data-ref="_M/CRYPTO_w_unlock">CRYPTO_w_unlock</dfn>(type)	\</u></td></tr>
+<tr><th id="236">236</th><td><u>	CRYPTO_lock(CRYPTO_UNLOCK|CRYPTO_WRITE,type,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="237">237</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_r_lock" data-ref="_M/CRYPTO_r_lock">CRYPTO_r_lock</dfn>(type)	\</u></td></tr>
+<tr><th id="238">238</th><td><u>	CRYPTO_lock(CRYPTO_LOCK|CRYPTO_READ,type,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="239">239</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_r_unlock" data-ref="_M/CRYPTO_r_unlock">CRYPTO_r_unlock</dfn>(type)	\</u></td></tr>
+<tr><th id="240">240</th><td><u>	CRYPTO_lock(CRYPTO_UNLOCK|CRYPTO_READ,type,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="241">241</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_add" data-ref="_M/CRYPTO_add">CRYPTO_add</dfn>(addr,amount,type)	\</u></td></tr>
+<tr><th id="242">242</th><td><u>	CRYPTO_add_lock(addr,amount,type,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="243">243</th><td><u>#<span data-ppcond="232">endif</span></u></td></tr>
+<tr><th id="244">244</th><td><u>#<span data-ppcond="231">else</span></u></td></tr>
+<tr><th id="245">245</th><td><u>#define CRYPTO_w_lock(a)</u></td></tr>
+<tr><th id="246">246</th><td><u>#define CRYPTO_w_unlock(a)</u></td></tr>
+<tr><th id="247">247</th><td><u>#define CRYPTO_r_lock(a)</u></td></tr>
+<tr><th id="248">248</th><td><u>#define CRYPTO_r_unlock(a)</u></td></tr>
+<tr><th id="249">249</th><td><u>#define CRYPTO_add(a,b,c)	((*(a))+=(b))</u></td></tr>
+<tr><th id="250">250</th><td><u>#<span data-ppcond="231">endif</span></u></td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td><i>/* Some applications as well as some parts of OpenSSL need to allocate</i></td></tr>
+<tr><th id="253">253</th><td><i>   and deallocate locks in a dynamic fashion.  The following typedef</i></td></tr>
+<tr><th id="254">254</th><td><i>   makes this possible in a type-safe manner.  */</i></td></tr>
+<tr><th id="255">255</th><td><i>/* struct CRYPTO_dynlock_value has to be defined by the application. */</i></td></tr>
+<tr><th id="256">256</th><td><b>typedef</b> <b>struct</b></td></tr>
+<tr><th id="257">257</th><td>	{</td></tr>
+<tr><th id="258">258</th><td>	<em>int</em> <dfn class="decl" id="(anonymous)::references" title='(anonymous struct)::references' data-ref="(anonymous)::references" >references</dfn>;</td></tr>
+<tr><th id="259">259</th><td>	<b>struct</b> <dfn class="type" id="CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" ><a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a></dfn> *<dfn class="decl" id="(anonymous)::data" title='(anonymous struct)::data' data-ref="(anonymous)::data" >data</dfn>;</td></tr>
+<tr><th id="260">260</th><td>	} <dfn class="typedef" id="CRYPTO_dynlock" title='CRYPTO_dynlock' data-type='struct CRYPTO_dynlock' data-ref="CRYPTO_dynlock" >CRYPTO_dynlock</dfn>;</td></tr>
+<tr><th id="261">261</th><td></td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td><i>/* The following can be used to detect memory leaks in the SSLeay library.</i></td></tr>
+<tr><th id="264">264</th><td><i> * It used, it turns on malloc checking */</i></td></tr>
+<tr><th id="265">265</th><td></td></tr>
+<tr><th id="266">266</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_MEM_CHECK_OFF" data-ref="_M/CRYPTO_MEM_CHECK_OFF">CRYPTO_MEM_CHECK_OFF</dfn>	0x0	/* an enume */</u></td></tr>
+<tr><th id="267">267</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_MEM_CHECK_ON" data-ref="_M/CRYPTO_MEM_CHECK_ON">CRYPTO_MEM_CHECK_ON</dfn>	0x1	/* a bit */</u></td></tr>
+<tr><th id="268">268</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_MEM_CHECK_ENABLE" data-ref="_M/CRYPTO_MEM_CHECK_ENABLE">CRYPTO_MEM_CHECK_ENABLE</dfn>	0x2	/* a bit */</u></td></tr>
+<tr><th id="269">269</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_MEM_CHECK_DISABLE" data-ref="_M/CRYPTO_MEM_CHECK_DISABLE">CRYPTO_MEM_CHECK_DISABLE</dfn> 0x3	/* an enume */</u></td></tr>
+<tr><th id="270">270</th><td></td></tr>
+<tr><th id="271">271</th><td><i>/* The following are bit values to turn on or off options connected to the</i></td></tr>
+<tr><th id="272">272</th><td><i> * malloc checking functionality */</i></td></tr>
+<tr><th id="273">273</th><td></td></tr>
+<tr><th id="274">274</th><td><i>/* Adds time to the memory checking information */</i></td></tr>
+<tr><th id="275">275</th><td><u>#define <dfn class="macro" id="_M/V_CRYPTO_MDEBUG_TIME" data-ref="_M/V_CRYPTO_MDEBUG_TIME">V_CRYPTO_MDEBUG_TIME</dfn>	0x1 /* a bit */</u></td></tr>
+<tr><th id="276">276</th><td><i>/* Adds thread number to the memory checking information */</i></td></tr>
+<tr><th id="277">277</th><td><u>#define <dfn class="macro" id="_M/V_CRYPTO_MDEBUG_THREAD" data-ref="_M/V_CRYPTO_MDEBUG_THREAD">V_CRYPTO_MDEBUG_THREAD</dfn>	0x2 /* a bit */</u></td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td><u>#define <dfn class="macro" id="_M/V_CRYPTO_MDEBUG_ALL" data-ref="_M/V_CRYPTO_MDEBUG_ALL">V_CRYPTO_MDEBUG_ALL</dfn> (V_CRYPTO_MDEBUG_TIME | V_CRYPTO_MDEBUG_THREAD)</u></td></tr>
+<tr><th id="280">280</th><td></td></tr>
+<tr><th id="281">281</th><td></td></tr>
+<tr><th id="282">282</th><td><i>/* predec of the BIO type */</i></td></tr>
+<tr><th id="283">283</th><td><b>typedef</b> <b>struct</b> <a class="type" href="bio.h.html#bio_st" title='bio_st' data-ref="bio_st" id="bio_st" ><a class="type" href="bio.h.html#bio_st" title='bio_st' data-ref="bio_st" >bio_st</a></a> <dfn class="typedef" id="BIO_dummy" title='BIO_dummy' data-type='struct bio_st' data-ref="BIO_dummy" >BIO_dummy</dfn>;</td></tr>
+<tr><th id="284">284</th><td></td></tr>
+<tr><th id="285">285</th><td><b>struct</b> <dfn class="type def" id="crypto_ex_data_st" title='crypto_ex_data_st' data-ref="crypto_ex_data_st" >crypto_ex_data_st</dfn></td></tr>
+<tr><th id="286">286</th><td>	{</td></tr>
+<tr><th id="287">287</th><td>	<a class="macro" href="safestack.h.html#83" title="struct stack_st_void" data-ref="_M/STACK_OF">STACK_OF</a>(<em>void</em>) *<dfn class="decl" id="crypto_ex_data_st::sk" title='crypto_ex_data_st::sk' data-ref="crypto_ex_data_st::sk" >sk</dfn>;</td></tr>
+<tr><th id="288">288</th><td>	<em>int</em> <dfn class="decl" id="crypto_ex_data_st::dummy" title='crypto_ex_data_st::dummy' data-ref="crypto_ex_data_st::dummy" >dummy</dfn>; <i>/* gcc is screwing up this data structure :-( */</i></td></tr>
+<tr><th id="289">289</th><td>	};</td></tr>
+<tr><th id="290">290</th><td><a class="macro" href="safestack.h.html#86" title="struct stack_st_void { _STACK stack; };" data-ref="_M/DECLARE_STACK_OF">DECLARE_STACK_OF</a>(<em>void</em>)</td></tr>
+<tr><th id="291">291</th><td></td></tr>
+<tr><th id="292">292</th><td><i>/* This stuff is basically class callback functions</i></td></tr>
+<tr><th id="293">293</th><td><i> * The current classes are SSL_CTX, SSL, SSL_SESSION, and a few more */</i></td></tr>
+<tr><th id="294">294</th><td></td></tr>
+<tr><th id="295">295</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="crypto_ex_data_func_st" title='crypto_ex_data_func_st' data-ref="crypto_ex_data_func_st" ><a class="type" href="#crypto_ex_data_func_st" title='crypto_ex_data_func_st' data-ref="crypto_ex_data_func_st" >crypto_ex_data_func_st</a></dfn></td></tr>
+<tr><th id="296">296</th><td>	{</td></tr>
+<tr><th id="297">297</th><td>	<em>long</em> <dfn class="decl" id="crypto_ex_data_func_st::argl" title='crypto_ex_data_func_st::argl' data-ref="crypto_ex_data_func_st::argl" >argl</dfn>;	<i>/* Arbitary long */</i></td></tr>
+<tr><th id="298">298</th><td>	<em>void</em> *<dfn class="decl" id="crypto_ex_data_func_st::argp" title='crypto_ex_data_func_st::argp' data-ref="crypto_ex_data_func_st::argp" >argp</dfn>;	<i>/* Arbitary void * */</i></td></tr>
+<tr><th id="299">299</th><td>	<a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_new" title='CRYPTO_EX_new' data-type='int (void *, void *, CRYPTO_EX_DATA *, int, long, void *)' data-ref="CRYPTO_EX_new" >CRYPTO_EX_new</a> *<dfn class="decl" id="crypto_ex_data_func_st::new_func" title='crypto_ex_data_func_st::new_func' data-ref="crypto_ex_data_func_st::new_func" >new_func</dfn>;</td></tr>
+<tr><th id="300">300</th><td>	<a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_free" title='CRYPTO_EX_free' data-type='void (void *, void *, CRYPTO_EX_DATA *, int, long, void *)' data-ref="CRYPTO_EX_free" >CRYPTO_EX_free</a> *<dfn class="decl" id="crypto_ex_data_func_st::free_func" title='crypto_ex_data_func_st::free_func' data-ref="crypto_ex_data_func_st::free_func" >free_func</dfn>;</td></tr>
+<tr><th id="301">301</th><td>	<a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_dup" title='CRYPTO_EX_dup' data-type='int (CRYPTO_EX_DATA *, CRYPTO_EX_DATA *, void *, int, long, void *)' data-ref="CRYPTO_EX_dup" >CRYPTO_EX_dup</a> *<dfn class="decl" id="crypto_ex_data_func_st::dup_func" title='crypto_ex_data_func_st::dup_func' data-ref="crypto_ex_data_func_st::dup_func" >dup_func</dfn>;</td></tr>
+<tr><th id="302">302</th><td>	} <dfn class="typedef" id="CRYPTO_EX_DATA_FUNCS" title='CRYPTO_EX_DATA_FUNCS' data-type='struct crypto_ex_data_func_st' data-ref="CRYPTO_EX_DATA_FUNCS" >CRYPTO_EX_DATA_FUNCS</dfn>;</td></tr>
+<tr><th id="303">303</th><td></td></tr>
+<tr><th id="304">304</th><td><a class="macro" href="safestack.h.html#86" title="struct stack_st_CRYPTO_EX_DATA_FUNCS { _STACK stack; };" data-ref="_M/DECLARE_STACK_OF">DECLARE_STACK_OF</a>(CRYPTO_EX_DATA_FUNCS)</td></tr>
+<tr><th id="305">305</th><td></td></tr>
+<tr><th id="306">306</th><td><i>/* Per class, we have a STACK of CRYPTO_EX_DATA_FUNCS for each CRYPTO_EX_DATA</i></td></tr>
+<tr><th id="307">307</th><td><i> * entry.</i></td></tr>
+<tr><th id="308">308</th><td><i> */</i></td></tr>
+<tr><th id="309">309</th><td></td></tr>
+<tr><th id="310">310</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_BIO" data-ref="_M/CRYPTO_EX_INDEX_BIO">CRYPTO_EX_INDEX_BIO</dfn>		0</u></td></tr>
+<tr><th id="311">311</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_SSL" data-ref="_M/CRYPTO_EX_INDEX_SSL">CRYPTO_EX_INDEX_SSL</dfn>		1</u></td></tr>
+<tr><th id="312">312</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_SSL_CTX" data-ref="_M/CRYPTO_EX_INDEX_SSL_CTX">CRYPTO_EX_INDEX_SSL_CTX</dfn>		2</u></td></tr>
+<tr><th id="313">313</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_SSL_SESSION" data-ref="_M/CRYPTO_EX_INDEX_SSL_SESSION">CRYPTO_EX_INDEX_SSL_SESSION</dfn>	3</u></td></tr>
+<tr><th id="314">314</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_X509_STORE" data-ref="_M/CRYPTO_EX_INDEX_X509_STORE">CRYPTO_EX_INDEX_X509_STORE</dfn>	4</u></td></tr>
+<tr><th id="315">315</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_X509_STORE_CTX" data-ref="_M/CRYPTO_EX_INDEX_X509_STORE_CTX">CRYPTO_EX_INDEX_X509_STORE_CTX</dfn>	5</u></td></tr>
+<tr><th id="316">316</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_RSA" data-ref="_M/CRYPTO_EX_INDEX_RSA">CRYPTO_EX_INDEX_RSA</dfn>		6</u></td></tr>
+<tr><th id="317">317</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_DSA" data-ref="_M/CRYPTO_EX_INDEX_DSA">CRYPTO_EX_INDEX_DSA</dfn>		7</u></td></tr>
+<tr><th id="318">318</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_DH" data-ref="_M/CRYPTO_EX_INDEX_DH">CRYPTO_EX_INDEX_DH</dfn>		8</u></td></tr>
+<tr><th id="319">319</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_ENGINE" data-ref="_M/CRYPTO_EX_INDEX_ENGINE">CRYPTO_EX_INDEX_ENGINE</dfn>		9</u></td></tr>
+<tr><th id="320">320</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_X509" data-ref="_M/CRYPTO_EX_INDEX_X509">CRYPTO_EX_INDEX_X509</dfn>		10</u></td></tr>
+<tr><th id="321">321</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_UI" data-ref="_M/CRYPTO_EX_INDEX_UI">CRYPTO_EX_INDEX_UI</dfn>		11</u></td></tr>
+<tr><th id="322">322</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_ECDSA" data-ref="_M/CRYPTO_EX_INDEX_ECDSA">CRYPTO_EX_INDEX_ECDSA</dfn>		12</u></td></tr>
+<tr><th id="323">323</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_ECDH" data-ref="_M/CRYPTO_EX_INDEX_ECDH">CRYPTO_EX_INDEX_ECDH</dfn>		13</u></td></tr>
+<tr><th id="324">324</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_COMP" data-ref="_M/CRYPTO_EX_INDEX_COMP">CRYPTO_EX_INDEX_COMP</dfn>		14</u></td></tr>
+<tr><th id="325">325</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_STORE" data-ref="_M/CRYPTO_EX_INDEX_STORE">CRYPTO_EX_INDEX_STORE</dfn>		15</u></td></tr>
+<tr><th id="326">326</th><td></td></tr>
+<tr><th id="327">327</th><td><i>/* Dynamically assigned indexes start from this value (don't use directly, use</i></td></tr>
+<tr><th id="328">328</th><td><i> * via CRYPTO_ex_data_new_class). */</i></td></tr>
+<tr><th id="329">329</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_EX_INDEX_USER" data-ref="_M/CRYPTO_EX_INDEX_USER">CRYPTO_EX_INDEX_USER</dfn>		100</u></td></tr>
+<tr><th id="330">330</th><td></td></tr>
+<tr><th id="331">331</th><td></td></tr>
+<tr><th id="332">332</th><td><i>/* This is the default callbacks, but we can have others as well:</i></td></tr>
+<tr><th id="333">333</th><td><i> * this is needed in Win32 where the application malloc and the</i></td></tr>
+<tr><th id="334">334</th><td><i> * library malloc may not be the same.</i></td></tr>
+<tr><th id="335">335</th><td><i> */</i></td></tr>
+<tr><th id="336">336</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_malloc_init" data-ref="_M/CRYPTO_malloc_init">CRYPTO_malloc_init</dfn>()	CRYPTO_set_mem_functions(\</u></td></tr>
+<tr><th id="337">337</th><td><u>	malloc, realloc, free)</u></td></tr>
+<tr><th id="338">338</th><td></td></tr>
+<tr><th id="339">339</th><td><u>#<span data-ppcond="339">if</span> defined <span class="macro" data-ref="_M/CRYPTO_MDEBUG_ALL">CRYPTO_MDEBUG_ALL</span> || defined <span class="macro" data-ref="_M/CRYPTO_MDEBUG_TIME">CRYPTO_MDEBUG_TIME</span> || defined <span class="macro" data-ref="_M/CRYPTO_MDEBUG_THREAD">CRYPTO_MDEBUG_THREAD</span></u></td></tr>
+<tr><th id="340">340</th><td><u># ifndef CRYPTO_MDEBUG /* avoid duplicate #define */</u></td></tr>
+<tr><th id="341">341</th><td><u>#  define CRYPTO_MDEBUG</u></td></tr>
+<tr><th id="342">342</th><td><u># endif</u></td></tr>
+<tr><th id="343">343</th><td><u>#<span data-ppcond="339">endif</span></u></td></tr>
+<tr><th id="344">344</th><td></td></tr>
+<tr><th id="345">345</th><td><i>/* Set standard debugging functions (not done by default</i></td></tr>
+<tr><th id="346">346</th><td><i> * unless CRYPTO_MDEBUG is defined) */</i></td></tr>
+<tr><th id="347">347</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_malloc_debug_init" data-ref="_M/CRYPTO_malloc_debug_init">CRYPTO_malloc_debug_init</dfn>()	do {\</u></td></tr>
+<tr><th id="348">348</th><td><u>	CRYPTO_set_mem_debug_functions(\</u></td></tr>
+<tr><th id="349">349</th><td><u>		CRYPTO_dbg_malloc,\</u></td></tr>
+<tr><th id="350">350</th><td><u>		CRYPTO_dbg_realloc,\</u></td></tr>
+<tr><th id="351">351</th><td><u>		CRYPTO_dbg_free,\</u></td></tr>
+<tr><th id="352">352</th><td><u>		CRYPTO_dbg_set_options,\</u></td></tr>
+<tr><th id="353">353</th><td><u>		CRYPTO_dbg_get_options);\</u></td></tr>
+<tr><th id="354">354</th><td><u>	} while(0)</u></td></tr>
+<tr><th id="355">355</th><td></td></tr>
+<tr><th id="356">356</th><td><em>int</em> <dfn class="decl" id="CRYPTO_mem_ctrl" title='CRYPTO_mem_ctrl' data-ref="CRYPTO_mem_ctrl" >CRYPTO_mem_ctrl</dfn>(<em>int</em> <dfn class="local col5 decl" id="45mode" title='mode' data-type='int' data-ref="45mode" >mode</dfn>);</td></tr>
+<tr><th id="357">357</th><td><em>int</em> <dfn class="decl" id="CRYPTO_is_mem_check_on" title='CRYPTO_is_mem_check_on' data-ref="CRYPTO_is_mem_check_on" >CRYPTO_is_mem_check_on</dfn>(<em>void</em>);</td></tr>
+<tr><th id="358">358</th><td></td></tr>
+<tr><th id="359">359</th><td><i>/* for applications */</i></td></tr>
+<tr><th id="360">360</th><td><u>#define <dfn class="macro" id="_M/MemCheck_start" data-ref="_M/MemCheck_start">MemCheck_start</dfn>() CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_ON)</u></td></tr>
+<tr><th id="361">361</th><td><u>#define <dfn class="macro" id="_M/MemCheck_stop" data-ref="_M/MemCheck_stop">MemCheck_stop</dfn>()	CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_OFF)</u></td></tr>
+<tr><th id="362">362</th><td></td></tr>
+<tr><th id="363">363</th><td><i>/* for library-internal use */</i></td></tr>
+<tr><th id="364">364</th><td><u>#define <dfn class="macro" id="_M/MemCheck_on" data-ref="_M/MemCheck_on">MemCheck_on</dfn>()	CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_ENABLE)</u></td></tr>
+<tr><th id="365">365</th><td><u>#define <dfn class="macro" id="_M/MemCheck_off" data-ref="_M/MemCheck_off">MemCheck_off</dfn>()	CRYPTO_mem_ctrl(CRYPTO_MEM_CHECK_DISABLE)</u></td></tr>
+<tr><th id="366">366</th><td><u>#define <dfn class="macro" id="_M/is_MemCheck_on" data-ref="_M/is_MemCheck_on">is_MemCheck_on</dfn>() CRYPTO_is_mem_check_on()</u></td></tr>
+<tr><th id="367">367</th><td></td></tr>
+<tr><th id="368">368</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_malloc" data-ref="_M/OPENSSL_malloc">OPENSSL_malloc</dfn>(num)	CRYPTO_malloc((int)num,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="369">369</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_strdup" data-ref="_M/OPENSSL_strdup">OPENSSL_strdup</dfn>(str)	CRYPTO_strdup((str),__FILE__,__LINE__)</u></td></tr>
+<tr><th id="370">370</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_realloc" data-ref="_M/OPENSSL_realloc">OPENSSL_realloc</dfn>(addr,num) \</u></td></tr>
+<tr><th id="371">371</th><td><u>	CRYPTO_realloc((char *)addr,(int)num,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="372">372</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_realloc_clean" data-ref="_M/OPENSSL_realloc_clean">OPENSSL_realloc_clean</dfn>(addr,old_num,num) \</u></td></tr>
+<tr><th id="373">373</th><td><u>	CRYPTO_realloc_clean(addr,old_num,num,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="374">374</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_remalloc" data-ref="_M/OPENSSL_remalloc">OPENSSL_remalloc</dfn>(addr,num) \</u></td></tr>
+<tr><th id="375">375</th><td><u>	CRYPTO_remalloc((char **)addr,(int)num,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="376">376</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_freeFunc" data-ref="_M/OPENSSL_freeFunc">OPENSSL_freeFunc</dfn>	CRYPTO_free</u></td></tr>
+<tr><th id="377">377</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_free" data-ref="_M/OPENSSL_free">OPENSSL_free</dfn>(addr)	CRYPTO_free(addr)</u></td></tr>
+<tr><th id="378">378</th><td></td></tr>
+<tr><th id="379">379</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_malloc_locked" data-ref="_M/OPENSSL_malloc_locked">OPENSSL_malloc_locked</dfn>(num) \</u></td></tr>
+<tr><th id="380">380</th><td><u>	CRYPTO_malloc_locked((int)num,__FILE__,__LINE__)</u></td></tr>
+<tr><th id="381">381</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_free_locked" data-ref="_M/OPENSSL_free_locked">OPENSSL_free_locked</dfn>(addr) CRYPTO_free_locked(addr)</u></td></tr>
+<tr><th id="382">382</th><td></td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td><em>const</em> <em>char</em> *<dfn class="decl" id="SSLeay_version" title='SSLeay_version' data-ref="SSLeay_version" >SSLeay_version</dfn>(<em>int</em> <dfn class="local col6 decl" id="46type" title='type' data-type='int' data-ref="46type" >type</dfn>);</td></tr>
+<tr><th id="385">385</th><td><em>unsigned</em> <em>long</em> <dfn class="decl" id="SSLeay" title='SSLeay' data-ref="SSLeay" >SSLeay</dfn>(<em>void</em>);</td></tr>
+<tr><th id="386">386</th><td></td></tr>
+<tr><th id="387">387</th><td><em>int</em> <dfn class="decl" id="OPENSSL_issetugid" title='OPENSSL_issetugid' data-ref="OPENSSL_issetugid" >OPENSSL_issetugid</dfn>(<em>void</em>);</td></tr>
+<tr><th id="388">388</th><td></td></tr>
+<tr><th id="389">389</th><td><i>/* An opaque type representing an implementation of "ex_data" support */</i></td></tr>
+<tr><th id="390">390</th><td><b>typedef</b> <b>struct</b> <dfn class="type" id="st_CRYPTO_EX_DATA_IMPL" title='st_CRYPTO_EX_DATA_IMPL' data-ref="st_CRYPTO_EX_DATA_IMPL" ><a class="type" href="#st_CRYPTO_EX_DATA_IMPL" title='st_CRYPTO_EX_DATA_IMPL' data-ref="st_CRYPTO_EX_DATA_IMPL" >st_CRYPTO_EX_DATA_IMPL</a></dfn>	<dfn class="typedef" id="CRYPTO_EX_DATA_IMPL" title='CRYPTO_EX_DATA_IMPL' data-type='struct st_CRYPTO_EX_DATA_IMPL' data-ref="CRYPTO_EX_DATA_IMPL" >CRYPTO_EX_DATA_IMPL</dfn>;</td></tr>
+<tr><th id="391">391</th><td><i>/* Return an opaque pointer to the current "ex_data" implementation */</i></td></tr>
+<tr><th id="392">392</th><td><em>const</em> <a class="typedef" href="#CRYPTO_EX_DATA_IMPL" title='CRYPTO_EX_DATA_IMPL' data-type='struct st_CRYPTO_EX_DATA_IMPL' data-ref="CRYPTO_EX_DATA_IMPL" >CRYPTO_EX_DATA_IMPL</a> *<dfn class="decl" id="CRYPTO_get_ex_data_implementation" title='CRYPTO_get_ex_data_implementation' data-ref="CRYPTO_get_ex_data_implementation" >CRYPTO_get_ex_data_implementation</dfn>(<em>void</em>);</td></tr>
+<tr><th id="393">393</th><td><i>/* Sets the "ex_data" implementation to be used (if it's not too late) */</i></td></tr>
+<tr><th id="394">394</th><td><em>int</em> <dfn class="decl" id="CRYPTO_set_ex_data_implementation" title='CRYPTO_set_ex_data_implementation' data-ref="CRYPTO_set_ex_data_implementation" >CRYPTO_set_ex_data_implementation</dfn>(<em>const</em> <a class="typedef" href="#CRYPTO_EX_DATA_IMPL" title='CRYPTO_EX_DATA_IMPL' data-type='struct st_CRYPTO_EX_DATA_IMPL' data-ref="CRYPTO_EX_DATA_IMPL" >CRYPTO_EX_DATA_IMPL</a> *<dfn class="local col7 decl" id="47i" title='i' data-type='const CRYPTO_EX_DATA_IMPL *' data-ref="47i" >i</dfn>);</td></tr>
+<tr><th id="395">395</th><td><i>/* Get a new "ex_data" class, and return the corresponding "class_index" */</i></td></tr>
+<tr><th id="396">396</th><td><em>int</em> <dfn class="decl" id="CRYPTO_ex_data_new_class" title='CRYPTO_ex_data_new_class' data-ref="CRYPTO_ex_data_new_class" >CRYPTO_ex_data_new_class</dfn>(<em>void</em>);</td></tr>
+<tr><th id="397">397</th><td><i>/* Within a given class, get/register a new index */</i></td></tr>
+<tr><th id="398">398</th><td><em>int</em> <dfn class="decl" id="CRYPTO_get_ex_new_index" title='CRYPTO_get_ex_new_index' data-ref="CRYPTO_get_ex_new_index" >CRYPTO_get_ex_new_index</dfn>(<em>int</em> <dfn class="local col8 decl" id="48class_index" title='class_index' data-type='int' data-ref="48class_index" >class_index</dfn>, <em>long</em> <dfn class="local col9 decl" id="49argl" title='argl' data-type='long' data-ref="49argl" >argl</dfn>, <em>void</em> *<dfn class="local col0 decl" id="50argp" title='argp' data-type='void *' data-ref="50argp" >argp</dfn>,</td></tr>
+<tr><th id="399">399</th><td>		<a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_new" title='CRYPTO_EX_new' data-type='int (void *, void *, CRYPTO_EX_DATA *, int, long, void *)' data-ref="CRYPTO_EX_new" >CRYPTO_EX_new</a> *<dfn class="local col1 decl" id="51new_func" title='new_func' data-type='CRYPTO_EX_new *' data-ref="51new_func" >new_func</dfn>, <a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_dup" title='CRYPTO_EX_dup' data-type='int (CRYPTO_EX_DATA *, CRYPTO_EX_DATA *, void *, int, long, void *)' data-ref="CRYPTO_EX_dup" >CRYPTO_EX_dup</a> *<dfn class="local col2 decl" id="52dup_func" title='dup_func' data-type='CRYPTO_EX_dup *' data-ref="52dup_func" >dup_func</dfn>,</td></tr>
+<tr><th id="400">400</th><td>		<a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_free" title='CRYPTO_EX_free' data-type='void (void *, void *, CRYPTO_EX_DATA *, int, long, void *)' data-ref="CRYPTO_EX_free" >CRYPTO_EX_free</a> *<dfn class="local col3 decl" id="53free_func" title='free_func' data-type='CRYPTO_EX_free *' data-ref="53free_func" >free_func</dfn>);</td></tr>
+<tr><th id="401">401</th><td><i>/* Initialise/duplicate/free CRYPTO_EX_DATA variables corresponding to a given</i></td></tr>
+<tr><th id="402">402</th><td><i> * class (invokes whatever per-class callbacks are applicable) */</i></td></tr>
+<tr><th id="403">403</th><td><em>int</em> <dfn class="decl" id="CRYPTO_new_ex_data" title='CRYPTO_new_ex_data' data-ref="CRYPTO_new_ex_data" >CRYPTO_new_ex_data</dfn>(<em>int</em> <dfn class="local col4 decl" id="54class_index" title='class_index' data-type='int' data-ref="54class_index" >class_index</dfn>, <em>void</em> *<dfn class="local col5 decl" id="55obj" title='obj' data-type='void *' data-ref="55obj" >obj</dfn>, <a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_DATA" title='CRYPTO_EX_DATA' data-type='struct crypto_ex_data_st' data-ref="CRYPTO_EX_DATA" >CRYPTO_EX_DATA</a> *<dfn class="local col6 decl" id="56ad" title='ad' data-type='CRYPTO_EX_DATA *' data-ref="56ad" >ad</dfn>);</td></tr>
+<tr><th id="404">404</th><td><em>int</em> <dfn class="decl" id="CRYPTO_dup_ex_data" title='CRYPTO_dup_ex_data' data-ref="CRYPTO_dup_ex_data" >CRYPTO_dup_ex_data</dfn>(<em>int</em> <dfn class="local col7 decl" id="57class_index" title='class_index' data-type='int' data-ref="57class_index" >class_index</dfn>, <a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_DATA" title='CRYPTO_EX_DATA' data-type='struct crypto_ex_data_st' data-ref="CRYPTO_EX_DATA" >CRYPTO_EX_DATA</a> *<dfn class="local col8 decl" id="58to" title='to' data-type='CRYPTO_EX_DATA *' data-ref="58to" >to</dfn>,</td></tr>
+<tr><th id="405">405</th><td>		<a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_DATA" title='CRYPTO_EX_DATA' data-type='struct crypto_ex_data_st' data-ref="CRYPTO_EX_DATA" >CRYPTO_EX_DATA</a> *<dfn class="local col9 decl" id="59from" title='from' data-type='CRYPTO_EX_DATA *' data-ref="59from" >from</dfn>);</td></tr>
+<tr><th id="406">406</th><td><em>void</em> <dfn class="decl" id="CRYPTO_free_ex_data" title='CRYPTO_free_ex_data' data-ref="CRYPTO_free_ex_data" >CRYPTO_free_ex_data</dfn>(<em>int</em> <dfn class="local col0 decl" id="60class_index" title='class_index' data-type='int' data-ref="60class_index" >class_index</dfn>, <em>void</em> *<dfn class="local col1 decl" id="61obj" title='obj' data-type='void *' data-ref="61obj" >obj</dfn>, <a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_DATA" title='CRYPTO_EX_DATA' data-type='struct crypto_ex_data_st' data-ref="CRYPTO_EX_DATA" >CRYPTO_EX_DATA</a> *<dfn class="local col2 decl" id="62ad" title='ad' data-type='CRYPTO_EX_DATA *' data-ref="62ad" >ad</dfn>);</td></tr>
+<tr><th id="407">407</th><td><i>/* Get/set data in a CRYPTO_EX_DATA variable corresponding to a particular index</i></td></tr>
+<tr><th id="408">408</th><td><i> * (relative to the class type involved) */</i></td></tr>
+<tr><th id="409">409</th><td><em>int</em> <dfn class="decl" id="CRYPTO_set_ex_data" title='CRYPTO_set_ex_data' data-ref="CRYPTO_set_ex_data" >CRYPTO_set_ex_data</dfn>(<a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_DATA" title='CRYPTO_EX_DATA' data-type='struct crypto_ex_data_st' data-ref="CRYPTO_EX_DATA" >CRYPTO_EX_DATA</a> *<dfn class="local col3 decl" id="63ad" title='ad' data-type='CRYPTO_EX_DATA *' data-ref="63ad" >ad</dfn>, <em>int</em> <dfn class="local col4 decl" id="64idx" title='idx' data-type='int' data-ref="64idx" >idx</dfn>, <em>void</em> *<dfn class="local col5 decl" id="65val" title='val' data-type='void *' data-ref="65val" >val</dfn>);</td></tr>
+<tr><th id="410">410</th><td><em>void</em> *<dfn class="decl" id="CRYPTO_get_ex_data" title='CRYPTO_get_ex_data' data-ref="CRYPTO_get_ex_data" >CRYPTO_get_ex_data</dfn>(<em>const</em> <a class="typedef" href="ossl_typ.h.html#CRYPTO_EX_DATA" title='CRYPTO_EX_DATA' data-type='struct crypto_ex_data_st' data-ref="CRYPTO_EX_DATA" >CRYPTO_EX_DATA</a> *<dfn class="local col6 decl" id="66ad" title='ad' data-type='const CRYPTO_EX_DATA *' data-ref="66ad" >ad</dfn>,<em>int</em> <dfn class="local col7 decl" id="67idx" title='idx' data-type='int' data-ref="67idx" >idx</dfn>);</td></tr>
+<tr><th id="411">411</th><td><i>/* This function cleans up all "ex_data" state. It mustn't be called under</i></td></tr>
+<tr><th id="412">412</th><td><i> * potential race-conditions. */</i></td></tr>
+<tr><th id="413">413</th><td><em>void</em> <dfn class="decl" id="CRYPTO_cleanup_all_ex_data" title='CRYPTO_cleanup_all_ex_data' data-ref="CRYPTO_cleanup_all_ex_data" >CRYPTO_cleanup_all_ex_data</dfn>(<em>void</em>);</td></tr>
+<tr><th id="414">414</th><td></td></tr>
+<tr><th id="415">415</th><td><em>int</em> <dfn class="decl" id="CRYPTO_get_new_lockid" title='CRYPTO_get_new_lockid' data-ref="CRYPTO_get_new_lockid" >CRYPTO_get_new_lockid</dfn>(<em>char</em> *<dfn class="local col8 decl" id="68name" title='name' data-type='char *' data-ref="68name" >name</dfn>);</td></tr>
+<tr><th id="416">416</th><td></td></tr>
+<tr><th id="417">417</th><td><em>int</em> <dfn class="decl" id="CRYPTO_num_locks" title='CRYPTO_num_locks' data-ref="CRYPTO_num_locks" >CRYPTO_num_locks</dfn>(<em>void</em>); <i>/* return CRYPTO_NUM_LOCKS (shared libs!) */</i></td></tr>
+<tr><th id="418">418</th><td><em>void</em> <dfn class="decl" id="CRYPTO_lock" title='CRYPTO_lock' data-ref="CRYPTO_lock" >CRYPTO_lock</dfn>(<em>int</em> <dfn class="local col9 decl" id="69mode" title='mode' data-type='int' data-ref="69mode" >mode</dfn>, <em>int</em> <dfn class="local col0 decl" id="70type" title='type' data-type='int' data-ref="70type" >type</dfn>,<em>const</em> <em>char</em> *<dfn class="local col1 decl" id="71file" title='file' data-type='const char *' data-ref="71file" >file</dfn>,<em>int</em> <dfn class="local col2 decl" id="72line" title='line' data-type='int' data-ref="72line" >line</dfn>);</td></tr>
+<tr><th id="419">419</th><td><em>void</em> <dfn class="decl" id="CRYPTO_set_locking_callback" title='CRYPTO_set_locking_callback' data-ref="CRYPTO_set_locking_callback" >CRYPTO_set_locking_callback</dfn>(<em>void</em> (*<dfn class="local col3 decl" id="73func" title='func' data-type='void (*)(int, int, const char *, int)' data-ref="73func" >func</dfn>)(<em>int</em> <dfn class="local col4 decl" id="74mode" title='mode' data-type='int' data-ref="74mode" >mode</dfn>,<em>int</em> <dfn class="local col5 decl" id="75type" title='type' data-type='int' data-ref="75type" >type</dfn>,</td></tr>
+<tr><th id="420">420</th><td>					      <em>const</em> <em>char</em> *<dfn class="local col6 decl" id="76file" title='file' data-type='const char *' data-ref="76file" >file</dfn>,<em>int</em> <dfn class="local col7 decl" id="77line" title='line' data-type='int' data-ref="77line" >line</dfn>));</td></tr>
+<tr><th id="421">421</th><td><em>void</em> (*<dfn class="decl" id="CRYPTO_get_locking_callback" title='CRYPTO_get_locking_callback' data-ref="CRYPTO_get_locking_callback" >CRYPTO_get_locking_callback</dfn>(<em>void</em>))(<em>int</em> <dfn class="local col8 decl" id="78mode" title='mode' data-type='int' data-ref="78mode" >mode</dfn>,<em>int</em> <dfn class="local col9 decl" id="79type" title='type' data-type='int' data-ref="79type" >type</dfn>,<em>const</em> <em>char</em> *<dfn class="local col0 decl" id="80file" title='file' data-type='const char *' data-ref="80file" >file</dfn>,</td></tr>
+<tr><th id="422">422</th><td>		<em>int</em> <dfn class="local col1 decl" id="81line" title='line' data-type='int' data-ref="81line" >line</dfn>);</td></tr>
+<tr><th id="423">423</th><td><em>void</em> <dfn class="decl" id="CRYPTO_set_add_lock_callback" title='CRYPTO_set_add_lock_callback' data-ref="CRYPTO_set_add_lock_callback" >CRYPTO_set_add_lock_callback</dfn>(<em>int</em> (*<dfn class="local col2 decl" id="82func" title='func' data-type='int (*)(int *, int, int, const char *, int)' data-ref="82func" >func</dfn>)(<em>int</em> *<dfn class="local col3 decl" id="83num" title='num' data-type='int *' data-ref="83num" >num</dfn>,<em>int</em> <dfn class="local col4 decl" id="84mount" title='mount' data-type='int' data-ref="84mount" >mount</dfn>,<em>int</em> <dfn class="local col5 decl" id="85type" title='type' data-type='int' data-ref="85type" >type</dfn>,</td></tr>
+<tr><th id="424">424</th><td>					      <em>const</em> <em>char</em> *<dfn class="local col6 decl" id="86file" title='file' data-type='const char *' data-ref="86file" >file</dfn>, <em>int</em> <dfn class="local col7 decl" id="87line" title='line' data-type='int' data-ref="87line" >line</dfn>));</td></tr>
+<tr><th id="425">425</th><td><em>int</em> (*<dfn class="decl" id="CRYPTO_get_add_lock_callback" title='CRYPTO_get_add_lock_callback' data-ref="CRYPTO_get_add_lock_callback" >CRYPTO_get_add_lock_callback</dfn>(<em>void</em>))(<em>int</em> *<dfn class="local col8 decl" id="88num" title='num' data-type='int *' data-ref="88num" >num</dfn>,<em>int</em> <dfn class="local col9 decl" id="89mount" title='mount' data-type='int' data-ref="89mount" >mount</dfn>,<em>int</em> <dfn class="local col0 decl" id="90type" title='type' data-type='int' data-ref="90type" >type</dfn>,</td></tr>
+<tr><th id="426">426</th><td>					  <em>const</em> <em>char</em> *<dfn class="local col1 decl" id="91file" title='file' data-type='const char *' data-ref="91file" >file</dfn>,<em>int</em> <dfn class="local col2 decl" id="92line" title='line' data-type='int' data-ref="92line" >line</dfn>);</td></tr>
+<tr><th id="427">427</th><td></td></tr>
+<tr><th id="428">428</th><td><i>/* Don't use this structure directly. */</i></td></tr>
+<tr><th id="429">429</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="crypto_threadid_st" title='crypto_threadid_st' data-ref="crypto_threadid_st" ><a class="type" href="#crypto_threadid_st" title='crypto_threadid_st' data-ref="crypto_threadid_st" >crypto_threadid_st</a></dfn></td></tr>
+<tr><th id="430">430</th><td>	{</td></tr>
+<tr><th id="431">431</th><td>	<em>void</em> *<dfn class="decl" id="crypto_threadid_st::ptr" title='crypto_threadid_st::ptr' data-ref="crypto_threadid_st::ptr" >ptr</dfn>;</td></tr>
+<tr><th id="432">432</th><td>	<em>unsigned</em> <em>long</em> <dfn class="decl" id="crypto_threadid_st::val" title='crypto_threadid_st::val' data-ref="crypto_threadid_st::val" >val</dfn>;</td></tr>
+<tr><th id="433">433</th><td>	} <dfn class="typedef" id="CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</dfn>;</td></tr>
+<tr><th id="434">434</th><td><i>/* Only use CRYPTO_THREADID_set_[numeric|pointer]() within callbacks */</i></td></tr>
+<tr><th id="435">435</th><td><em>void</em> <dfn class="decl" id="CRYPTO_THREADID_set_numeric" title='CRYPTO_THREADID_set_numeric' data-ref="CRYPTO_THREADID_set_numeric" >CRYPTO_THREADID_set_numeric</dfn>(<a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col3 decl" id="93id" title='id' data-type='CRYPTO_THREADID *' data-ref="93id" >id</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col4 decl" id="94val" title='val' data-type='unsigned long' data-ref="94val" >val</dfn>);</td></tr>
+<tr><th id="436">436</th><td><em>void</em> <dfn class="decl" id="CRYPTO_THREADID_set_pointer" title='CRYPTO_THREADID_set_pointer' data-ref="CRYPTO_THREADID_set_pointer" >CRYPTO_THREADID_set_pointer</dfn>(<a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col5 decl" id="95id" title='id' data-type='CRYPTO_THREADID *' data-ref="95id" >id</dfn>, <em>void</em> *<dfn class="local col6 decl" id="96ptr" title='ptr' data-type='void *' data-ref="96ptr" >ptr</dfn>);</td></tr>
+<tr><th id="437">437</th><td><em>int</em> <dfn class="decl" id="CRYPTO_THREADID_set_callback" title='CRYPTO_THREADID_set_callback' data-ref="CRYPTO_THREADID_set_callback" >CRYPTO_THREADID_set_callback</dfn>(<em>void</em> (*<dfn class="local col7 decl" id="97threadid_func" title='threadid_func' data-type='void (*)(CRYPTO_THREADID *)' data-ref="97threadid_func" >threadid_func</dfn>)(<a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *));</td></tr>
+<tr><th id="438">438</th><td><em>void</em> (*<dfn class="decl" id="CRYPTO_THREADID_get_callback" title='CRYPTO_THREADID_get_callback' data-ref="CRYPTO_THREADID_get_callback" >CRYPTO_THREADID_get_callback</dfn>(<em>void</em>))(<a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *);</td></tr>
+<tr><th id="439">439</th><td><em>void</em> <dfn class="decl" id="CRYPTO_THREADID_current" title='CRYPTO_THREADID_current' data-ref="CRYPTO_THREADID_current" >CRYPTO_THREADID_current</dfn>(<a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col8 decl" id="98id" title='id' data-type='CRYPTO_THREADID *' data-ref="98id" >id</dfn>);</td></tr>
+<tr><th id="440">440</th><td><em>int</em> <dfn class="decl" id="CRYPTO_THREADID_cmp" title='CRYPTO_THREADID_cmp' data-ref="CRYPTO_THREADID_cmp" >CRYPTO_THREADID_cmp</dfn>(<em>const</em> <a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col9 decl" id="99a" title='a' data-type='const CRYPTO_THREADID *' data-ref="99a" >a</dfn>, <em>const</em> <a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col0 decl" id="100b" title='b' data-type='const CRYPTO_THREADID *' data-ref="100b" >b</dfn>);</td></tr>
+<tr><th id="441">441</th><td><em>void</em> <dfn class="decl" id="CRYPTO_THREADID_cpy" title='CRYPTO_THREADID_cpy' data-ref="CRYPTO_THREADID_cpy" >CRYPTO_THREADID_cpy</dfn>(<a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col1 decl" id="101dest" title='dest' data-type='CRYPTO_THREADID *' data-ref="101dest" >dest</dfn>, <em>const</em> <a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col2 decl" id="102src" title='src' data-type='const CRYPTO_THREADID *' data-ref="102src" >src</dfn>);</td></tr>
+<tr><th id="442">442</th><td><em>unsigned</em> <em>long</em> <dfn class="decl" id="CRYPTO_THREADID_hash" title='CRYPTO_THREADID_hash' data-ref="CRYPTO_THREADID_hash" >CRYPTO_THREADID_hash</dfn>(<em>const</em> <a class="typedef" href="#CRYPTO_THREADID" title='CRYPTO_THREADID' data-type='struct crypto_threadid_st' data-ref="CRYPTO_THREADID" >CRYPTO_THREADID</a> *<dfn class="local col3 decl" id="103id" title='id' data-type='const CRYPTO_THREADID *' data-ref="103id" >id</dfn>);</td></tr>
+<tr><th id="443">443</th><td><u>#<span data-ppcond="443">ifndef</span> <span class="macro" data-ref="_M/OPENSSL_NO_DEPRECATED">OPENSSL_NO_DEPRECATED</span></u></td></tr>
+<tr><th id="444">444</th><td><em>void</em> <dfn class="decl" id="CRYPTO_set_id_callback" title='CRYPTO_set_id_callback' data-ref="CRYPTO_set_id_callback" >CRYPTO_set_id_callback</dfn>(<em>unsigned</em> <em>long</em> (*<dfn class="local col4 decl" id="104func" title='func' data-type='unsigned long (*)()' data-ref="104func" >func</dfn>)(<em>void</em>));</td></tr>
+<tr><th id="445">445</th><td><em>unsigned</em> <em>long</em> (*<dfn class="decl" id="CRYPTO_get_id_callback" title='CRYPTO_get_id_callback' data-ref="CRYPTO_get_id_callback" >CRYPTO_get_id_callback</dfn>(<em>void</em>))(<em>void</em>);</td></tr>
+<tr><th id="446">446</th><td><em>unsigned</em> <em>long</em> <dfn class="decl" id="CRYPTO_thread_id" title='CRYPTO_thread_id' data-ref="CRYPTO_thread_id" >CRYPTO_thread_id</dfn>(<em>void</em>);</td></tr>
+<tr><th id="447">447</th><td><u>#<span data-ppcond="443">endif</span></u></td></tr>
+<tr><th id="448">448</th><td></td></tr>
+<tr><th id="449">449</th><td><em>const</em> <em>char</em> *<dfn class="decl" id="CRYPTO_get_lock_name" title='CRYPTO_get_lock_name' data-ref="CRYPTO_get_lock_name" >CRYPTO_get_lock_name</dfn>(<em>int</em> <dfn class="local col5 decl" id="105type" title='type' data-type='int' data-ref="105type" >type</dfn>);</td></tr>
+<tr><th id="450">450</th><td><em>int</em> <dfn class="decl" id="CRYPTO_add_lock" title='CRYPTO_add_lock' data-ref="CRYPTO_add_lock" >CRYPTO_add_lock</dfn>(<em>int</em> *<dfn class="local col6 decl" id="106pointer" title='pointer' data-type='int *' data-ref="106pointer" >pointer</dfn>,<em>int</em> <dfn class="local col7 decl" id="107amount" title='amount' data-type='int' data-ref="107amount" >amount</dfn>,<em>int</em> <dfn class="local col8 decl" id="108type" title='type' data-type='int' data-ref="108type" >type</dfn>, <em>const</em> <em>char</em> *<dfn class="local col9 decl" id="109file" title='file' data-type='const char *' data-ref="109file" >file</dfn>,</td></tr>
+<tr><th id="451">451</th><td>		    <em>int</em> <dfn class="local col0 decl" id="110line" title='line' data-type='int' data-ref="110line" >line</dfn>);</td></tr>
+<tr><th id="452">452</th><td></td></tr>
+<tr><th id="453">453</th><td><em>int</em> <dfn class="decl" id="CRYPTO_get_new_dynlockid" title='CRYPTO_get_new_dynlockid' data-ref="CRYPTO_get_new_dynlockid" >CRYPTO_get_new_dynlockid</dfn>(<em>void</em>);</td></tr>
+<tr><th id="454">454</th><td><em>void</em> <dfn class="decl" id="CRYPTO_destroy_dynlockid" title='CRYPTO_destroy_dynlockid' data-ref="CRYPTO_destroy_dynlockid" >CRYPTO_destroy_dynlockid</dfn>(<em>int</em> <dfn class="local col1 decl" id="111i" title='i' data-type='int' data-ref="111i" >i</dfn>);</td></tr>
+<tr><th id="455">455</th><td><b>struct</b> <a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a> *<dfn class="decl" id="CRYPTO_get_dynlock_value" title='CRYPTO_get_dynlock_value' data-ref="CRYPTO_get_dynlock_value" >CRYPTO_get_dynlock_value</dfn>(<em>int</em> <dfn class="local col2 decl" id="112i" title='i' data-type='int' data-ref="112i" >i</dfn>);</td></tr>
+<tr><th id="456">456</th><td><em>void</em> <dfn class="decl" id="CRYPTO_set_dynlock_create_callback" title='CRYPTO_set_dynlock_create_callback' data-ref="CRYPTO_set_dynlock_create_callback" >CRYPTO_set_dynlock_create_callback</dfn>(<b>struct</b> <a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a> *(*<dfn class="local col3 decl" id="113dyn_create_function" title='dyn_create_function' data-type='struct CRYPTO_dynlock_value *(*)(const char *, int)' data-ref="113dyn_create_function" >dyn_create_function</dfn>)(<em>const</em> <em>char</em> *<dfn class="local col4 decl" id="114file" title='file' data-type='const char *' data-ref="114file" >file</dfn>, <em>int</em> <dfn class="local col5 decl" id="115line" title='line' data-type='int' data-ref="115line" >line</dfn>));</td></tr>
+<tr><th id="457">457</th><td><em>void</em> <dfn class="decl" id="CRYPTO_set_dynlock_lock_callback" title='CRYPTO_set_dynlock_lock_callback' data-ref="CRYPTO_set_dynlock_lock_callback" >CRYPTO_set_dynlock_lock_callback</dfn>(<em>void</em> (*<dfn class="local col6 decl" id="116dyn_lock_function" title='dyn_lock_function' data-type='void (*)(int, struct CRYPTO_dynlock_value *, const char *, int)' data-ref="116dyn_lock_function" >dyn_lock_function</dfn>)(<em>int</em> <dfn class="local col7 decl" id="117mode" title='mode' data-type='int' data-ref="117mode" >mode</dfn>, <b>struct</b> <a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a> *<dfn class="local col8 decl" id="118l" title='l' data-type='struct CRYPTO_dynlock_value *' data-ref="118l" >l</dfn>, <em>const</em> <em>char</em> *<dfn class="local col9 decl" id="119file" title='file' data-type='const char *' data-ref="119file" >file</dfn>, <em>int</em> <dfn class="local col0 decl" id="120line" title='line' data-type='int' data-ref="120line" >line</dfn>));</td></tr>
+<tr><th id="458">458</th><td><em>void</em> <dfn class="decl" id="CRYPTO_set_dynlock_destroy_callback" title='CRYPTO_set_dynlock_destroy_callback' data-ref="CRYPTO_set_dynlock_destroy_callback" >CRYPTO_set_dynlock_destroy_callback</dfn>(<em>void</em> (*<dfn class="local col1 decl" id="121dyn_destroy_function" title='dyn_destroy_function' data-type='void (*)(struct CRYPTO_dynlock_value *, const char *, int)' data-ref="121dyn_destroy_function" >dyn_destroy_function</dfn>)(<b>struct</b> <a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a> *<dfn class="local col2 decl" id="122l" title='l' data-type='struct CRYPTO_dynlock_value *' data-ref="122l" >l</dfn>, <em>const</em> <em>char</em> *<dfn class="local col3 decl" id="123file" title='file' data-type='const char *' data-ref="123file" >file</dfn>, <em>int</em> <dfn class="local col4 decl" id="124line" title='line' data-type='int' data-ref="124line" >line</dfn>));</td></tr>
+<tr><th id="459">459</th><td><b>struct</b> <a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a> *(*<dfn class="decl" id="CRYPTO_get_dynlock_create_callback" title='CRYPTO_get_dynlock_create_callback' data-ref="CRYPTO_get_dynlock_create_callback" >CRYPTO_get_dynlock_create_callback</dfn>(<em>void</em>))(<em>const</em> <em>char</em> *<dfn class="local col5 decl" id="125file" title='file' data-type='const char *' data-ref="125file" >file</dfn>,<em>int</em> <dfn class="local col6 decl" id="126line" title='line' data-type='int' data-ref="126line" >line</dfn>);</td></tr>
+<tr><th id="460">460</th><td><em>void</em> (*<dfn class="decl" id="CRYPTO_get_dynlock_lock_callback" title='CRYPTO_get_dynlock_lock_callback' data-ref="CRYPTO_get_dynlock_lock_callback" >CRYPTO_get_dynlock_lock_callback</dfn>(<em>void</em>))(<em>int</em> <dfn class="local col7 decl" id="127mode" title='mode' data-type='int' data-ref="127mode" >mode</dfn>, <b>struct</b> <a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a> *<dfn class="local col8 decl" id="128l" title='l' data-type='struct CRYPTO_dynlock_value *' data-ref="128l" >l</dfn>, <em>const</em> <em>char</em> *<dfn class="local col9 decl" id="129file" title='file' data-type='const char *' data-ref="129file" >file</dfn>,<em>int</em> <dfn class="local col0 decl" id="130line" title='line' data-type='int' data-ref="130line" >line</dfn>);</td></tr>
+<tr><th id="461">461</th><td><em>void</em> (*<dfn class="decl" id="CRYPTO_get_dynlock_destroy_callback" title='CRYPTO_get_dynlock_destroy_callback' data-ref="CRYPTO_get_dynlock_destroy_callback" >CRYPTO_get_dynlock_destroy_callback</dfn>(<em>void</em>))(<b>struct</b> <a class="type" href="#CRYPTO_dynlock_value" title='CRYPTO_dynlock_value' data-ref="CRYPTO_dynlock_value" >CRYPTO_dynlock_value</a> *<dfn class="local col1 decl" id="131l" title='l' data-type='struct CRYPTO_dynlock_value *' data-ref="131l" >l</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="132file" title='file' data-type='const char *' data-ref="132file" >file</dfn>,<em>int</em> <dfn class="local col3 decl" id="133line" title='line' data-type='int' data-ref="133line" >line</dfn>);</td></tr>
+<tr><th id="462">462</th><td></td></tr>
+<tr><th id="463">463</th><td><i>/* CRYPTO_set_mem_functions includes CRYPTO_set_locked_mem_functions --</i></td></tr>
+<tr><th id="464">464</th><td><i> * call the latter last if you need different functions */</i></td></tr>
+<tr><th id="465">465</th><td><em>int</em> <dfn class="decl" id="CRYPTO_set_mem_functions" title='CRYPTO_set_mem_functions' data-ref="CRYPTO_set_mem_functions" >CRYPTO_set_mem_functions</dfn>(<em>void</em> *(*<dfn class="local col4 decl" id="134m" title='m' data-type='void *(*)(size_t)' data-ref="134m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>),<em>void</em> *(*<dfn class="local col5 decl" id="135r" title='r' data-type='void *(*)(void *, size_t)' data-ref="135r" >r</dfn>)(<em>void</em> *,<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>), <em>void</em> (*<dfn class="local col6 decl" id="136f" title='f' data-type='void (*)(void *)' data-ref="136f" >f</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="466">466</th><td><em>int</em> <dfn class="decl" id="CRYPTO_set_locked_mem_functions" title='CRYPTO_set_locked_mem_functions' data-ref="CRYPTO_set_locked_mem_functions" >CRYPTO_set_locked_mem_functions</dfn>(<em>void</em> *(*<dfn class="local col7 decl" id="137m" title='m' data-type='void *(*)(size_t)' data-ref="137m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>), <em>void</em> (*<dfn class="local col8 decl" id="138free_func" title='free_func' data-type='void (*)(void *)' data-ref="138free_func" >free_func</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="467">467</th><td><em>int</em> <dfn class="decl" id="CRYPTO_set_mem_ex_functions" title='CRYPTO_set_mem_ex_functions' data-ref="CRYPTO_set_mem_ex_functions" >CRYPTO_set_mem_ex_functions</dfn>(<em>void</em> *(*<dfn class="local col9 decl" id="139m" title='m' data-type='void *(*)(size_t, const char *, int)' data-ref="139m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>,<em>const</em> <em>char</em> *,<em>int</em>),</td></tr>
+<tr><th id="468">468</th><td>                                <em>void</em> *(*<dfn class="local col0 decl" id="140r" title='r' data-type='void *(*)(void *, size_t, const char *, int)' data-ref="140r" >r</dfn>)(<em>void</em> *,<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>,<em>const</em> <em>char</em> *,<em>int</em>),</td></tr>
+<tr><th id="469">469</th><td>                                <em>void</em> (*<dfn class="local col1 decl" id="141f" title='f' data-type='void (*)(void *)' data-ref="141f" >f</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="470">470</th><td><em>int</em> <dfn class="decl" id="CRYPTO_set_locked_mem_ex_functions" title='CRYPTO_set_locked_mem_ex_functions' data-ref="CRYPTO_set_locked_mem_ex_functions" >CRYPTO_set_locked_mem_ex_functions</dfn>(<em>void</em> *(*<dfn class="local col2 decl" id="142m" title='m' data-type='void *(*)(size_t, const char *, int)' data-ref="142m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>,<em>const</em> <em>char</em> *,<em>int</em>),</td></tr>
+<tr><th id="471">471</th><td>                                       <em>void</em> (*<dfn class="local col3 decl" id="143free_func" title='free_func' data-type='void (*)(void *)' data-ref="143free_func" >free_func</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="472">472</th><td><em>int</em> <dfn class="decl" id="CRYPTO_set_mem_debug_functions" title='CRYPTO_set_mem_debug_functions' data-ref="CRYPTO_set_mem_debug_functions" >CRYPTO_set_mem_debug_functions</dfn>(<em>void</em> (*<dfn class="local col4 decl" id="144m" title='m' data-type='void (*)(void *, int, const char *, int, int)' data-ref="144m" >m</dfn>)(<em>void</em> *,<em>int</em>,<em>const</em> <em>char</em> *,<em>int</em>,<em>int</em>),</td></tr>
+<tr><th id="473">473</th><td>				   <em>void</em> (*<dfn class="local col5 decl" id="145r" title='r' data-type='void (*)(void *, void *, int, const char *, int, int)' data-ref="145r" >r</dfn>)(<em>void</em> *,<em>void</em> *,<em>int</em>,<em>const</em> <em>char</em> *,<em>int</em>,<em>int</em>),</td></tr>
+<tr><th id="474">474</th><td>				   <em>void</em> (*<dfn class="local col6 decl" id="146f" title='f' data-type='void (*)(void *, int)' data-ref="146f" >f</dfn>)(<em>void</em> *,<em>int</em>),</td></tr>
+<tr><th id="475">475</th><td>				   <em>void</em> (*<dfn class="local col7 decl" id="147so" title='so' data-type='void (*)(long)' data-ref="147so" >so</dfn>)(<em>long</em>),</td></tr>
+<tr><th id="476">476</th><td>				   <em>long</em> (*<dfn class="local col8 decl" id="148go" title='go' data-type='long (*)()' data-ref="148go" >go</dfn>)(<em>void</em>));</td></tr>
+<tr><th id="477">477</th><td><em>void</em> <dfn class="decl" id="CRYPTO_get_mem_functions" title='CRYPTO_get_mem_functions' data-ref="CRYPTO_get_mem_functions" >CRYPTO_get_mem_functions</dfn>(<em>void</em> *(**<dfn class="local col9 decl" id="149m" title='m' data-type='void *(**)(size_t)' data-ref="149m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>),<em>void</em> *(**<dfn class="local col0 decl" id="150r" title='r' data-type='void *(**)(void *, size_t)' data-ref="150r" >r</dfn>)(<em>void</em> *, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>), <em>void</em> (**<dfn class="local col1 decl" id="151f" title='f' data-type='void (**)(void *)' data-ref="151f" >f</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="478">478</th><td><em>void</em> <dfn class="decl" id="CRYPTO_get_locked_mem_functions" title='CRYPTO_get_locked_mem_functions' data-ref="CRYPTO_get_locked_mem_functions" >CRYPTO_get_locked_mem_functions</dfn>(<em>void</em> *(**<dfn class="local col2 decl" id="152m" title='m' data-type='void *(**)(size_t)' data-ref="152m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>), <em>void</em> (**<dfn class="local col3 decl" id="153f" title='f' data-type='void (**)(void *)' data-ref="153f" >f</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="479">479</th><td><em>void</em> <dfn class="decl" id="CRYPTO_get_mem_ex_functions" title='CRYPTO_get_mem_ex_functions' data-ref="CRYPTO_get_mem_ex_functions" >CRYPTO_get_mem_ex_functions</dfn>(<em>void</em> *(**<dfn class="local col4 decl" id="154m" title='m' data-type='void *(**)(size_t, const char *, int)' data-ref="154m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>,<em>const</em> <em>char</em> *,<em>int</em>),</td></tr>
+<tr><th id="480">480</th><td>                                 <em>void</em> *(**<dfn class="local col5 decl" id="155r" title='r' data-type='void *(**)(void *, size_t, const char *, int)' data-ref="155r" >r</dfn>)(<em>void</em> *, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>,<em>const</em> <em>char</em> *,<em>int</em>),</td></tr>
+<tr><th id="481">481</th><td>                                 <em>void</em> (**<dfn class="local col6 decl" id="156f" title='f' data-type='void (**)(void *)' data-ref="156f" >f</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="482">482</th><td><em>void</em> <dfn class="decl" id="CRYPTO_get_locked_mem_ex_functions" title='CRYPTO_get_locked_mem_ex_functions' data-ref="CRYPTO_get_locked_mem_ex_functions" >CRYPTO_get_locked_mem_ex_functions</dfn>(<em>void</em> *(**<dfn class="local col7 decl" id="157m" title='m' data-type='void *(**)(size_t, const char *, int)' data-ref="157m" >m</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>,<em>const</em> <em>char</em> *,<em>int</em>),</td></tr>
+<tr><th id="483">483</th><td>                                        <em>void</em> (**<dfn class="local col8 decl" id="158f" title='f' data-type='void (**)(void *)' data-ref="158f" >f</dfn>)(<em>void</em> *));</td></tr>
+<tr><th id="484">484</th><td><em>void</em> <dfn class="decl" id="CRYPTO_get_mem_debug_functions" title='CRYPTO_get_mem_debug_functions' data-ref="CRYPTO_get_mem_debug_functions" >CRYPTO_get_mem_debug_functions</dfn>(<em>void</em> (**<dfn class="local col9 decl" id="159m" title='m' data-type='void (**)(void *, int, const char *, int, int)' data-ref="159m" >m</dfn>)(<em>void</em> *,<em>int</em>,<em>const</em> <em>char</em> *,<em>int</em>,<em>int</em>),</td></tr>
+<tr><th id="485">485</th><td>				    <em>void</em> (**<dfn class="local col0 decl" id="160r" title='r' data-type='void (**)(void *, void *, int, const char *, int, int)' data-ref="160r" >r</dfn>)(<em>void</em> *,<em>void</em> *,<em>int</em>,<em>const</em> <em>char</em> *,<em>int</em>,<em>int</em>),</td></tr>
+<tr><th id="486">486</th><td>				    <em>void</em> (**<dfn class="local col1 decl" id="161f" title='f' data-type='void (**)(void *, int)' data-ref="161f" >f</dfn>)(<em>void</em> *,<em>int</em>),</td></tr>
+<tr><th id="487">487</th><td>				    <em>void</em> (**<dfn class="local col2 decl" id="162so" title='so' data-type='void (**)(long)' data-ref="162so" >so</dfn>)(<em>long</em>),</td></tr>
+<tr><th id="488">488</th><td>				    <em>long</em> (**<dfn class="local col3 decl" id="163go" title='go' data-type='long (**)()' data-ref="163go" >go</dfn>)(<em>void</em>));</td></tr>
+<tr><th id="489">489</th><td></td></tr>
+<tr><th id="490">490</th><td><em>void</em> *<dfn class="decl" id="CRYPTO_malloc_locked" title='CRYPTO_malloc_locked' data-ref="CRYPTO_malloc_locked" >CRYPTO_malloc_locked</dfn>(<em>int</em> <dfn class="local col4 decl" id="164num" title='num' data-type='int' data-ref="164num" >num</dfn>, <em>const</em> <em>char</em> *<dfn class="local col5 decl" id="165file" title='file' data-type='const char *' data-ref="165file" >file</dfn>, <em>int</em> <dfn class="local col6 decl" id="166line" title='line' data-type='int' data-ref="166line" >line</dfn>);</td></tr>
+<tr><th id="491">491</th><td><em>void</em> <dfn class="decl" id="CRYPTO_free_locked" title='CRYPTO_free_locked' data-ref="CRYPTO_free_locked" >CRYPTO_free_locked</dfn>(<em>void</em> *<dfn class="local col7 decl" id="167ptr" title='ptr' data-type='void *' data-ref="167ptr" >ptr</dfn>);</td></tr>
+<tr><th id="492">492</th><td><em>void</em> *<dfn class="decl" id="CRYPTO_malloc" title='CRYPTO_malloc' data-ref="CRYPTO_malloc" >CRYPTO_malloc</dfn>(<em>int</em> <dfn class="local col8 decl" id="168num" title='num' data-type='int' data-ref="168num" >num</dfn>, <em>const</em> <em>char</em> *<dfn class="local col9 decl" id="169file" title='file' data-type='const char *' data-ref="169file" >file</dfn>, <em>int</em> <dfn class="local col0 decl" id="170line" title='line' data-type='int' data-ref="170line" >line</dfn>);</td></tr>
+<tr><th id="493">493</th><td><em>char</em> *<dfn class="decl" id="CRYPTO_strdup" title='CRYPTO_strdup' data-ref="CRYPTO_strdup" >CRYPTO_strdup</dfn>(<em>const</em> <em>char</em> *<dfn class="local col1 decl" id="171str" title='str' data-type='const char *' data-ref="171str" >str</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="172file" title='file' data-type='const char *' data-ref="172file" >file</dfn>, <em>int</em> <dfn class="local col3 decl" id="173line" title='line' data-type='int' data-ref="173line" >line</dfn>);</td></tr>
+<tr><th id="494">494</th><td><em>void</em> <dfn class="decl" id="CRYPTO_free" title='CRYPTO_free' data-ref="CRYPTO_free" >CRYPTO_free</dfn>(<em>void</em> *<dfn class="local col4 decl" id="174ptr" title='ptr' data-type='void *' data-ref="174ptr" >ptr</dfn>);</td></tr>
+<tr><th id="495">495</th><td><em>void</em> *<dfn class="decl" id="CRYPTO_realloc" title='CRYPTO_realloc' data-ref="CRYPTO_realloc" >CRYPTO_realloc</dfn>(<em>void</em> *<dfn class="local col5 decl" id="175addr" title='addr' data-type='void *' data-ref="175addr" >addr</dfn>,<em>int</em> <dfn class="local col6 decl" id="176num" title='num' data-type='int' data-ref="176num" >num</dfn>, <em>const</em> <em>char</em> *<dfn class="local col7 decl" id="177file" title='file' data-type='const char *' data-ref="177file" >file</dfn>, <em>int</em> <dfn class="local col8 decl" id="178line" title='line' data-type='int' data-ref="178line" >line</dfn>);</td></tr>
+<tr><th id="496">496</th><td><em>void</em> *<dfn class="decl" id="CRYPTO_realloc_clean" title='CRYPTO_realloc_clean' data-ref="CRYPTO_realloc_clean" >CRYPTO_realloc_clean</dfn>(<em>void</em> *<dfn class="local col9 decl" id="179addr" title='addr' data-type='void *' data-ref="179addr" >addr</dfn>,<em>int</em> <dfn class="local col0 decl" id="180old_num" title='old_num' data-type='int' data-ref="180old_num" >old_num</dfn>,<em>int</em> <dfn class="local col1 decl" id="181num" title='num' data-type='int' data-ref="181num" >num</dfn>,<em>const</em> <em>char</em> *<dfn class="local col2 decl" id="182file" title='file' data-type='const char *' data-ref="182file" >file</dfn>,</td></tr>
+<tr><th id="497">497</th><td>			   <em>int</em> <dfn class="local col3 decl" id="183line" title='line' data-type='int' data-ref="183line" >line</dfn>);</td></tr>
+<tr><th id="498">498</th><td><em>void</em> *<dfn class="decl" id="CRYPTO_remalloc" title='CRYPTO_remalloc' data-ref="CRYPTO_remalloc" >CRYPTO_remalloc</dfn>(<em>void</em> *<dfn class="local col4 decl" id="184addr" title='addr' data-type='void *' data-ref="184addr" >addr</dfn>,<em>int</em> <dfn class="local col5 decl" id="185num" title='num' data-type='int' data-ref="185num" >num</dfn>, <em>const</em> <em>char</em> *<dfn class="local col6 decl" id="186file" title='file' data-type='const char *' data-ref="186file" >file</dfn>, <em>int</em> <dfn class="local col7 decl" id="187line" title='line' data-type='int' data-ref="187line" >line</dfn>);</td></tr>
+<tr><th id="499">499</th><td></td></tr>
+<tr><th id="500">500</th><td><em>void</em> <dfn class="decl" id="OPENSSL_cleanse" title='OPENSSL_cleanse' data-ref="OPENSSL_cleanse" >OPENSSL_cleanse</dfn>(<em>void</em> *<dfn class="local col8 decl" id="188ptr" title='ptr' data-type='void *' data-ref="188ptr" >ptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="189len" title='len' data-type='size_t' data-ref="189len" >len</dfn>);</td></tr>
+<tr><th id="501">501</th><td></td></tr>
+<tr><th id="502">502</th><td><em>void</em> <dfn class="decl" id="CRYPTO_set_mem_debug_options" title='CRYPTO_set_mem_debug_options' data-ref="CRYPTO_set_mem_debug_options" >CRYPTO_set_mem_debug_options</dfn>(<em>long</em> <dfn class="local col0 decl" id="190bits" title='bits' data-type='long' data-ref="190bits" >bits</dfn>);</td></tr>
+<tr><th id="503">503</th><td><em>long</em> <dfn class="decl" id="CRYPTO_get_mem_debug_options" title='CRYPTO_get_mem_debug_options' data-ref="CRYPTO_get_mem_debug_options" >CRYPTO_get_mem_debug_options</dfn>(<em>void</em>);</td></tr>
+<tr><th id="504">504</th><td></td></tr>
+<tr><th id="505">505</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_push_info" data-ref="_M/CRYPTO_push_info">CRYPTO_push_info</dfn>(info) \</u></td></tr>
+<tr><th id="506">506</th><td><u>        CRYPTO_push_info_(info, __FILE__, __LINE__);</u></td></tr>
+<tr><th id="507">507</th><td><em>int</em> <dfn class="decl" id="CRYPTO_push_info_" title='CRYPTO_push_info_' data-ref="CRYPTO_push_info_" >CRYPTO_push_info_</dfn>(<em>const</em> <em>char</em> *<dfn class="local col1 decl" id="191info" title='info' data-type='const char *' data-ref="191info" >info</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="192file" title='file' data-type='const char *' data-ref="192file" >file</dfn>, <em>int</em> <dfn class="local col3 decl" id="193line" title='line' data-type='int' data-ref="193line" >line</dfn>);</td></tr>
+<tr><th id="508">508</th><td><em>int</em> <dfn class="decl" id="CRYPTO_pop_info" title='CRYPTO_pop_info' data-ref="CRYPTO_pop_info" >CRYPTO_pop_info</dfn>(<em>void</em>);</td></tr>
+<tr><th id="509">509</th><td><em>int</em> <dfn class="decl" id="CRYPTO_remove_all_info" title='CRYPTO_remove_all_info' data-ref="CRYPTO_remove_all_info" >CRYPTO_remove_all_info</dfn>(<em>void</em>);</td></tr>
+<tr><th id="510">510</th><td></td></tr>
+<tr><th id="511">511</th><td></td></tr>
+<tr><th id="512">512</th><td><i>/* Default debugging functions (enabled by CRYPTO_malloc_debug_init() macro;</i></td></tr>
+<tr><th id="513">513</th><td><i> * used as default in CRYPTO_MDEBUG compilations): */</i></td></tr>
+<tr><th id="514">514</th><td><i>/* The last argument has the following significance:</i></td></tr>
+<tr><th id="515">515</th><td><i> *</i></td></tr>
+<tr><th id="516">516</th><td><i> * 0:	called before the actual memory allocation has taken place</i></td></tr>
+<tr><th id="517">517</th><td><i> * 1:	called after the actual memory allocation has taken place</i></td></tr>
+<tr><th id="518">518</th><td><i> */</i></td></tr>
+<tr><th id="519">519</th><td><em>void</em> <dfn class="decl" id="CRYPTO_dbg_malloc" title='CRYPTO_dbg_malloc' data-ref="CRYPTO_dbg_malloc" >CRYPTO_dbg_malloc</dfn>(<em>void</em> *<dfn class="local col4 decl" id="194addr" title='addr' data-type='void *' data-ref="194addr" >addr</dfn>,<em>int</em> <dfn class="local col5 decl" id="195num" title='num' data-type='int' data-ref="195num" >num</dfn>,<em>const</em> <em>char</em> *<dfn class="local col6 decl" id="196file" title='file' data-type='const char *' data-ref="196file" >file</dfn>,<em>int</em> <dfn class="local col7 decl" id="197line" title='line' data-type='int' data-ref="197line" >line</dfn>,<em>int</em> <dfn class="local col8 decl" id="198before_p" title='before_p' data-type='int' data-ref="198before_p" >before_p</dfn>);</td></tr>
+<tr><th id="520">520</th><td><em>void</em> <dfn class="decl" id="CRYPTO_dbg_realloc" title='CRYPTO_dbg_realloc' data-ref="CRYPTO_dbg_realloc" >CRYPTO_dbg_realloc</dfn>(<em>void</em> *<dfn class="local col9 decl" id="199addr1" title='addr1' data-type='void *' data-ref="199addr1" >addr1</dfn>,<em>void</em> *<dfn class="local col0 decl" id="200addr2" title='addr2' data-type='void *' data-ref="200addr2" >addr2</dfn>,<em>int</em> <dfn class="local col1 decl" id="201num" title='num' data-type='int' data-ref="201num" >num</dfn>,<em>const</em> <em>char</em> *<dfn class="local col2 decl" id="202file" title='file' data-type='const char *' data-ref="202file" >file</dfn>,<em>int</em> <dfn class="local col3 decl" id="203line" title='line' data-type='int' data-ref="203line" >line</dfn>,<em>int</em> <dfn class="local col4 decl" id="204before_p" title='before_p' data-type='int' data-ref="204before_p" >before_p</dfn>);</td></tr>
+<tr><th id="521">521</th><td><em>void</em> <dfn class="decl" id="CRYPTO_dbg_free" title='CRYPTO_dbg_free' data-ref="CRYPTO_dbg_free" >CRYPTO_dbg_free</dfn>(<em>void</em> *<dfn class="local col5 decl" id="205addr" title='addr' data-type='void *' data-ref="205addr" >addr</dfn>,<em>int</em> <dfn class="local col6 decl" id="206before_p" title='before_p' data-type='int' data-ref="206before_p" >before_p</dfn>);</td></tr>
+<tr><th id="522">522</th><td><i>/* Tell the debugging code about options.  By default, the following values</i></td></tr>
+<tr><th id="523">523</th><td><i> * apply:</i></td></tr>
+<tr><th id="524">524</th><td><i> *</i></td></tr>
+<tr><th id="525">525</th><td><i> * 0:                           Clear all options.</i></td></tr>
+<tr><th id="526">526</th><td><i> * V_CRYPTO_MDEBUG_TIME (1):    Set the "Show Time" option.</i></td></tr>
+<tr><th id="527">527</th><td><i> * V_CRYPTO_MDEBUG_THREAD (2):  Set the "Show Thread Number" option.</i></td></tr>
+<tr><th id="528">528</th><td><i> * V_CRYPTO_MDEBUG_ALL (3):     1 + 2</i></td></tr>
+<tr><th id="529">529</th><td><i> */</i></td></tr>
+<tr><th id="530">530</th><td><em>void</em> <dfn class="decl" id="CRYPTO_dbg_set_options" title='CRYPTO_dbg_set_options' data-ref="CRYPTO_dbg_set_options" >CRYPTO_dbg_set_options</dfn>(<em>long</em> <dfn class="local col7 decl" id="207bits" title='bits' data-type='long' data-ref="207bits" >bits</dfn>);</td></tr>
+<tr><th id="531">531</th><td><em>long</em> <dfn class="decl" id="CRYPTO_dbg_get_options" title='CRYPTO_dbg_get_options' data-ref="CRYPTO_dbg_get_options" >CRYPTO_dbg_get_options</dfn>(<em>void</em>);</td></tr>
+<tr><th id="532">532</th><td></td></tr>
+<tr><th id="533">533</th><td></td></tr>
+<tr><th id="534">534</th><td><u>#<span data-ppcond="534">ifndef</span> <span class="macro" data-ref="_M/OPENSSL_NO_FP_API">OPENSSL_NO_FP_API</span></u></td></tr>
+<tr><th id="535">535</th><td><em>void</em> <dfn class="decl" id="CRYPTO_mem_leaks_fp" title='CRYPTO_mem_leaks_fp' data-ref="CRYPTO_mem_leaks_fp" >CRYPTO_mem_leaks_fp</dfn>(<a class="typedef" href="../stdio.h.html#FILE" title='FILE' data-type='struct _IO_FILE' data-ref="FILE" >FILE</a> *);</td></tr>
+<tr><th id="536">536</th><td><u>#<span data-ppcond="534">endif</span></u></td></tr>
+<tr><th id="537">537</th><td><em>void</em> <dfn class="decl" id="CRYPTO_mem_leaks" title='CRYPTO_mem_leaks' data-ref="CRYPTO_mem_leaks" >CRYPTO_mem_leaks</dfn>(<b>struct</b> <a class="type" href="bio.h.html#bio_st" title='bio_st' data-ref="bio_st" >bio_st</a> *<dfn class="local col8 decl" id="208bio" title='bio' data-type='struct bio_st *' data-ref="208bio" >bio</dfn>);</td></tr>
+<tr><th id="538">538</th><td><i>/* unsigned long order, char *file, int line, int num_bytes, char *addr */</i></td></tr>
+<tr><th id="539">539</th><td><b>typedef</b> <em>void</em> *<dfn class="typedef" id="CRYPTO_MEM_LEAK_CB" title='CRYPTO_MEM_LEAK_CB' data-type='void *(unsigned long, const char *, int, int, void *)' data-ref="CRYPTO_MEM_LEAK_CB" >CRYPTO_MEM_LEAK_CB</dfn>(<em>unsigned</em> <em>long</em>, <em>const</em> <em>char</em> *, <em>int</em>, <em>int</em>, <em>void</em> *);</td></tr>
+<tr><th id="540">540</th><td><em>void</em> <dfn class="decl" id="CRYPTO_mem_leaks_cb" title='CRYPTO_mem_leaks_cb' data-ref="CRYPTO_mem_leaks_cb" >CRYPTO_mem_leaks_cb</dfn>(<a class="typedef" href="#CRYPTO_MEM_LEAK_CB" title='CRYPTO_MEM_LEAK_CB' data-type='void *(unsigned long, const char *, int, int, void *)' data-ref="CRYPTO_MEM_LEAK_CB" >CRYPTO_MEM_LEAK_CB</a> *<dfn class="local col9 decl" id="209cb" title='cb' data-type='CRYPTO_MEM_LEAK_CB *' data-ref="209cb" >cb</dfn>);</td></tr>
+<tr><th id="541">541</th><td></td></tr>
+<tr><th id="542">542</th><td><i>/* die if we have to */</i></td></tr>
+<tr><th id="543">543</th><td><em>void</em> <dfn class="decl" id="OpenSSLDie" title='OpenSSLDie' data-ref="OpenSSLDie" >OpenSSLDie</dfn>(<em>const</em> <em>char</em> *<dfn class="local col0 decl" id="210file" title='file' data-type='const char *' data-ref="210file" >file</dfn>,<em>int</em> <dfn class="local col1 decl" id="211line" title='line' data-type='int' data-ref="211line" >line</dfn>,<em>const</em> <em>char</em> *<dfn class="local col2 decl" id="212assertion" title='assertion' data-type='const char *' data-ref="212assertion" >assertion</dfn>);</td></tr>
+<tr><th id="544">544</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_assert" data-ref="_M/OPENSSL_assert">OPENSSL_assert</dfn>(e)       (void)((e) ? 0 : (OpenSSLDie(__FILE__, __LINE__, #e),1))</u></td></tr>
+<tr><th id="545">545</th><td></td></tr>
+<tr><th id="546">546</th><td><em>unsigned</em> <em>long</em> *<dfn class="decl" id="OPENSSL_ia32cap_loc" title='OPENSSL_ia32cap_loc' data-ref="OPENSSL_ia32cap_loc" >OPENSSL_ia32cap_loc</dfn>(<em>void</em>);</td></tr>
+<tr><th id="547">547</th><td><u>#define <dfn class="macro" id="_M/OPENSSL_ia32cap" data-ref="_M/OPENSSL_ia32cap">OPENSSL_ia32cap</dfn> (*(OPENSSL_ia32cap_loc()))</u></td></tr>
+<tr><th id="548">548</th><td><em>int</em> <dfn class="decl" id="OPENSSL_isservice" title='OPENSSL_isservice' data-ref="OPENSSL_isservice" >OPENSSL_isservice</dfn>(<em>void</em>);</td></tr>
+<tr><th id="549">549</th><td></td></tr>
+<tr><th id="550">550</th><td><em>int</em> <dfn class="decl" id="FIPS_mode" title='FIPS_mode' data-ref="FIPS_mode" >FIPS_mode</dfn>(<em>void</em>);</td></tr>
+<tr><th id="551">551</th><td><em>int</em> <dfn class="decl" id="FIPS_mode_set" title='FIPS_mode_set' data-ref="FIPS_mode_set" >FIPS_mode_set</dfn>(<em>int</em> <dfn class="local col3 decl" id="213r" title='r' data-type='int' data-ref="213r" >r</dfn>);</td></tr>
+<tr><th id="552">552</th><td></td></tr>
+<tr><th id="553">553</th><td><em>void</em> <dfn class="decl" id="OPENSSL_init" title='OPENSSL_init' data-ref="OPENSSL_init" >OPENSSL_init</dfn>(<em>void</em>);</td></tr>
+<tr><th id="554">554</th><td></td></tr>
+<tr><th id="555">555</th><td><u>#define <dfn class="macro" id="_M/fips_md_init" data-ref="_M/fips_md_init">fips_md_init</dfn>(alg) fips_md_init_ctx(alg, alg)</u></td></tr>
+<tr><th id="556">556</th><td></td></tr>
+<tr><th id="557">557</th><td><u>#<span data-ppcond="557">ifdef</span> <span class="macro" data-ref="_M/OPENSSL_FIPS">OPENSSL_FIPS</span></u></td></tr>
+<tr><th id="558">558</th><td><u>#define fips_md_init_ctx(alg, cx) \</u></td></tr>
+<tr><th id="559">559</th><td><u>	int alg##_Init(cx##_CTX *c) \</u></td></tr>
+<tr><th id="560">560</th><td><u>	{ \</u></td></tr>
+<tr><th id="561">561</th><td><u>	if (FIPS_mode()) OpenSSLDie(__FILE__, __LINE__, \</u></td></tr>
+<tr><th id="562">562</th><td><u>		"Low level API call to digest " #alg " forbidden in FIPS mode!"); \</u></td></tr>
+<tr><th id="563">563</th><td><u>	return private_##alg##_Init(c); \</u></td></tr>
+<tr><th id="564">564</th><td><u>	} \</u></td></tr>
+<tr><th id="565">565</th><td><u>	int private_##alg##_Init(cx##_CTX *c)</u></td></tr>
+<tr><th id="566">566</th><td></td></tr>
+<tr><th id="567">567</th><td><u>#define fips_cipher_abort(alg) \</u></td></tr>
+<tr><th id="568">568</th><td><u>	if (FIPS_mode()) OpenSSLDie(__FILE__, __LINE__, \</u></td></tr>
+<tr><th id="569">569</th><td><u>		"Low level API call to cipher " #alg " forbidden in FIPS mode!")</u></td></tr>
+<tr><th id="570">570</th><td></td></tr>
+<tr><th id="571">571</th><td><u>#<span data-ppcond="557">else</span></u></td></tr>
+<tr><th id="572">572</th><td><u>#define <dfn class="macro" id="_M/fips_md_init_ctx" data-ref="_M/fips_md_init_ctx">fips_md_init_ctx</dfn>(alg, cx) \</u></td></tr>
+<tr><th id="573">573</th><td><u>	int alg##_Init(cx##_CTX *c)</u></td></tr>
+<tr><th id="574">574</th><td><u>#define <dfn class="macro" id="_M/fips_cipher_abort" data-ref="_M/fips_cipher_abort">fips_cipher_abort</dfn>(alg) while(0)</u></td></tr>
+<tr><th id="575">575</th><td><u>#<span data-ppcond="557">endif</span></u></td></tr>
+<tr><th id="576">576</th><td></td></tr>
+<tr><th id="577">577</th><td><i>/* CRYPTO_memcmp returns zero iff the |len| bytes at |a| and |b| are equal. It</i></td></tr>
+<tr><th id="578">578</th><td><i> * takes an amount of time dependent on |len|, but independent of the contents</i></td></tr>
+<tr><th id="579">579</th><td><i> * of |a| and |b|. Unlike memcmp, it cannot be used to put elements into a</i></td></tr>
+<tr><th id="580">580</th><td><i> * defined order as the return value when a != b is undefined, other than to be</i></td></tr>
+<tr><th id="581">581</th><td><i> * non-zero. */</i></td></tr>
+<tr><th id="582">582</th><td><em>int</em> <dfn class="decl" id="CRYPTO_memcmp" title='CRYPTO_memcmp' data-ref="CRYPTO_memcmp" >CRYPTO_memcmp</dfn>(<em>const</em> <em>void</em> *<dfn class="local col4 decl" id="214a" title='a' data-type='const void *' data-ref="214a" >a</dfn>, <em>const</em> <em>void</em> *<dfn class="local col5 decl" id="215b" title='b' data-type='const void *' data-ref="215b" >b</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="216len" title='len' data-type='size_t' data-ref="216len" >len</dfn>);</td></tr>
+<tr><th id="583">583</th><td></td></tr>
+<tr><th id="584">584</th><td><i>/* BEGIN ERROR CODES */</i></td></tr>
+<tr><th id="585">585</th><td><i>/* The following lines are auto generated by the script mkerr.pl. Any changes</i></td></tr>
+<tr><th id="586">586</th><td><i> * made after this point may be overwritten when the script is next run.</i></td></tr>
+<tr><th id="587">587</th><td><i> */</i></td></tr>
+<tr><th id="588">588</th><td><em>void</em> <dfn class="decl" id="ERR_load_CRYPTO_strings" title='ERR_load_CRYPTO_strings' data-ref="ERR_load_CRYPTO_strings" >ERR_load_CRYPTO_strings</dfn>(<em>void</em>);</td></tr>
+<tr><th id="589">589</th><td></td></tr>
+<tr><th id="590">590</th><td><i>/* Error codes for the CRYPTO functions. */</i></td></tr>
+<tr><th id="591">591</th><td></td></tr>
+<tr><th id="592">592</th><td><i>/* Function codes. */</i></td></tr>
+<tr><th id="593">593</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_CRYPTO_GET_EX_NEW_INDEX" data-ref="_M/CRYPTO_F_CRYPTO_GET_EX_NEW_INDEX">CRYPTO_F_CRYPTO_GET_EX_NEW_INDEX</dfn>		 100</u></td></tr>
+<tr><th id="594">594</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_CRYPTO_GET_NEW_DYNLOCKID" data-ref="_M/CRYPTO_F_CRYPTO_GET_NEW_DYNLOCKID">CRYPTO_F_CRYPTO_GET_NEW_DYNLOCKID</dfn>		 103</u></td></tr>
+<tr><th id="595">595</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_CRYPTO_GET_NEW_LOCKID" data-ref="_M/CRYPTO_F_CRYPTO_GET_NEW_LOCKID">CRYPTO_F_CRYPTO_GET_NEW_LOCKID</dfn>			 101</u></td></tr>
+<tr><th id="596">596</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_CRYPTO_SET_EX_DATA" data-ref="_M/CRYPTO_F_CRYPTO_SET_EX_DATA">CRYPTO_F_CRYPTO_SET_EX_DATA</dfn>			 102</u></td></tr>
+<tr><th id="597">597</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_DEF_ADD_INDEX" data-ref="_M/CRYPTO_F_DEF_ADD_INDEX">CRYPTO_F_DEF_ADD_INDEX</dfn>				 104</u></td></tr>
+<tr><th id="598">598</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_DEF_GET_CLASS" data-ref="_M/CRYPTO_F_DEF_GET_CLASS">CRYPTO_F_DEF_GET_CLASS</dfn>				 105</u></td></tr>
+<tr><th id="599">599</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_FIPS_MODE_SET" data-ref="_M/CRYPTO_F_FIPS_MODE_SET">CRYPTO_F_FIPS_MODE_SET</dfn>				 109</u></td></tr>
+<tr><th id="600">600</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_INT_DUP_EX_DATA" data-ref="_M/CRYPTO_F_INT_DUP_EX_DATA">CRYPTO_F_INT_DUP_EX_DATA</dfn>			 106</u></td></tr>
+<tr><th id="601">601</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_INT_FREE_EX_DATA" data-ref="_M/CRYPTO_F_INT_FREE_EX_DATA">CRYPTO_F_INT_FREE_EX_DATA</dfn>			 107</u></td></tr>
+<tr><th id="602">602</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_F_INT_NEW_EX_DATA" data-ref="_M/CRYPTO_F_INT_NEW_EX_DATA">CRYPTO_F_INT_NEW_EX_DATA</dfn>			 108</u></td></tr>
+<tr><th id="603">603</th><td></td></tr>
+<tr><th id="604">604</th><td><i>/* Reason codes. */</i></td></tr>
+<tr><th id="605">605</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_R_FIPS_MODE_NOT_SUPPORTED" data-ref="_M/CRYPTO_R_FIPS_MODE_NOT_SUPPORTED">CRYPTO_R_FIPS_MODE_NOT_SUPPORTED</dfn>		 101</u></td></tr>
+<tr><th id="606">606</th><td><u>#define <dfn class="macro" id="_M/CRYPTO_R_NO_DYNLOCK_CREATE_CALLBACK" data-ref="_M/CRYPTO_R_NO_DYNLOCK_CREATE_CALLBACK">CRYPTO_R_NO_DYNLOCK_CREATE_CALLBACK</dfn>		 100</u></td></tr>
+<tr><th id="607">607</th><td></td></tr>
+<tr><th id="608">608</th><td><u>#<span data-ppcond="608">ifdef</span>  <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="609">609</th><td>}</td></tr>
+<tr><th id="610">610</th><td><u>#<span data-ppcond="608">endif</span></u></td></tr>
+<tr><th id="611">611</th><td><u>#<span data-ppcond="117">endif</span></u></td></tr>
+<tr><th id="612">612</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore6.x/src/common/Cryptography/ARC4.cpp.html'>TrinityCore6.x/src/common/Cryptography/ARC4.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

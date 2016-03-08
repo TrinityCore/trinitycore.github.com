@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+<title>CascLib.h [TrinityCore6.x/dep/CascLib/src/CascLib.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/CascLib.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>CascLib</a>/<a href='./'>src</a>/CascLib.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><i>/* CascLib.h                              Copyright (c) Ladislav Zezula 2014 */</i></td></tr>
+<tr><th id="3">3</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="4">4</th><td><i>/* CascLib library v 1.00                                                    */</i></td></tr>
+<tr><th id="5">5</th><td><i>/*                                                                           */</i></td></tr>
+<tr><th id="6">6</th><td><i>/* Author : Ladislav Zezula                                                  */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* E-mail : ladik@zezula.net                                                 */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* WWW    : <a href="http://www.zezula.net">http://www.zezula.net</a>                                            */</i></td></tr>
+<tr><th id="9">9</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="10">10</th><td><i>/*   Date    Ver   Who  Comment                                              */</i></td></tr>
+<tr><th id="11">11</th><td><i>/* --------  ----  ---  -------                                              */</i></td></tr>
+<tr><th id="12">12</th><td><i>/* 29.04.14  1.00  Lad  Created                                              */</i></td></tr>
+<tr><th id="13">13</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="15">ifndef</span> <span class="macro" data-ref="_M/__CASCLIB_H__">__CASCLIB_H__</span></u></td></tr>
+<tr><th id="16">16</th><td><u>#define <dfn class="macro" id="_M/__CASCLIB_H__" data-ref="_M/__CASCLIB_H__">__CASCLIB_H__</dfn></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifdef</span> <span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#pragma warning(disable:4668)       // 'XXX' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif' </u></td></tr>
+<tr><th id="20">20</th><td><u>#pragma warning(disable:4820)       // 'XXX' : '2' bytes padding added after data member 'XXX::yyy'</u></td></tr>
+<tr><th id="21">21</th><td><u>#<span data-ppcond="18">endif</span></u>                                             </td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="CascPort.h.html">"CascPort.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#<span data-ppcond="25">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="26">26</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="25">endif</span></u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="30">30</th><td><i>// Defines</i></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/CASCLIB_VERSION" data-ref="_M/CASCLIB_VERSION">CASCLIB_VERSION</dfn>                 0x0100  // Current version of CascLib (1.0)</u></td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/CASCLIB_VERSION_STRING" data-ref="_M/CASCLIB_VERSION_STRING">CASCLIB_VERSION_STRING</dfn>          "1.00"  // String version of CascLib version</u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><u>#define <dfn class="macro" id="_M/ERROR_UNKNOWN_FILE_KEY" data-ref="_M/ERROR_UNKNOWN_FILE_KEY">ERROR_UNKNOWN_FILE_KEY</dfn>           10001  // Returned by encrypted stream when can't find file key</u></td></tr>
+<tr><th id="36">36</th><td><u>#define <dfn class="macro" id="_M/ERROR_FILE_INCOMPLETE" data-ref="_M/ERROR_FILE_INCOMPLETE">ERROR_FILE_INCOMPLETE</dfn>            10006  // The required file part is missing</u></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><i>// Values for CascOpenStorage</i></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/CASC_STOR_XXXXX" data-ref="_M/CASC_STOR_XXXXX">CASC_STOR_XXXXX</dfn>             0x00000001  // Not used</u></td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><i>// Values for CascOpenFile</i></td></tr>
+<tr><th id="42">42</th><td><u>#define <dfn class="macro" id="_M/CASC_OPEN_BY_ENCODING_KEY" data-ref="_M/CASC_OPEN_BY_ENCODING_KEY">CASC_OPEN_BY_ENCODING_KEY</dfn>   0x00000001  // The name is just the encoding key; skip ROOT file processing</u></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><i>// Flags for file stream</i></td></tr>
+<tr><th id="45">45</th><td><u>#define <dfn class="macro" id="_M/BASE_PROVIDER_FILE" data-ref="_M/BASE_PROVIDER_FILE">BASE_PROVIDER_FILE</dfn>          0x00000000  // Base data source is a file</u></td></tr>
+<tr><th id="46">46</th><td><u>#define <dfn class="macro" id="_M/BASE_PROVIDER_MAP" data-ref="_M/BASE_PROVIDER_MAP">BASE_PROVIDER_MAP</dfn>           0x00000001  // Base data source is memory-mapped file</u></td></tr>
+<tr><th id="47">47</th><td><u>#define <dfn class="macro" id="_M/BASE_PROVIDER_HTTP" data-ref="_M/BASE_PROVIDER_HTTP">BASE_PROVIDER_HTTP</dfn>          0x00000002  // Base data source is a file on web server</u></td></tr>
+<tr><th id="48">48</th><td><u>#define <dfn class="macro" id="_M/BASE_PROVIDER_MASK" data-ref="_M/BASE_PROVIDER_MASK">BASE_PROVIDER_MASK</dfn>          0x0000000F  // Mask for base provider value</u></td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><u>#define <dfn class="macro" id="_M/STREAM_PROVIDER_FLAT" data-ref="_M/STREAM_PROVIDER_FLAT">STREAM_PROVIDER_FLAT</dfn>        0x00000000  // Stream is linear with no offset mapping</u></td></tr>
+<tr><th id="51">51</th><td><u>#define <dfn class="macro" id="_M/STREAM_PROVIDER_PARTIAL" data-ref="_M/STREAM_PROVIDER_PARTIAL">STREAM_PROVIDER_PARTIAL</dfn>     0x00000010  // Stream is partial file (.part)</u></td></tr>
+<tr><th id="52">52</th><td><u>#define <dfn class="macro" id="_M/STREAM_PROVIDER_ENCRYPTED" data-ref="_M/STREAM_PROVIDER_ENCRYPTED">STREAM_PROVIDER_ENCRYPTED</dfn>   0x00000020  // Stream is an encrypted archive</u></td></tr>
+<tr><th id="53">53</th><td><u>#define <dfn class="macro" id="_M/STREAM_PROVIDER_BLOCK4" data-ref="_M/STREAM_PROVIDER_BLOCK4">STREAM_PROVIDER_BLOCK4</dfn>      0x00000030  // 0x4000 per block, text MD5 after each block, max 0x2000 blocks per file</u></td></tr>
+<tr><th id="54">54</th><td><u>#define <dfn class="macro" id="_M/STREAM_PROVIDER_MASK" data-ref="_M/STREAM_PROVIDER_MASK">STREAM_PROVIDER_MASK</dfn>        0x000000F0  // Mask for stream provider value</u></td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td><u>#define <dfn class="macro" id="_M/STREAM_FLAG_READ_ONLY" data-ref="_M/STREAM_FLAG_READ_ONLY">STREAM_FLAG_READ_ONLY</dfn>       0x00000100  // Stream is read only</u></td></tr>
+<tr><th id="57">57</th><td><u>#define <dfn class="macro" id="_M/STREAM_FLAG_WRITE_SHARE" data-ref="_M/STREAM_FLAG_WRITE_SHARE">STREAM_FLAG_WRITE_SHARE</dfn>     0x00000200  // Allow write sharing when open for write</u></td></tr>
+<tr><th id="58">58</th><td><u>#define <dfn class="macro" id="_M/STREAM_FLAG_USE_BITMAP" data-ref="_M/STREAM_FLAG_USE_BITMAP">STREAM_FLAG_USE_BITMAP</dfn>      0x00000400  // If the file has a file bitmap, load it and use it</u></td></tr>
+<tr><th id="59">59</th><td><u>#define <dfn class="macro" id="_M/STREAM_OPTIONS_MASK" data-ref="_M/STREAM_OPTIONS_MASK">STREAM_OPTIONS_MASK</dfn>         0x0000FF00  // Mask for stream options</u></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><u>#define <dfn class="macro" id="_M/STREAM_PROVIDERS_MASK" data-ref="_M/STREAM_PROVIDERS_MASK">STREAM_PROVIDERS_MASK</dfn>       0x000000FF  // Mask to get stream providers</u></td></tr>
+<tr><th id="62">62</th><td><u>#define <dfn class="macro" id="_M/STREAM_FLAGS_MASK" data-ref="_M/STREAM_FLAGS_MASK">STREAM_FLAGS_MASK</dfn>           0x0000FFFF  // Mask for all stream flags (providers+options)</u></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ALL" data-ref="_M/CASC_LOCALE_ALL">CASC_LOCALE_ALL</dfn>             0xFFFFFFFF</u></td></tr>
+<tr><th id="65">65</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_NONE" data-ref="_M/CASC_LOCALE_NONE">CASC_LOCALE_NONE</dfn>            0x00000000</u></td></tr>
+<tr><th id="66">66</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_UNKNOWN1" data-ref="_M/CASC_LOCALE_UNKNOWN1">CASC_LOCALE_UNKNOWN1</dfn>        0x00000001</u></td></tr>
+<tr><th id="67">67</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ENUS" data-ref="_M/CASC_LOCALE_ENUS">CASC_LOCALE_ENUS</dfn>            0x00000002</u></td></tr>
+<tr><th id="68">68</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_KOKR" data-ref="_M/CASC_LOCALE_KOKR">CASC_LOCALE_KOKR</dfn>            0x00000004</u> </td></tr>
+<tr><th id="69">69</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_RESERVED" data-ref="_M/CASC_LOCALE_RESERVED">CASC_LOCALE_RESERVED</dfn>        0x00000008</u> </td></tr>
+<tr><th id="70">70</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_FRFR" data-ref="_M/CASC_LOCALE_FRFR">CASC_LOCALE_FRFR</dfn>            0x00000010</u> </td></tr>
+<tr><th id="71">71</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_DEDE" data-ref="_M/CASC_LOCALE_DEDE">CASC_LOCALE_DEDE</dfn>            0x00000020</u> </td></tr>
+<tr><th id="72">72</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ZHCN" data-ref="_M/CASC_LOCALE_ZHCN">CASC_LOCALE_ZHCN</dfn>            0x00000040</u> </td></tr>
+<tr><th id="73">73</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ESES" data-ref="_M/CASC_LOCALE_ESES">CASC_LOCALE_ESES</dfn>            0x00000080</u> </td></tr>
+<tr><th id="74">74</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ZHTW" data-ref="_M/CASC_LOCALE_ZHTW">CASC_LOCALE_ZHTW</dfn>            0x00000100</u>  </td></tr>
+<tr><th id="75">75</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ENGB" data-ref="_M/CASC_LOCALE_ENGB">CASC_LOCALE_ENGB</dfn>            0x00000200</u> </td></tr>
+<tr><th id="76">76</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ENCN" data-ref="_M/CASC_LOCALE_ENCN">CASC_LOCALE_ENCN</dfn>            0x00000400</u> </td></tr>
+<tr><th id="77">77</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ENTW" data-ref="_M/CASC_LOCALE_ENTW">CASC_LOCALE_ENTW</dfn>            0x00000800</u> </td></tr>
+<tr><th id="78">78</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ESMX" data-ref="_M/CASC_LOCALE_ESMX">CASC_LOCALE_ESMX</dfn>            0x00001000</u> </td></tr>
+<tr><th id="79">79</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_RURU" data-ref="_M/CASC_LOCALE_RURU">CASC_LOCALE_RURU</dfn>            0x00002000</u> </td></tr>
+<tr><th id="80">80</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_PTBR" data-ref="_M/CASC_LOCALE_PTBR">CASC_LOCALE_PTBR</dfn>            0x00004000</u>  </td></tr>
+<tr><th id="81">81</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_ITIT" data-ref="_M/CASC_LOCALE_ITIT">CASC_LOCALE_ITIT</dfn>            0x00008000</u> </td></tr>
+<tr><th id="82">82</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_PTPT" data-ref="_M/CASC_LOCALE_PTPT">CASC_LOCALE_PTPT</dfn>            0x00010000</u></td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ENUS" data-ref="_M/CASC_LOCALE_BIT_ENUS">CASC_LOCALE_BIT_ENUS</dfn>        0x01</u></td></tr>
+<tr><th id="85">85</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_KOKR" data-ref="_M/CASC_LOCALE_BIT_KOKR">CASC_LOCALE_BIT_KOKR</dfn>        0x02</u></td></tr>
+<tr><th id="86">86</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_DUAL_LANG" data-ref="_M/CASC_LOCALE_DUAL_LANG">CASC_LOCALE_DUAL_LANG</dfn>       0x03</u></td></tr>
+<tr><th id="87">87</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_FRFR" data-ref="_M/CASC_LOCALE_BIT_FRFR">CASC_LOCALE_BIT_FRFR</dfn>        0x04</u></td></tr>
+<tr><th id="88">88</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_DEDE" data-ref="_M/CASC_LOCALE_BIT_DEDE">CASC_LOCALE_BIT_DEDE</dfn>        0x05</u></td></tr>
+<tr><th id="89">89</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ZHCN" data-ref="_M/CASC_LOCALE_BIT_ZHCN">CASC_LOCALE_BIT_ZHCN</dfn>        0x06</u></td></tr>
+<tr><th id="90">90</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ESES" data-ref="_M/CASC_LOCALE_BIT_ESES">CASC_LOCALE_BIT_ESES</dfn>        0x07</u></td></tr>
+<tr><th id="91">91</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ZHTW" data-ref="_M/CASC_LOCALE_BIT_ZHTW">CASC_LOCALE_BIT_ZHTW</dfn>        0x08</u> </td></tr>
+<tr><th id="92">92</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ENGB" data-ref="_M/CASC_LOCALE_BIT_ENGB">CASC_LOCALE_BIT_ENGB</dfn>        0x09</u></td></tr>
+<tr><th id="93">93</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ENCN" data-ref="_M/CASC_LOCALE_BIT_ENCN">CASC_LOCALE_BIT_ENCN</dfn>        0x0A</u></td></tr>
+<tr><th id="94">94</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ENTW" data-ref="_M/CASC_LOCALE_BIT_ENTW">CASC_LOCALE_BIT_ENTW</dfn>        0x0B</u></td></tr>
+<tr><th id="95">95</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ESMX" data-ref="_M/CASC_LOCALE_BIT_ESMX">CASC_LOCALE_BIT_ESMX</dfn>        0x0C</u></td></tr>
+<tr><th id="96">96</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_RURU" data-ref="_M/CASC_LOCALE_BIT_RURU">CASC_LOCALE_BIT_RURU</dfn>        0x0D</u></td></tr>
+<tr><th id="97">97</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_PTBR" data-ref="_M/CASC_LOCALE_BIT_PTBR">CASC_LOCALE_BIT_PTBR</dfn>        0x0E</u> </td></tr>
+<tr><th id="98">98</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_ITIT" data-ref="_M/CASC_LOCALE_BIT_ITIT">CASC_LOCALE_BIT_ITIT</dfn>        0x0F</u></td></tr>
+<tr><th id="99">99</th><td><u>#define <dfn class="macro" id="_M/CASC_LOCALE_BIT_PTPT" data-ref="_M/CASC_LOCALE_BIT_PTPT">CASC_LOCALE_BIT_PTPT</dfn>        0x10</u></td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td><u>#define <dfn class="macro" id="_M/MAX_CASC_KEY_LENGTH" data-ref="_M/MAX_CASC_KEY_LENGTH">MAX_CASC_KEY_LENGTH</dfn>               0x10  // Maximum length of the key (equal to MD5 hash)</u></td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td><u>#<span data-ppcond="104">ifndef</span> <span class="macro" data-ref="_M/MD5_HASH_SIZE">MD5_HASH_SIZE</span></u></td></tr>
+<tr><th id="105">105</th><td><u>#define <dfn class="macro" id="_M/MD5_HASH_SIZE" data-ref="_M/MD5_HASH_SIZE">MD5_HASH_SIZE</dfn>                     0x10</u></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/MD5_STRING_SIZE" data-ref="_M/MD5_STRING_SIZE">MD5_STRING_SIZE</dfn>                   0x20</u></td></tr>
+<tr><th id="107">107</th><td><u>#<span data-ppcond="104">endif</span></u></td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><u>#<span data-ppcond="109">ifndef</span> <span class="macro" data-ref="_M/SHA1_DIGEST_SIZE">SHA1_DIGEST_SIZE</span></u></td></tr>
+<tr><th id="110">110</th><td><u>#define <dfn class="macro" id="_M/SHA1_DIGEST_SIZE" data-ref="_M/SHA1_DIGEST_SIZE">SHA1_DIGEST_SIZE</dfn>                  0x14  // 160 bits</u></td></tr>
+<tr><th id="111">111</th><td><u>#<span data-ppcond="109">endif</span></u></td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td><u>#<span data-ppcond="113">ifndef</span> <span class="macro" data-ref="_M/LANG_NEUTRAL">LANG_NEUTRAL</span></u></td></tr>
+<tr><th id="114">114</th><td><u>#define <dfn class="macro" id="_M/LANG_NEUTRAL" data-ref="_M/LANG_NEUTRAL">LANG_NEUTRAL</dfn>                      0x00  // Neutral locale</u></td></tr>
+<tr><th id="115">115</th><td><u>#<span data-ppcond="113">endif</span></u></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><i>// Return value for CascGetFileSize and CascSetFilePointer</i></td></tr>
+<tr><th id="118">118</th><td><u>#define <dfn class="macro" id="_M/CASC_INVALID_SIZE" data-ref="_M/CASC_INVALID_SIZE">CASC_INVALID_SIZE</dfn>           0xFFFFFFFF</u></td></tr>
+<tr><th id="119">119</th><td><u>#define <dfn class="macro" id="_M/CASC_INVALID_POS" data-ref="_M/CASC_INVALID_POS">CASC_INVALID_POS</dfn>            0xFFFFFFFF</u></td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><i>// Flags for CascGetStorageInfo</i></td></tr>
+<tr><th id="122">122</th><td><u>#define <dfn class="macro" id="_M/CASC_FEATURE_LISTFILE" data-ref="_M/CASC_FEATURE_LISTFILE">CASC_FEATURE_LISTFILE</dfn>       0x00000001  // The storage supports listfile</u></td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="125">125</th><td><i>// Structures</i></td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><b>typedef</b> <b>enum</b> <dfn class="type def" id="_CASC_STORAGE_INFO_CLASS" title='_CASC_STORAGE_INFO_CLASS' data-ref="_CASC_STORAGE_INFO_CLASS" ><a class="type" href="#_CASC_STORAGE_INFO_CLASS" title='_CASC_STORAGE_INFO_CLASS' data-ref="_CASC_STORAGE_INFO_CLASS" ><a class="type" href="#_CASC_STORAGE_INFO_CLASS" title='_CASC_STORAGE_INFO_CLASS' data-ref="_CASC_STORAGE_INFO_CLASS" >_CASC_STORAGE_INFO_CLASS</a></a></dfn></td></tr>
+<tr><th id="128">128</th><td>{</td></tr>
+<tr><th id="129">129</th><td>    <dfn class="enum" id="_CASC_STORAGE_INFO_CLASS::CascStorageFileCount" title='_CASC_STORAGE_INFO_CLASS::CascStorageFileCount' data-ref="_CASC_STORAGE_INFO_CLASS::CascStorageFileCount" >CascStorageFileCount</dfn>,</td></tr>
+<tr><th id="130">130</th><td>    <dfn class="enum" id="_CASC_STORAGE_INFO_CLASS::CascStorageFeatures" title='_CASC_STORAGE_INFO_CLASS::CascStorageFeatures' data-ref="_CASC_STORAGE_INFO_CLASS::CascStorageFeatures" >CascStorageFeatures</dfn>,</td></tr>
+<tr><th id="131">131</th><td>    <dfn class="enum" id="_CASC_STORAGE_INFO_CLASS::CascStorageGameInfo" title='_CASC_STORAGE_INFO_CLASS::CascStorageGameInfo' data-ref="_CASC_STORAGE_INFO_CLASS::CascStorageGameInfo" >CascStorageGameInfo</dfn>,</td></tr>
+<tr><th id="132">132</th><td>    <dfn class="enum" id="_CASC_STORAGE_INFO_CLASS::CascStorageGameBuild" title='_CASC_STORAGE_INFO_CLASS::CascStorageGameBuild' data-ref="_CASC_STORAGE_INFO_CLASS::CascStorageGameBuild" >CascStorageGameBuild</dfn>,</td></tr>
+<tr><th id="133">133</th><td>    <dfn class="enum" id="_CASC_STORAGE_INFO_CLASS::CascStorageInfoClassMax" title='_CASC_STORAGE_INFO_CLASS::CascStorageInfoClassMax' data-ref="_CASC_STORAGE_INFO_CLASS::CascStorageInfoClassMax" >CascStorageInfoClassMax</dfn></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td>} <dfn class="typedef" id="CASC_STORAGE_INFO_CLASS" title='CASC_STORAGE_INFO_CLASS' data-type='enum _CASC_STORAGE_INFO_CLASS' data-ref="CASC_STORAGE_INFO_CLASS" >CASC_STORAGE_INFO_CLASS</dfn>, *<dfn class="typedef" id="PCASC_STORAGE_INFO_CLASS" title='PCASC_STORAGE_INFO_CLASS' data-type='enum _CASC_STORAGE_INFO_CLASS *' data-ref="PCASC_STORAGE_INFO_CLASS" >PCASC_STORAGE_INFO_CLASS</dfn>;</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="_QUERY_KEY" title='_QUERY_KEY' data-ref="_QUERY_KEY" ><a class="type" href="#_QUERY_KEY" title='_QUERY_KEY' data-ref="_QUERY_KEY" ><a class="type" href="#_QUERY_KEY" title='_QUERY_KEY' data-ref="_QUERY_KEY" >_QUERY_KEY</a></a></dfn></td></tr>
+<tr><th id="139">139</th><td>{</td></tr>
+<tr><th id="140">140</th><td>    <a class="typedef" href="CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="decl" id="_QUERY_KEY::pbData" title='_QUERY_KEY::pbData' data-ref="_QUERY_KEY::pbData" >pbData</dfn>;</td></tr>
+<tr><th id="141">141</th><td>    <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="decl" id="_QUERY_KEY::cbData" title='_QUERY_KEY::cbData' data-ref="_QUERY_KEY::cbData" >cbData</dfn>;</td></tr>
+<tr><th id="142">142</th><td>} <dfn class="typedef" id="QUERY_KEY" title='QUERY_KEY' data-type='struct _QUERY_KEY' data-ref="QUERY_KEY" >QUERY_KEY</dfn>, *<dfn class="typedef" id="PQUERY_KEY" title='PQUERY_KEY' data-type='struct _QUERY_KEY *' data-ref="PQUERY_KEY" >PQUERY_KEY</dfn>;</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td><i>// Structure for SFileFindFirstFile and SFileFindNextFile</i></td></tr>
+<tr><th id="145">145</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="_CASC_FIND_DATA" title='_CASC_FIND_DATA' data-ref="_CASC_FIND_DATA" ><a class="type" href="#_CASC_FIND_DATA" title='_CASC_FIND_DATA' data-ref="_CASC_FIND_DATA" ><a class="type" href="#_CASC_FIND_DATA" title='_CASC_FIND_DATA' data-ref="_CASC_FIND_DATA" >_CASC_FIND_DATA</a></a></dfn></td></tr>
+<tr><th id="146">146</th><td>{</td></tr>
+<tr><th id="147">147</th><td>    <em>char</em>   <dfn class="decl" id="_CASC_FIND_DATA::szFileName" title='_CASC_FIND_DATA::szFileName' data-ref="_CASC_FIND_DATA::szFileName" >szFileName</dfn>[<a class="macro" href="CascPort.h.html#160" title="1024" data-ref="_M/MAX_PATH">MAX_PATH</a>];                <i>// Full name of the found file</i></td></tr>
+<tr><th id="148">148</th><td>    <em>char</em> * <dfn class="decl" id="_CASC_FIND_DATA::szPlainName" title='_CASC_FIND_DATA::szPlainName' data-ref="_CASC_FIND_DATA::szPlainName" >szPlainName</dfn>;                         <i>// Plain name of the found file</i></td></tr>
+<tr><th id="149">149</th><td>    <a class="typedef" href="CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a>   <dfn class="decl" id="_CASC_FIND_DATA::EncodingKey" title='_CASC_FIND_DATA::EncodingKey' data-ref="_CASC_FIND_DATA::EncodingKey" >EncodingKey</dfn>[<a class="macro" href="#105" title="0x10" data-ref="_M/MD5_HASH_SIZE">MD5_HASH_SIZE</a>];          <i>// Encoding key</i></td></tr>
+<tr><th id="150">150</th><td>    <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a>  <dfn class="decl" id="_CASC_FIND_DATA::dwLocaleFlags" title='_CASC_FIND_DATA::dwLocaleFlags' data-ref="_CASC_FIND_DATA::dwLocaleFlags" >dwLocaleFlags</dfn>;                       <i>// Locale flags (WoW only)</i></td></tr>
+<tr><th id="151">151</th><td>    <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a>  <dfn class="decl" id="_CASC_FIND_DATA::dwFileSize" title='_CASC_FIND_DATA::dwFileSize' data-ref="_CASC_FIND_DATA::dwFileSize" >dwFileSize</dfn>;                          <i>// Size of the file</i></td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>} <dfn class="typedef" id="CASC_FIND_DATA" title='CASC_FIND_DATA' data-type='struct _CASC_FIND_DATA' data-ref="CASC_FIND_DATA" >CASC_FIND_DATA</dfn>, *<dfn class="typedef" id="PCASC_FIND_DATA" title='PCASC_FIND_DATA' data-type='struct _CASC_FIND_DATA *' data-ref="PCASC_FIND_DATA" >PCASC_FIND_DATA</dfn>;</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="156">156</th><td><i>// Callback functions</i></td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td><b>typedef</b> <b>struct</b> <a class="type" href="common/FileStream.h.html#TFileStream" title='TFileStream' data-ref="TFileStream" id="TFileStream" ><a class="type" href="common/FileStream.h.html#TFileStream" title='TFileStream' data-ref="TFileStream" >TFileStream</a></a> <dfn class="typedef" id="TFileStream" title='TFileStream' data-type='struct TFileStream' data-ref="TFileStream" >TFileStream</dfn>;</td></tr>
+<tr><th id="159">159</th><td><b>typedef</b> <em>void</em> (<a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> * <dfn class="typedef" id="STREAM_DOWNLOAD_CALLBACK" title='STREAM_DOWNLOAD_CALLBACK' data-type='void (*)(void *, ULONGLONG, DWORD)' data-ref="STREAM_DOWNLOAD_CALLBACK" >STREAM_DOWNLOAD_CALLBACK</dfn>)(<em>void</em> * <dfn class="local col8 decl" id="48pvUserData" title='pvUserData' data-type='void *' data-ref="48pvUserData" >pvUserData</dfn>, <a class="typedef" href="CascPort.h.html#ULONGLONG" title='ULONGLONG' data-type='unsigned long long' data-ref="ULONGLONG" >ULONGLONG</a> <dfn class="local col9 decl" id="49ByteOffset" title='ByteOffset' data-type='ULONGLONG' data-ref="49ByteOffset" >ByteOffset</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col0 decl" id="50dwTotalBytes" title='dwTotalBytes' data-type='DWORD' data-ref="50dwTotalBytes" >dwTotalBytes</dfn>);</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="162">162</th><td><i>// We have our own qsort implementation, optimized for sorting array of pointers</i></td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td><em>void</em> <dfn class="decl" id="qsort_pointer_array" title='qsort_pointer_array' data-ref="qsort_pointer_array" >qsort_pointer_array</dfn>(<em>void</em> ** <dfn class="local col1 decl" id="51base" title='base' data-type='void **' data-ref="51base" >base</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="52num" title='num' data-type='size_t' data-ref="52num" >num</dfn>, <em>int</em> (*<dfn class="local col3 decl" id="53compare" title='compare' data-type='int (*)(const void *, const void *, const void *)' data-ref="53compare" >compare</dfn>)(<em>const</em> <em>void</em> *, <em>const</em> <em>void</em> *, <em>const</em> <em>void</em> *), <em>const</em> <em>void</em> * <dfn class="local col4 decl" id="54context" title='context' data-type='const void *' data-ref="54context" >context</dfn>);</td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="167">167</th><td><i>// Functions for storage manipulation</i></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascOpenStorage" title='CascOpenStorage' data-ref="CascOpenStorage" >CascOpenStorage</dfn>(<em>const</em> <a class="typedef" href="CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col5 decl" id="55szDataPath" title='szDataPath' data-type='const TCHAR *' data-ref="55szDataPath" >szDataPath</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col6 decl" id="56dwLocaleMask" title='dwLocaleMask' data-type='DWORD' data-ref="56dwLocaleMask" >dwLocaleMask</dfn>, <a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> * <dfn class="local col7 decl" id="57phStorage" title='phStorage' data-type='HANDLE *' data-ref="57phStorage" >phStorage</dfn>);</td></tr>
+<tr><th id="170">170</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascGetStorageInfo" title='CascGetStorageInfo' data-ref="CascGetStorageInfo" >CascGetStorageInfo</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col8 decl" id="58hStorage" title='hStorage' data-type='HANDLE' data-ref="58hStorage" >hStorage</dfn>, <a class="typedef" href="#CASC_STORAGE_INFO_CLASS" title='CASC_STORAGE_INFO_CLASS' data-type='enum _CASC_STORAGE_INFO_CLASS' data-ref="CASC_STORAGE_INFO_CLASS" >CASC_STORAGE_INFO_CLASS</a> <dfn class="local col9 decl" id="59InfoClass" title='InfoClass' data-type='CASC_STORAGE_INFO_CLASS' data-ref="59InfoClass" >InfoClass</dfn>, <em>void</em> * <dfn class="local col0 decl" id="60pvStorageInfo" title='pvStorageInfo' data-type='void *' data-ref="60pvStorageInfo" >pvStorageInfo</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="61cbStorageInfo" title='cbStorageInfo' data-type='size_t' data-ref="61cbStorageInfo" >cbStorageInfo</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> * <dfn class="local col2 decl" id="62pcbLengthNeeded" title='pcbLengthNeeded' data-type='size_t *' data-ref="62pcbLengthNeeded" >pcbLengthNeeded</dfn>);</td></tr>
+<tr><th id="171">171</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascCloseStorage" title='CascCloseStorage' data-ref="CascCloseStorage" >CascCloseStorage</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col3 decl" id="63hStorage" title='hStorage' data-type='HANDLE' data-ref="63hStorage" >hStorage</dfn>);</td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascOpenFileByIndexKey" title='CascOpenFileByIndexKey' data-ref="CascOpenFileByIndexKey" >CascOpenFileByIndexKey</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col4 decl" id="64hStorage" title='hStorage' data-type='HANDLE' data-ref="64hStorage" >hStorage</dfn>, <a class="typedef" href="#PQUERY_KEY" title='PQUERY_KEY' data-type='struct _QUERY_KEY *' data-ref="PQUERY_KEY" >PQUERY_KEY</a> <dfn class="local col5 decl" id="65pIndexKey" title='pIndexKey' data-type='PQUERY_KEY' data-ref="65pIndexKey" >pIndexKey</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col6 decl" id="66dwFlags" title='dwFlags' data-type='DWORD' data-ref="66dwFlags" >dwFlags</dfn>, <a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> * <dfn class="local col7 decl" id="67phFile" title='phFile' data-type='HANDLE *' data-ref="67phFile" >phFile</dfn>);</td></tr>
+<tr><th id="174">174</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascOpenFileByEncodingKey" title='CascOpenFileByEncodingKey' data-ref="CascOpenFileByEncodingKey" >CascOpenFileByEncodingKey</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col8 decl" id="68hStorage" title='hStorage' data-type='HANDLE' data-ref="68hStorage" >hStorage</dfn>, <a class="typedef" href="#PQUERY_KEY" title='PQUERY_KEY' data-type='struct _QUERY_KEY *' data-ref="PQUERY_KEY" >PQUERY_KEY</a> <dfn class="local col9 decl" id="69pEncodingKey" title='pEncodingKey' data-type='PQUERY_KEY' data-ref="69pEncodingKey" >pEncodingKey</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col0 decl" id="70dwFlags" title='dwFlags' data-type='DWORD' data-ref="70dwFlags" >dwFlags</dfn>, <a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> * <dfn class="local col1 decl" id="71phFile" title='phFile' data-type='HANDLE *' data-ref="71phFile" >phFile</dfn>);</td></tr>
+<tr><th id="175">175</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascOpenFile" title='CascOpenFile' data-ref="CascOpenFile" >CascOpenFile</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col2 decl" id="72hStorage" title='hStorage' data-type='HANDLE' data-ref="72hStorage" >hStorage</dfn>, <em>const</em> <em>char</em> * <dfn class="local col3 decl" id="73szFileName" title='szFileName' data-type='const char *' data-ref="73szFileName" >szFileName</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col4 decl" id="74dwLocale" title='dwLocale' data-type='DWORD' data-ref="74dwLocale" >dwLocale</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col5 decl" id="75dwFlags" title='dwFlags' data-type='DWORD' data-ref="75dwFlags" >dwFlags</dfn>, <a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> * <dfn class="local col6 decl" id="76phFile" title='phFile' data-type='HANDLE *' data-ref="76phFile" >phFile</dfn>);</td></tr>
+<tr><th id="176">176</th><td><a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascGetFileSize" title='CascGetFileSize' data-ref="CascGetFileSize" >CascGetFileSize</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col7 decl" id="77hFile" title='hFile' data-type='HANDLE' data-ref="77hFile" >hFile</dfn>, <a class="typedef" href="CascPort.h.html#PDWORD" title='PDWORD' data-type='DWORD *' data-ref="PDWORD" >PDWORD</a> <dfn class="local col8 decl" id="78pdwFileSizeHigh" title='pdwFileSizeHigh' data-type='PDWORD' data-ref="78pdwFileSizeHigh" >pdwFileSizeHigh</dfn>);</td></tr>
+<tr><th id="177">177</th><td><a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascSetFilePointer" title='CascSetFilePointer' data-ref="CascSetFilePointer" >CascSetFilePointer</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col9 decl" id="79hFile" title='hFile' data-type='HANDLE' data-ref="79hFile" >hFile</dfn>, <a class="typedef" href="CascPort.h.html#LONG" title='LONG' data-type='int' data-ref="LONG" >LONG</a> <dfn class="local col0 decl" id="80lFilePos" title='lFilePos' data-type='LONG' data-ref="80lFilePos" >lFilePos</dfn>, <a class="typedef" href="CascPort.h.html#LONG" title='LONG' data-type='int' data-ref="LONG" >LONG</a> * <dfn class="local col1 decl" id="81plFilePosHigh" title='plFilePosHigh' data-type='LONG *' data-ref="81plFilePosHigh" >plFilePosHigh</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col2 decl" id="82dwMoveMethod" title='dwMoveMethod' data-type='DWORD' data-ref="82dwMoveMethod" >dwMoveMethod</dfn>);</td></tr>
+<tr><th id="178">178</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascReadFile" title='CascReadFile' data-ref="CascReadFile" >CascReadFile</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col3 decl" id="83hFile" title='hFile' data-type='HANDLE' data-ref="83hFile" >hFile</dfn>, <em>void</em> * <dfn class="local col4 decl" id="84lpBuffer" title='lpBuffer' data-type='void *' data-ref="84lpBuffer" >lpBuffer</dfn>, <a class="typedef" href="CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col5 decl" id="85dwToRead" title='dwToRead' data-type='DWORD' data-ref="85dwToRead" >dwToRead</dfn>, <a class="typedef" href="CascPort.h.html#PDWORD" title='PDWORD' data-type='DWORD *' data-ref="PDWORD" >PDWORD</a> <dfn class="local col6 decl" id="86pdwRead" title='pdwRead' data-type='PDWORD' data-ref="86pdwRead" >pdwRead</dfn>);</td></tr>
+<tr><th id="179">179</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascCloseFile" title='CascCloseFile' data-ref="CascCloseFile" >CascCloseFile</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col7 decl" id="87hFile" title='hFile' data-type='HANDLE' data-ref="87hFile" >hFile</dfn>);</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td><a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascFindFirstFile" title='CascFindFirstFile' data-ref="CascFindFirstFile" >CascFindFirstFile</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col8 decl" id="88hStorage" title='hStorage' data-type='HANDLE' data-ref="88hStorage" >hStorage</dfn>, <em>const</em> <em>char</em> * <dfn class="local col9 decl" id="89szMask" title='szMask' data-type='const char *' data-ref="89szMask" >szMask</dfn>, <a class="typedef" href="#PCASC_FIND_DATA" title='PCASC_FIND_DATA' data-type='struct _CASC_FIND_DATA *' data-ref="PCASC_FIND_DATA" >PCASC_FIND_DATA</a> <dfn class="local col0 decl" id="90pFindData" title='pFindData' data-type='PCASC_FIND_DATA' data-ref="90pFindData" >pFindData</dfn>, <em>const</em> <a class="typedef" href="CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col1 decl" id="91szListFile" title='szListFile' data-type='const TCHAR *' data-ref="91szListFile" >szListFile</dfn>);</td></tr>
+<tr><th id="182">182</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascFindNextFile" title='CascFindNextFile' data-ref="CascFindNextFile" >CascFindNextFile</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col2 decl" id="92hFind" title='hFind' data-type='HANDLE' data-ref="92hFind" >hFind</dfn>, <a class="typedef" href="#PCASC_FIND_DATA" title='PCASC_FIND_DATA' data-type='struct _CASC_FIND_DATA *' data-ref="PCASC_FIND_DATA" >PCASC_FIND_DATA</a> <dfn class="local col3 decl" id="93pFindData" title='pFindData' data-type='PCASC_FIND_DATA' data-ref="93pFindData" >pFindData</dfn>);</td></tr>
+<tr><th id="183">183</th><td><em>bool</em>  <a class="macro" href="CascPort.h.html#163" title="" data-ref="_M/WINAPI">WINAPI</a> <dfn class="decl" id="CascFindClose" title='CascFindClose' data-ref="CascFindClose" >CascFindClose</dfn>(<a class="typedef" href="CascPort.h.html#HANDLE" title='HANDLE' data-type='void *' data-ref="HANDLE" >HANDLE</a> <dfn class="local col4 decl" id="94hFind" title='hFind' data-type='HANDLE' data-ref="94hFind" >hFind</dfn>);</td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="186">186</th><td><i>// GetLastError/SetLastError support for non-Windows platform</i></td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td><u>#<span data-ppcond="188">ifndef</span> <span class="macro" data-ref="_M/PLATFORM_WINDOWS">PLATFORM_WINDOWS</span></u></td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td><em>int</em> <dfn class="decl" id="GetLastError" title='GetLastError' data-ref="GetLastError" >GetLastError</dfn>();</td></tr>
+<tr><th id="191">191</th><td><em>void</em> <dfn class="decl" id="SetLastError" title='SetLastError' data-ref="SetLastError" >SetLastError</dfn>(<em>int</em> <dfn class="local col5 decl" id="95nError" title='nError' data-type='int' data-ref="95nError" >nError</dfn>);</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><u>#<span data-ppcond="188">endif</span>  // PLATFORM_WINDOWS</u></td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td><u>#<span data-ppcond="195">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="196">196</th><td>}   <i>// extern "C"</i></td></tr>
+<tr><th id="197">197</th><td><u>#<span data-ppcond="195">endif</span></u></td></tr>
+<tr><th id="198">198</th><td></td></tr>
+<tr><th id="199">199</th><td><u>#<span data-ppcond="15">endif</span>  // __CASCLIB_H__</u></td></tr>
+<tr><th id="200">200</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

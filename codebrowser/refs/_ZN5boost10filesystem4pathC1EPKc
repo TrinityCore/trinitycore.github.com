@@ -1,0 +1,10 @@
+<def f='include/boost/filesystem/path.hpp' l='150' type='void boost::filesystem::path::path(const value_type * s)'/>
+<use f='include/boost/filesystem/path.hpp' l='425' u='c' c='_ZNK5boost10filesystem4path7compareEPKc'/>
+<doc f='include/boost/filesystem/path.hpp' l='142'>//  Overloads for the operating system API&apos;s native character type. Rationale:
+    //    - Avoids use of codecvt() for native value_type strings. This limits the
+    //      impact of locale(&quot;&quot;) initialization failures on POSIX systems to programs
+    //      that actually depend on locale(&quot;&quot;). It further ensures that exceptions thrown
+    //      as a result of such failues occur after main() has started, so can be caught.
+    //      This is a partial resolution of tickets 4688, 5100, and 5289.
+    //    - A slight optimization for a common use case, particularly on POSIX since
+    //      value_type is char and that is the most common useage.</doc>

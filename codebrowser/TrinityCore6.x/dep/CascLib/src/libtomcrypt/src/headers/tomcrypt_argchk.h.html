@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<title>tomcrypt_argchk.h [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_argchk.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_argchk.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>headers</a>/tomcrypt_argchk.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* Defines the LTC_ARGCHK macro used within the library */</i></td></tr>
+<tr><th id="2">2</th><td><i>/* ARGTYPE is defined in mycrypt_cfg.h */</i></td></tr>
+<tr><th id="3">3</th><td><u>#<span data-ppcond="3">if</span> <a class="macro" href="tomcrypt_cfg.h.html#48" title="0" data-ref="_M/ARGTYPE">ARGTYPE</a> == 0</u></td></tr>
+<tr><th id="4">4</th><td></td></tr>
+<tr><th id="5">5</th><td><u>#include <a href="../../../../../../../include/signal.h.html">&lt;signal.h&gt;</a></u></td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td><i>/* this is the default LibTomCrypt macro  */</i></td></tr>
+<tr><th id="8">8</th><td><em>void</em> <dfn class="decl" id="crypt_argchk" title='crypt_argchk' data-ref="crypt_argchk" >crypt_argchk</dfn>(<em>char</em> *<dfn class="local col8 decl" id="1168v" title='v' data-type='char *' data-ref="1168v" >v</dfn>, <em>char</em> *<dfn class="local col9 decl" id="1169s" title='s' data-type='char *' data-ref="1169s" >s</dfn>, <em>int</em> <dfn class="local col0 decl" id="1170d" title='d' data-type='int' data-ref="1170d" >d</dfn>);</td></tr>
+<tr><th id="9">9</th><td><u>#define <dfn class="macro" id="_M/LTC_ARGCHK" data-ref="_M/LTC_ARGCHK">LTC_ARGCHK</dfn>(x) if (!(x)) { crypt_argchk(#x, __FILE__, __LINE__); }</u></td></tr>
+<tr><th id="10">10</th><td><u>#define <dfn class="macro" id="_M/LTC_ARGCHKVD" data-ref="_M/LTC_ARGCHKVD">LTC_ARGCHKVD</dfn>(x) LTC_ARGCHK(x)</u></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#<span data-ppcond="3">elif</span> ARGTYPE == 1</u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><i>/* fatal type of error */</i></td></tr>
+<tr><th id="15">15</th><td><u>#define LTC_ARGCHK(x) assert((x))</u></td></tr>
+<tr><th id="16">16</th><td><u>#define LTC_ARGCHKVD(x) LTC_ARGCHK(x)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#elif ARGTYPE == 2</u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#define LTC_ARGCHK(x) if (!(x)) { fprintf(stderr, "\nwarning: ARGCHK failed at %s:%d\n", __FILE__, __LINE__); }</u></td></tr>
+<tr><th id="21">21</th><td><u>#define LTC_ARGCHKVD(x) LTC_ARGCHK(x)</u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#elif ARGTYPE == 3</u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#define LTC_ARGCHK(x)</u> </td></tr>
+<tr><th id="26">26</th><td><u>#define LTC_ARGCHKVD(x) LTC_ARGCHK(x)</u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#elif ARGTYPE == 4</u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><u>#define LTC_ARGCHK(x)   if (!(x)) return CRYPT_INVALID_ARG;</u></td></tr>
+<tr><th id="31">31</th><td><u>#define LTC_ARGCHKVD(x) if (!(x)) return;</u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="3">endif</span></u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_argchk.h,v $ */</i></td></tr>
+<tr><th id="37">37</th><td><i>/* $Revision: 1.5 $ */</i></td></tr>
+<tr><th id="38">38</th><td><i>/* $Date: 2006/08/27 20:50:21 $ */</i></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

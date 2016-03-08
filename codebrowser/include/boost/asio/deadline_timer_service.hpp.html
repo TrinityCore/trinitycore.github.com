@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+<title>deadline_timer_service.hpp [include/boost/asio/deadline_timer_service.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/deadline_timer_service.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>asio</a>/deadline_timer_service.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// deadline_timer_service.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~~~~~~~~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_DEADLINE_TIMER_SERVICE_HPP">BOOST_ASIO_DEADLINE_TIMER_SERVICE_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_DEADLINE_TIMER_SERVICE_HPP" data-ref="_M/BOOST_ASIO_DEADLINE_TIMER_SERVICE_HPP">BOOST_ASIO_DEADLINE_TIMER_SERVICE_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="detail/config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">if</span> defined(<a class="macro" href="detail/config.hpp.html#280" data-ref="_M/BOOST_ASIO_HAS_BOOST_DATE_TIME">BOOST_ASIO_HAS_BOOST_DATE_TIME</a>) \</u></td></tr>
+<tr><th id="21">21</th><td><u>  || defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../c++/4.9/cstddef.html">&lt;cstddef&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="async_result.hpp.html">&lt;boost/asio/async_result.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="detail/deadline_timer_service.hpp.html">&lt;boost/asio/detail/deadline_timer_service.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="io_service.hpp.html">&lt;boost/asio/io_service.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="time_traits.hpp.html">&lt;boost/asio/time_traits.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="detail/timer_queue_ptime.hpp.html">&lt;boost/asio/detail/timer_queue_ptime.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="detail/push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="33">33</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i class="doc">/// Default service implementation for a timer.</i></td></tr>
+<tr><th id="36">36</th><td><b>template</b> &lt;<b>typename</b> TimeType,</td></tr>
+<tr><th id="37">37</th><td>    <b>typename</b> TimeTraits = <span class="namespace">boost::asio::</span><a class="type" href="time_traits.hpp.html#boost::asio::time_traits" title='boost::asio::time_traits' data-ref="boost::asio::time_traits" >time_traits</a>&lt;TimeType&gt; &gt;</td></tr>
+<tr><th id="38">38</th><td><b>class</b> <dfn class="type def" id="boost::asio::deadline_timer_service" title='boost::asio::deadline_timer_service' data-ref="boost::asio::deadline_timer_service" >deadline_timer_service</dfn></td></tr>
+<tr><th id="39">39</th><td><u>#<span data-ppcond="39">if</span> defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="40">40</th><td>  : <b>public</b> boost::asio::io_service::service</td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="39">else</span></u></td></tr>
+<tr><th id="42">42</th><td>  : <b>public</b> <span class="namespace">boost::asio::detail::</span><a class="type" href="io_service.hpp.html#boost::asio::detail::service_base" title='boost::asio::detail::service_base' data-ref="boost::asio::detail::service_base" >service_base</a>&lt;</td></tr>
+<tr><th id="43">43</th><td>      <a class="type" href="#boost::asio::deadline_timer_service" title='boost::asio::deadline_timer_service' data-ref="boost::asio::deadline_timer_service" >deadline_timer_service</a>&lt;TimeType, TimeTraits&gt; &gt;</td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="39">endif</span></u></td></tr>
+<tr><th id="45">45</th><td>{</td></tr>
+<tr><th id="46">46</th><td><b>public</b>:</td></tr>
+<tr><th id="47">47</th><td><u>#<span data-ppcond="47">if</span> defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="48">48</th><td>  <i class="doc">/// The unique service identifier.</i></td></tr>
+<tr><th id="49">49</th><td>  <em>static</em> boost::asio::io_service::id id;</td></tr>
+<tr><th id="50">50</th><td><u>#<span data-ppcond="47">endif</span></u></td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td>  <i class="doc">/// The time traits type.</i></td></tr>
+<tr><th id="53">53</th><td>  <b>typedef</b> TimeTraits <dfn class="typedef" id="boost::asio::deadline_timer_service::traits_type" title='boost::asio::deadline_timer_service::traits_type' data-type='TimeTraits' data-ref="boost::asio::deadline_timer_service::traits_type" >traits_type</dfn>;</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>  <i class="doc">/// The time type.</i></td></tr>
+<tr><th id="56">56</th><td>  <b>typedef</b> <b>typename</b> <a class="typedef" href="#boost::asio::deadline_timer_service::traits_type" title='boost::asio::deadline_timer_service::traits_type' data-type='TimeTraits' data-ref="boost::asio::deadline_timer_service::traits_type" >traits_type</a>::time_type <dfn class="typedef" id="boost::asio::deadline_timer_service::time_type" title='boost::asio::deadline_timer_service::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::deadline_timer_service::time_type" >time_type</dfn>;</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>  <i class="doc">/// The duration type.</i></td></tr>
+<tr><th id="59">59</th><td>  <b>typedef</b> <b>typename</b> <a class="typedef" href="#boost::asio::deadline_timer_service::traits_type" title='boost::asio::deadline_timer_service::traits_type' data-type='TimeTraits' data-ref="boost::asio::deadline_timer_service::traits_type" >traits_type</a>::duration_type <dfn class="typedef" id="boost::asio::deadline_timer_service::duration_type" title='boost::asio::deadline_timer_service::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::deadline_timer_service::duration_type" >duration_type</dfn>;</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><b>private</b>:</td></tr>
+<tr><th id="62">62</th><td>  <i>// The type of the platform-specific implementation.</i></td></tr>
+<tr><th id="63">63</th><td>  <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="detail/deadline_timer_service.hpp.html#boost::asio::detail::deadline_timer_service" title='boost::asio::detail::deadline_timer_service' data-ref="boost::asio::detail::deadline_timer_service" >deadline_timer_service</a>&lt;<a class="typedef" href="#boost::asio::deadline_timer_service::traits_type" title='boost::asio::deadline_timer_service::traits_type' data-type='TimeTraits' data-ref="boost::asio::deadline_timer_service::traits_type" >traits_type</a>&gt; <dfn class="typedef" id="boost::asio::deadline_timer_service::service_impl_type" title='boost::asio::deadline_timer_service::service_impl_type' data-type='detail::deadline_timer_service&lt;traits_type&gt;' data-ref="boost::asio::deadline_timer_service::service_impl_type" >service_impl_type</dfn>;</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><b>public</b>:</td></tr>
+<tr><th id="66">66</th><td>  <i class="doc">/// The implementation type of the deadline timer.</i></td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="67">if</span> defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="68">68</th><td>  <b>typedef</b> implementation_defined implementation_type;</td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="67">else</span></u></td></tr>
+<tr><th id="70">70</th><td>  <b>typedef</b> <b>typename</b> <a class="typedef" href="#boost::asio::deadline_timer_service::service_impl_type" title='boost::asio::deadline_timer_service::service_impl_type' data-type='detail::deadline_timer_service&lt;traits_type&gt;' data-ref="boost::asio::deadline_timer_service::service_impl_type" >service_impl_type</a>::implementation_type <dfn class="typedef" id="boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</dfn>;</td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="67">endif</span></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>  <i class="doc">/// Construct a new timer service for the specified io_service.</i></td></tr>
+<tr><th id="74">74</th><td>  <b>explicit</b> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_serviceC1ERNS0_10io_serviceE" title='boost::asio::deadline_timer_service::deadline_timer_service&lt;TimeType, TimeTraits&gt;' data-ref="_ZN5boost4asio22deadline_timer_serviceC1ERNS0_10io_serviceE" >deadline_timer_service</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col6 decl" id="2306io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="2306io_service" >io_service</dfn>)</td></tr>
+<tr><th id="75">75</th><td>    : <span class="namespace">boost::asio::detail::</span><a class="type" href="io_service.hpp.html#boost::asio::detail::service_base" title='boost::asio::detail::service_base' data-ref="boost::asio::detail::service_base" >service_base</a>&lt;</td></tr>
+<tr><th id="76">76</th><td>        <a class="type" href="#boost::asio::deadline_timer_service" title='boost::asio::deadline_timer_service' data-ref="boost::asio::deadline_timer_service" >deadline_timer_service</a>&lt;TimeType, TimeTraits&gt; &gt;(<a class="local col6 ref" href="#2306io_service" title='io_service' data-ref="2306io_service" >io_service</a>),</td></tr>
+<tr><th id="77">77</th><td>      <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>(<a class="local col6 ref" href="#2306io_service" title='io_service' data-ref="2306io_service" >io_service</a>)</td></tr>
+<tr><th id="78">78</th><td>  {</td></tr>
+<tr><th id="79">79</th><td>  }</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>  <i class="doc">/// Construct a new timer implementation.</i></td></tr>
+<tr><th id="82">82</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service9constructERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" title='boost::asio::deadline_timer_service::construct' data-ref="_ZN5boost4asio22deadline_timer_service9constructERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" >construct</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col7 decl" id="2307impl" title='impl' data-type='implementation_type &amp;' data-ref="2307impl" >impl</dfn>)</td></tr>
+<tr><th id="83">83</th><td>  {</td></tr>
+<tr><th id="84">84</th><td>    <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.construct(<a class="local col7 ref" href="#2307impl" title='impl' data-ref="2307impl" >impl</a>);</td></tr>
+<tr><th id="85">85</th><td>  }</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>  <i class="doc">/// Destroy a timer implementation.</i></td></tr>
+<tr><th id="88">88</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service7destroyERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" title='boost::asio::deadline_timer_service::destroy' data-ref="_ZN5boost4asio22deadline_timer_service7destroyERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" >destroy</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col8 decl" id="2308impl" title='impl' data-type='implementation_type &amp;' data-ref="2308impl" >impl</dfn>)</td></tr>
+<tr><th id="89">89</th><td>  {</td></tr>
+<tr><th id="90">90</th><td>    <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.destroy(<a class="local col8 ref" href="#2308impl" title='impl' data-ref="2308impl" >impl</a>);</td></tr>
+<tr><th id="91">91</th><td>  }</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>  <i class="doc">/// Cancel any asynchronous wait operations associated with the timer.</i></td></tr>
+<tr><th id="94">94</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service6cancelERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERNS_6system10error_codeE" title='boost::asio::deadline_timer_service::cancel' data-ref="_ZN5boost4asio22deadline_timer_service6cancelERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERNS_6system10error_codeE" >cancel</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col9 decl" id="2309impl" title='impl' data-type='implementation_type &amp;' data-ref="2309impl" >impl</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col0 decl" id="2310ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2310ec" >ec</dfn>)</td></tr>
+<tr><th id="95">95</th><td>  {</td></tr>
+<tr><th id="96">96</th><td>    <b>return</b> <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.cancel(<a class="local col9 ref" href="#2309impl" title='impl' data-ref="2309impl" >impl</a>, <a class="local col0 ref" href="#2310ec" title='ec' data-ref="2310ec" >ec</a>);</td></tr>
+<tr><th id="97">97</th><td>  }</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>  <i class="doc">/// Cancels one asynchronous wait operation associated with the timer.</i></td></tr>
+<tr><th id="100">100</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service10cancel_oneERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERNS_6system10error_codeE" title='boost::asio::deadline_timer_service::cancel_one' data-ref="_ZN5boost4asio22deadline_timer_service10cancel_oneERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERNS_6system10error_codeE" >cancel_one</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col1 decl" id="2311impl" title='impl' data-type='implementation_type &amp;' data-ref="2311impl" >impl</dfn>,</td></tr>
+<tr><th id="101">101</th><td>      <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col2 decl" id="2312ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2312ec" >ec</dfn>)</td></tr>
+<tr><th id="102">102</th><td>  {</td></tr>
+<tr><th id="103">103</th><td>    <b>return</b> <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.cancel_one(<a class="local col1 ref" href="#2311impl" title='impl' data-ref="2311impl" >impl</a>, <a class="local col2 ref" href="#2312ec" title='ec' data-ref="2312ec" >ec</a>);</td></tr>
+<tr><th id="104">104</th><td>  }</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>  <i class="doc">/// Get the expiry time for the timer as an absolute time.</i></td></tr>
+<tr><th id="107">107</th><td>  <a class="typedef" href="#boost::asio::deadline_timer_service::time_type" title='boost::asio::deadline_timer_service::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::deadline_timer_service::time_type" >time_type</a> <dfn class="decl def" id="_ZNK5boost4asio22deadline_timer_service10expires_atERKNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" title='boost::asio::deadline_timer_service::expires_at' data-ref="_ZNK5boost4asio22deadline_timer_service10expires_atERKNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" >expires_at</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col3 decl" id="2313impl" title='impl' data-type='const implementation_type &amp;' data-ref="2313impl" >impl</dfn>) <em>const</em></td></tr>
+<tr><th id="108">108</th><td>  {</td></tr>
+<tr><th id="109">109</th><td>    <b>return</b> <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.expires_at(<a class="local col3 ref" href="#2313impl" title='impl' data-ref="2313impl" >impl</a>);</td></tr>
+<tr><th id="110">110</th><td>  }</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>  <i class="doc">/// Set the expiry time for the timer as an absolute time.</i></td></tr>
+<tr><th id="113">113</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service10expires_atERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERKNS4_9time_typeERNS_6system10error_codeE" title='boost::asio::deadline_timer_service::expires_at' data-ref="_ZN5boost4asio22deadline_timer_service10expires_atERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERKNS4_9time_typeERNS_6system10error_codeE" >expires_at</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col4 decl" id="2314impl" title='impl' data-type='implementation_type &amp;' data-ref="2314impl" >impl</dfn>,</td></tr>
+<tr><th id="114">114</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::deadline_timer_service::time_type" title='boost::asio::deadline_timer_service::time_type' data-type='typename traits_type::time_type' data-ref="boost::asio::deadline_timer_service::time_type" >time_type</a>&amp; <dfn class="local col5 decl" id="2315expiry_time" title='expiry_time' data-type='const time_type &amp;' data-ref="2315expiry_time" >expiry_time</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col6 decl" id="2316ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2316ec" >ec</dfn>)</td></tr>
+<tr><th id="115">115</th><td>  {</td></tr>
+<tr><th id="116">116</th><td>    <b>return</b> <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.expires_at(<a class="local col4 ref" href="#2314impl" title='impl' data-ref="2314impl" >impl</a>, <a class="local col5 ref" href="#2315expiry_time" title='expiry_time' data-ref="2315expiry_time" >expiry_time</a>, <a class="local col6 ref" href="#2316ec" title='ec' data-ref="2316ec" >ec</a>);</td></tr>
+<tr><th id="117">117</th><td>  }</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>  <i class="doc">/// Get the expiry time for the timer relative to now.</i></td></tr>
+<tr><th id="120">120</th><td>  <a class="typedef" href="#boost::asio::deadline_timer_service::duration_type" title='boost::asio::deadline_timer_service::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::deadline_timer_service::duration_type" >duration_type</a> <dfn class="decl def" id="_ZNK5boost4asio22deadline_timer_service16expires_from_nowERKNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" title='boost::asio::deadline_timer_service::expires_from_now' data-ref="_ZNK5boost4asio22deadline_timer_service16expires_from_nowERKNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeE" >expires_from_now</dfn>(<em>const</em> <a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col7 decl" id="2317impl" title='impl' data-type='const implementation_type &amp;' data-ref="2317impl" >impl</dfn>) <em>const</em></td></tr>
+<tr><th id="121">121</th><td>  {</td></tr>
+<tr><th id="122">122</th><td>    <b>return</b> <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.expires_from_now(<a class="local col7 ref" href="#2317impl" title='impl' data-ref="2317impl" >impl</a>);</td></tr>
+<tr><th id="123">123</th><td>  }</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td>  <i class="doc">/// Set the expiry time for the timer relative to now.</i></td></tr>
+<tr><th id="126">126</th><td>  <span class="namespace">std::</span><a class="typedef" href="../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service16expires_from_nowERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERKNS4_13duration_typeERNS_6system10error_codeE" title='boost::asio::deadline_timer_service::expires_from_now' data-ref="_ZN5boost4asio22deadline_timer_service16expires_from_nowERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERKNS4_13duration_typeERNS_6system10error_codeE" >expires_from_now</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col8 decl" id="2318impl" title='impl' data-type='implementation_type &amp;' data-ref="2318impl" >impl</dfn>,</td></tr>
+<tr><th id="127">127</th><td>      <em>const</em> <a class="typedef" href="#boost::asio::deadline_timer_service::duration_type" title='boost::asio::deadline_timer_service::duration_type' data-type='typename traits_type::duration_type' data-ref="boost::asio::deadline_timer_service::duration_type" >duration_type</a>&amp; <dfn class="local col9 decl" id="2319expiry_time" title='expiry_time' data-type='const duration_type &amp;' data-ref="2319expiry_time" >expiry_time</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col0 decl" id="2320ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2320ec" >ec</dfn>)</td></tr>
+<tr><th id="128">128</th><td>  {</td></tr>
+<tr><th id="129">129</th><td>    <b>return</b> <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.expires_from_now(<a class="local col8 ref" href="#2318impl" title='impl' data-ref="2318impl" >impl</a>, <a class="local col9 ref" href="#2319expiry_time" title='expiry_time' data-ref="2319expiry_time" >expiry_time</a>, <a class="local col0 ref" href="#2320ec" title='ec' data-ref="2320ec" >ec</a>);</td></tr>
+<tr><th id="130">130</th><td>  }</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>  <i>// Perform a blocking wait on the timer.</i></td></tr>
+<tr><th id="133">133</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service4waitERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERNS_6system10error_codeE" title='boost::asio::deadline_timer_service::wait' data-ref="_ZN5boost4asio22deadline_timer_service4waitERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeERNS_6system10error_codeE" >wait</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col1 decl" id="2321impl" title='impl' data-type='implementation_type &amp;' data-ref="2321impl" >impl</dfn>, <span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>&amp; <dfn class="local col2 decl" id="2322ec" title='ec' data-type='boost::system::error_code &amp;' data-ref="2322ec" >ec</dfn>)</td></tr>
+<tr><th id="134">134</th><td>  {</td></tr>
+<tr><th id="135">135</th><td>    <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.wait(<a class="local col1 ref" href="#2321impl" title='impl' data-ref="2321impl" >impl</a>, <a class="local col2 ref" href="#2322ec" title='ec' data-ref="2322ec" >ec</a>);</td></tr>
+<tr><th id="136">136</th><td>  }</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>  <i>// Start an asynchronous wait on the timer.</i></td></tr>
+<tr><th id="139">139</th><td>  <b>template</b> &lt;<b>typename</b> WaitHandler&gt;</td></tr>
+<tr><th id="140">140</th><td>  <a class="macro" href="async_result.hpp.html#91" title="typename ::boost::asio::async_result&lt; typename ::boost::asio::handler_type&lt;WaitHandler, void (boost::system::error_code)&gt;::type&gt;::type" data-ref="_M/BOOST_ASIO_INITFN_RESULT_TYPE">BOOST_ASIO_INITFN_RESULT_TYPE</a>(WaitHandler,</td></tr>
+<tr><th id="141">141</th><td>      <em>void</em> (boost::system::<a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>))</td></tr>
+<tr><th id="142">142</th><td>  <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service10async_waitERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeEOT_" title='boost::asio::deadline_timer_service::async_wait' data-ref="_ZN5boost4asio22deadline_timer_service10async_waitERNS0_6detail22deadline_timer_serviceIT0_E19implementation_typeEOT_" >async_wait</dfn>(<a class="typedef" href="#boost::asio::deadline_timer_service::implementation_type" title='boost::asio::deadline_timer_service::implementation_type' data-type='typename service_impl_type::implementation_type' data-ref="boost::asio::deadline_timer_service::implementation_type" >implementation_type</a>&amp; <dfn class="local col3 decl" id="2323impl" title='impl' data-type='implementation_type &amp;' data-ref="2323impl" >impl</dfn>,</td></tr>
+<tr><th id="143">143</th><td>      <a class="macro" href="detail/config.hpp.html#107" title="WaitHandler&amp;&amp;" data-ref="_M/BOOST_ASIO_MOVE_ARG">BOOST_ASIO_MOVE_ARG</a>(WaitHandler) <dfn class="local col4 decl" id="2324handler" title='handler' data-type='WaitHandler &amp;&amp;' data-ref="2324handler" >handler</dfn>)</td></tr>
+<tr><th id="144">144</th><td>  {</td></tr>
+<tr><th id="145">145</th><td>    <span class="namespace">detail::</span><a class="type" href="async_result.hpp.html#boost::asio::detail::async_result_init" title='boost::asio::detail::async_result_init' data-ref="boost::asio::detail::async_result_init" >async_result_init</a>&lt;</td></tr>
+<tr><th id="146">146</th><td>      WaitHandler, <em>void</em> (<span class="namespace">boost::system::</span><a class="type" href="../system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a>)&gt; <dfn class="local col5 decl" id="2325init" title='init' data-type='detail::async_result_init&lt;WaitHandler, void (boost::system::error_code)&gt;' data-ref="2325init" >init</dfn>(</td></tr>
+<tr><th id="147">147</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;WaitHandler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(WaitHandler)(<a class="local col4 ref" href="#2324handler" title='handler' data-ref="2324handler" >handler</a>));</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td>    <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.async_wait(<a class="local col3 ref" href="#2323impl" title='impl' data-ref="2323impl" >impl</a>, <a class="local col5 ref" href="#2325init" title='init' data-ref="2325init" >init</a>.handler);</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>    <b>return</b> <a class="local col5 ref" href="#2325init" title='init' data-ref="2325init" >init</a>.result.get();</td></tr>
+<tr><th id="152">152</th><td>  }</td></tr>
+<tr><th id="153">153</th><td></td></tr>
+<tr><th id="154">154</th><td><b>private</b>:</td></tr>
+<tr><th id="155">155</th><td>  <i>// Destroy all user-defined handler objects owned by the service.</i></td></tr>
+<tr><th id="156">156</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio22deadline_timer_service16shutdown_serviceEv" title='boost::asio::deadline_timer_service::shutdown_service' data-ref="_ZN5boost4asio22deadline_timer_service16shutdown_serviceEv" >shutdown_service</dfn>()</td></tr>
+<tr><th id="157">157</th><td>  {</td></tr>
+<tr><th id="158">158</th><td>    <a class="member" href="#boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</a>.shutdown_service();</td></tr>
+<tr><th id="159">159</th><td>  }</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>  <i>// The platform-specific implementation.</i></td></tr>
+<tr><th id="162">162</th><td>  <a class="typedef" href="#boost::asio::deadline_timer_service::service_impl_type" title='boost::asio::deadline_timer_service::service_impl_type' data-type='detail::deadline_timer_service&lt;traits_type&gt;' data-ref="boost::asio::deadline_timer_service::service_impl_type" >service_impl_type</a> <dfn class="decl" id="boost::asio::deadline_timer_service::service_impl_" title='boost::asio::deadline_timer_service::service_impl_' data-ref="boost::asio::deadline_timer_service::service_impl_" >service_impl_</dfn>;</td></tr>
+<tr><th id="163">163</th><td>};</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="166">166</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><u>#include <a href="detail/pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td><u>#<span data-ppcond="20">endif</span> // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)</u></td></tr>
+<tr><th id="171">171</th><td>       <i>// || defined(GENERATING_DOCUMENTATION)</i></td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DEADLINE_TIMER_SERVICE_HPP</u></td></tr>
+<tr><th id="174">174</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

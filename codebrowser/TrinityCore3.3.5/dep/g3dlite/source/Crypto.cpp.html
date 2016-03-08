@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<title>Crypto.cpp [TrinityCore3.3.5/dep/g3dlite/source/Crypto.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/source/Crypto.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>dep</a>/<a href='..'>g3dlite</a>/<a href='./'>source</a>/Crypto.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> @file</span> Crypto.cpp</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> <span class="command">@author</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"></i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"></i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> @created</span> 2006-03-28</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"><span class="command"> @edited</span>  2006-04-06</i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../include/G3D/platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../include/G3D/Crypto.h.html">"G3D/Crypto.h"</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../include/G3D/g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="../../../../include/zlib.h.html">"zlib.h"</a></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="17">17</th><td>    </td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><em>int</em> <a class="type" href="../include/G3D/Crypto.h.html#G3D::Crypto" title='G3D::Crypto' data-ref="G3D::Crypto" >Crypto</a>::<dfn class="decl def" id="_ZN3G3D6Crypto10smallPrimeEi" title='G3D::Crypto::smallPrime' data-ref="_ZN3G3D6Crypto10smallPrimeEi" >smallPrime</dfn>(<em>int</em> <dfn class="local col1 decl" id="1n" title='n' data-type='int' data-ref="1n" >n</dfn>) {</td></tr>
+<tr><th id="20">20</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(n &lt; numSmallPrimes() &amp;&amp; n &gt;= <var>0</var>);</td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td>    <i>// From:</i></td></tr>
+<tr><th id="23">23</th><td><i>    // <a href="http://primes.utm.edu/lists/small/">http://primes.utm.edu/lists/small/</a>1000.txt</i></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td>    <em>static</em> <em>const</em> <em>int</em> <dfn class="local col2 decl" id="2table" title='table' data-type='const int [303]' data-ref="2table" >table</dfn>[] = {</td></tr>
+<tr><th id="26">26</th><td>          <var>2</var>,      <var>3</var>,      <var>5</var>,      <var>7</var>,     <var>11</var>,     <var>13</var>,     <var>17</var>,     <var>19</var>,     <var>23</var>,     <var>29</var>, </td></tr>
+<tr><th id="27">27</th><td>         <var>31</var>,     <var>37</var>,     <var>41</var>,     <var>43</var>,     <var>47</var>,     <var>53</var>,     <var>59</var>,     <var>61</var>,     <var>67</var>,     <var>71</var>, </td></tr>
+<tr><th id="28">28</th><td>         <var>73</var>,     <var>79</var>,     <var>83</var>,     <var>89</var>,     <var>97</var>,    <var>101</var>,    <var>103</var>,    <var>107</var>,    <var>109</var>,    <var>113</var>, </td></tr>
+<tr><th id="29">29</th><td>        <var>127</var>,    <var>131</var>,    <var>137</var>,    <var>139</var>,    <var>149</var>,    <var>151</var>,    <var>157</var>,    <var>163</var>,    <var>167</var>,    <var>173</var>, </td></tr>
+<tr><th id="30">30</th><td>        <var>179</var>,    <var>181</var>,    <var>191</var>,    <var>193</var>,    <var>197</var>,    <var>199</var>,    <var>211</var>,    <var>223</var>,    <var>227</var>,    <var>229</var>, </td></tr>
+<tr><th id="31">31</th><td>        <var>233</var>,    <var>239</var>,    <var>241</var>,    <var>251</var>,    <var>257</var>,    <var>263</var>,    <var>269</var>,    <var>271</var>,    <var>277</var>,    <var>281</var>, </td></tr>
+<tr><th id="32">32</th><td>        <var>283</var>,    <var>293</var>,    <var>307</var>,    <var>311</var>,    <var>313</var>,    <var>317</var>,    <var>331</var>,    <var>337</var>,    <var>347</var>,    <var>349</var>, </td></tr>
+<tr><th id="33">33</th><td>        <var>353</var>,    <var>359</var>,    <var>367</var>,    <var>373</var>,    <var>379</var>,    <var>383</var>,    <var>389</var>,    <var>397</var>,    <var>401</var>,    <var>409</var>, </td></tr>
+<tr><th id="34">34</th><td>        <var>419</var>,    <var>421</var>,    <var>431</var>,    <var>433</var>,    <var>439</var>,    <var>443</var>,    <var>449</var>,    <var>457</var>,    <var>461</var>,    <var>463</var>, </td></tr>
+<tr><th id="35">35</th><td>        <var>467</var>,    <var>479</var>,    <var>487</var>,    <var>491</var>,    <var>499</var>,    <var>503</var>,    <var>509</var>,    <var>521</var>,    <var>523</var>,    <var>541</var>, </td></tr>
+<tr><th id="36">36</th><td>        <var>547</var>,    <var>557</var>,    <var>563</var>,    <var>569</var>,    <var>571</var>,    <var>577</var>,    <var>587</var>,    <var>593</var>,    <var>599</var>,    <var>601</var>, </td></tr>
+<tr><th id="37">37</th><td>        <var>607</var>,    <var>613</var>,    <var>617</var>,    <var>619</var>,    <var>631</var>,    <var>641</var>,    <var>643</var>,    <var>647</var>,    <var>653</var>,    <var>659</var>, </td></tr>
+<tr><th id="38">38</th><td>        <var>661</var>,    <var>673</var>,    <var>677</var>,    <var>683</var>,    <var>691</var>,    <var>701</var>,    <var>709</var>,    <var>719</var>,    <var>727</var>,    <var>733</var>, </td></tr>
+<tr><th id="39">39</th><td>        <var>739</var>,    <var>743</var>,    <var>751</var>,    <var>757</var>,    <var>761</var>,    <var>769</var>,    <var>773</var>,    <var>787</var>,    <var>797</var>,    <var>809</var>, </td></tr>
+<tr><th id="40">40</th><td>        <var>811</var>,    <var>821</var>,    <var>823</var>,    <var>827</var>,    <var>829</var>,    <var>839</var>,    <var>853</var>,    <var>857</var>,    <var>859</var>,    <var>863</var>, </td></tr>
+<tr><th id="41">41</th><td>        <var>877</var>,    <var>881</var>,    <var>883</var>,    <var>887</var>,    <var>907</var>,    <var>911</var>,    <var>919</var>,    <var>929</var>,    <var>937</var>,    <var>941</var>, </td></tr>
+<tr><th id="42">42</th><td>        <var>947</var>,    <var>953</var>,    <var>967</var>,    <var>971</var>,    <var>977</var>,    <var>983</var>,    <var>991</var>,    <var>997</var>,   <var>1009</var>,   <var>1013</var>, </td></tr>
+<tr><th id="43">43</th><td>       <var>1019</var>,   <var>1021</var>,   <var>1031</var>,   <var>1033</var>,   <var>1039</var>,   <var>1049</var>,   <var>1051</var>,   <var>1061</var>,   <var>1063</var>,   <var>1069</var>, </td></tr>
+<tr><th id="44">44</th><td>       <var>1087</var>,   <var>1091</var>,   <var>1093</var>,   <var>1097</var>,   <var>1103</var>,   <var>1109</var>,   <var>1117</var>,   <var>1123</var>,   <var>1129</var>,   <var>1151</var>, </td></tr>
+<tr><th id="45">45</th><td>       <var>1153</var>,   <var>1163</var>,   <var>1171</var>,   <var>1181</var>,   <var>1187</var>,   <var>1193</var>,   <var>1201</var>,   <var>1213</var>,   <var>1217</var>,   <var>1223</var>, </td></tr>
+<tr><th id="46">46</th><td>       <var>1229</var>,   <var>1231</var>,   <var>1237</var>,   <var>1249</var>,   <var>1259</var>,   <var>1277</var>,   <var>1279</var>,   <var>1283</var>,   <var>1289</var>,   <var>1291</var>, </td></tr>
+<tr><th id="47">47</th><td>       <var>1297</var>,   <var>1301</var>,   <var>1303</var>,   <var>1307</var>,   <var>1319</var>,   <var>1321</var>,   <var>1327</var>,   <var>1361</var>,   <var>1367</var>,   <var>1373</var>, </td></tr>
+<tr><th id="48">48</th><td>       <var>1381</var>,   <var>1399</var>,   <var>1409</var>,   <var>1423</var>,   <var>1427</var>,   <var>1429</var>,   <var>1433</var>,   <var>1439</var>,   <var>1447</var>,   <var>1451</var>, </td></tr>
+<tr><th id="49">49</th><td>       <var>1453</var>,   <var>1459</var>,   <var>1471</var>,   <var>1481</var>,   <var>1483</var>,   <var>1487</var>,   <var>1489</var>,   <var>1493</var>,   <var>1499</var>,   <var>1511</var>, </td></tr>
+<tr><th id="50">50</th><td>       <var>1523</var>,   <var>1531</var>,   <var>1543</var>,   <var>1549</var>,   <var>1553</var>,   <var>1559</var>,   <var>1567</var>,   <var>1571</var>,   <var>1579</var>,   <var>1583</var>, </td></tr>
+<tr><th id="51">51</th><td>       <var>1597</var>,   <var>1601</var>,   <var>1607</var>,   <var>1609</var>,   <var>1613</var>,   <var>1619</var>,   <var>1621</var>,   <var>1627</var>,   <var>1637</var>,   <var>1657</var>, </td></tr>
+<tr><th id="52">52</th><td>       <var>1663</var>,   <var>1667</var>,   <var>1669</var>,   <var>1693</var>,   <var>1697</var>,   <var>1699</var>,   <var>1709</var>,   <var>1721</var>,   <var>1723</var>,   <var>1733</var>, </td></tr>
+<tr><th id="53">53</th><td>       <var>1741</var>,   <var>1747</var>,   <var>1753</var>,   <var>1759</var>,   <var>1777</var>,   <var>1783</var>,   <var>1787</var>,   <var>1789</var>,   <var>1801</var>,   <var>1811</var>,</td></tr>
+<tr><th id="54">54</th><td>       <var>1823</var>,   <var>1831</var>,   <var>1847</var>,   <var>1861</var>,   <var>1867</var>,   <var>1871</var>,   <var>1873</var>,   <var>1877</var>,   <var>1879</var>,   <var>1889</var>, </td></tr>
+<tr><th id="55">55</th><td>       <var>1901</var>,   <var>1907</var>,   <var>1913</var>,   <var>1931</var>,   <var>1933</var>,   <var>1949</var>,   <var>1951</var>,   <var>1973</var>,   <var>1979</var>,   <var>1987</var>, </td></tr>
+<tr><th id="56">56</th><td>       <var>1993</var>,   <var>1997</var>,   <var>1999</var>};</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <b>return</b> <a class="local col2 ref" href="#2table" title='table' data-ref="2table" >table</a>[<a class="local col1 ref" href="#1n" title='n' data-ref="1n" >n</a>];</td></tr>
+<tr><th id="59">59</th><td>}</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><em>int</em> <a class="type" href="../include/G3D/Crypto.h.html#G3D::Crypto" title='G3D::Crypto' data-ref="G3D::Crypto" >Crypto</a>::<dfn class="decl def" id="_ZN3G3D6Crypto14numSmallPrimesEv" title='G3D::Crypto::numSmallPrimes' data-ref="_ZN3G3D6Crypto14numSmallPrimesEv" >numSmallPrimes</dfn>() {</td></tr>
+<tr><th id="63">63</th><td>    <b>return</b> <var>303</var>;</td></tr>
+<tr><th id="64">64</th><td>}</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><a class="typedef" href="../include/G3D/g3dmath.h.html#G3D::uint32" title='G3D::uint32' data-type='uint32_t' data-ref="G3D::uint32" >uint32</a> <a class="type" href="../include/G3D/Crypto.h.html#G3D::Crypto" title='G3D::Crypto' data-ref="G3D::Crypto" >Crypto</a>::<dfn class="decl def" id="_ZN3G3D6Crypto5crc32EPKvm" title='G3D::Crypto::crc32' data-ref="_ZN3G3D6Crypto5crc32EPKvm" >crc32</dfn>(<em>const</em> <em>void</em>* <dfn class="local col3 decl" id="3byte" title='byte' data-type='const void *' data-ref="3byte" >byte</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4numBytes" title='numBytes' data-type='size_t' data-ref="4numBytes" >numBytes</dfn>) {</td></tr>
+<tr><th id="67">67</th><td>    <a class="macro" href="../include/G3D/debugAssert.h.html#165" title="{ if (!(numBytes &lt; 0xFFFFFFFF)) { G3D::_internal::_releaseInputGrab_(); if ((G3D::_internal::_failureHook != __null) &amp;&amp; G3D::_internal::_failureHook(&quot;numBytes &lt; 0xFFFFFFFF&quot;, &quot;Not implemented for arrays larger than 2^32 bytes&quot;, &quot;/home/nayd/TrinityCore/dep/g3dlite/source/Crypto.cpp&quot;, 67, true)) { ::exit(-1); } G3D::_internal::_restoreInputGrab_(); } }" data-ref="_M/alwaysAssertM">alwaysAssertM</a>(<a class="local col4 ref" href="#4numBytes" title='numBytes' data-ref="4numBytes" >numBytes</a> &lt; <var>0xFFFFFFFF</var>, <q>"Not implemented for arrays larger than 2^32 bytes"</q>);</td></tr>
+<tr><th id="68">68</th><td>    <b>return</b> ::<a class="ref" href="../../../../include/zlib.h.html#crc32" title='crc32' data-ref="crc32" id="crc32" >crc32</a>(::<a class="ref" href="../../../../include/zlib.h.html#crc32" title='crc32' data-ref="crc32" id="crc32" >crc32</a>(<var>0</var>, <a class="macro" href="../../../../include/zlib.h.html#208" title="0" data-ref="_M/Z_NULL">Z_NULL</a>, <var>0</var>), <b>static_cast</b>&lt;<em>const</em> <a class="typedef" href="../../../../include/x86_64-linux-gnu/zconf.h.html#Bytef" title='Bytef' data-type='Byte' data-ref="Bytef" >Bytef</a> *&gt;(<a class="local col3 ref" href="#3byte" title='byte' data-ref="3byte" >byte</a>), (<em>int</em>)<a class="local col4 ref" href="#4numBytes" title='numBytes' data-ref="4numBytes" >numBytes</a>);</td></tr>
+<tr><th id="69">69</th><td>}</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>} <i>// G3D</i></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

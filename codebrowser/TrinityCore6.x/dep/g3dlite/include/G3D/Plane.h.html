@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+<title>Plane.h [TrinityCore6.x/dep/g3dlite/include/G3D/Plane.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/Plane.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/Plane.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> \file</span> Plane.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> Plane class</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"></i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"><span class="command"> \maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"></i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"><span class="command"> \created</span> 2001-06-02</i></td></tr>
+<tr><th id="9">9</th><td><i class="doc"><span class="command"> \edited</span>  2010-12-04</i></td></tr>
+<tr><th id="10">10</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#<span data-ppcond="12">ifndef</span> <span class="macro" data-ref="_M/G3D_Plane_h">G3D_Plane_h</span></u></td></tr>
+<tr><th id="13">13</th><td><u>#define <dfn class="macro" id="_M/G3D_Plane_h" data-ref="_M/G3D_Plane_h">G3D_Plane_h</dfn></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="Vector3.h.html">"G3D/Vector3.h"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="Vector4.h.html">"G3D/Vector4.h"</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="debugAssert.h.html">"G3D/debugAssert.h"</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="23">23</th><td><i class="doc"> An infinite 2D plane in 3D space.</i></td></tr>
+<tr><th id="24">24</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="25">25</th><td><b>class</b> <dfn class="type def" id="G3D::Plane" title='G3D::Plane' data-ref="G3D::Plane" >Plane</dfn> {</td></tr>
+<tr><th id="26">26</th><td><b>private</b>:</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td>    <i class="doc">/** normal.Dot(x,y,z) = distance */</i></td></tr>
+<tr><th id="29">29</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>                        <dfn class="decl" id="G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</dfn>;</td></tr>
+<tr><th id="30">30</th><td>    <em>float</em>                        <dfn class="decl" id="G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</dfn>;</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">     Assumes the normal has unit length.</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="35">35</th><td>    <dfn class="decl def" id="_ZN3G3D5PlaneC1ERKNS_7Vector3Ef" title='G3D::Plane::Plane' data-ref="_ZN3G3D5PlaneC1ERKNS_7Vector3Ef" >Plane</dfn>(<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col8 decl" id="1118n" title='n' data-type='const G3D::Vector3 &amp;' data-ref="1118n" >n</dfn>, <em>float</em> <dfn class="local col9 decl" id="1119d" title='d' data-type='float' data-ref="1119d" >d</dfn>) : <a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a><a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3C1ERKS0_" title='G3D::Vector3::Vector3' data-ref="_ZN3G3D7Vector3C1ERKS0_" id="_ZN3G3D7Vector3C1ERKS0_" >(</a><a class="local col8 ref" href="#1118n" title='n' data-ref="1118n" >n</a>), <a class="member" href="#G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</a>(<a class="local col9 ref" href="#1119d" title='d' data-ref="1119d" >d</a>) {</td></tr>
+<tr><th id="36">36</th><td>    }</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><b>public</b>:</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <dfn class="decl def" id="_ZN3G3D5PlaneC1Ev" title='G3D::Plane::Plane' data-ref="_ZN3G3D5PlaneC1Ev" >Plane</dfn>() : <a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a><a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3C1ERKS0_" title='G3D::Vector3::Vector3' data-ref="_ZN3G3D7Vector3C1ERKS0_" id="_ZN3G3D7Vector3C1ERKS0_" >(</a><a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector35unitYEv" title='G3D::Vector3::unitY' data-ref="_ZN3G3D7Vector35unitYEv" id="_ZN3G3D7Vector35unitYEv" >unitY</a>()), <a class="member" href="#G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</a>(<var>0</var>) {</td></tr>
+<tr><th id="41">41</th><td>    }</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <i class="doc">/** Format is:</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">        - Plane(normal, point)</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="46">46</th><td>    <b>explicit</b> <dfn class="decl" id="_ZN3G3D5PlaneC1ERKNS_3AnyE" title='G3D::Plane::Plane' data-ref="_ZN3G3D5PlaneC1ERKNS_3AnyE" >Plane</dfn>(<em>const</em> <b>class</b> <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a>&amp; <dfn class="local col0 decl" id="1120a" title='a' data-type='const class Any &amp;' data-ref="1120a" >a</dfn>);</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td>    <a class="type" href="Any.h.html#G3D::Any" title='G3D::Any' data-ref="G3D::Any" >Any</a> <dfn class="decl" id="_ZNK3G3D5Plane5toAnyEv" title='G3D::Plane::toAny' data-ref="_ZNK3G3D5Plane5toAnyEv" >toAny</dfn>() <em>const</em>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">     Constructs a plane from three points.</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="53">53</th><td>    <dfn class="decl" id="_ZN3G3D5PlaneC1ERKNS_7Vector3ES3_S3_" title='G3D::Plane::Plane' data-ref="_ZN3G3D5PlaneC1ERKNS_7Vector3ES3_S3_" >Plane</dfn></td></tr>
+<tr><th id="54">54</th><td>     (<em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp;      <dfn class="local col1 decl" id="1121point0" title='point0' data-type='const Point3 &amp;' data-ref="1121point0" >point0</dfn>,</td></tr>
+<tr><th id="55">55</th><td>      <em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp;      <dfn class="local col2 decl" id="1122point1" title='point1' data-type='const Point3 &amp;' data-ref="1122point1" >point1</dfn>,</td></tr>
+<tr><th id="56">56</th><td>      <em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp;      <dfn class="local col3 decl" id="1123point2" title='point2' data-type='const Point3 &amp;' data-ref="1123point2" >point2</dfn>);</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc">     Constructs a plane from three points, where at most two are</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">     at infinity (w = 0, not xyz = inf).</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="62">62</th><td>    <dfn class="decl" id="_ZN3G3D5PlaneC1ENS_7Vector4ES1_S1_" title='G3D::Plane::Plane' data-ref="_ZN3G3D5PlaneC1ENS_7Vector4ES1_S1_" >Plane</dfn>(</td></tr>
+<tr><th id="63">63</th><td>        <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>         <dfn class="local col4 decl" id="1124point0" title='point0' data-type='G3D::Vector4' data-ref="1124point0" >point0</dfn>,</td></tr>
+<tr><th id="64">64</th><td>        <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>         <dfn class="local col5 decl" id="1125point1" title='point1' data-type='G3D::Vector4' data-ref="1125point1" >point1</dfn>,</td></tr>
+<tr><th id="65">65</th><td>        <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>         <dfn class="local col6 decl" id="1126point2" title='point2' data-type='G3D::Vector4' data-ref="1126point2" >point2</dfn>);</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">     The normal will be unitized.</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="70">70</th><td>    <dfn class="decl" id="_ZN3G3D5PlaneC1ERKNS_7Vector3ES3_" title='G3D::Plane::Plane' data-ref="_ZN3G3D5PlaneC1ERKNS_7Vector3ES3_" >Plane</dfn></td></tr>
+<tr><th id="71">71</th><td>     (<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp;     <dfn class="local col7 decl" id="1127normal" title='normal' data-type='const G3D::Vector3 &amp;' data-ref="1127normal" >normal</dfn>,</td></tr>
+<tr><th id="72">72</th><td>      <em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp;      <dfn class="local col8 decl" id="1128point" title='point' data-type='const Point3 &amp;' data-ref="1128point" >point</dfn>);</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>    <em>static</em> <a class="type" href="#G3D::Plane" title='G3D::Plane' data-ref="G3D::Plane" >Plane</a> <dfn class="decl" id="_ZN3G3D5Plane12fromEquationEffff" title='G3D::Plane::fromEquation' data-ref="_ZN3G3D5Plane12fromEquationEffff" >fromEquation</dfn>(<em>float</em> <dfn class="local col9 decl" id="1129a" title='a' data-type='float' data-ref="1129a" >a</dfn>, <em>float</em> <dfn class="local col0 decl" id="1130b" title='b' data-type='float' data-ref="1130b" >b</dfn>, <em>float</em> <dfn class="local col1 decl" id="1131c" title='c' data-type='float' data-ref="1131c" >c</dfn>, <em>float</em> <dfn class="local col2 decl" id="1132d" title='d' data-type='float' data-ref="1132d" >d</dfn>);</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>    <dfn class="decl" id="_ZN3G3D5PlaneC1ERNS_11BinaryInputE" title='G3D::Plane::Plane' data-ref="_ZN3G3D5PlaneC1ERNS_11BinaryInputE" >Plane</dfn>(<b>class</b> <a class="type" href="BinaryInput.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col3 decl" id="1133b" title='b' data-type='class BinaryInput &amp;' data-ref="1133b" >b</dfn>);</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D5Plane9serializeERNS_12BinaryOutputE" title='G3D::Plane::serialize' data-ref="_ZNK3G3D5Plane9serializeERNS_12BinaryOutputE" >serialize</dfn>(<b>class</b> <a class="type" href="BinaryOutput.h.html#G3D::BinaryOutput" title='G3D::BinaryOutput' data-ref="G3D::BinaryOutput" >BinaryOutput</a>&amp; <dfn class="local col4 decl" id="1134b" title='b' data-type='class BinaryOutput &amp;' data-ref="1134b" >b</dfn>) <em>const</em>;</td></tr>
+<tr><th id="79">79</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D5Plane11deserializeERNS_11BinaryInputE" title='G3D::Plane::deserialize' data-ref="_ZN3G3D5Plane11deserializeERNS_11BinaryInputE" >deserialize</dfn>(<b>class</b> <a class="type" href="BinaryInput.h.html#G3D::BinaryInput" title='G3D::BinaryInput' data-ref="G3D::BinaryInput" >BinaryInput</a>&amp; <dfn class="local col5 decl" id="1135b" title='b' data-type='class BinaryInput &amp;' data-ref="1135b" >b</dfn>);</td></tr>
+<tr><th id="80">80</th><td>    </td></tr>
+<tr><th id="81">81</th><td>    <b>virtual</b> <dfn class="virtual decl def" id="_ZN3G3D5PlaneD1Ev" title='G3D::Plane::~Plane' data-ref="_ZN3G3D5PlaneD1Ev" >~Plane</dfn>() {}</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc">     Returns true if point is on the side the normal points to or </i></td></tr>
+<tr><th id="85">85</th><td><i class="doc">     is in the plane.</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="87">87</th><td>    <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Plane17halfSpaceContainsENS_7Vector3E" title='G3D::Plane::halfSpaceContains' data-ref="_ZNK3G3D5Plane17halfSpaceContainsENS_7Vector3E" >halfSpaceContains</dfn>(<a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a> <dfn class="local col6 decl" id="1136point" title='point' data-type='Point3' data-ref="1136point" >point</dfn>) <em>const</em> {</td></tr>
+<tr><th id="88">88</th><td>        <i>// Clamp to a finite range for testing</i></td></tr>
+<tr><th id="89">89</th><td>        <a class="local col6 ref" href="#1136point" title='point' data-ref="1136point" >point</a> <a class="ref" href="Vector3.h.html#_ZN3G3D7Vector3aSERKS0_" title='G3D::Vector3::operator=' data-ref="_ZN3G3D7Vector3aSERKS0_" id="_ZN3G3D7Vector3aSERKS0_" >=</a> <a class="local col6 ref" href="#1136point" title='point' data-ref="1136point" >point</a>.<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector35clampERKS0_S2_" title='G3D::Vector3::clamp' data-ref="_ZNK3G3D7Vector35clampERKS0_S2_" id="_ZNK3G3D7Vector35clampERKS0_S2_" >clamp</a>(<a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector39minFiniteEv" title='G3D::Vector3::minFinite' data-ref="_ZN3G3D7Vector39minFiniteEv" id="_ZN3G3D7Vector39minFiniteEv" >minFinite</a>(), <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>::<a class="ref" href="Vector3.h.html#_ZN3G3D7Vector39maxFiniteEv" title='G3D::Vector3::maxFinite' data-ref="_ZN3G3D7Vector39maxFiniteEv" id="_ZN3G3D7Vector39maxFiniteEv" >maxFinite</a>());</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>        <i>// We can get away with putting values *at* the limits of the float32 range into</i></td></tr>
+<tr><th id="92">92</th><td><i>        // a dot product, since the dot product is carried out on float64.</i></td></tr>
+<tr><th id="93">93</th><td>        <b>return</b> <a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a>.<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector33dotERKS0_" title='G3D::Vector3::dot' data-ref="_ZNK3G3D7Vector33dotERKS0_" id="_ZNK3G3D7Vector33dotERKS0_" >dot</a>(<a class="local col6 ref" href="#1136point" title='point' data-ref="1136point" >point</a>) &gt;= <a class="member" href="#G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</a>;</td></tr>
+<tr><th id="94">94</th><td>    }</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">     Returns true if point is on the side the normal points to or </i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">     is in the plane.</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="100">100</th><td>    <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Plane17halfSpaceContainsERKNS_7Vector4E" title='G3D::Plane::halfSpaceContains' data-ref="_ZNK3G3D5Plane17halfSpaceContainsERKNS_7Vector4E" >halfSpaceContains</dfn>(<em>const</em> <a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>&amp; <dfn class="local col7 decl" id="1137point" title='point' data-type='const G3D::Vector4 &amp;' data-ref="1137point" >point</dfn>) <em>const</em> {</td></tr>
+<tr><th id="101">101</th><td>        <b>if</b> (<a class="local col7 ref" href="#1137point" title='point' data-ref="1137point" >point</a>.<a class="ref" href="Vector4.h.html#G3D::Vector4::w" title='G3D::Vector4::w' data-ref="G3D::Vector4::w" id="G3D::Vector4::w" >w</a> == <var>0</var>) {</td></tr>
+<tr><th id="102">102</th><td>            <b>return</b> <a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a>.<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector33dotERKS0_" title='G3D::Vector3::dot' data-ref="_ZNK3G3D7Vector33dotERKS0_" id="_ZNK3G3D7Vector33dotERKS0_" >dot</a>(<a class="local col7 ref" href="#1137point" title='point' data-ref="1137point" >point</a>.<a class="ref" href="Vector4.h.html#_ZNK3G3D7Vector43xyzEv" title='G3D::Vector4::xyz' data-ref="_ZNK3G3D7Vector43xyzEv" id="_ZNK3G3D7Vector43xyzEv" >xyz</a>()) &gt; <var>0</var>;</td></tr>
+<tr><th id="103">103</th><td>        } <b>else</b> {</td></tr>
+<tr><th id="104">104</th><td>            <b>return</b> <a class="member" href="#_ZNK3G3D5Plane17halfSpaceContainsENS_7Vector3E" title='G3D::Plane::halfSpaceContains' data-ref="_ZNK3G3D5Plane17halfSpaceContainsENS_7Vector3E" >halfSpaceContains</a>(<a class="local col7 ref" href="#1137point" title='point' data-ref="1137point" >point</a>.<a class="ref" href="Vector4.h.html#_ZNK3G3D7Vector43xyzEv" title='G3D::Vector4::xyz' data-ref="_ZNK3G3D7Vector43xyzEv" id="_ZNK3G3D7Vector43xyzEv" >xyz</a>() <a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector3dvEf" title='G3D::Vector3::operator/' data-ref="_ZNK3G3D7Vector3dvEf" id="_ZNK3G3D7Vector3dvEf" >/</a> <a class="local col7 ref" href="#1137point" title='point' data-ref="1137point" >point</a>.<a class="ref" href="Vector4.h.html#G3D::Vector4::w" title='G3D::Vector4::w' data-ref="G3D::Vector4::w" >w</a>);</td></tr>
+<tr><th id="105">105</th><td>        }</td></tr>
+<tr><th id="106">106</th><td>    }</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="109">109</th><td><i class="doc">     Returns true if point is on the side the normal points to or </i></td></tr>
+<tr><th id="110">110</th><td><i class="doc">     is in the plane.  Only call on finite points.  Faster than halfSpaceContains.</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="112">112</th><td>    <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Plane23halfSpaceContainsFiniteERKNS_7Vector3E" title='G3D::Plane::halfSpaceContainsFinite' data-ref="_ZNK3G3D5Plane23halfSpaceContainsFiniteERKNS_7Vector3E" >halfSpaceContainsFinite</dfn>(<em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="local col8 decl" id="1138point" title='point' data-type='const Point3 &amp;' data-ref="1138point" >point</dfn>) <em>const</em> {</td></tr>
+<tr><th id="113">113</th><td>        <a class="macro" href="debugAssert.h.html#160" title="do {} while (0)" data-ref="_M/debugAssert">debugAssert</a>(point.isFinite());</td></tr>
+<tr><th id="114">114</th><td>        <b>return</b> <a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a>.<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector33dotERKS0_" title='G3D::Vector3::dot' data-ref="_ZNK3G3D7Vector33dotERKS0_" id="_ZNK3G3D7Vector33dotERKS0_" >dot</a>(<a class="local col8 ref" href="#1138point" title='point' data-ref="1138point" >point</a>) &gt;= <a class="member" href="#G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</a>;</td></tr>
+<tr><th id="115">115</th><td>    }</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc">     Returns true if the point is nearly in the plane.</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="120">120</th><td>    <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK3G3D5Plane13fuzzyContainsERKNS_7Vector3E" title='G3D::Plane::fuzzyContains' data-ref="_ZNK3G3D5Plane13fuzzyContainsERKNS_7Vector3E" >fuzzyContains</dfn>(<em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="local col9 decl" id="1139point" title='point' data-type='const Point3 &amp;' data-ref="1139point" >point</dfn>) <em>const</em> {</td></tr>
+<tr><th id="121">121</th><td>        <b>return</b> <a class="ref" href="g3dmath.h.html#_ZN3G3D7fuzzyEqEff" title='G3D::fuzzyEq' data-ref="_ZN3G3D7fuzzyEqEff" id="_ZN3G3D7fuzzyEqEff" >fuzzyEq</a>(<a class="local col9 ref" href="#1139point" title='point' data-ref="1139point" >point</a>.<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector33dotERKS0_" title='G3D::Vector3::dot' data-ref="_ZNK3G3D7Vector33dotERKS0_" id="_ZNK3G3D7Vector33dotERKS0_" >dot</a>(<a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a>), <a class="member" href="#G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</a>);</td></tr>
+<tr><th id="122">122</th><td>    }</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>    <b>inline</b> <em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="decl def" id="_ZNK3G3D5Plane6normalEv" title='G3D::Plane::normal' data-ref="_ZNK3G3D5Plane6normalEv" >normal</dfn>() <em>const</em> {</td></tr>
+<tr><th id="125">125</th><td>        <b>return</b> <a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a>;</td></tr>
+<tr><th id="126">126</th><td>    }</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="129">129</th><td><i class="doc">      Returns distance from point to plane. Distance is negative if point is behind (not in plane in direction opposite normal) the plane.</i></td></tr>
+<tr><th id="130">130</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="131">131</th><td>    <b>inline</b> <em>float</em> <dfn class="decl def" id="_ZNK3G3D5Plane8distanceERKNS_7Vector3E" title='G3D::Plane::distance' data-ref="_ZNK3G3D5Plane8distanceERKNS_7Vector3E" >distance</dfn>(<em>const</em> <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col0 decl" id="1140x" title='x' data-type='const G3D::Vector3 &amp;' data-ref="1140x" >x</dfn>) <em>const</em> {</td></tr>
+<tr><th id="132">132</th><td>        <b>return</b> (<a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a>.<a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector33dotERKS0_" title='G3D::Vector3::dot' data-ref="_ZNK3G3D7Vector33dotERKS0_" id="_ZNK3G3D7Vector33dotERKS0_" >dot</a>(<a class="local col0 ref" href="#1140x" title='x' data-ref="1140x" >x</a>) - <a class="member" href="#G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</a>);</td></tr>
+<tr><th id="133">133</th><td>    }</td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td>    <b>inline</b> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a> <dfn class="decl def" id="_ZNK3G3D5Plane12closestPointERKNS_7Vector3E" title='G3D::Plane::closestPoint' data-ref="_ZNK3G3D5Plane12closestPointERKNS_7Vector3E" >closestPoint</dfn>(<em>const</em> <a class="typedef" href="Vector3.h.html#G3D::Point3" title='G3D::Point3' data-type='G3D::Vector3' data-ref="G3D::Point3" >Point3</a>&amp; <dfn class="local col1 decl" id="1141x" title='x' data-type='const Point3 &amp;' data-ref="1141x" >x</dfn>) <em>const</em> {</td></tr>
+<tr><th id="136">136</th><td>        <b>return</b> <a class="local col1 ref" href="#1141x" title='x' data-ref="1141x" >x</a> <a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector3plERKS0_" title='G3D::Vector3::operator+' data-ref="_ZNK3G3D7Vector3plERKS0_" id="_ZNK3G3D7Vector3plERKS0_" >+</a> (<a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a> <a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector3mlEf" title='G3D::Vector3::operator*' data-ref="_ZNK3G3D7Vector3mlEf" id="_ZNK3G3D7Vector3mlEf" >*</a> (-<a class="member" href="#_ZNK3G3D5Plane8distanceERKNS_7Vector3E" title='G3D::Plane::distance' data-ref="_ZNK3G3D5Plane8distanceERKNS_7Vector3E" >distance</a>(<a class="local col1 ref" href="#1141x" title='x' data-ref="1141x" >x</a>)));</td></tr>
+<tr><th id="137">137</th><td>    }</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td>    <i class="doc">/** Returns normal * distance from origin */</i></td></tr>
+<tr><th id="140">140</th><td>    <a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a> <dfn class="decl def" id="_ZNK3G3D5Plane6centerEv" title='G3D::Plane::center' data-ref="_ZNK3G3D5Plane6centerEv" >center</dfn>() <em>const</em> {</td></tr>
+<tr><th id="141">141</th><td>        <b>return</b> <a class="member" href="#G3D::Plane::_normal" title='G3D::Plane::_normal' data-ref="G3D::Plane::_normal" >_normal</a> <a class="ref" href="Vector3.h.html#_ZNK3G3D7Vector3mlEf" title='G3D::Vector3::operator*' data-ref="_ZNK3G3D7Vector3mlEf" id="_ZNK3G3D7Vector3mlEf" >*</a> <a class="member" href="#G3D::Plane::_distance" title='G3D::Plane::_distance' data-ref="G3D::Plane::_distance" >_distance</a>;</td></tr>
+<tr><th id="142">142</th><td>    }</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc">     Inverts the facing direction of the plane so the new normal</i></td></tr>
+<tr><th id="146">146</th><td><i class="doc">     is the inverse of the old normal.</i></td></tr>
+<tr><th id="147">147</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="148">148</th><td>    <em>void</em> <dfn class="decl" id="_ZN3G3D5Plane4flipEv" title='G3D::Plane::flip' data-ref="_ZN3G3D5Plane4flipEv" >flip</dfn>();</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="151">151</th><td><i class="doc">      Returns the equation in the form:</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc"></i></td></tr>
+<tr><th id="153">153</th><td><i class="doc">      &lt;CODE&gt;normal.Dot(Vector3(&lt;I&gt;x&lt;/I&gt;, &lt;I&gt;y&lt;/I&gt;, &lt;I&gt;z&lt;/I&gt;)) + d = 0&lt;/CODE&gt;</i></td></tr>
+<tr><th id="154">154</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="155">155</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D5Plane11getEquationERNS_7Vector3ERd" title='G3D::Plane::getEquation' data-ref="_ZNK3G3D5Plane11getEquationERNS_7Vector3ERd" >getEquation</dfn>(<a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col2 decl" id="1142normal" title='normal' data-type='G3D::Vector3 &amp;' data-ref="1142normal" >normal</dfn>, <em>double</em>&amp; <dfn class="local col3 decl" id="1143d" title='d' data-type='double &amp;' data-ref="1143d" >d</dfn>) <em>const</em>;</td></tr>
+<tr><th id="156">156</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D5Plane11getEquationERNS_7Vector3ERf" title='G3D::Plane::getEquation' data-ref="_ZNK3G3D5Plane11getEquationERNS_7Vector3ERf" >getEquation</dfn>(<a class="type" href="Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col4 decl" id="1144normal" title='normal' data-type='G3D::Vector3 &amp;' data-ref="1144normal" >normal</dfn>, <em>float</em>&amp; <dfn class="local col5 decl" id="1145d" title='d' data-type='float &amp;' data-ref="1145d" >d</dfn>) <em>const</em>;</td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td>    <i class="doc">/**</i></td></tr>
+<tr><th id="159">159</th><td><i class="doc">      ax + by + cz + d = 0</i></td></tr>
+<tr><th id="160">160</th><td><i class="doc">     */</i></td></tr>
+<tr><th id="161">161</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D5Plane11getEquationERdS1_S1_S1_" title='G3D::Plane::getEquation' data-ref="_ZNK3G3D5Plane11getEquationERdS1_S1_S1_" >getEquation</dfn>(<em>double</em>&amp; <dfn class="local col6 decl" id="1146a" title='a' data-type='double &amp;' data-ref="1146a" >a</dfn>, <em>double</em>&amp; <dfn class="local col7 decl" id="1147b" title='b' data-type='double &amp;' data-ref="1147b" >b</dfn>, <em>double</em>&amp; <dfn class="local col8 decl" id="1148c" title='c' data-type='double &amp;' data-ref="1148c" >c</dfn>, <em>double</em>&amp; <dfn class="local col9 decl" id="1149d" title='d' data-type='double &amp;' data-ref="1149d" >d</dfn>) <em>const</em>;</td></tr>
+<tr><th id="162">162</th><td>    <em>void</em> <dfn class="decl" id="_ZNK3G3D5Plane11getEquationERfS1_S1_S1_" title='G3D::Plane::getEquation' data-ref="_ZNK3G3D5Plane11getEquationERfS1_S1_S1_" >getEquation</dfn>(<em>float</em>&amp; <dfn class="local col0 decl" id="1150a" title='a' data-type='float &amp;' data-ref="1150a" >a</dfn>, <em>float</em>&amp; <dfn class="local col1 decl" id="1151b" title='b' data-type='float &amp;' data-ref="1151b" >b</dfn>, <em>float</em>&amp; <dfn class="local col2 decl" id="1152c" title='c' data-type='float &amp;' data-ref="1152c" >c</dfn>, <em>float</em>&amp; <dfn class="local col3 decl" id="1153d" title='d' data-type='float &amp;' data-ref="1153d" >d</dfn>) <em>const</em>;</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZNK3G3D5Plane8toStringEv" title='G3D::Plane::toString' data-ref="_ZNK3G3D5Plane8toStringEv" >toString</dfn>() <em>const</em>;</td></tr>
+<tr><th id="165">165</th><td>};</td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td><u>#<span data-ppcond="12">endif</span></u></td></tr>
+<tr><th id="170">170</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore6.x/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

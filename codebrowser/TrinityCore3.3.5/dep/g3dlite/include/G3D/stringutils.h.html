@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+<title>stringutils.h [TrinityCore3.3.5/dep/g3dlite/include/G3D/stringutils.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/g3dlite/include/G3D/stringutils.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/stringutils.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> @file</span> stringutils.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> </i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"><span class="command"> @maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> </i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> <span class="command">@author</span>  2000-09-09</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"><span class="command"> @edited</span>  2010-03-05</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#<span data-ppcond="10">ifndef</span> <span class="macro" data-ref="_M/G3D_stringutils_h">G3D_stringutils_h</span></u></td></tr>
+<tr><th id="11">11</th><td><u>#define <dfn class="macro" id="_M/G3D_stringutils_h" data-ref="_M/G3D_stringutils_h">G3D_stringutils_h</dfn></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="Array.h.html">"G3D/Array.h"</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="../../../../../include/c++/4.9/cstring.html">&lt;cstring&gt;</a></u></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>extern</b> <em>const</em> <em>char</em>* <dfn class="decl" id="_ZN3G3D7NEWLINEE" title='G3D::NEWLINE' data-ref="_ZN3G3D7NEWLINEE" >NEWLINE</dfn>;</td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><i class="doc">/** Separates a comma-separated line, properly escaping commas within</i></td></tr>
+<tr><th id="22">22</th><td><i class="doc">    double quotes (") and super quotes ("""). This matches Microsoft Excel's </i></td></tr>
+<tr><th id="23">23</th><td><i class="doc">    CSV output.</i></td></tr>
+<tr><th id="24">24</th><td><i class="doc"></i></td></tr>
+<tr><th id="25">25</th><td><i class="doc">    <span class="command">\param</span> <span class="arg">stripQuotes</span> If true, strips leading and trailing " and """</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc"></i></td></tr>
+<tr><th id="27">27</th><td><i class="doc">    <span class="command">\sa</span> G3D::stringSplit, G3D::TextInput, G3D::readWholeFile</i></td></tr>
+<tr><th id="28">28</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="29">29</th><td><em>void</em> <dfn class="decl" id="_ZN3G3D19parseCommaSeparatedESsRNS_5ArrayISsLm10EEEb" title='G3D::parseCommaSeparated' data-ref="_ZN3G3D19parseCommaSeparatedESsRNS_5ArrayISsLm10EEEb" >parseCommaSeparated</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col9 decl" id="5439s" title='s' data-type='const std::string' data-ref="5439s" >s</dfn>, <a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&gt;&amp; <dfn class="local col0 decl" id="5440array" title='array' data-type='Array&lt;std::string&gt; &amp;' data-ref="5440array" >array</dfn>, <em>bool</em> <dfn class="local col1 decl" id="5441stripQuotes" title='stripQuotes' data-type='bool' data-ref="5441stripQuotes" >stripQuotes</dfn> = <b>true</b>);</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><i class="doc">/** Finds the index of the first '\\' or '/' character, starting at index<span class="command"> \a</span> <span class="arg">start.</span> </i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">  <span class="command">\sa</span> G3D::findLastSlash, G3D::isSlash</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="34">34</th><td><b>inline</b> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZN3G3D9findSlashERKSsm" title='G3D::findSlash' data-ref="_ZN3G3D9findSlashERKSsm" >findSlash</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col2 decl" id="5442f" title='f' data-type='const std::string &amp;' data-ref="5442f" >f</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="5443start" title='start' data-type='size_t' data-ref="5443start" >start</dfn> = <var>0</var>) {</td></tr>
+<tr><th id="35">35</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="5444i" title='i' data-type='size_t' data-ref="5444i" >i</dfn> = <a class="local col2 ref" href="#5442f" title='f' data-ref="5442f" >f</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string4findET_NT1_6rebindIS0_E5other9size_typeE" title='std::basic_string::find' data-ref="_ZNKSt12basic_string4findET_NT1_6rebindIS0_E5other9size_typeE" id="_ZNKSt12basic_string4findET_NT1_6rebindIS0_E5other9size_typeE" >find</a>(<kdb>'/'</kdb>, <a class="local col3 ref" href="#5443start" title='start' data-ref="5443start" >start</a>);</td></tr>
+<tr><th id="36">36</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="5445j" title='j' data-type='size_t' data-ref="5445j" >j</dfn> = <a class="local col2 ref" href="#5442f" title='f' data-ref="5442f" >f</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string4findET_NT1_6rebindIS0_E5other9size_typeE" title='std::basic_string::find' data-ref="_ZNKSt12basic_string4findET_NT1_6rebindIS0_E5other9size_typeE" id="_ZNKSt12basic_string4findET_NT1_6rebindIS0_E5other9size_typeE" >find</a>(<kdb>'\\'</kdb>, <a class="local col3 ref" href="#5443start" title='start' data-ref="5443start" >start</a>);</td></tr>
+<tr><th id="37">37</th><td>    <b>if</b> ((<a class="local col4 ref" href="#5444i" title='i' data-ref="5444i" >i</a> != <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>::<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string4nposE" title='std::basic_string::npos' data-ref="_ZNSt12basic_string4nposE" id="_ZNSt12basic_string4nposE" >npos</a>) &amp;&amp; (<a class="local col4 ref" href="#5444i" title='i' data-ref="5444i" >i</a> &lt; <a class="local col5 ref" href="#5445j" title='j' data-ref="5445j" >j</a>)) {</td></tr>
+<tr><th id="38">38</th><td>        <b>return</b> <a class="local col4 ref" href="#5444i" title='i' data-ref="5444i" >i</a>;</td></tr>
+<tr><th id="39">39</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="40">40</th><td>        <b>return</b> <a class="local col5 ref" href="#5445j" title='j' data-ref="5445j" >j</a>;</td></tr>
+<tr><th id="41">41</th><td>    }</td></tr>
+<tr><th id="42">42</th><td>}</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><i class="doc">/** <span class="command">\brief</span> Returns the larger string index, ignoring std::string::npos. */</i></td></tr>
+<tr><th id="45">45</th><td><b>inline</b> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZN3G3D10maxNotNPOSEmm" title='G3D::maxNotNPOS' data-ref="_ZN3G3D10maxNotNPOSEmm" >maxNotNPOS</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="5446i" title='i' data-type='size_t' data-ref="5446i" >i</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="5447j" title='j' data-type='size_t' data-ref="5447j" >j</dfn>) {</td></tr>
+<tr><th id="46">46</th><td>    <b>if</b> (<a class="local col6 ref" href="#5446i" title='i' data-ref="5446i" >i</a> == <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>::<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string4nposE" title='std::basic_string::npos' data-ref="_ZNSt12basic_string4nposE" id="_ZNSt12basic_string4nposE" >npos</a>) {</td></tr>
+<tr><th id="47">47</th><td>        <b>return</b> <a class="local col7 ref" href="#5447j" title='j' data-ref="5447j" >j</a>;</td></tr>
+<tr><th id="48">48</th><td>    } <b>else</b> <b>if</b> (<a class="local col7 ref" href="#5447j" title='j' data-ref="5447j" >j</a> == <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>::<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string4nposE" title='std::basic_string::npos' data-ref="_ZNSt12basic_string4nposE" id="_ZNSt12basic_string4nposE" >npos</a>) {</td></tr>
+<tr><th id="49">49</th><td>        <b>return</b> <a class="local col6 ref" href="#5446i" title='i' data-ref="5446i" >i</a>;</td></tr>
+<tr><th id="50">50</th><td>    } <b>else</b> {</td></tr>
+<tr><th id="51">51</th><td>        <b>return</b> <a class="ref" href="g3dmath.h.html#_ZN3G3D3maxERKT_S2_" title='G3D::max' data-ref="_ZN3G3D3maxERKT_S2_" id="_ZN3G3D3maxERKT_S2_" >max</a>(<a class="local col6 ref" href="#5446i" title='i' data-ref="5446i" >i</a>, <a class="local col7 ref" href="#5447j" title='j' data-ref="5447j" >j</a>);</td></tr>
+<tr><th id="52">52</th><td>    }</td></tr>
+<tr><th id="53">53</th><td>}</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><i class="doc">/** Finds the index of the first '\\' or '/' character, starting at index<span class="command"> \a</span> <span class="arg">start</span> (if<span class="command"> \a</span> <span class="arg">start</span> is -1, starts at the end of the string).</i></td></tr>
+<tr><th id="56">56</th><td><i class="doc">  <span class="command">\sa</span> G3D::findSlash, G3D::isSlash</i></td></tr>
+<tr><th id="57">57</th><td><i class="doc">  */</i></td></tr>
+<tr><th id="58">58</th><td><b>inline</b> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZN3G3D13findLastSlashERKSsm" title='G3D::findLastSlash' data-ref="_ZN3G3D13findLastSlashERKSsm" >findLastSlash</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col8 decl" id="5448f" title='f' data-type='const std::string &amp;' data-ref="5448f" >f</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="5449start" title='start' data-type='size_t' data-ref="5449start" >start</dfn> = <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>::<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string4nposE" title='std::basic_string::npos' data-ref="_ZNSt12basic_string4nposE" >npos</a>) {</td></tr>
+<tr><th id="59">59</th><td>    <b>if</b> (<a class="local col9 ref" href="#5449start" title='start' data-ref="5449start" >start</a> == <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>::<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string4nposE" title='std::basic_string::npos' data-ref="_ZNSt12basic_string4nposE" id="_ZNSt12basic_string4nposE" >npos</a>) {</td></tr>
+<tr><th id="60">60</th><td>        <a class="local col9 ref" href="#5449start" title='start' data-ref="5449start" >start</a> = <a class="local col8 ref" href="#5448f" title='f' data-ref="5448f" >f</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string6lengthEv" title='std::basic_string::length' data-ref="_ZNKSt12basic_string6lengthEv" id="_ZNKSt12basic_string6lengthEv" >length</a>() - <var>1</var>;</td></tr>
+<tr><th id="61">61</th><td>    }</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="5450i" title='i' data-type='size_t' data-ref="5450i" >i</dfn> = <a class="local col8 ref" href="#5448f" title='f' data-ref="5448f" >f</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5rfindET_NT1_6rebindIS0_E5other9size_typeE" title='std::basic_string::rfind' data-ref="_ZNKSt12basic_string5rfindET_NT1_6rebindIS0_E5other9size_typeE" id="_ZNKSt12basic_string5rfindET_NT1_6rebindIS0_E5other9size_typeE" >rfind</a>(<kdb>'/'</kdb>, <a class="local col9 ref" href="#5449start" title='start' data-ref="5449start" >start</a>);</td></tr>
+<tr><th id="64">64</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="5451j" title='j' data-type='size_t' data-ref="5451j" >j</dfn> = <a class="local col8 ref" href="#5448f" title='f' data-ref="5448f" >f</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5rfindET_NT1_6rebindIS0_E5other9size_typeE" title='std::basic_string::rfind' data-ref="_ZNKSt12basic_string5rfindET_NT1_6rebindIS0_E5other9size_typeE" id="_ZNKSt12basic_string5rfindET_NT1_6rebindIS0_E5other9size_typeE" >rfind</a>(<kdb>'\\'</kdb>, <a class="local col9 ref" href="#5449start" title='start' data-ref="5449start" >start</a>);</td></tr>
+<tr><th id="65">65</th><td>    <b>return</b> <a class="ref" href="#_ZN3G3D10maxNotNPOSEmm" title='G3D::maxNotNPOS' data-ref="_ZN3G3D10maxNotNPOSEmm" >maxNotNPOS</a>(<a class="local col0 ref" href="#5450i" title='i' data-ref="5450i" >i</a>, <a class="local col1 ref" href="#5451j" title='j' data-ref="5451j" >j</a>);</td></tr>
+<tr><th id="66">66</th><td>}</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><i class="doc">/** Returns a string which is<span class="command"> \a</span> <span class="arg">s,</span> with all instances of<span class="command"> \a</span> <span class="arg">pattern</span> replaced */</i></td></tr>
+<tr><th id="70">70</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D7replaceERKSsS1_S1_" title='G3D::replace' data-ref="_ZN3G3D7replaceERKSsS1_S1_" >replace</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col2 decl" id="5452s" title='s' data-type='const std::string &amp;' data-ref="5452s" >s</dfn>, <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col3 decl" id="5453pattern" title='pattern' data-type='const std::string &amp;' data-ref="5453pattern" >pattern</dfn>, <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col4 decl" id="5454replacement" title='replacement' data-type='const std::string &amp;' data-ref="5454replacement" >replacement</dfn>);</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><i class="doc">/** Returns true if<span class="command"> \a</span> <span class="arg">s</span> is a valid C++ identifier */</i></td></tr>
+<tr><th id="73">73</th><td><em>bool</em> <dfn class="decl" id="_ZN3G3D17isValidIdentifierERKSs" title='G3D::isValidIdentifier' data-ref="_ZN3G3D17isValidIdentifierERKSs" >isValidIdentifier</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col5 decl" id="5455s" title='s' data-type='const std::string &amp;' data-ref="5455s" >s</dfn>);</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc"> <span class="command">\brief</span> Returns true if the test string begins with the pattern string.</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="78">78</th><td><em>bool</em> <dfn class="decl" id="_ZN3G3D10beginsWithERKSsS1_" title='G3D::beginsWith' data-ref="_ZN3G3D10beginsWithERKSsS1_" >beginsWith</dfn></td></tr>
+<tr><th id="79">79</th><td>   (<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col6 decl" id="5456test" title='test' data-type='const std::string &amp;' data-ref="5456test" >test</dfn>,</td></tr>
+<tr><th id="80">80</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col7 decl" id="5457pattern" title='pattern' data-type='const std::string &amp;' data-ref="5457pattern" >pattern</dfn>);</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="83">83</th><td><i class="doc"> <span class="command">\brief</span> Returns true if the test string ends with the pattern string.</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="85">85</th><td><em>bool</em> <dfn class="decl" id="_ZN3G3D8endsWithERKSsS1_" title='G3D::endsWith' data-ref="_ZN3G3D8endsWithERKSsS1_" >endsWith</dfn></td></tr>
+<tr><th id="86">86</th><td>   (<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col8 decl" id="5458test" title='test' data-type='const std::string &amp;' data-ref="5458test" >test</dfn>,</td></tr>
+<tr><th id="87">87</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col9 decl" id="5459pattern" title='pattern' data-type='const std::string &amp;' data-ref="5459pattern" >pattern</dfn>);</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc"> <span class="command">\brief</span> Produces a new string that is the input string</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc"> wrapped at a certain number of columns (where</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc"> the line is broken at the latest space before the</i></td></tr>
+<tr><th id="93">93</th><td><i class="doc"> column limit.)  Platform specific NEWLINEs</i></td></tr>
+<tr><th id="94">94</th><td><i class="doc"> are inserted to wrap.</i></td></tr>
+<tr><th id="95">95</th><td><i class="doc"></i></td></tr>
+<tr><th id="96">96</th><td><i class="doc"> <span class="command">\sa</span> G3D::GFont::wordWrapCut, G3D::TextOutput::Settings::WordWrapMode</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="98">98</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D8wordWrapERKSsi" title='G3D::wordWrap' data-ref="_ZN3G3D8wordWrapERKSsi" >wordWrap</dfn></td></tr>
+<tr><th id="99">99</th><td>   (<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col0 decl" id="5460input" title='input' data-type='const std::string &amp;' data-ref="5460input" >input</dfn>,</td></tr>
+<tr><th id="100">100</th><td>    <em>int</em>                         <dfn class="local col1 decl" id="5461numCols" title='numCols' data-type='int' data-ref="5461numCols" >numCols</dfn>);</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="103">103</th><td><i class="doc"> A comparison function for passing to Array::sort.</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="105">105</th><td><em>int</em> <dfn class="decl" id="_ZN3G3D13stringCompareERKSsS1_" title='G3D::stringCompare' data-ref="_ZN3G3D13stringCompareERKSsS1_" >stringCompare</dfn>(</td></tr>
+<tr><th id="106">106</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col2 decl" id="5462s1" title='s1' data-type='const std::string &amp;' data-ref="5462s1" >s1</dfn>,</td></tr>
+<tr><th id="107">107</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col3 decl" id="5463s2" title='s2' data-type='const std::string &amp;' data-ref="5463s2" >s2</dfn>);</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><em>int</em> <dfn class="decl" id="_ZN3G3D16stringPtrCompareEPKSsS1_" title='G3D::stringPtrCompare' data-ref="_ZN3G3D16stringPtrCompareEPKSsS1_" >stringPtrCompare</dfn>(</td></tr>
+<tr><th id="110">110</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>*          <dfn class="local col4 decl" id="5464s1" title='s1' data-type='const std::string *' data-ref="5464s1" >s1</dfn>,</td></tr>
+<tr><th id="111">111</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>*          <dfn class="local col5 decl" id="5465s2" title='s2' data-type='const std::string *' data-ref="5465s2" >s2</dfn>);</td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc"> Returns a new string that is an uppercase version of x.</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="116">116</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D7toUpperERKSs" title='G3D::toUpper' data-ref="_ZN3G3D7toUpperERKSs" >toUpper</dfn>(</td></tr>
+<tr><th id="117">117</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col6 decl" id="5466x" title='x' data-type='const std::string &amp;' data-ref="5466x" >x</dfn>);</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D7toLowerERKSs" title='G3D::toLower' data-ref="_ZN3G3D7toLowerERKSs" >toLower</dfn>(</td></tr>
+<tr><th id="120">120</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col7 decl" id="5467x" title='x' data-type='const std::string &amp;' data-ref="5467x" >x</dfn>);</td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="123">123</th><td><i class="doc"> Splits x at each occurance of splitChar.</i></td></tr>
+<tr><th id="124">124</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="125">125</th><td><span class="namespace">G3D::</span><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&gt; <dfn class="decl" id="_ZN3G3D11stringSplitERKSsc" title='G3D::stringSplit' data-ref="_ZN3G3D11stringSplitERKSsc" >stringSplit</dfn>(</td></tr>
+<tr><th id="126">126</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;          <dfn class="local col8 decl" id="5468x" title='x' data-type='const std::string &amp;' data-ref="5468x" >x</dfn>,</td></tr>
+<tr><th id="127">127</th><td>    <em>char</em>                        <dfn class="local col9 decl" id="5469splitChar" title='splitChar' data-type='char' data-ref="5469splitChar" >splitChar</dfn>);</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="130">130</th><td><i class="doc"> joinChar is not inserted at the beginning or end, just in between</i></td></tr>
+<tr><th id="131">131</th><td><i class="doc"> elements.</i></td></tr>
+<tr><th id="132">132</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="133">133</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D10stringJoinERKNS_5ArrayISsLm10EEEc" title='G3D::stringJoin' data-ref="_ZN3G3D10stringJoinERKNS_5ArrayISsLm10EEEc" >stringJoin</dfn>(</td></tr>
+<tr><th id="134">134</th><td>    <em>const</em> <span class="namespace">G3D::</span><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&gt;&amp;   <dfn class="local col0 decl" id="5470a" title='a' data-type='const G3D::Array&lt;std::string&gt; &amp;' data-ref="5470a" >a</dfn>,</td></tr>
+<tr><th id="135">135</th><td>    <em>char</em>                        <dfn class="local col1 decl" id="5471joinChar" title='joinChar' data-type='char' data-ref="5471joinChar" >joinChar</dfn>);</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D10stringJoinERKNS_5ArrayISsLm10EEERKSs" title='G3D::stringJoin' data-ref="_ZN3G3D10stringJoinERKNS_5ArrayISsLm10EEERKSs" >stringJoin</dfn>(</td></tr>
+<tr><th id="138">138</th><td>    <em>const</em> <span class="namespace">G3D::</span><a class="type" href="Array.h.html#G3D::Array" title='G3D::Array' data-ref="G3D::Array" >Array</a>&lt;<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&gt;&amp;   <dfn class="local col2 decl" id="5472a" title='a' data-type='const G3D::Array&lt;std::string&gt; &amp;' data-ref="5472a" >a</dfn>,</td></tr>
+<tr><th id="139">139</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;               <dfn class="local col3 decl" id="5473joinStr" title='joinStr' data-type='const std::string &amp;' data-ref="5473joinStr" >joinStr</dfn>);</td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc"> Strips whitespace from both ends of the string.</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="144">144</th><td><span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN3G3D14trimWhitespaceERKSs" title='G3D::trimWhitespace' data-ref="_ZN3G3D14trimWhitespaceERKSs" >trimWhitespace</dfn>(</td></tr>
+<tr><th id="145">145</th><td>    <em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp;              <dfn class="local col4 decl" id="5474s" title='s' data-type='const std::string &amp;' data-ref="5474s" >s</dfn>);</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td><i class="doc">/** These standard C functions are renamed for clarity/naming</i></td></tr>
+<tr><th id="148">148</th><td><i class="doc">   conventions and to return bool, not int.</i></td></tr>
+<tr><th id="149">149</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="150">150</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D12isWhiteSpaceEh" title='G3D::isWhiteSpace' data-ref="_ZN3G3D12isWhiteSpaceEh" >isWhiteSpace</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> <dfn class="local col5 decl" id="5475c" title='c' data-type='const unsigned char' data-ref="5475c" >c</dfn>) {</td></tr>
+<tr><th id="151">151</th><td>    <b>return</b> <a class="ref" href="../../../../../include/ctype.h.html#118" title='isspace' data-ref="isspace" id="isspace" >isspace</a>(<a class="local col5 ref" href="#5475c" title='c' data-ref="5475c" >c</a>) != <var>0</var>;</td></tr>
+<tr><th id="152">152</th><td>}</td></tr>
+<tr><th id="153">153</th><td></td></tr>
+<tr><th id="154">154</th><td><i class="doc">/** These standard C functions are renamed for clarity/naming</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">   conventions and to return bool, not int.</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="157">157</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D9isNewlineEh" title='G3D::isNewline' data-ref="_ZN3G3D9isNewlineEh" >isNewline</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> <dfn class="local col6 decl" id="5476c" title='c' data-type='const unsigned char' data-ref="5476c" >c</dfn>) {</td></tr>
+<tr><th id="158">158</th><td>    <b>return</b> (<a class="local col6 ref" href="#5476c" title='c' data-ref="5476c" >c</a> == <kdb>'\n'</kdb>) || (<a class="local col6 ref" href="#5476c" title='c' data-ref="5476c" >c</a> == <kdb>'\r'</kdb>);</td></tr>
+<tr><th id="159">159</th><td>}</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td><i class="doc">/** These standard C functions are renamed for clarity/naming</i></td></tr>
+<tr><th id="162">162</th><td><i class="doc">   conventions and to return bool, not int.</i></td></tr>
+<tr><th id="163">163</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="164">164</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7isDigitEh" title='G3D::isDigit' data-ref="_ZN3G3D7isDigitEh" >isDigit</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> <dfn class="local col7 decl" id="5477c" title='c' data-type='const unsigned char' data-ref="5477c" >c</dfn>) {</td></tr>
+<tr><th id="165">165</th><td>    <b>return</b> <a class="ref" href="../../../../../include/ctype.h.html#113" title='isdigit' data-ref="isdigit" id="isdigit" >isdigit</a>(<a class="local col7 ref" href="#5477c" title='c' data-ref="5477c" >c</a>) != <var>0</var>;</td></tr>
+<tr><th id="166">166</th><td>}</td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><i class="doc">/** These standard C functions are renamed for clarity/naming</i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">   conventions and to return bool, not int.</i></td></tr>
+<tr><th id="170">170</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="171">171</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D8isLetterEh" title='G3D::isLetter' data-ref="_ZN3G3D8isLetterEh" >isLetter</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> <dfn class="local col8 decl" id="5478c" title='c' data-type='const unsigned char' data-ref="5478c" >c</dfn>) {</td></tr>
+<tr><th id="172">172</th><td>    <b>return</b> <a class="ref" href="../../../../../include/ctype.h.html#111" title='isalpha' data-ref="isalpha" id="isalpha" >isalpha</a>(<a class="local col8 ref" href="#5478c" title='c' data-ref="5478c" >c</a>) != <var>0</var>;</td></tr>
+<tr><th id="173">173</th><td>}</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7isSlashEh" title='G3D::isSlash' data-ref="_ZN3G3D7isSlashEh" >isSlash</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> <dfn class="local col9 decl" id="5479c" title='c' data-type='const unsigned char' data-ref="5479c" >c</dfn>) {</td></tr>
+<tr><th id="176">176</th><td>    <b>return</b> (<a class="local col9 ref" href="#5479c" title='c' data-ref="5479c" >c</a> == <kdb>'\\'</kdb>) || (<a class="local col9 ref" href="#5479c" title='c' data-ref="5479c" >c</a> == <kdb>'/'</kdb>);</td></tr>
+<tr><th id="177">177</th><td>}</td></tr>
+<tr><th id="178">178</th><td></td></tr>
+<tr><th id="179">179</th><td><b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZN3G3D7isQuoteEh" title='G3D::isQuote' data-ref="_ZN3G3D7isQuoteEh" >isQuote</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> <dfn class="local col0 decl" id="5480c" title='c' data-type='const unsigned char' data-ref="5480c" >c</dfn>) {</td></tr>
+<tr><th id="180">180</th><td>    <b>return</b> (<a class="local col0 ref" href="#5480c" title='c' data-ref="5480c" >c</a> == <kdb>'\''</kdb>) || (<a class="local col0 ref" href="#5480c" title='c' data-ref="5480c" >c</a> == <kdb>'\"'</kdb>);</td></tr>
+<tr><th id="181">181</th><td>}</td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td><i class="doc">/** Number of new lines in the given string */</i></td></tr>
+<tr><th id="184">184</th><td><b>inline</b> <em>int</em> <dfn class="decl def" id="_ZN3G3D13countNewlinesERKSs" title='G3D::countNewlines' data-ref="_ZN3G3D13countNewlinesERKSs" >countNewlines</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col1 decl" id="5481s" title='s' data-type='const std::string &amp;' data-ref="5481s" >s</dfn>) {</td></tr>
+<tr><th id="185">185</th><td>    <em>int</em> <dfn class="local col2 decl" id="5482c" title='c' data-type='int' data-ref="5482c" >c</dfn> = <var>0</var>;</td></tr>
+<tr><th id="186">186</th><td>    <b>for</b> (<em>int</em> <dfn class="local col3 decl" id="5483i" title='i' data-type='int' data-ref="5483i" >i</dfn> = <var>0</var>; <a class="local col3 ref" href="#5483i" title='i' data-ref="5483i" >i</a> &lt; (<em>int</em>)<a class="local col1 ref" href="#5481s" title='s' data-ref="5481s" >s</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string4sizeEv" title='std::basic_string::size' data-ref="_ZNKSt12basic_string4sizeEv" id="_ZNKSt12basic_string4sizeEv" >size</a>(); ++<a class="local col3 ref" href="#5483i" title='i' data-ref="5483i" >i</a>) {</td></tr>
+<tr><th id="187">187</th><td>        <b>if</b> (<a class="local col1 ref" href="#5481s" title='s' data-ref="5481s" >s</a><a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_stringixENT1_6rebindIT_E5other9size_typeE" title='std::basic_string::operator[]' data-ref="_ZNKSt12basic_stringixENT1_6rebindIT_E5other9size_typeE" id="_ZNKSt12basic_stringixENT1_6rebindIT_E5other9size_typeE" >[<a class="local col3 ref" href="#5483i" title='i' data-ref="5483i" >i</a>]</a> == <kdb>'\n'</kdb>) {</td></tr>
+<tr><th id="188">188</th><td>            ++<a class="local col2 ref" href="#5482c" title='c' data-ref="5482c" >c</a>;</td></tr>
+<tr><th id="189">189</th><td>        }</td></tr>
+<tr><th id="190">190</th><td>    }</td></tr>
+<tr><th id="191">191</th><td>    <b>return</b> <a class="local col2 ref" href="#5482c" title='c' data-ref="5482c" >c</a>;</td></tr>
+<tr><th id="192">192</th><td>}</td></tr>
+<tr><th id="193">193</th><td></td></tr>
+<tr><th id="194">194</th><td>}; <i>// namespace</i></td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td><u>#<span data-ppcond="10">endif</span></u></td></tr>
+<tr><th id="197">197</th><td></td></tr>
+<tr><th id="198">198</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/AABox.cpp.html'>TrinityCore3.3.5/dep/g3dlite/source/AABox.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<title>asio.hpp [include/boost/asio.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio.hpp'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>boost</a>/asio.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// asio.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td><i>//  See www.boost.org/libs/asio for documentation.</i></td></tr>
+<tr><th id="11">11</th><td><i>//</i></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_HPP">BOOST_ASIO_HPP</span></u></td></tr>
+<tr><th id="14">14</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_HPP" data-ref="_M/BOOST_ASIO_HPP">BOOST_ASIO_HPP</dfn></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="16">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td><u># pragma once</u></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="16">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="asio/async_result.hpp.html">&lt;boost/asio/async_result.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="asio/basic_datagram_socket.hpp.html">&lt;boost/asio/basic_datagram_socket.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="asio/basic_deadline_timer.hpp.html">&lt;boost/asio/basic_deadline_timer.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="asio/basic_io_object.hpp.html">&lt;boost/asio/basic_io_object.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="asio/basic_raw_socket.hpp.html">&lt;boost/asio/basic_raw_socket.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="asio/basic_seq_packet_socket.hpp.html">&lt;boost/asio/basic_seq_packet_socket.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="asio/basic_serial_port.hpp.html">&lt;boost/asio/basic_serial_port.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="asio/basic_signal_set.hpp.html">&lt;boost/asio/basic_signal_set.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="asio/basic_socket_acceptor.hpp.html">&lt;boost/asio/basic_socket_acceptor.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="asio/basic_socket_iostream.hpp.html">&lt;boost/asio/basic_socket_iostream.hpp&gt;</a></u></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="asio/basic_socket_streambuf.hpp.html">&lt;boost/asio/basic_socket_streambuf.hpp&gt;</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="asio/basic_stream_socket.hpp.html">&lt;boost/asio/basic_stream_socket.hpp&gt;</a></u></td></tr>
+<tr><th id="32">32</th><td><u>#include <a href="asio/basic_streambuf.hpp.html">&lt;boost/asio/basic_streambuf.hpp&gt;</a></u></td></tr>
+<tr><th id="33">33</th><td><u>#include <a href="asio/basic_waitable_timer.hpp.html">&lt;boost/asio/basic_waitable_timer.hpp&gt;</a></u></td></tr>
+<tr><th id="34">34</th><td><u>#include <a href="asio/buffer.hpp.html">&lt;boost/asio/buffer.hpp&gt;</a></u></td></tr>
+<tr><th id="35">35</th><td><u>#include <a href="asio/buffered_read_stream_fwd.hpp.html">&lt;boost/asio/buffered_read_stream_fwd.hpp&gt;</a></u></td></tr>
+<tr><th id="36">36</th><td><u>#include <a href="asio/buffered_read_stream.hpp.html">&lt;boost/asio/buffered_read_stream.hpp&gt;</a></u></td></tr>
+<tr><th id="37">37</th><td><u>#include <a href="asio/buffered_stream_fwd.hpp.html">&lt;boost/asio/buffered_stream_fwd.hpp&gt;</a></u></td></tr>
+<tr><th id="38">38</th><td><u>#include <a href="asio/buffered_stream.hpp.html">&lt;boost/asio/buffered_stream.hpp&gt;</a></u></td></tr>
+<tr><th id="39">39</th><td><u>#include <a href="asio/buffered_write_stream_fwd.hpp.html">&lt;boost/asio/buffered_write_stream_fwd.hpp&gt;</a></u></td></tr>
+<tr><th id="40">40</th><td><u>#include <a href="asio/buffered_write_stream.hpp.html">&lt;boost/asio/buffered_write_stream.hpp&gt;</a></u></td></tr>
+<tr><th id="41">41</th><td><u>#include <a href="asio/buffers_iterator.hpp.html">&lt;boost/asio/buffers_iterator.hpp&gt;</a></u></td></tr>
+<tr><th id="42">42</th><td><u>#include <a href="asio/completion_condition.hpp.html">&lt;boost/asio/completion_condition.hpp&gt;</a></u></td></tr>
+<tr><th id="43">43</th><td><u>#include <a href="asio/connect.hpp.html">&lt;boost/asio/connect.hpp&gt;</a></u></td></tr>
+<tr><th id="44">44</th><td><u>#include <a href="asio/coroutine.hpp.html">&lt;boost/asio/coroutine.hpp&gt;</a></u></td></tr>
+<tr><th id="45">45</th><td><u>#include <a href="asio/datagram_socket_service.hpp.html">&lt;boost/asio/datagram_socket_service.hpp&gt;</a></u></td></tr>
+<tr><th id="46">46</th><td><u>#include <a href="asio/deadline_timer_service.hpp.html">&lt;boost/asio/deadline_timer_service.hpp&gt;</a></u></td></tr>
+<tr><th id="47">47</th><td><u>#include <a href="asio/deadline_timer.hpp.html">&lt;boost/asio/deadline_timer.hpp&gt;</a></u></td></tr>
+<tr><th id="48">48</th><td><u>#include <a href="asio/error.hpp.html">&lt;boost/asio/error.hpp&gt;</a></u></td></tr>
+<tr><th id="49">49</th><td><u>#include <a href="asio/generic/basic_endpoint.hpp.html">&lt;boost/asio/generic/basic_endpoint.hpp&gt;</a></u></td></tr>
+<tr><th id="50">50</th><td><u>#include <a href="asio/generic/datagram_protocol.hpp.html">&lt;boost/asio/generic/datagram_protocol.hpp&gt;</a></u></td></tr>
+<tr><th id="51">51</th><td><u>#include <a href="asio/generic/raw_protocol.hpp.html">&lt;boost/asio/generic/raw_protocol.hpp&gt;</a></u></td></tr>
+<tr><th id="52">52</th><td><u>#include <a href="asio/generic/seq_packet_protocol.hpp.html">&lt;boost/asio/generic/seq_packet_protocol.hpp&gt;</a></u></td></tr>
+<tr><th id="53">53</th><td><u>#include <a href="asio/generic/stream_protocol.hpp.html">&lt;boost/asio/generic/stream_protocol.hpp&gt;</a></u></td></tr>
+<tr><th id="54">54</th><td><u>#include <a href="asio/handler_alloc_hook.hpp.html">&lt;boost/asio/handler_alloc_hook.hpp&gt;</a></u></td></tr>
+<tr><th id="55">55</th><td><u>#include <a href="asio/handler_continuation_hook.hpp.html">&lt;boost/asio/handler_continuation_hook.hpp&gt;</a></u></td></tr>
+<tr><th id="56">56</th><td><u>#include <a href="asio/handler_invoke_hook.hpp.html">&lt;boost/asio/handler_invoke_hook.hpp&gt;</a></u></td></tr>
+<tr><th id="57">57</th><td><u>#include <a href="asio/handler_type.hpp.html">&lt;boost/asio/handler_type.hpp&gt;</a></u></td></tr>
+<tr><th id="58">58</th><td><u>#include <a href="asio/io_service.hpp.html">&lt;boost/asio/io_service.hpp&gt;</a></u></td></tr>
+<tr><th id="59">59</th><td><u>#include <a href="asio/ip/address.hpp.html">&lt;boost/asio/ip/address.hpp&gt;</a></u></td></tr>
+<tr><th id="60">60</th><td><u>#include <a href="asio/ip/address_v4.hpp.html">&lt;boost/asio/ip/address_v4.hpp&gt;</a></u></td></tr>
+<tr><th id="61">61</th><td><u>#include <a href="asio/ip/address_v6.hpp.html">&lt;boost/asio/ip/address_v6.hpp&gt;</a></u></td></tr>
+<tr><th id="62">62</th><td><u>#include <a href="asio/ip/basic_endpoint.hpp.html">&lt;boost/asio/ip/basic_endpoint.hpp&gt;</a></u></td></tr>
+<tr><th id="63">63</th><td><u>#include <a href="asio/ip/basic_resolver.hpp.html">&lt;boost/asio/ip/basic_resolver.hpp&gt;</a></u></td></tr>
+<tr><th id="64">64</th><td><u>#include <a href="asio/ip/basic_resolver_entry.hpp.html">&lt;boost/asio/ip/basic_resolver_entry.hpp&gt;</a></u></td></tr>
+<tr><th id="65">65</th><td><u>#include <a href="asio/ip/basic_resolver_iterator.hpp.html">&lt;boost/asio/ip/basic_resolver_iterator.hpp&gt;</a></u></td></tr>
+<tr><th id="66">66</th><td><u>#include <a href="asio/ip/basic_resolver_query.hpp.html">&lt;boost/asio/ip/basic_resolver_query.hpp&gt;</a></u></td></tr>
+<tr><th id="67">67</th><td><u>#include <a href="asio/ip/host_name.hpp.html">&lt;boost/asio/ip/host_name.hpp&gt;</a></u></td></tr>
+<tr><th id="68">68</th><td><u>#include <a href="asio/ip/icmp.hpp.html">&lt;boost/asio/ip/icmp.hpp&gt;</a></u></td></tr>
+<tr><th id="69">69</th><td><u>#include <a href="asio/ip/multicast.hpp.html">&lt;boost/asio/ip/multicast.hpp&gt;</a></u></td></tr>
+<tr><th id="70">70</th><td><u>#include <a href="asio/ip/resolver_query_base.hpp.html">&lt;boost/asio/ip/resolver_query_base.hpp&gt;</a></u></td></tr>
+<tr><th id="71">71</th><td><u>#include <a href="asio/ip/resolver_service.hpp.html">&lt;boost/asio/ip/resolver_service.hpp&gt;</a></u></td></tr>
+<tr><th id="72">72</th><td><u>#include <a href="asio/ip/tcp.hpp.html">&lt;boost/asio/ip/tcp.hpp&gt;</a></u></td></tr>
+<tr><th id="73">73</th><td><u>#include <a href="asio/ip/udp.hpp.html">&lt;boost/asio/ip/udp.hpp&gt;</a></u></td></tr>
+<tr><th id="74">74</th><td><u>#include <a href="asio/ip/unicast.hpp.html">&lt;boost/asio/ip/unicast.hpp&gt;</a></u></td></tr>
+<tr><th id="75">75</th><td><u>#include <a href="asio/ip/v6_only.hpp.html">&lt;boost/asio/ip/v6_only.hpp&gt;</a></u></td></tr>
+<tr><th id="76">76</th><td><u>#include <a href="asio/is_read_buffered.hpp.html">&lt;boost/asio/is_read_buffered.hpp&gt;</a></u></td></tr>
+<tr><th id="77">77</th><td><u>#include <a href="asio/is_write_buffered.hpp.html">&lt;boost/asio/is_write_buffered.hpp&gt;</a></u></td></tr>
+<tr><th id="78">78</th><td><u>#include <a href="asio/local/basic_endpoint.hpp.html">&lt;boost/asio/local/basic_endpoint.hpp&gt;</a></u></td></tr>
+<tr><th id="79">79</th><td><u>#include <a href="asio/local/connect_pair.hpp.html">&lt;boost/asio/local/connect_pair.hpp&gt;</a></u></td></tr>
+<tr><th id="80">80</th><td><u>#include <a href="asio/local/datagram_protocol.hpp.html">&lt;boost/asio/local/datagram_protocol.hpp&gt;</a></u></td></tr>
+<tr><th id="81">81</th><td><u>#include <a href="asio/local/stream_protocol.hpp.html">&lt;boost/asio/local/stream_protocol.hpp&gt;</a></u></td></tr>
+<tr><th id="82">82</th><td><u>#include <a href="asio/placeholders.hpp.html">&lt;boost/asio/placeholders.hpp&gt;</a></u></td></tr>
+<tr><th id="83">83</th><td><u>#include <a href="asio/posix/basic_descriptor.hpp.html">&lt;boost/asio/posix/basic_descriptor.hpp&gt;</a></u></td></tr>
+<tr><th id="84">84</th><td><u>#include <a href="asio/posix/basic_stream_descriptor.hpp.html">&lt;boost/asio/posix/basic_stream_descriptor.hpp&gt;</a></u></td></tr>
+<tr><th id="85">85</th><td><u>#include <a href="asio/posix/descriptor_base.hpp.html">&lt;boost/asio/posix/descriptor_base.hpp&gt;</a></u></td></tr>
+<tr><th id="86">86</th><td><u>#include <a href="asio/posix/stream_descriptor.hpp.html">&lt;boost/asio/posix/stream_descriptor.hpp&gt;</a></u></td></tr>
+<tr><th id="87">87</th><td><u>#include <a href="asio/posix/stream_descriptor_service.hpp.html">&lt;boost/asio/posix/stream_descriptor_service.hpp&gt;</a></u></td></tr>
+<tr><th id="88">88</th><td><u>#include <a href="asio/raw_socket_service.hpp.html">&lt;boost/asio/raw_socket_service.hpp&gt;</a></u></td></tr>
+<tr><th id="89">89</th><td><u>#include <a href="asio/read.hpp.html">&lt;boost/asio/read.hpp&gt;</a></u></td></tr>
+<tr><th id="90">90</th><td><u>#include <a href="asio/read_at.hpp.html">&lt;boost/asio/read_at.hpp&gt;</a></u></td></tr>
+<tr><th id="91">91</th><td><u>#include <a href="asio/read_until.hpp.html">&lt;boost/asio/read_until.hpp&gt;</a></u></td></tr>
+<tr><th id="92">92</th><td><u>#include <a href="asio/seq_packet_socket_service.hpp.html">&lt;boost/asio/seq_packet_socket_service.hpp&gt;</a></u></td></tr>
+<tr><th id="93">93</th><td><u>#include <a href="asio/serial_port.hpp.html">&lt;boost/asio/serial_port.hpp&gt;</a></u></td></tr>
+<tr><th id="94">94</th><td><u>#include <a href="asio/serial_port_base.hpp.html">&lt;boost/asio/serial_port_base.hpp&gt;</a></u></td></tr>
+<tr><th id="95">95</th><td><u>#include <a href="asio/serial_port_service.hpp.html">&lt;boost/asio/serial_port_service.hpp&gt;</a></u></td></tr>
+<tr><th id="96">96</th><td><u>#include <a href="asio/signal_set.hpp.html">&lt;boost/asio/signal_set.hpp&gt;</a></u></td></tr>
+<tr><th id="97">97</th><td><u>#include <a href="asio/signal_set_service.hpp.html">&lt;boost/asio/signal_set_service.hpp&gt;</a></u></td></tr>
+<tr><th id="98">98</th><td><u>#include <a href="asio/socket_acceptor_service.hpp.html">&lt;boost/asio/socket_acceptor_service.hpp&gt;</a></u></td></tr>
+<tr><th id="99">99</th><td><u>#include <a href="asio/socket_base.hpp.html">&lt;boost/asio/socket_base.hpp&gt;</a></u></td></tr>
+<tr><th id="100">100</th><td><u>#include <a href="asio/strand.hpp.html">&lt;boost/asio/strand.hpp&gt;</a></u></td></tr>
+<tr><th id="101">101</th><td><u>#include <a href="asio/stream_socket_service.hpp.html">&lt;boost/asio/stream_socket_service.hpp&gt;</a></u></td></tr>
+<tr><th id="102">102</th><td><u>#include <a href="asio/streambuf.hpp.html">&lt;boost/asio/streambuf.hpp&gt;</a></u></td></tr>
+<tr><th id="103">103</th><td><u>#include <a href="asio/time_traits.hpp.html">&lt;boost/asio/time_traits.hpp&gt;</a></u></td></tr>
+<tr><th id="104">104</th><td><u>#include <a href="asio/version.hpp.html">&lt;boost/asio/version.hpp&gt;</a></u></td></tr>
+<tr><th id="105">105</th><td><u>#include <a href="asio/wait_traits.hpp.html">&lt;boost/asio/wait_traits.hpp&gt;</a></u></td></tr>
+<tr><th id="106">106</th><td><u>#include <a href="asio/waitable_timer_service.hpp.html">&lt;boost/asio/waitable_timer_service.hpp&gt;</a></u></td></tr>
+<tr><th id="107">107</th><td><u>#include <a href="asio/windows/basic_handle.hpp.html">&lt;boost/asio/windows/basic_handle.hpp&gt;</a></u></td></tr>
+<tr><th id="108">108</th><td><u>#include <a href="asio/windows/basic_object_handle.hpp.html">&lt;boost/asio/windows/basic_object_handle.hpp&gt;</a></u></td></tr>
+<tr><th id="109">109</th><td><u>#include <a href="asio/windows/basic_random_access_handle.hpp.html">&lt;boost/asio/windows/basic_random_access_handle.hpp&gt;</a></u></td></tr>
+<tr><th id="110">110</th><td><u>#include <a href="asio/windows/basic_stream_handle.hpp.html">&lt;boost/asio/windows/basic_stream_handle.hpp&gt;</a></u></td></tr>
+<tr><th id="111">111</th><td><u>#include <a href="asio/windows/object_handle.hpp.html">&lt;boost/asio/windows/object_handle.hpp&gt;</a></u></td></tr>
+<tr><th id="112">112</th><td><u>#include <a href="asio/windows/object_handle_service.hpp.html">&lt;boost/asio/windows/object_handle_service.hpp&gt;</a></u></td></tr>
+<tr><th id="113">113</th><td><u>#include <a href="asio/windows/overlapped_ptr.hpp.html">&lt;boost/asio/windows/overlapped_ptr.hpp&gt;</a></u></td></tr>
+<tr><th id="114">114</th><td><u>#include <a href="asio/windows/random_access_handle.hpp.html">&lt;boost/asio/windows/random_access_handle.hpp&gt;</a></u></td></tr>
+<tr><th id="115">115</th><td><u>#include <a href="asio/windows/random_access_handle_service.hpp.html">&lt;boost/asio/windows/random_access_handle_service.hpp&gt;</a></u></td></tr>
+<tr><th id="116">116</th><td><u>#include <a href="asio/windows/stream_handle.hpp.html">&lt;boost/asio/windows/stream_handle.hpp&gt;</a></u></td></tr>
+<tr><th id="117">117</th><td><u>#include <a href="asio/windows/stream_handle_service.hpp.html">&lt;boost/asio/windows/stream_handle_service.hpp&gt;</a></u></td></tr>
+<tr><th id="118">118</th><td><u>#include <a href="asio/write.hpp.html">&lt;boost/asio/write.hpp&gt;</a></u></td></tr>
+<tr><th id="119">119</th><td><u>#include <a href="asio/write_at.hpp.html">&lt;boost/asio/write_at.hpp&gt;</a></u></td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="13">endif</span> // BOOST_ASIO_HPP</u></td></tr>
+<tr><th id="122">122</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore6.x/src/tools/connection_patcher/Helper.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Helper.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

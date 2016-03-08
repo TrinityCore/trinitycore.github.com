@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+<title>AppenderConsole.cpp [TrinityCore6.x/src/common/Logging/AppenderConsole.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/common/Logging/AppenderConsole.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Logging</a>/AppenderConsole.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../../../include/c++/4.9/sstream.html">&lt;sstream&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="AppenderConsole.h.html">"AppenderConsole.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../Configuration/Config.h.html">"Config.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Utilities/Util.h.html">"Util.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="24">if</span> <a class="macro" href="../CompilerDefs.h.html#37" title="1" data-ref="_M/PLATFORM">PLATFORM</a> == <a class="macro" href="../CompilerDefs.h.html#22" title="0" data-ref="_M/PLATFORM_WINDOWS">PLATFORM_WINDOWS</a></u></td></tr>
+<tr><th id="25">25</th><td>  <u>#include &lt;Windows.h&gt;</u></td></tr>
+<tr><th id="26">26</th><td><u>#<span data-ppcond="24">endif</span></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><a class="type" href="AppenderConsole.h.html#AppenderConsole" title='AppenderConsole' data-ref="AppenderConsole" >AppenderConsole</a>::<dfn class="decl def" id="_ZN15AppenderConsoleC1EhRKSs8LogLevel13AppenderFlagsSt6vectorIPKcSaIS6_EE" title='AppenderConsole::AppenderConsole' data-ref="_ZN15AppenderConsoleC1EhRKSs8LogLevel13AppenderFlagsSt6vectorIPKcSaIS6_EE" >AppenderConsole</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col1 decl" id="11id" title='id' data-type='uint8' data-ref="11id" >id</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col2 decl" id="12name" title='name' data-type='const std::string &amp;' data-ref="12name" >name</dfn>, <a class="type" href="Appender.h.html#LogLevel" title='LogLevel' data-ref="LogLevel" >LogLevel</a> <dfn class="local col3 decl" id="13level" title='level' data-type='LogLevel' data-ref="13level" >level</dfn>, <a class="type" href="Appender.h.html#AppenderFlags" title='AppenderFlags' data-ref="AppenderFlags" >AppenderFlags</a> <dfn class="local col4 decl" id="14flags" title='flags' data-type='AppenderFlags' data-ref="14flags" >flags</dfn>, <a class="typedef" href="Appender.h.html#ExtraAppenderArgs" title='ExtraAppenderArgs' data-type='std::vector&lt;const char *&gt;' data-ref="ExtraAppenderArgs" >ExtraAppenderArgs</a> <dfn class="local col5 decl" id="15extraArgs" title='extraArgs' data-type='ExtraAppenderArgs' data-ref="15extraArgs" >extraArgs</dfn>)</td></tr>
+<tr><th id="29">29</th><td>    : <a class="type" href="Appender.h.html#Appender" title='Appender' data-ref="Appender" >Appender</a><a class="ref" href="Appender.h.html#_ZN8AppenderC1EhRKSs8LogLevel13AppenderFlags" title='Appender::Appender' data-ref="_ZN8AppenderC1EhRKSs8LogLevel13AppenderFlags" id="_ZN8AppenderC1EhRKSs8LogLevel13AppenderFlags" >(</a><a class="local col1 ref" href="#11id" title='id' data-ref="11id" >id</a>, <a class="local col2 ref" href="#12name" title='name' data-ref="12name" >name</a>, <a class="local col3 ref" href="#13level" title='level' data-ref="13level" >level</a>, <a class="local col4 ref" href="#14flags" title='flags' data-ref="14flags" >flags</a>), <a class="member" href="AppenderConsole.h.html#AppenderConsole::_colored" title='AppenderConsole::_colored' data-ref="AppenderConsole::_colored" id="AppenderConsole::_colored" >_colored</a>(<b>false</b>)</td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <b>for</b> (<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col6 decl" id="16i" title='i' data-type='uint8' data-ref="16i" >i</dfn> = <var>0</var>; <a class="local col6 ref" href="#16i" title='i' data-ref="16i" >i</a> &lt; <a class="ref" href="Appender.h.html#_ZL12MaxLogLevels" title='MaxLogLevels' data-ref="_ZL12MaxLogLevels" id="_ZL12MaxLogLevels" >MaxLogLevels</a>; ++<a class="local col6 ref" href="#16i" title='i' data-ref="16i" >i</a>)</td></tr>
+<tr><th id="32">32</th><td>        <a class="member" href="AppenderConsole.h.html#AppenderConsole::_colors" title='AppenderConsole::_colors' data-ref="AppenderConsole::_colors" id="AppenderConsole::_colors" >_colors</a>[<a class="local col6 ref" href="#16i" title='i' data-ref="16i" >i</a>] = <a class="type" href="AppenderConsole.h.html#ColorTypes" title='ColorTypes' data-ref="ColorTypes" >ColorTypes</a>(<a class="ref" href="AppenderConsole.h.html#_ZL9MaxColors" title='MaxColors' data-ref="_ZL9MaxColors" id="_ZL9MaxColors" >MaxColors</a>);</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>    <b>if</b> (!<a class="local col5 ref" href="#15extraArgs" title='extraArgs' data-ref="15extraArgs" >extraArgs</a>.<a class="ref" href="../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNKSt6vector5emptyEv" title='std::vector::empty' data-ref="_ZNKSt6vector5emptyEv" id="_ZNKSt6vector5emptyEv" >empty</a>())</td></tr>
+<tr><th id="35">35</th><td>        <a class="member" href="#_ZN15AppenderConsole10InitColorsERKSs" title='AppenderConsole::InitColors' data-ref="_ZN15AppenderConsole10InitColorsERKSs" >InitColors</a>(<a class="local col5 ref" href="#15extraArgs" title='extraArgs' data-ref="15extraArgs" >extraArgs</a><a class="ref" href="../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNSt6vectorixEm" title='std::vector::operator[]' data-ref="_ZNSt6vectorixEm" id="_ZNSt6vectorixEm" >[<var>0</var>]</a>);</td></tr>
+<tr><th id="36">36</th><td>}</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><em>void</em> <a class="type" href="AppenderConsole.h.html#AppenderConsole" title='AppenderConsole' data-ref="AppenderConsole" >AppenderConsole</a>::<dfn class="decl def" id="_ZN15AppenderConsole10InitColorsERKSs" title='AppenderConsole::InitColors' data-ref="_ZN15AppenderConsole10InitColorsERKSs" >InitColors</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col7 decl" id="17str" title='str' data-type='const std::string &amp;' data-ref="17str" >str</dfn>)</td></tr>
+<tr><th id="39">39</th><td>{</td></tr>
+<tr><th id="40">40</th><td>    <b>if</b> (<a class="local col7 ref" href="#17str" title='str' data-ref="17str" >str</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5emptyEv" title='std::basic_string::empty' data-ref="_ZNKSt12basic_string5emptyEv" id="_ZNKSt12basic_string5emptyEv" >empty</a>())</td></tr>
+<tr><th id="41">41</th><td>    {</td></tr>
+<tr><th id="42">42</th><td>        <a class="member" href="AppenderConsole.h.html#AppenderConsole::_colored" title='AppenderConsole::_colored' data-ref="AppenderConsole::_colored" id="AppenderConsole::_colored" >_colored</a> = <b>false</b>;</td></tr>
+<tr><th id="43">43</th><td>        <b>return</b>;</td></tr>
+<tr><th id="44">44</th><td>    }</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <em>int</em> <dfn class="local col8 decl" id="18color" title='color' data-type='int [6]' data-ref="18color" >color</dfn>[<a class="ref" href="Appender.h.html#_ZL12MaxLogLevels" title='MaxLogLevels' data-ref="_ZL12MaxLogLevels" >MaxLogLevels</a>];</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/iosfwd.html#std::istringstream" title='std::istringstream' data-type='basic_istringstream&lt;char&gt;' data-ref="std::istringstream" >istringstream</a> <dfn class="local col9 decl" id="19ss" title='ss' data-type='std::istringstream' data-ref="19ss" >ss</dfn><a class="ref" href="../../../../include/c++/4.9/sstream.html#_ZNSt19basic_istringstreamC1ERKSbIT_T0_T1_ESt13_Ios_Openmode" title='std::basic_istringstream::basic_istringstream&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt19basic_istringstreamC1ERKSbIT_T0_T1_ESt13_Ios_Openmode" id="_ZNSt19basic_istringstreamC1ERKSbIT_T0_T1_ESt13_Ios_Openmode" >(</a><a class="local col7 ref" href="#17str" title='str' data-ref="17str" >str</a>);</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <b>for</b> (<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col0 decl" id="20i" title='i' data-type='uint8' data-ref="20i" >i</dfn> = <var>0</var>; <a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a> &lt; <a class="ref" href="Appender.h.html#_ZL12MaxLogLevels" title='MaxLogLevels' data-ref="_ZL12MaxLogLevels" id="_ZL12MaxLogLevels" >MaxLogLevels</a>; ++<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>)</td></tr>
+<tr><th id="51">51</th><td>    {</td></tr>
+<tr><th id="52">52</th><td>        <a class="local col9 ref" href="#19ss" title='ss' data-ref="19ss" >ss</a> <a class="ref" href="../../../../include/c++/4.9/istream.html#_ZNSt13basic_istreamrsERi" title='std::basic_istream::operator&gt;&gt;' data-ref="_ZNSt13basic_istreamrsERi" id="_ZNSt13basic_istreamrsERi" >&gt;&gt;</a> <a class="local col8 ref" href="#18color" title='color' data-ref="18color" >color</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>];</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>        <b>if</b> (<a class="ref" href="../../../../include/c++/4.9/bits/basic_ios.h.html#_ZNKSt9basic_iosntEv" title='std::basic_ios::operator!' data-ref="_ZNKSt9basic_iosntEv" id="_ZNKSt9basic_iosntEv" >!</a><a class="local col9 ref" href="#19ss" title='ss' data-ref="19ss" >ss</a>)</td></tr>
+<tr><th id="55">55</th><td>            <b>return</b>;</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>        <b>if</b> (<a class="local col8 ref" href="#18color" title='color' data-ref="18color" >color</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>] &lt; <var>0</var> || <a class="local col8 ref" href="#18color" title='color' data-ref="18color" >color</a>[<a class="local col0 ref" href="#20i" title='i' data-ref="20i" >i</a>] &gt;= <a class="ref" href="AppenderConsole.h.html#_ZL9MaxColors" title='MaxColors' data-ref="_ZL9MaxColors" id="_ZL9MaxColors" >MaxColors</a>)</td></tr>
+<tr><th id="58">58</th><td>            <b>return</b>;</td></tr>
+<tr><th id="59">59</th><td>    }</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <b>for</b> (<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col1 decl" id="21i" title='i' data-type='uint8' data-ref="21i" >i</dfn> = <var>0</var>; <a class="local col1 ref" href="#21i" title='i' data-ref="21i" >i</a> &lt; <a class="ref" href="Appender.h.html#_ZL12MaxLogLevels" title='MaxLogLevels' data-ref="_ZL12MaxLogLevels" id="_ZL12MaxLogLevels" >MaxLogLevels</a>; ++<a class="local col1 ref" href="#21i" title='i' data-ref="21i" >i</a>)</td></tr>
+<tr><th id="62">62</th><td>        <a class="member" href="AppenderConsole.h.html#AppenderConsole::_colors" title='AppenderConsole::_colors' data-ref="AppenderConsole::_colors" id="AppenderConsole::_colors" >_colors</a>[<a class="local col1 ref" href="#21i" title='i' data-ref="21i" >i</a>] = <a class="type" href="AppenderConsole.h.html#ColorTypes" title='ColorTypes' data-ref="ColorTypes" >ColorTypes</a>(<a class="local col8 ref" href="#18color" title='color' data-ref="18color" >color</a>[<a class="local col1 ref" href="#21i" title='i' data-ref="21i" >i</a>]);</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>    <a class="member" href="AppenderConsole.h.html#AppenderConsole::_colored" title='AppenderConsole::_colored' data-ref="AppenderConsole::_colored" id="AppenderConsole::_colored" >_colored</a> = <b>true</b>;</td></tr>
+<tr><th id="65">65</th><td>}</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><em>void</em> <a class="type" href="AppenderConsole.h.html#AppenderConsole" title='AppenderConsole' data-ref="AppenderConsole" >AppenderConsole</a>::<dfn class="decl def" id="_ZN15AppenderConsole8SetColorEb10ColorTypes" title='AppenderConsole::SetColor' data-ref="_ZN15AppenderConsole8SetColorEb10ColorTypes" >SetColor</dfn>(<em>bool</em> <dfn class="local col2 decl" id="22stdout_stream" title='stdout_stream' data-type='bool' data-ref="22stdout_stream" >stdout_stream</dfn>, <a class="type" href="AppenderConsole.h.html#ColorTypes" title='ColorTypes' data-ref="ColorTypes" >ColorTypes</a> <dfn class="local col3 decl" id="23color" title='color' data-type='ColorTypes' data-ref="23color" >color</dfn>)</td></tr>
+<tr><th id="68">68</th><td>{</td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="69">if</span> <a class="macro" href="../CompilerDefs.h.html#37" title="1" data-ref="_M/PLATFORM">PLATFORM</a> == <a class="macro" href="../CompilerDefs.h.html#22" title="0" data-ref="_M/PLATFORM_WINDOWS">PLATFORM_WINDOWS</a></u></td></tr>
+<tr><th id="70">70</th><td>    <em>static</em> WORD WinColorFG[MaxColors] =</td></tr>
+<tr><th id="71">71</th><td>    {</td></tr>
+<tr><th id="72">72</th><td>        <var>0</var>,                                                  <i>// BLACK</i></td></tr>
+<tr><th id="73">73</th><td>        FOREGROUND_RED,                                     <i>// RED</i></td></tr>
+<tr><th id="74">74</th><td>        FOREGROUND_GREEN,                                   <i>// GREEN</i></td></tr>
+<tr><th id="75">75</th><td>        FOREGROUND_RED | FOREGROUND_GREEN,                  <i>// BROWN</i></td></tr>
+<tr><th id="76">76</th><td>        FOREGROUND_BLUE,                                    <i>// BLUE</i></td></tr>
+<tr><th id="77">77</th><td>        FOREGROUND_RED |                    FOREGROUND_BLUE, <i>// MAGENTA</i></td></tr>
+<tr><th id="78">78</th><td>        FOREGROUND_GREEN | FOREGROUND_BLUE,                 <i>// CYAN</i></td></tr>
+<tr><th id="79">79</th><td>        FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, <i>// WHITE</i></td></tr>
+<tr><th id="80">80</th><td>                                                            <i>// YELLOW</i></td></tr>
+<tr><th id="81">81</th><td>        FOREGROUND_RED | FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,</td></tr>
+<tr><th id="82">82</th><td>                                                            <i>// RED_BOLD</i></td></tr>
+<tr><th id="83">83</th><td>        FOREGROUND_RED |                                      FOREGROUND_INTENSITY,</td></tr>
+<tr><th id="84">84</th><td>                                                            <i>// GREEN_BOLD</i></td></tr>
+<tr><th id="85">85</th><td>        FOREGROUND_GREEN |                   FOREGROUND_INTENSITY,</td></tr>
+<tr><th id="86">86</th><td>        FOREGROUND_BLUE | FOREGROUND_INTENSITY,             <i>// BLUE_BOLD</i></td></tr>
+<tr><th id="87">87</th><td>                                                            <i>// MAGENTA_BOLD</i></td></tr>
+<tr><th id="88">88</th><td>        FOREGROUND_RED |                    FOREGROUND_BLUE | FOREGROUND_INTENSITY,</td></tr>
+<tr><th id="89">89</th><td>                                                            <i>// CYAN_BOLD</i></td></tr>
+<tr><th id="90">90</th><td>        FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY,</td></tr>
+<tr><th id="91">91</th><td>                                                            <i>// WHITE_BOLD</i></td></tr>
+<tr><th id="92">92</th><td>        FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY</td></tr>
+<tr><th id="93">93</th><td>    };</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>    HANDLE hConsole = GetStdHandle(stdout_stream ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE);</td></tr>
+<tr><th id="96">96</th><td>    SetConsoleTextAttribute(hConsole, WinColorFG[color]);</td></tr>
+<tr><th id="97">97</th><td><u>#<span data-ppcond="69">else</span></u></td></tr>
+<tr><th id="98">98</th><td>    <b>enum</b> <dfn class="local col4 type" id="24ANSITextAttr" title='ANSITextAttr' data-ref="24ANSITextAttr" >ANSITextAttr</dfn></td></tr>
+<tr><th id="99">99</th><td>    {</td></tr>
+<tr><th id="100">100</th><td>        <dfn class="local col5 enum" id="25TA_NORMAL" title='TA_NORMAL' data-type='0' data-ref="25TA_NORMAL" >TA_NORMAL</dfn>                                = <var>0</var>,</td></tr>
+<tr><th id="101">101</th><td>        <dfn class="local col6 enum" id="26TA_BOLD" title='TA_BOLD' data-type='1' data-ref="26TA_BOLD" >TA_BOLD</dfn>                                  = <var>1</var>,</td></tr>
+<tr><th id="102">102</th><td>        <dfn class="local col7 enum" id="27TA_BLINK" title='TA_BLINK' data-type='5' data-ref="27TA_BLINK" >TA_BLINK</dfn>                                 = <var>5</var>,</td></tr>
+<tr><th id="103">103</th><td>        <dfn class="local col8 enum" id="28TA_REVERSE" title='TA_REVERSE' data-type='7' data-ref="28TA_REVERSE" >TA_REVERSE</dfn>                               = <var>7</var></td></tr>
+<tr><th id="104">104</th><td>    };</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>    <b>enum</b> <dfn class="local col9 type" id="29ANSIFgTextAttr" title='ANSIFgTextAttr' data-ref="29ANSIFgTextAttr" >ANSIFgTextAttr</dfn></td></tr>
+<tr><th id="107">107</th><td>    {</td></tr>
+<tr><th id="108">108</th><td>        <dfn class="local col0 enum" id="30FG_BLACK" title='FG_BLACK' data-type='30' data-ref="30FG_BLACK" >FG_BLACK</dfn>                                 = <var>30</var>,</td></tr>
+<tr><th id="109">109</th><td>        <dfn class="local col1 enum" id="31FG_RED" title='FG_RED' data-type='31' data-ref="31FG_RED" >FG_RED</dfn>,</td></tr>
+<tr><th id="110">110</th><td>        <dfn class="local col2 enum" id="32FG_GREEN" title='FG_GREEN' data-type='32' data-ref="32FG_GREEN" >FG_GREEN</dfn>,</td></tr>
+<tr><th id="111">111</th><td>        <dfn class="local col3 enum" id="33FG_BROWN" title='FG_BROWN' data-type='33' data-ref="33FG_BROWN" >FG_BROWN</dfn>,</td></tr>
+<tr><th id="112">112</th><td>        <dfn class="local col4 enum" id="34FG_BLUE" title='FG_BLUE' data-type='34' data-ref="34FG_BLUE" >FG_BLUE</dfn>,</td></tr>
+<tr><th id="113">113</th><td>        <dfn class="local col5 enum" id="35FG_MAGENTA" title='FG_MAGENTA' data-type='35' data-ref="35FG_MAGENTA" >FG_MAGENTA</dfn>,</td></tr>
+<tr><th id="114">114</th><td>        <dfn class="local col6 enum" id="36FG_CYAN" title='FG_CYAN' data-type='36' data-ref="36FG_CYAN" >FG_CYAN</dfn>,</td></tr>
+<tr><th id="115">115</th><td>        <dfn class="local col7 enum" id="37FG_WHITE" title='FG_WHITE' data-type='37' data-ref="37FG_WHITE" >FG_WHITE</dfn>,</td></tr>
+<tr><th id="116">116</th><td>        <dfn class="local col8 enum" id="38FG_YELLOW" title='FG_YELLOW' data-type='38' data-ref="38FG_YELLOW" >FG_YELLOW</dfn></td></tr>
+<tr><th id="117">117</th><td>    };</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>    <b>enum</b> <dfn class="local col9 type" id="39ANSIBgTextAttr" title='ANSIBgTextAttr' data-ref="39ANSIBgTextAttr" >ANSIBgTextAttr</dfn></td></tr>
+<tr><th id="120">120</th><td>    {</td></tr>
+<tr><th id="121">121</th><td>        <dfn class="local col0 enum" id="40BG_BLACK" title='BG_BLACK' data-type='40' data-ref="40BG_BLACK" >BG_BLACK</dfn>                                 = <var>40</var>,</td></tr>
+<tr><th id="122">122</th><td>        <dfn class="local col1 enum" id="41BG_RED" title='BG_RED' data-type='41' data-ref="41BG_RED" >BG_RED</dfn>,</td></tr>
+<tr><th id="123">123</th><td>        <dfn class="local col2 enum" id="42BG_GREEN" title='BG_GREEN' data-type='42' data-ref="42BG_GREEN" >BG_GREEN</dfn>,</td></tr>
+<tr><th id="124">124</th><td>        <dfn class="local col3 enum" id="43BG_BROWN" title='BG_BROWN' data-type='43' data-ref="43BG_BROWN" >BG_BROWN</dfn>,</td></tr>
+<tr><th id="125">125</th><td>        <dfn class="local col4 enum" id="44BG_BLUE" title='BG_BLUE' data-type='44' data-ref="44BG_BLUE" >BG_BLUE</dfn>,</td></tr>
+<tr><th id="126">126</th><td>        <dfn class="local col5 enum" id="45BG_MAGENTA" title='BG_MAGENTA' data-type='45' data-ref="45BG_MAGENTA" >BG_MAGENTA</dfn>,</td></tr>
+<tr><th id="127">127</th><td>        <dfn class="local col6 enum" id="46BG_CYAN" title='BG_CYAN' data-type='46' data-ref="46BG_CYAN" >BG_CYAN</dfn>,</td></tr>
+<tr><th id="128">128</th><td>        <dfn class="local col7 enum" id="47BG_WHITE" title='BG_WHITE' data-type='47' data-ref="47BG_WHITE" >BG_WHITE</dfn></td></tr>
+<tr><th id="129">129</th><td>    };</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>    <em>static</em> <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col8 decl" id="48UnixColorFG" title='UnixColorFG' data-type='uint8 [15]' data-ref="48UnixColorFG" >UnixColorFG</dfn>[<a class="ref" href="AppenderConsole.h.html#_ZL9MaxColors" title='MaxColors' data-ref="_ZL9MaxColors" >MaxColors</a>] =</td></tr>
+<tr><th id="132">132</th><td>    {</td></tr>
+<tr><th id="133">133</th><td>        <a class="local col0 enum" href="#30FG_BLACK" title='FG_BLACK' data-ref="30FG_BLACK" ><a class="local col0 enum" href="#30FG_BLACK" title='FG_BLACK' data-ref="30FG_BLACK" >FG_BLACK</a></a>,                                          <i>// BLACK</i></td></tr>
+<tr><th id="134">134</th><td>        <a class="local col1 enum" href="#31FG_RED" title='FG_RED' data-ref="31FG_RED" ><a class="local col1 enum" href="#31FG_RED" title='FG_RED' data-ref="31FG_RED" >FG_RED</a></a>,                                            <i>// RED</i></td></tr>
+<tr><th id="135">135</th><td>        <a class="local col2 enum" href="#32FG_GREEN" title='FG_GREEN' data-ref="32FG_GREEN" ><a class="local col2 enum" href="#32FG_GREEN" title='FG_GREEN' data-ref="32FG_GREEN" >FG_GREEN</a></a>,                                          <i>// GREEN</i></td></tr>
+<tr><th id="136">136</th><td>        <a class="local col3 enum" href="#33FG_BROWN" title='FG_BROWN' data-ref="33FG_BROWN" ><a class="local col3 enum" href="#33FG_BROWN" title='FG_BROWN' data-ref="33FG_BROWN" >FG_BROWN</a></a>,                                          <i>// BROWN</i></td></tr>
+<tr><th id="137">137</th><td>        <a class="local col4 enum" href="#34FG_BLUE" title='FG_BLUE' data-ref="34FG_BLUE" ><a class="local col4 enum" href="#34FG_BLUE" title='FG_BLUE' data-ref="34FG_BLUE" >FG_BLUE</a></a>,                                           <i>// BLUE</i></td></tr>
+<tr><th id="138">138</th><td>        <a class="local col5 enum" href="#35FG_MAGENTA" title='FG_MAGENTA' data-ref="35FG_MAGENTA" ><a class="local col5 enum" href="#35FG_MAGENTA" title='FG_MAGENTA' data-ref="35FG_MAGENTA" >FG_MAGENTA</a></a>,                                        <i>// MAGENTA</i></td></tr>
+<tr><th id="139">139</th><td>        <a class="local col6 enum" href="#36FG_CYAN" title='FG_CYAN' data-ref="36FG_CYAN" ><a class="local col6 enum" href="#36FG_CYAN" title='FG_CYAN' data-ref="36FG_CYAN" >FG_CYAN</a></a>,                                           <i>// CYAN</i></td></tr>
+<tr><th id="140">140</th><td>        <a class="local col7 enum" href="#37FG_WHITE" title='FG_WHITE' data-ref="37FG_WHITE" ><a class="local col7 enum" href="#37FG_WHITE" title='FG_WHITE' data-ref="37FG_WHITE" >FG_WHITE</a></a>,                                          <i>// WHITE</i></td></tr>
+<tr><th id="141">141</th><td>        <a class="local col8 enum" href="#38FG_YELLOW" title='FG_YELLOW' data-ref="38FG_YELLOW" ><a class="local col8 enum" href="#38FG_YELLOW" title='FG_YELLOW' data-ref="38FG_YELLOW" >FG_YELLOW</a></a>,                                         <i>// YELLOW</i></td></tr>
+<tr><th id="142">142</th><td>        <a class="local col1 enum" href="#31FG_RED" title='FG_RED' data-ref="31FG_RED" ><a class="local col1 enum" href="#31FG_RED" title='FG_RED' data-ref="31FG_RED" >FG_RED</a></a>,                                            <i>// LRED</i></td></tr>
+<tr><th id="143">143</th><td>        <a class="local col2 enum" href="#32FG_GREEN" title='FG_GREEN' data-ref="32FG_GREEN" ><a class="local col2 enum" href="#32FG_GREEN" title='FG_GREEN' data-ref="32FG_GREEN" >FG_GREEN</a></a>,                                          <i>// LGREEN</i></td></tr>
+<tr><th id="144">144</th><td>        <a class="local col4 enum" href="#34FG_BLUE" title='FG_BLUE' data-ref="34FG_BLUE" ><a class="local col4 enum" href="#34FG_BLUE" title='FG_BLUE' data-ref="34FG_BLUE" >FG_BLUE</a></a>,                                           <i>// LBLUE</i></td></tr>
+<tr><th id="145">145</th><td>        <a class="local col5 enum" href="#35FG_MAGENTA" title='FG_MAGENTA' data-ref="35FG_MAGENTA" ><a class="local col5 enum" href="#35FG_MAGENTA" title='FG_MAGENTA' data-ref="35FG_MAGENTA" >FG_MAGENTA</a></a>,                                        <i>// LMAGENTA</i></td></tr>
+<tr><th id="146">146</th><td>        <a class="local col6 enum" href="#36FG_CYAN" title='FG_CYAN' data-ref="36FG_CYAN" ><a class="local col6 enum" href="#36FG_CYAN" title='FG_CYAN' data-ref="36FG_CYAN" >FG_CYAN</a></a>,                                           <i>// LCYAN</i></td></tr>
+<tr><th id="147">147</th><td>        <a class="local col7 enum" href="#37FG_WHITE" title='FG_WHITE' data-ref="37FG_WHITE" ><a class="local col7 enum" href="#37FG_WHITE" title='FG_WHITE' data-ref="37FG_WHITE" >FG_WHITE</a></a>                                           <i>// LWHITE</i></td></tr>
+<tr><th id="148">148</th><td>    };</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>    <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>((<a class="local col2 ref" href="#22stdout_stream" title='stdout_stream' data-ref="22stdout_stream" >stdout_stream</a>? <a class="macro" href="../../../../include/stdio.h.html#173" title="stdout" data-ref="_M/stdout">stdout</a> : <a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>), <q>"\x1b[%d%sm"</q>, <a class="local col8 ref" href="#48UnixColorFG" title='UnixColorFG' data-ref="48UnixColorFG" >UnixColorFG</a>[<a class="local col3 ref" href="#23color" title='color' data-ref="23color" >color</a>], (<a class="local col3 ref" href="#23color" title='color' data-ref="23color" >color</a> &gt;= <a class="enum" href="AppenderConsole.h.html#ColorTypes::YELLOW" title='ColorTypes::YELLOW' data-ref="ColorTypes::YELLOW" id="ColorTypes::YELLOW" >YELLOW</a> &amp;&amp; <a class="local col3 ref" href="#23color" title='color' data-ref="23color" >color</a> &lt; <a class="ref" href="AppenderConsole.h.html#_ZL9MaxColors" title='MaxColors' data-ref="_ZL9MaxColors" id="_ZL9MaxColors" >MaxColors</a> ? <q>";1"</q> : <q>""</q>));</td></tr>
+<tr><th id="151">151</th><td>    <u>#<span data-ppcond="69">endif</span></u></td></tr>
+<tr><th id="152">152</th><td>}</td></tr>
+<tr><th id="153">153</th><td></td></tr>
+<tr><th id="154">154</th><td><em>void</em> <a class="type" href="AppenderConsole.h.html#AppenderConsole" title='AppenderConsole' data-ref="AppenderConsole" >AppenderConsole</a>::<dfn class="decl def" id="_ZN15AppenderConsole10ResetColorEb" title='AppenderConsole::ResetColor' data-ref="_ZN15AppenderConsole10ResetColorEb" >ResetColor</dfn>(<em>bool</em> <dfn class="local col9 decl" id="49stdout_stream" title='stdout_stream' data-type='bool' data-ref="49stdout_stream" >stdout_stream</dfn>)</td></tr>
+<tr><th id="155">155</th><td>{</td></tr>
+<tr><th id="156">156</th><td>    <u>#<span data-ppcond="156">if</span> <a class="macro" href="../CompilerDefs.h.html#37" title="1" data-ref="_M/PLATFORM">PLATFORM</a> == <a class="macro" href="../CompilerDefs.h.html#22" title="0" data-ref="_M/PLATFORM_WINDOWS">PLATFORM_WINDOWS</a></u></td></tr>
+<tr><th id="157">157</th><td>    HANDLE hConsole = GetStdHandle(stdout_stream ? STD_OUTPUT_HANDLE : STD_ERROR_HANDLE);</td></tr>
+<tr><th id="158">158</th><td>    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);</td></tr>
+<tr><th id="159">159</th><td>    <u>#<span data-ppcond="156">else</span></u></td></tr>
+<tr><th id="160">160</th><td>    <a class="ref" href="../../../../include/stdio.h.html#fprintf" title='fprintf' data-ref="fprintf" id="fprintf" >fprintf</a>((<a class="local col9 ref" href="#49stdout_stream" title='stdout_stream' data-ref="49stdout_stream" >stdout_stream</a> ? <a class="macro" href="../../../../include/stdio.h.html#173" title="stdout" data-ref="_M/stdout">stdout</a> : <a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>), <q>"\x1b[0m"</q>);</td></tr>
+<tr><th id="161">161</th><td>    <u>#<span data-ppcond="156">endif</span></u></td></tr>
+<tr><th id="162">162</th><td>}</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td><em>void</em> <a class="type" href="AppenderConsole.h.html#AppenderConsole" title='AppenderConsole' data-ref="AppenderConsole" >AppenderConsole</a>::<dfn class="virtual decl def" id="_ZN15AppenderConsole6_writeEPK10LogMessage" title='AppenderConsole::_write' data-ref="_ZN15AppenderConsole6_writeEPK10LogMessage" >_write</dfn>(<a class="type" href="Appender.h.html#LogMessage" title='LogMessage' data-ref="LogMessage" >LogMessage</a> <em>const</em>* <dfn class="local col0 decl" id="50message" title='message' data-type='const LogMessage *' data-ref="50message" >message</dfn>)</td></tr>
+<tr><th id="165">165</th><td>{</td></tr>
+<tr><th id="166">166</th><td>    <em>bool</em> <dfn class="local col1 decl" id="51stdout_stream" title='stdout_stream' data-type='bool' data-ref="51stdout_stream" >stdout_stream</dfn> = !(<a class="local col0 ref" href="#50message" title='message' data-ref="50message" >message</a>-&gt;<a class="ref" href="Appender.h.html#LogMessage::level" title='LogMessage::level' data-ref="LogMessage::level" id="LogMessage::level" >level</a> == <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_ERROR" title='LogLevel::LOG_LEVEL_ERROR' data-ref="LogLevel::LOG_LEVEL_ERROR" id="LogLevel::LOG_LEVEL_ERROR" >LOG_LEVEL_ERROR</a> || <a class="local col0 ref" href="#50message" title='message' data-ref="50message" >message</a>-&gt;<a class="ref" href="Appender.h.html#LogMessage::level" title='LogMessage::level' data-ref="LogMessage::level" id="LogMessage::level" >level</a> == <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_FATAL" title='LogLevel::LOG_LEVEL_FATAL' data-ref="LogLevel::LOG_LEVEL_FATAL" id="LogLevel::LOG_LEVEL_FATAL" >LOG_LEVEL_FATAL</a>);</td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td>    <b>if</b> (<a class="member" href="AppenderConsole.h.html#AppenderConsole::_colored" title='AppenderConsole::_colored' data-ref="AppenderConsole::_colored" id="AppenderConsole::_colored" >_colored</a>)</td></tr>
+<tr><th id="169">169</th><td>    {</td></tr>
+<tr><th id="170">170</th><td>        <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col2 decl" id="52index" title='index' data-type='uint8' data-ref="52index" >index</dfn>;</td></tr>
+<tr><th id="171">171</th><td>        <b>switch</b> (<a class="local col0 ref" href="#50message" title='message' data-ref="50message" >message</a>-&gt;<a class="ref" href="Appender.h.html#LogMessage::level" title='LogMessage::level' data-ref="LogMessage::level" id="LogMessage::level" >level</a>)</td></tr>
+<tr><th id="172">172</th><td>        {</td></tr>
+<tr><th id="173">173</th><td>            <b>case</b> <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_TRACE" title='LogLevel::LOG_LEVEL_TRACE' data-ref="LogLevel::LOG_LEVEL_TRACE" >LOG_LEVEL_TRACE</a>:</td></tr>
+<tr><th id="174">174</th><td>               <a class="local col2 ref" href="#52index" title='index' data-ref="52index" >index</a> = <var>5</var>;</td></tr>
+<tr><th id="175">175</th><td>               <b>break</b>;</td></tr>
+<tr><th id="176">176</th><td>            <b>case</b> <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_DEBUG" title='LogLevel::LOG_LEVEL_DEBUG' data-ref="LogLevel::LOG_LEVEL_DEBUG" >LOG_LEVEL_DEBUG</a>:</td></tr>
+<tr><th id="177">177</th><td>               <a class="local col2 ref" href="#52index" title='index' data-ref="52index" >index</a> = <var>4</var>;</td></tr>
+<tr><th id="178">178</th><td>               <b>break</b>;</td></tr>
+<tr><th id="179">179</th><td>            <b>case</b> <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_INFO" title='LogLevel::LOG_LEVEL_INFO' data-ref="LogLevel::LOG_LEVEL_INFO" >LOG_LEVEL_INFO</a>:</td></tr>
+<tr><th id="180">180</th><td>               <a class="local col2 ref" href="#52index" title='index' data-ref="52index" >index</a> = <var>3</var>;</td></tr>
+<tr><th id="181">181</th><td>               <b>break</b>;</td></tr>
+<tr><th id="182">182</th><td>            <b>case</b> <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_WARN" title='LogLevel::LOG_LEVEL_WARN' data-ref="LogLevel::LOG_LEVEL_WARN" >LOG_LEVEL_WARN</a>:</td></tr>
+<tr><th id="183">183</th><td>               <a class="local col2 ref" href="#52index" title='index' data-ref="52index" >index</a> = <var>2</var>;</td></tr>
+<tr><th id="184">184</th><td>               <b>break</b>;</td></tr>
+<tr><th id="185">185</th><td>            <b>case</b> <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_FATAL" title='LogLevel::LOG_LEVEL_FATAL' data-ref="LogLevel::LOG_LEVEL_FATAL" >LOG_LEVEL_FATAL</a>:</td></tr>
+<tr><th id="186">186</th><td>               <a class="local col2 ref" href="#52index" title='index' data-ref="52index" >index</a> = <var>0</var>;</td></tr>
+<tr><th id="187">187</th><td>               <b>break</b>;</td></tr>
+<tr><th id="188">188</th><td>            <b>case</b> <a class="enum" href="Appender.h.html#LogLevel::LOG_LEVEL_ERROR" title='LogLevel::LOG_LEVEL_ERROR' data-ref="LogLevel::LOG_LEVEL_ERROR" >LOG_LEVEL_ERROR</a>: <i>// No break on purpose</i></td></tr>
+<tr><th id="189">189</th><td>            <b>default</b>:</td></tr>
+<tr><th id="190">190</th><td>               <a class="local col2 ref" href="#52index" title='index' data-ref="52index" >index</a> = <var>1</var>;</td></tr>
+<tr><th id="191">191</th><td>               <b>break</b>;</td></tr>
+<tr><th id="192">192</th><td>        }</td></tr>
+<tr><th id="193">193</th><td></td></tr>
+<tr><th id="194">194</th><td>        <a class="member" href="#_ZN15AppenderConsole8SetColorEb10ColorTypes" title='AppenderConsole::SetColor' data-ref="_ZN15AppenderConsole8SetColorEb10ColorTypes" >SetColor</a>(<a class="local col1 ref" href="#51stdout_stream" title='stdout_stream' data-ref="51stdout_stream" >stdout_stream</a>, <a class="member" href="AppenderConsole.h.html#AppenderConsole::_colors" title='AppenderConsole::_colors' data-ref="AppenderConsole::_colors" id="AppenderConsole::_colors" >_colors</a>[<a class="local col2 ref" href="#52index" title='index' data-ref="52index" >index</a>]);</td></tr>
+<tr><th id="195">195</th><td>        <a class="ref" href="../Utilities/Util.h.html#_Z10utf8printfP8_IO_FILEPKcz" title='utf8printf' data-ref="_Z10utf8printfP8_IO_FILEPKcz" id="_Z10utf8printfP8_IO_FILEPKcz" >utf8printf</a>(<a class="local col1 ref" href="#51stdout_stream" title='stdout_stream' data-ref="51stdout_stream" >stdout_stream</a> ? <a class="macro" href="../../../../include/stdio.h.html#173" title="stdout" data-ref="_M/stdout">stdout</a> : <a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"%s%s\n"</q>, <a class="local col0 ref" href="#50message" title='message' data-ref="50message" >message</a>-&gt;<a class="ref" href="Appender.h.html#LogMessage::prefix" title='LogMessage::prefix' data-ref="LogMessage::prefix" id="LogMessage::prefix" >prefix</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col0 ref" href="#50message" title='message' data-ref="50message" >message</a>-&gt;<a class="ref" href="Appender.h.html#LogMessage::text" title='LogMessage::text' data-ref="LogMessage::text" id="LogMessage::text" >text</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="196">196</th><td>        <a class="member" href="#_ZN15AppenderConsole10ResetColorEb" title='AppenderConsole::ResetColor' data-ref="_ZN15AppenderConsole10ResetColorEb" >ResetColor</a>(<a class="local col1 ref" href="#51stdout_stream" title='stdout_stream' data-ref="51stdout_stream" >stdout_stream</a>);</td></tr>
+<tr><th id="197">197</th><td>    }</td></tr>
+<tr><th id="198">198</th><td>    <b>else</b></td></tr>
+<tr><th id="199">199</th><td>        <a class="ref" href="../Utilities/Util.h.html#_Z10utf8printfP8_IO_FILEPKcz" title='utf8printf' data-ref="_Z10utf8printfP8_IO_FILEPKcz" id="_Z10utf8printfP8_IO_FILEPKcz" >utf8printf</a>(<a class="local col1 ref" href="#51stdout_stream" title='stdout_stream' data-ref="51stdout_stream" >stdout_stream</a> ? <a class="macro" href="../../../../include/stdio.h.html#173" title="stdout" data-ref="_M/stdout">stdout</a> : <a class="macro" href="../../../../include/stdio.h.html#174" title="stderr" data-ref="_M/stderr">stderr</a>, <q>"%s%s\n"</q>, <a class="local col0 ref" href="#50message" title='message' data-ref="50message" >message</a>-&gt;<a class="ref" href="Appender.h.html#LogMessage::prefix" title='LogMessage::prefix' data-ref="LogMessage::prefix" id="LogMessage::prefix" >prefix</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col0 ref" href="#50message" title='message' data-ref="50message" >message</a>-&gt;<a class="ref" href="Appender.h.html#LogMessage::text" title='LogMessage::text' data-ref="LogMessage::text" id="LogMessage::text" >text</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="200">200</th><td>}</td></tr>
+<tr><th id="201">201</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,52 @@
+<def f='TrinityCore3.3.5/dep/cppformat/format.h' l='2142' type='void fmt::SystemError::SystemError(int error_code, CStringRef message)'/>
+<doc f='TrinityCore3.3.5/dep/cppformat/format.h' l='2117'>/**
+   \rst
+   Constructs a :class:`fmt::SystemError` object with the description
+   of the form
+
+   .. parsed-literal::
+     *&lt;message&gt;*: *&lt;system-message&gt;*
+
+   where *&lt;message&gt;* is the formatted message and *&lt;system-message&gt;* is
+   the system message corresponding to the error code.
+   *error_code* is a system error code as given by ``errno``.
+   If *error_code* is not a valid error code such as -1, the system message
+   may look like &quot;Unknown error -1&quot; and is platform-dependent.
+
+   **Example**::
+
+     // This throws a SystemError with the description
+     //   cannot open file &apos;madeup&apos;: No such file or directory
+     // or similar (system message may vary).
+     const char *filename = &quot;madeup&quot;;
+     std::FILE *file = std::fopen(filename, &quot;r&quot;);
+     if (!file)
+       throw fmt::SystemError(errno, &quot;cannot open file &apos;{}&apos;&quot;, filename);
+   \endrst
+  */</doc>
+<def f='TrinityCore6.x/dep/cppformat/format.h' l='2142' type='void fmt::SystemError::SystemError(int error_code, CStringRef message)'/>
+<doc f='TrinityCore6.x/dep/cppformat/format.h' l='2117'>/**
+   \rst
+   Constructs a :class:`fmt::SystemError` object with the description
+   of the form
+
+   .. parsed-literal::
+     *&lt;message&gt;*: *&lt;system-message&gt;*
+
+   where *&lt;message&gt;* is the formatted message and *&lt;system-message&gt;* is
+   the system message corresponding to the error code.
+   *error_code* is a system error code as given by ``errno``.
+   If *error_code* is not a valid error code such as -1, the system message
+   may look like &quot;Unknown error -1&quot; and is platform-dependent.
+
+   **Example**::
+
+     // This throws a SystemError with the description
+     //   cannot open file &apos;madeup&apos;: No such file or directory
+     // or similar (system message may vary).
+     const char *filename = &quot;madeup&quot;;
+     std::FILE *file = std::fopen(filename, &quot;r&quot;);
+     if (!file)
+       throw fmt::SystemError(errno, &quot;cannot open file &apos;{}&apos;&quot;, filename);
+   \endrst
+  */</doc>

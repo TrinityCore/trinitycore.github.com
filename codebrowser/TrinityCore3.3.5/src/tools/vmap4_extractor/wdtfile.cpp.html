@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<title>wdtfile.cpp [TrinityCore3.3.5/src/tools/vmap4_extractor/wdtfile.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/tools/vmap4_extractor/wdtfile.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>tools</a>/<a href='./'>vmap4_extractor</a>/wdtfile.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="vmapexport.h.html">"vmapexport.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="wdtfile.h.html">"wdtfile.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="adtfile.h.html">"adtfile.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../include/c++/4.9/cstdio.html">&lt;cstdio&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><em>char</em> * <dfn class="decl def" id="_Z15wdtGetPlainNamePc" title='wdtGetPlainName' data-ref="_Z15wdtGetPlainNamePc" >wdtGetPlainName</dfn>(<em>char</em> * <dfn class="local col1 decl" id="1FileName" title='FileName' data-type='char *' data-ref="1FileName" >FileName</dfn>)</td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <em>char</em> * <dfn class="local col2 decl" id="2szTemp" title='szTemp' data-type='char *' data-ref="2szTemp" >szTemp</dfn>;</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>    <b>if</b>((<a class="local col2 ref" href="#2szTemp" title='szTemp' data-ref="2szTemp" >szTemp</a> = <a class="ref" href="../../../../include/string.h.html#strrchr" title='strrchr' data-ref="strrchr" id="strrchr" >strrchr</a>(<a class="local col1 ref" href="#1FileName" title='FileName' data-ref="1FileName" >FileName</a>, <kdb>'\\'</kdb>)) != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="30">30</th><td>        <a class="local col1 ref" href="#1FileName" title='FileName' data-ref="1FileName" >FileName</a> = <a class="local col2 ref" href="#2szTemp" title='szTemp' data-ref="2szTemp" >szTemp</a> + <var>1</var>;</td></tr>
+<tr><th id="31">31</th><td>    <b>return</b> <a class="local col1 ref" href="#1FileName" title='FileName' data-ref="1FileName" >FileName</a>;</td></tr>
+<tr><th id="32">32</th><td>}</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><a class="type" href="wdtfile.h.html#WDTFile" title='WDTFile' data-ref="WDTFile" >WDTFile</a>::<dfn class="decl def" id="_ZN7WDTFileC1EPcS0_" title='WDTFile::WDTFile' data-ref="_ZN7WDTFileC1EPcS0_" >WDTFile</dfn>(<em>char</em>* <dfn class="local col3 decl" id="3file_name" title='file_name' data-type='char *' data-ref="3file_name" >file_name</dfn>, <em>char</em>* <dfn class="local col4 decl" id="4file_name1" title='file_name1' data-type='char *' data-ref="4file_name1" >file_name1</dfn>) : <a class="member" href="wdtfile.h.html#WDTFile::gWmoInstansName" title='WDTFile::gWmoInstansName' data-ref="WDTFile::gWmoInstansName" id="WDTFile::gWmoInstansName" >gWmoInstansName</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>), <a class="member" href="wdtfile.h.html#WDTFile::gnWMO" title='WDTFile::gnWMO' data-ref="WDTFile::gnWMO" id="WDTFile::gnWMO" >gnWMO</a>(<var>0</var>), <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a><a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFileC1EPKc" title='MPQFile::MPQFile' data-ref="_ZN7MPQFileC1EPKc" id="_ZN7MPQFileC1EPKc" >(</a><a class="local col3 ref" href="#3file_name" title='file_name' data-ref="3file_name" >file_name</a>)</td></tr>
+<tr><th id="35">35</th><td>{</td></tr>
+<tr><th id="36">36</th><td>    <a class="member" href="wdtfile.h.html#WDTFile::filename" title='WDTFile::filename' data-ref="WDTFile::filename" id="WDTFile::filename" >filename</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_string6appendEPKT_NT1_6rebindIS0_E5other9size_typeE" title='std::basic_string::append' data-ref="_ZNSt12basic_string6appendEPKT_NT1_6rebindIS0_E5other9size_typeE" id="_ZNSt12basic_string6appendEPKT_NT1_6rebindIS0_E5other9size_typeE" >append</a>(<a class="local col4 ref" href="#4file_name1" title='file_name1' data-ref="4file_name1" >file_name1</a>,<a class="ref" href="../../../../include/string.h.html#strlen" title='strlen' data-ref="strlen" id="strlen" >strlen</a>(<a class="local col4 ref" href="#4file_name1" title='file_name1' data-ref="4file_name1" >file_name1</a>));</td></tr>
+<tr><th id="37">37</th><td>}</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><em>bool</em> <a class="type" href="wdtfile.h.html#WDTFile" title='WDTFile' data-ref="WDTFile" >WDTFile</a>::<dfn class="decl def" id="_ZN7WDTFile4initEPcj" title='WDTFile::init' data-ref="_ZN7WDTFile4initEPcj" >init</dfn>(<em>char</em>* <i>/*map_id*/</i>, <em>unsigned</em> <em>int</em> <dfn class="local col5 decl" id="5mapID" title='mapID' data-type='unsigned int' data-ref="5mapID" >mapID</dfn>)</td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <b>if</b> (<a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile5isEofEv" title='MPQFile::isEof' data-ref="_ZN7MPQFile5isEofEv" id="_ZN7MPQFile5isEofEv" >isEof</a>())</td></tr>
+<tr><th id="42">42</th><td>    {</td></tr>
+<tr><th id="43">43</th><td>        <i>//printf("Can't find WDT file.\n");</i></td></tr>
+<tr><th id="44">44</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="45">45</th><td>    }</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <em>char</em> <dfn class="local col6 decl" id="6fourcc" title='fourcc' data-type='char [5]' data-ref="6fourcc" >fourcc</dfn>[<var>5</var>];</td></tr>
+<tr><th id="48">48</th><td>    <a class="typedef" href="loadlib/loadlib.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="7size" title='size' data-type='uint32' data-ref="7size" >size</dfn>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col8 decl" id="8dirname" title='dirname' data-type='std::string' data-ref="8dirname" >dirname</dfn> = <span class="namespace"><a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1EPKT_RKT1_" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1EPKT_RKT1_" id="_ZNSt12basic_stringC1EPKT_RKT1_" >std</a>::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>(<a class="ref" href="vmapexport.h.html#szWorkDirWmo" title='szWorkDirWmo' data-ref="szWorkDirWmo" id="szWorkDirWmo" >szWorkDirWmo</a>) <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZStplOSbIT_T0_T1_EPKS_" title='std::operator+' data-ref="_ZStplOSbIT_T0_T1_EPKS_" id="_ZStplOSbIT_T0_T1_EPKS_" >+</a> <q>"/dir_bin"</q>;</td></tr>
+<tr><th id="51">51</th><td>    <a class="typedef" href="../../../../include/stdio.h.html#FILE" title='FILE' data-type='struct _IO_FILE' data-ref="FILE" >FILE</a> *<dfn class="local col9 decl" id="9dirfile" title='dirfile' data-type='FILE *' data-ref="9dirfile" >dirfile</dfn>;</td></tr>
+<tr><th id="52">52</th><td>    <a class="local col9 ref" href="#9dirfile" title='dirfile' data-ref="9dirfile" >dirfile</a> = <a class="ref" href="../../../../include/stdio.h.html#fopen" title='fopen' data-ref="fopen" id="fopen" >fopen</a>(<a class="local col8 ref" href="#8dirname" title='dirname' data-ref="8dirname" >dirname</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <q>"ab"</q>);</td></tr>
+<tr><th id="53">53</th><td>    <b>if</b>(!<a class="local col9 ref" href="#9dirfile" title='dirfile' data-ref="9dirfile" >dirfile</a>)</td></tr>
+<tr><th id="54">54</th><td>    {</td></tr>
+<tr><th id="55">55</th><td>        <a class="ref" href="../../../../include/stdio.h.html#printf" title='printf' data-ref="printf" id="printf" >printf</a>(<q>"Can't open dirfile!'%s'\n"</q>, <a class="local col8 ref" href="#8dirname" title='dirname' data-ref="8dirname" >dirname</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>());</td></tr>
+<tr><th id="56">56</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="57">57</th><td>    }</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <b>while</b> (!<a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile5isEofEv" title='MPQFile::isEof' data-ref="_ZN7MPQFile5isEofEv" id="_ZN7MPQFile5isEofEv" >isEof</a>())</td></tr>
+<tr><th id="60">60</th><td>    {</td></tr>
+<tr><th id="61">61</th><td>        <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(<a class="local col6 ref" href="#6fourcc" title='fourcc' data-ref="6fourcc" >fourcc</a>,<var>4</var>);</td></tr>
+<tr><th id="62">62</th><td>        <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(&amp;<a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>, <var>4</var>);</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>        <a class="ref" href="mpq_libmpq04.h.html#_Z6flipccPc" title='flipcc' data-ref="_Z6flipccPc" id="_Z6flipccPc" >flipcc</a>(<a class="local col6 ref" href="#6fourcc" title='fourcc' data-ref="6fourcc" >fourcc</a>);</td></tr>
+<tr><th id="65">65</th><td>        <a class="local col6 ref" href="#6fourcc" title='fourcc' data-ref="6fourcc" >fourcc</a>[<var>4</var>] = <var>0</var>;</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>        <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="10nextpos" title='nextpos' data-type='size_t' data-ref="10nextpos" >nextpos</dfn> = <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile6getPosEv" title='MPQFile::getPos' data-ref="_ZN7MPQFile6getPosEv" id="_ZN7MPQFile6getPosEv" >getPos</a>() + <a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>;</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>        <b>if</b> (!<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col6 ref" href="#6fourcc" title='fourcc' data-ref="6fourcc" >fourcc</a>,<q>"MAIN"</q>))</td></tr>
+<tr><th id="70">70</th><td>        {</td></tr>
+<tr><th id="71">71</th><td>        }</td></tr>
+<tr><th id="72">72</th><td>        <b>if</b> (!<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col6 ref" href="#6fourcc" title='fourcc' data-ref="6fourcc" >fourcc</a>,<q>"MWMO"</q>))</td></tr>
+<tr><th id="73">73</th><td>        {</td></tr>
+<tr><th id="74">74</th><td>            <i>// global map objects</i></td></tr>
+<tr><th id="75">75</th><td>            <b>if</b> (<a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>)</td></tr>
+<tr><th id="76">76</th><td>            {</td></tr>
+<tr><th id="77">77</th><td>                <em>char</em> *<dfn class="local col1 decl" id="11buf" title='buf' data-type='char *' data-ref="11buf" >buf</dfn> = <b>new</b> <em>char</em>[<a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>];</td></tr>
+<tr><th id="78">78</th><td>                <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(<a class="local col1 ref" href="#11buf" title='buf' data-ref="11buf" >buf</a>, <a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>);</td></tr>
+<tr><th id="79">79</th><td>                <em>char</em> *<dfn class="local col2 decl" id="12p" title='p' data-type='char *' data-ref="12p" >p</dfn>=<a class="local col1 ref" href="#11buf" title='buf' data-ref="11buf" >buf</a>;</td></tr>
+<tr><th id="80">80</th><td>                <em>int</em> <dfn class="local col3 decl" id="13q" title='q' data-type='int' data-ref="13q" >q</dfn> = <var>0</var>;</td></tr>
+<tr><th id="81">81</th><td>                <a class="member" href="wdtfile.h.html#WDTFile::gWmoInstansName" title='WDTFile::gWmoInstansName' data-ref="WDTFile::gWmoInstansName" id="WDTFile::gWmoInstansName" >gWmoInstansName</a> = <b>new</b> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>[<a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>];</td></tr>
+<tr><th id="82">82</th><td>                <b>while</b> (<a class="local col2 ref" href="#12p" title='p' data-ref="12p" >p</a> &lt; <a class="local col1 ref" href="#11buf" title='buf' data-ref="11buf" >buf</a> + <a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>)</td></tr>
+<tr><th id="83">83</th><td>                {</td></tr>
+<tr><th id="84">84</th><td>                    <em>char</em>* <dfn class="local col4 decl" id="14s" title='s' data-type='char *' data-ref="14s" >s</dfn>=<a class="ref" href="#_Z15wdtGetPlainNamePc" title='wdtGetPlainName' data-ref="_Z15wdtGetPlainNamePc" >wdtGetPlainName</a>(<a class="local col2 ref" href="#12p" title='p' data-ref="12p" >p</a>);</td></tr>
+<tr><th id="85">85</th><td>                    <a class="ref" href="adtfile.h.html#_Z8fixnamenPcm" title='fixnamen' data-ref="_Z8fixnamenPcm" id="_Z8fixnamenPcm" >fixnamen</a>(<a class="local col4 ref" href="#14s" title='s' data-ref="14s" >s</a>,<a class="ref" href="../../../../include/string.h.html#strlen" title='strlen' data-ref="strlen" id="strlen" >strlen</a>(<a class="local col4 ref" href="#14s" title='s' data-ref="14s" >s</a>));</td></tr>
+<tr><th id="86">86</th><td>                    <a class="local col2 ref" href="#12p" title='p' data-ref="12p" >p</a>=<a class="local col2 ref" href="#12p" title='p' data-ref="12p" >p</a>+<a class="ref" href="../../../../include/string.h.html#strlen" title='strlen' data-ref="strlen" id="strlen" >strlen</a>(<a class="local col2 ref" href="#12p" title='p' data-ref="12p" >p</a>)+<var>1</var>;</td></tr>
+<tr><th id="87">87</th><td>                    <a class="member" href="wdtfile.h.html#WDTFile::gWmoInstansName" title='WDTFile::gWmoInstansName' data-ref="WDTFile::gWmoInstansName" id="WDTFile::gWmoInstansName" >gWmoInstansName</a>[<a class="local col3 ref" href="#13q" title='q' data-ref="13q" >q</a>++] <a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringaSEPKT_" title='std::basic_string::operator=' data-ref="_ZNSt12basic_stringaSEPKT_" id="_ZNSt12basic_stringaSEPKT_" >=</a> <a class="local col4 ref" href="#14s" title='s' data-ref="14s" >s</a>;</td></tr>
+<tr><th id="88">88</th><td>                }</td></tr>
+<tr><th id="89">89</th><td>                <b>delete</b>[] <a class="local col1 ref" href="#11buf" title='buf' data-ref="11buf" >buf</a>;</td></tr>
+<tr><th id="90">90</th><td>            }</td></tr>
+<tr><th id="91">91</th><td>        }</td></tr>
+<tr><th id="92">92</th><td>        <b>else</b> <b>if</b> (!<a class="ref" href="../../../../include/string.h.html#strcmp" title='strcmp' data-ref="strcmp" id="strcmp" >strcmp</a>(<a class="local col6 ref" href="#6fourcc" title='fourcc' data-ref="6fourcc" >fourcc</a>, <q>"MODF"</q>))</td></tr>
+<tr><th id="93">93</th><td>        {</td></tr>
+<tr><th id="94">94</th><td>            <i>// global wmo instance data</i></td></tr>
+<tr><th id="95">95</th><td>            <b>if</b> (<a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a>)</td></tr>
+<tr><th id="96">96</th><td>            {</td></tr>
+<tr><th id="97">97</th><td>                <a class="member" href="wdtfile.h.html#WDTFile::gnWMO" title='WDTFile::gnWMO' data-ref="WDTFile::gnWMO" id="WDTFile::gnWMO" >gnWMO</a> = (<em>int</em>)<a class="local col7 ref" href="#7size" title='size' data-ref="7size" >size</a> / <var>64</var>;</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>                <b>for</b> (<em>int</em> <dfn class="local col5 decl" id="15i" title='i' data-type='int' data-ref="15i" >i</dfn> = <var>0</var>; <a class="local col5 ref" href="#15i" title='i' data-ref="15i" >i</a> &lt; <a class="member" href="wdtfile.h.html#WDTFile::gnWMO" title='WDTFile::gnWMO' data-ref="WDTFile::gnWMO" id="WDTFile::gnWMO" >gnWMO</a>; ++<a class="local col5 ref" href="#15i" title='i' data-ref="15i" >i</a>)</td></tr>
+<tr><th id="100">100</th><td>                {</td></tr>
+<tr><th id="101">101</th><td>                    <em>int</em> <dfn class="local col6 decl" id="16id" title='id' data-type='int' data-ref="16id" >id</dfn>;</td></tr>
+<tr><th id="102">102</th><td>                    <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4readEPvm" title='MPQFile::read' data-ref="_ZN7MPQFile4readEPvm" id="_ZN7MPQFile4readEPvm" >read</a>(&amp;<a class="local col6 ref" href="#16id" title='id' data-ref="16id" >id</a>, <var>4</var>);</td></tr>
+<tr><th id="103">103</th><td>                    <a class="type" href="wmo.h.html#WMOInstance" title='WMOInstance' data-ref="WMOInstance" >WMOInstance</a> <dfn class="local col7 decl" id="17inst" title='inst' data-type='WMOInstance' data-ref="17inst" >inst</dfn><a class="ref" href="wmo.h.html#_ZN11WMOInstanceC1ER7MPQFilePKcjjjP8_IO_FILE" title='WMOInstance::WMOInstance' data-ref="_ZN11WMOInstanceC1ER7MPQFilePKcjjjP8_IO_FILE" id="_ZN11WMOInstanceC1ER7MPQFilePKcjjjP8_IO_FILE" >(</a><a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>,<a class="member" href="wdtfile.h.html#WDTFile::gWmoInstansName" title='WDTFile::gWmoInstansName' data-ref="WDTFile::gWmoInstansName" id="WDTFile::gWmoInstansName" >gWmoInstansName</a>[<a class="local col6 ref" href="#16id" title='id' data-ref="16id" >id</a>].<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col5 ref" href="#5mapID" title='mapID' data-ref="5mapID" >mapID</a>, <var>65</var>, <var>65</var>, <a class="local col9 ref" href="#9dirfile" title='dirfile' data-ref="9dirfile" >dirfile</a>);</td></tr>
+<tr><th id="104">104</th><td>                }</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>                <b>delete</b>[] <a class="member" href="wdtfile.h.html#WDTFile::gWmoInstansName" title='WDTFile::gWmoInstansName' data-ref="WDTFile::gWmoInstansName" >gWmoInstansName</a>;</td></tr>
+<tr><th id="107">107</th><td>                <a class="member" href="wdtfile.h.html#WDTFile::gWmoInstansName" title='WDTFile::gWmoInstansName' data-ref="WDTFile::gWmoInstansName" id="WDTFile::gWmoInstansName" >gWmoInstansName</a> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="108">108</th><td>            }</td></tr>
+<tr><th id="109">109</th><td>        }</td></tr>
+<tr><th id="110">110</th><td>        <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile4seekEi" title='MPQFile::seek' data-ref="_ZN7MPQFile4seekEi" id="_ZN7MPQFile4seekEi" >seek</a>((<em>int</em>)<a class="local col0 ref" href="#10nextpos" title='nextpos' data-ref="10nextpos" >nextpos</a>);</td></tr>
+<tr><th id="111">111</th><td>    }</td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td>    <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile5closeEv" title='MPQFile::close' data-ref="_ZN7MPQFile5closeEv" id="_ZN7MPQFile5closeEv" >close</a>();</td></tr>
+<tr><th id="114">114</th><td>    <a class="ref" href="../../../../include/stdio.h.html#fclose" title='fclose' data-ref="fclose" id="fclose" >fclose</a>(<a class="local col9 ref" href="#9dirfile" title='dirfile' data-ref="9dirfile" >dirfile</a>);</td></tr>
+<tr><th id="115">115</th><td>    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="116">116</th><td>}</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><a class="type" href="wdtfile.h.html#WDTFile" title='WDTFile' data-ref="WDTFile" >WDTFile</a>::<dfn class="decl def" id="_ZN7WDTFileD1Ev" title='WDTFile::~WDTFile' data-ref="_ZN7WDTFileD1Ev" >~WDTFile</dfn>(<em>void</em>)</td></tr>
+<tr><th id="119">119</th><td>{</td></tr>
+<tr><th id="120">120</th><td>    <a class="member" href="wdtfile.h.html#WDTFile::WDT" title='WDTFile::WDT' data-ref="WDTFile::WDT" id="WDTFile::WDT" >WDT</a>.<a class="ref" href="mpq_libmpq04.h.html#_ZN7MPQFile5closeEv" title='MPQFile::close' data-ref="_ZN7MPQFile5closeEv" id="_ZN7MPQFile5closeEv" >close</a>();</td></tr>
+<tr><th id="121">121</th><td>}</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><a class="type" href="adtfile.h.html#ADTFile" title='ADTFile' data-ref="ADTFile" >ADTFile</a>* <a class="type" href="wdtfile.h.html#WDTFile" title='WDTFile' data-ref="WDTFile" >WDTFile</a>::<dfn class="decl def" id="_ZN7WDTFile6GetMapEii" title='WDTFile::GetMap' data-ref="_ZN7WDTFile6GetMapEii" >GetMap</dfn>(<em>int</em> <dfn class="local col8 decl" id="18x" title='x' data-type='int' data-ref="18x" >x</dfn>, <em>int</em> <dfn class="local col9 decl" id="19z" title='z' data-type='int' data-ref="19z" >z</dfn>)</td></tr>
+<tr><th id="124">124</th><td>{</td></tr>
+<tr><th id="125">125</th><td>    <b>if</b>(!(<a class="local col8 ref" href="#18x" title='x' data-ref="18x" >x</a>&gt;=<var>0</var> &amp;&amp; <a class="local col9 ref" href="#19z" title='z' data-ref="19z" >z</a> &gt;= <var>0</var> &amp;&amp; <a class="local col8 ref" href="#18x" title='x' data-ref="18x" >x</a>&lt;<var>64</var> &amp;&amp; <a class="local col9 ref" href="#19z" title='z' data-ref="19z" >z</a>&lt;<var>64</var>))</td></tr>
+<tr><th id="126">126</th><td>        <b>return</b> <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>    <em>char</em> <dfn class="local col0 decl" id="20name" title='name' data-type='char [512]' data-ref="20name" >name</dfn>[<var>512</var>];</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>    <a class="ref" href="../../../../include/stdio.h.html#sprintf" title='sprintf' data-ref="sprintf" id="sprintf" >sprintf</a>(<a class="local col0 ref" href="#20name" title='name' data-ref="20name" >name</a>,<q>"World\\Maps\\%s\\%s_%d_%d.adt"</q>, <a class="member" href="wdtfile.h.html#WDTFile::filename" title='WDTFile::filename' data-ref="WDTFile::filename" id="WDTFile::filename" >filename</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="member" href="wdtfile.h.html#WDTFile::filename" title='WDTFile::filename' data-ref="WDTFile::filename" id="WDTFile::filename" >filename</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col8 ref" href="#18x" title='x' data-ref="18x" >x</a>, <a class="local col9 ref" href="#19z" title='z' data-ref="19z" >z</a>);</td></tr>
+<tr><th id="131">131</th><td>    <b>return</b> <b>new</b> <a class="type" href="adtfile.h.html#ADTFile" title='ADTFile' data-ref="ADTFile" >ADTFile</a><a class="ref" href="adtfile.h.html#_ZN7ADTFileC1EPc" title='ADTFile::ADTFile' data-ref="_ZN7ADTFileC1EPc" id="_ZN7ADTFileC1EPc" >(</a><a class="local col0 ref" href="#20name" title='name' data-ref="20name" >name</a>);</td></tr>
+<tr><th id="132">132</th><td>}</td></tr>
+<tr><th id="133">133</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

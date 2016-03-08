@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<title>BinaryFormat.cpp [TrinityCore6.x/dep/g3dlite/source/BinaryFormat.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/source/BinaryFormat.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>g3dlite</a>/<a href='./'>source</a>/BinaryFormat.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"><span class="command"> @file</span> BinaryFormat.cpp</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> <span class="command"> @maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> <span class="command"> @created</span> 2005-06-10</i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> <span class="command"> @edited</span>  2005-06-10</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#include <a href="../include/G3D/BinaryFormat.h.html">"G3D/BinaryFormat.h"</a></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><a class="typedef" href="../include/G3D/g3dmath.h.html#G3D::int32" title='G3D::int32' data-type='int32_t' data-ref="G3D::int32" >int32</a> <dfn class="decl def" id="_ZN3G3D8byteSizeENS_12BinaryFormatE" title='G3D::byteSize' data-ref="_ZN3G3D8byteSizeENS_12BinaryFormatE" >byteSize</dfn>(<a class="type" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat" title='G3D::BinaryFormat' data-ref="G3D::BinaryFormat" >BinaryFormat</a> <dfn class="local col1 decl" id="1f" title='f' data-type='G3D::BinaryFormat' data-ref="1f" >f</dfn>) {</td></tr>
+<tr><th id="14">14</th><td>    <b>switch</b> (<a class="local col1 ref" href="#1f" title='f' data-ref="1f" >f</a>) {</td></tr>
+<tr><th id="15">15</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::BOOL8_BINFMT" title='G3D::BinaryFormat::BOOL8_BINFMT' data-ref="G3D::BinaryFormat::BOOL8_BINFMT" >BOOL8_BINFMT</a>:</td></tr>
+<tr><th id="16">16</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::UINT8_BINFMT" title='G3D::BinaryFormat::UINT8_BINFMT' data-ref="G3D::BinaryFormat::UINT8_BINFMT" >UINT8_BINFMT</a>:</td></tr>
+<tr><th id="17">17</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::INT8_BINFMT" title='G3D::BinaryFormat::INT8_BINFMT' data-ref="G3D::BinaryFormat::INT8_BINFMT" >INT8_BINFMT</a>:</td></tr>
+<tr><th id="18">18</th><td>        <b>return</b> <var>1</var>;</td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::UINT16_BINFMT" title='G3D::BinaryFormat::UINT16_BINFMT' data-ref="G3D::BinaryFormat::UINT16_BINFMT" >UINT16_BINFMT</a>:</td></tr>
+<tr><th id="21">21</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::INT16_BINFMT" title='G3D::BinaryFormat::INT16_BINFMT' data-ref="G3D::BinaryFormat::INT16_BINFMT" >INT16_BINFMT</a>:</td></tr>
+<tr><th id="22">22</th><td>        <b>return</b> <var>2</var>;</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::FLOAT16_BINFMT" title='G3D::BinaryFormat::FLOAT16_BINFMT' data-ref="G3D::BinaryFormat::FLOAT16_BINFMT" >FLOAT16_BINFMT</a>:</td></tr>
+<tr><th id="25">25</th><td>        <b>return</b> <var>2</var>;</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::UINT32_BINFMT" title='G3D::BinaryFormat::UINT32_BINFMT' data-ref="G3D::BinaryFormat::UINT32_BINFMT" >UINT32_BINFMT</a>:</td></tr>
+<tr><th id="28">28</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::INT32_BINFMT" title='G3D::BinaryFormat::INT32_BINFMT' data-ref="G3D::BinaryFormat::INT32_BINFMT" >INT32_BINFMT</a>:</td></tr>
+<tr><th id="29">29</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::FLOAT32_BINFMT" title='G3D::BinaryFormat::FLOAT32_BINFMT' data-ref="G3D::BinaryFormat::FLOAT32_BINFMT" >FLOAT32_BINFMT</a>:</td></tr>
+<tr><th id="30">30</th><td>        <b>return</b> <var>4</var>;</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::FLOAT64_BINFMT" title='G3D::BinaryFormat::FLOAT64_BINFMT' data-ref="G3D::BinaryFormat::FLOAT64_BINFMT" >FLOAT64_BINFMT</a>:</td></tr>
+<tr><th id="33">33</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::UINT64_BINFMT" title='G3D::BinaryFormat::UINT64_BINFMT' data-ref="G3D::BinaryFormat::UINT64_BINFMT" >UINT64_BINFMT</a>:</td></tr>
+<tr><th id="34">34</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::INT64_BINFMT" title='G3D::BinaryFormat::INT64_BINFMT' data-ref="G3D::BinaryFormat::INT64_BINFMT" >INT64_BINFMT</a>:</td></tr>
+<tr><th id="35">35</th><td>        <b>return</b> <var>8</var>;</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::INT128_BINFMT" title='G3D::BinaryFormat::INT128_BINFMT' data-ref="G3D::BinaryFormat::INT128_BINFMT" >INT128_BINFMT</a>:</td></tr>
+<tr><th id="38">38</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::UINT128_BINFMT" title='G3D::BinaryFormat::UINT128_BINFMT' data-ref="G3D::BinaryFormat::UINT128_BINFMT" >UINT128_BINFMT</a>:</td></tr>
+<tr><th id="39">39</th><td>        <b>return</b> <var>16</var>;</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::VECTOR2_BINFMT" title='G3D::BinaryFormat::VECTOR2_BINFMT' data-ref="G3D::BinaryFormat::VECTOR2_BINFMT" >VECTOR2_BINFMT</a>:</td></tr>
+<tr><th id="42">42</th><td>        <b>return</b> <var>2</var> * <var>4</var>;</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::VECTOR2INT16_BINFMT" title='G3D::BinaryFormat::VECTOR2INT16_BINFMT' data-ref="G3D::BinaryFormat::VECTOR2INT16_BINFMT" >VECTOR2INT16_BINFMT</a>:</td></tr>
+<tr><th id="45">45</th><td>        <b>return</b> <var>2</var> * <var>2</var>;</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::VECTOR3_BINFMT" title='G3D::BinaryFormat::VECTOR3_BINFMT' data-ref="G3D::BinaryFormat::VECTOR3_BINFMT" >VECTOR3_BINFMT</a>:</td></tr>
+<tr><th id="48">48</th><td>        <b>return</b> <var>3</var> * <var>4</var>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::VECTOR3INT16_BINFMT" title='G3D::BinaryFormat::VECTOR3INT16_BINFMT' data-ref="G3D::BinaryFormat::VECTOR3INT16_BINFMT" >VECTOR3INT16_BINFMT</a>:</td></tr>
+<tr><th id="51">51</th><td>        <b>return</b> <var>3</var> * <var>2</var>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::VECTOR4_BINFMT" title='G3D::BinaryFormat::VECTOR4_BINFMT' data-ref="G3D::BinaryFormat::VECTOR4_BINFMT" >VECTOR4_BINFMT</a>:</td></tr>
+<tr><th id="54">54</th><td>        <b>return</b> <var>4</var> * <var>4</var>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::VECTOR4INT16_BINFMT" title='G3D::BinaryFormat::VECTOR4INT16_BINFMT' data-ref="G3D::BinaryFormat::VECTOR4INT16_BINFMT" >VECTOR4INT16_BINFMT</a>:</td></tr>
+<tr><th id="57">57</th><td>        <b>return</b> <var>4</var> * <var>4</var>;</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::COLOR3_BINFMT" title='G3D::BinaryFormat::COLOR3_BINFMT' data-ref="G3D::BinaryFormat::COLOR3_BINFMT" >COLOR3_BINFMT</a>:</td></tr>
+<tr><th id="60">60</th><td>        <b>return</b> <var>3</var> * <var>4</var>;</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::COLOR3UINT8_BINFMT" title='G3D::BinaryFormat::COLOR3UINT8_BINFMT' data-ref="G3D::BinaryFormat::COLOR3UINT8_BINFMT" >COLOR3UINT8_BINFMT</a>:</td></tr>
+<tr><th id="63">63</th><td>        <b>return</b> <var>3</var> * <var>1</var>;</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::COLOR3INT16_BINFMT" title='G3D::BinaryFormat::COLOR3INT16_BINFMT' data-ref="G3D::BinaryFormat::COLOR3INT16_BINFMT" >COLOR3INT16_BINFMT</a>:</td></tr>
+<tr><th id="66">66</th><td>        <b>return</b> <var>3</var> * <var>2</var>;</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::COLOR4_BINFMT" title='G3D::BinaryFormat::COLOR4_BINFMT' data-ref="G3D::BinaryFormat::COLOR4_BINFMT" >COLOR4_BINFMT</a>:</td></tr>
+<tr><th id="69">69</th><td>        <b>return</b> <var>4</var> * <var>4</var>;</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::COLOR4UINT8_BINFMT" title='G3D::BinaryFormat::COLOR4UINT8_BINFMT' data-ref="G3D::BinaryFormat::COLOR4UINT8_BINFMT" >COLOR4UINT8_BINFMT</a>:</td></tr>
+<tr><th id="72">72</th><td>        <b>return</b> <var>4</var> * <var>1</var>;</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>    <b>case</b> <a class="enum" href="../include/G3D/BinaryFormat.h.html#G3D::BinaryFormat::COLOR4INT16_BINFMT" title='G3D::BinaryFormat::COLOR4INT16_BINFMT' data-ref="G3D::BinaryFormat::COLOR4INT16_BINFMT" >COLOR4INT16_BINFMT</a>:</td></tr>
+<tr><th id="75">75</th><td>        <b>return</b> <var>4</var> * <var>2</var>;</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <b>default</b>:</td></tr>
+<tr><th id="78">78</th><td>        <b>return</b> -<var>1</var>;</td></tr>
+<tr><th id="79">79</th><td>    }</td></tr>
+<tr><th id="80">80</th><td>}</td></tr>
+<tr><th id="81">81</th><td>}</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

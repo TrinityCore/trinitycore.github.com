@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<title>explode.h [TrinityCore3.3.5/dep/libmpq/libmpq/explode.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/libmpq/libmpq/explode.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>dep</a>/<a href='..'>libmpq</a>/<a href='./'>libmpq</a>/explode.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> *  explode.h -- header file for pkware data decompression library</i></td></tr>
+<tr><th id="3">3</th><td><i> *               used by mpq-tools.</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> *  Copyright (c) 2003-2011 Maik Broemme &lt;mbroemme@libmpq.org&gt;</i></td></tr>
+<tr><th id="6">6</th><td><i> *</i></td></tr>
+<tr><th id="7">7</th><td><i> *  This source was adepted from the C++ version of pklib.h included</i></td></tr>
+<tr><th id="8">8</th><td><i> *  in stormlib. The C++ version belongs to the following authors:</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> *  Ladislav Zezula &lt;ladik@zezula.net&gt;</i></td></tr>
+<tr><th id="11">11</th><td><i> *</i></td></tr>
+<tr><th id="12">12</th><td><i> *  This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="13">13</th><td><i> *  it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="14">14</th><td><i> *  the Free Software Foundation; either version 2 of the License, or</i></td></tr>
+<tr><th id="15">15</th><td><i> *  (at your option) any later version.</i></td></tr>
+<tr><th id="16">16</th><td><i> *</i></td></tr>
+<tr><th id="17">17</th><td><i> *  This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="18">18</th><td><i> *  but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="19">19</th><td><i> *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="20">20</th><td><i> *  GNU General Public License for more details.</i></td></tr>
+<tr><th id="21">21</th><td><i> *</i></td></tr>
+<tr><th id="22">22</th><td><i> *  You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="23">23</th><td><i> *  along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="24">24</th><td><i> *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.</i></td></tr>
+<tr><th id="25">25</th><td><i> */</i></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="27">ifndef</span> <span class="macro" data-ref="_M/_EXPLODE_H">_EXPLODE_H</span></u></td></tr>
+<tr><th id="28">28</th><td><u>#define <dfn class="macro" id="_M/_EXPLODE_H" data-ref="_M/_EXPLODE_H">_EXPLODE_H</dfn></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i>/* define compression constants and return values. */</i></td></tr>
+<tr><th id="31">31</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_PKZIP_CMP_BINARY" data-ref="_M/LIBMPQ_PKZIP_CMP_BINARY">LIBMPQ_PKZIP_CMP_BINARY</dfn>			0		/* binary compression. */</u></td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_PKZIP_CMP_ASCII" data-ref="_M/LIBMPQ_PKZIP_CMP_ASCII">LIBMPQ_PKZIP_CMP_ASCII</dfn>			1		/* ascii compression. */</u></td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_PKZIP_CMP_NO_ERROR" data-ref="_M/LIBMPQ_PKZIP_CMP_NO_ERROR">LIBMPQ_PKZIP_CMP_NO_ERROR</dfn>		0</u></td></tr>
+<tr><th id="34">34</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_PKZIP_CMP_INV_DICTSIZE" data-ref="_M/LIBMPQ_PKZIP_CMP_INV_DICTSIZE">LIBMPQ_PKZIP_CMP_INV_DICTSIZE</dfn>		1</u></td></tr>
+<tr><th id="35">35</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_PKZIP_CMP_INV_MODE" data-ref="_M/LIBMPQ_PKZIP_CMP_INV_MODE">LIBMPQ_PKZIP_CMP_INV_MODE</dfn>		2</u></td></tr>
+<tr><th id="36">36</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_PKZIP_CMP_BAD_DATA" data-ref="_M/LIBMPQ_PKZIP_CMP_BAD_DATA">LIBMPQ_PKZIP_CMP_BAD_DATA</dfn>		3</u></td></tr>
+<tr><th id="37">37</th><td><u>#define <dfn class="macro" id="_M/LIBMPQ_PKZIP_CMP_ABORT" data-ref="_M/LIBMPQ_PKZIP_CMP_ABORT">LIBMPQ_PKZIP_CMP_ABORT</dfn>			4</u></td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><u>#include <a href="pack_begin.h.html">"pack_begin.h"</a></u></td></tr>
+<tr><th id="40">40</th><td><i>/* compression structure. */</i></td></tr>
+<tr><th id="41">41</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="42">42</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::offs0000" title='(anonymous struct)::offs0000' data-ref="(anonymous)::offs0000" >offs0000</dfn>;		<i>/* 0000 - start. */</i></td></tr>
+<tr><th id="43">43</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::cmp_type" title='(anonymous struct)::cmp_type' data-ref="(anonymous)::cmp_type" >cmp_type</dfn>;		<i>/* 0004 - compression type (binary or ascii). */</i></td></tr>
+<tr><th id="44">44</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::out_pos" title='(anonymous struct)::out_pos' data-ref="(anonymous)::out_pos" >out_pos</dfn>;		<i>/* 0008 - position in output buffer. */</i></td></tr>
+<tr><th id="45">45</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::dsize_bits" title='(anonymous struct)::dsize_bits' data-ref="(anonymous)::dsize_bits" >dsize_bits</dfn>;		<i>/* 000C - dict size (4, 5, 6 for 0x400, 0x800, 0x1000). */</i></td></tr>
+<tr><th id="46">46</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::dsize_mask" title='(anonymous struct)::dsize_mask' data-ref="(anonymous)::dsize_mask" >dsize_mask</dfn>;		<i>/* 0010 - dict size bitmask (0x0F, 0x1F, 0x3F for 0x400, 0x800, 0x1000). */</i></td></tr>
+<tr><th id="47">47</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::bit_buf" title='(anonymous struct)::bit_buf' data-ref="(anonymous)::bit_buf" >bit_buf</dfn>;		<i>/* 0014 - 16-bit buffer for processing input data. */</i></td></tr>
+<tr><th id="48">48</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::extra_bits" title='(anonymous struct)::extra_bits' data-ref="(anonymous)::extra_bits" >extra_bits</dfn>;		<i>/* 0018 - number of extra (above 8) bits in bit buffer. */</i></td></tr>
+<tr><th id="49">49</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::in_pos" title='(anonymous struct)::in_pos' data-ref="(anonymous)::in_pos" >in_pos</dfn>;			<i>/* 001C - position in in_buf. */</i></td></tr>
+<tr><th id="50">50</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::in_bytes" title='(anonymous struct)::in_bytes' data-ref="(anonymous)::in_bytes" >in_bytes</dfn>;		<i>/* 0020 - number of bytes in input buffer. */</i></td></tr>
+<tr><th id="51">51</th><td>	<em>void</em>		*<dfn class="decl" id="(anonymous)::param" title='(anonymous struct)::param' data-ref="(anonymous)::param" >param</dfn>;			<i>/* 0024 - custom parameter. */</i></td></tr>
+<tr><th id="52">52</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	(*<dfn class="decl" id="(anonymous)::read_buf" title='(anonymous struct)::read_buf' data-ref="(anonymous)::read_buf" >read_buf</dfn>)(<em>char</em> *<dfn class="local col1 decl" id="1buf" title='buf' data-type='char *' data-ref="1buf" >buf</dfn>, <a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> *<dfn class="local col2 decl" id="2size" title='size' data-type='uint32_t *' data-ref="2size" >size</dfn>, <em>void</em> *<dfn class="local col3 decl" id="3param" title='param' data-type='void *' data-ref="3param" >param</dfn>);	<i>/* 0028 offset.*/</i></td></tr>
+<tr><th id="53">53</th><td>	<em>void</em>		(*<dfn class="decl" id="(anonymous)::write_buf" title='(anonymous struct)::write_buf' data-ref="(anonymous)::write_buf" >write_buf</dfn>)(<em>char</em> *<dfn class="local col4 decl" id="4buf" title='buf' data-type='char *' data-ref="4buf" >buf</dfn>, <a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> *<dfn class="local col5 decl" id="5size" title='size' data-type='uint32_t *' data-ref="5size" >size</dfn>, <em>void</em> *<dfn class="local col6 decl" id="6param" title='param' data-type='void *' data-ref="6param" >param</dfn>);	<i>/* 002C offset. */</i></td></tr>
+<tr><th id="54">54</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::out_buf" title='(anonymous struct)::out_buf' data-ref="(anonymous)::out_buf" >out_buf</dfn>[<var>0x2000</var>];	<i>/* 0030 - output circle buffer, starting position is 0x1000. */</i></td></tr>
+<tr><th id="55">55</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::offs_2030" title='(anonymous struct)::offs_2030' data-ref="(anonymous)::offs_2030" >offs_2030</dfn>[<var>0x204</var>];	<i>/* 2030 - whats that? */</i></td></tr>
+<tr><th id="56">56</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::in_buf" title='(anonymous struct)::in_buf' data-ref="(anonymous)::in_buf" >in_buf</dfn>[<var>0x800</var>];		<i>/* 2234 - buffer for data to be decompressed. */</i></td></tr>
+<tr><th id="57">57</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::pos1" title='(anonymous struct)::pos1' data-ref="(anonymous)::pos1" >pos1</dfn>[<var>0x100</var>];		<i>/* 2A34 - positions in buffers. */</i></td></tr>
+<tr><th id="58">58</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::pos2" title='(anonymous struct)::pos2' data-ref="(anonymous)::pos2" >pos2</dfn>[<var>0x100</var>];		<i>/* 2B34 - positions in buffers. */</i></td></tr>
+<tr><th id="59">59</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::offs_2c34" title='(anonymous struct)::offs_2c34' data-ref="(anonymous)::offs_2c34" >offs_2c34</dfn>[<var>0x100</var>];	<i>/* 2C34 - buffer. */</i></td></tr>
+<tr><th id="60">60</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::offs_2d34" title='(anonymous struct)::offs_2d34' data-ref="(anonymous)::offs_2d34" >offs_2d34</dfn>[<var>0x100</var>];	<i>/* 2D34 - buffer. */</i></td></tr>
+<tr><th id="61">61</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::offs_2e34" title='(anonymous struct)::offs_2e34' data-ref="(anonymous)::offs_2e34" >offs_2e34</dfn>[<var>0x80</var>];	<i>/* 2EB4 - buffer. */</i></td></tr>
+<tr><th id="62">62</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::offs_2eb4" title='(anonymous struct)::offs_2eb4' data-ref="(anonymous)::offs_2eb4" >offs_2eb4</dfn>[<var>0x100</var>];	<i>/* 2EB4 - buffer. */</i></td></tr>
+<tr><th id="63">63</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::bits_asc" title='(anonymous struct)::bits_asc' data-ref="(anonymous)::bits_asc" >bits_asc</dfn>[<var>0x100</var>];	<i>/* 2FB4 - buffer. */</i></td></tr>
+<tr><th id="64">64</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::dist_bits" title='(anonymous struct)::dist_bits' data-ref="(anonymous)::dist_bits" >dist_bits</dfn>[<var>0x40</var>];	<i>/* 30B4 - numbers of bytes to skip copied block length. */</i></td></tr>
+<tr><th id="65">65</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::slen_bits" title='(anonymous struct)::slen_bits' data-ref="(anonymous)::slen_bits" >slen_bits</dfn>[<var>0x10</var>];	<i>/* 30F4 - numbers of bits for skip copied block length. */</i></td></tr>
+<tr><th id="66">66</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		<dfn class="decl" id="(anonymous)::clen_bits" title='(anonymous struct)::clen_bits' data-ref="(anonymous)::clen_bits" >clen_bits</dfn>[<var>0x10</var>];	<i>/* 3104 - number of valid bits for copied block. */</i></td></tr>
+<tr><th id="67">67</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint16_t" title='uint16_t' data-type='unsigned short' data-ref="uint16_t" >uint16_t</a>	<dfn class="decl" id="(anonymous)::len_base" title='(anonymous struct)::len_base' data-ref="(anonymous)::len_base" >len_base</dfn>[<var>0x10</var>];		<i>/* 3114 - buffer. */</i></td></tr>
+<tr><th id="68">68</th><td>} <a class="macro" href="pack_begin.h.html#32" title="__attribute__((packed))" data-ref="_M/PACK_STRUCT">PACK_STRUCT</a> <dfn class="typedef" id="pkzip_cmp_s" title='pkzip_cmp_s' data-type='struct pkzip_cmp_s' data-ref="pkzip_cmp_s" >pkzip_cmp_s</dfn>;</td></tr>
+<tr><th id="69">69</th><td><u>#include <a href="pack_end.h.html">"pack_end.h"</a></u></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><i>/* data structure. */</i></td></tr>
+<tr><th id="72">72</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="73">73</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		*<dfn class="decl" id="(anonymous)::in_buf" title='(anonymous struct)::in_buf' data-ref="(anonymous)::in_buf" >in_buf</dfn>;		<i>/* pointer to input data buffer. */</i></td></tr>
+<tr><th id="74">74</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::in_pos" title='(anonymous struct)::in_pos' data-ref="(anonymous)::in_pos" >in_pos</dfn>;			<i>/* current offset in input data buffer. */</i></td></tr>
+<tr><th id="75">75</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#int32_t" title='int32_t' data-type='int' data-ref="int32_t" >int32_t</a>		<dfn class="decl" id="(anonymous)::in_bytes" title='(anonymous struct)::in_bytes' data-ref="(anonymous)::in_bytes" >in_bytes</dfn>;		<i>/* number of bytes in the input buffer. */</i></td></tr>
+<tr><th id="76">76</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		*<dfn class="decl" id="(anonymous)::out_buf" title='(anonymous struct)::out_buf' data-ref="(anonymous)::out_buf" >out_buf</dfn>;		<i>/* pointer to output data buffer. */</i></td></tr>
+<tr><th id="77">77</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>	<dfn class="decl" id="(anonymous)::out_pos" title='(anonymous struct)::out_pos' data-ref="(anonymous)::out_pos" >out_pos</dfn>;		<i>/* position in the output buffer. */</i></td></tr>
+<tr><th id="78">78</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#int32_t" title='int32_t' data-type='int' data-ref="int32_t" >int32_t</a>		<dfn class="decl" id="(anonymous)::max_out" title='(anonymous struct)::max_out' data-ref="(anonymous)::max_out" >max_out</dfn>;		<i>/* maximum number of bytes in the output buffer. */</i></td></tr>
+<tr><th id="79">79</th><td>} <dfn class="typedef" id="pkzip_data_s" title='pkzip_data_s' data-type='struct pkzip_data_s' data-ref="pkzip_data_s" >pkzip_data_s</dfn>;</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><i>/* decompress the stream using pkzip compression. */</i></td></tr>
+<tr><th id="82">82</th><td><a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <a class="decl" href="explode.c.html#libmpq__do_decompress_pkzip" title='libmpq__do_decompress_pkzip' data-ref="libmpq__do_decompress_pkzip" id="libmpq__do_decompress_pkzip" >libmpq__do_decompress_pkzip</a>(</td></tr>
+<tr><th id="83">83</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a>		*<dfn class="local col7 decl" id="7work_buf" title='work_buf' data-type='uint8_t *' data-ref="7work_buf" >work_buf</dfn>,</td></tr>
+<tr><th id="84">84</th><td>	<em>void</em>		*<dfn class="local col8 decl" id="8param" title='param' data-type='void *' data-ref="8param" >param</dfn></td></tr>
+<tr><th id="85">85</th><td>);</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td><u>#<span data-ppcond="27">endif</span>						/* _EXPLODE_H */</u></td></tr>
+<tr><th id="88">88</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='explode.c.html'>TrinityCore3.3.5/dep/libmpq/libmpq/explode.c</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

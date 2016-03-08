@@ -1,0 +1,58 @@
+<dec f='TrinityCore3.3.5/dep/g3dlite/include/G3D/AABox.h' l='223' type='bool G3D::AABox::culledBy(const Array&lt;G3D::Plane&gt; &amp; plane, int32 &amp; cullingPlaneIndex, const uint32 testMask, uint32 &amp; childMask) const'/>
+<def f='TrinityCore3.3.5/dep/g3dlite/source/AABox.cpp' l='195' type='bool G3D::AABox::culledBy(const Array&lt;G3D::Plane&gt; &amp; plane, int &amp; cullingPlane, const uint32 _inMask, uint32 &amp; childMask) const'/>
+<doc f='TrinityCore3.3.5/dep/g3dlite/include/G3D/AABox.h' l='196'>/**
+     Conservative culling test for up to 32 planes.    
+     Returns true if there exists a &lt;CODE&gt;plane[p]&lt;/CODE&gt; for
+     which the entire object is in the negative half space
+     (opposite the plane normal).
+
+     &lt;CODE&gt;testMask&lt;/CODE&gt; and &lt;CODE&gt;childMask&lt;/CODE&gt;
+     are used for optimizing bounding volume hierarchies.
+     The version of this method that produces childMask
+     is slower than the version without; it should only
+     be used for parent nodes.
+
+     @param cullingPlaneIndex The index of the first plane for which
+      the entire object is in the negative half-space.  The function
+      exits early when one plane is found.  -1 when the function
+      returns false (i.e. when no plane culls the whole object).
+
+     @param testMask  If bit &lt;I&gt;p&lt;/I&gt; is 0, the 
+       bounding volume automatically passes the culling test for
+       &lt;CODE&gt;plane[p]&lt;/CODE&gt; (i.e. it is known that the volume
+       is entirely within the positive half space).  The function
+       must return false if testMask is 0 and test all planes
+       when testMask is -1 (0xFFFFFFFF).
+
+     @param childMask Test mask for the children of this volume.
+       
+     */</doc>
+<dec f='TrinityCore6.x/dep/g3dlite/include/G3D/AABox.h' l='223' type='bool G3D::AABox::culledBy(const Array&lt;G3D::Plane&gt; &amp; plane, int32 &amp; cullingPlaneIndex, const uint32 testMask, uint32 &amp; childMask) const'/>
+<def f='TrinityCore6.x/dep/g3dlite/source/AABox.cpp' l='195' type='bool G3D::AABox::culledBy(const Array&lt;G3D::Plane&gt; &amp; plane, int &amp; cullingPlane, const uint32 _inMask, uint32 &amp; childMask) const'/>
+<doc f='TrinityCore6.x/dep/g3dlite/include/G3D/AABox.h' l='196'>/**
+     Conservative culling test for up to 32 planes.    
+     Returns true if there exists a &lt;CODE&gt;plane[p]&lt;/CODE&gt; for
+     which the entire object is in the negative half space
+     (opposite the plane normal).
+
+     &lt;CODE&gt;testMask&lt;/CODE&gt; and &lt;CODE&gt;childMask&lt;/CODE&gt;
+     are used for optimizing bounding volume hierarchies.
+     The version of this method that produces childMask
+     is slower than the version without; it should only
+     be used for parent nodes.
+
+     @param cullingPlaneIndex The index of the first plane for which
+      the entire object is in the negative half-space.  The function
+      exits early when one plane is found.  -1 when the function
+      returns false (i.e. when no plane culls the whole object).
+
+     @param testMask  If bit &lt;I&gt;p&lt;/I&gt; is 0, the 
+       bounding volume automatically passes the culling test for
+       &lt;CODE&gt;plane[p]&lt;/CODE&gt; (i.e. it is known that the volume
+       is entirely within the positive half space).  The function
+       must return false if testMask is 0 and test all planes
+       when testMask is -1 (0xFFFFFFFF).
+
+     @param childMask Test mask for the children of this volume.
+       
+     */</doc>

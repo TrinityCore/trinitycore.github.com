@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<title>HmacHash.cpp [TrinityCore6.x/src/common/Cryptography/HmacHash.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/common/Cryptography/HmacHash.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Cryptography</a>/HmacHash.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="HmacHash.h.html">"HmacHash.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="BigNumber.h.html">"BigNumber.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><b>template</b>&lt;HashCreateFn HashCreator, uint32 DigestLength&gt;</td></tr>
+<tr><th id="24">24</th><td><a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a>&lt;<a class="tu ref" href="#HashCreator" title='HashCreator' data-ref="HashCreator" >HashCreator</a>, <a class="tu ref" href="#DigestLength" title='DigestLength' data-ref="DigestLength" >DigestLength</a>&gt;::<dfn class="decl def" id="_ZN8HmacHashC1EjPKh" title='HmacHash::HmacHash&lt;HashCreator, DigestLength&gt;' data-ref="_ZN8HmacHashC1EjPKh" >HmacHash</dfn>(<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="1len" title='len' data-type='uint32' data-ref="1len" >len</dfn>, <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <em>const</em>* <dfn class="local col2 decl" id="2seed" title='seed' data-type='const uint8 *' data-ref="2seed" >seed</dfn>)</td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td>    HMAC_CTX_init(&amp;<a class="member" href="HmacHash.h.html#HmacHash::_ctx" title='HmacHash::_ctx' data-ref="HmacHash::_ctx" id="HmacHash::_ctx" >_ctx</a>);</td></tr>
+<tr><th id="27">27</th><td>    HMAC_Init_ex(&amp;<a class="member" href="HmacHash.h.html#HmacHash::_ctx" title='HmacHash::_ctx' data-ref="HmacHash::_ctx" id="HmacHash::_ctx" >_ctx</a>, <a class="local col2 ref" href="#2seed" title='seed' data-ref="2seed" >seed</a>, <a class="local col1 ref" href="#1len" title='len' data-ref="1len" >len</a>, <a class="tu ref" href="#HashCreator" title='HashCreator' data-use='c' data-ref="HashCreator" >HashCreator</a>(), <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="28">28</th><td>    memset(<a class="member" href="HmacHash.h.html#HmacHash::_digest" title='HmacHash::_digest' data-ref="HmacHash::_digest" >_digest</a>, <var>0</var>, <a class="tu ref" href="#DigestLength" title='DigestLength' data-ref="DigestLength" >DigestLength</a>);</td></tr>
+<tr><th id="29">29</th><td>}</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>template</b>&lt;HashCreateFn HashCreator, uint32 DigestLength&gt;</td></tr>
+<tr><th id="32">32</th><td><a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a>&lt;<a class="tu ref" href="#HashCreator" title='HashCreator' data-ref="HashCreator" >HashCreator</a>, <a class="tu ref" href="#DigestLength" title='DigestLength' data-ref="DigestLength" >DigestLength</a>&gt;::<dfn class="decl def" id="_ZN8HmacHashD1Ev" title='HmacHash::~HmacHash&lt;HashCreator, DigestLength&gt;' data-ref="_ZN8HmacHashD1Ev" >~HmacHash</dfn>()</td></tr>
+<tr><th id="33">33</th><td>{</td></tr>
+<tr><th id="34">34</th><td>    HMAC_CTX_cleanup(&amp;<a class="member" href="HmacHash.h.html#HmacHash::_ctx" title='HmacHash::_ctx' data-ref="HmacHash::_ctx" id="HmacHash::_ctx" >_ctx</a>);</td></tr>
+<tr><th id="35">35</th><td>}</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>template</b>&lt;HashCreateFn HashCreator, uint32 DigestLength&gt;</td></tr>
+<tr><th id="38">38</th><td><em>void</em> <a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a>&lt;<a class="tu ref" href="#HashCreator" title='HashCreator' data-ref="HashCreator" >HashCreator</a>, <a class="tu ref" href="#DigestLength" title='DigestLength' data-ref="DigestLength" >DigestLength</a>&gt;::<dfn class="decl def" id="_ZN8HmacHash10UpdateDataERKSs" title='HmacHash::UpdateData' data-ref="_ZN8HmacHash10UpdateDataERKSs" >UpdateData</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> &amp;<dfn class="local col3 decl" id="3str" title='str' data-type='const std::string &amp;' data-ref="3str" >str</dfn>)</td></tr>
+<tr><th id="39">39</th><td>{</td></tr>
+<tr><th id="40">40</th><td>    HMAC_Update(&amp;<a class="member" href="HmacHash.h.html#HmacHash::_ctx" title='HmacHash::_ctx' data-ref="HmacHash::_ctx" id="HmacHash::_ctx" >_ctx</a>, (<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <em>const</em>*)<a class="local col3 ref" href="#3str" title='str' data-ref="3str" >str</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col3 ref" href="#3str" title='str' data-ref="3str" >str</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string6lengthEv" title='std::basic_string::length' data-ref="_ZNKSt12basic_string6lengthEv" id="_ZNKSt12basic_string6lengthEv" >length</a>());</td></tr>
+<tr><th id="41">41</th><td>}</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><b>template</b>&lt;HashCreateFn HashCreator, uint32 DigestLength&gt;</td></tr>
+<tr><th id="44">44</th><td><em>void</em> <a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a>&lt;<a class="tu ref" href="#HashCreator" title='HashCreator' data-ref="HashCreator" >HashCreator</a>, <a class="tu ref" href="#DigestLength" title='DigestLength' data-ref="DigestLength" >DigestLength</a>&gt;::<dfn class="decl def" id="_ZN8HmacHash10UpdateDataEPKhm" title='HmacHash::UpdateData' data-ref="_ZN8HmacHash10UpdateDataEPKhm" >UpdateData</dfn>(<em>const</em> <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>* <dfn class="local col4 decl" id="4data" title='data' data-type='const uint8 *' data-ref="4data" >data</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="5len" title='len' data-type='size_t' data-ref="5len" >len</dfn>)</td></tr>
+<tr><th id="45">45</th><td>{</td></tr>
+<tr><th id="46">46</th><td>    HMAC_Update(&amp;<a class="member" href="HmacHash.h.html#HmacHash::_ctx" title='HmacHash::_ctx' data-ref="HmacHash::_ctx" id="HmacHash::_ctx" >_ctx</a>, <a class="local col4 ref" href="#4data" title='data' data-ref="4data" >data</a>, <a class="local col5 ref" href="#5len" title='len' data-ref="5len" >len</a>);</td></tr>
+<tr><th id="47">47</th><td>}</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><b>template</b>&lt;HashCreateFn HashCreator, uint32 DigestLength&gt;</td></tr>
+<tr><th id="50">50</th><td><em>void</em> <a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a>&lt;<a class="tu ref" href="#HashCreator" title='HashCreator' data-ref="HashCreator" >HashCreator</a>, <a class="tu ref" href="#DigestLength" title='DigestLength' data-ref="DigestLength" >DigestLength</a>&gt;::<dfn class="decl def" id="_ZN8HmacHash8FinalizeEv" title='HmacHash::Finalize' data-ref="_ZN8HmacHash8FinalizeEv" >Finalize</dfn>()</td></tr>
+<tr><th id="51">51</th><td>{</td></tr>
+<tr><th id="52">52</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="6length" title='length' data-type='uint32' data-ref="6length" >length</dfn> = <var>0</var>;</td></tr>
+<tr><th id="53">53</th><td>    HMAC_Final(&amp;<a class="member" href="HmacHash.h.html#HmacHash::_ctx" title='HmacHash::_ctx' data-ref="HmacHash::_ctx" id="HmacHash::_ctx" >_ctx</a>, <a class="member" href="HmacHash.h.html#HmacHash::_digest" title='HmacHash::_digest' data-ref="HmacHash::_digest" >_digest</a>, &amp;<a class="local col6 ref" href="#6length" title='length' data-ref="6length" >length</a>);</td></tr>
+<tr><th id="54">54</th><td>    <a class="macro" href="../Debugging/Errors.h.html#55" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col6 ref" href="#6length" title='length' data-ref="6length" >length</a> == <a class="tu ref" href="#DigestLength" title='DigestLength' data-use='r' data-ref="DigestLength" >DigestLength</a>);</td></tr>
+<tr><th id="55">55</th><td>}</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><b>template</b>&lt;HashCreateFn HashCreator, uint32 DigestLength&gt;</td></tr>
+<tr><th id="58">58</th><td><a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>* <a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a>&lt;<a class="tu ref" href="#HashCreator" title='HashCreator' data-ref="HashCreator" >HashCreator</a>, <a class="tu ref" href="#DigestLength" title='DigestLength' data-ref="DigestLength" >DigestLength</a>&gt;::<dfn class="decl def" id="_ZN8HmacHash11ComputeHashEP9BigNumber" title='HmacHash::ComputeHash' data-ref="_ZN8HmacHash11ComputeHashEP9BigNumber" >ComputeHash</dfn>(<a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col7 decl" id="7bn" title='bn' data-type='BigNumber *' data-ref="7bn" >bn</dfn>)</td></tr>
+<tr><th id="59">59</th><td>{</td></tr>
+<tr><th id="60">60</th><td>    HMAC_Update(&amp;<a class="member" href="HmacHash.h.html#HmacHash::_ctx" title='HmacHash::_ctx' data-ref="HmacHash::_ctx" id="HmacHash::_ctx" >_ctx</a>, <a class="local col7 ref" href="#7bn" title='bn' data-ref="7bn" >bn</a>-&gt;<a class="ref" href="BigNumber.h.html#_ZN9BigNumber11AsByteArrayEib" title='BigNumber::AsByteArray' data-ref="_ZN9BigNumber11AsByteArrayEib" id="_ZN9BigNumber11AsByteArrayEib" >AsByteArray</a>().<a class="ref" href="../../../../include/c++/4.9/bits/unique_ptr.h.html#_ZNKSt10unique_ptrIA_T_T0_E3getEv" title='std::unique_ptr&lt;type-parameter-0-0 [], type-parameter-0-1&gt;::get' data-ref="_ZNKSt10unique_ptrIA_T_T0_E3getEv" id="_ZNKSt10unique_ptrIA_T_T0_E3getEv" >get</a>(), <a class="local col7 ref" href="#7bn" title='bn' data-ref="7bn" >bn</a>-&gt;<a class="ref" href="BigNumber.h.html#_ZN9BigNumber11GetNumBytesEv" title='BigNumber::GetNumBytes' data-ref="_ZN9BigNumber11GetNumBytesEv" id="_ZN9BigNumber11GetNumBytesEv" >GetNumBytes</a>());</td></tr>
+<tr><th id="61">61</th><td>    <a class="member" href="#_ZN8HmacHash8FinalizeEv" title='HmacHash::Finalize' data-ref="_ZN8HmacHash8FinalizeEv" >Finalize</a>();</td></tr>
+<tr><th id="62">62</th><td>    <b>return</b> <a class="member" href="HmacHash.h.html#HmacHash::_digest" title='HmacHash::_digest' data-ref="HmacHash::_digest" id="HmacHash::_digest" >_digest</a>;</td></tr>
+<tr><th id="63">63</th><td>}</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><b>template</b> <b>class</b> <dfn class="type def" id="HmacHash" title='HmacHash' data-ref="HmacHash" ><a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a></dfn>&lt;<a class="ref" href="../../../../include/openssl/evp.h.html#EVP_sha1" title='EVP_sha1' data-ref="EVP_sha1" >EVP_sha1</a>, <a class="macro" href="../../../../include/openssl/sha.h.html#99" title="20" data-ref="_M/SHA_DIGEST_LENGTH">SHA_DIGEST_LENGTH</a>&gt;;</td></tr>
+<tr><th id="66">66</th><td><b>template</b> <b>class</b> <dfn class="type def" id="HmacHash" title='HmacHash' data-ref="HmacHash" ><a class="type" href="HmacHash.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a></dfn>&lt;<a class="ref" href="../../../../include/openssl/evp.h.html#EVP_sha256" title='EVP_sha256' data-ref="EVP_sha256" >EVP_sha256</a>, <a class="macro" href="../../../../include/openssl/sha.h.html#134" title="32" data-ref="_M/SHA256_DIGEST_LENGTH">SHA256_DIGEST_LENGTH</a>&gt;;</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

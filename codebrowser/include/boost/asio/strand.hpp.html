@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+<head>
+<title>strand.hpp [include/boost/asio/strand.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/asio/strand.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>asio</a>/strand.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//</i></td></tr>
+<tr><th id="2">2</th><td><i>// strand.hpp</i></td></tr>
+<tr><th id="3">3</th><td><i>// ~~~~~~~~~~</i></td></tr>
+<tr><th id="4">4</th><td><i>//</i></td></tr>
+<tr><th id="5">5</th><td><i>// Copyright (c) 2003-2013 Christopher M. Kohlhoff (chris at kohlhoff dot com)</i></td></tr>
+<tr><th id="6">6</th><td><i>//</i></td></tr>
+<tr><th id="7">7</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="8">8</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_ASIO_STRAND_HPP">BOOST_ASIO_STRAND_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_ASIO_STRAND_HPP" data-ref="_M/BOOST_ASIO_STRAND_HPP">BOOST_ASIO_STRAND_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="15">15</th><td><u># pragma once</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span> // defined(_MSC_VER) &amp;&amp; (_MSC_VER &gt;= 1200)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="detail/config.hpp.html">&lt;boost/asio/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="async_result.hpp.html">&lt;boost/asio/async_result.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="detail/handler_type_requirements.hpp.html">&lt;boost/asio/detail/handler_type_requirements.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="detail/strand_service.hpp.html">&lt;boost/asio/detail/strand_service.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="detail/wrapped_handler.hpp.html">&lt;boost/asio/detail/wrapped_handler.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="io_service.hpp.html">&lt;boost/asio/io_service.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="detail/push_options.hpp.html">&lt;boost/asio/detail/push_options.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="28">28</th><td><b>namespace</b> <span class="namespace">asio</span> {</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i class="doc">/// Provides serialised handler execution.</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc"> * The io_service::strand class provides the ability to post and dispatch</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc"> * handlers with the guarantee that none of those handlers will execute</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc"> * concurrently.</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc"> * <span class="command">@par</span> Order of handler invocation</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc"> * Given:</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc"> * <span class="command">@li</span> a strand object<span class="command"> @c</span> <span class="arg">s</span></i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> * <span class="command">@li</span> an object<span class="command"> @c</span> <span class="arg">a</span> meeting completion handler requirements</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> * <span class="command">@li</span> an object<span class="command"> @c</span> <span class="arg">a1</span> which is an arbitrary copy of<span class="command"> @c</span> <span class="arg">a</span> made by the</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc"> * implementation</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc"> * <span class="command">@li</span> an object<span class="command"> @c</span> <span class="arg">b</span> meeting completion handler requirements</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"> * <span class="command">@li</span> an object<span class="command"> @c</span> <span class="arg">b1</span> which is an arbitrary copy of<span class="command"> @c</span> <span class="arg">b</span> made by the</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc"> * implementation</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc"> * if any of the following conditions are true:</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="53">53</th><td><i class="doc"> * <span class="command">@li</span><span class="command"> @c</span> <span class="arg">s.post(a)</span> happens-before<span class="command"> @c</span> <span class="arg">s.post(b)</span></i></td></tr>
+<tr><th id="54">54</th><td><i class="doc"> * </i></td></tr>
+<tr><th id="55">55</th><td><i class="doc"> * <span class="command">@li</span><span class="command"> @c</span> <span class="arg">s.post(a)</span> happens-before<span class="command"> @c</span> <span class="arg">s.dispatch(b),</span> where the latter is</i></td></tr>
+<tr><th id="56">56</th><td><i class="doc"> * performed outside the strand</i></td></tr>
+<tr><th id="57">57</th><td><i class="doc"> * </i></td></tr>
+<tr><th id="58">58</th><td><i class="doc"> * <span class="command">@li</span><span class="command"> @c</span> <span class="arg">s.dispatch(a)</span> happens-before<span class="command"> @c</span> <span class="arg">s.post(b),</span> where the former is</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc"> * performed outside the strand</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc"> * </i></td></tr>
+<tr><th id="61">61</th><td><i class="doc"> * <span class="command">@li</span><span class="command"> @c</span> <span class="arg">s.dispatch(a)</span> happens-before<span class="command"> @c</span> <span class="arg">s.dispatch(b),</span> where both are</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc"> * performed outside the strand</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc"> *   </i></td></tr>
+<tr><th id="64">64</th><td><i class="doc"> * then<span class="command"> @c</span> <span class="arg">asio_handler_invoke(a1,</span> &amp;a1) happens-before</i></td></tr>
+<tr><th id="65">65</th><td><i class="doc"> *<span class="command"> @c</span> <span class="arg">asio_handler_invoke(b1,</span> &amp;b1).</i></td></tr>
+<tr><th id="66">66</th><td><i class="doc"> * </i></td></tr>
+<tr><th id="67">67</th><td><i class="doc"> * Note that in the following case:</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc"> * <span class="command">@code</span><span class="verb"> async_op_1(..., s.wrap(a));</span></i></td></tr>
+<tr><th id="69">69</th><td><i class="doc"><span class="verb"></span> *<span class="verb"> async_op_2(..., s.wrap(b)); @</span>endcode</i></td></tr>
+<tr><th id="70">70</th><td><i class="doc"> * the completion of the first async operation will perform<span class="command"> @c</span> <span class="arg">s.dispatch(a),</span></i></td></tr>
+<tr><th id="71">71</th><td><i class="doc"> * and the second will perform<span class="command"> @c</span> <span class="arg">s.dispatch(b),</span> but the order in which those</i></td></tr>
+<tr><th id="72">72</th><td><i class="doc"> * are performed is unspecified. That is, you cannot state whether one</i></td></tr>
+<tr><th id="73">73</th><td><i class="doc"> * happens-before the other. Therefore none of the above conditions are met and</i></td></tr>
+<tr><th id="74">74</th><td><i class="doc"> * no ordering guarantee is made.</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc"> * <span class="command">@par</span> Thread Safety</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Distinct</span><span class="command"> @e</span> <span class="arg">objects:</span> Safe<span class="command">.@n</span></i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"> *<span class="command"> @e</span> <span class="arg">Shared</span><span class="command"> @e</span> <span class="arg">objects:</span> Safe.</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="80">80</th><td><i class="doc"> * <span class="command">@par</span> Concepts:</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc"> * Dispatcher.</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="83">83</th><td><b>class</b> <a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>::<dfn class="type def" id="boost::asio::io_service::strand" title='boost::asio::io_service::strand' data-ref="boost::asio::io_service::strand" >strand</dfn></td></tr>
+<tr><th id="84">84</th><td>{</td></tr>
+<tr><th id="85">85</th><td><b>public</b>:</td></tr>
+<tr><th id="86">86</th><td>  <i class="doc">/// Constructor.</i></td></tr>
+<tr><th id="87">87</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="88">88</th><td><i class="doc">   * Constructs the strand.</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">io_service</span> The io_service object that the strand will use to</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">   * dispatch handlers that are ready to be run.</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="93">93</th><td>  <b>explicit</b> <dfn class="decl def" id="_ZN5boost4asio10io_service6strandC1ERS1_" title='boost::asio::io_service::strand::strand' data-ref="_ZN5boost4asio10io_service6strandC1ERS1_" >strand</dfn>(<span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="local col6 decl" id="3576io_service" title='io_service' data-type='boost::asio::io_service &amp;' data-ref="3576io_service" >io_service</dfn>)</td></tr>
+<tr><th id="94">94</th><td>    : <a class="member" href="#boost::asio::io_service::strand::service_" title='boost::asio::io_service::strand::service_' data-ref="boost::asio::io_service::strand::service_" >service_</a>(<span class="namespace">boost::asio::</span><a class="ref" href="impl/io_service.hpp.html#_ZN5boost4asio11use_serviceERNS0_10io_serviceE" title='boost::asio::use_service' data-ref="_ZN5boost4asio11use_serviceERNS0_10io_serviceE" id="_ZN5boost4asio11use_serviceERNS0_10io_serviceE" >use_service</a>&lt;</td></tr>
+<tr><th id="95">95</th><td>        <span class="namespace">boost::asio::detail::</span><a class="type" href="detail/strand_service.hpp.html#boost::asio::detail::strand_service" title='boost::asio::detail::strand_service' data-ref="boost::asio::detail::strand_service" >strand_service</a>&gt;(<a class="local col6 ref" href="#3576io_service" title='io_service' data-ref="3576io_service" >io_service</a>))</td></tr>
+<tr><th id="96">96</th><td>  {</td></tr>
+<tr><th id="97">97</th><td>    <a class="member" href="#boost::asio::io_service::strand::service_" title='boost::asio::io_service::strand::service_' data-ref="boost::asio::io_service::strand::service_" >service_</a>.<a class="ref" href="detail/impl/strand_service.ipp.html#_ZN5boost4asio6detail14strand_service9constructERPNS2_11strand_implE" title='boost::asio::detail::strand_service::construct' data-ref="_ZN5boost4asio6detail14strand_service9constructERPNS2_11strand_implE" id="_ZN5boost4asio6detail14strand_service9constructERPNS2_11strand_implE" >construct</a>(<a class="member" href="#boost::asio::io_service::strand::impl_" title='boost::asio::io_service::strand::impl_' data-ref="boost::asio::io_service::strand::impl_" >impl_</a>);</td></tr>
+<tr><th id="98">98</th><td>  }</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>  <i class="doc">/// Destructor.</i></td></tr>
+<tr><th id="101">101</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc">   * Destroys a strand.</i></td></tr>
+<tr><th id="103">103</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc">   * Handlers posted through the strand that have not yet been invoked will</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">   * still be dispatched in a way that meets the guarantee of non-concurrency.</i></td></tr>
+<tr><th id="106">106</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="107">107</th><td>  <dfn class="decl def" id="_ZN5boost4asio10io_service6strandD1Ev" title='boost::asio::io_service::strand::~strand' data-ref="_ZN5boost4asio10io_service6strandD1Ev" >~strand</dfn>()</td></tr>
+<tr><th id="108">108</th><td>  {</td></tr>
+<tr><th id="109">109</th><td>  }</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>  <i class="doc">/// Get the io_service associated with the strand.</i></td></tr>
+<tr><th id="112">112</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="113">113</th><td><i class="doc">   * This function may be used to obtain the io_service object that the strand</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc">   * uses to dispatch handlers for asynchronous operations.</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">   * <span class="command">@return</span> A reference to the io_service object that the strand will use to</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">   * dispatch handlers. Ownership is not transferred to the caller.</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="119">119</th><td>  <span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>&amp; <dfn class="decl def" id="_ZN5boost4asio10io_service6strand14get_io_serviceEv" title='boost::asio::io_service::strand::get_io_service' data-ref="_ZN5boost4asio10io_service6strand14get_io_serviceEv" >get_io_service</dfn>()</td></tr>
+<tr><th id="120">120</th><td>  {</td></tr>
+<tr><th id="121">121</th><td>    <b>return</b> <a class="member" href="#boost::asio::io_service::strand::service_" title='boost::asio::io_service::strand::service_' data-ref="boost::asio::io_service::strand::service_" >service_</a>.<a class="ref" href="impl/io_service.hpp.html#_ZN5boost4asio10io_service7service14get_io_serviceEv" title='boost::asio::io_service::service::get_io_service' data-ref="_ZN5boost4asio10io_service7service14get_io_serviceEv" id="_ZN5boost4asio10io_service7service14get_io_serviceEv" >get_io_service</a>();</td></tr>
+<tr><th id="122">122</th><td>  }</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>  <i class="doc">/// Request the strand to invoke the given handler.</i></td></tr>
+<tr><th id="125">125</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="126">126</th><td><i class="doc">   * This function is used to ask the strand to execute the given handler.</i></td></tr>
+<tr><th id="127">127</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="128">128</th><td><i class="doc">   * The strand object guarantees that handlers posted or dispatched through</i></td></tr>
+<tr><th id="129">129</th><td><i class="doc">   * the strand will not be executed concurrently. The handler may be executed</i></td></tr>
+<tr><th id="130">130</th><td><i class="doc">   * inside this function if the guarantee can be met. If this function is</i></td></tr>
+<tr><th id="131">131</th><td><i class="doc">   * called from within a handler that was posted or dispatched through the same</i></td></tr>
+<tr><th id="132">132</th><td><i class="doc">   * strand, then the new handler will be executed immediately.</i></td></tr>
+<tr><th id="133">133</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="134">134</th><td><i class="doc">   * The strand's guarantee is in addition to the guarantee provided by the</i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">   * underlying io_service. The io_service guarantees that the handler will only</i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">   * be called in a thread in which the io_service's run member function is</i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">   * currently being invoked.</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="139">139</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">handler</span> The handler to be called. The strand will make a copy of the</i></td></tr>
+<tr><th id="140">140</th><td><i class="doc">   * handler object as required. The function signature of the handler must be:</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> void handler(); @</span>endcode</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="143">143</th><td>  <b>template</b> &lt;<b>typename</b> CompletionHandler&gt;</td></tr>
+<tr><th id="144">144</th><td>  <a class="macro" href="async_result.hpp.html#91" title="typename ::boost::asio::async_result&lt; typename ::boost::asio::handler_type&lt;CompletionHandler, void ()&gt;::type&gt;::type" data-ref="_M/BOOST_ASIO_INITFN_RESULT_TYPE">BOOST_ASIO_INITFN_RESULT_TYPE</a>(CompletionHandler, <em>void</em> ())</td></tr>
+<tr><th id="145">145</th><td>  <dfn class="decl def" id="_ZN5boost4asio10io_service6strand8dispatchEOT_" title='boost::asio::io_service::strand::dispatch' data-ref="_ZN5boost4asio10io_service6strand8dispatchEOT_" >dispatch</dfn>(<a class="macro" href="detail/config.hpp.html#107" title="CompletionHandler&amp;&amp;" data-ref="_M/BOOST_ASIO_MOVE_ARG">BOOST_ASIO_MOVE_ARG</a>(CompletionHandler) <dfn class="local col7 decl" id="3577handler" title='handler' data-type='CompletionHandler &amp;&amp;' data-ref="3577handler" >handler</dfn>)</td></tr>
+<tr><th id="146">146</th><td>  {</td></tr>
+<tr><th id="147">147</th><td>    <i>// If you get an error on the following line it means that your handler does</i></td></tr>
+<tr><th id="148">148</th><td><i>    // not meet the documented type requirements for a CompletionHandler.</i></td></tr>
+<tr><th id="149">149</th><td>    <a class="macro" href="detail/handler_type_requirements.hpp.html#114" title="typedef typename handler_type&lt;CompletionHandler, void()&gt;::type asio_true_handler_type; static_assert(sizeof(boost::asio::detail::zero_arg_handler_test( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;(), 0)) == 1, &quot;CompletionHandler type requirements not met&quot;); typedef boost::asio::detail::handler_type_requirements&lt; sizeof( boost::asio::detail::argbyv( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;())) + sizeof( boost::asio::detail::lvref&lt; asio_true_handler_type&gt;()(), char(0))&gt;" data-ref="_M/BOOST_ASIO_COMPLETION_HANDLER_CHECK">BOOST_ASIO_COMPLETION_HANDLER_CHECK</a>(CompletionHandler, handler) <dfn class="local col8 typedef" id="3578type_check" title='type_check' data-type='boost::asio::detail::handler_type_requirements&lt;sizeof (boost::asio::detail::argbyv(boost::asio::detail::clvref&lt;asio_true_handler_type&gt;())) + sizeof (boost::asio::detail::lvref&lt;asio_true_handler_type&gt;()() , char(0))&gt;' data-ref="3578type_check" >type_check</dfn>;</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>    <span class="namespace">detail::</span><a class="type" href="async_result.hpp.html#boost::asio::detail::async_result_init" title='boost::asio::detail::async_result_init' data-ref="boost::asio::detail::async_result_init" >async_result_init</a>&lt;</td></tr>
+<tr><th id="152">152</th><td>      CompletionHandler, <em>void</em> ()&gt; <dfn class="local col9 decl" id="3579init" title='init' data-type='detail::async_result_init&lt;CompletionHandler, void ()&gt;' data-ref="3579init" >init</dfn>(</td></tr>
+<tr><th id="153">153</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;CompletionHandler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(CompletionHandler)(<a class="local col7 ref" href="#3577handler" title='handler' data-ref="3577handler" >handler</a>));</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td>    <a class="member" href="#boost::asio::io_service::strand::service_" title='boost::asio::io_service::strand::service_' data-ref="boost::asio::io_service::strand::service_" >service_</a>.dispatch(<a class="member" href="#boost::asio::io_service::strand::impl_" title='boost::asio::io_service::strand::impl_' data-ref="boost::asio::io_service::strand::impl_" >impl_</a>, <a class="local col9 ref" href="#3579init" title='init' data-ref="3579init" >init</a>.handler);</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>    <b>return</b> <a class="local col9 ref" href="#3579init" title='init' data-ref="3579init" >init</a>.result.get();</td></tr>
+<tr><th id="158">158</th><td>  }</td></tr>
+<tr><th id="159">159</th><td></td></tr>
+<tr><th id="160">160</th><td>  <i class="doc">/// Request the strand to invoke the given handler and return</i></td></tr>
+<tr><th id="161">161</th><td><i class="doc">  /// immediately.</i></td></tr>
+<tr><th id="162">162</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="163">163</th><td><i class="doc">   * This function is used to ask the strand to execute the given handler, but</i></td></tr>
+<tr><th id="164">164</th><td><i class="doc">   * without allowing the strand to call the handler from inside this function.</i></td></tr>
+<tr><th id="165">165</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">   * The strand object guarantees that handlers posted or dispatched through</i></td></tr>
+<tr><th id="167">167</th><td><i class="doc">   * the strand will not be executed concurrently. The strand's guarantee is in</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc">   * addition to the guarantee provided by the underlying io_service. The</i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">   * io_service guarantees that the handler will only be called in a thread in</i></td></tr>
+<tr><th id="170">170</th><td><i class="doc">   * which the io_service's run member function is currently being invoked.</i></td></tr>
+<tr><th id="171">171</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="172">172</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">handler</span> The handler to be called. The strand will make a copy of the</i></td></tr>
+<tr><th id="173">173</th><td><i class="doc">   * handler object as required. The function signature of the handler must be:</i></td></tr>
+<tr><th id="174">174</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> void handler(); @</span>endcode</i></td></tr>
+<tr><th id="175">175</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="176">176</th><td>  <b>template</b> &lt;<b>typename</b> CompletionHandler&gt;</td></tr>
+<tr><th id="177">177</th><td>  <a class="macro" href="async_result.hpp.html#91" title="typename ::boost::asio::async_result&lt; typename ::boost::asio::handler_type&lt;CompletionHandler, void ()&gt;::type&gt;::type" data-ref="_M/BOOST_ASIO_INITFN_RESULT_TYPE">BOOST_ASIO_INITFN_RESULT_TYPE</a>(CompletionHandler, <em>void</em> ())</td></tr>
+<tr><th id="178">178</th><td>  <dfn class="decl def" id="_ZN5boost4asio10io_service6strand4postEOT_" title='boost::asio::io_service::strand::post' data-ref="_ZN5boost4asio10io_service6strand4postEOT_" >post</dfn>(<a class="macro" href="detail/config.hpp.html#107" title="CompletionHandler&amp;&amp;" data-ref="_M/BOOST_ASIO_MOVE_ARG">BOOST_ASIO_MOVE_ARG</a>(CompletionHandler) <dfn class="local col0 decl" id="3580handler" title='handler' data-type='CompletionHandler &amp;&amp;' data-ref="3580handler" >handler</dfn>)</td></tr>
+<tr><th id="179">179</th><td>  {</td></tr>
+<tr><th id="180">180</th><td>    <i>// If you get an error on the following line it means that your handler does</i></td></tr>
+<tr><th id="181">181</th><td><i>    // not meet the documented type requirements for a CompletionHandler.</i></td></tr>
+<tr><th id="182">182</th><td>    <a class="macro" href="detail/handler_type_requirements.hpp.html#114" title="typedef typename handler_type&lt;CompletionHandler, void()&gt;::type asio_true_handler_type; static_assert(sizeof(boost::asio::detail::zero_arg_handler_test( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;(), 0)) == 1, &quot;CompletionHandler type requirements not met&quot;); typedef boost::asio::detail::handler_type_requirements&lt; sizeof( boost::asio::detail::argbyv( boost::asio::detail::clvref&lt; asio_true_handler_type&gt;())) + sizeof( boost::asio::detail::lvref&lt; asio_true_handler_type&gt;()(), char(0))&gt;" data-ref="_M/BOOST_ASIO_COMPLETION_HANDLER_CHECK">BOOST_ASIO_COMPLETION_HANDLER_CHECK</a>(CompletionHandler, handler) <dfn class="local col1 typedef" id="3581type_check" title='type_check' data-type='boost::asio::detail::handler_type_requirements&lt;sizeof (boost::asio::detail::argbyv(boost::asio::detail::clvref&lt;asio_true_handler_type&gt;())) + sizeof (boost::asio::detail::lvref&lt;asio_true_handler_type&gt;()() , char(0))&gt;' data-ref="3581type_check" >type_check</dfn>;</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td>    <span class="namespace">detail::</span><a class="type" href="async_result.hpp.html#boost::asio::detail::async_result_init" title='boost::asio::detail::async_result_init' data-ref="boost::asio::detail::async_result_init" >async_result_init</a>&lt;</td></tr>
+<tr><th id="185">185</th><td>      CompletionHandler, <em>void</em> ()&gt; <dfn class="local col2 decl" id="3582init" title='init' data-type='detail::async_result_init&lt;CompletionHandler, void ()&gt;' data-ref="3582init" >init</dfn>(</td></tr>
+<tr><th id="186">186</th><td>        <a class="macro" href="detail/config.hpp.html#108" title="static_cast&lt;CompletionHandler&amp;&amp;&gt;" data-ref="_M/BOOST_ASIO_MOVE_CAST">BOOST_ASIO_MOVE_CAST</a>(CompletionHandler)(<a class="local col0 ref" href="#3580handler" title='handler' data-ref="3580handler" >handler</a>));</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>    <a class="member" href="#boost::asio::io_service::strand::service_" title='boost::asio::io_service::strand::service_' data-ref="boost::asio::io_service::strand::service_" >service_</a>.post(<a class="member" href="#boost::asio::io_service::strand::impl_" title='boost::asio::io_service::strand::impl_' data-ref="boost::asio::io_service::strand::impl_" >impl_</a>, <a class="local col2 ref" href="#3582init" title='init' data-ref="3582init" >init</a>.handler);</td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td>    <b>return</b> <a class="local col2 ref" href="#3582init" title='init' data-ref="3582init" >init</a>.result.get();</td></tr>
+<tr><th id="191">191</th><td>  }</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td>  <i class="doc">/// Create a new handler that automatically dispatches the wrapped handler</i></td></tr>
+<tr><th id="194">194</th><td><i class="doc">  /// on the strand.</i></td></tr>
+<tr><th id="195">195</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="196">196</th><td><i class="doc">   * This function is used to create a new handler function object that, when</i></td></tr>
+<tr><th id="197">197</th><td><i class="doc">   * invoked, will automatically pass the wrapped handler to the strand's</i></td></tr>
+<tr><th id="198">198</th><td><i class="doc">   * dispatch function.</i></td></tr>
+<tr><th id="199">199</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="200">200</th><td><i class="doc">   * <span class="command">@param</span> <span class="arg">handler</span> The handler to be wrapped. The strand will make a copy of</i></td></tr>
+<tr><th id="201">201</th><td><i class="doc">   * the handler object as required. The function signature of the handler must</i></td></tr>
+<tr><th id="202">202</th><td><i class="doc">   * be: <span class="command">@code</span><span class="verb"> void handler(A1 a1, ... An an); @</span>endcode</i></td></tr>
+<tr><th id="203">203</th><td><i class="doc">   *</i></td></tr>
+<tr><th id="204">204</th><td><i class="doc">   * <span class="command">@return</span> A function object that, when invoked, passes the wrapped handler to</i></td></tr>
+<tr><th id="205">205</th><td><i class="doc">   * the strand's dispatch function. Given a function object with the signature:</i></td></tr>
+<tr><th id="206">206</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> R f(A1 a1, ... An an); @</span>endcode</i></td></tr>
+<tr><th id="207">207</th><td><i class="doc">   * If this function object is passed to the wrap function like so:</i></td></tr>
+<tr><th id="208">208</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> strand.wrap(f); @</span>endcode</i></td></tr>
+<tr><th id="209">209</th><td><i class="doc">   * then the return value is a function object with the signature</i></td></tr>
+<tr><th id="210">210</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> void g(A1 a1, ... An an); @</span>endcode</i></td></tr>
+<tr><th id="211">211</th><td><i class="doc">   * that, when invoked, executes code equivalent to:</i></td></tr>
+<tr><th id="212">212</th><td><i class="doc">   * <span class="command">@code</span><span class="verb"> strand.dispatch(boost::bind(f, a1, ... an)); @</span>endcode</i></td></tr>
+<tr><th id="213">213</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="214">214</th><td>  <b>template</b> &lt;<b>typename</b> Handler&gt;</td></tr>
+<tr><th id="215">215</th><td><u>#<span data-ppcond="215">if</span> defined(<span class="macro" data-ref="_M/GENERATING_DOCUMENTATION">GENERATING_DOCUMENTATION</span>)</u></td></tr>
+<tr><th id="216">216</th><td>  unspecified</td></tr>
+<tr><th id="217">217</th><td><u>#<span data-ppcond="215">else</span></u></td></tr>
+<tr><th id="218">218</th><td>  <span class="namespace">detail::</span><a class="type" href="detail/wrapped_handler.hpp.html#boost::asio::detail::wrapped_handler" title='boost::asio::detail::wrapped_handler' data-ref="boost::asio::detail::wrapped_handler" >wrapped_handler</a>&lt;<a class="type" href="#boost::asio::io_service::strand" title='boost::asio::io_service::strand' data-ref="boost::asio::io_service::strand" >strand</a>, Handler, <span class="namespace">detail::</span><a class="type" href="detail/wrapped_handler.hpp.html#boost::asio::detail::is_continuation_if_running" title='boost::asio::detail::is_continuation_if_running' data-ref="boost::asio::detail::is_continuation_if_running" >is_continuation_if_running</a>&gt;</td></tr>
+<tr><th id="219">219</th><td><u>#<span data-ppcond="215">endif</span></u></td></tr>
+<tr><th id="220">220</th><td>  <dfn class="decl def" id="_ZN5boost4asio10io_service6strand4wrapET_" title='boost::asio::io_service::strand::wrap' data-ref="_ZN5boost4asio10io_service6strand4wrapET_" >wrap</dfn>(Handler <dfn class="local col3 decl" id="3583handler" title='handler' data-type='Handler' data-ref="3583handler" >handler</dfn>)</td></tr>
+<tr><th id="221">221</th><td>  {</td></tr>
+<tr><th id="222">222</th><td>    <b>return</b> <span class="namespace">detail::</span><a class="type" href="detail/wrapped_handler.hpp.html#boost::asio::detail::wrapped_handler" title='boost::asio::detail::wrapped_handler' data-ref="boost::asio::detail::wrapped_handler" >wrapped_handler</a>&lt;<a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>::<a class="type" href="#boost::asio::io_service::strand" title='boost::asio::io_service::strand' data-ref="boost::asio::io_service::strand" >strand</a>, Handler,</td></tr>
+<tr><th id="223">223</th><td>        <span class="namespace">detail::</span><a class="type" href="detail/wrapped_handler.hpp.html#boost::asio::detail::is_continuation_if_running" title='boost::asio::detail::is_continuation_if_running' data-ref="boost::asio::detail::is_continuation_if_running" >is_continuation_if_running</a>&gt;(*<b>this</b>, <a class="local col3 ref" href="#3583handler" title='handler' data-ref="3583handler" >handler</a>);</td></tr>
+<tr><th id="224">224</th><td>  }</td></tr>
+<tr><th id="225">225</th><td></td></tr>
+<tr><th id="226">226</th><td>  <i class="doc">/// Determine whether the strand is running in the current thread.</i></td></tr>
+<tr><th id="227">227</th><td>  <i class="doc">/**</i></td></tr>
+<tr><th id="228">228</th><td><i class="doc">   * <span class="command">@return</span><span class="command"> @c</span> <span class="arg">true</span> if the current thread is executing a handler that was</i></td></tr>
+<tr><th id="229">229</th><td><i class="doc">   * submitted to the strand using post(), dispatch() or wrap(). Otherwise</i></td></tr>
+<tr><th id="230">230</th><td><i class="doc">   * returns<span class="command"> @c</span> <span class="arg">false.</span></i></td></tr>
+<tr><th id="231">231</th><td><i class="doc">   */</i></td></tr>
+<tr><th id="232">232</th><td>  <em>bool</em> <dfn class="decl def" id="_ZNK5boost4asio10io_service6strand22running_in_this_threadEv" title='boost::asio::io_service::strand::running_in_this_thread' data-ref="_ZNK5boost4asio10io_service6strand22running_in_this_threadEv" >running_in_this_thread</dfn>() <em>const</em></td></tr>
+<tr><th id="233">233</th><td>  {</td></tr>
+<tr><th id="234">234</th><td>    <b>return</b> <a class="member" href="#boost::asio::io_service::strand::service_" title='boost::asio::io_service::strand::service_' data-ref="boost::asio::io_service::strand::service_" >service_</a>.<a class="ref" href="detail/impl/strand_service.ipp.html#_ZNK5boost4asio6detail14strand_service22running_in_this_threadERKPNS2_11strand_implE" title='boost::asio::detail::strand_service::running_in_this_thread' data-ref="_ZNK5boost4asio6detail14strand_service22running_in_this_threadERKPNS2_11strand_implE" id="_ZNK5boost4asio6detail14strand_service22running_in_this_threadERKPNS2_11strand_implE" >running_in_this_thread</a>(<a class="member" href="#boost::asio::io_service::strand::impl_" title='boost::asio::io_service::strand::impl_' data-ref="boost::asio::io_service::strand::impl_" >impl_</a>);</td></tr>
+<tr><th id="235">235</th><td>  }</td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td><b>private</b>:</td></tr>
+<tr><th id="238">238</th><td>  <span class="namespace">boost::asio::detail::</span><a class="type" href="detail/strand_service.hpp.html#boost::asio::detail::strand_service" title='boost::asio::detail::strand_service' data-ref="boost::asio::detail::strand_service" >strand_service</a>&amp; <dfn class="decl" id="boost::asio::io_service::strand::service_" title='boost::asio::io_service::strand::service_' data-ref="boost::asio::io_service::strand::service_" >service_</dfn>;</td></tr>
+<tr><th id="239">239</th><td>  <span class="namespace">boost::asio::detail::</span><a class="type" href="detail/strand_service.hpp.html#boost::asio::detail::strand_service" title='boost::asio::detail::strand_service' data-ref="boost::asio::detail::strand_service" >strand_service</a>::<a class="typedef" href="detail/strand_service.hpp.html#boost::asio::detail::strand_service::implementation_type" title='boost::asio::detail::strand_service::implementation_type' data-type='boost::asio::detail::strand_service::strand_impl *' data-ref="boost::asio::detail::strand_service::implementation_type" >implementation_type</a> <dfn class="decl" id="boost::asio::io_service::strand::impl_" title='boost::asio::io_service::strand::impl_' data-ref="boost::asio::io_service::strand::impl_" >impl_</dfn>;</td></tr>
+<tr><th id="240">240</th><td>};</td></tr>
+<tr><th id="241">241</th><td></td></tr>
+<tr><th id="242">242</th><td><i class="doc">/// Typedef for backwards compatibility.</i></td></tr>
+<tr><th id="243">243</th><td><b>typedef</b> <span class="namespace">boost::asio::</span><a class="type" href="io_service.hpp.html#boost::asio::io_service" title='boost::asio::io_service' data-ref="boost::asio::io_service" >io_service</a>::<a class="type" href="#boost::asio::io_service::strand" title='boost::asio::io_service::strand' data-ref="boost::asio::io_service::strand" >strand</a> <dfn class="typedef" id="boost::asio::strand" title='boost::asio::strand' data-type='boost::asio::io_service::strand' data-ref="boost::asio::strand" >strand</dfn>;</td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td>} <i>// namespace asio</i></td></tr>
+<tr><th id="246">246</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="247">247</th><td></td></tr>
+<tr><th id="248">248</th><td><u>#include <a href="detail/pop_options.hpp.html">&lt;boost/asio/detail/pop_options.hpp&gt;</a></u></td></tr>
+<tr><th id="249">249</th><td></td></tr>
+<tr><th id="250">250</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_STRAND_HPP</u></td></tr>
+<tr><th id="251">251</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

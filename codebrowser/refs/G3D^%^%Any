@@ -1,0 +1,300 @@
+<def f='TrinityCore3.3.5/dep/g3dlite/include/G3D/Any.h' l='184'/>
+<size>32</size>
+<doc f='TrinityCore3.3.5/dep/g3dlite/include/G3D/Any.h' l='36'>/** 
+\brief Easy loading and saving of human-readable configuration files.
+
+Any encodes typed, structured data and can serialize it to a human
+readable format that is very similar to the Python language&apos;s data
+syntax, and fully supports Python&apos;s data syntax as well.
+It is well-suited for quickly creating human-readable file
+formats, especially since deserialization and serialization preserve
+comments and an Any can tell you what file and line it came from.  The
+syntax allows most C++ editors to properly highlight Any files, and
+makes it easy to design little ad-hoc C-like languages in
+configuration files.
+
+The class is designed so that copying Anys generally is fast, even if
+it is a large array or table.  This is because data is shared between
+copies until it is mutated, at which point an actual copy occurs.
+
+\section Example
+Sample File:
+&lt;pre&gt;
+{
+   shape = &quot;round&quot;,
+
+   // in meters
+   radius = 3.7,
+
+   position = Vector3(1.0, -1.0, 0.0),
+   video = { format = &quot;RGB8&quot;, size = (320, 200)},
+
+   material = \#include(&quot;rocks.mat&quot;)
+}
+&lt;/pre&gt;
+
+Sample code using Any:
+&lt;pre&gt;
+Any x;
+x.load(&quot;ball.txt&quot;);
+if (x[&quot;shape&quot;].string() == &quot;round&quot;) {
+    x[&quot;density&quot;] = 3;
+}
+x.save(&quot;ball.txt&quot;);
+&lt;/pre&gt;
+
+The custom serialization format was chosen to be terse, easy for
+humans to read, and easy for machines to parse. It was specifically
+chosen over formats like XML, YAML, JSON, S-expressions, and Protocol
+Buffers, although there is no reason you could not write readers and
+writers for G3D::Any that support those. Any also currently supports
+the JSON format.
+
+G3D::Any assumes that structures do not contain cycles; it is an 
+error to create a structure like:
+
+&lt;pre&gt;
+Any x(Any::ARRAY);
+x.array().append(x);    // don&apos;t do this!
+&lt;/pre&gt;
+
+although no exception will be thrown at runtime during that append.
+
+\section includes
+
+When parsing an Any from a file, the syntax 
+&lt;code&gt;\#include(&lt;i&gt;filename&lt;/i&gt;)&lt;/code&gt; allows subsitution of the contents of
+&lt;i&gt;filename&lt;/i&gt; for any single expression in an Any.  The filename is interpreted
+relative to the file being parsed, and inside of the included file, relative filenames
+are interpreted with respect to the included file (and so on, recursively for nested
+inclusion).
+
+Filenames are resolved with System::resolve and then System::findDataFile if not found,
+so they may contain environment variables.
+
+\section Parsing
+
+The primary use of Any is to create your own text file formats.
+The Vector3 constructor is a good example of how to use the Any::verify 
+methods to provide good error checking while parsing such formats:
+
+&lt;pre&gt;
+Vector3::Vector3(const Any&amp; any) {
+    any.verifyName(&quot;Vector3&quot;);
+    any.verifyType(Any::TABLE, Any::ARRAY);
+    any.verifySize(3);
+
+    if (any.type() == Any::ARRAY) {
+        x = any[0];
+        y = any[1];
+        z = any[2];
+    } else {
+        // Table
+        x = any[&quot;x&quot;];
+        y = any[&quot;y&quot;];
+        z = any[&quot;z&quot;];
+    }
+}
+&lt;/pre&gt;
+
+It is often convenient to iterate through the table portion using G3D::AnyTableReader.
+
+\section BNF
+Serialized format BNF:
+
+\htmlonly
+&lt;pre&gt;
+identifier  ::= (letter | &quot;_&quot;) (letter | digit | &quot;_&quot;)*
+identifier-op ::= &quot;::&quot; | &quot;-&gt;&quot; | &quot;.&quot;
+
+identifier-exp ::= [identifier-op] identifier (identifier-op identifier)*
+
+comment     ::= C++ single or multi-line comments
+separator   ::= &quot;,&quot; | &quot;;&quot;
+
+number      ::= &lt;legal C printf number format&gt;
+string      ::= &lt;legal C double-quoted or unquoted string; backslashes must be escaped&gt;
+boolean     ::= &quot;True&quot; | &quot;False&quot;
+nil         ::= &quot;Nil&quot; &lt;not case sensitive&gt; | &quot;None&quot; &lt;case sensitive&gt;
+array       ::= (&quot;(&quot; | &quot;[&quot; | &quot;{&quot;) [value (separator value)* [separator] ] (&quot;)&quot; | &quot;]&quot; | &quot;}&quot;)
+pair        ::= (identifier | string) (&quot;=&quot; | &quot;:&quot;) value
+table       ::= (&quot;(&quot; | &quot;[&quot; | &quot;{&quot;) [ pair (separator pair)* [separator] ] (&quot;)&quot; | &quot;]&quot; | &quot;}&quot;)
+named-array ::= identifier-exp array
+named-table ::= identifier-exp table
+include     ::= &quot;#&quot; &quot;include&quot; &quot;(&quot; string &quot;)&quot;
+
+value       ::= [comment] (nil | number | boolean | string | array | table | named-array | named-table | include)
+&lt;/pre&gt;
+\endhtmlonly
+
+Except for single-line comments, whitespace is not significant.  
+All parsing is case-insensitive.
+
+The include expression pastes the contents of the named file in as if
+they appeared in the original source.  Note that an include expression
+can only appear in the locations where a value is expected.  This means
+that it cannot yield more than one element of an array and cannot serve
+as the pair in a table.
+
+The deserializer allows the substitution of [] or {} for () when writing
+tuples and &quot;;&quot; for &quot;,&quot;.  These are convenient when mimicing a
+programming language, e.g., &lt;code&gt;&quot;[ printf(&quot;hello world.&quot;); clearScreen();]&quot;&lt;/code&gt; 
+parses as an array containing two named arrays within it. The 
+deserializer also allows a trailing comma inside any array or table,
+which also convenient when commenting out the last element.
+
+The serializer indents four spaces for each level of nesting. 
+Tables are written with the keys in alphabetic order.
+
+\sa G3D::AnyTableReader
+*/</doc>
+<def f='TrinityCore6.x/dep/g3dlite/include/G3D/Any.h' l='184'/>
+<size>32</size>
+<doc f='TrinityCore6.x/dep/g3dlite/include/G3D/Any.h' l='36'>/** 
+\brief Easy loading and saving of human-readable configuration files.
+
+Any encodes typed, structured data and can serialize it to a human
+readable format that is very similar to the Python language&apos;s data
+syntax, and fully supports Python&apos;s data syntax as well.
+It is well-suited for quickly creating human-readable file
+formats, especially since deserialization and serialization preserve
+comments and an Any can tell you what file and line it came from.  The
+syntax allows most C++ editors to properly highlight Any files, and
+makes it easy to design little ad-hoc C-like languages in
+configuration files.
+
+The class is designed so that copying Anys generally is fast, even if
+it is a large array or table.  This is because data is shared between
+copies until it is mutated, at which point an actual copy occurs.
+
+\section Example
+Sample File:
+&lt;pre&gt;
+{
+   shape = &quot;round&quot;,
+
+   // in meters
+   radius = 3.7,
+
+   position = Vector3(1.0, -1.0, 0.0),
+   video = { format = &quot;RGB8&quot;, size = (320, 200)},
+
+   material = \#include(&quot;rocks.mat&quot;)
+}
+&lt;/pre&gt;
+
+Sample code using Any:
+&lt;pre&gt;
+Any x;
+x.load(&quot;ball.txt&quot;);
+if (x[&quot;shape&quot;].string() == &quot;round&quot;) {
+    x[&quot;density&quot;] = 3;
+}
+x.save(&quot;ball.txt&quot;);
+&lt;/pre&gt;
+
+The custom serialization format was chosen to be terse, easy for
+humans to read, and easy for machines to parse. It was specifically
+chosen over formats like XML, YAML, JSON, S-expressions, and Protocol
+Buffers, although there is no reason you could not write readers and
+writers for G3D::Any that support those. Any also currently supports
+the JSON format.
+
+G3D::Any assumes that structures do not contain cycles; it is an 
+error to create a structure like:
+
+&lt;pre&gt;
+Any x(Any::ARRAY);
+x.array().append(x);    // don&apos;t do this!
+&lt;/pre&gt;
+
+although no exception will be thrown at runtime during that append.
+
+\section includes
+
+When parsing an Any from a file, the syntax 
+&lt;code&gt;\#include(&lt;i&gt;filename&lt;/i&gt;)&lt;/code&gt; allows subsitution of the contents of
+&lt;i&gt;filename&lt;/i&gt; for any single expression in an Any.  The filename is interpreted
+relative to the file being parsed, and inside of the included file, relative filenames
+are interpreted with respect to the included file (and so on, recursively for nested
+inclusion).
+
+Filenames are resolved with System::resolve and then System::findDataFile if not found,
+so they may contain environment variables.
+
+\section Parsing
+
+The primary use of Any is to create your own text file formats.
+The Vector3 constructor is a good example of how to use the Any::verify 
+methods to provide good error checking while parsing such formats:
+
+&lt;pre&gt;
+Vector3::Vector3(const Any&amp; any) {
+    any.verifyName(&quot;Vector3&quot;);
+    any.verifyType(Any::TABLE, Any::ARRAY);
+    any.verifySize(3);
+
+    if (any.type() == Any::ARRAY) {
+        x = any[0];
+        y = any[1];
+        z = any[2];
+    } else {
+        // Table
+        x = any[&quot;x&quot;];
+        y = any[&quot;y&quot;];
+        z = any[&quot;z&quot;];
+    }
+}
+&lt;/pre&gt;
+
+It is often convenient to iterate through the table portion using G3D::AnyTableReader.
+
+\section BNF
+Serialized format BNF:
+
+\htmlonly
+&lt;pre&gt;
+identifier  ::= (letter | &quot;_&quot;) (letter | digit | &quot;_&quot;)*
+identifier-op ::= &quot;::&quot; | &quot;-&gt;&quot; | &quot;.&quot;
+
+identifier-exp ::= [identifier-op] identifier (identifier-op identifier)*
+
+comment     ::= C++ single or multi-line comments
+separator   ::= &quot;,&quot; | &quot;;&quot;
+
+number      ::= &lt;legal C printf number format&gt;
+string      ::= &lt;legal C double-quoted or unquoted string; backslashes must be escaped&gt;
+boolean     ::= &quot;True&quot; | &quot;False&quot;
+nil         ::= &quot;Nil&quot; &lt;not case sensitive&gt; | &quot;None&quot; &lt;case sensitive&gt;
+array       ::= (&quot;(&quot; | &quot;[&quot; | &quot;{&quot;) [value (separator value)* [separator] ] (&quot;)&quot; | &quot;]&quot; | &quot;}&quot;)
+pair        ::= (identifier | string) (&quot;=&quot; | &quot;:&quot;) value
+table       ::= (&quot;(&quot; | &quot;[&quot; | &quot;{&quot;) [ pair (separator pair)* [separator] ] (&quot;)&quot; | &quot;]&quot; | &quot;}&quot;)
+named-array ::= identifier-exp array
+named-table ::= identifier-exp table
+include     ::= &quot;#&quot; &quot;include&quot; &quot;(&quot; string &quot;)&quot;
+
+value       ::= [comment] (nil | number | boolean | string | array | table | named-array | named-table | include)
+&lt;/pre&gt;
+\endhtmlonly
+
+Except for single-line comments, whitespace is not significant.  
+All parsing is case-insensitive.
+
+The include expression pastes the contents of the named file in as if
+they appeared in the original source.  Note that an include expression
+can only appear in the locations where a value is expected.  This means
+that it cannot yield more than one element of an array and cannot serve
+as the pair in a table.
+
+The deserializer allows the substitution of [] or {} for () when writing
+tuples and &quot;;&quot; for &quot;,&quot;.  These are convenient when mimicing a
+programming language, e.g., &lt;code&gt;&quot;[ printf(&quot;hello world.&quot;); clearScreen();]&quot;&lt;/code&gt; 
+parses as an array containing two named arrays within it. The 
+deserializer also allows a trailing comma inside any array or table,
+which also convenient when commenting out the last element.
+
+The serializer indents four spaces for each level of nesting. 
+Tables are written with the keys in alphabetic order.
+
+\sa G3D::AnyTableReader
+*/</doc>

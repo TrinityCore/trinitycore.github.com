@@ -1,0 +1,112 @@
+<dec f='TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMeshQuery.h' l='356' type='dtStatus dtNavMeshQuery::raycast(dtPolyRef startRef, const float * startPos, const float * endPos, const dtQueryFilter * filter, float * t, float * hitNormal, dtPolyRef * path, int * pathCount, const int maxPath) const'/>
+<use f='TrinityCore3.3.5/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='1476' u='c' c='_ZN14dtNavMeshQuery22finalizeSlicedFindPathEPmPii'/>
+<use f='TrinityCore3.3.5/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='1576' u='c' c='_ZN14dtNavMeshQuery29finalizeSlicedFindPathPartialEPKmiPmPii'/>
+<def f='TrinityCore3.3.5/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='2306' type='dtStatus dtNavMeshQuery::raycast(dtPolyRef startRef, const float * startPos, const float * endPos, const dtQueryFilter * filter, float * t, float * hitNormal, dtPolyRef * path, int * pathCount, const int maxPath) const'/>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='2268'>/// @par
+///
+/// This method is meant to be used for quick, short distance checks.
+///
+/// If the path array is too small to hold the result, it will be filled as 
+/// far as possible from the start postion toward the end position.
+///
+/// &lt;b&gt;Using the Hit Parameter (t)&lt;/b&gt;
+/// 
+/// If the hit parameter is a very high value (FLT_MAX), then the ray has hit 
+/// the end position. In this case the path represents a valid corridor to the 
+/// end position and the value of @p hitNormal is undefined.
+///
+/// If the hit parameter is zero, then the start position is on the wall that 
+/// was hit and the value of @p hitNormal is undefined.
+///
+/// If 0 &lt; t &lt; 1.0 then the following applies:
+///
+/// @code
+/// distanceToHitBorder = distanceToEndPosition * t
+/// hitPoint = startPos + (endPos - startPos) * t
+/// @endcode
+///
+/// &lt;b&gt;Use Case Restriction&lt;/b&gt;
+///
+/// The raycast ignores the y-value of the end position. (2D check.) This 
+/// places significant limits on how it can be used. For example:
+///
+/// Consider a scene where there is a main floor with a second floor balcony 
+/// that hangs over the main floor. So the first floor mesh extends below the 
+/// balcony mesh. The start position is somewhere on the first floor. The end 
+/// position is on the balcony.
+///
+/// The raycast will search toward the end position along the first floor mesh. 
+/// If it reaches the end position&apos;s xz-coordinates it will indicate FLT_MAX
+/// (no wall hit), meaning it reached the end position. This is one example of why
+/// this method is meant for short distance checks.
+///</doc>
+<doc f='TrinityCore3.3.5/dep/recastnavigation/Detour/Include/DetourNavMeshQuery.h' l='342'>/// Casts a &apos;walkability&apos; ray along the surface of the navigation mesh from 
+	/// the start position toward the end position.
+	/// @note A wrapper around raycast(..., RaycastHit*). Retained for backward compatibility.
+	///  @param[in]		startRef	The reference id of the start polygon.
+	///  @param[in]		startPos	A position within the start polygon representing 
+	///  							the start of the ray. [(x, y, z)]
+	///  @param[in]		endPos		The position to cast the ray toward. [(x, y, z)]
+	///  @param[out]	t			The hit parameter. (FLT_MAX if no wall hit.)
+	///  @param[out]	hitNormal	The normal of the nearest wall hit. [(x, y, z)]
+	///  @param[in]		filter		The polygon filter to apply to the query.
+	///  @param[out]	path		The reference ids of the visited polygons. [opt]
+	///  @param[out]	pathCount	The number of visited polygons. [opt]
+	///  @param[in]		maxPath		The maximum number of polygons the @p path array can hold.
+	/// @returns The status flags for the query.</doc>
+<dec f='TrinityCore6.x/dep/recastnavigation/Detour/Include/DetourNavMeshQuery.h' l='356' type='dtStatus dtNavMeshQuery::raycast(dtPolyRef startRef, const float * startPos, const float * endPos, const dtQueryFilter * filter, float * t, float * hitNormal, dtPolyRef * path, int * pathCount, const int maxPath) const'/>
+<use f='TrinityCore6.x/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='1476' u='c' c='_ZN14dtNavMeshQuery22finalizeSlicedFindPathEPmPii'/>
+<use f='TrinityCore6.x/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='1576' u='c' c='_ZN14dtNavMeshQuery29finalizeSlicedFindPathPartialEPKmiPmPii'/>
+<def f='TrinityCore6.x/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='2306' type='dtStatus dtNavMeshQuery::raycast(dtPolyRef startRef, const float * startPos, const float * endPos, const dtQueryFilter * filter, float * t, float * hitNormal, dtPolyRef * path, int * pathCount, const int maxPath) const'/>
+<doc f='TrinityCore6.x/dep/recastnavigation/Detour/Source/DetourNavMeshQuery.cpp' l='2268'>/// @par
+///
+/// This method is meant to be used for quick, short distance checks.
+///
+/// If the path array is too small to hold the result, it will be filled as 
+/// far as possible from the start postion toward the end position.
+///
+/// &lt;b&gt;Using the Hit Parameter (t)&lt;/b&gt;
+/// 
+/// If the hit parameter is a very high value (FLT_MAX), then the ray has hit 
+/// the end position. In this case the path represents a valid corridor to the 
+/// end position and the value of @p hitNormal is undefined.
+///
+/// If the hit parameter is zero, then the start position is on the wall that 
+/// was hit and the value of @p hitNormal is undefined.
+///
+/// If 0 &lt; t &lt; 1.0 then the following applies:
+///
+/// @code
+/// distanceToHitBorder = distanceToEndPosition * t
+/// hitPoint = startPos + (endPos - startPos) * t
+/// @endcode
+///
+/// &lt;b&gt;Use Case Restriction&lt;/b&gt;
+///
+/// The raycast ignores the y-value of the end position. (2D check.) This 
+/// places significant limits on how it can be used. For example:
+///
+/// Consider a scene where there is a main floor with a second floor balcony 
+/// that hangs over the main floor. So the first floor mesh extends below the 
+/// balcony mesh. The start position is somewhere on the first floor. The end 
+/// position is on the balcony.
+///
+/// The raycast will search toward the end position along the first floor mesh. 
+/// If it reaches the end position&apos;s xz-coordinates it will indicate FLT_MAX
+/// (no wall hit), meaning it reached the end position. This is one example of why
+/// this method is meant for short distance checks.
+///</doc>
+<doc f='TrinityCore6.x/dep/recastnavigation/Detour/Include/DetourNavMeshQuery.h' l='342'>/// Casts a &apos;walkability&apos; ray along the surface of the navigation mesh from 
+	/// the start position toward the end position.
+	/// @note A wrapper around raycast(..., RaycastHit*). Retained for backward compatibility.
+	///  @param[in]		startRef	The reference id of the start polygon.
+	///  @param[in]		startPos	A position within the start polygon representing 
+	///  							the start of the ray. [(x, y, z)]
+	///  @param[in]		endPos		The position to cast the ray toward. [(x, y, z)]
+	///  @param[out]	t			The hit parameter. (FLT_MAX if no wall hit.)
+	///  @param[out]	hitNormal	The normal of the nearest wall hit. [(x, y, z)]
+	///  @param[in]		filter		The polygon filter to apply to the query.
+	///  @param[out]	path		The reference ids of the visited polygons. [opt]
+	///  @param[out]	pathCount	The number of visited polygons. [opt]
+	///  @param[in]		maxPath		The maximum number of polygons the @p path array can hold.
+	/// @returns The status flags for the query.</doc>

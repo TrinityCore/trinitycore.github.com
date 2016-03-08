@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+<head>
+<title>tomcrypt_prng.h [TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_prng.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/libtomcrypt/src/headers/tomcrypt_prng.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>dep</a>/<a href='../../../..'>CascLib</a>/<a href='../../..'>src</a>/<a href='../..'>libtomcrypt</a>/<a href='..'>src</a>/<a href='./'>headers</a>/tomcrypt_prng.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* ---- PRNG Stuff ---- */</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <span class="macro" data-ref="_M/LTC_YARROW">LTC_YARROW</span></u></td></tr>
+<tr><th id="3">3</th><td><b>struct</b> yarrow_prng {</td></tr>
+<tr><th id="4">4</th><td>    <em>int</em>                   cipher, hash;</td></tr>
+<tr><th id="5">5</th><td>    <em>unsigned</em> <em>char</em>         pool[MAXBLOCKSIZE];</td></tr>
+<tr><th id="6">6</th><td>    symmetric_CTR         ctr;</td></tr>
+<tr><th id="7">7</th><td>    LTC_MUTEX_TYPE(prng_lock)</td></tr>
+<tr><th id="8">8</th><td>};</td></tr>
+<tr><th id="9">9</th><td><u>#<span data-ppcond="2">endif</span></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#17" data-ref="_M/LTC_RC4">LTC_RC4</a></u></td></tr>
+<tr><th id="12">12</th><td><b>struct</b> <dfn class="type def" id="rc4_prng" title='rc4_prng' data-ref="rc4_prng" >rc4_prng</dfn> {</td></tr>
+<tr><th id="13">13</th><td>    <em>int</em> <dfn class="decl" id="rc4_prng::x" title='rc4_prng::x' data-ref="rc4_prng::x" >x</dfn>, <dfn class="decl" id="rc4_prng::y" title='rc4_prng::y' data-ref="rc4_prng::y" >y</dfn>;</td></tr>
+<tr><th id="14">14</th><td>    <em>unsigned</em> <em>char</em> <dfn class="decl" id="rc4_prng::buf" title='rc4_prng::buf' data-ref="rc4_prng::buf" >buf</dfn>[<var>256</var>];</td></tr>
+<tr><th id="15">15</th><td>};</td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="11">endif</span></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifdef</span> <span class="macro" data-ref="_M/LTC_FORTUNA">LTC_FORTUNA</span></u></td></tr>
+<tr><th id="19">19</th><td><b>struct</b> fortuna_prng {</td></tr>
+<tr><th id="20">20</th><td>    hash_state pool[LTC_FORTUNA_POOLS];     <i>/* the  pools */</i></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td>    symmetric_key skey;</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td>    <em>unsigned</em> <em>char</em> K[<var>32</var>],      <i>/* the current key */</i></td></tr>
+<tr><th id="25">25</th><td>                  IV[<var>16</var>];     <i>/* IV for CTR mode */</i></td></tr>
+<tr><th id="26">26</th><td>    </td></tr>
+<tr><th id="27">27</th><td>    <em>unsigned</em> <em>long</em> pool_idx,   <i>/* current pool we will add to */</i></td></tr>
+<tr><th id="28">28</th><td>                  pool0_len,  <i>/* length of 0'th pool */</i></td></tr>
+<tr><th id="29">29</th><td>                  wd;            </td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>    ulong64       reset_cnt;  <i>/* number of times we have reset */</i></td></tr>
+<tr><th id="32">32</th><td>    LTC_MUTEX_TYPE(prng_lock)</td></tr>
+<tr><th id="33">33</th><td>};</td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><u>#<span data-ppcond="36">ifdef</span> <span class="macro" data-ref="_M/LTC_SOBER128">LTC_SOBER128</span></u></td></tr>
+<tr><th id="37">37</th><td><b>struct</b> sober128_prng {</td></tr>
+<tr><th id="38">38</th><td>    ulong32      R[<var>17</var>],          <i>/* Working storage for the shift register */</i></td></tr>
+<tr><th id="39">39</th><td>                 initR[<var>17</var>],      <i>/* saved register contents */</i> </td></tr>
+<tr><th id="40">40</th><td>                 konst,          <i>/* key dependent constant */</i></td></tr>
+<tr><th id="41">41</th><td>                 sbuf;           <i>/* partial word encryption buffer */</i></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <em>int</em>          nbuf,           <i>/* number of part-word stream bits buffered */</i></td></tr>
+<tr><th id="44">44</th><td>                 flag,           <i>/* first add_entropy call or not? */</i></td></tr>
+<tr><th id="45">45</th><td>                 set;            <i>/* did we call add_entropy to set key? */</i></td></tr>
+<tr><th id="46">46</th><td>    </td></tr>
+<tr><th id="47">47</th><td>};</td></tr>
+<tr><th id="48">48</th><td><u>#<span data-ppcond="36">endif</span></u></td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><b>typedef</b> <b>union</b> <dfn class="type def" id="Prng_state" title='Prng_state' data-ref="Prng_state" ><a class="type" href="#Prng_state" title='Prng_state' data-ref="Prng_state" >Prng_state</a></dfn> {</td></tr>
+<tr><th id="51">51</th><td>    <em>char</em> <dfn class="decl" id="Prng_state::dummy" title='Prng_state::dummy' data-ref="Prng_state::dummy" >dummy</dfn>[<var>1</var>];</td></tr>
+<tr><th id="52">52</th><td><u>#<span data-ppcond="52">ifdef</span> <span class="macro" data-ref="_M/LTC_YARROW">LTC_YARROW</span></u></td></tr>
+<tr><th id="53">53</th><td>    <b>struct</b> yarrow_prng    yarrow;</td></tr>
+<tr><th id="54">54</th><td><u>#<span data-ppcond="52">endif</span></u></td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="55">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#17" data-ref="_M/LTC_RC4">LTC_RC4</a></u></td></tr>
+<tr><th id="56">56</th><td>    <b>struct</b> <a class="type" href="#rc4_prng" title='rc4_prng' data-ref="rc4_prng" >rc4_prng</a>       <dfn class="decl" id="Prng_state::rc4" title='Prng_state::rc4' data-ref="Prng_state::rc4" >rc4</dfn>;</td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="55">endif</span></u></td></tr>
+<tr><th id="58">58</th><td><u>#<span data-ppcond="58">ifdef</span> <span class="macro" data-ref="_M/LTC_FORTUNA">LTC_FORTUNA</span></u></td></tr>
+<tr><th id="59">59</th><td>    <b>struct</b> fortuna_prng   fortuna;</td></tr>
+<tr><th id="60">60</th><td><u>#<span data-ppcond="58">endif</span></u></td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="61">ifdef</span> <span class="macro" data-ref="_M/LTC_SOBER128">LTC_SOBER128</span></u></td></tr>
+<tr><th id="62">62</th><td>    <b>struct</b> sober128_prng  sober128;</td></tr>
+<tr><th id="63">63</th><td><u>#<span data-ppcond="61">endif</span></u></td></tr>
+<tr><th id="64">64</th><td>} <dfn class="typedef" id="prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</dfn>;</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><i class="doc">/** PRNG descriptor */</i></td></tr>
+<tr><th id="67">67</th><td><b>extern</b> <b>struct</b> <dfn class="type def" id="ltc_prng_descriptor" title='ltc_prng_descriptor' data-ref="ltc_prng_descriptor" ><a class="type" href="#ltc_prng_descriptor" title='ltc_prng_descriptor' data-ref="ltc_prng_descriptor" >ltc_prng_descriptor</a></dfn> {</td></tr>
+<tr><th id="68">68</th><td>    <i class="doc">/** Name of the PRNG */</i></td></tr>
+<tr><th id="69">69</th><td>    <em>char</em> *<dfn class="decl" id="ltc_prng_descriptor::name" title='ltc_prng_descriptor::name' data-ref="ltc_prng_descriptor::name" >name</dfn>;</td></tr>
+<tr><th id="70">70</th><td>    <i class="doc">/** size in bytes of exported state */</i></td></tr>
+<tr><th id="71">71</th><td>    <em>int</em>  <dfn class="decl" id="ltc_prng_descriptor::export_size" title='ltc_prng_descriptor::export_size' data-ref="ltc_prng_descriptor::export_size" >export_size</dfn>;</td></tr>
+<tr><th id="72">72</th><td>    <i class="doc">/** Start a PRNG state</i></td></tr>
+<tr><th id="73">73</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">prng</span>   [out] The state to initialize</i></td></tr>
+<tr><th id="74">74</th><td><i class="doc">        <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="76">76</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_prng_descriptor::start" title='ltc_prng_descriptor::start' data-ref="ltc_prng_descriptor::start" >start</dfn>)(<a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col7 decl" id="637prng" title='prng' data-type='prng_state *' data-ref="637prng" >prng</dfn>);</td></tr>
+<tr><th id="77">77</th><td>    <i class="doc">/** Add entropy to the PRNG</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">in</span>         The entropy</i></td></tr>
+<tr><th id="79">79</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">inlen</span>      Length of the entropy (octets)\</i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">prng</span>       The PRNG state</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">        <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="83">83</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_prng_descriptor::add_entropy" title='ltc_prng_descriptor::add_entropy' data-ref="ltc_prng_descriptor::add_entropy" >add_entropy</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col8 decl" id="638in" title='in' data-type='const unsigned char *' data-ref="638in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="639inlen" title='inlen' data-type='unsigned long' data-ref="639inlen" >inlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col0 decl" id="640prng" title='prng' data-type='prng_state *' data-ref="640prng" >prng</dfn>);</td></tr>
+<tr><th id="84">84</th><td>    <i class="doc">/** Ready a PRNG state to read from</i></td></tr>
+<tr><th id="85">85</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">prng</span>       The PRNG state to ready</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc">        <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="87">87</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="88">88</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_prng_descriptor::ready" title='ltc_prng_descriptor::ready' data-ref="ltc_prng_descriptor::ready" >ready</dfn>)(<a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col1 decl" id="641prng" title='prng' data-type='prng_state *' data-ref="641prng" >prng</dfn>);</td></tr>
+<tr><th id="89">89</th><td>    <i class="doc">/** Read from the PRNG</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">out</span>     [out] Where to store the data</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">outlen</span>  Length of data desired (octets)</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">prng</span>    The PRNG state to read from</i></td></tr>
+<tr><th id="93">93</th><td><i class="doc">        <span class="command">@return</span> Number of octets read</i></td></tr>
+<tr><th id="94">94</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="95">95</th><td>    <em>unsigned</em> <em>long</em> (*<dfn class="decl" id="ltc_prng_descriptor::read" title='ltc_prng_descriptor::read' data-ref="ltc_prng_descriptor::read" >read</dfn>)(<em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="642out" title='out' data-type='unsigned char *' data-ref="642out" >out</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="643outlen" title='outlen' data-type='unsigned long' data-ref="643outlen" >outlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col4 decl" id="644prng" title='prng' data-type='prng_state *' data-ref="644prng" >prng</dfn>);</td></tr>
+<tr><th id="96">96</th><td>    <i class="doc">/** Terminate a PRNG state</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">prng</span>   The PRNG state to terminate</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">        <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="100">100</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_prng_descriptor::done" title='ltc_prng_descriptor::done' data-ref="ltc_prng_descriptor::done" >done</dfn>)(<a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col5 decl" id="645prng" title='prng' data-type='prng_state *' data-ref="645prng" >prng</dfn>);</td></tr>
+<tr><th id="101">101</th><td>    <i class="doc">/** Export a PRNG state  </i></td></tr>
+<tr><th id="102">102</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">out</span>     [out] The destination for the state</i></td></tr>
+<tr><th id="103">103</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">outlen</span>  [in/out] The max size and resulting size of the PRNG state</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">prng</span>    The PRNG to export</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">        <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="106">106</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="107">107</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_prng_descriptor::pexport" title='ltc_prng_descriptor::pexport' data-ref="ltc_prng_descriptor::pexport" >pexport</dfn>)(<em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="646out" title='out' data-type='unsigned char *' data-ref="646out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col7 decl" id="647outlen" title='outlen' data-type='unsigned long *' data-ref="647outlen" >outlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col8 decl" id="648prng" title='prng' data-type='prng_state *' data-ref="648prng" >prng</dfn>);</td></tr>
+<tr><th id="108">108</th><td>    <i class="doc">/** Import a PRNG state</i></td></tr>
+<tr><th id="109">109</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">in</span>      The data to import</i></td></tr>
+<tr><th id="110">110</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">inlen</span>   The length of the data to import (octets)</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">        <span class="command">@param</span> <span class="arg">prng</span>    The PRNG to initialize/import</i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">        <span class="command">@return</span> CRYPT_OK if successful</i></td></tr>
+<tr><th id="113">113</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="114">114</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_prng_descriptor::pimport" title='ltc_prng_descriptor::pimport' data-ref="ltc_prng_descriptor::pimport" >pimport</dfn>)(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col9 decl" id="649in" title='in' data-type='const unsigned char *' data-ref="649in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col0 decl" id="650inlen" title='inlen' data-type='unsigned long' data-ref="650inlen" >inlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col1 decl" id="651prng" title='prng' data-type='prng_state *' data-ref="651prng" >prng</dfn>);</td></tr>
+<tr><th id="115">115</th><td>    <i class="doc">/** Self-test the PRNG</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">        <span class="command">@return</span> CRYPT_OK if successful, CRYPT_NOP if self-testing has been disabled</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">    */</i></td></tr>
+<tr><th id="118">118</th><td>    <em>int</em> (*<dfn class="decl" id="ltc_prng_descriptor::test" title='ltc_prng_descriptor::test' data-ref="ltc_prng_descriptor::test" >test</dfn>)(<em>void</em>);</td></tr>
+<tr><th id="119">119</th><td>} <dfn class="decl" id="prng_descriptor" title='prng_descriptor' data-ref="prng_descriptor" >prng_descriptor</dfn>[];</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="121">ifdef</span> <span class="macro" data-ref="_M/LTC_YARROW">LTC_YARROW</span></u></td></tr>
+<tr><th id="122">122</th><td><em>int</em> yarrow_start(prng_state *prng);</td></tr>
+<tr><th id="123">123</th><td><em>int</em> yarrow_add_entropy(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="124">124</th><td><em>int</em> yarrow_ready(prng_state *prng);</td></tr>
+<tr><th id="125">125</th><td><em>unsigned</em> <em>long</em> yarrow_read(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> outlen, prng_state *prng);</td></tr>
+<tr><th id="126">126</th><td><em>int</em> yarrow_done(prng_state *prng);</td></tr>
+<tr><th id="127">127</th><td><em>int</em>  yarrow_export(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> *outlen, prng_state *prng);</td></tr>
+<tr><th id="128">128</th><td><em>int</em>  yarrow_import(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="129">129</th><td><em>int</em>  yarrow_test(<em>void</em>);</td></tr>
+<tr><th id="130">130</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_prng_descriptor yarrow_desc;</td></tr>
+<tr><th id="131">131</th><td><u>#<span data-ppcond="121">endif</span></u></td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td><u>#<span data-ppcond="133">ifdef</span> <span class="macro" data-ref="_M/LTC_FORTUNA">LTC_FORTUNA</span></u></td></tr>
+<tr><th id="134">134</th><td><em>int</em> fortuna_start(prng_state *prng);</td></tr>
+<tr><th id="135">135</th><td><em>int</em> fortuna_add_entropy(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="136">136</th><td><em>int</em> fortuna_ready(prng_state *prng);</td></tr>
+<tr><th id="137">137</th><td><em>unsigned</em> <em>long</em> fortuna_read(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> outlen, prng_state *prng);</td></tr>
+<tr><th id="138">138</th><td><em>int</em> fortuna_done(prng_state *prng);</td></tr>
+<tr><th id="139">139</th><td><em>int</em>  fortuna_export(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> *outlen, prng_state *prng);</td></tr>
+<tr><th id="140">140</th><td><em>int</em>  fortuna_import(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="141">141</th><td><em>int</em>  fortuna_test(<em>void</em>);</td></tr>
+<tr><th id="142">142</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_prng_descriptor fortuna_desc;</td></tr>
+<tr><th id="143">143</th><td><u>#<span data-ppcond="133">endif</span></u></td></tr>
+<tr><th id="144">144</th><td></td></tr>
+<tr><th id="145">145</th><td><u>#<span data-ppcond="145">ifdef</span> <a class="macro" href="tomcrypt_custom.h.html#17" data-ref="_M/LTC_RC4">LTC_RC4</a></u></td></tr>
+<tr><th id="146">146</th><td><em>int</em> <dfn class="decl" id="rc4_start" title='rc4_start' data-ref="rc4_start" >rc4_start</dfn>(<a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col2 decl" id="652prng" title='prng' data-type='prng_state *' data-ref="652prng" >prng</dfn>);</td></tr>
+<tr><th id="147">147</th><td><em>int</em> <dfn class="decl" id="rc4_add_entropy" title='rc4_add_entropy' data-ref="rc4_add_entropy" >rc4_add_entropy</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="653in" title='in' data-type='const unsigned char *' data-ref="653in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col4 decl" id="654inlen" title='inlen' data-type='unsigned long' data-ref="654inlen" >inlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col5 decl" id="655prng" title='prng' data-type='prng_state *' data-ref="655prng" >prng</dfn>);</td></tr>
+<tr><th id="148">148</th><td><em>int</em> <dfn class="decl" id="rc4_ready" title='rc4_ready' data-ref="rc4_ready" >rc4_ready</dfn>(<a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col6 decl" id="656prng" title='prng' data-type='prng_state *' data-ref="656prng" >prng</dfn>);</td></tr>
+<tr><th id="149">149</th><td><em>unsigned</em> <em>long</em> <dfn class="decl" id="rc4_read" title='rc4_read' data-ref="rc4_read" >rc4_read</dfn>(<em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="657out" title='out' data-type='unsigned char *' data-ref="657out" >out</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col8 decl" id="658outlen" title='outlen' data-type='unsigned long' data-ref="658outlen" >outlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col9 decl" id="659prng" title='prng' data-type='prng_state *' data-ref="659prng" >prng</dfn>);</td></tr>
+<tr><th id="150">150</th><td><em>int</em>  <dfn class="decl" id="rc4_done" title='rc4_done' data-ref="rc4_done" >rc4_done</dfn>(<a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col0 decl" id="660prng" title='prng' data-type='prng_state *' data-ref="660prng" >prng</dfn>);</td></tr>
+<tr><th id="151">151</th><td><em>int</em>  <dfn class="decl" id="rc4_export" title='rc4_export' data-ref="rc4_export" >rc4_export</dfn>(<em>unsigned</em> <em>char</em> *<dfn class="local col1 decl" id="661out" title='out' data-type='unsigned char *' data-ref="661out" >out</dfn>, <em>unsigned</em> <em>long</em> *<dfn class="local col2 decl" id="662outlen" title='outlen' data-type='unsigned long *' data-ref="662outlen" >outlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col3 decl" id="663prng" title='prng' data-type='prng_state *' data-ref="663prng" >prng</dfn>);</td></tr>
+<tr><th id="152">152</th><td><em>int</em>  <dfn class="decl" id="rc4_import" title='rc4_import' data-ref="rc4_import" >rc4_import</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="664in" title='in' data-type='const unsigned char *' data-ref="664in" >in</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col5 decl" id="665inlen" title='inlen' data-type='unsigned long' data-ref="665inlen" >inlen</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col6 decl" id="666prng" title='prng' data-type='prng_state *' data-ref="666prng" >prng</dfn>);</td></tr>
+<tr><th id="153">153</th><td><em>int</em>  <dfn class="decl" id="rc4_test" title='rc4_test' data-ref="rc4_test" >rc4_test</dfn>(<em>void</em>);</td></tr>
+<tr><th id="154">154</th><td><b>extern</b> <em>const</em> <b>struct</b> <a class="type" href="#ltc_prng_descriptor" title='ltc_prng_descriptor' data-ref="ltc_prng_descriptor" >ltc_prng_descriptor</a> <dfn class="decl" id="rc4_desc" title='rc4_desc' data-ref="rc4_desc" >rc4_desc</dfn>;</td></tr>
+<tr><th id="155">155</th><td><u>#<span data-ppcond="145">endif</span></u></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td><u>#<span data-ppcond="157">ifdef</span> <span class="macro" data-ref="_M/LTC_SPRNG">LTC_SPRNG</span></u></td></tr>
+<tr><th id="158">158</th><td><em>int</em> sprng_start(prng_state *prng);</td></tr>
+<tr><th id="159">159</th><td><em>int</em> sprng_add_entropy(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="160">160</th><td><em>int</em> sprng_ready(prng_state *prng);</td></tr>
+<tr><th id="161">161</th><td><em>unsigned</em> <em>long</em> sprng_read(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> outlen, prng_state *prng);</td></tr>
+<tr><th id="162">162</th><td><em>int</em> sprng_done(prng_state *prng);</td></tr>
+<tr><th id="163">163</th><td><em>int</em>  sprng_export(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> *outlen, prng_state *prng);</td></tr>
+<tr><th id="164">164</th><td><em>int</em>  sprng_import(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="165">165</th><td><em>int</em>  sprng_test(<em>void</em>);</td></tr>
+<tr><th id="166">166</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_prng_descriptor sprng_desc;</td></tr>
+<tr><th id="167">167</th><td><u>#<span data-ppcond="157">endif</span></u></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td><u>#<span data-ppcond="169">ifdef</span> <span class="macro" data-ref="_M/LTC_SOBER128">LTC_SOBER128</span></u></td></tr>
+<tr><th id="170">170</th><td><em>int</em> sober128_start(prng_state *prng);</td></tr>
+<tr><th id="171">171</th><td><em>int</em> sober128_add_entropy(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="172">172</th><td><em>int</em> sober128_ready(prng_state *prng);</td></tr>
+<tr><th id="173">173</th><td><em>unsigned</em> <em>long</em> sober128_read(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> outlen, prng_state *prng);</td></tr>
+<tr><th id="174">174</th><td><em>int</em> sober128_done(prng_state *prng);</td></tr>
+<tr><th id="175">175</th><td><em>int</em>  sober128_export(<em>unsigned</em> <em>char</em> *out, <em>unsigned</em> <em>long</em> *outlen, prng_state *prng);</td></tr>
+<tr><th id="176">176</th><td><em>int</em>  sober128_import(<em>const</em> <em>unsigned</em> <em>char</em> *in, <em>unsigned</em> <em>long</em> inlen, prng_state *prng);</td></tr>
+<tr><th id="177">177</th><td><em>int</em>  sober128_test(<em>void</em>);</td></tr>
+<tr><th id="178">178</th><td><b>extern</b> <em>const</em> <b>struct</b> ltc_prng_descriptor sober128_desc;</td></tr>
+<tr><th id="179">179</th><td><u>#<span data-ppcond="169">endif</span></u></td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td><em>int</em> <dfn class="decl" id="find_prng" title='find_prng' data-ref="find_prng" >find_prng</dfn>(<em>const</em> <em>char</em> *<dfn class="local col7 decl" id="667name" title='name' data-type='const char *' data-ref="667name" >name</dfn>);</td></tr>
+<tr><th id="182">182</th><td><em>int</em> <dfn class="decl" id="register_prng" title='register_prng' data-ref="register_prng" >register_prng</dfn>(<em>const</em> <b>struct</b> <a class="type" href="#ltc_prng_descriptor" title='ltc_prng_descriptor' data-ref="ltc_prng_descriptor" >ltc_prng_descriptor</a> *<dfn class="local col8 decl" id="668prng" title='prng' data-type='const struct ltc_prng_descriptor *' data-ref="668prng" >prng</dfn>);</td></tr>
+<tr><th id="183">183</th><td><em>int</em> <dfn class="decl" id="unregister_prng" title='unregister_prng' data-ref="unregister_prng" >unregister_prng</dfn>(<em>const</em> <b>struct</b> <a class="type" href="#ltc_prng_descriptor" title='ltc_prng_descriptor' data-ref="ltc_prng_descriptor" >ltc_prng_descriptor</a> *<dfn class="local col9 decl" id="669prng" title='prng' data-type='const struct ltc_prng_descriptor *' data-ref="669prng" >prng</dfn>);</td></tr>
+<tr><th id="184">184</th><td><em>int</em> <dfn class="decl" id="prng_is_valid" title='prng_is_valid' data-ref="prng_is_valid" >prng_is_valid</dfn>(<em>int</em> <dfn class="local col0 decl" id="670idx" title='idx' data-type='int' data-ref="670idx" >idx</dfn>);</td></tr>
+<tr><th id="185">185</th><td><a class="macro" href="tomcrypt_custom.h.html#405" title="" data-ref="_M/LTC_MUTEX_PROTO">LTC_MUTEX_PROTO</a>(ltc_prng_mutex)</td></tr>
+<tr><th id="186">186</th><td></td></tr>
+<tr><th id="187">187</th><td><i>/* Slow RNG you **might** be able to use to seed a PRNG with.  Be careful as this</i></td></tr>
+<tr><th id="188">188</th><td><i> * might not work on all platforms as planned</i></td></tr>
+<tr><th id="189">189</th><td><i> */</i></td></tr>
+<tr><th id="190">190</th><td><em>unsigned</em> <em>long</em> <dfn class="decl" id="rng_get_bytes" title='rng_get_bytes' data-ref="rng_get_bytes" >rng_get_bytes</dfn>(<em>unsigned</em> <em>char</em> *<dfn class="local col1 decl" id="671out" title='out' data-type='unsigned char *' data-ref="671out" >out</dfn>, </td></tr>
+<tr><th id="191">191</th><td>                            <em>unsigned</em> <em>long</em> <dfn class="local col2 decl" id="672outlen" title='outlen' data-type='unsigned long' data-ref="672outlen" >outlen</dfn>, </td></tr>
+<tr><th id="192">192</th><td>                            <em>void</em> (*<dfn class="local col3 decl" id="673callback" title='callback' data-type='void (*)()' data-ref="673callback" >callback</dfn>)(<em>void</em>));</td></tr>
+<tr><th id="193">193</th><td></td></tr>
+<tr><th id="194">194</th><td><em>int</em> <dfn class="decl" id="rng_make_prng" title='rng_make_prng' data-ref="rng_make_prng" >rng_make_prng</dfn>(<em>int</em> <dfn class="local col4 decl" id="674bits" title='bits' data-type='int' data-ref="674bits" >bits</dfn>, <em>int</em> <dfn class="local col5 decl" id="675wprng" title='wprng' data-type='int' data-ref="675wprng" >wprng</dfn>, <a class="typedef" href="#prng_state" title='prng_state' data-type='union Prng_state' data-ref="prng_state" >prng_state</a> *<dfn class="local col6 decl" id="676prng" title='prng' data-type='prng_state *' data-ref="676prng" >prng</dfn>, <em>void</em> (*<dfn class="local col7 decl" id="677callback" title='callback' data-type='void (*)()' data-ref="677callback" >callback</dfn>)(<em>void</em>));</td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td><i>/* $Source: /cvs/libtom/libtomcrypt/src/headers/tomcrypt_prng.h,v $ */</i></td></tr>
+<tr><th id="198">198</th><td><i>/* $Revision: 1.9 $ */</i></td></tr>
+<tr><th id="199">199</th><td><i>/* $Date: 2007/05/12 14:32:35 $ */</i></td></tr>
+<tr><th id="200">200</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../CascCommon.cpp.html'>TrinityCore6.x/dep/CascLib/src/CascCommon.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,50 @@
+<dec f='TrinityCore3.3.5/dep/g3dlite/include/G3D/BinaryInput.h' l='185' type='void G3D::BinaryInput::BinaryInput(const uint8 * data, int64 dataLen, G3D::G3DEndian dataEndian, bool compressed = false, bool copyMemory = true)'/>
+<doc f='TrinityCore3.3.5/dep/g3dlite/include/G3D/BinaryInput.h' l='162'>/**
+     Creates input stream from an in memory source.
+     Unless you specify copyMemory = false, the data is copied
+     from the pointer, so you may deallocate it as soon as the
+     object is constructed.  It is an error to specify copyMemory = false
+     and compressed = true.
+
+     To decompress part of a file, you can follow the following paradigm:
+
+     \htmlonly
+     &lt;PRE&gt;
+        BinaryInput master(...);
+
+        // read from master to point where compressed data exists.
+
+        BinaryInput subset(master.getCArray() + master.getPosition(), 
+                           master.length() - master.getPosition(),
+                           master.endian(), true, true);
+
+        // Now read from subset (it is ok for master to go out of scope)
+     &lt;/PRE&gt;
+     \endhtmlonly
+     */</doc>
+<def f='TrinityCore3.3.5/dep/g3dlite/source/BinaryInput.cpp' l='67' type='void G3D::BinaryInput::BinaryInput(const uint8 * data, int64 dataLen, G3D::G3DEndian dataEndian, bool compressed = false, bool copyMemory = true)'/>
+<dec f='TrinityCore6.x/dep/g3dlite/include/G3D/BinaryInput.h' l='185' type='void G3D::BinaryInput::BinaryInput(const uint8 * data, int64 dataLen, G3D::G3DEndian dataEndian, bool compressed = false, bool copyMemory = true)'/>
+<doc f='TrinityCore6.x/dep/g3dlite/include/G3D/BinaryInput.h' l='162'>/**
+     Creates input stream from an in memory source.
+     Unless you specify copyMemory = false, the data is copied
+     from the pointer, so you may deallocate it as soon as the
+     object is constructed.  It is an error to specify copyMemory = false
+     and compressed = true.
+
+     To decompress part of a file, you can follow the following paradigm:
+
+     \htmlonly
+     &lt;PRE&gt;
+        BinaryInput master(...);
+
+        // read from master to point where compressed data exists.
+
+        BinaryInput subset(master.getCArray() + master.getPosition(), 
+                           master.length() - master.getPosition(),
+                           master.endian(), true, true);
+
+        // Now read from subset (it is ok for master to go out of scope)
+     &lt;/PRE&gt;
+     \endhtmlonly
+     */</doc>
+<def f='TrinityCore6.x/dep/g3dlite/source/BinaryInput.cpp' l='67' type='void G3D::BinaryInput::BinaryInput(const uint8 * data, int64 dataLen, G3D::G3DEndian dataEndian, bool compressed = false, bool copyMemory = true)'/>

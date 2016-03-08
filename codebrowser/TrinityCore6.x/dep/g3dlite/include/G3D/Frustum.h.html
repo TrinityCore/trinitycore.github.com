@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<title>Frustum.h [TrinityCore6.x/dep/g3dlite/include/G3D/Frustum.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/g3dlite/include/G3D/Frustum.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>g3dlite</a>/<a href='..'>include</a>/<a href='./'>G3D</a>/Frustum.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> <span class="command"> \file</span> G3D/Frustum.h</i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"></i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> <span class="command"> \maintainer</span> Morgan McGuire, <a href="http://graphics.cs.williams.edu">http://graphics.cs.williams.edu</a></i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"></i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> <span class="command"> \created</span> 2005-07-20</i></td></tr>
+<tr><th id="7">7</th><td><i class="doc"> <span class="command"> \edited</span>  2013-06-11</i></td></tr>
+<tr><th id="8">8</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#<span data-ppcond="10">ifndef</span> <span class="macro" data-ref="_M/G3D_Frustum_h">G3D_Frustum_h</span></u></td></tr>
+<tr><th id="11">11</th><td><u>#define <dfn class="macro" id="_M/G3D_Frustum_h" data-ref="_M/G3D_Frustum_h">G3D_Frustum_h</dfn></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="platform.h.html">"G3D/platform.h"</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="g3dmath.h.html">"G3D/g3dmath.h"</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="Plane.h.html">"G3D/Plane.h"</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="SmallArray.h.html">"G3D/SmallArray.h"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="Vector4.h.html">"G3D/Vector4.h"</a></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>namespace</b> <span class="namespace">G3D</span> {</td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><b>class</b> <a class="type" href="Box.h.html#G3D::Box" title='G3D::Box' data-ref="G3D::Box" id="G3D::Box" >Box</a>;</td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><i class="doc">/** <span class="command">\see</span> Projection */</i></td></tr>
+<tr><th id="24">24</th><td><b>class</b> <dfn class="type def" id="G3D::Frustum" title='G3D::Frustum' data-ref="G3D::Frustum" >Frustum</dfn> {</td></tr>
+<tr><th id="25">25</th><td><b>public</b>:</td></tr>
+<tr><th id="26">26</th><td>    <b>class</b> <dfn class="type def" id="G3D::Frustum::Face" title='G3D::Frustum::Face' data-ref="G3D::Frustum::Face" >Face</dfn> {</td></tr>
+<tr><th id="27">27</th><td>    <b>public</b>:</td></tr>
+<tr><th id="28">28</th><td>        <i class="doc">/** Counter clockwise indices into vertexPos */</i></td></tr>
+<tr><th id="29">29</th><td>        <em>int</em>             <dfn class="decl" id="G3D::Frustum::Face::vertexIndex" title='G3D::Frustum::Face::vertexIndex' data-ref="G3D::Frustum::Face::vertexIndex" >vertexIndex</dfn>[<var>4</var>];</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>        <i class="doc">/** The plane containing the face. */</i></td></tr>
+<tr><th id="32">32</th><td>        <a class="type" href="Plane.h.html#G3D::Plane" title='G3D::Plane' data-ref="G3D::Plane" >Plane</a>           <dfn class="decl" id="G3D::Frustum::Face::plane" title='G3D::Frustum::Face::plane' data-ref="G3D::Frustum::Face::plane" >plane</dfn>;</td></tr>
+<tr><th id="33">33</th><td>    };</td></tr>
+<tr><th id="34">34</th><td>        </td></tr>
+<tr><th id="35">35</th><td>    <i class="doc">/** The vertices, in homogeneous space.  The order is that of</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc">        the near face, starting from the (object space) +x,+y corner</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc">        and proceeding CCW from the camera's point of view; followed</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc">        by the far face also in CCW order.</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc">    </i></td></tr>
+<tr><th id="40">40</th><td><i class="doc">        If w == 0,</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc">        a vertex is at infinity. */</i></td></tr>
+<tr><th id="42">42</th><td>    <a class="type" href="SmallArray.h.html#G3D::SmallArray" title='G3D::SmallArray' data-ref="G3D::SmallArray" >SmallArray</a>&lt;<a class="type" href="Vector4.h.html#G3D::Vector4" title='G3D::Vector4' data-ref="G3D::Vector4" >Vector4</a>, <var>8</var>&gt;      <dfn class="decl" id="G3D::Frustum::vertexPos" title='G3D::Frustum::vertexPos' data-ref="G3D::Frustum::vertexPos" >vertexPos</dfn>;</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>    <i class="doc">/** The faces in the frustum.  When the</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">        far plane is at infinity, there are 5 faces,</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">        otherwise there are 6.  The faces are in the order</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc">        N,R,L,B,T,[F].</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="49">49</th><td>    <a class="type" href="SmallArray.h.html#G3D::SmallArray" title='G3D::SmallArray' data-ref="G3D::SmallArray" >SmallArray</a>&lt;<a class="type" href="#G3D::Frustum::Face" title='G3D::Frustum::Face' data-ref="G3D::Frustum::Face" >Face</a>, <var>6</var>&gt;         <dfn class="decl" id="G3D::Frustum::faceArray" title='G3D::Frustum::faceArray' data-ref="G3D::Frustum::faceArray" >faceArray</dfn>;</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <i class="doc">/** <span class="command">\param</span> <span class="arg">minObjectSpaceDepth</span> Smallest value permitted for the near plane Z - far plane Z (e.g., to force finite bounds)*/</i></td></tr>
+<tr><th id="52">52</th><td>    <a class="type" href="Box.h.html#G3D::Box" title='G3D::Box' data-ref="G3D::Box" >Box</a> <dfn class="decl" id="_ZNK3G3D7Frustum11boundingBoxEf" title='G3D::Frustum::boundingBox' data-ref="_ZNK3G3D7Frustum11boundingBoxEf" >boundingBox</dfn>(<em>float</em> <dfn class="local col3 decl" id="223minObjectSpaceDepth" title='minObjectSpaceDepth' data-type='float' data-ref="223minObjectSpaceDepth" >minObjectSpaceDepth</dfn> = <a class="ref" href="g3dmath.h.html#_ZN3G3D4finfEv" title='G3D::finf' data-ref="_ZN3G3D4finfEv" id="_ZN3G3D4finfEv" >finf</a>()) <em>const</em>;</td></tr>
+<tr><th id="53">53</th><td>};</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>} <i>// namespace G3D</i></td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="10">endif</span></u></td></tr>
+<tr><th id="58">58</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../source/CoordinateFrame.cpp.html'>TrinityCore6.x/dep/g3dlite/source/CoordinateFrame.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

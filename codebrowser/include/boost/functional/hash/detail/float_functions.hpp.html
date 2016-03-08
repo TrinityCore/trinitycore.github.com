@@ -1,0 +1,354 @@
+<!doctype html>
+<html>
+<head>
+<title>float_functions.hpp [include/boost/functional/hash/detail/float_functions.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/functional/hash/detail/float_functions.hpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>include</a>/<a href='../../..'>boost</a>/<a href='../..'>functional</a>/<a href='..'>hash</a>/<a href='./'>detail</a>/float_functions.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td></td></tr>
+<tr><th id="2">2</th><td><i>// Copyright 2005-2009 Daniel James.</i></td></tr>
+<tr><th id="3">3</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="4">4</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="5">5</th><td></td></tr>
+<tr><th id="6">6</th><td><u>#<span data-ppcond="6">if</span> !defined(<span class="macro" data-ref="_M/BOOST_FUNCTIONAL_HASH_DETAIL_FLOAT_FUNCTIONS_HPP">BOOST_FUNCTIONAL_HASH_DETAIL_FLOAT_FUNCTIONS_HPP</span>)</u></td></tr>
+<tr><th id="7">7</th><td><u>#define <dfn class="macro" id="_M/BOOST_FUNCTIONAL_HASH_DETAIL_FLOAT_FUNCTIONS_HPP" data-ref="_M/BOOST_FUNCTIONAL_HASH_DETAIL_FLOAT_FUNCTIONS_HPP">BOOST_FUNCTIONAL_HASH_DETAIL_FLOAT_FUNCTIONS_HPP</dfn></u></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#include <a href="../../../config.hpp.html">&lt;boost/config.hpp&gt;</a></u></td></tr>
+<tr><th id="10">10</th><td><u>#include <a href="../../../config/no_tr1/cmath.hpp.html">&lt;boost/config/no_tr1/cmath.hpp&gt;</a></u></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#<span data-ppcond="12">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1020)</u></td></tr>
+<tr><th id="13">13</th><td><u># pragma once</u></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="12">endif</span></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><i>// Set BOOST_HASH_CONFORMANT_FLOATS to 1 for libraries known to have</i></td></tr>
+<tr><th id="17">17</th><td><i>// sufficiently good floating point support to not require any</i></td></tr>
+<tr><th id="18">18</th><td><i>// workarounds.</i></td></tr>
+<tr><th id="19">19</th><td><i>//</i></td></tr>
+<tr><th id="20">20</th><td><i>// When set to 0, the library tries to automatically</i></td></tr>
+<tr><th id="21">21</th><td><i>// use the best available implementation. This normally works well, but</i></td></tr>
+<tr><th id="22">22</th><td><i>// breaks when ambiguities are created by odd namespacing of the functions.</i></td></tr>
+<tr><th id="23">23</th><td><i>//</i></td></tr>
+<tr><th id="24">24</th><td><i>// Note that if this is set to 0, the library should still take full</i></td></tr>
+<tr><th id="25">25</th><td><i>// advantage of the platform's floating point support.</i></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="27">if</span> defined(<span class="macro" data-ref="_M/__SGI_STL_PORT">__SGI_STL_PORT</span>) || defined(<span class="macro" data-ref="_M/_STLPORT_VERSION">_STLPORT_VERSION</span>)</u></td></tr>
+<tr><th id="28">28</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="27">elif</span> defined(<span class="macro" data-ref="_M/__LIBCOMO__">__LIBCOMO__</span>)</u></td></tr>
+<tr><th id="30">30</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="31">31</th><td><u>#<span data-ppcond="27">elif</span> defined(<span class="macro" data-ref="_M/__STD_RWCOMPILER_H__">__STD_RWCOMPILER_H__</span>) || defined(<span class="macro" data-ref="_M/_RWSTD_VER">_RWSTD_VER</span>)</u></td></tr>
+<tr><th id="32">32</th><td><i>// Rogue Wave library:</i></td></tr>
+<tr><th id="33">33</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="27">elif</span> defined(<span class="macro" data-ref="_M/_LIBCPP_VERSION">_LIBCPP_VERSION</span>)</u></td></tr>
+<tr><th id="35">35</th><td><i>// libc++</i></td></tr>
+<tr><th id="36">36</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 1</u></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="27">elif</span> defined(<span class="macro" data-ref="_M/__GLIBCPP__">__GLIBCPP__</span>) || defined(<a class="macro" href="../../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#34" data-ref="_M/__GLIBCXX__">__GLIBCXX__</a>)</u></td></tr>
+<tr><th id="38">38</th><td><i>// GNU libstdc++ 3</i></td></tr>
+<tr><th id="39">39</th><td><u>#   <span data-ppcond="39">if</span> defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &gt;= 4</u></td></tr>
+<tr><th id="40">40</th><td><u>#       define <dfn class="macro" id="_M/BOOST_HASH_CONFORMANT_FLOATS" data-ref="_M/BOOST_HASH_CONFORMANT_FLOATS">BOOST_HASH_CONFORMANT_FLOATS</dfn> 1</u></td></tr>
+<tr><th id="41">41</th><td><u>#   <span data-ppcond="39">else</span></u></td></tr>
+<tr><th id="42">42</th><td><u>#       define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="43">43</th><td><u>#   <span data-ppcond="39">endif</span></u></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="27">elif</span> defined(__STL_CONFIG_H)</u></td></tr>
+<tr><th id="45">45</th><td><i>// generic SGI STL</i></td></tr>
+<tr><th id="46">46</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="47">47</th><td><u>#elif defined(__MSL_CPP__)</u></td></tr>
+<tr><th id="48">48</th><td><i>// MSL standard lib:</i></td></tr>
+<tr><th id="49">49</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="50">50</th><td><u>#elif defined(__IBMCPP__)</u></td></tr>
+<tr><th id="51">51</th><td><i>// VACPP std lib (probably conformant for much earlier version).</i></td></tr>
+<tr><th id="52">52</th><td><u>#   if __IBMCPP__ &gt;= 1210</u></td></tr>
+<tr><th id="53">53</th><td><u>#       define BOOST_HASH_CONFORMANT_FLOATS 1</u></td></tr>
+<tr><th id="54">54</th><td><u>#   else</u></td></tr>
+<tr><th id="55">55</th><td><u>#       define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="56">56</th><td><u>#   endif</u></td></tr>
+<tr><th id="57">57</th><td><u>#elif defined(MSIPL_COMPILE_H)</u></td></tr>
+<tr><th id="58">58</th><td><i>// Modena C++ standard library</i></td></tr>
+<tr><th id="59">59</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="60">60</th><td><u>#elif (defined(_YVALS) &amp;&amp; !defined(__IBMCPP__)) || defined(_CPPLIB_VER)</u></td></tr>
+<tr><th id="61">61</th><td><i>// Dinkumware Library (this has to appear after any possible replacement libraries):</i></td></tr>
+<tr><th id="62">62</th><td><u>#   if _CPPLIB_VER &gt;= 405</u></td></tr>
+<tr><th id="63">63</th><td><u>#       define BOOST_HASH_CONFORMANT_FLOATS 1</u></td></tr>
+<tr><th id="64">64</th><td><u>#   else</u></td></tr>
+<tr><th id="65">65</th><td><u>#       define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="66">66</th><td><u>#   endif</u></td></tr>
+<tr><th id="67">67</th><td><u>#else</u></td></tr>
+<tr><th id="68">68</th><td><u>#   define BOOST_HASH_CONFORMANT_FLOATS 0</u></td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="27">endif</span></u></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="71">if</span> <a class="macro" href="#40" title="1" data-ref="_M/BOOST_HASH_CONFORMANT_FLOATS">BOOST_HASH_CONFORMANT_FLOATS</a></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><i>// The standard library is known to be compliant, so don't use the</i></td></tr>
+<tr><th id="74">74</th><td><i>// configuration mechanism.</i></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="77">77</th><td>    <b>namespace</b> <span class="namespace">hash_detail</span> {</td></tr>
+<tr><th id="78">78</th><td>        <b>template</b> &lt;<b>typename</b> Float&gt;</td></tr>
+<tr><th id="79">79</th><td>        <b>struct</b> <dfn class="type def" id="boost::hash_detail::call_ldexp" title='boost::hash_detail::call_ldexp' data-ref="boost::hash_detail::call_ldexp" >call_ldexp</dfn> {</td></tr>
+<tr><th id="80">80</th><td>            <b>typedef</b> Float <dfn class="typedef" id="boost::hash_detail::call_ldexp::float_type" title='boost::hash_detail::call_ldexp::float_type' data-type='Float' data-ref="boost::hash_detail::call_ldexp::float_type" >float_type</dfn>;</td></tr>
+<tr><th id="81">81</th><td>            <b>inline</b> Float <dfn class="decl def" id="_ZNK5boost11hash_detail10call_ldexpclET_i" title='boost::hash_detail::call_ldexp::operator()' data-ref="_ZNK5boost11hash_detail10call_ldexpclET_i" ><b>operator</b>()</dfn>(Float <dfn class="local col3 decl" id="1263x" title='x' data-type='Float' data-ref="1263x" >x</dfn>, <em>int</em> <dfn class="local col4 decl" id="1264y" title='y' data-type='int' data-ref="1264y" >y</dfn>) <em>const</em> {</td></tr>
+<tr><th id="82">82</th><td>                <b>return</b> <span class="namespace">std::</span>ldexp(<a class="local col3 ref" href="#1263x" title='x' data-ref="1263x" >x</a>, <a class="local col4 ref" href="#1264y" title='y' data-ref="1264y" >y</a>);</td></tr>
+<tr><th id="83">83</th><td>            }</td></tr>
+<tr><th id="84">84</th><td>        };</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>        <b>template</b> &lt;<b>typename</b> Float&gt;</td></tr>
+<tr><th id="87">87</th><td>        <b>struct</b> <dfn class="type def" id="boost::hash_detail::call_frexp" title='boost::hash_detail::call_frexp' data-ref="boost::hash_detail::call_frexp" >call_frexp</dfn> {</td></tr>
+<tr><th id="88">88</th><td>            <b>typedef</b> Float <dfn class="typedef" id="boost::hash_detail::call_frexp::float_type" title='boost::hash_detail::call_frexp::float_type' data-type='Float' data-ref="boost::hash_detail::call_frexp::float_type" >float_type</dfn>;</td></tr>
+<tr><th id="89">89</th><td>            <b>inline</b> Float <dfn class="decl def" id="_ZNK5boost11hash_detail10call_frexpclET_Pi" title='boost::hash_detail::call_frexp::operator()' data-ref="_ZNK5boost11hash_detail10call_frexpclET_Pi" ><b>operator</b>()</dfn>(Float <dfn class="local col5 decl" id="1265x" title='x' data-type='Float' data-ref="1265x" >x</dfn>, <em>int</em>* <dfn class="local col6 decl" id="1266y" title='y' data-type='int *' data-ref="1266y" >y</dfn>) <em>const</em> {</td></tr>
+<tr><th id="90">90</th><td>                <b>return</b> <span class="namespace">std::</span>frexp(<a class="local col5 ref" href="#1265x" title='x' data-ref="1265x" >x</a>, <a class="local col6 ref" href="#1266y" title='y' data-ref="1266y" >y</a>);</td></tr>
+<tr><th id="91">91</th><td>            }</td></tr>
+<tr><th id="92">92</th><td>        };</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td>        <b>template</b> &lt;<b>typename</b> Float&gt;</td></tr>
+<tr><th id="95">95</th><td>        <b>struct</b> <dfn class="type def" id="boost::hash_detail::select_hash_type" title='boost::hash_detail::select_hash_type' data-ref="boost::hash_detail::select_hash_type" >select_hash_type</dfn></td></tr>
+<tr><th id="96">96</th><td>        {</td></tr>
+<tr><th id="97">97</th><td>            <b>typedef</b> Float <dfn class="typedef" id="boost::hash_detail::select_hash_type::type" title='boost::hash_detail::select_hash_type::type' data-type='Float' data-ref="boost::hash_detail::select_hash_type::type" >type</dfn>;</td></tr>
+<tr><th id="98">98</th><td>        };</td></tr>
+<tr><th id="99">99</th><td>    }</td></tr>
+<tr><th id="100">100</th><td>}</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td><u>#<span data-ppcond="71">else</span> // BOOST_HASH_CONFORMANT_FLOATS == 0</u></td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td><i>// The C++ standard requires that the C float functions are overloarded</i></td></tr>
+<tr><th id="105">105</th><td><i>// for float, double and long double in the std namespace, but some of the older</i></td></tr>
+<tr><th id="106">106</th><td><i>// library implementations don't support this. On some that don't, the C99</i></td></tr>
+<tr><th id="107">107</th><td><i>// float functions (frexpf, frexpl, etc.) are available.</i></td></tr>
+<tr><th id="108">108</th><td><i>//</i></td></tr>
+<tr><th id="109">109</th><td><i>// The following tries to automatically detect which are available.</i></td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td><b>namespace</b> boost {</td></tr>
+<tr><th id="112">112</th><td>    <b>namespace</b> hash_detail {</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>        <i>// Returned by dummy versions of the float functions.</i></td></tr>
+<tr><th id="115">115</th><td>    </td></tr>
+<tr><th id="116">116</th><td>        <b>struct</b> not_found {</td></tr>
+<tr><th id="117">117</th><td>            <i>// Implicitly convertible to float and long double in order to avoid</i></td></tr>
+<tr><th id="118">118</th><td><i>            // a compile error when the dummy float functions are used.</i></td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>            <b>inline</b> <b>operator</b> <em>float</em>() <em>const</em> { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="121">121</th><td>            <b>inline</b> <b>operator</b> <em>long</em> <em>double</em>() <em>const</em> { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="122">122</th><td>        };</td></tr>
+<tr><th id="123">123</th><td>          </td></tr>
+<tr><th id="124">124</th><td>        <i>// A type for detecting the return type of functions.</i></td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td>        <b>template</b> &lt;<b>typename</b> T&gt; <b>struct</b> is;</td></tr>
+<tr><th id="127">127</th><td>        <b>template</b> &lt;&gt; <b>struct</b> is&lt;<em>float</em>&gt; { <em>char</em> x[<var>10</var>]; };</td></tr>
+<tr><th id="128">128</th><td>        <b>template</b> &lt;&gt; <b>struct</b> is&lt;<em>double</em>&gt; { <em>char</em> x[<var>20</var>]; };</td></tr>
+<tr><th id="129">129</th><td>        <b>template</b> &lt;&gt; <b>struct</b> is&lt;<em>long</em> <em>double</em>&gt; { <em>char</em> x[<var>30</var>]; };</td></tr>
+<tr><th id="130">130</th><td>        <b>template</b> &lt;&gt; <b>struct</b> is&lt;boost::hash_detail::not_found&gt; { <em>char</em> x[<var>40</var>]; };</td></tr>
+<tr><th id="131">131</th><td>            </td></tr>
+<tr><th id="132">132</th><td>        <i>// Used to convert the return type of a function to a type for sizeof.</i></td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td>        <b>template</b> &lt;<b>typename</b> T&gt; is&lt;T&gt; float_type(T);</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>        <i>// call_ldexp</i></td></tr>
+<tr><th id="137">137</th><td><i>        //</i></td></tr>
+<tr><th id="138">138</th><td><i>        // This will get specialized for float and long double</i></td></tr>
+<tr><th id="139">139</th><td>        </td></tr>
+<tr><th id="140">140</th><td>        <b>template</b> &lt;<b>typename</b> Float&gt; <b>struct</b> call_ldexp</td></tr>
+<tr><th id="141">141</th><td>        {</td></tr>
+<tr><th id="142">142</th><td>            <b>typedef</b> <em>double</em> float_type;</td></tr>
+<tr><th id="143">143</th><td>            </td></tr>
+<tr><th id="144">144</th><td>            <b>inline</b> <em>double</em> <b>operator</b>()(<em>double</em> a, <em>int</em> b) <em>const</em></td></tr>
+<tr><th id="145">145</th><td>            {</td></tr>
+<tr><th id="146">146</th><td>                <b>using</b> <b>namespace</b> std;</td></tr>
+<tr><th id="147">147</th><td>                <b>return</b> ldexp(a, b);</td></tr>
+<tr><th id="148">148</th><td>            }</td></tr>
+<tr><th id="149">149</th><td>        };</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>        <i>// call_frexp</i></td></tr>
+<tr><th id="152">152</th><td><i>        //</i></td></tr>
+<tr><th id="153">153</th><td><i>        // This will get specialized for float and long double</i></td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td>        <b>template</b> &lt;<b>typename</b> Float&gt; <b>struct</b> call_frexp</td></tr>
+<tr><th id="156">156</th><td>        {</td></tr>
+<tr><th id="157">157</th><td>            <b>typedef</b> <em>double</em> float_type;</td></tr>
+<tr><th id="158">158</th><td>            </td></tr>
+<tr><th id="159">159</th><td>            <b>inline</b> <em>double</em> <b>operator</b>()(<em>double</em> a, <em>int</em>* b) <em>const</em></td></tr>
+<tr><th id="160">160</th><td>            {</td></tr>
+<tr><th id="161">161</th><td>                <b>using</b> <b>namespace</b> std;</td></tr>
+<tr><th id="162">162</th><td>                <b>return</b> frexp(a, b);</td></tr>
+<tr><th id="163">163</th><td>            }</td></tr>
+<tr><th id="164">164</th><td>        };</td></tr>
+<tr><th id="165">165</th><td>    }</td></tr>
+<tr><th id="166">166</th><td>}</td></tr>
+<tr><th id="167">167</th><td>            </td></tr>
+<tr><th id="168">168</th><td><i>// A namespace for dummy functions to detect when the actual function we want</i></td></tr>
+<tr><th id="169">169</th><td><i>// isn't available. ldexpl, ldexpf etc. might be added tby the macros below.</i></td></tr>
+<tr><th id="170">170</th><td><i>//</i></td></tr>
+<tr><th id="171">171</th><td><i>// AFAICT these have to be outside of the boost namespace, as if they're in</i></td></tr>
+<tr><th id="172">172</th><td><i>// the boost namespace they'll always be preferable to any other function</i></td></tr>
+<tr><th id="173">173</th><td><i>// (since the arguments are built in types, ADL can't be used).</i></td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td><b>namespace</b> boost_hash_detect_float_functions {</td></tr>
+<tr><th id="176">176</th><td>    <b>template</b> &lt;<b>class</b> Float&gt; boost::hash_detail::not_found ldexp(Float, <em>int</em>);</td></tr>
+<tr><th id="177">177</th><td>    <b>template</b> &lt;<b>class</b> Float&gt; boost::hash_detail::not_found frexp(Float, <em>int</em>*);    </td></tr>
+<tr><th id="178">178</th><td>}</td></tr>
+<tr><th id="179">179</th><td></td></tr>
+<tr><th id="180">180</th><td><i>// Macros for generating specializations of call_ldexp and call_frexp.</i></td></tr>
+<tr><th id="181">181</th><td><i>//</i></td></tr>
+<tr><th id="182">182</th><td><i>// check_cpp and check_c99 check if the C++ or C99 functions are available.</i></td></tr>
+<tr><th id="183">183</th><td><i>//</i></td></tr>
+<tr><th id="184">184</th><td><i>// Then the call_* functions select an appropriate implementation.</i></td></tr>
+<tr><th id="185">185</th><td><i>//</i></td></tr>
+<tr><th id="186">186</th><td><i>// I used c99_func in a few places just to get a unique name.</i></td></tr>
+<tr><th id="187">187</th><td><i>//</i></td></tr>
+<tr><th id="188">188</th><td><i>// Important: when using 'using namespace' at namespace level, include as</i></td></tr>
+<tr><th id="189">189</th><td><i>// little as possible in that namespace, as Visual C++ has an odd bug which</i></td></tr>
+<tr><th id="190">190</th><td><i>// can cause the namespace to be imported at the global level. This seems to</i></td></tr>
+<tr><th id="191">191</th><td><i>// happen mainly when there's a template in the same namesapce.</i></td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><u>#define BOOST_HASH_CALL_FLOAT_FUNC(cpp_func, c99_func, type1, type2)    \</u></td></tr>
+<tr><th id="194">194</th><td><u>namespace boost_hash_detect_float_functions {                           \</u></td></tr>
+<tr><th id="195">195</th><td><u>    template &lt;class Float&gt;                                              \</u></td></tr>
+<tr><th id="196">196</th><td><u>    boost::hash_detail::not_found c99_func(Float, type2);               \</u></td></tr>
+<tr><th id="197">197</th><td><u>}                                                                       \</u></td></tr>
+<tr><th id="198">198</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="199">199</th><td><u>namespace boost {                                                       \</u></td></tr>
+<tr><th id="200">200</th><td><u>    namespace hash_detail {                                             \</u></td></tr>
+<tr><th id="201">201</th><td><u>        namespace c99_func##_detect {                                   \</u></td></tr>
+<tr><th id="202">202</th><td><u>            using namespace std;                                        \</u></td></tr>
+<tr><th id="203">203</th><td><u>            using namespace boost_hash_detect_float_functions;          \</u></td></tr>
+<tr><th id="204">204</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="205">205</th><td><u>            struct check {                                              \</u></td></tr>
+<tr><th id="206">206</th><td><u>                static type1 x;                                         \</u></td></tr>
+<tr><th id="207">207</th><td><u>                static type2 y;                                         \</u></td></tr>
+<tr><th id="208">208</th><td><u>                BOOST_STATIC_CONSTANT(bool, cpp =                       \</u></td></tr>
+<tr><th id="209">209</th><td><u>                    sizeof(float_type(cpp_func(x,y)))                   \</u></td></tr>
+<tr><th id="210">210</th><td><u>                        == sizeof(is&lt;type1&gt;));                          \</u></td></tr>
+<tr><th id="211">211</th><td><u>                BOOST_STATIC_CONSTANT(bool, c99 =                       \</u></td></tr>
+<tr><th id="212">212</th><td><u>                    sizeof(float_type(c99_func(x,y)))                   \</u></td></tr>
+<tr><th id="213">213</th><td><u>                        == sizeof(is&lt;type1&gt;));                          \</u></td></tr>
+<tr><th id="214">214</th><td><u>            };                                                          \</u></td></tr>
+<tr><th id="215">215</th><td><u>        }                                                               \</u></td></tr>
+<tr><th id="216">216</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="217">217</th><td><u>        template &lt;bool x&gt;                                               \</u></td></tr>
+<tr><th id="218">218</th><td><u>        struct call_c99_##c99_func :                                    \</u></td></tr>
+<tr><th id="219">219</th><td><u>            boost::hash_detail::call_##cpp_func&lt;double&gt; {};             \</u></td></tr>
+<tr><th id="220">220</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="221">221</th><td><u>        template &lt;&gt;                                                     \</u></td></tr>
+<tr><th id="222">222</th><td><u>        struct call_c99_##c99_func&lt;true&gt; {                              \</u></td></tr>
+<tr><th id="223">223</th><td><u>            typedef type1 float_type;                                   \</u></td></tr>
+<tr><th id="224">224</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="225">225</th><td><u>            template &lt;typename T&gt;                                       \</u></td></tr>
+<tr><th id="226">226</th><td><u>            inline type1 operator()(type1 a, T b)  const                \</u></td></tr>
+<tr><th id="227">227</th><td><u>            {                                                           \</u></td></tr>
+<tr><th id="228">228</th><td><u>                using namespace std;                                    \</u></td></tr>
+<tr><th id="229">229</th><td><u>                return c99_func(a, b);                                  \</u></td></tr>
+<tr><th id="230">230</th><td><u>            }                                                           \</u></td></tr>
+<tr><th id="231">231</th><td><u>        };                                                              \</u></td></tr>
+<tr><th id="232">232</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="233">233</th><td><u>        template &lt;bool x&gt;                                               \</u></td></tr>
+<tr><th id="234">234</th><td><u>        struct call_cpp_##c99_func :                                    \</u></td></tr>
+<tr><th id="235">235</th><td><u>            call_c99_##c99_func&lt;                                        \</u></td></tr>
+<tr><th id="236">236</th><td><u>                ::boost::hash_detail::c99_func##_detect::check::c99     \</u></td></tr>
+<tr><th id="237">237</th><td><u>            &gt; {};                                                       \</u></td></tr>
+<tr><th id="238">238</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="239">239</th><td><u>        template &lt;&gt;                                                     \</u></td></tr>
+<tr><th id="240">240</th><td><u>        struct call_cpp_##c99_func&lt;true&gt; {                              \</u></td></tr>
+<tr><th id="241">241</th><td><u>            typedef type1 float_type;                                   \</u></td></tr>
+<tr><th id="242">242</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="243">243</th><td><u>            template &lt;typename T&gt;                                       \</u></td></tr>
+<tr><th id="244">244</th><td><u>            inline type1 operator()(type1 a, T b)  const                \</u></td></tr>
+<tr><th id="245">245</th><td><u>            {                                                           \</u></td></tr>
+<tr><th id="246">246</th><td><u>                using namespace std;                                    \</u></td></tr>
+<tr><th id="247">247</th><td><u>                return cpp_func(a, b);                                  \</u></td></tr>
+<tr><th id="248">248</th><td><u>            }                                                           \</u></td></tr>
+<tr><th id="249">249</th><td><u>        };                                                              \</u></td></tr>
+<tr><th id="250">250</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="251">251</th><td><u>        template &lt;&gt;                                                     \</u></td></tr>
+<tr><th id="252">252</th><td><u>        struct call_##cpp_func&lt;type1&gt; :                                 \</u></td></tr>
+<tr><th id="253">253</th><td><u>            call_cpp_##c99_func&lt;                                        \</u></td></tr>
+<tr><th id="254">254</th><td><u>                ::boost::hash_detail::c99_func##_detect::check::cpp     \</u></td></tr>
+<tr><th id="255">255</th><td><u>            &gt; {};                                                       \</u></td></tr>
+<tr><th id="256">256</th><td><u>    }                                                                   \</u></td></tr>
+<tr><th id="257">257</th><td><u>}</u></td></tr>
+<tr><th id="258">258</th><td></td></tr>
+<tr><th id="259">259</th><td><u>#define BOOST_HASH_CALL_FLOAT_MACRO(cpp_func, c99_func, type1, type2)   \</u></td></tr>
+<tr><th id="260">260</th><td><u>namespace boost {                                                       \</u></td></tr>
+<tr><th id="261">261</th><td><u>    namespace hash_detail {                                             \</u></td></tr>
+<tr><th id="262">262</th><td><u>                                                                        \</u></td></tr>
+<tr><th id="263">263</th><td><u>        template &lt;&gt;                                                     \</u></td></tr>
+<tr><th id="264">264</th><td><u>        struct call_##cpp_func&lt;type1&gt; {                                 \</u></td></tr>
+<tr><th id="265">265</th><td><u>            typedef type1 float_type;                                   \</u></td></tr>
+<tr><th id="266">266</th><td><u>            inline type1 operator()(type1 x, type2 y) const {           \</u></td></tr>
+<tr><th id="267">267</th><td><u>                return c99_func(x, y);                                  \</u></td></tr>
+<tr><th id="268">268</th><td><u>            }                                                           \</u></td></tr>
+<tr><th id="269">269</th><td><u>        };                                                              \</u></td></tr>
+<tr><th id="270">270</th><td><u>    }                                                                   \</u></td></tr>
+<tr><th id="271">271</th><td><u>}</u></td></tr>
+<tr><th id="272">272</th><td></td></tr>
+<tr><th id="273">273</th><td><u>#if defined(ldexpf)</u></td></tr>
+<tr><th id="274">274</th><td>BOOST_HASH_CALL_FLOAT_MACRO(ldexp, ldexpf, <em>float</em>, <em>int</em>)</td></tr>
+<tr><th id="275">275</th><td><u>#else</u></td></tr>
+<tr><th id="276">276</th><td>BOOST_HASH_CALL_FLOAT_FUNC(ldexp, ldexpf, <em>float</em>, <em>int</em>)</td></tr>
+<tr><th id="277">277</th><td><u>#endif</u></td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td><u>#if defined(ldexpl)</u></td></tr>
+<tr><th id="280">280</th><td>BOOST_HASH_CALL_FLOAT_MACRO(ldexp, ldexpl, <em>long</em> <em>double</em>, <em>int</em>)</td></tr>
+<tr><th id="281">281</th><td><u>#else</u></td></tr>
+<tr><th id="282">282</th><td>BOOST_HASH_CALL_FLOAT_FUNC(ldexp, ldexpl, <em>long</em> <em>double</em>, <em>int</em>)</td></tr>
+<tr><th id="283">283</th><td><u>#endif</u></td></tr>
+<tr><th id="284">284</th><td></td></tr>
+<tr><th id="285">285</th><td><u>#if defined(frexpf)</u></td></tr>
+<tr><th id="286">286</th><td>BOOST_HASH_CALL_FLOAT_MACRO(frexp, frexpf, <em>float</em>, <em>int</em>*)</td></tr>
+<tr><th id="287">287</th><td><u>#else</u></td></tr>
+<tr><th id="288">288</th><td>BOOST_HASH_CALL_FLOAT_FUNC(frexp, frexpf, <em>float</em>, <em>int</em>*)</td></tr>
+<tr><th id="289">289</th><td><u>#endif</u></td></tr>
+<tr><th id="290">290</th><td></td></tr>
+<tr><th id="291">291</th><td><u>#if defined(frexpl)</u></td></tr>
+<tr><th id="292">292</th><td>BOOST_HASH_CALL_FLOAT_MACRO(frexp, frexpl, <em>long</em> <em>double</em>, <em>int</em>*)</td></tr>
+<tr><th id="293">293</th><td><u>#else</u></td></tr>
+<tr><th id="294">294</th><td>BOOST_HASH_CALL_FLOAT_FUNC(frexp, frexpl, <em>long</em> <em>double</em>, <em>int</em>*)</td></tr>
+<tr><th id="295">295</th><td><u>#endif</u></td></tr>
+<tr><th id="296">296</th><td></td></tr>
+<tr><th id="297">297</th><td><u>#undef BOOST_HASH_CALL_FLOAT_MACRO</u></td></tr>
+<tr><th id="298">298</th><td><u>#undef BOOST_HASH_CALL_FLOAT_FUNC</u></td></tr>
+<tr><th id="299">299</th><td></td></tr>
+<tr><th id="300">300</th><td></td></tr>
+<tr><th id="301">301</th><td><b>namespace</b> boost</td></tr>
+<tr><th id="302">302</th><td>{</td></tr>
+<tr><th id="303">303</th><td>    <b>namespace</b> hash_detail</td></tr>
+<tr><th id="304">304</th><td>    {</td></tr>
+<tr><th id="305">305</th><td>        <b>template</b> &lt;<b>typename</b> Float1, <b>typename</b> Float2&gt;</td></tr>
+<tr><th id="306">306</th><td>        <b>struct</b> select_hash_type_impl {</td></tr>
+<tr><th id="307">307</th><td>            <b>typedef</b> <em>double</em> type;</td></tr>
+<tr><th id="308">308</th><td>        };</td></tr>
+<tr><th id="309">309</th><td></td></tr>
+<tr><th id="310">310</th><td>        <b>template</b> &lt;&gt;</td></tr>
+<tr><th id="311">311</th><td>        <b>struct</b> select_hash_type_impl&lt;<em>float</em>, <em>float</em>&gt; {</td></tr>
+<tr><th id="312">312</th><td>            <b>typedef</b> <em>float</em> type;</td></tr>
+<tr><th id="313">313</th><td>        };</td></tr>
+<tr><th id="314">314</th><td></td></tr>
+<tr><th id="315">315</th><td>        <b>template</b> &lt;&gt;</td></tr>
+<tr><th id="316">316</th><td>        <b>struct</b> select_hash_type_impl&lt;<em>long</em> <em>double</em>, <em>long</em> <em>double</em>&gt; {</td></tr>
+<tr><th id="317">317</th><td>            <b>typedef</b> <em>long</em> <em>double</em> type;</td></tr>
+<tr><th id="318">318</th><td>        };</td></tr>
+<tr><th id="319">319</th><td></td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td>        <i>// select_hash_type</i></td></tr>
+<tr><th id="322">322</th><td><i>        //</i></td></tr>
+<tr><th id="323">323</th><td><i>        // If there is support for a particular floating point type, use that</i></td></tr>
+<tr><th id="324">324</th><td><i>        // otherwise use double (there's always support for double).</i></td></tr>
+<tr><th id="325">325</th><td>             </td></tr>
+<tr><th id="326">326</th><td>        <b>template</b> &lt;<b>typename</b> Float&gt;</td></tr>
+<tr><th id="327">327</th><td>        <b>struct</b> select_hash_type : select_hash_type_impl&lt;</td></tr>
+<tr><th id="328">328</th><td>                BOOST_DEDUCED_TYPENAME call_ldexp&lt;Float&gt;::float_type,</td></tr>
+<tr><th id="329">329</th><td>                BOOST_DEDUCED_TYPENAME call_frexp&lt;Float&gt;::float_type</td></tr>
+<tr><th id="330">330</th><td>            &gt; {};            </td></tr>
+<tr><th id="331">331</th><td>    }</td></tr>
+<tr><th id="332">332</th><td>}</td></tr>
+<tr><th id="333">333</th><td></td></tr>
+<tr><th id="334">334</th><td><u>#<span data-ppcond="71">endif</span> // BOOST_HASH_CONFORMANT_FLOATS</u></td></tr>
+<tr><th id="335">335</th><td></td></tr>
+<tr><th id="336">336</th><td><u>#<span data-ppcond="6">endif</span></u></td></tr>
+<tr><th id="337">337</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

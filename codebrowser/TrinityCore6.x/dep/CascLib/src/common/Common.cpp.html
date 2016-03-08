@@ -1,0 +1,737 @@
+<!doctype html>
+<html>
+<head>
+<title>Common.cpp [TrinityCore6.x/dep/CascLib/src/common/Common.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/CascLib/src/common/Common.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>dep</a>/<a href='../..'>CascLib</a>/<a href='..'>src</a>/<a href='./'>common</a>/Common.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><i>/* CascCommon.cpp                         Copyright (c) Ladislav Zezula 2014 */</i></td></tr>
+<tr><th id="3">3</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="4">4</th><td><i>/* Common functions for CascLib                                              */</i></td></tr>
+<tr><th id="5">5</th><td><i>/*---------------------------------------------------------------------------*/</i></td></tr>
+<tr><th id="6">6</th><td><i>/*   Date    Ver   Who  Comment                                              */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* --------  ----  ---  -------                                              */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* 29.04.14  1.00  Lad  The first version of CascCommon.cpp                  */</i></td></tr>
+<tr><th id="9">9</th><td><i>/*****************************************************************************/</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#define <dfn class="macro" id="_M/__CASCLIB_SELF__" data-ref="_M/__CASCLIB_SELF__">__CASCLIB_SELF__</dfn></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../CascLib.h.html">"../CascLib.h"</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../CascCommon.h.html">"../CascCommon.h"</a></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="16">16</th><td><i>// Conversion to uppercase/lowercase</i></td></tr>
+<tr><th id="17">17</th><td><i></i></td></tr>
+<tr><th id="18">18</th><td><i>// Converts ASCII characters to lowercase</i></td></tr>
+<tr><th id="19">19</th><td><i>// Converts backslash (0x5C) to normal slash (0x2F)</i></td></tr>
+<tr><th id="20">20</th><td><em>unsigned</em> <em>char</em> <dfn class="decl def" id="AsciiToLowerTable_Slash" title='AsciiToLowerTable_Slash' data-ref="AsciiToLowerTable_Slash" >AsciiToLowerTable_Slash</dfn>[<var>256</var>] = </td></tr>
+<tr><th id="21">21</th><td>{</td></tr>
+<tr><th id="22">22</th><td>    <var>0x00</var>, <var>0x01</var>, <var>0x02</var>, <var>0x03</var>, <var>0x04</var>, <var>0x05</var>, <var>0x06</var>, <var>0x07</var>, <var>0x08</var>, <var>0x09</var>, <var>0x0A</var>, <var>0x0B</var>, <var>0x0C</var>, <var>0x0D</var>, <var>0x0E</var>, <var>0x0F</var>, </td></tr>
+<tr><th id="23">23</th><td>    <var>0x10</var>, <var>0x11</var>, <var>0x12</var>, <var>0x13</var>, <var>0x14</var>, <var>0x15</var>, <var>0x16</var>, <var>0x17</var>, <var>0x18</var>, <var>0x19</var>, <var>0x1A</var>, <var>0x1B</var>, <var>0x1C</var>, <var>0x1D</var>, <var>0x1E</var>, <var>0x1F</var>, </td></tr>
+<tr><th id="24">24</th><td>    <var>0x20</var>, <var>0x21</var>, <var>0x22</var>, <var>0x23</var>, <var>0x24</var>, <var>0x25</var>, <var>0x26</var>, <var>0x27</var>, <var>0x28</var>, <var>0x29</var>, <var>0x2A</var>, <var>0x2B</var>, <var>0x2C</var>, <var>0x2D</var>, <var>0x2E</var>, <var>0x2F</var>, </td></tr>
+<tr><th id="25">25</th><td>    <var>0x30</var>, <var>0x31</var>, <var>0x32</var>, <var>0x33</var>, <var>0x34</var>, <var>0x35</var>, <var>0x36</var>, <var>0x37</var>, <var>0x38</var>, <var>0x39</var>, <var>0x3A</var>, <var>0x3B</var>, <var>0x3C</var>, <var>0x3D</var>, <var>0x3E</var>, <var>0x3F</var>, </td></tr>
+<tr><th id="26">26</th><td>    <var>0x40</var>, <var>0x61</var>, <var>0x62</var>, <var>0x63</var>, <var>0x64</var>, <var>0x65</var>, <var>0x66</var>, <var>0x67</var>, <var>0x68</var>, <var>0x69</var>, <var>0x6A</var>, <var>0x6B</var>, <var>0x6C</var>, <var>0x6D</var>, <var>0x6E</var>, <var>0x6F</var>, </td></tr>
+<tr><th id="27">27</th><td>    <var>0x70</var>, <var>0x71</var>, <var>0x72</var>, <var>0x73</var>, <var>0x74</var>, <var>0x75</var>, <var>0x76</var>, <var>0x77</var>, <var>0x78</var>, <var>0x79</var>, <var>0x7A</var>, <var>0x5B</var>, <var>0x2F</var>, <var>0x5D</var>, <var>0x5E</var>, <var>0x5F</var>, </td></tr>
+<tr><th id="28">28</th><td>    <var>0x60</var>, <var>0x61</var>, <var>0x62</var>, <var>0x63</var>, <var>0x64</var>, <var>0x65</var>, <var>0x66</var>, <var>0x67</var>, <var>0x68</var>, <var>0x69</var>, <var>0x6A</var>, <var>0x6B</var>, <var>0x6C</var>, <var>0x6D</var>, <var>0x6E</var>, <var>0x6F</var>, </td></tr>
+<tr><th id="29">29</th><td>    <var>0x70</var>, <var>0x71</var>, <var>0x72</var>, <var>0x73</var>, <var>0x74</var>, <var>0x75</var>, <var>0x76</var>, <var>0x77</var>, <var>0x78</var>, <var>0x79</var>, <var>0x7A</var>, <var>0x7B</var>, <var>0x7C</var>, <var>0x7D</var>, <var>0x7E</var>, <var>0x7F</var>, </td></tr>
+<tr><th id="30">30</th><td>    <var>0x80</var>, <var>0x81</var>, <var>0x82</var>, <var>0x83</var>, <var>0x84</var>, <var>0x85</var>, <var>0x86</var>, <var>0x87</var>, <var>0x88</var>, <var>0x89</var>, <var>0x8A</var>, <var>0x8B</var>, <var>0x8C</var>, <var>0x8D</var>, <var>0x8E</var>, <var>0x8F</var>, </td></tr>
+<tr><th id="31">31</th><td>    <var>0x90</var>, <var>0x91</var>, <var>0x92</var>, <var>0x93</var>, <var>0x94</var>, <var>0x95</var>, <var>0x96</var>, <var>0x97</var>, <var>0x98</var>, <var>0x99</var>, <var>0x9A</var>, <var>0x9B</var>, <var>0x9C</var>, <var>0x9D</var>, <var>0x9E</var>, <var>0x9F</var>, </td></tr>
+<tr><th id="32">32</th><td>    <var>0xA0</var>, <var>0xA1</var>, <var>0xA2</var>, <var>0xA3</var>, <var>0xA4</var>, <var>0xA5</var>, <var>0xA6</var>, <var>0xA7</var>, <var>0xA8</var>, <var>0xA9</var>, <var>0xAA</var>, <var>0xAB</var>, <var>0xAC</var>, <var>0xAD</var>, <var>0xAE</var>, <var>0xAF</var>, </td></tr>
+<tr><th id="33">33</th><td>    <var>0xB0</var>, <var>0xB1</var>, <var>0xB2</var>, <var>0xB3</var>, <var>0xB4</var>, <var>0xB5</var>, <var>0xB6</var>, <var>0xB7</var>, <var>0xB8</var>, <var>0xB9</var>, <var>0xBA</var>, <var>0xBB</var>, <var>0xBC</var>, <var>0xBD</var>, <var>0xBE</var>, <var>0xBF</var>, </td></tr>
+<tr><th id="34">34</th><td>    <var>0xC0</var>, <var>0xC1</var>, <var>0xC2</var>, <var>0xC3</var>, <var>0xC4</var>, <var>0xC5</var>, <var>0xC6</var>, <var>0xC7</var>, <var>0xC8</var>, <var>0xC9</var>, <var>0xCA</var>, <var>0xCB</var>, <var>0xCC</var>, <var>0xCD</var>, <var>0xCE</var>, <var>0xCF</var>, </td></tr>
+<tr><th id="35">35</th><td>    <var>0xD0</var>, <var>0xD1</var>, <var>0xD2</var>, <var>0xD3</var>, <var>0xD4</var>, <var>0xD5</var>, <var>0xD6</var>, <var>0xD7</var>, <var>0xD8</var>, <var>0xD9</var>, <var>0xDA</var>, <var>0xDB</var>, <var>0xDC</var>, <var>0xDD</var>, <var>0xDE</var>, <var>0xDF</var>, </td></tr>
+<tr><th id="36">36</th><td>    <var>0xE0</var>, <var>0xE1</var>, <var>0xE2</var>, <var>0xE3</var>, <var>0xE4</var>, <var>0xE5</var>, <var>0xE6</var>, <var>0xE7</var>, <var>0xE8</var>, <var>0xE9</var>, <var>0xEA</var>, <var>0xEB</var>, <var>0xEC</var>, <var>0xED</var>, <var>0xEE</var>, <var>0xEF</var>,</td></tr>
+<tr><th id="37">37</th><td>    <var>0xF0</var>, <var>0xF1</var>, <var>0xF2</var>, <var>0xF3</var>, <var>0xF4</var>, <var>0xF5</var>, <var>0xF6</var>, <var>0xF7</var>, <var>0xF8</var>, <var>0xF9</var>, <var>0xFA</var>, <var>0xFB</var>, <var>0xFC</var>, <var>0xFD</var>, <var>0xFE</var>, <var>0xFF</var></td></tr>
+<tr><th id="38">38</th><td>};</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><i>// Converts ASCII characters to uppercase</i></td></tr>
+<tr><th id="41">41</th><td><i>// Converts slash (0x2F) to backslash (0x5C)</i></td></tr>
+<tr><th id="42">42</th><td><em>unsigned</em> <em>char</em> <dfn class="decl def" id="AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</dfn>[<var>256</var>] = </td></tr>
+<tr><th id="43">43</th><td>{</td></tr>
+<tr><th id="44">44</th><td>    <var>0x00</var>, <var>0x01</var>, <var>0x02</var>, <var>0x03</var>, <var>0x04</var>, <var>0x05</var>, <var>0x06</var>, <var>0x07</var>, <var>0x08</var>, <var>0x09</var>, <var>0x0A</var>, <var>0x0B</var>, <var>0x0C</var>, <var>0x0D</var>, <var>0x0E</var>, <var>0x0F</var>, </td></tr>
+<tr><th id="45">45</th><td>    <var>0x10</var>, <var>0x11</var>, <var>0x12</var>, <var>0x13</var>, <var>0x14</var>, <var>0x15</var>, <var>0x16</var>, <var>0x17</var>, <var>0x18</var>, <var>0x19</var>, <var>0x1A</var>, <var>0x1B</var>, <var>0x1C</var>, <var>0x1D</var>, <var>0x1E</var>, <var>0x1F</var>, </td></tr>
+<tr><th id="46">46</th><td>    <var>0x20</var>, <var>0x21</var>, <var>0x22</var>, <var>0x23</var>, <var>0x24</var>, <var>0x25</var>, <var>0x26</var>, <var>0x27</var>, <var>0x28</var>, <var>0x29</var>, <var>0x2A</var>, <var>0x2B</var>, <var>0x2C</var>, <var>0x2D</var>, <var>0x2E</var>, <var>0x5C</var>, </td></tr>
+<tr><th id="47">47</th><td>    <var>0x30</var>, <var>0x31</var>, <var>0x32</var>, <var>0x33</var>, <var>0x34</var>, <var>0x35</var>, <var>0x36</var>, <var>0x37</var>, <var>0x38</var>, <var>0x39</var>, <var>0x3A</var>, <var>0x3B</var>, <var>0x3C</var>, <var>0x3D</var>, <var>0x3E</var>, <var>0x3F</var>, </td></tr>
+<tr><th id="48">48</th><td>    <var>0x40</var>, <var>0x41</var>, <var>0x42</var>, <var>0x43</var>, <var>0x44</var>, <var>0x45</var>, <var>0x46</var>, <var>0x47</var>, <var>0x48</var>, <var>0x49</var>, <var>0x4A</var>, <var>0x4B</var>, <var>0x4C</var>, <var>0x4D</var>, <var>0x4E</var>, <var>0x4F</var>, </td></tr>
+<tr><th id="49">49</th><td>    <var>0x50</var>, <var>0x51</var>, <var>0x52</var>, <var>0x53</var>, <var>0x54</var>, <var>0x55</var>, <var>0x56</var>, <var>0x57</var>, <var>0x58</var>, <var>0x59</var>, <var>0x5A</var>, <var>0x5B</var>, <var>0x5C</var>, <var>0x5D</var>, <var>0x5E</var>, <var>0x5F</var>, </td></tr>
+<tr><th id="50">50</th><td>    <var>0x60</var>, <var>0x41</var>, <var>0x42</var>, <var>0x43</var>, <var>0x44</var>, <var>0x45</var>, <var>0x46</var>, <var>0x47</var>, <var>0x48</var>, <var>0x49</var>, <var>0x4A</var>, <var>0x4B</var>, <var>0x4C</var>, <var>0x4D</var>, <var>0x4E</var>, <var>0x4F</var>, </td></tr>
+<tr><th id="51">51</th><td>    <var>0x50</var>, <var>0x51</var>, <var>0x52</var>, <var>0x53</var>, <var>0x54</var>, <var>0x55</var>, <var>0x56</var>, <var>0x57</var>, <var>0x58</var>, <var>0x59</var>, <var>0x5A</var>, <var>0x7B</var>, <var>0x7C</var>, <var>0x7D</var>, <var>0x7E</var>, <var>0x7F</var>, </td></tr>
+<tr><th id="52">52</th><td>    <var>0x80</var>, <var>0x81</var>, <var>0x82</var>, <var>0x83</var>, <var>0x84</var>, <var>0x85</var>, <var>0x86</var>, <var>0x87</var>, <var>0x88</var>, <var>0x89</var>, <var>0x8A</var>, <var>0x8B</var>, <var>0x8C</var>, <var>0x8D</var>, <var>0x8E</var>, <var>0x8F</var>, </td></tr>
+<tr><th id="53">53</th><td>    <var>0x90</var>, <var>0x91</var>, <var>0x92</var>, <var>0x93</var>, <var>0x94</var>, <var>0x95</var>, <var>0x96</var>, <var>0x97</var>, <var>0x98</var>, <var>0x99</var>, <var>0x9A</var>, <var>0x9B</var>, <var>0x9C</var>, <var>0x9D</var>, <var>0x9E</var>, <var>0x9F</var>, </td></tr>
+<tr><th id="54">54</th><td>    <var>0xA0</var>, <var>0xA1</var>, <var>0xA2</var>, <var>0xA3</var>, <var>0xA4</var>, <var>0xA5</var>, <var>0xA6</var>, <var>0xA7</var>, <var>0xA8</var>, <var>0xA9</var>, <var>0xAA</var>, <var>0xAB</var>, <var>0xAC</var>, <var>0xAD</var>, <var>0xAE</var>, <var>0xAF</var>, </td></tr>
+<tr><th id="55">55</th><td>    <var>0xB0</var>, <var>0xB1</var>, <var>0xB2</var>, <var>0xB3</var>, <var>0xB4</var>, <var>0xB5</var>, <var>0xB6</var>, <var>0xB7</var>, <var>0xB8</var>, <var>0xB9</var>, <var>0xBA</var>, <var>0xBB</var>, <var>0xBC</var>, <var>0xBD</var>, <var>0xBE</var>, <var>0xBF</var>, </td></tr>
+<tr><th id="56">56</th><td>    <var>0xC0</var>, <var>0xC1</var>, <var>0xC2</var>, <var>0xC3</var>, <var>0xC4</var>, <var>0xC5</var>, <var>0xC6</var>, <var>0xC7</var>, <var>0xC8</var>, <var>0xC9</var>, <var>0xCA</var>, <var>0xCB</var>, <var>0xCC</var>, <var>0xCD</var>, <var>0xCE</var>, <var>0xCF</var>, </td></tr>
+<tr><th id="57">57</th><td>    <var>0xD0</var>, <var>0xD1</var>, <var>0xD2</var>, <var>0xD3</var>, <var>0xD4</var>, <var>0xD5</var>, <var>0xD6</var>, <var>0xD7</var>, <var>0xD8</var>, <var>0xD9</var>, <var>0xDA</var>, <var>0xDB</var>, <var>0xDC</var>, <var>0xDD</var>, <var>0xDE</var>, <var>0xDF</var>, </td></tr>
+<tr><th id="58">58</th><td>    <var>0xE0</var>, <var>0xE1</var>, <var>0xE2</var>, <var>0xE3</var>, <var>0xE4</var>, <var>0xE5</var>, <var>0xE6</var>, <var>0xE7</var>, <var>0xE8</var>, <var>0xE9</var>, <var>0xEA</var>, <var>0xEB</var>, <var>0xEC</var>, <var>0xED</var>, <var>0xEE</var>, <var>0xEF</var>,</td></tr>
+<tr><th id="59">59</th><td>    <var>0xF0</var>, <var>0xF1</var>, <var>0xF2</var>, <var>0xF3</var>, <var>0xF4</var>, <var>0xF5</var>, <var>0xF6</var>, <var>0xF7</var>, <var>0xF8</var>, <var>0xF9</var>, <var>0xFA</var>, <var>0xFB</var>, <var>0xFC</var>, <var>0xFD</var>, <var>0xFE</var>, <var>0xFF</var></td></tr>
+<tr><th id="60">60</th><td>};</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><em>unsigned</em> <em>char</em> <dfn class="decl def" id="IntToHexChar" title='IntToHexChar' data-ref="IntToHexChar" >IntToHexChar</dfn>[] = <q>"0123456789abcdef"</q>;</td></tr>
+<tr><th id="63">63</th><td>                        </td></tr>
+<tr><th id="64">64</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="65">65</th><td><i>// GetLastError/SetLastError support for non-Windows platform</i></td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="67">ifndef</span> <span class="macro" data-ref="_M/PLATFORM_WINDOWS">PLATFORM_WINDOWS</span></u></td></tr>
+<tr><th id="68">68</th><td><em>static</em> <em>int</em> <dfn class="tu decl def" id="_ZL10nLastError" title='nLastError' data-type='int' data-ref="_ZL10nLastError" >nLastError</dfn> = <a class="macro" href="../CascPort.h.html#204" title="0" data-ref="_M/ERROR_SUCCESS">ERROR_SUCCESS</a>;</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><em>int</em> <dfn class="decl def" id="GetLastError" title='GetLastError' data-ref="GetLastError" >GetLastError</dfn>()</td></tr>
+<tr><th id="71">71</th><td>{</td></tr>
+<tr><th id="72">72</th><td>    <b>return</b> <a class="tu ref" href="#_ZL10nLastError" title='nLastError' data-use='r' data-ref="_ZL10nLastError" >nLastError</a>;</td></tr>
+<tr><th id="73">73</th><td>}</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><em>void</em> <dfn class="decl def" id="SetLastError" title='SetLastError' data-ref="SetLastError" >SetLastError</dfn>(<em>int</em> <dfn class="local col1 decl" id="1nError" title='nError' data-type='int' data-ref="1nError" >nError</dfn>)</td></tr>
+<tr><th id="76">76</th><td>{</td></tr>
+<tr><th id="77">77</th><td>    <a class="tu ref" href="#_ZL10nLastError" title='nLastError' data-use='w' data-ref="_ZL10nLastError" >nLastError</a> = <a class="local col1 ref" href="#1nError" title='nError' data-ref="1nError" >nError</a>;</td></tr>
+<tr><th id="78">78</th><td>}</td></tr>
+<tr><th id="79">79</th><td><u>#<span data-ppcond="67">endif</span></u></td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="82">82</th><td><i>// String manipulation</i></td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><em>void</em> <dfn class="decl def" id="_Z10CopyStringPcPKcm" title='CopyString' data-ref="_Z10CopyStringPcPKcm" >CopyString</dfn>(<em>char</em> * <dfn class="local col2 decl" id="2szTarget" title='szTarget' data-type='char *' data-ref="2szTarget" >szTarget</dfn>, <em>const</em> <em>char</em> * <dfn class="local col3 decl" id="3szSource" title='szSource' data-type='const char *' data-ref="3szSource" >szSource</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4cchLength" title='cchLength' data-type='size_t' data-ref="4cchLength" >cchLength</dfn>)</td></tr>
+<tr><th id="85">85</th><td>{</td></tr>
+<tr><th id="86">86</th><td>    <a class="ref" href="../../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="local col2 ref" href="#2szTarget" title='szTarget' data-ref="2szTarget" >szTarget</a>, <a class="local col3 ref" href="#3szSource" title='szSource' data-ref="3szSource" >szSource</a>, <a class="local col4 ref" href="#4cchLength" title='cchLength' data-ref="4cchLength" >cchLength</a>);</td></tr>
+<tr><th id="87">87</th><td>    <a class="local col2 ref" href="#2szTarget" title='szTarget' data-ref="2szTarget" >szTarget</a>[<a class="local col4 ref" href="#4cchLength" title='cchLength' data-ref="4cchLength" >cchLength</a>] = <var>0</var>;</td></tr>
+<tr><th id="88">88</th><td>}</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td><em>void</em> <dfn class="decl def" id="_Z10CopyStringPwPKcm" title='CopyString' data-ref="_Z10CopyStringPwPKcm" >CopyString</dfn>(<em>wchar_t</em> * <dfn class="local col5 decl" id="5szTarget" title='szTarget' data-type='wchar_t *' data-ref="5szTarget" >szTarget</dfn>, <em>const</em> <em>char</em> * <dfn class="local col6 decl" id="6szSource" title='szSource' data-type='const char *' data-ref="6szSource" >szSource</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="7cchLength" title='cchLength' data-type='size_t' data-ref="7cchLength" >cchLength</dfn>)</td></tr>
+<tr><th id="91">91</th><td>{</td></tr>
+<tr><th id="92">92</th><td>    <a class="ref" href="../../../../../include/stdlib.h.html#mbstowcs" title='mbstowcs' data-ref="mbstowcs" id="mbstowcs" >mbstowcs</a>(<a class="local col5 ref" href="#5szTarget" title='szTarget' data-ref="5szTarget" >szTarget</a>, <a class="local col6 ref" href="#6szSource" title='szSource' data-ref="6szSource" >szSource</a>, <a class="local col7 ref" href="#7cchLength" title='cchLength' data-ref="7cchLength" >cchLength</a>);</td></tr>
+<tr><th id="93">93</th><td>    <a class="local col5 ref" href="#5szTarget" title='szTarget' data-ref="5szTarget" >szTarget</a>[<a class="local col7 ref" href="#7cchLength" title='cchLength' data-ref="7cchLength" >cchLength</a>] = <var>0</var>;</td></tr>
+<tr><th id="94">94</th><td>}</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td><em>void</em> <dfn class="decl def" id="_Z10CopyStringPcPKwm" title='CopyString' data-ref="_Z10CopyStringPcPKwm" >CopyString</dfn>(<em>char</em> * <dfn class="local col8 decl" id="8szTarget" title='szTarget' data-type='char *' data-ref="8szTarget" >szTarget</dfn>, <em>const</em> <em>wchar_t</em> * <dfn class="local col9 decl" id="9szSource" title='szSource' data-type='const wchar_t *' data-ref="9szSource" >szSource</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="10cchLength" title='cchLength' data-type='size_t' data-ref="10cchLength" >cchLength</dfn>)</td></tr>
+<tr><th id="97">97</th><td>{</td></tr>
+<tr><th id="98">98</th><td>    <a class="ref" href="../../../../../include/stdlib.h.html#wcstombs" title='wcstombs' data-ref="wcstombs" id="wcstombs" >wcstombs</a>(<a class="local col8 ref" href="#8szTarget" title='szTarget' data-ref="8szTarget" >szTarget</a>, <a class="local col9 ref" href="#9szSource" title='szSource' data-ref="9szSource" >szSource</a>, <a class="local col0 ref" href="#10cchLength" title='cchLength' data-ref="10cchLength" >cchLength</a>);</td></tr>
+<tr><th id="99">99</th><td>    <a class="local col8 ref" href="#8szTarget" title='szTarget' data-ref="8szTarget" >szTarget</a>[<a class="local col0 ref" href="#10cchLength" title='cchLength' data-ref="10cchLength" >cchLength</a>] = <var>0</var>;</td></tr>
+<tr><th id="100">100</th><td>}</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td><em>char</em> * <dfn class="decl def" id="_Z10CascNewStrPKcm" title='CascNewStr' data-ref="_Z10CascNewStrPKcm" >CascNewStr</dfn>(<em>const</em> <em>char</em> * <dfn class="local col1 decl" id="11szString" title='szString' data-type='const char *' data-ref="11szString" >szString</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="12nCharsToReserve" title='nCharsToReserve' data-type='size_t' data-ref="12nCharsToReserve" >nCharsToReserve</dfn>)</td></tr>
+<tr><th id="103">103</th><td>{</td></tr>
+<tr><th id="104">104</th><td>    <em>char</em> * <dfn class="local col3 decl" id="13szNewString" title='szNewString' data-type='char *' data-ref="13szNewString" >szNewString</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="105">105</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="14nLength" title='nLength' data-type='size_t' data-ref="14nLength" >nLength</dfn>;</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>    <b>if</b>(<a class="local col1 ref" href="#11szString" title='szString' data-ref="11szString" >szString</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="108">108</th><td>    {</td></tr>
+<tr><th id="109">109</th><td>        <a class="local col4 ref" href="#14nLength" title='nLength' data-ref="14nLength" >nLength</a> = <a class="ref" href="../../../../../include/string.h.html#strlen" title='strlen' data-ref="strlen" id="strlen" >strlen</a>(<a class="local col1 ref" href="#11szString" title='szString' data-ref="11szString" >szString</a>);</td></tr>
+<tr><th id="110">110</th><td>        <a class="local col3 ref" href="#13szNewString" title='szNewString' data-ref="13szNewString" >szNewString</a> = <a class="macro" href="../CascCommon.h.html#302" title="(char *)malloc((nLength + nCharsToReserve + 1) * sizeof(char))" data-ref="_M/CASC_ALLOC">CASC_ALLOC</a>(<em>char</em>, <a class="local col4 ref" href="#14nLength" title='nLength' data-ref="14nLength" >nLength</a> + <a class="local col2 ref" href="#12nCharsToReserve" title='nCharsToReserve' data-ref="12nCharsToReserve" >nCharsToReserve</a> + <var>1</var>);</td></tr>
+<tr><th id="111">111</th><td>        <b>if</b>(<a class="local col3 ref" href="#13szNewString" title='szNewString' data-ref="13szNewString" >szNewString</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="112">112</th><td>        {</td></tr>
+<tr><th id="113">113</th><td>            <a class="ref" href="../../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="local col3 ref" href="#13szNewString" title='szNewString' data-ref="13szNewString" >szNewString</a>, <a class="local col1 ref" href="#11szString" title='szString' data-ref="11szString" >szString</a>, <a class="local col4 ref" href="#14nLength" title='nLength' data-ref="14nLength" >nLength</a>);</td></tr>
+<tr><th id="114">114</th><td>            <a class="local col3 ref" href="#13szNewString" title='szNewString' data-ref="13szNewString" >szNewString</a>[<a class="local col4 ref" href="#14nLength" title='nLength' data-ref="14nLength" >nLength</a>] = <var>0</var>;</td></tr>
+<tr><th id="115">115</th><td>        }</td></tr>
+<tr><th id="116">116</th><td>    }</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>    <b>return</b> <a class="local col3 ref" href="#13szNewString" title='szNewString' data-ref="13szNewString" >szNewString</a>;</td></tr>
+<tr><th id="119">119</th><td>}</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><em>wchar_t</em> * <dfn class="decl def" id="_Z10CascNewStrPKwm" title='CascNewStr' data-ref="_Z10CascNewStrPKwm" >CascNewStr</dfn>(<em>const</em> <em>wchar_t</em> * <dfn class="local col5 decl" id="15szString" title='szString' data-type='const wchar_t *' data-ref="15szString" >szString</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="16nCharsToReserve" title='nCharsToReserve' data-type='size_t' data-ref="16nCharsToReserve" >nCharsToReserve</dfn>)</td></tr>
+<tr><th id="122">122</th><td>{</td></tr>
+<tr><th id="123">123</th><td>    <em>wchar_t</em> * <dfn class="local col7 decl" id="17szNewString" title='szNewString' data-type='wchar_t *' data-ref="17szNewString" >szNewString</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="124">124</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="18nLength" title='nLength' data-type='size_t' data-ref="18nLength" >nLength</dfn>;</td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td>    <b>if</b>(<a class="local col5 ref" href="#15szString" title='szString' data-ref="15szString" >szString</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="127">127</th><td>    {</td></tr>
+<tr><th id="128">128</th><td>        <a class="local col8 ref" href="#18nLength" title='nLength' data-ref="18nLength" >nLength</a> = <a class="ref" href="../../../../../include/wchar.h.html#wcslen" title='wcslen' data-ref="wcslen" id="wcslen" >wcslen</a>(<a class="local col5 ref" href="#15szString" title='szString' data-ref="15szString" >szString</a>);</td></tr>
+<tr><th id="129">129</th><td>        <a class="local col7 ref" href="#17szNewString" title='szNewString' data-ref="17szNewString" >szNewString</a> = <a class="macro" href="../CascCommon.h.html#302" title="(wchar_t *)malloc((nLength + nCharsToReserve + 1) * sizeof(wchar_t))" data-ref="_M/CASC_ALLOC">CASC_ALLOC</a>(<em>wchar_t</em>, <a class="local col8 ref" href="#18nLength" title='nLength' data-ref="18nLength" >nLength</a> + <a class="local col6 ref" href="#16nCharsToReserve" title='nCharsToReserve' data-ref="16nCharsToReserve" >nCharsToReserve</a> + <var>1</var>);</td></tr>
+<tr><th id="130">130</th><td>        <b>if</b>(<a class="local col7 ref" href="#17szNewString" title='szNewString' data-ref="17szNewString" >szNewString</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="131">131</th><td>        {</td></tr>
+<tr><th id="132">132</th><td>            <a class="ref" href="../../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="local col7 ref" href="#17szNewString" title='szNewString' data-ref="17szNewString" >szNewString</a>, <a class="local col5 ref" href="#15szString" title='szString' data-ref="15szString" >szString</a>, <a class="local col8 ref" href="#18nLength" title='nLength' data-ref="18nLength" >nLength</a> * <b>sizeof</b>(<em>wchar_t</em>));</td></tr>
+<tr><th id="133">133</th><td>            <a class="local col7 ref" href="#17szNewString" title='szNewString' data-ref="17szNewString" >szNewString</a>[<a class="local col8 ref" href="#18nLength" title='nLength' data-ref="18nLength" >nLength</a>] = <var>0</var>;</td></tr>
+<tr><th id="134">134</th><td>        }</td></tr>
+<tr><th id="135">135</th><td>    }</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td>    <b>return</b> <a class="local col7 ref" href="#17szNewString" title='szNewString' data-ref="17szNewString" >szNewString</a>;</td></tr>
+<tr><th id="138">138</th><td>}</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td><a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="decl def" id="_Z18CascNewStrFromAnsiPKcS0_" title='CascNewStrFromAnsi' data-ref="_Z18CascNewStrFromAnsiPKcS0_" >CascNewStrFromAnsi</dfn>(<em>const</em> <em>char</em> * <dfn class="local col9 decl" id="19szBegin" title='szBegin' data-type='const char *' data-ref="19szBegin" >szBegin</dfn>, <em>const</em> <em>char</em> * <dfn class="local col0 decl" id="20szEnd" title='szEnd' data-type='const char *' data-ref="20szEnd" >szEnd</dfn>)</td></tr>
+<tr><th id="141">141</th><td>{</td></tr>
+<tr><th id="142">142</th><td>    <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col1 decl" id="21szNewString" title='szNewString' data-type='TCHAR *' data-ref="21szNewString" >szNewString</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td>    <i>// Only if the entry is valid</i></td></tr>
+<tr><th id="145">145</th><td>    <b>if</b>(<a class="local col9 ref" href="#19szBegin" title='szBegin' data-ref="19szBegin" >szBegin</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span> &amp;&amp; <a class="local col0 ref" href="#20szEnd" title='szEnd' data-ref="20szEnd" >szEnd</a> &gt; <a class="local col9 ref" href="#19szBegin" title='szBegin' data-ref="19szBegin" >szBegin</a>)</td></tr>
+<tr><th id="146">146</th><td>    {</td></tr>
+<tr><th id="147">147</th><td>        <i>// Allocate and copy the string</i></td></tr>
+<tr><th id="148">148</th><td>        <a class="local col1 ref" href="#21szNewString" title='szNewString' data-ref="21szNewString" >szNewString</a> = <a class="macro" href="../CascCommon.h.html#302" title="(TCHAR *)malloc(((szEnd - szBegin + 1)) * sizeof(TCHAR))" data-ref="_M/CASC_ALLOC">CASC_ALLOC</a>(<a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" ><a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a></a>, (<a class="local col0 ref" href="#20szEnd" title='szEnd' data-ref="20szEnd" >szEnd</a> - <a class="local col9 ref" href="#19szBegin" title='szBegin' data-ref="19szBegin" >szBegin</a> + <var>1</var>));</td></tr>
+<tr><th id="149">149</th><td>        <b>if</b>(<a class="local col1 ref" href="#21szNewString" title='szNewString' data-ref="21szNewString" >szNewString</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="150">150</th><td>            <a class="ref" href="#_Z10CopyStringPcPKcm" title='CopyString' data-ref="_Z10CopyStringPcPKcm" >CopyString</a>(<a class="local col1 ref" href="#21szNewString" title='szNewString' data-ref="21szNewString" >szNewString</a>, <a class="local col9 ref" href="#19szBegin" title='szBegin' data-ref="19szBegin" >szBegin</a>, (<a class="local col0 ref" href="#20szEnd" title='szEnd' data-ref="20szEnd" >szEnd</a> - <a class="local col9 ref" href="#19szBegin" title='szBegin' data-ref="19szBegin" >szBegin</a>));</td></tr>
+<tr><th id="151">151</th><td>    }</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>    <i>// Return the string</i></td></tr>
+<tr><th id="154">154</th><td>    <b>return</b> <a class="local col1 ref" href="#21szNewString" title='szNewString' data-ref="21szNewString" >szNewString</a>;</td></tr>
+<tr><th id="155">155</th><td>}</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td><a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="decl def" id="_Z11CombinePathPKcS0_" title='CombinePath' data-ref="_Z11CombinePathPKcS0_" >CombinePath</dfn>(<em>const</em> <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col2 decl" id="22szDirectory" title='szDirectory' data-type='const TCHAR *' data-ref="22szDirectory" >szDirectory</dfn>, <em>const</em> <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col3 decl" id="23szSubDir" title='szSubDir' data-type='const TCHAR *' data-ref="23szSubDir" >szSubDir</dfn>)</td></tr>
+<tr><th id="158">158</th><td>{</td></tr>
+<tr><th id="159">159</th><td>    <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col4 decl" id="24szFullPath" title='szFullPath' data-type='TCHAR *' data-ref="24szFullPath" >szFullPath</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="160">160</th><td>    <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col5 decl" id="25szPathPtr" title='szPathPtr' data-type='TCHAR *' data-ref="25szPathPtr" >szPathPtr</dfn>;</td></tr>
+<tr><th id="161">161</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="26nLength1" title='nLength1' data-type='size_t' data-ref="26nLength1" >nLength1</dfn> = <var>0</var>;</td></tr>
+<tr><th id="162">162</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="27nLength2" title='nLength2' data-type='size_t' data-ref="27nLength2" >nLength2</dfn> = <var>0</var>;</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>    <i>// Calculate lengths of each part</i></td></tr>
+<tr><th id="165">165</th><td>    <b>if</b>(<a class="local col2 ref" href="#22szDirectory" title='szDirectory' data-ref="22szDirectory" >szDirectory</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="166">166</th><td>    {</td></tr>
+<tr><th id="167">167</th><td>        <i>// Get the length of the directory</i></td></tr>
+<tr><th id="168">168</th><td>        <a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a> = <a class="macro" href="../CascPort.h.html#172" title="strlen" data-ref="_M/_tcslen">_tcslen</a>(<a class="local col2 ref" href="#22szDirectory" title='szDirectory' data-ref="22szDirectory" >szDirectory</a>);</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td>        <i>// Cut all ending backslashes</i></td></tr>
+<tr><th id="171">171</th><td>        <b>while</b>(<a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a> &gt; <var>0</var> &amp;&amp; <a class="local col2 ref" href="#22szDirectory" title='szDirectory' data-ref="22szDirectory" >szDirectory</a>[<a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a> - <var>1</var>] == <a class="macro" href="../CascPort.h.html#171" title="&apos;/&apos;" data-ref="_M/_T">_T</a>(<a class="macro" href="../CascPort.h.html#115" title="&apos;/&apos;" data-ref="_M/PATH_SEPARATOR">PATH_SEPARATOR</a>))</td></tr>
+<tr><th id="172">172</th><td>            <a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a>--;</td></tr>
+<tr><th id="173">173</th><td>    }</td></tr>
+<tr><th id="174">174</th><td>    </td></tr>
+<tr><th id="175">175</th><td>    <b>if</b>(<a class="local col3 ref" href="#23szSubDir" title='szSubDir' data-ref="23szSubDir" >szSubDir</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="176">176</th><td>    {</td></tr>
+<tr><th id="177">177</th><td>        <i>// Cut all leading backslashes</i></td></tr>
+<tr><th id="178">178</th><td>        <b>while</b>(<a class="local col3 ref" href="#23szSubDir" title='szSubDir' data-ref="23szSubDir" >szSubDir</a>[<var>0</var>] == <a class="macro" href="../CascPort.h.html#171" title="&apos;/&apos;" data-ref="_M/_T">_T</a>(<a class="macro" href="../CascPort.h.html#115" title="&apos;/&apos;" data-ref="_M/PATH_SEPARATOR">PATH_SEPARATOR</a>))</td></tr>
+<tr><th id="179">179</th><td>            <a class="local col3 ref" href="#23szSubDir" title='szSubDir' data-ref="23szSubDir" >szSubDir</a>++;</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>        <i>// Get the length of the subdir</i></td></tr>
+<tr><th id="182">182</th><td>        <a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a> = <a class="macro" href="../CascPort.h.html#172" title="strlen" data-ref="_M/_tcslen">_tcslen</a>(<a class="local col3 ref" href="#23szSubDir" title='szSubDir' data-ref="23szSubDir" >szSubDir</a>);</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td>        <i>// Cut all ending backslashes</i></td></tr>
+<tr><th id="185">185</th><td>        <b>while</b>(<a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a> &gt; <var>0</var> &amp;&amp; <a class="local col3 ref" href="#23szSubDir" title='szSubDir' data-ref="23szSubDir" >szSubDir</a>[<a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a> - <var>1</var>] == <a class="macro" href="../CascPort.h.html#171" title="&apos;/&apos;" data-ref="_M/_T">_T</a>(<a class="macro" href="../CascPort.h.html#115" title="&apos;/&apos;" data-ref="_M/PATH_SEPARATOR">PATH_SEPARATOR</a>))</td></tr>
+<tr><th id="186">186</th><td>            <a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a>--;</td></tr>
+<tr><th id="187">187</th><td>    }</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td>    <i>// Allocate space for the full path</i></td></tr>
+<tr><th id="190">190</th><td>    <a class="local col4 ref" href="#24szFullPath" title='szFullPath' data-ref="24szFullPath" >szFullPath</a> = <a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a> = <a class="macro" href="../CascCommon.h.html#302" title="(TCHAR *)malloc((nLength1 + nLength2 + 2) * sizeof(TCHAR))" data-ref="_M/CASC_ALLOC">CASC_ALLOC</a>(<a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" ><a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a></a>, <a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a> + <a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a> + <var>2</var>);</td></tr>
+<tr><th id="191">191</th><td>    <b>if</b>(<a class="local col4 ref" href="#24szFullPath" title='szFullPath' data-ref="24szFullPath" >szFullPath</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="192">192</th><td>    {</td></tr>
+<tr><th id="193">193</th><td>        <i>// Copy the directory</i></td></tr>
+<tr><th id="194">194</th><td>        <b>if</b>(<a class="local col2 ref" href="#22szDirectory" title='szDirectory' data-ref="22szDirectory" >szDirectory</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span> &amp;&amp; <a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a> != <var>0</var>)</td></tr>
+<tr><th id="195">195</th><td>        {</td></tr>
+<tr><th id="196">196</th><td>            <a class="ref" href="../../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a>, <a class="local col2 ref" href="#22szDirectory" title='szDirectory' data-ref="22szDirectory" >szDirectory</a>, (<a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a> * <b>sizeof</b>(<a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a>)));</td></tr>
+<tr><th id="197">197</th><td>            <a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a> += <a class="local col6 ref" href="#26nLength1" title='nLength1' data-ref="26nLength1" >nLength1</a>;</td></tr>
+<tr><th id="198">198</th><td>        }</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>        <i>// Copy the sub-directory</i></td></tr>
+<tr><th id="201">201</th><td>        <b>if</b>(<a class="local col3 ref" href="#23szSubDir" title='szSubDir' data-ref="23szSubDir" >szSubDir</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span> &amp;&amp; <a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a> != <var>0</var>)</td></tr>
+<tr><th id="202">202</th><td>        {</td></tr>
+<tr><th id="203">203</th><td>            <i>// Append backslash to the previous one</i></td></tr>
+<tr><th id="204">204</th><td>            <b>if</b>(<a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a> &gt; <a class="local col4 ref" href="#24szFullPath" title='szFullPath' data-ref="24szFullPath" >szFullPath</a>)</td></tr>
+<tr><th id="205">205</th><td>                *<a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a>++ = <a class="macro" href="../CascPort.h.html#171" title="&apos;/&apos;" data-ref="_M/_T">_T</a>(<a class="macro" href="../CascPort.h.html#115" title="&apos;/&apos;" data-ref="_M/PATH_SEPARATOR">PATH_SEPARATOR</a>);</td></tr>
+<tr><th id="206">206</th><td></td></tr>
+<tr><th id="207">207</th><td>            <i>// Copy the string</i></td></tr>
+<tr><th id="208">208</th><td>            <a class="ref" href="../../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a>, <a class="local col3 ref" href="#23szSubDir" title='szSubDir' data-ref="23szSubDir" >szSubDir</a>, (<a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a> * <b>sizeof</b>(<a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a>)));</td></tr>
+<tr><th id="209">209</th><td>            <a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a> += <a class="local col7 ref" href="#27nLength2" title='nLength2' data-ref="27nLength2" >nLength2</a>;</td></tr>
+<tr><th id="210">210</th><td>        }</td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td>        <i>// Terminate the string</i></td></tr>
+<tr><th id="213">213</th><td>        <a class="local col5 ref" href="#25szPathPtr" title='szPathPtr' data-ref="25szPathPtr" >szPathPtr</a>[<var>0</var>] = <var>0</var>;</td></tr>
+<tr><th id="214">214</th><td>    }</td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td>    <b>return</b> <a class="local col4 ref" href="#24szFullPath" title='szFullPath' data-ref="24szFullPath" >szFullPath</a>;</td></tr>
+<tr><th id="217">217</th><td>}</td></tr>
+<tr><th id="218">218</th><td></td></tr>
+<tr><th id="219">219</th><td><a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="decl def" id="_Z20CombinePathAndStringPKcS0_m" title='CombinePathAndString' data-ref="_Z20CombinePathAndStringPKcS0_m" >CombinePathAndString</dfn>(<em>const</em> <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col8 decl" id="28szPath" title='szPath' data-type='const TCHAR *' data-ref="28szPath" >szPath</dfn>, <em>const</em> <em>char</em> * <dfn class="local col9 decl" id="29szString" title='szString' data-type='const char *' data-ref="29szString" >szString</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="30nLength" title='nLength' data-type='size_t' data-ref="30nLength" >nLength</dfn>)</td></tr>
+<tr><th id="220">220</th><td>{</td></tr>
+<tr><th id="221">221</th><td>    <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col1 decl" id="31szFullPath" title='szFullPath' data-type='TCHAR *' data-ref="31szFullPath" >szFullPath</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="222">222</th><td>    <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col2 decl" id="32szSubDir" title='szSubDir' data-type='TCHAR *' data-ref="32szSubDir" >szSubDir</dfn>;</td></tr>
+<tr><th id="223">223</th><td></td></tr>
+<tr><th id="224">224</th><td>    <i>// Create the subdir string</i></td></tr>
+<tr><th id="225">225</th><td>    <a class="local col2 ref" href="#32szSubDir" title='szSubDir' data-ref="32szSubDir" >szSubDir</a> = <a class="macro" href="../CascCommon.h.html#302" title="(TCHAR *)malloc((nLength + 1) * sizeof(TCHAR))" data-ref="_M/CASC_ALLOC">CASC_ALLOC</a>(<a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" ><a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a></a>, <a class="local col0 ref" href="#30nLength" title='nLength' data-ref="30nLength" >nLength</a> + <var>1</var>);</td></tr>
+<tr><th id="226">226</th><td>    <b>if</b>(<a class="local col2 ref" href="#32szSubDir" title='szSubDir' data-ref="32szSubDir" >szSubDir</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="227">227</th><td>    {</td></tr>
+<tr><th id="228">228</th><td>        <a class="ref" href="#_Z10CopyStringPcPKcm" title='CopyString' data-ref="_Z10CopyStringPcPKcm" >CopyString</a>(<a class="local col2 ref" href="#32szSubDir" title='szSubDir' data-ref="32szSubDir" >szSubDir</a>, <a class="local col9 ref" href="#29szString" title='szString' data-ref="29szString" >szString</a>, <a class="local col0 ref" href="#30nLength" title='nLength' data-ref="30nLength" >nLength</a>);</td></tr>
+<tr><th id="229">229</th><td>        <a class="local col1 ref" href="#31szFullPath" title='szFullPath' data-ref="31szFullPath" >szFullPath</a> = <a class="ref" href="#_Z11CombinePathPKcS0_" title='CombinePath' data-ref="_Z11CombinePathPKcS0_" >CombinePath</a>(<a class="local col8 ref" href="#28szPath" title='szPath' data-ref="28szPath" >szPath</a>, <a class="local col2 ref" href="#32szSubDir" title='szSubDir' data-ref="32szSubDir" >szSubDir</a>);</td></tr>
+<tr><th id="230">230</th><td>        <a class="macro" href="../CascCommon.h.html#303" title="free(szSubDir)" data-ref="_M/CASC_FREE">CASC_FREE</a>(<a class="local col2 ref" href="#32szSubDir" title='szSubDir' data-ref="32szSubDir" >szSubDir</a>);</td></tr>
+<tr><th id="231">231</th><td>    }</td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td>    <b>return</b> <a class="local col1 ref" href="#31szFullPath" title='szFullPath' data-ref="31szFullPath" >szFullPath</a>;</td></tr>
+<tr><th id="234">234</th><td>}</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_Z17NormalizeFileNamePKhPcPKcm" title='NormalizeFileName' data-ref="_Z17NormalizeFileNamePKhPcPKcm" >NormalizeFileName</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> * <dfn class="local col3 decl" id="33NormTable" title='NormTable' data-type='const unsigned char *' data-ref="33NormTable" >NormTable</dfn>, <em>char</em> * <dfn class="local col4 decl" id="34szNormName" title='szNormName' data-type='char *' data-ref="34szNormName" >szNormName</dfn>, <em>const</em> <em>char</em> * <dfn class="local col5 decl" id="35szFileName" title='szFileName' data-type='const char *' data-ref="35szFileName" >szFileName</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="36cchMaxChars" title='cchMaxChars' data-type='size_t' data-ref="36cchMaxChars" >cchMaxChars</dfn>)</td></tr>
+<tr><th id="237">237</th><td>{</td></tr>
+<tr><th id="238">238</th><td>    <em>char</em> * <dfn class="local col7 decl" id="37szNormNameEnd" title='szNormNameEnd' data-type='char *' data-ref="37szNormNameEnd" >szNormNameEnd</dfn> = <a class="local col4 ref" href="#34szNormName" title='szNormName' data-ref="34szNormName" >szNormName</a> + <a class="local col6 ref" href="#36cchMaxChars" title='cchMaxChars' data-ref="36cchMaxChars" >cchMaxChars</a>;</td></tr>
+<tr><th id="239">239</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="38i" title='i' data-type='size_t' data-ref="38i" >i</dfn>;</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>    <i>// Normalize the file name: ToLower + BackSlashToSlash</i></td></tr>
+<tr><th id="242">242</th><td>    <b>for</b>(<a class="local col8 ref" href="#38i" title='i' data-ref="38i" >i</a> = <var>0</var>; <a class="local col5 ref" href="#35szFileName" title='szFileName' data-ref="35szFileName" >szFileName</a>[<var>0</var>] != <var>0</var> &amp;&amp; <a class="local col4 ref" href="#34szNormName" title='szNormName' data-ref="34szNormName" >szNormName</a> &lt; <a class="local col7 ref" href="#37szNormNameEnd" title='szNormNameEnd' data-ref="37szNormNameEnd" >szNormNameEnd</a>; <a class="local col8 ref" href="#38i" title='i' data-ref="38i" >i</a>++)</td></tr>
+<tr><th id="243">243</th><td>        *<a class="local col4 ref" href="#34szNormName" title='szNormName' data-ref="34szNormName" >szNormName</a>++ = <a class="local col3 ref" href="#33NormTable" title='NormTable' data-ref="33NormTable" >NormTable</a>[*<a class="local col5 ref" href="#35szFileName" title='szFileName' data-ref="35szFileName" >szFileName</a>++];</td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td>    <i>// Terminate the string</i></td></tr>
+<tr><th id="246">246</th><td>    <a class="local col4 ref" href="#34szNormName" title='szNormName' data-ref="34szNormName" >szNormName</a>[<var>0</var>] = <var>0</var>;</td></tr>
+<tr><th id="247">247</th><td>    <b>return</b> <a class="local col8 ref" href="#38i" title='i' data-ref="38i" >i</a>;</td></tr>
+<tr><th id="248">248</th><td>}</td></tr>
+<tr><th id="249">249</th><td></td></tr>
+<tr><th id="250">250</th><td><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_Z30NormalizeFileName_UpperBkSlashPcPKcm" title='NormalizeFileName_UpperBkSlash' data-ref="_Z30NormalizeFileName_UpperBkSlashPcPKcm" >NormalizeFileName_UpperBkSlash</dfn>(<em>char</em> * <dfn class="local col9 decl" id="39szNormName" title='szNormName' data-type='char *' data-ref="39szNormName" >szNormName</dfn>, <em>const</em> <em>char</em> * <dfn class="local col0 decl" id="40szFileName" title='szFileName' data-type='const char *' data-ref="40szFileName" >szFileName</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="41cchMaxChars" title='cchMaxChars' data-type='size_t' data-ref="41cchMaxChars" >cchMaxChars</dfn>)</td></tr>
+<tr><th id="251">251</th><td>{</td></tr>
+<tr><th id="252">252</th><td>    <b>return</b> <a class="ref" href="#_Z17NormalizeFileNamePKhPcPKcm" title='NormalizeFileName' data-ref="_Z17NormalizeFileNamePKhPcPKcm" >NormalizeFileName</a>(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>, <a class="local col9 ref" href="#39szNormName" title='szNormName' data-ref="39szNormName" >szNormName</a>, <a class="local col0 ref" href="#40szFileName" title='szFileName' data-ref="40szFileName" >szFileName</a>, <a class="local col1 ref" href="#41cchMaxChars" title='cchMaxChars' data-ref="41cchMaxChars" >cchMaxChars</a>);</td></tr>
+<tr><th id="253">253</th><td>}</td></tr>
+<tr><th id="254">254</th><td></td></tr>
+<tr><th id="255">255</th><td><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_Z28NormalizeFileName_LowerSlashPcPKcm" title='NormalizeFileName_LowerSlash' data-ref="_Z28NormalizeFileName_LowerSlashPcPKcm" >NormalizeFileName_LowerSlash</dfn>(<em>char</em> * <dfn class="local col2 decl" id="42szNormName" title='szNormName' data-type='char *' data-ref="42szNormName" >szNormName</dfn>, <em>const</em> <em>char</em> * <dfn class="local col3 decl" id="43szFileName" title='szFileName' data-type='const char *' data-ref="43szFileName" >szFileName</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="44cchMaxChars" title='cchMaxChars' data-type='size_t' data-ref="44cchMaxChars" >cchMaxChars</dfn>)</td></tr>
+<tr><th id="256">256</th><td>{</td></tr>
+<tr><th id="257">257</th><td>    <b>return</b> <a class="ref" href="#_Z17NormalizeFileNamePKhPcPKcm" title='NormalizeFileName' data-ref="_Z17NormalizeFileNamePKhPcPKcm" >NormalizeFileName</a>(<a class="ref" href="Common.h.html#AsciiToLowerTable_Slash" title='AsciiToLowerTable_Slash' data-ref="AsciiToLowerTable_Slash" id="AsciiToLowerTable_Slash" >AsciiToLowerTable_Slash</a>, <a class="local col2 ref" href="#42szNormName" title='szNormName' data-ref="42szNormName" >szNormName</a>, <a class="local col3 ref" href="#43szFileName" title='szFileName' data-ref="43szFileName" >szFileName</a>, <a class="local col4 ref" href="#44cchMaxChars" title='cchMaxChars' data-ref="44cchMaxChars" >cchMaxChars</a>);</td></tr>
+<tr><th id="258">258</th><td>}</td></tr>
+<tr><th id="259">259</th><td></td></tr>
+<tr><th id="260">260</th><td><a class="typedef" href="../CascPort.h.html#ULONGLONG" title='ULONGLONG' data-type='unsigned long long' data-ref="ULONGLONG" >ULONGLONG</a> <dfn class="decl def" id="_Z16CalcFileNameHashPKc" title='CalcFileNameHash' data-ref="_Z16CalcFileNameHashPKc" >CalcFileNameHash</dfn>(<em>const</em> <em>char</em> * <dfn class="local col5 decl" id="45szFileName" title='szFileName' data-type='const char *' data-ref="45szFileName" >szFileName</dfn>)</td></tr>
+<tr><th id="261">261</th><td>{</td></tr>
+<tr><th id="262">262</th><td>    <em>char</em> <dfn class="local col6 decl" id="46szNormName" title='szNormName' data-type='char [1025]' data-ref="46szNormName" >szNormName</dfn>[<a class="macro" href="../CascPort.h.html#160" title="1024" data-ref="_M/MAX_PATH">MAX_PATH</a>+<var>1</var>];</td></tr>
+<tr><th id="263">263</th><td>    <a class="typedef" href="../../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <dfn class="local col7 decl" id="47dwHashHigh" title='dwHashHigh' data-type='uint32_t' data-ref="47dwHashHigh" >dwHashHigh</dfn> = <var>0</var>;</td></tr>
+<tr><th id="264">264</th><td>    <a class="typedef" href="../../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <dfn class="local col8 decl" id="48dwHashLow" title='dwHashLow' data-type='uint32_t' data-ref="48dwHashLow" >dwHashLow</dfn> = <var>0</var>;</td></tr>
+<tr><th id="265">265</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="49nLength" title='nLength' data-type='size_t' data-ref="49nLength" >nLength</dfn>;</td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td>    <i>// Normalize the file name - convert to uppercase, slashes to backslashes</i></td></tr>
+<tr><th id="268">268</th><td>    <a class="local col9 ref" href="#49nLength" title='nLength' data-ref="49nLength" >nLength</a> = <a class="ref" href="#_Z30NormalizeFileName_UpperBkSlashPcPKcm" title='NormalizeFileName_UpperBkSlash' data-ref="_Z30NormalizeFileName_UpperBkSlashPcPKcm" >NormalizeFileName_UpperBkSlash</a>(<a class="local col6 ref" href="#46szNormName" title='szNormName' data-ref="46szNormName" >szNormName</a>, <a class="local col5 ref" href="#45szFileName" title='szFileName' data-ref="45szFileName" >szFileName</a>, <a class="macro" href="../CascPort.h.html#160" title="1024" data-ref="_M/MAX_PATH">MAX_PATH</a>);</td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td>    <i>// Calculate the HASH value of the normalized file name</i></td></tr>
+<tr><th id="271">271</th><td>    <a class="ref" href="../jenkins/lookup.h.html#hashlittle2" title='hashlittle2' data-ref="hashlittle2" id="hashlittle2" >hashlittle2</a>(<a class="local col6 ref" href="#46szNormName" title='szNormName' data-ref="46szNormName" >szNormName</a>, <a class="local col9 ref" href="#49nLength" title='nLength' data-ref="49nLength" >nLength</a>, &amp;<a class="local col7 ref" href="#47dwHashHigh" title='dwHashHigh' data-ref="47dwHashHigh" >dwHashHigh</a>, &amp;<a class="local col8 ref" href="#48dwHashLow" title='dwHashLow' data-ref="48dwHashLow" >dwHashLow</a>);</td></tr>
+<tr><th id="272">272</th><td>    <b>return</b> ((<a class="typedef" href="../CascPort.h.html#ULONGLONG" title='ULONGLONG' data-type='unsigned long long' data-ref="ULONGLONG" >ULONGLONG</a>)<a class="local col7 ref" href="#47dwHashHigh" title='dwHashHigh' data-ref="47dwHashHigh" >dwHashHigh</a> &lt;&lt; <var>0x20</var>) | <a class="local col8 ref" href="#48dwHashLow" title='dwHashLow' data-ref="48dwHashLow" >dwHashLow</a>;</td></tr>
+<tr><th id="273">273</th><td>}</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td><em>int</em> <dfn class="decl def" id="_Z19ConvertDigitToInt32PKcPj" title='ConvertDigitToInt32' data-ref="_Z19ConvertDigitToInt32PKcPj" >ConvertDigitToInt32</dfn>(<em>const</em> <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col0 decl" id="50szString" title='szString' data-type='const TCHAR *' data-ref="50szString" >szString</dfn>, <a class="typedef" href="../CascPort.h.html#PDWORD" title='PDWORD' data-type='DWORD *' data-ref="PDWORD" >PDWORD</a> <dfn class="local col1 decl" id="51PtrValue" title='PtrValue' data-type='PDWORD' data-ref="51PtrValue" >PtrValue</dfn>)</td></tr>
+<tr><th id="276">276</th><td>{</td></tr>
+<tr><th id="277">277</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col2 decl" id="52Digit" title='Digit' data-type='BYTE' data-ref="52Digit" >Digit</dfn>;</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td>    <a class="local col2 ref" href="#52Digit" title='Digit' data-ref="52Digit" >Digit</a> = (<a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a>)(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col0 ref" href="#50szString" title='szString' data-ref="50szString" >szString</a>[<var>0</var>]] - <a class="macro" href="../CascPort.h.html#171" title="&apos;0&apos;" data-ref="_M/_T">_T</a>(<kdb>'0'</kdb>));</td></tr>
+<tr><th id="280">280</th><td>    <b>if</b>(<a class="local col2 ref" href="#52Digit" title='Digit' data-ref="52Digit" >Digit</a> &gt; <var>9</var>)</td></tr>
+<tr><th id="281">281</th><td>        <a class="local col2 ref" href="#52Digit" title='Digit' data-ref="52Digit" >Digit</a> -= <kdb>'A'</kdb> - <kdb>'9'</kdb> - <var>1</var>;</td></tr>
+<tr><th id="282">282</th><td></td></tr>
+<tr><th id="283">283</th><td>    <a class="local col1 ref" href="#51PtrValue" title='PtrValue' data-ref="51PtrValue" >PtrValue</a>[<var>0</var>] = <a class="local col2 ref" href="#52Digit" title='Digit' data-ref="52Digit" >Digit</a>;</td></tr>
+<tr><th id="284">284</th><td>    <b>return</b> (<a class="local col2 ref" href="#52Digit" title='Digit' data-ref="52Digit" >Digit</a> &gt; <var>0x0F</var>) ? <a class="macro" href="../CascPort.h.html#214" title="1000" data-ref="_M/ERROR_BAD_FORMAT">ERROR_BAD_FORMAT</a> : <a class="macro" href="../CascPort.h.html#204" title="0" data-ref="_M/ERROR_SUCCESS">ERROR_SUCCESS</a>;</td></tr>
+<tr><th id="285">285</th><td>}</td></tr>
+<tr><th id="286">286</th><td></td></tr>
+<tr><th id="287">287</th><td><em>int</em> <dfn class="decl def" id="_Z20ConvertStringToInt08PKcPj" title='ConvertStringToInt08' data-ref="_Z20ConvertStringToInt08PKcPj" >ConvertStringToInt08</dfn>(<em>const</em> <em>char</em> * <dfn class="local col3 decl" id="53szString" title='szString' data-type='const char *' data-ref="53szString" >szString</dfn>, <a class="typedef" href="../CascPort.h.html#PDWORD" title='PDWORD' data-type='DWORD *' data-ref="PDWORD" >PDWORD</a> <dfn class="local col4 decl" id="54PtrValue" title='PtrValue' data-type='PDWORD' data-ref="54PtrValue" >PtrValue</dfn>)</td></tr>
+<tr><th id="288">288</th><td>{</td></tr>
+<tr><th id="289">289</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col5 decl" id="55DigitOne" title='DigitOne' data-type='BYTE' data-ref="55DigitOne" >DigitOne</dfn> = <a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col3 ref" href="#53szString" title='szString' data-ref="53szString" >szString</a>[<var>0</var>]] - <kdb>'0'</kdb>;</td></tr>
+<tr><th id="290">290</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col6 decl" id="56DigitTwo" title='DigitTwo' data-type='BYTE' data-ref="56DigitTwo" >DigitTwo</dfn> = <a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col3 ref" href="#53szString" title='szString' data-ref="53szString" >szString</a>[<var>1</var>]] - <kdb>'0'</kdb>;</td></tr>
+<tr><th id="291">291</th><td></td></tr>
+<tr><th id="292">292</th><td>    <i>// Fix the digits</i></td></tr>
+<tr><th id="293">293</th><td>    <b>if</b>(<a class="local col5 ref" href="#55DigitOne" title='DigitOne' data-ref="55DigitOne" >DigitOne</a> &gt; <var>9</var>)</td></tr>
+<tr><th id="294">294</th><td>        <a class="local col5 ref" href="#55DigitOne" title='DigitOne' data-ref="55DigitOne" >DigitOne</a> -= <kdb>'A'</kdb> - <kdb>'9'</kdb> - <var>1</var>;</td></tr>
+<tr><th id="295">295</th><td>    <b>if</b>(<a class="local col6 ref" href="#56DigitTwo" title='DigitTwo' data-ref="56DigitTwo" >DigitTwo</a> &gt; <var>9</var>)</td></tr>
+<tr><th id="296">296</th><td>        <a class="local col6 ref" href="#56DigitTwo" title='DigitTwo' data-ref="56DigitTwo" >DigitTwo</a> -= <kdb>'A'</kdb> - <kdb>'9'</kdb> - <var>1</var>;</td></tr>
+<tr><th id="297">297</th><td></td></tr>
+<tr><th id="298">298</th><td>    <i>// Combine them into a value</i></td></tr>
+<tr><th id="299">299</th><td>    <a class="local col4 ref" href="#54PtrValue" title='PtrValue' data-ref="54PtrValue" >PtrValue</a>[<var>0</var>] = (<a class="local col5 ref" href="#55DigitOne" title='DigitOne' data-ref="55DigitOne" >DigitOne</a> &lt;&lt; <var>0x04</var>) | <a class="local col6 ref" href="#56DigitTwo" title='DigitTwo' data-ref="56DigitTwo" >DigitTwo</a>;</td></tr>
+<tr><th id="300">300</th><td>    <b>return</b> (<a class="local col5 ref" href="#55DigitOne" title='DigitOne' data-ref="55DigitOne" >DigitOne</a> &lt;= <var>0x0F</var> &amp;&amp; <a class="local col6 ref" href="#56DigitTwo" title='DigitTwo' data-ref="56DigitTwo" >DigitTwo</a> &lt;= <var>0x0F</var>) ? <a class="macro" href="../CascPort.h.html#204" title="0" data-ref="_M/ERROR_SUCCESS">ERROR_SUCCESS</a> : <a class="macro" href="../CascPort.h.html#214" title="1000" data-ref="_M/ERROR_BAD_FORMAT">ERROR_BAD_FORMAT</a>;</td></tr>
+<tr><th id="301">301</th><td>}</td></tr>
+<tr><th id="302">302</th><td></td></tr>
+<tr><th id="303">303</th><td><em>int</em> <dfn class="decl def" id="_Z20ConvertStringToInt32PKcmPj" title='ConvertStringToInt32' data-ref="_Z20ConvertStringToInt32PKcmPj" >ConvertStringToInt32</dfn>(<em>const</em> <a class="typedef" href="../CascPort.h.html#TCHAR" title='TCHAR' data-type='char' data-ref="TCHAR" >TCHAR</a> * <dfn class="local col7 decl" id="57szString" title='szString' data-type='const TCHAR *' data-ref="57szString" >szString</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="58nMaxDigits" title='nMaxDigits' data-type='size_t' data-ref="58nMaxDigits" >nMaxDigits</dfn>, <a class="typedef" href="../CascPort.h.html#PDWORD" title='PDWORD' data-type='DWORD *' data-ref="PDWORD" >PDWORD</a> <dfn class="local col9 decl" id="59PtrValue" title='PtrValue' data-type='PDWORD' data-ref="59PtrValue" >PtrValue</dfn>)</td></tr>
+<tr><th id="304">304</th><td>{</td></tr>
+<tr><th id="305">305</th><td>    <i>// The number of digits must be even</i></td></tr>
+<tr><th id="306">306</th><td>    <a class="macro" href="../../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>((nMaxDigits &amp; <var>0x01</var>) == <var>0</var>);</td></tr>
+<tr><th id="307">307</th><td>    <a class="macro" href="../../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(nMaxDigits &lt;= <var>8</var>);</td></tr>
+<tr><th id="308">308</th><td></td></tr>
+<tr><th id="309">309</th><td>    <i>// Prepare the variables</i></td></tr>
+<tr><th id="310">310</th><td>    <a class="local col9 ref" href="#59PtrValue" title='PtrValue' data-ref="59PtrValue" >PtrValue</a>[<var>0</var>] = <var>0</var>;</td></tr>
+<tr><th id="311">311</th><td>    <a class="local col8 ref" href="#58nMaxDigits" title='nMaxDigits' data-ref="58nMaxDigits" >nMaxDigits</a> &gt;&gt;= <var>1</var>;</td></tr>
+<tr><th id="312">312</th><td></td></tr>
+<tr><th id="313">313</th><td>    <i>// Convert the string up to the number of digits</i></td></tr>
+<tr><th id="314">314</th><td>    <b>for</b>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="60i" title='i' data-type='size_t' data-ref="60i" >i</dfn> = <var>0</var>; <a class="local col0 ref" href="#60i" title='i' data-ref="60i" >i</a> &lt; <a class="local col8 ref" href="#58nMaxDigits" title='nMaxDigits' data-ref="58nMaxDigits" >nMaxDigits</a>; <a class="local col0 ref" href="#60i" title='i' data-ref="60i" >i</a>++)</td></tr>
+<tr><th id="315">315</th><td>    {</td></tr>
+<tr><th id="316">316</th><td>        <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col1 decl" id="61DigitOne" title='DigitOne' data-type='BYTE' data-ref="61DigitOne" >DigitOne</dfn>;</td></tr>
+<tr><th id="317">317</th><td>        <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col2 decl" id="62DigitTwo" title='DigitTwo' data-type='BYTE' data-ref="62DigitTwo" >DigitTwo</dfn>;</td></tr>
+<tr><th id="318">318</th><td></td></tr>
+<tr><th id="319">319</th><td>        <a class="local col1 ref" href="#61DigitOne" title='DigitOne' data-ref="61DigitOne" >DigitOne</a> = (<a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a>)(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col7 ref" href="#57szString" title='szString' data-ref="57szString" >szString</a>[<var>0</var>]] - <a class="macro" href="../CascPort.h.html#171" title="&apos;0&apos;" data-ref="_M/_T">_T</a>(<kdb>'0'</kdb>));</td></tr>
+<tr><th id="320">320</th><td>        <b>if</b>(<a class="local col1 ref" href="#61DigitOne" title='DigitOne' data-ref="61DigitOne" >DigitOne</a> &gt; <var>9</var>)</td></tr>
+<tr><th id="321">321</th><td>            <a class="local col1 ref" href="#61DigitOne" title='DigitOne' data-ref="61DigitOne" >DigitOne</a> -= <kdb>'A'</kdb> - <kdb>'9'</kdb> - <var>1</var>;</td></tr>
+<tr><th id="322">322</th><td></td></tr>
+<tr><th id="323">323</th><td>        <a class="local col2 ref" href="#62DigitTwo" title='DigitTwo' data-ref="62DigitTwo" >DigitTwo</a> = (<a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a>)(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col7 ref" href="#57szString" title='szString' data-ref="57szString" >szString</a>[<var>1</var>]] - <a class="macro" href="../CascPort.h.html#171" title="&apos;0&apos;" data-ref="_M/_T">_T</a>(<kdb>'0'</kdb>));</td></tr>
+<tr><th id="324">324</th><td>        <b>if</b>(<a class="local col2 ref" href="#62DigitTwo" title='DigitTwo' data-ref="62DigitTwo" >DigitTwo</a> &gt; <var>9</var>)</td></tr>
+<tr><th id="325">325</th><td>            <a class="local col2 ref" href="#62DigitTwo" title='DigitTwo' data-ref="62DigitTwo" >DigitTwo</a> -= <kdb>'A'</kdb> - <kdb>'9'</kdb> - <var>1</var>;</td></tr>
+<tr><th id="326">326</th><td></td></tr>
+<tr><th id="327">327</th><td>        <b>if</b>(<a class="local col1 ref" href="#61DigitOne" title='DigitOne' data-ref="61DigitOne" >DigitOne</a> &gt; <var>0x0F</var> || <a class="local col2 ref" href="#62DigitTwo" title='DigitTwo' data-ref="62DigitTwo" >DigitTwo</a> &gt; <var>0x0F</var>)</td></tr>
+<tr><th id="328">328</th><td>            <b>return</b> <a class="macro" href="../CascPort.h.html#214" title="1000" data-ref="_M/ERROR_BAD_FORMAT">ERROR_BAD_FORMAT</a>;</td></tr>
+<tr><th id="329">329</th><td></td></tr>
+<tr><th id="330">330</th><td>        <a class="local col9 ref" href="#59PtrValue" title='PtrValue' data-ref="59PtrValue" >PtrValue</a>[<var>0</var>] = (<a class="local col9 ref" href="#59PtrValue" title='PtrValue' data-ref="59PtrValue" >PtrValue</a>[<var>0</var>] &lt;&lt; <var>0x08</var>) | (<a class="local col1 ref" href="#61DigitOne" title='DigitOne' data-ref="61DigitOne" >DigitOne</a> &lt;&lt; <var>0x04</var>) | <a class="local col2 ref" href="#62DigitTwo" title='DigitTwo' data-ref="62DigitTwo" >DigitTwo</a>;</td></tr>
+<tr><th id="331">331</th><td>        <a class="local col7 ref" href="#57szString" title='szString' data-ref="57szString" >szString</a> += <var>2</var>;</td></tr>
+<tr><th id="332">332</th><td>    }</td></tr>
+<tr><th id="333">333</th><td></td></tr>
+<tr><th id="334">334</th><td>    <b>return</b> <a class="macro" href="../CascPort.h.html#204" title="0" data-ref="_M/ERROR_SUCCESS">ERROR_SUCCESS</a>;</td></tr>
+<tr><th id="335">335</th><td>}</td></tr>
+<tr><th id="336">336</th><td></td></tr>
+<tr><th id="337">337</th><td><i>// Converts string blob to binary blob.</i></td></tr>
+<tr><th id="338">338</th><td><em>int</em> <dfn class="decl def" id="_Z21ConvertStringToBinaryPKcmPh" title='ConvertStringToBinary' data-ref="_Z21ConvertStringToBinaryPKcmPh" >ConvertStringToBinary</dfn>(</td></tr>
+<tr><th id="339">339</th><td>    <em>const</em> <em>char</em> * <dfn class="local col3 decl" id="63szString" title='szString' data-type='const char *' data-ref="63szString" >szString</dfn>,</td></tr>
+<tr><th id="340">340</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="64nMaxDigits" title='nMaxDigits' data-type='size_t' data-ref="64nMaxDigits" >nMaxDigits</dfn>,</td></tr>
+<tr><th id="341">341</th><td>    <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col5 decl" id="65pbBinary" title='pbBinary' data-type='LPBYTE' data-ref="65pbBinary" >pbBinary</dfn>)</td></tr>
+<tr><th id="342">342</th><td>{</td></tr>
+<tr><th id="343">343</th><td>    <em>const</em> <em>char</em> * <dfn class="local col6 decl" id="66szStringEnd" title='szStringEnd' data-type='const char *' data-ref="66szStringEnd" >szStringEnd</dfn> = <a class="local col3 ref" href="#63szString" title='szString' data-ref="63szString" >szString</a> + <a class="local col4 ref" href="#64nMaxDigits" title='nMaxDigits' data-ref="64nMaxDigits" >nMaxDigits</a>;</td></tr>
+<tr><th id="344">344</th><td>    <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col7 decl" id="67dwCounter" title='dwCounter' data-type='DWORD' data-ref="67dwCounter" >dwCounter</dfn> = <var>0</var>;</td></tr>
+<tr><th id="345">345</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col8 decl" id="68DigitValue" title='DigitValue' data-type='BYTE' data-ref="68DigitValue" >DigitValue</dfn>;</td></tr>
+<tr><th id="346">346</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col9 decl" id="69ByteValue" title='ByteValue' data-type='BYTE' data-ref="69ByteValue" >ByteValue</dfn> = <var>0</var>;</td></tr>
+<tr><th id="347">347</th><td></td></tr>
+<tr><th id="348">348</th><td>    <i>// Convert the string</i></td></tr>
+<tr><th id="349">349</th><td>    <b>while</b>(<a class="local col3 ref" href="#63szString" title='szString' data-ref="63szString" >szString</a> &lt; <a class="local col6 ref" href="#66szStringEnd" title='szStringEnd' data-ref="66szStringEnd" >szStringEnd</a>)</td></tr>
+<tr><th id="350">350</th><td>    {</td></tr>
+<tr><th id="351">351</th><td>        <i>// Retrieve the digit converted to hexa</i></td></tr>
+<tr><th id="352">352</th><td>        <a class="local col8 ref" href="#68DigitValue" title='DigitValue' data-ref="68DigitValue" >DigitValue</a> = (<a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a>)(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col3 ref" href="#63szString" title='szString' data-ref="63szString" >szString</a>[<var>0</var>]] - <kdb>'0'</kdb>);</td></tr>
+<tr><th id="353">353</th><td>        <b>if</b>(<a class="local col8 ref" href="#68DigitValue" title='DigitValue' data-ref="68DigitValue" >DigitValue</a> &gt; <var>9</var>)</td></tr>
+<tr><th id="354">354</th><td>            <a class="local col8 ref" href="#68DigitValue" title='DigitValue' data-ref="68DigitValue" >DigitValue</a> -= <kdb>'A'</kdb> - <kdb>'9'</kdb> - <var>1</var>;</td></tr>
+<tr><th id="355">355</th><td>        <b>if</b>(<a class="local col8 ref" href="#68DigitValue" title='DigitValue' data-ref="68DigitValue" >DigitValue</a> &gt; <var>0x0F</var>)</td></tr>
+<tr><th id="356">356</th><td>            <b>return</b> <a class="macro" href="../CascPort.h.html#214" title="1000" data-ref="_M/ERROR_BAD_FORMAT">ERROR_BAD_FORMAT</a>;</td></tr>
+<tr><th id="357">357</th><td></td></tr>
+<tr><th id="358">358</th><td>        <i>// Insert the digit to the binary buffer</i></td></tr>
+<tr><th id="359">359</th><td>        <a class="local col9 ref" href="#69ByteValue" title='ByteValue' data-ref="69ByteValue" >ByteValue</a> = (<a class="local col9 ref" href="#69ByteValue" title='ByteValue' data-ref="69ByteValue" >ByteValue</a> &lt;&lt; <var>0x04</var>) | <a class="local col8 ref" href="#68DigitValue" title='DigitValue' data-ref="68DigitValue" >DigitValue</a>;</td></tr>
+<tr><th id="360">360</th><td>        <a class="local col7 ref" href="#67dwCounter" title='dwCounter' data-ref="67dwCounter" >dwCounter</a>++;</td></tr>
+<tr><th id="361">361</th><td></td></tr>
+<tr><th id="362">362</th><td>        <i>// If we reached the second digit, it means that we need</i></td></tr>
+<tr><th id="363">363</th><td><i>        // to flush the byte value and move on</i></td></tr>
+<tr><th id="364">364</th><td>        <b>if</b>((<a class="local col7 ref" href="#67dwCounter" title='dwCounter' data-ref="67dwCounter" >dwCounter</a> &amp; <var>0x01</var>) == <var>0</var>)</td></tr>
+<tr><th id="365">365</th><td>            *<a class="local col5 ref" href="#65pbBinary" title='pbBinary' data-ref="65pbBinary" >pbBinary</a>++ = <a class="local col9 ref" href="#69ByteValue" title='ByteValue' data-ref="69ByteValue" >ByteValue</a>;</td></tr>
+<tr><th id="366">366</th><td>        <a class="local col3 ref" href="#63szString" title='szString' data-ref="63szString" >szString</a>++;</td></tr>
+<tr><th id="367">367</th><td>    }</td></tr>
+<tr><th id="368">368</th><td></td></tr>
+<tr><th id="369">369</th><td>    <b>return</b> <a class="macro" href="../CascPort.h.html#204" title="0" data-ref="_M/ERROR_SUCCESS">ERROR_SUCCESS</a>;</td></tr>
+<tr><th id="370">370</th><td>}</td></tr>
+<tr><th id="371">371</th><td></td></tr>
+<tr><th id="372">372</th><td><em>char</em> * <dfn class="decl def" id="_Z16StringFromBinaryPhmPc" title='StringFromBinary' data-ref="_Z16StringFromBinaryPhmPc" >StringFromBinary</dfn>(<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col0 decl" id="70pbBinary" title='pbBinary' data-type='LPBYTE' data-ref="70pbBinary" >pbBinary</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="71cbBinary" title='cbBinary' data-type='size_t' data-ref="71cbBinary" >cbBinary</dfn>, <em>char</em> * <dfn class="local col2 decl" id="72szBuffer" title='szBuffer' data-type='char *' data-ref="72szBuffer" >szBuffer</dfn>)</td></tr>
+<tr><th id="373">373</th><td>{</td></tr>
+<tr><th id="374">374</th><td>    <em>char</em> * <dfn class="local col3 decl" id="73szSaveBuffer" title='szSaveBuffer' data-type='char *' data-ref="73szSaveBuffer" >szSaveBuffer</dfn> = <a class="local col2 ref" href="#72szBuffer" title='szBuffer' data-ref="72szBuffer" >szBuffer</a>;</td></tr>
+<tr><th id="375">375</th><td></td></tr>
+<tr><th id="376">376</th><td>    <i>// Convert the string to the array of MD5</i></td></tr>
+<tr><th id="377">377</th><td><i>    // Copy the blob data as text</i></td></tr>
+<tr><th id="378">378</th><td>    <b>for</b>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="74i" title='i' data-type='size_t' data-ref="74i" >i</dfn> = <var>0</var>; <a class="local col4 ref" href="#74i" title='i' data-ref="74i" >i</a> &lt; <a class="local col1 ref" href="#71cbBinary" title='cbBinary' data-ref="71cbBinary" >cbBinary</a>; <a class="local col4 ref" href="#74i" title='i' data-ref="74i" >i</a>++)</td></tr>
+<tr><th id="379">379</th><td>    {</td></tr>
+<tr><th id="380">380</th><td>        *<a class="local col2 ref" href="#72szBuffer" title='szBuffer' data-ref="72szBuffer" >szBuffer</a>++ = <a class="ref" href="Common.h.html#IntToHexChar" title='IntToHexChar' data-ref="IntToHexChar" id="IntToHexChar" >IntToHexChar</a>[<a class="local col0 ref" href="#70pbBinary" title='pbBinary' data-ref="70pbBinary" >pbBinary</a>[<var>0</var>] &gt;&gt; <var>0x04</var>];</td></tr>
+<tr><th id="381">381</th><td>        *<a class="local col2 ref" href="#72szBuffer" title='szBuffer' data-ref="72szBuffer" >szBuffer</a>++ = <a class="ref" href="Common.h.html#IntToHexChar" title='IntToHexChar' data-ref="IntToHexChar" id="IntToHexChar" >IntToHexChar</a>[<a class="local col0 ref" href="#70pbBinary" title='pbBinary' data-ref="70pbBinary" >pbBinary</a>[<var>0</var>] &amp; <var>0x0F</var>];</td></tr>
+<tr><th id="382">382</th><td>        <a class="local col0 ref" href="#70pbBinary" title='pbBinary' data-ref="70pbBinary" >pbBinary</a>++;</td></tr>
+<tr><th id="383">383</th><td>    }</td></tr>
+<tr><th id="384">384</th><td></td></tr>
+<tr><th id="385">385</th><td>    <i>// Terminate the string</i></td></tr>
+<tr><th id="386">386</th><td>    *<a class="local col2 ref" href="#72szBuffer" title='szBuffer' data-ref="72szBuffer" >szBuffer</a> = <var>0</var>;</td></tr>
+<tr><th id="387">387</th><td>    <b>return</b> <a class="local col3 ref" href="#73szSaveBuffer" title='szSaveBuffer' data-ref="73szSaveBuffer" >szSaveBuffer</a>;</td></tr>
+<tr><th id="388">388</th><td>}</td></tr>
+<tr><th id="389">389</th><td></td></tr>
+<tr><th id="390">390</th><td><em>char</em> * <dfn class="decl def" id="_Z13StringFromMD5PhPc" title='StringFromMD5' data-ref="_Z13StringFromMD5PhPc" >StringFromMD5</dfn>(<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col5 decl" id="75md5" title='md5' data-type='LPBYTE' data-ref="75md5" >md5</dfn>, <em>char</em> * <dfn class="local col6 decl" id="76szBuffer" title='szBuffer' data-type='char *' data-ref="76szBuffer" >szBuffer</dfn>)</td></tr>
+<tr><th id="391">391</th><td>{</td></tr>
+<tr><th id="392">392</th><td>    <b>return</b> <a class="ref" href="#_Z16StringFromBinaryPhmPc" title='StringFromBinary' data-ref="_Z16StringFromBinaryPhmPc" >StringFromBinary</a>(<a class="local col5 ref" href="#75md5" title='md5' data-ref="75md5" >md5</a>, <a class="macro" href="../CascLib.h.html#105" title="0x10" data-ref="_M/MD5_HASH_SIZE">MD5_HASH_SIZE</a>, <a class="local col6 ref" href="#76szBuffer" title='szBuffer' data-ref="76szBuffer" >szBuffer</a>);</td></tr>
+<tr><th id="393">393</th><td>}</td></tr>
+<tr><th id="394">394</th><td></td></tr>
+<tr><th id="395">395</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="396">396</th><td><i>// File name utilities</i></td></tr>
+<tr><th id="397">397</th><td></td></tr>
+<tr><th id="398">398</th><td><em>const</em> <em>wchar_t</em> * <dfn class="decl def" id="_Z16GetPlainFileNamePKw" title='GetPlainFileName' data-ref="_Z16GetPlainFileNamePKw" >GetPlainFileName</dfn>(<em>const</em> <em>wchar_t</em> * <dfn class="local col7 decl" id="77szFileName" title='szFileName' data-type='const wchar_t *' data-ref="77szFileName" >szFileName</dfn>)</td></tr>
+<tr><th id="399">399</th><td>{</td></tr>
+<tr><th id="400">400</th><td>    <em>const</em> <em>wchar_t</em> * <dfn class="local col8 decl" id="78szPlainName" title='szPlainName' data-type='const wchar_t *' data-ref="78szPlainName" >szPlainName</dfn> = <a class="local col7 ref" href="#77szFileName" title='szFileName' data-ref="77szFileName" >szFileName</a>;</td></tr>
+<tr><th id="401">401</th><td></td></tr>
+<tr><th id="402">402</th><td>    <b>while</b>(*<a class="local col7 ref" href="#77szFileName" title='szFileName' data-ref="77szFileName" >szFileName</a> != <var>0</var>)</td></tr>
+<tr><th id="403">403</th><td>    {</td></tr>
+<tr><th id="404">404</th><td>        <b>if</b>(*<a class="local col7 ref" href="#77szFileName" title='szFileName' data-ref="77szFileName" >szFileName</a> == <kdb>'\\'</kdb> || *<a class="local col7 ref" href="#77szFileName" title='szFileName' data-ref="77szFileName" >szFileName</a> == <kdb>'/'</kdb>)</td></tr>
+<tr><th id="405">405</th><td>            <a class="local col8 ref" href="#78szPlainName" title='szPlainName' data-ref="78szPlainName" >szPlainName</a> = <a class="local col7 ref" href="#77szFileName" title='szFileName' data-ref="77szFileName" >szFileName</a> + <var>1</var>;</td></tr>
+<tr><th id="406">406</th><td>        <a class="local col7 ref" href="#77szFileName" title='szFileName' data-ref="77szFileName" >szFileName</a>++;</td></tr>
+<tr><th id="407">407</th><td>    }</td></tr>
+<tr><th id="408">408</th><td></td></tr>
+<tr><th id="409">409</th><td>    <b>return</b> <a class="local col8 ref" href="#78szPlainName" title='szPlainName' data-ref="78szPlainName" >szPlainName</a>;</td></tr>
+<tr><th id="410">410</th><td>}</td></tr>
+<tr><th id="411">411</th><td></td></tr>
+<tr><th id="412">412</th><td><em>const</em> <em>char</em> * <dfn class="decl def" id="_Z16GetPlainFileNamePKc" title='GetPlainFileName' data-ref="_Z16GetPlainFileNamePKc" >GetPlainFileName</dfn>(<em>const</em> <em>char</em> * <dfn class="local col9 decl" id="79szFileName" title='szFileName' data-type='const char *' data-ref="79szFileName" >szFileName</dfn>)</td></tr>
+<tr><th id="413">413</th><td>{</td></tr>
+<tr><th id="414">414</th><td>    <em>const</em> <em>char</em> * <dfn class="local col0 decl" id="80szPlainName" title='szPlainName' data-type='const char *' data-ref="80szPlainName" >szPlainName</dfn> = <a class="local col9 ref" href="#79szFileName" title='szFileName' data-ref="79szFileName" >szFileName</a>;</td></tr>
+<tr><th id="415">415</th><td></td></tr>
+<tr><th id="416">416</th><td>    <b>while</b>(*<a class="local col9 ref" href="#79szFileName" title='szFileName' data-ref="79szFileName" >szFileName</a> != <var>0</var>)</td></tr>
+<tr><th id="417">417</th><td>    {</td></tr>
+<tr><th id="418">418</th><td>        <b>if</b>(*<a class="local col9 ref" href="#79szFileName" title='szFileName' data-ref="79szFileName" >szFileName</a> == <kdb>'\\'</kdb> || *<a class="local col9 ref" href="#79szFileName" title='szFileName' data-ref="79szFileName" >szFileName</a> == <kdb>'/'</kdb>)</td></tr>
+<tr><th id="419">419</th><td>            <a class="local col0 ref" href="#80szPlainName" title='szPlainName' data-ref="80szPlainName" >szPlainName</a> = <a class="local col9 ref" href="#79szFileName" title='szFileName' data-ref="79szFileName" >szFileName</a> + <var>1</var>;</td></tr>
+<tr><th id="420">420</th><td>        <a class="local col9 ref" href="#79szFileName" title='szFileName' data-ref="79szFileName" >szFileName</a>++;</td></tr>
+<tr><th id="421">421</th><td>    }</td></tr>
+<tr><th id="422">422</th><td></td></tr>
+<tr><th id="423">423</th><td>    <b>return</b> <a class="local col0 ref" href="#80szPlainName" title='szPlainName' data-ref="80szPlainName" >szPlainName</a>;</td></tr>
+<tr><th id="424">424</th><td>}</td></tr>
+<tr><th id="425">425</th><td></td></tr>
+<tr><th id="426">426</th><td><em>bool</em> <dfn class="decl def" id="_Z13CheckWildCardPKcS0_" title='CheckWildCard' data-ref="_Z13CheckWildCardPKcS0_" >CheckWildCard</dfn>(<em>const</em> <em>char</em> * <dfn class="local col1 decl" id="81szString" title='szString' data-type='const char *' data-ref="81szString" >szString</dfn>, <em>const</em> <em>char</em> * <dfn class="local col2 decl" id="82szWildCard" title='szWildCard' data-type='const char *' data-ref="82szWildCard" >szWildCard</dfn>)</td></tr>
+<tr><th id="427">427</th><td>{</td></tr>
+<tr><th id="428">428</th><td>    <em>const</em> <em>char</em> * <dfn class="local col3 decl" id="83szWildCardPtr" title='szWildCardPtr' data-type='const char *' data-ref="83szWildCardPtr" >szWildCardPtr</dfn>;</td></tr>
+<tr><th id="429">429</th><td></td></tr>
+<tr><th id="430">430</th><td>    <b>for</b>(;;)</td></tr>
+<tr><th id="431">431</th><td>    {</td></tr>
+<tr><th id="432">432</th><td>        <i>// If there is '?' in the wildcard, we skip one char</i></td></tr>
+<tr><th id="433">433</th><td>        <b>while</b>(<a class="local col2 ref" href="#82szWildCard" title='szWildCard' data-ref="82szWildCard" >szWildCard</a>[<var>0</var>] == <kdb>'?'</kdb>)</td></tr>
+<tr><th id="434">434</th><td>        {</td></tr>
+<tr><th id="435">435</th><td>            <b>if</b>(<a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>[<var>0</var>] == <var>0</var>)</td></tr>
+<tr><th id="436">436</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="437">437</th><td></td></tr>
+<tr><th id="438">438</th><td>            <a class="local col2 ref" href="#82szWildCard" title='szWildCard' data-ref="82szWildCard" >szWildCard</a>++;</td></tr>
+<tr><th id="439">439</th><td>            <a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>++;</td></tr>
+<tr><th id="440">440</th><td>        }</td></tr>
+<tr><th id="441">441</th><td></td></tr>
+<tr><th id="442">442</th><td>        <i>// Handle '*'</i></td></tr>
+<tr><th id="443">443</th><td>        <a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a> = <a class="local col2 ref" href="#82szWildCard" title='szWildCard' data-ref="82szWildCard" >szWildCard</a>;</td></tr>
+<tr><th id="444">444</th><td>        <b>if</b>(<a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>[<var>0</var>] != <var>0</var>)</td></tr>
+<tr><th id="445">445</th><td>        {</td></tr>
+<tr><th id="446">446</th><td>            <b>if</b>(<a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>[<var>0</var>] == <kdb>'*'</kdb>)</td></tr>
+<tr><th id="447">447</th><td>            {</td></tr>
+<tr><th id="448">448</th><td>                <a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>++;</td></tr>
+<tr><th id="449">449</th><td></td></tr>
+<tr><th id="450">450</th><td>                <b>if</b>(<a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>[<var>0</var>] == <kdb>'*'</kdb>)</td></tr>
+<tr><th id="451">451</th><td>                    <b>continue</b>;</td></tr>
+<tr><th id="452">452</th><td></td></tr>
+<tr><th id="453">453</th><td>                <b>if</b>(<a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>[<var>0</var>] == <var>0</var>)</td></tr>
+<tr><th id="454">454</th><td>                    <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="455">455</th><td></td></tr>
+<tr><th id="456">456</th><td>                <b>if</b>(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>[<var>0</var>]] == <a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>[<var>0</var>]])</td></tr>
+<tr><th id="457">457</th><td>                {</td></tr>
+<tr><th id="458">458</th><td>                    <b>if</b>(<a class="ref" href="#_Z13CheckWildCardPKcS0_" title='CheckWildCard' data-ref="_Z13CheckWildCardPKcS0_" >CheckWildCard</a>(<a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>, <a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>))</td></tr>
+<tr><th id="459">459</th><td>                        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="460">460</th><td>                }</td></tr>
+<tr><th id="461">461</th><td>            }</td></tr>
+<tr><th id="462">462</th><td>            <b>else</b></td></tr>
+<tr><th id="463">463</th><td>            {</td></tr>
+<tr><th id="464">464</th><td>                <b>if</b>(<a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a>[<var>0</var>]] != <a class="ref" href="Common.h.html#AsciiToUpperTable_BkSlash" title='AsciiToUpperTable_BkSlash' data-ref="AsciiToUpperTable_BkSlash" id="AsciiToUpperTable_BkSlash" >AsciiToUpperTable_BkSlash</a>[<a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>[<var>0</var>]])</td></tr>
+<tr><th id="465">465</th><td>                    <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="466">466</th><td></td></tr>
+<tr><th id="467">467</th><td>                <a class="local col2 ref" href="#82szWildCard" title='szWildCard' data-ref="82szWildCard" >szWildCard</a> = <a class="local col3 ref" href="#83szWildCardPtr" title='szWildCardPtr' data-ref="83szWildCardPtr" >szWildCardPtr</a> + <var>1</var>;</td></tr>
+<tr><th id="468">468</th><td>            }</td></tr>
+<tr><th id="469">469</th><td></td></tr>
+<tr><th id="470">470</th><td>            <b>if</b>(<a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>[<var>0</var>] == <var>0</var>)</td></tr>
+<tr><th id="471">471</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="472">472</th><td>            <a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>++;</td></tr>
+<tr><th id="473">473</th><td>        }</td></tr>
+<tr><th id="474">474</th><td>        <b>else</b></td></tr>
+<tr><th id="475">475</th><td>        {</td></tr>
+<tr><th id="476">476</th><td>            <b>return</b> (<a class="local col1 ref" href="#81szString" title='szString' data-ref="81szString" >szString</a>[<var>0</var>] == <var>0</var>) ? <b>true</b> : <b>false</b>;</td></tr>
+<tr><th id="477">477</th><td>        }</td></tr>
+<tr><th id="478">478</th><td>    }</td></tr>
+<tr><th id="479">479</th><td>}</td></tr>
+<tr><th id="480">480</th><td></td></tr>
+<tr><th id="481">481</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="482">482</th><td><i>// Hashing functions</i></td></tr>
+<tr><th id="483">483</th><td></td></tr>
+<tr><th id="484">484</th><td><em>bool</em> <dfn class="decl def" id="_Z10IsValidMD5Ph" title='IsValidMD5' data-ref="_Z10IsValidMD5Ph" >IsValidMD5</dfn>(<a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col4 decl" id="84pbMd5" title='pbMd5' data-type='LPBYTE' data-ref="84pbMd5" >pbMd5</dfn>)</td></tr>
+<tr><th id="485">485</th><td>{</td></tr>
+<tr><th id="486">486</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col5 decl" id="85BitSummary" title='BitSummary' data-type='BYTE' data-ref="85BitSummary" >BitSummary</dfn> = <var>0</var>;</td></tr>
+<tr><th id="487">487</th><td>    </td></tr>
+<tr><th id="488">488</th><td>    <i>// The MD5 is considered invalid of it is zeroed</i></td></tr>
+<tr><th id="489">489</th><td>    <a class="local col5 ref" href="#85BitSummary" title='BitSummary' data-ref="85BitSummary" >BitSummary</a> |= <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x00</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x01</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x02</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x03</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x04</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x05</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x06</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x07</var>];</td></tr>
+<tr><th id="490">490</th><td>    <a class="local col5 ref" href="#85BitSummary" title='BitSummary' data-ref="85BitSummary" >BitSummary</a> |= <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x08</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x09</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x0A</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x0B</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x0C</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x0D</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x0E</var>] | <a class="local col4 ref" href="#84pbMd5" title='pbMd5' data-ref="84pbMd5" >pbMd5</a>[<var>0x0F</var>];</td></tr>
+<tr><th id="491">491</th><td>    <b>return</b> (<a class="local col5 ref" href="#85BitSummary" title='BitSummary' data-ref="85BitSummary" >BitSummary</a> != <var>0</var>);</td></tr>
+<tr><th id="492">492</th><td>}</td></tr>
+<tr><th id="493">493</th><td></td></tr>
+<tr><th id="494">494</th><td><em>bool</em> <dfn class="decl def" id="_Z19VerifyDataBlockHashPvjPh" title='VerifyDataBlockHash' data-ref="_Z19VerifyDataBlockHashPvjPh" >VerifyDataBlockHash</dfn>(<em>void</em> * <dfn class="local col6 decl" id="86pvDataBlock" title='pvDataBlock' data-type='void *' data-ref="86pvDataBlock" >pvDataBlock</dfn>, <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col7 decl" id="87cbDataBlock" title='cbDataBlock' data-type='DWORD' data-ref="87cbDataBlock" >cbDataBlock</dfn>, <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col8 decl" id="88expected_md5" title='expected_md5' data-type='LPBYTE' data-ref="88expected_md5" >expected_md5</dfn>)</td></tr>
+<tr><th id="495">495</th><td>{</td></tr>
+<tr><th id="496">496</th><td>    <a class="typedef" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> <dfn class="local col9 decl" id="89md5_state" title='md5_state' data-type='hash_state' data-ref="89md5_state" >md5_state</dfn>;</td></tr>
+<tr><th id="497">497</th><td>    <a class="typedef" href="../CascPort.h.html#BYTE" title='BYTE' data-type='unsigned char' data-ref="BYTE" >BYTE</a> <dfn class="local col0 decl" id="90md5_digest" title='md5_digest' data-type='BYTE [16]' data-ref="90md5_digest" >md5_digest</dfn>[<a class="macro" href="../CascLib.h.html#105" title="0x10" data-ref="_M/MD5_HASH_SIZE">MD5_HASH_SIZE</a>];</td></tr>
+<tr><th id="498">498</th><td></td></tr>
+<tr><th id="499">499</th><td>    <i>// Don't verify the block if the MD5 is not valid.</i></td></tr>
+<tr><th id="500">500</th><td>    <b>if</b>(!<a class="ref" href="#_Z10IsValidMD5Ph" title='IsValidMD5' data-ref="_Z10IsValidMD5Ph" >IsValidMD5</a>(<a class="local col8 ref" href="#88expected_md5" title='expected_md5' data-ref="88expected_md5" >expected_md5</a>))</td></tr>
+<tr><th id="501">501</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="502">502</th><td></td></tr>
+<tr><th id="503">503</th><td>    <i>// Calculate the MD5 of the data block</i></td></tr>
+<tr><th id="504">504</th><td>    <a class="ref" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#md5_init" title='md5_init' data-ref="md5_init" id="md5_init" >md5_init</a>(&amp;<a class="local col9 ref" href="#89md5_state" title='md5_state' data-ref="89md5_state" >md5_state</a>);</td></tr>
+<tr><th id="505">505</th><td>    <a class="ref" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#md5_process" title='md5_process' data-ref="md5_process" id="md5_process" >md5_process</a>(&amp;<a class="local col9 ref" href="#89md5_state" title='md5_state' data-ref="89md5_state" >md5_state</a>, (<em>unsigned</em> <em>char</em> *)<a class="local col6 ref" href="#86pvDataBlock" title='pvDataBlock' data-ref="86pvDataBlock" >pvDataBlock</a>, <a class="local col7 ref" href="#87cbDataBlock" title='cbDataBlock' data-ref="87cbDataBlock" >cbDataBlock</a>);</td></tr>
+<tr><th id="506">506</th><td>    <a class="ref" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#md5_done" title='md5_done' data-ref="md5_done" id="md5_done" >md5_done</a>(&amp;<a class="local col9 ref" href="#89md5_state" title='md5_state' data-ref="89md5_state" >md5_state</a>, <a class="local col0 ref" href="#90md5_digest" title='md5_digest' data-ref="90md5_digest" >md5_digest</a>);</td></tr>
+<tr><th id="507">507</th><td></td></tr>
+<tr><th id="508">508</th><td>    <i>// Does the MD5's match?</i></td></tr>
+<tr><th id="509">509</th><td>    <b>return</b> (<a class="ref" href="../../../../../include/string.h.html#memcmp" title='memcmp' data-ref="memcmp" id="memcmp" >memcmp</a>(<a class="local col0 ref" href="#90md5_digest" title='md5_digest' data-ref="90md5_digest" >md5_digest</a>, <a class="local col8 ref" href="#88expected_md5" title='expected_md5' data-ref="88expected_md5" >expected_md5</a>, <a class="macro" href="../CascLib.h.html#105" title="0x10" data-ref="_M/MD5_HASH_SIZE">MD5_HASH_SIZE</a>) == <var>0</var>);</td></tr>
+<tr><th id="510">510</th><td>}</td></tr>
+<tr><th id="511">511</th><td></td></tr>
+<tr><th id="512">512</th><td><em>void</em> <dfn class="decl def" id="_Z22CalculateDataBlockHashPvjPh" title='CalculateDataBlockHash' data-ref="_Z22CalculateDataBlockHashPvjPh" >CalculateDataBlockHash</dfn>(<em>void</em> * <dfn class="local col1 decl" id="91pvDataBlock" title='pvDataBlock' data-type='void *' data-ref="91pvDataBlock" >pvDataBlock</dfn>, <a class="typedef" href="../CascPort.h.html#DWORD" title='DWORD' data-type='unsigned int' data-ref="DWORD" >DWORD</a> <dfn class="local col2 decl" id="92cbDataBlock" title='cbDataBlock' data-type='DWORD' data-ref="92cbDataBlock" >cbDataBlock</dfn>, <a class="typedef" href="../CascPort.h.html#LPBYTE" title='LPBYTE' data-type='BYTE *' data-ref="LPBYTE" >LPBYTE</a> <dfn class="local col3 decl" id="93md5_hash" title='md5_hash' data-type='LPBYTE' data-ref="93md5_hash" >md5_hash</dfn>)</td></tr>
+<tr><th id="513">513</th><td>{</td></tr>
+<tr><th id="514">514</th><td>    <a class="typedef" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#hash_state" title='hash_state' data-type='union Hash_state' data-ref="hash_state" >hash_state</a> <dfn class="local col4 decl" id="94md5_state" title='md5_state' data-type='hash_state' data-ref="94md5_state" >md5_state</dfn>;</td></tr>
+<tr><th id="515">515</th><td></td></tr>
+<tr><th id="516">516</th><td>    <a class="ref" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#md5_init" title='md5_init' data-ref="md5_init" id="md5_init" >md5_init</a>(&amp;<a class="local col4 ref" href="#94md5_state" title='md5_state' data-ref="94md5_state" >md5_state</a>);</td></tr>
+<tr><th id="517">517</th><td>    <a class="ref" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#md5_process" title='md5_process' data-ref="md5_process" id="md5_process" >md5_process</a>(&amp;<a class="local col4 ref" href="#94md5_state" title='md5_state' data-ref="94md5_state" >md5_state</a>, (<em>unsigned</em> <em>char</em> *)<a class="local col1 ref" href="#91pvDataBlock" title='pvDataBlock' data-ref="91pvDataBlock" >pvDataBlock</a>, <a class="local col2 ref" href="#92cbDataBlock" title='cbDataBlock' data-ref="92cbDataBlock" >cbDataBlock</a>);</td></tr>
+<tr><th id="518">518</th><td>    <a class="ref" href="../libtomcrypt/src/headers/tomcrypt_hash.h.html#md5_done" title='md5_done' data-ref="md5_done" id="md5_done" >md5_done</a>(&amp;<a class="local col4 ref" href="#94md5_state" title='md5_state' data-ref="94md5_state" >md5_state</a>, <a class="local col3 ref" href="#93md5_hash" title='md5_hash' data-ref="93md5_hash" >md5_hash</a>);</td></tr>
+<tr><th id="519">519</th><td>}</td></tr>
+<tr><th id="520">520</th><td></td></tr>
+<tr><th id="521">521</th><td><i>//-----------------------------------------------------------------------------</i></td></tr>
+<tr><th id="522">522</th><td><i>// We have our own qsort implementation, optimized for using array of pointers</i></td></tr>
+<tr><th id="523">523</th><td></td></tr>
+<tr><th id="524">524</th><td><u>#define <dfn class="macro" id="_M/STKSIZ" data-ref="_M/STKSIZ">STKSIZ</dfn> (8*sizeof(void*) - 2)</u></td></tr>
+<tr><th id="525">525</th><td></td></tr>
+<tr><th id="526">526</th><td><u>#define <dfn class="macro" id="_M/SWAP_ENTRIES" data-ref="_M/SWAP_ENTRIES">SWAP_ENTRIES</dfn>(index1, index2)        \</u></td></tr>
+<tr><th id="527">527</th><td><u>{                                           \</u></td></tr>
+<tr><th id="528">528</th><td><u>    <a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" ><a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" ><a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" ><a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" >temp</a></a></a></a> = <a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a></a></a></a>[index1];                    \</u></td></tr>
+<tr><th id="529">529</th><td><u>    <a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a></a></a></a>[index1] = <a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a></a></a></a>[index2];            \</u></td></tr>
+<tr><th id="530">530</th><td><u>    <a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" ><a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a></a></a></a>[index2] = <a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" ><a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" ><a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" ><a class="local col7 ref" href="#107temp" title='temp' data-ref="107temp" >temp</a></a></a></a>;                    \</u></td></tr>
+<tr><th id="531">531</th><td><u>}</u></td></tr>
+<tr><th id="532">532</th><td></td></tr>
+<tr><th id="533">533</th><td><em>void</em> <dfn class="decl def" id="qsort_pointer_array" title='qsort_pointer_array' data-ref="qsort_pointer_array" >qsort_pointer_array</dfn>(<em>void</em> ** <dfn class="local col5 decl" id="95base" title='base' data-type='void **' data-ref="95base" >base</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="96num" title='num' data-type='size_t' data-ref="96num" >num</dfn>, <em>int</em> (*<dfn class="local col7 decl" id="97compare" title='compare' data-type='int (*)(const void *, const void *, const void *)' data-ref="97compare" >compare</dfn>)(<em>const</em> <em>void</em> *, <em>const</em> <em>void</em> *, <em>const</em> <em>void</em> *), <em>const</em> <em>void</em> * <dfn class="local col8 decl" id="98context" title='context' data-type='const void *' data-ref="98context" >context</dfn>)</td></tr>
+<tr><th id="534">534</th><td>{</td></tr>
+<tr><th id="535">535</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" ><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span></span> <dfn class="local col9 decl" id="99lo" title='lo' data-type='size_t' data-ref="99lo" >lo</dfn>, <dfn class="local col0 decl" id="100hi" title='hi' data-type='size_t' data-ref="100hi" >hi</dfn>;                  <i>/* ends of sub-array currently sorting */</i></td></tr>
+<tr><th id="536">536</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="101mid" title='mid' data-type='size_t' data-ref="101mid" >mid</dfn>;                     <i>/* points to middle of subarray */</i></td></tr>
+<tr><th id="537">537</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" ><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span></span> <dfn class="local col2 decl" id="102loguy" title='loguy' data-type='size_t' data-ref="102loguy" >loguy</dfn>, <dfn class="local col3 decl" id="103higuy" title='higuy' data-type='size_t' data-ref="103higuy" >higuy</dfn>;            <i>/* traveling pointers for partition step */</i></td></tr>
+<tr><th id="538">538</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="104size" title='size' data-type='size_t' data-ref="104size" >size</dfn>;                    <i>/* size of the sub-array */</i></td></tr>
+<tr><th id="539">539</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" ><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span></span> <dfn class="local col5 decl" id="105lostk" title='lostk' data-type='size_t [62]' data-ref="105lostk" >lostk</dfn>[<a class="macro" href="#524" title="(8*sizeof(void*) - 2)" data-ref="_M/STKSIZ">STKSIZ</a>], <dfn class="local col6 decl" id="106histk" title='histk' data-type='size_t [62]' data-ref="106histk" >histk</dfn>[<a class="macro" href="#524" title="(8*sizeof(void*) - 2)" data-ref="_M/STKSIZ">STKSIZ</a>];</td></tr>
+<tr><th id="540">540</th><td>    <em>void</em> * <dfn class="local col7 decl" id="107temp" title='temp' data-type='void *' data-ref="107temp" >temp</dfn>;</td></tr>
+<tr><th id="541">541</th><td>    <em>int</em> <dfn class="local col8 decl" id="108stkptr" title='stkptr' data-type='int' data-ref="108stkptr" >stkptr</dfn>;                     <i>/* stack for saving sub-array to be processed */</i></td></tr>
+<tr><th id="542">542</th><td></td></tr>
+<tr><th id="543">543</th><td>    <i>/* validation section */</i></td></tr>
+<tr><th id="544">544</th><td>    <a class="macro" href="../../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(base != NULL);</td></tr>
+<tr><th id="545">545</th><td>    <a class="macro" href="../../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(compare != NULL);</td></tr>
+<tr><th id="546">546</th><td></td></tr>
+<tr><th id="547">547</th><td>    <b>if</b> (<a class="local col6 ref" href="#96num" title='num' data-ref="96num" >num</a> &lt; <var>2</var>)</td></tr>
+<tr><th id="548">548</th><td>        <b>return</b>;                 <i>/* nothing to do */</i></td></tr>
+<tr><th id="549">549</th><td></td></tr>
+<tr><th id="550">550</th><td>    <a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a> = <var>0</var>;                 <i>/* initialize stack */</i></td></tr>
+<tr><th id="551">551</th><td></td></tr>
+<tr><th id="552">552</th><td>    <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> = <var>0</var>;</td></tr>
+<tr><th id="553">553</th><td>    <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a> = (<a class="local col6 ref" href="#96num" title='num' data-ref="96num" >num</a>-<var>1</var>);               <i>/* initialize limits */</i></td></tr>
+<tr><th id="554">554</th><td></td></tr>
+<tr><th id="555">555</th><td>    <i>/* this entry point is for pseudo-recursion calling: setting</i></td></tr>
+<tr><th id="556">556</th><td><i>       lo and hi and jumping to here is like recursion, but stkptr is</i></td></tr>
+<tr><th id="557">557</th><td><i>       preserved, locals aren't, so we preserve stuff on the stack */</i></td></tr>
+<tr><th id="558">558</th><td><dfn class="lbl" id="109recurse" data-ref="109recurse" >recurse</dfn>:</td></tr>
+<tr><th id="559">559</th><td></td></tr>
+<tr><th id="560">560</th><td>    <a class="local col4 ref" href="#104size" title='size' data-ref="104size" >size</a> = (<a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a> - <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a>) + <var>1</var>;       <i>/* number of el's to sort */</i></td></tr>
+<tr><th id="561">561</th><td></td></tr>
+<tr><th id="562">562</th><td>    <i>/* First we pick a partitioning element.  The efficiency of the</i></td></tr>
+<tr><th id="563">563</th><td><i>       algorithm demands that we find one that is approximately the median</i></td></tr>
+<tr><th id="564">564</th><td><i>       of the values, but also that we select one fast.  We choose the</i></td></tr>
+<tr><th id="565">565</th><td><i>       median of the first, middle, and last elements, to avoid bad</i></td></tr>
+<tr><th id="566">566</th><td><i>       performance in the face of already sorted data, or data that is made</i></td></tr>
+<tr><th id="567">567</th><td><i>       up of multiple sorted runs appended together.  Testing shows that a</i></td></tr>
+<tr><th id="568">568</th><td><i>       median-of-three algorithm provides better performance than simply</i></td></tr>
+<tr><th id="569">569</th><td><i>       picking the middle element for the latter case. */</i></td></tr>
+<tr><th id="570">570</th><td></td></tr>
+<tr><th id="571">571</th><td>    <a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> = <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> + (<a class="local col4 ref" href="#104size" title='size' data-ref="104size" >size</a> / <var>2</var>);      <i>/* find middle element */</i></td></tr>
+<tr><th id="572">572</th><td></td></tr>
+<tr><th id="573">573</th><td>    <i>/* Sort the first, middle, last elements into order */</i></td></tr>
+<tr><th id="574">574</th><td>    <b>if</b> (<a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a>]) &gt; <var>0</var>) {</td></tr>
+<tr><th id="575">575</th><td>        <a class="macro" href="#526" title="{ temp = base[lo]; base[lo] = base[mid]; base[mid] = temp; }" data-ref="_M/SWAP_ENTRIES">SWAP_ENTRIES</a>(<a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" ><a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a></a>, <a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" ><a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a></a>);</td></tr>
+<tr><th id="576">576</th><td>    }</td></tr>
+<tr><th id="577">577</th><td>    <b>if</b> (<a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a>]) &gt; <var>0</var>) {</td></tr>
+<tr><th id="578">578</th><td>        <a class="macro" href="#526" title="{ temp = base[lo]; base[lo] = base[hi]; base[hi] = temp; }" data-ref="_M/SWAP_ENTRIES">SWAP_ENTRIES</a>(<a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" ><a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a></a>, <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" ><a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a></a>);</td></tr>
+<tr><th id="579">579</th><td>    }</td></tr>
+<tr><th id="580">580</th><td>    <b>if</b> (<a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a>]) &gt; <var>0</var>) {</td></tr>
+<tr><th id="581">581</th><td>        <a class="macro" href="#526" title="{ temp = base[mid]; base[mid] = base[hi]; base[hi] = temp; }" data-ref="_M/SWAP_ENTRIES">SWAP_ENTRIES</a>(<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" ><a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a></a>, <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" ><a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a></a>);</td></tr>
+<tr><th id="582">582</th><td>    }</td></tr>
+<tr><th id="583">583</th><td></td></tr>
+<tr><th id="584">584</th><td>    <i>/* We now wish to partition the array into three pieces, one consisting</i></td></tr>
+<tr><th id="585">585</th><td><i>       of elements &lt;= partition element, one of elements equal to the</i></td></tr>
+<tr><th id="586">586</th><td><i>       partition element, and one of elements &gt; than it.  This is done</i></td></tr>
+<tr><th id="587">587</th><td><i>       below; comments indicate conditions established at every step. */</i></td></tr>
+<tr><th id="588">588</th><td></td></tr>
+<tr><th id="589">589</th><td>    <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> = <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a>;</td></tr>
+<tr><th id="590">590</th><td>    <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> = <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a>;</td></tr>
+<tr><th id="591">591</th><td></td></tr>
+<tr><th id="592">592</th><td>    <i>/* Note that higuy decreases and loguy increases on every iteration,</i></td></tr>
+<tr><th id="593">593</th><td><i>       so loop must terminate. */</i></td></tr>
+<tr><th id="594">594</th><td>    <b>for</b> (;;) {</td></tr>
+<tr><th id="595">595</th><td>        <i>/* lo &lt;= loguy &lt; hi, lo &lt; higuy &lt;= hi,</i></td></tr>
+<tr><th id="596">596</th><td><i>           A[i] &lt;= A[mid] for lo &lt;= i &lt;= loguy,</i></td></tr>
+<tr><th id="597">597</th><td><i>           A[i] &gt; A[mid] for higuy &lt;= i &lt; hi,</i></td></tr>
+<tr><th id="598">598</th><td><i>           A[hi] &gt;= A[mid] */</i></td></tr>
+<tr><th id="599">599</th><td></td></tr>
+<tr><th id="600">600</th><td>        <i>/* The doubled loop is to avoid calling comp(mid,mid), since some</i></td></tr>
+<tr><th id="601">601</th><td><i>           existing comparison funcs don't work when passed the same</i></td></tr>
+<tr><th id="602">602</th><td><i>           value for both pointers. */</i></td></tr>
+<tr><th id="603">603</th><td></td></tr>
+<tr><th id="604">604</th><td>        <b>if</b> (<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> &gt; <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>) {</td></tr>
+<tr><th id="605">605</th><td>            <b>do</b>  {</td></tr>
+<tr><th id="606">606</th><td>                <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> ++;</td></tr>
+<tr><th id="607">607</th><td>            } <b>while</b> (<a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> &lt; <a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> &amp;&amp; <a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a>]) &lt;= <var>0</var>);</td></tr>
+<tr><th id="608">608</th><td>        }</td></tr>
+<tr><th id="609">609</th><td>        <b>if</b> (<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> &lt;= <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>) {</td></tr>
+<tr><th id="610">610</th><td>            <b>do</b>  {</td></tr>
+<tr><th id="611">611</th><td>                <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> ++;</td></tr>
+<tr><th id="612">612</th><td>            } <b>while</b> (<a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> &lt;= <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a> &amp;&amp; <a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a>]) &lt;= <var>0</var>);</td></tr>
+<tr><th id="613">613</th><td>        }</td></tr>
+<tr><th id="614">614</th><td></td></tr>
+<tr><th id="615">615</th><td>        <i>/* lo &lt; loguy &lt;= hi+1, A[i] &lt;= A[mid] for lo &lt;= i &lt; loguy,</i></td></tr>
+<tr><th id="616">616</th><td><i>           either loguy &gt; hi or A[loguy] &gt; A[mid] */</i></td></tr>
+<tr><th id="617">617</th><td></td></tr>
+<tr><th id="618">618</th><td>        <b>do</b>  {</td></tr>
+<tr><th id="619">619</th><td>            <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> --;</td></tr>
+<tr><th id="620">620</th><td>        } <b>while</b> (<a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> &gt; <a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> &amp;&amp; <a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a>]) &gt; <var>0</var>);</td></tr>
+<tr><th id="621">621</th><td></td></tr>
+<tr><th id="622">622</th><td>        <i>/* lo &lt;= higuy &lt; hi, A[i] &gt; A[mid] for higuy &lt; i &lt; hi,</i></td></tr>
+<tr><th id="623">623</th><td><i>           either higuy == lo or A[higuy] &lt;= A[mid] */</i></td></tr>
+<tr><th id="624">624</th><td></td></tr>
+<tr><th id="625">625</th><td>        <b>if</b> (<a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> &lt; <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>)</td></tr>
+<tr><th id="626">626</th><td>            <b>break</b>;</td></tr>
+<tr><th id="627">627</th><td></td></tr>
+<tr><th id="628">628</th><td>        <i>/* if loguy &gt; hi or higuy == lo, then we would have exited, so</i></td></tr>
+<tr><th id="629">629</th><td><i>           A[loguy] &gt; A[mid], A[higuy] &lt;= A[mid],</i></td></tr>
+<tr><th id="630">630</th><td><i>           loguy &lt;= hi, higuy &gt; lo */</i></td></tr>
+<tr><th id="631">631</th><td></td></tr>
+<tr><th id="632">632</th><td>        <a class="macro" href="#526" title="{ temp = base[loguy]; base[loguy] = base[higuy]; base[higuy] = temp; }" data-ref="_M/SWAP_ENTRIES">SWAP_ENTRIES</a>(<a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" ><a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a></a>, <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" ><a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a></a>);</td></tr>
+<tr><th id="633">633</th><td></td></tr>
+<tr><th id="634">634</th><td>        <i>/* If the partition element was moved, follow it.  Only need</i></td></tr>
+<tr><th id="635">635</th><td><i>           to check for mid == higuy, since before the swap,</i></td></tr>
+<tr><th id="636">636</th><td><i>           A[loguy] &gt; A[mid] implies loguy != mid. */</i></td></tr>
+<tr><th id="637">637</th><td></td></tr>
+<tr><th id="638">638</th><td>        <b>if</b> (<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> == <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>)</td></tr>
+<tr><th id="639">639</th><td>            <a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> = <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>;</td></tr>
+<tr><th id="640">640</th><td></td></tr>
+<tr><th id="641">641</th><td>        <i>/* A[loguy] &lt;= A[mid], A[higuy] &gt; A[mid]; so condition at top</i></td></tr>
+<tr><th id="642">642</th><td><i>           of loop is re-established */</i></td></tr>
+<tr><th id="643">643</th><td>    }</td></tr>
+<tr><th id="644">644</th><td></td></tr>
+<tr><th id="645">645</th><td>    <i>/*     A[i] &lt;= A[mid] for lo &lt;= i &lt; loguy,</i></td></tr>
+<tr><th id="646">646</th><td><i>           A[i] &gt; A[mid] for higuy &lt; i &lt; hi,</i></td></tr>
+<tr><th id="647">647</th><td><i>           A[hi] &gt;= A[mid]</i></td></tr>
+<tr><th id="648">648</th><td><i>           higuy &lt; loguy</i></td></tr>
+<tr><th id="649">649</th><td><i>       implying:</i></td></tr>
+<tr><th id="650">650</th><td><i>           higuy == loguy-1</i></td></tr>
+<tr><th id="651">651</th><td><i>           or higuy == hi - 1, loguy == hi + 1, A[hi] == A[mid] */</i></td></tr>
+<tr><th id="652">652</th><td></td></tr>
+<tr><th id="653">653</th><td>    <i>/* Find adjacent elements equal to the partition element.  The</i></td></tr>
+<tr><th id="654">654</th><td><i>       doubled loop is to avoid calling comp(mid,mid), since some</i></td></tr>
+<tr><th id="655">655</th><td><i>       existing comparison funcs don't work when passed the same value</i></td></tr>
+<tr><th id="656">656</th><td><i>       for both pointers. */</i></td></tr>
+<tr><th id="657">657</th><td></td></tr>
+<tr><th id="658">658</th><td>    <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> ++;</td></tr>
+<tr><th id="659">659</th><td>    <b>if</b> (<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> &lt; <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>) {</td></tr>
+<tr><th id="660">660</th><td>        <b>do</b>  {</td></tr>
+<tr><th id="661">661</th><td>            <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> --;</td></tr>
+<tr><th id="662">662</th><td>        } <b>while</b> (<a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> &gt; <a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> &amp;&amp; <a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a>]) == <var>0</var>);</td></tr>
+<tr><th id="663">663</th><td>    }</td></tr>
+<tr><th id="664">664</th><td>    <b>if</b> (<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a> &gt;= <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>) {</td></tr>
+<tr><th id="665">665</th><td>        <b>do</b>  {</td></tr>
+<tr><th id="666">666</th><td>            <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> --;</td></tr>
+<tr><th id="667">667</th><td>        } <b>while</b> (<a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> &gt; <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> &amp;&amp; <a class="local col7 ref" href="#97compare" title='compare' data-ref="97compare" >compare</a>(<a class="local col8 ref" href="#98context" title='context' data-ref="98context" >context</a>, <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>], <a class="local col5 ref" href="#95base" title='base' data-ref="95base" >base</a>[<a class="local col1 ref" href="#101mid" title='mid' data-ref="101mid" >mid</a>]) == <var>0</var>);</td></tr>
+<tr><th id="668">668</th><td>    }</td></tr>
+<tr><th id="669">669</th><td></td></tr>
+<tr><th id="670">670</th><td>    <i>/* OK, now we have the following:</i></td></tr>
+<tr><th id="671">671</th><td><i>          higuy &lt; loguy</i></td></tr>
+<tr><th id="672">672</th><td><i>          lo &lt;= higuy &lt;= hi</i></td></tr>
+<tr><th id="673">673</th><td><i>          A[i]  &lt;= A[mid] for lo &lt;= i &lt;= higuy</i></td></tr>
+<tr><th id="674">674</th><td><i>          A[i]  == A[mid] for higuy &lt; i &lt; loguy</i></td></tr>
+<tr><th id="675">675</th><td><i>          A[i]  &gt;  A[mid] for loguy &lt;= i &lt; hi</i></td></tr>
+<tr><th id="676">676</th><td><i>          A[hi] &gt;= A[mid] */</i></td></tr>
+<tr><th id="677">677</th><td></td></tr>
+<tr><th id="678">678</th><td>    <i>/* We've finished the partition, now we want to sort the subarrays</i></td></tr>
+<tr><th id="679">679</th><td><i>       [lo, higuy] and [loguy, hi].</i></td></tr>
+<tr><th id="680">680</th><td><i>       We do the smaller one first to minimize stack usage.</i></td></tr>
+<tr><th id="681">681</th><td><i>       We only sort arrays of length 2 or more.*/</i></td></tr>
+<tr><th id="682">682</th><td></td></tr>
+<tr><th id="683">683</th><td>    <b>if</b> ( <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a> - <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> &gt;= <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a> - <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> ) {</td></tr>
+<tr><th id="684">684</th><td>        <b>if</b> (<a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> &lt; <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>) {</td></tr>
+<tr><th id="685">685</th><td>            <a class="local col5 ref" href="#105lostk" title='lostk' data-ref="105lostk" >lostk</a>[<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>] = <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a>;</td></tr>
+<tr><th id="686">686</th><td>            <a class="local col6 ref" href="#106histk" title='histk' data-ref="106histk" >histk</a>[<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>] = <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>;</td></tr>
+<tr><th id="687">687</th><td>            ++<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>;</td></tr>
+<tr><th id="688">688</th><td>        }                           <i>/* save big recursion for later */</i></td></tr>
+<tr><th id="689">689</th><td></td></tr>
+<tr><th id="690">690</th><td>        <b>if</b> (<a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> &lt; <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a>) {</td></tr>
+<tr><th id="691">691</th><td>            <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> = <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>;</td></tr>
+<tr><th id="692">692</th><td>            <b>goto</b> <a class="lbl" href="#109recurse" data-ref="109recurse" >recurse</a>;           <i>/* do small recursion */</i></td></tr>
+<tr><th id="693">693</th><td>        }</td></tr>
+<tr><th id="694">694</th><td>    }</td></tr>
+<tr><th id="695">695</th><td>    <b>else</b> {</td></tr>
+<tr><th id="696">696</th><td>        <b>if</b> (<a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a> &lt; <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a>) {</td></tr>
+<tr><th id="697">697</th><td>            <a class="local col5 ref" href="#105lostk" title='lostk' data-ref="105lostk" >lostk</a>[<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>] = <a class="local col2 ref" href="#102loguy" title='loguy' data-ref="102loguy" >loguy</a>;</td></tr>
+<tr><th id="698">698</th><td>            <a class="local col6 ref" href="#106histk" title='histk' data-ref="106histk" >histk</a>[<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>] = <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a>;</td></tr>
+<tr><th id="699">699</th><td>            ++<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>;               <i>/* save big recursion for later */</i></td></tr>
+<tr><th id="700">700</th><td>        }</td></tr>
+<tr><th id="701">701</th><td></td></tr>
+<tr><th id="702">702</th><td>        <b>if</b> (<a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> &lt; <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>) {</td></tr>
+<tr><th id="703">703</th><td>            <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a> = <a class="local col3 ref" href="#103higuy" title='higuy' data-ref="103higuy" >higuy</a>;</td></tr>
+<tr><th id="704">704</th><td>            <b>goto</b> <a class="lbl" href="#109recurse" data-ref="109recurse" >recurse</a>;           <i>/* do small recursion */</i></td></tr>
+<tr><th id="705">705</th><td>        }</td></tr>
+<tr><th id="706">706</th><td>    }</td></tr>
+<tr><th id="707">707</th><td></td></tr>
+<tr><th id="708">708</th><td>    <i>/* We have sorted the array, except for any pending sorts on the stack.</i></td></tr>
+<tr><th id="709">709</th><td><i>       Check if there are any, and do them. */</i></td></tr>
+<tr><th id="710">710</th><td></td></tr>
+<tr><th id="711">711</th><td>    --<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>;</td></tr>
+<tr><th id="712">712</th><td>    <b>if</b> (<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a> &gt;= <var>0</var>) {</td></tr>
+<tr><th id="713">713</th><td>        <a class="local col9 ref" href="#99lo" title='lo' data-ref="99lo" >lo</a> = <a class="local col5 ref" href="#105lostk" title='lostk' data-ref="105lostk" >lostk</a>[<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>];</td></tr>
+<tr><th id="714">714</th><td>        <a class="local col0 ref" href="#100hi" title='hi' data-ref="100hi" >hi</a> = <a class="local col6 ref" href="#106histk" title='histk' data-ref="106histk" >histk</a>[<a class="local col8 ref" href="#108stkptr" title='stkptr' data-ref="108stkptr" >stkptr</a>];</td></tr>
+<tr><th id="715">715</th><td>        <b>goto</b> <a class="lbl" href="#109recurse" data-ref="109recurse" >recurse</a>;           <i>/* pop subarray from stack */</i></td></tr>
+<tr><th id="716">716</th><td>    }</td></tr>
+<tr><th id="717">717</th><td>    <b>else</b></td></tr>
+<tr><th id="718">718</th><td>        <b>return</b>;                 <i>/* all subarrays done */</i></td></tr>
+<tr><th id="719">719</th><td>}</td></tr>
+<tr><th id="720">720</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-08</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>
