@@ -1,0 +1,118 @@
+<def f='TrinityCore3.3.5/dep/g3dlite/include/G3D/CollisionDetection.h' l='94'/>
+<size>8</size>
+<doc f='TrinityCore3.3.5/dep/g3dlite/include/G3D/CollisionDetection.h' l='37'>/**
+  Collision detection primitives and tools for building
+  higher order collision detection schemes.
+
+  These routines provide &lt;I&gt;moving&lt;/I&gt; and static collision detection.
+  Moving collision detection allows the calculation of collisions that
+  occur during a period of time -- as opposed to the intersection of 
+  two static bodies.
+  
+  Moving collision detection routines detect collisions between
+  &lt;I&gt;only&lt;/I&gt; static primitives and moving spheres or points.  Since the 
+  reference frame can be user defined, these functions can be used to
+  detect the collision between two moving bodies by subtracting
+  the velocity vector of one object from the velocity vector of the 
+  sphere or point the detection is to occur with.  This unified 
+  velocity vector will act as if both objects are moving simultaneously.
+
+  Collisions are detected for single-sided objects only.  That is,
+  no collision is detected when &lt;I&gt;leaving&lt;/I&gt; a primitive or passing
+  through a plane or triangle opposite the normal... except for the 
+  point-sphere calculation or when otherwise noted.
+
+  For a sphere, the collision location returned is the point in world
+  space where the surface of the sphere and the fixed object meet.
+  It is &lt;B&gt;not&lt;/B&gt; the position of the center of the sphere at
+  the time of the collision.
+
+  The collision normal returned is the surface normal to the fixed
+  object at the collision location.
+
+  &lt;p&gt;
+  &lt;b&gt;Static Collision Detection:&lt;/b&gt; (Neither object is moving)
+
+  &lt;table&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Point3&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;LineSegment&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ray *&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Line&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Plane&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Triangle&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sphere&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Cylinder&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Capsule&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;AABox&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Box&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Point3&lt;/b&gt;&lt;/td&gt;&lt;td&gt;\link Vector3::operator== P3::==\endlink \link Vector3::fuzzyEq V3::fuzzy \endlink \link G3D::distance distance \endlink&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=10 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;LineSegment&lt;/b&gt;&lt;/td&gt;&lt;td&gt;\link LineSegment::closestPoint LS::closestPoint\endlink \link LineSegment::distance LS::distance\endlink \link CollisionDetection::closestPointOnLineSegment CD\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=9 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ray *&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ray::closestPoint Ray::distance&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=8 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Line&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Line::closestPoint Line::distance&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link CollisionDetection::closestPointsBetweenLineAndLine CD\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=7 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Plane&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=6 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Triangle&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=5 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Sphere&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Sphere::contains&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link CollisionDetection::collisionTimeForMovingPointFixedSphere CD \endlink, \link Ray::intersectionTime R::time\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link G3D::CollisionDetection::fixedSolidSphereIntersectsFixedTriangle CD\endlink&lt;/td&gt;&lt;td&gt;
+\link G3D::CollisionDetection::penetrationDepthForFixedSphereFixedSphere CD\endlink&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=4 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Cylinder&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Cylinder::contains&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=3 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Capsule&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Capsule::contains&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;\link G3D::CollisionDetection::collisionTimeForMovingSphereFixedTriangle CD\endlink&lt;/td&gt; &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=2 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;AABox&lt;/b&gt;&lt;/td&gt;&lt;td&gt;AABox::contains&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link CollisionDetection::fixedSolidBoxIntersectsFixedTriangle CD\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=1 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Box&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Box::contains&lt;/td&gt;&lt;td&gt;(treat as Ray)&lt;/td&gt;&lt;td&gt;\link CollisionDetection::collisionTimeForMovingPointFixedBox CD\endlink&lt;/td&gt;&lt;td&gt;(treat as Ray)&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedPlane CD \endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedPlane CD\endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedSphereFixedBox CD\endlink&lt;/td&gt;&lt;td&gt;None (use OPCODE)&lt;/td&gt;&lt;td&gt;\link CollisionDetection::movingSpherePassesThroughFixedBox CD \endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedBox CD\endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedBox CD\endlink&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;
+  &lt;b&gt;Moving Collision Detection:&lt;/b&gt;
+
+  &lt;i&gt;* Note: Moving collision detection against certain primitives is equivalent to static collision
+   detection against a bigger primitive.  Ray, Line Segment == ``moving Point&apos;&apos;; Capsule ==``moving Sphere&apos;&apos;; Plane == ``moving Line&apos;&apos;&lt;/i&gt;
+
+   @deprecated Routines moving to the G3D::Intersect class in G3D 9.0
+ */</doc>
+<def f='TrinityCore6.x/dep/g3dlite/include/G3D/CollisionDetection.h' l='94'/>
+<size>8</size>
+<doc f='TrinityCore6.x/dep/g3dlite/include/G3D/CollisionDetection.h' l='37'>/**
+  Collision detection primitives and tools for building
+  higher order collision detection schemes.
+
+  These routines provide &lt;I&gt;moving&lt;/I&gt; and static collision detection.
+  Moving collision detection allows the calculation of collisions that
+  occur during a period of time -- as opposed to the intersection of 
+  two static bodies.
+  
+  Moving collision detection routines detect collisions between
+  &lt;I&gt;only&lt;/I&gt; static primitives and moving spheres or points.  Since the 
+  reference frame can be user defined, these functions can be used to
+  detect the collision between two moving bodies by subtracting
+  the velocity vector of one object from the velocity vector of the 
+  sphere or point the detection is to occur with.  This unified 
+  velocity vector will act as if both objects are moving simultaneously.
+
+  Collisions are detected for single-sided objects only.  That is,
+  no collision is detected when &lt;I&gt;leaving&lt;/I&gt; a primitive or passing
+  through a plane or triangle opposite the normal... except for the 
+  point-sphere calculation or when otherwise noted.
+
+  For a sphere, the collision location returned is the point in world
+  space where the surface of the sphere and the fixed object meet.
+  It is &lt;B&gt;not&lt;/B&gt; the position of the center of the sphere at
+  the time of the collision.
+
+  The collision normal returned is the surface normal to the fixed
+  object at the collision location.
+
+  &lt;p&gt;
+  &lt;b&gt;Static Collision Detection:&lt;/b&gt; (Neither object is moving)
+
+  &lt;table&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Point3&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;LineSegment&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Ray *&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Line&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Plane&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Triangle&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sphere&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Cylinder&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Capsule&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;AABox&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Box&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Point3&lt;/b&gt;&lt;/td&gt;&lt;td&gt;\link Vector3::operator== P3::==\endlink \link Vector3::fuzzyEq V3::fuzzy \endlink \link G3D::distance distance \endlink&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=10 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;LineSegment&lt;/b&gt;&lt;/td&gt;&lt;td&gt;\link LineSegment::closestPoint LS::closestPoint\endlink \link LineSegment::distance LS::distance\endlink \link CollisionDetection::closestPointOnLineSegment CD\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=9 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Ray *&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Ray::closestPoint Ray::distance&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=8 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Line&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Line::closestPoint Line::distance&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link CollisionDetection::closestPointsBetweenLineAndLine CD\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=7 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Plane&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=6 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Triangle&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=5 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Sphere&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Sphere::contains&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link CollisionDetection::collisionTimeForMovingPointFixedSphere CD \endlink, \link Ray::intersectionTime R::time\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link G3D::CollisionDetection::fixedSolidSphereIntersectsFixedTriangle CD\endlink&lt;/td&gt;&lt;td&gt;
+\link G3D::CollisionDetection::penetrationDepthForFixedSphereFixedSphere CD\endlink&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=4 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Cylinder&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Cylinder::contains&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=3 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Capsule&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Capsule::contains&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;&lt;/td&gt; &lt;td&gt;\link G3D::CollisionDetection::collisionTimeForMovingSphereFixedTriangle CD\endlink&lt;/td&gt; &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=2 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;AABox&lt;/b&gt;&lt;/td&gt;&lt;td&gt;AABox::contains&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;\link CollisionDetection::fixedSolidBoxIntersectsFixedTriangle CD\endlink&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td bgcolor=#C0C0C0 colspan=1 &gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;b&gt;Box&lt;/b&gt;&lt;/td&gt;&lt;td&gt;Box::contains&lt;/td&gt;&lt;td&gt;(treat as Ray)&lt;/td&gt;&lt;td&gt;\link CollisionDetection::collisionTimeForMovingPointFixedBox CD\endlink&lt;/td&gt;&lt;td&gt;(treat as Ray)&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedPlane CD \endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedPlane CD\endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedSphereFixedBox CD\endlink&lt;/td&gt;&lt;td&gt;None (use OPCODE)&lt;/td&gt;&lt;td&gt;\link CollisionDetection::movingSpherePassesThroughFixedBox CD \endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedBox CD\endlink&lt;/td&gt;&lt;td&gt;\link CollisionDetection::penetrationDepthForFixedBoxFixedBox CD\endlink&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;
+  &lt;b&gt;Moving Collision Detection:&lt;/b&gt;
+
+  &lt;i&gt;* Note: Moving collision detection against certain primitives is equivalent to static collision
+   detection against a bigger primitive.  Ray, Line Segment == ``moving Point&apos;&apos;; Capsule ==``moving Sphere&apos;&apos;; Plane == ``moving Line&apos;&apos;&lt;/i&gt;
+
+   @deprecated Routines moving to the G3D::Intersect class in G3D 9.0
+ */</doc>

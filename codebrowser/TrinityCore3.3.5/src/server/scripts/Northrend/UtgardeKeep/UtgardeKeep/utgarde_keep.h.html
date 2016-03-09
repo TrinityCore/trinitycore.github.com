@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<title>utgarde_keep.h [TrinityCore3.3.5/src/server/scripts/Northrend/UtgardeKeep/UtgardeKeep/utgarde_keep.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/scripts/Northrend/UtgardeKeep/UtgardeKeep/utgarde_keep.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore3.3.5</a>/<a href='../../../../..'>src</a>/<a href='../../../..'>server</a>/<a href='../../..'>scripts</a>/<a href='../..'>Northrend</a>/<a href='..'>UtgardeKeep</a>/<a href='./'>UtgardeKeep</a>/utgarde_keep.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/UTGARDE_KEEP_H_">UTGARDE_KEEP_H_</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/UTGARDE_KEEP_H_" data-ref="_M/UTGARDE_KEEP_H_">UTGARDE_KEEP_H_</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/UKScriptName" data-ref="_M/UKScriptName">UKScriptName</dfn> "instance_utgarde_keep"</u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/DataHeader" data-ref="_M/DataHeader">DataHeader</dfn> "UK"</u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <em>const</em> <dfn class="decl def" id="_ZL14EncounterCount" title='EncounterCount' data-ref="_ZL14EncounterCount" >EncounterCount</dfn> = <var>3</var>;</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>enum</b> <dfn class="type def" id="DataTypes" title='DataTypes' data-ref="DataTypes" >DataTypes</dfn></td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td>    <i>// Encounter States/Boss GUIDs</i></td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="DataTypes::DATA_PRINCE_KELESETH" title='DataTypes::DATA_PRINCE_KELESETH' data-ref="DataTypes::DATA_PRINCE_KELESETH" >DATA_PRINCE_KELESETH</dfn>    = <var>0</var>,</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="DataTypes::DATA_SKARVALD_DALRONN" title='DataTypes::DATA_SKARVALD_DALRONN' data-ref="DataTypes::DATA_SKARVALD_DALRONN" >DATA_SKARVALD_DALRONN</dfn>   = <var>1</var>,</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="DataTypes::DATA_INGVAR" title='DataTypes::DATA_INGVAR' data-ref="DataTypes::DATA_INGVAR" >DATA_INGVAR</dfn>             = <var>2</var>,</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>    <i>// Additional Data</i></td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="DataTypes::DATA_SKARVALD" title='DataTypes::DATA_SKARVALD' data-ref="DataTypes::DATA_SKARVALD" >DATA_SKARVALD</dfn>           = <var>3</var>,</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="DataTypes::DATA_DALRONN" title='DataTypes::DATA_DALRONN' data-ref="DataTypes::DATA_DALRONN" >DATA_DALRONN</dfn>            = <var>4</var>,</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="DataTypes::DATA_FORGE_1" title='DataTypes::DATA_FORGE_1' data-ref="DataTypes::DATA_FORGE_1" >DATA_FORGE_1</dfn>            = <var>5</var>,</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="DataTypes::DATA_FORGE_2" title='DataTypes::DATA_FORGE_2' data-ref="DataTypes::DATA_FORGE_2" >DATA_FORGE_2</dfn>            = <var>6</var>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="DataTypes::DATA_FORGE_3" title='DataTypes::DATA_FORGE_3' data-ref="DataTypes::DATA_FORGE_3" >DATA_FORGE_3</dfn>            = <var>7</var></td></tr>
+<tr><th id="40">40</th><td>};</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>enum</b> <dfn class="type def" id="CreatureIds" title='CreatureIds' data-ref="CreatureIds" >CreatureIds</dfn></td></tr>
+<tr><th id="43">43</th><td>{</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="CreatureIds::NPC_PRINCE_KELESETH" title='CreatureIds::NPC_PRINCE_KELESETH' data-ref="CreatureIds::NPC_PRINCE_KELESETH" >NPC_PRINCE_KELESETH</dfn>     = <var>23953</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="CreatureIds::NPC_SKARVALD" title='CreatureIds::NPC_SKARVALD' data-ref="CreatureIds::NPC_SKARVALD" >NPC_SKARVALD</dfn>            = <var>24200</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="CreatureIds::NPC_DALRONN" title='CreatureIds::NPC_DALRONN' data-ref="CreatureIds::NPC_DALRONN" >NPC_DALRONN</dfn>             = <var>24201</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="CreatureIds::NPC_INGVAR" title='CreatureIds::NPC_INGVAR' data-ref="CreatureIds::NPC_INGVAR" >NPC_INGVAR</dfn>              = <var>23954</var>,</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <i>// Skarvald - Dalronn</i></td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="CreatureIds::NPC_DALRONN_GHOST" title='CreatureIds::NPC_DALRONN_GHOST' data-ref="CreatureIds::NPC_DALRONN_GHOST" >NPC_DALRONN_GHOST</dfn>       = <var>27389</var>,</td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="CreatureIds::NPC_SKARVALD_GHOST" title='CreatureIds::NPC_SKARVALD_GHOST' data-ref="CreatureIds::NPC_SKARVALD_GHOST" >NPC_SKARVALD_GHOST</dfn>      = <var>27390</var>,</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <i>// Ingvar the Plunderer</i></td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="CreatureIds::NPC_INGVAR_UNDEAD" title='CreatureIds::NPC_INGVAR_UNDEAD' data-ref="CreatureIds::NPC_INGVAR_UNDEAD" >NPC_INGVAR_UNDEAD</dfn>       = <var>23980</var>,</td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="CreatureIds::NPC_THROW_TARGET" title='CreatureIds::NPC_THROW_TARGET' data-ref="CreatureIds::NPC_THROW_TARGET" >NPC_THROW_TARGET</dfn>        = <var>23996</var>,</td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="CreatureIds::NPC_ANNHYLDE_THE_CALLER" title='CreatureIds::NPC_ANNHYLDE_THE_CALLER' data-ref="CreatureIds::NPC_ANNHYLDE_THE_CALLER" >NPC_ANNHYLDE_THE_CALLER</dfn> = <var>24068</var></td></tr>
+<tr><th id="57">57</th><td>};</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><b>enum</b> <dfn class="type def" id="GameObjectIds" title='GameObjectIds' data-ref="GameObjectIds" >GameObjectIds</dfn></td></tr>
+<tr><th id="60">60</th><td>{</td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="GameObjectIds::GO_BELLOW_1" title='GameObjectIds::GO_BELLOW_1' data-ref="GameObjectIds::GO_BELLOW_1" >GO_BELLOW_1</dfn>             = <var>186688</var>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="GameObjectIds::GO_BELLOW_2" title='GameObjectIds::GO_BELLOW_2' data-ref="GameObjectIds::GO_BELLOW_2" >GO_BELLOW_2</dfn>             = <var>186689</var>,</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="enum" id="GameObjectIds::GO_BELLOW_3" title='GameObjectIds::GO_BELLOW_3' data-ref="GameObjectIds::GO_BELLOW_3" >GO_BELLOW_3</dfn>             = <var>186690</var>,</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <dfn class="enum" id="GameObjectIds::GO_FORGEFIRE_1" title='GameObjectIds::GO_FORGEFIRE_1' data-ref="GameObjectIds::GO_FORGEFIRE_1" >GO_FORGEFIRE_1</dfn>          = <var>186692</var>,</td></tr>
+<tr><th id="66">66</th><td>    <dfn class="enum" id="GameObjectIds::GO_FORGEFIRE_2" title='GameObjectIds::GO_FORGEFIRE_2' data-ref="GameObjectIds::GO_FORGEFIRE_2" >GO_FORGEFIRE_2</dfn>          = <var>186693</var>,</td></tr>
+<tr><th id="67">67</th><td>    <dfn class="enum" id="GameObjectIds::GO_FORGEFIRE_3" title='GameObjectIds::GO_FORGEFIRE_3' data-ref="GameObjectIds::GO_FORGEFIRE_3" >GO_FORGEFIRE_3</dfn>          = <var>186691</var>,</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>    <dfn class="enum" id="GameObjectIds::GO_GLOWING_ANVIL_1" title='GameObjectIds::GO_GLOWING_ANVIL_1' data-ref="GameObjectIds::GO_GLOWING_ANVIL_1" >GO_GLOWING_ANVIL_1</dfn>      = <var>186609</var>,</td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="GameObjectIds::GO_GLOWING_ANVIL_2" title='GameObjectIds::GO_GLOWING_ANVIL_2' data-ref="GameObjectIds::GO_GLOWING_ANVIL_2" >GO_GLOWING_ANVIL_2</dfn>      = <var>186610</var>,</td></tr>
+<tr><th id="71">71</th><td>    <dfn class="enum" id="GameObjectIds::GO_GLOWING_ANVIL_3" title='GameObjectIds::GO_GLOWING_ANVIL_3' data-ref="GameObjectIds::GO_GLOWING_ANVIL_3" >GO_GLOWING_ANVIL_3</dfn>      = <var>186611</var>,</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="GameObjectIds::GO_GIANT_PORTCULLIS_1" title='GameObjectIds::GO_GIANT_PORTCULLIS_1' data-ref="GameObjectIds::GO_GIANT_PORTCULLIS_1" >GO_GIANT_PORTCULLIS_1</dfn>   = <var>186756</var>,</td></tr>
+<tr><th id="74">74</th><td>    <dfn class="enum" id="GameObjectIds::GO_GIANT_PORTCULLIS_2" title='GameObjectIds::GO_GIANT_PORTCULLIS_2' data-ref="GameObjectIds::GO_GIANT_PORTCULLIS_2" >GO_GIANT_PORTCULLIS_2</dfn>   = <var>186694</var></td></tr>
+<tr><th id="75">75</th><td>};</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><b>struct</b> <dfn class="type def" id="ForgeInfo" title='ForgeInfo' data-ref="ForgeInfo" >ForgeInfo</dfn></td></tr>
+<tr><th id="78">78</th><td>{</td></tr>
+<tr><th id="79">79</th><td>    <dfn class="decl def" id="_ZN9ForgeInfoC1Ev" title='ForgeInfo::ForgeInfo' data-ref="_ZN9ForgeInfoC1Ev" >ForgeInfo</dfn>() : <a class="member" href="#ForgeInfo::Event" title='ForgeInfo::Event' data-ref="ForgeInfo::Event" >Event</a>(<a class="enum" href="../../../../game/Instances/InstanceScript.h.html#EncounterState::NOT_STARTED" title='EncounterState::NOT_STARTED' data-ref="EncounterState::NOT_STARTED" >NOT_STARTED</a>) { };</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>    <a class="type" href="../../../../game/Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="decl" id="ForgeInfo::AnvilGUID" title='ForgeInfo::AnvilGUID' data-ref="ForgeInfo::AnvilGUID" >AnvilGUID</dfn>;</td></tr>
+<tr><th id="82">82</th><td>    <a class="type" href="../../../../game/Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="decl" id="ForgeInfo::BellowGUID" title='ForgeInfo::BellowGUID' data-ref="ForgeInfo::BellowGUID" >BellowGUID</dfn>;</td></tr>
+<tr><th id="83">83</th><td>    <a class="type" href="../../../../game/Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="decl" id="ForgeInfo::FireGUID" title='ForgeInfo::FireGUID' data-ref="ForgeInfo::FireGUID" >FireGUID</dfn>;</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>    <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="ForgeInfo::Event" title='ForgeInfo::Event' data-ref="ForgeInfo::Event" >Event</dfn>;</td></tr>
+<tr><th id="86">86</th><td>};</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><b>template</b>&lt;<b>class</b> AI&gt;</td></tr>
+<tr><th id="89">89</th><td>AI* <dfn class="decl def" id="_Z16GetUtgardeKeepAIP8Creature" title='GetUtgardeKeepAI' data-ref="_Z16GetUtgardeKeepAIP8Creature" >GetUtgardeKeepAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>)</td></tr>
+<tr><th id="90">90</th><td>{</td></tr>
+<tr><th id="91">91</th><td>    <b>return</b> GetInstanceAI&lt;AI&gt;(<a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="macro" href="#21" title="&quot;instance_utgarde_keep&quot;" data-ref="_M/UKScriptName">UKScriptName</a>);</td></tr>
+<tr><th id="92">92</th><td>}</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td><u>#<span data-ppcond="18">endif</span> // UTGARDE_KEEP_H_</u></td></tr>
+<tr><th id="95">95</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='boss_ingvar_the_plunderer.cpp.html'>TrinityCore3.3.5/src/server/scripts/Northrend/UtgardeKeep/UtgardeKeep/boss_ingvar_the_plunderer.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

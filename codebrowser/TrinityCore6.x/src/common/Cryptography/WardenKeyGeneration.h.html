@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<title>WardenKeyGeneration.h [TrinityCore6.x/src/common/Cryptography/WardenKeyGeneration.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/common/Cryptography/WardenKeyGeneration.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Cryptography</a>/WardenKeyGeneration.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="SHA1.h.html">"SHA1.h"</a></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../../include/c++/4.9/cstring.html">&lt;cstring&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#<span data-ppcond="23">ifndef</span> <span class="macro" data-ref="_M/_WARDEN_KEY_GENERATION_H">_WARDEN_KEY_GENERATION_H</span></u></td></tr>
+<tr><th id="24">24</th><td><u>#define <dfn class="macro" id="_M/_WARDEN_KEY_GENERATION_H" data-ref="_M/_WARDEN_KEY_GENERATION_H">_WARDEN_KEY_GENERATION_H</dfn></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>class</b> <dfn class="type def" id="SHA1Randx" title='SHA1Randx' data-ref="SHA1Randx" >SHA1Randx</dfn></td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td><b>public</b>:</td></tr>
+<tr><th id="29">29</th><td>    <dfn class="decl def" id="_ZN9SHA1RandxC1EPhj" title='SHA1Randx::SHA1Randx' data-ref="_ZN9SHA1RandxC1EPhj" >SHA1Randx</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>* <dfn class="local col1 decl" id="1buff" title='buff' data-type='uint8 *' data-ref="1buff" >buff</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="2size" title='size' data-type='uint32' data-ref="2size" >size</dfn>)</td></tr>
+<tr><th id="30">30</th><td>    {</td></tr>
+<tr><th id="31">31</th><td>        <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3halfSize" title='halfSize' data-type='uint32' data-ref="3halfSize" >halfSize</dfn> = <a class="local col2 ref" href="#2size" title='size' data-ref="2size" >size</a> / <var>2</var>;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10InitializeEv" title='SHA1Hash::Initialize' data-ref="_ZN8SHA1Hash10InitializeEv" id="_ZN8SHA1Hash10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="34">34</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" id="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>(<a class="local col1 ref" href="#1buff" title='buff' data-ref="1buff" >buff</a>, <a class="local col3 ref" href="#3halfSize" title='halfSize' data-ref="3halfSize" >halfSize</a>);</td></tr>
+<tr><th id="35">35</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash8FinalizeEv" title='SHA1Hash::Finalize' data-ref="_ZN8SHA1Hash8FinalizeEv" id="_ZN8SHA1Hash8FinalizeEv" >Finalize</a>();</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>        <a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="member" href="#SHA1Randx::o1" title='SHA1Randx::o1' data-ref="SHA1Randx::o1" >o1</a>, <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash9GetDigestEv" title='SHA1Hash::GetDigest' data-ref="_ZN8SHA1Hash9GetDigestEv" id="_ZN8SHA1Hash9GetDigestEv" >GetDigest</a>(), <var>20</var>);</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10InitializeEv" title='SHA1Hash::Initialize' data-ref="_ZN8SHA1Hash10InitializeEv" id="_ZN8SHA1Hash10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="40">40</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" id="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>(<a class="local col1 ref" href="#1buff" title='buff' data-ref="1buff" >buff</a> + <a class="local col3 ref" href="#3halfSize" title='halfSize' data-ref="3halfSize" >halfSize</a>, <a class="local col2 ref" href="#2size" title='size' data-ref="2size" >size</a> - <a class="local col3 ref" href="#3halfSize" title='halfSize' data-ref="3halfSize" >halfSize</a>);</td></tr>
+<tr><th id="41">41</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash8FinalizeEv" title='SHA1Hash::Finalize' data-ref="_ZN8SHA1Hash8FinalizeEv" id="_ZN8SHA1Hash8FinalizeEv" >Finalize</a>();</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>        <a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="member" href="#SHA1Randx::o2" title='SHA1Randx::o2' data-ref="SHA1Randx::o2" >o2</a>, <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash9GetDigestEv" title='SHA1Hash::GetDigest' data-ref="_ZN8SHA1Hash9GetDigestEv" id="_ZN8SHA1Hash9GetDigestEv" >GetDigest</a>(), <var>20</var>);</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>        <a class="ref" href="../../../../include/string.h.html#memset" title='memset' data-ref="memset" id="memset" >memset</a>(<a class="member" href="#SHA1Randx::o0" title='SHA1Randx::o0' data-ref="SHA1Randx::o0" >o0</a>, <var>0x00</var>, <var>20</var>);</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>        <a class="member" href="#_ZN9SHA1Randx6FillUpEv" title='SHA1Randx::FillUp' data-ref="_ZN9SHA1Randx6FillUpEv" >FillUp</a>();</td></tr>
+<tr><th id="48">48</th><td>    }</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <em>void</em> <dfn class="decl def" id="_ZN9SHA1Randx8GenerateEPhj" title='SHA1Randx::Generate' data-ref="_ZN9SHA1Randx8GenerateEPhj" >Generate</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>* <dfn class="local col4 decl" id="4buf" title='buf' data-type='uint8 *' data-ref="4buf" >buf</dfn>, <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="5sz" title='sz' data-type='uint32' data-ref="5sz" >sz</dfn>)</td></tr>
+<tr><th id="51">51</th><td>    {</td></tr>
+<tr><th id="52">52</th><td>        <b>for</b> (<a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="6i" title='i' data-type='uint32' data-ref="6i" >i</dfn> = <var>0</var>; <a class="local col6 ref" href="#6i" title='i' data-ref="6i" >i</a> &lt; <a class="local col5 ref" href="#5sz" title='sz' data-ref="5sz" >sz</a>; ++<a class="local col6 ref" href="#6i" title='i' data-ref="6i" >i</a>)</td></tr>
+<tr><th id="53">53</th><td>        {</td></tr>
+<tr><th id="54">54</th><td>            <b>if</b> (<a class="member" href="#SHA1Randx::taken" title='SHA1Randx::taken' data-ref="SHA1Randx::taken" >taken</a> == <var>20</var>)</td></tr>
+<tr><th id="55">55</th><td>                <a class="member" href="#_ZN9SHA1Randx6FillUpEv" title='SHA1Randx::FillUp' data-ref="_ZN9SHA1Randx6FillUpEv" >FillUp</a>();</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>            <a class="local col4 ref" href="#4buf" title='buf' data-ref="4buf" >buf</a>[<a class="local col6 ref" href="#6i" title='i' data-ref="6i" >i</a>] = <a class="member" href="#SHA1Randx::o0" title='SHA1Randx::o0' data-ref="SHA1Randx::o0" >o0</a>[<a class="member" href="#SHA1Randx::taken" title='SHA1Randx::taken' data-ref="SHA1Randx::taken" >taken</a>];</td></tr>
+<tr><th id="58">58</th><td>            <a class="member" href="#SHA1Randx::taken" title='SHA1Randx::taken' data-ref="SHA1Randx::taken" >taken</a>++;</td></tr>
+<tr><th id="59">59</th><td>        }</td></tr>
+<tr><th id="60">60</th><td>    }</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><b>private</b>:</td></tr>
+<tr><th id="63">63</th><td>    <em>void</em> <dfn class="decl def" id="_ZN9SHA1Randx6FillUpEv" title='SHA1Randx::FillUp' data-ref="_ZN9SHA1Randx6FillUpEv" >FillUp</dfn>()</td></tr>
+<tr><th id="64">64</th><td>    {</td></tr>
+<tr><th id="65">65</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10InitializeEv" title='SHA1Hash::Initialize' data-ref="_ZN8SHA1Hash10InitializeEv" id="_ZN8SHA1Hash10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="66">66</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" id="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>(<a class="member" href="#SHA1Randx::o1" title='SHA1Randx::o1' data-ref="SHA1Randx::o1" >o1</a>, <var>20</var>);</td></tr>
+<tr><th id="67">67</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" id="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>(<a class="member" href="#SHA1Randx::o0" title='SHA1Randx::o0' data-ref="SHA1Randx::o0" >o0</a>, <var>20</var>);</td></tr>
+<tr><th id="68">68</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" id="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>(<a class="member" href="#SHA1Randx::o2" title='SHA1Randx::o2' data-ref="SHA1Randx::o2" >o2</a>, <var>20</var>);</td></tr>
+<tr><th id="69">69</th><td>        <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash8FinalizeEv" title='SHA1Hash::Finalize' data-ref="_ZN8SHA1Hash8FinalizeEv" id="_ZN8SHA1Hash8FinalizeEv" >Finalize</a>();</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>        <a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(<a class="member" href="#SHA1Randx::o0" title='SHA1Randx::o0' data-ref="SHA1Randx::o0" >o0</a>, <a class="member" href="#SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</a>.<a class="ref" href="SHA1.h.html#_ZN8SHA1Hash9GetDigestEv" title='SHA1Hash::GetDigest' data-ref="_ZN8SHA1Hash9GetDigestEv" id="_ZN8SHA1Hash9GetDigestEv" >GetDigest</a>(), <var>20</var>);</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>        <a class="member" href="#SHA1Randx::taken" title='SHA1Randx::taken' data-ref="SHA1Randx::taken" >taken</a> = <var>0</var>;</td></tr>
+<tr><th id="74">74</th><td>    }</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>    <a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a> <dfn class="decl" id="SHA1Randx::sh" title='SHA1Randx::sh' data-ref="SHA1Randx::sh" >sh</dfn>;</td></tr>
+<tr><th id="77">77</th><td>    <a class="typedef" href="../Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="SHA1Randx::taken" title='SHA1Randx::taken' data-ref="SHA1Randx::taken" >taken</dfn>;</td></tr>
+<tr><th id="78">78</th><td>    <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" ><a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" ><a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a></a></a> <dfn class="decl" id="SHA1Randx::o0" title='SHA1Randx::o0' data-ref="SHA1Randx::o0" >o0</dfn>[<var>20</var>], <dfn class="decl" id="SHA1Randx::o1" title='SHA1Randx::o1' data-ref="SHA1Randx::o1" >o1</dfn>[<var>20</var>], <dfn class="decl" id="SHA1Randx::o2" title='SHA1Randx::o2' data-ref="SHA1Randx::o2" >o2</dfn>[<var>20</var>];</td></tr>
+<tr><th id="79">79</th><td>};</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><u>#<span data-ppcond="23">endif</span></u></td></tr>
+<tr><th id="82">82</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../server/game/Warden/WardenMac.cpp.html'>TrinityCore6.x/src/server/game/Warden/WardenMac.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

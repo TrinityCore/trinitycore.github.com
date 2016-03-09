@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<title>Bag.h [TrinityCore6.x/src/server/game/Entities/Item/Container/Bag.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/Entities/Item/Container/Bag.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>src</a>/<a href='../../../..'>server</a>/<a href='../../..'>game</a>/<a href='../..'>Entities</a>/<a href='..'>Item</a>/<a href='./'>Container</a>/Bag.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_BAG_H">TRINITY_BAG_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_BAG_H" data-ref="_M/TRINITY_BAG_H">TRINITY_BAG_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i>// Maximum 36 Slots ((CONTAINER_END - CONTAINER_FIELD_SLOT_1)/2</i></td></tr>
+<tr><th id="23">23</th><td><u>#define <dfn class="macro" id="_M/MAX_BAG_SIZE" data-ref="_M/MAX_BAG_SIZE">MAX_BAG_SIZE</dfn> 36                                     // 2.0.12</u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../Item.h.html">"Item.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../ItemTemplate.h.html">"ItemTemplate.h"</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>class</b> <dfn class="type def" id="Bag" title='Bag' data-ref="Bag" >Bag</dfn> : <b>public</b> <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <b>public</b>:</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>        <dfn class="decl" id="_ZN3BagC1Ev" title='Bag::Bag' data-ref="_ZN3BagC1Ev" >Bag</dfn>();</td></tr>
+<tr><th id="33">33</th><td>        <dfn class="virtual decl" id="_ZN3BagD1Ev" title='Bag::~Bag' data-ref="_ZN3BagD1Ev" >~Bag</dfn>();</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN3Bag10AddToWorldEv" title='Bag::AddToWorld' data-ref="_ZN3Bag10AddToWorldEv" >AddToWorld</dfn>() override;</td></tr>
+<tr><th id="36">36</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN3Bag15RemoveFromWorldEv" title='Bag::RemoveFromWorld' data-ref="_ZN3Bag15RemoveFromWorldEv" >RemoveFromWorld</dfn>() override;</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>        <em>bool</em> <dfn class="virtual decl" id="_ZN3Bag6CreateEmjPK6Player" title='Bag::Create' data-ref="_ZN3Bag6CreateEmjPK6Player" >Create</dfn>(<a class="type" href="../../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../../Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint64' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col3 decl" id="3guidlow" title='guidlow' data-type='ObjectGuid::LowType' data-ref="3guidlow" >guidlow</dfn>, <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="4itemid" title='itemid' data-type='uint32' data-ref="4itemid" >itemid</dfn>, <a class="type" href="../../Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a> <em>const</em>* <dfn class="local col5 decl" id="5owner" title='owner' data-type='const Player *' data-ref="5owner" >owner</dfn>) override;</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>        <em>void</em> <dfn class="decl" id="_ZN3Bag5ClearEv" title='Bag::Clear' data-ref="_ZN3Bag5ClearEv" >Clear</dfn>();</td></tr>
+<tr><th id="41">41</th><td>        <em>void</em> <dfn class="decl" id="_ZN3Bag9StoreItemEhP4Itemb" title='Bag::StoreItem' data-ref="_ZN3Bag9StoreItemEhP4Itemb" >StoreItem</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col6 decl" id="6slot" title='slot' data-type='uint8' data-ref="6slot" >slot</dfn>, <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a>* <dfn class="local col7 decl" id="7pItem" title='pItem' data-type='Item *' data-ref="7pItem" >pItem</dfn>, <em>bool</em> <dfn class="local col8 decl" id="8update" title='update' data-type='bool' data-ref="8update" >update</dfn>);</td></tr>
+<tr><th id="42">42</th><td>        <em>void</em> <dfn class="decl" id="_ZN3Bag10RemoveItemEhb" title='Bag::RemoveItem' data-ref="_ZN3Bag10RemoveItemEhb" >RemoveItem</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col9 decl" id="9slot" title='slot' data-type='uint8' data-ref="9slot" >slot</dfn>, <em>bool</em> <dfn class="local col0 decl" id="10update" title='update' data-type='bool' data-ref="10update" >update</dfn>);</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>        <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a>* <dfn class="decl" id="_ZNK3Bag12GetItemByPosEh" title='Bag::GetItemByPos' data-ref="_ZNK3Bag12GetItemByPosEh" >GetItemByPos</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col1 decl" id="11slot" title='slot' data-type='uint8' data-ref="11slot" >slot</dfn>) <em>const</em>;</td></tr>
+<tr><th id="45">45</th><td>        <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="_ZNK3Bag12GetItemCountEjP4Item" title='Bag::GetItemCount' data-ref="_ZNK3Bag12GetItemCountEjP4Item" >GetItemCount</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="12item" title='item' data-type='uint32' data-ref="12item" >item</dfn>, <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a>* <dfn class="local col3 decl" id="13eItem" title='eItem' data-type='Item *' data-ref="13eItem" >eItem</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) <em>const</em>;</td></tr>
+<tr><th id="46">46</th><td>        <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="_ZNK3Bag29GetItemCountWithLimitCategoryEjP4Item" title='Bag::GetItemCountWithLimitCategory' data-ref="_ZNK3Bag29GetItemCountWithLimitCategoryEjP4Item" >GetItemCountWithLimitCategory</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="14limitCategory" title='limitCategory' data-type='uint32' data-ref="14limitCategory" >limitCategory</dfn>, <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a>* <dfn class="local col5 decl" id="15skipItem" title='skipItem' data-type='Item *' data-ref="15skipItem" >skipItem</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>) <em>const</em>;</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td>        <a class="typedef" href="../../../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="_ZNK3Bag17GetSlotByItemGUIDE10ObjectGuid" title='Bag::GetSlotByItemGUID' data-ref="_ZNK3Bag17GetSlotByItemGUIDE10ObjectGuid" >GetSlotByItemGUID</dfn>(<a class="type" href="../../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="local col6 decl" id="16guid" title='guid' data-type='ObjectGuid' data-ref="16guid" >guid</dfn>) <em>const</em>;</td></tr>
+<tr><th id="49">49</th><td>        <em>bool</em> <dfn class="decl" id="_ZNK3Bag7IsEmptyEv" title='Bag::IsEmpty' data-ref="_ZNK3Bag7IsEmptyEv" >IsEmpty</dfn>() <em>const</em>;</td></tr>
+<tr><th id="50">50</th><td>        <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="_ZNK3Bag12GetFreeSlotsEv" title='Bag::GetFreeSlots' data-ref="_ZNK3Bag12GetFreeSlotsEv" >GetFreeSlots</dfn>() <em>const</em>;</td></tr>
+<tr><th id="51">51</th><td>        <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK3Bag10GetBagSizeEv" title='Bag::GetBagSize' data-ref="_ZNK3Bag10GetBagSizeEv" >GetBagSize</dfn>() <em>const</em> { <b>return</b> <a class="member" href="../../Object/Object.h.html#_ZNK6Object14GetUInt32ValueEt" title='Object::GetUInt32Value' data-ref="_ZNK6Object14GetUInt32ValueEt" id="_ZNK6Object14GetUInt32ValueEt" >GetUInt32Value</a>(<a class="enum" href="../../Object/Updates/UpdateFields.h.html#ContainerFields::CONTAINER_FIELD_NUM_SLOTS" title='ContainerFields::CONTAINER_FIELD_NUM_SLOTS' data-ref="ContainerFields::CONTAINER_FIELD_NUM_SLOTS" id="ContainerFields::CONTAINER_FIELD_NUM_SLOTS" >CONTAINER_FIELD_NUM_SLOTS</a>); }</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>        <i>// DB operations</i></td></tr>
+<tr><th id="54">54</th><td><i>        // overwrite virtual Item::SaveToDB</i></td></tr>
+<tr><th id="55">55</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN3Bag8SaveToDBERSt10shared_ptrI11TransactionE" title='Bag::SaveToDB' data-ref="_ZN3Bag8SaveToDBERSt10shared_ptrI11TransactionE" >SaveToDB</dfn>(<a class="typedef" href="../../../../database/Database/Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a>&amp; <dfn class="local col7 decl" id="17trans" title='trans' data-type='SQLTransaction &amp;' data-ref="17trans" >trans</dfn>) override;</td></tr>
+<tr><th id="56">56</th><td>        <i>// overwrite virtual Item::LoadFromDB</i></td></tr>
+<tr><th id="57">57</th><td>        <em>bool</em> <dfn class="virtual decl" id="_ZN3Bag10LoadFromDBEm10ObjectGuidP5Fieldj" title='Bag::LoadFromDB' data-ref="_ZN3Bag10LoadFromDBEm10ObjectGuidP5Fieldj" >LoadFromDB</dfn>(<a class="type" href="../../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../../Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint64' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col8 decl" id="18guid" title='guid' data-type='ObjectGuid::LowType' data-ref="18guid" >guid</dfn>, <a class="type" href="../../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="local col9 decl" id="19owner_guid" title='owner_guid' data-type='ObjectGuid' data-ref="19owner_guid" >owner_guid</dfn>, <a class="type" href="../../../../database/Database/Field.h.html#Field" title='Field' data-ref="Field" >Field</a>* <dfn class="local col0 decl" id="20fields" title='fields' data-type='Field *' data-ref="20fields" >fields</dfn>, <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="21entry" title='entry' data-type='uint32' data-ref="21entry" >entry</dfn>) override;</td></tr>
+<tr><th id="58">58</th><td>        <i>// overwrite virtual Item::DeleteFromDB</i></td></tr>
+<tr><th id="59">59</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN3Bag12DeleteFromDBERSt10shared_ptrI11TransactionE" title='Bag::DeleteFromDB' data-ref="_ZN3Bag12DeleteFromDBERSt10shared_ptrI11TransactionE" >DeleteFromDB</dfn>(<a class="typedef" href="../../../../database/Database/Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a>&amp; <dfn class="local col2 decl" id="22trans" title='trans' data-type='SQLTransaction &amp;' data-ref="22trans" >trans</dfn>) override;</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZNK3Bag31BuildCreateUpdateBlockForPlayerEP10UpdateDataP6Player" title='Bag::BuildCreateUpdateBlockForPlayer' data-ref="_ZNK3Bag31BuildCreateUpdateBlockForPlayerEP10UpdateDataP6Player" >BuildCreateUpdateBlockForPlayer</dfn>(<a class="type" href="../../Object/Updates/UpdateData.h.html#UpdateData" title='UpdateData' data-ref="UpdateData" >UpdateData</a>* <dfn class="local col3 decl" id="23data" title='data' data-type='UpdateData *' data-ref="23data" >data</dfn>, <a class="type" href="../../Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col4 decl" id="24target" title='target' data-type='Player *' data-ref="24target" >target</dfn>) <em>const</em> override;</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>        <i>// Bag Storage space</i></td></tr>
+<tr><th id="66">66</th><td>        <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a>* <dfn class="decl" id="Bag::m_bagslot" title='Bag::m_bagslot' data-ref="Bag::m_bagslot" >m_bagslot</dfn>[<a class="macro" href="#23" title="36" data-ref="_M/MAX_BAG_SIZE">MAX_BAG_SIZE</a>];</td></tr>
+<tr><th id="67">67</th><td>};</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><b>inline</b> <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a>* <dfn class="decl def" id="_Z12NewItemOrBagPK12ItemTemplate" title='NewItemOrBag' data-ref="_Z12NewItemOrBagPK12ItemTemplate" >NewItemOrBag</dfn>(<a class="type" href="../ItemTemplate.h.html#ItemTemplate" title='ItemTemplate' data-ref="ItemTemplate" >ItemTemplate</a> <em>const</em>* <dfn class="local col5 decl" id="25proto" title='proto' data-type='const ItemTemplate *' data-ref="25proto" >proto</dfn>)</td></tr>
+<tr><th id="70">70</th><td>{</td></tr>
+<tr><th id="71">71</th><td>    <b>return</b> (<a class="local col5 ref" href="#25proto" title='proto' data-ref="25proto" >proto</a>-&gt;<a class="ref" href="../ItemTemplate.h.html#_ZNK12ItemTemplate16GetInventoryTypeEv" title='ItemTemplate::GetInventoryType' data-ref="_ZNK12ItemTemplate16GetInventoryTypeEv" id="_ZNK12ItemTemplate16GetInventoryTypeEv" >GetInventoryType</a>() == <a class="enum" href="../ItemTemplate.h.html#InventoryType::INVTYPE_BAG" title='InventoryType::INVTYPE_BAG' data-ref="InventoryType::INVTYPE_BAG" id="InventoryType::INVTYPE_BAG" >INVTYPE_BAG</a>) ? <b>new</b> <a class="type" href="#Bag" title='Bag' data-ref="Bag" >Bag</a> : <b>new</b> <a class="type" href="../Item.h.html#Item" title='Item' data-ref="Item" >Item</a>;</td></tr>
+<tr><th id="72">72</th><td>}</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../AI/CoreAI/GuardAI.cpp.html'>TrinityCore6.x/src/server/game/AI/CoreAI/GuardAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<title>WorldPacket.h [TrinityCore3.3.5/src/server/shared/Packets/WorldPacket.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/shared/Packets/WorldPacket.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>shared</a>/<a href='./'>Packets</a>/WorldPacket.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITYCORE_WORLDPACKET_H">TRINITYCORE_WORLDPACKET_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITYCORE_WORLDPACKET_H" data-ref="_M/TRINITYCORE_WORLDPACKET_H">TRINITYCORE_WORLDPACKET_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../common/Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="ByteBuffer.h.html">"ByteBuffer.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>class</b> <dfn class="type def" id="WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</dfn> : <b>public</b> <a class="type" href="ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <b>public</b>:</td></tr>
+<tr><th id="28">28</th><td>                                                            <i>// just container for later use</i></td></tr>
+<tr><th id="29">29</th><td>        <dfn class="decl def" id="_ZN11WorldPacketC1Ev" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1Ev" >WorldPacket</dfn>()                                       : <a class="type" href="ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a><a class="ref" href="ByteBuffer.h.html#_ZN10ByteBufferC1Em" title='ByteBuffer::ByteBuffer' data-ref="_ZN10ByteBufferC1Em" id="_ZN10ByteBufferC1Em" >(</a><var>0</var>), <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>(<var>0</var>)</td></tr>
+<tr><th id="30">30</th><td>        {</td></tr>
+<tr><th id="31">31</th><td>        }</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>        <b>explicit</b> <dfn class="decl def" id="_ZN11WorldPacketC1Etm" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1Etm" >WorldPacket</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="local col9 decl" id="39opcode" title='opcode' data-type='uint16' data-ref="39opcode" >opcode</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="40res" title='res' data-type='size_t' data-ref="40res" >res</dfn>=<var>200</var>) : <a class="type" href="ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a><a class="ref" href="ByteBuffer.h.html#_ZN10ByteBufferC1Em" title='ByteBuffer::ByteBuffer' data-ref="_ZN10ByteBufferC1Em" id="_ZN10ByteBufferC1Em" >(</a><a class="local col0 ref" href="#40res" title='res' data-ref="40res" >res</a>), <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>(<a class="local col9 ref" href="#39opcode" title='opcode' data-ref="39opcode" >opcode</a>) { }</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>        <dfn class="decl def" id="_ZN11WorldPacketC1EOS_" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1EOS_" >WorldPacket</dfn>(<a class="type" href="#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a>&amp;&amp; <dfn class="local col1 decl" id="41packet" title='packet' data-type='WorldPacket &amp;&amp;' data-ref="41packet" >packet</dfn>) : <a class="type" href="ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a><a class="ref" href="ByteBuffer.h.html#_ZN10ByteBufferC1EOS_" title='ByteBuffer::ByteBuffer' data-ref="_ZN10ByteBufferC1EOS_" id="_ZN10ByteBufferC1EOS_" >(</a><span class="namespace">std::</span><a class="ref" href="../../../../../include/c++/4.9/bits/move.h.html#_ZSt4moveOT_" title='std::move' data-ref="_ZSt4moveOT_" id="_ZSt4moveOT_" >move</a>(<a class="local col1 ref" href="#41packet" title='packet' data-ref="41packet" >packet</a>)), <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>(<a class="local col1 ref" href="#41packet" title='packet' data-ref="41packet" >packet</a>.<a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>)</td></tr>
+<tr><th id="36">36</th><td>        {</td></tr>
+<tr><th id="37">37</th><td>        }</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>        <dfn class="decl def" id="_ZN11WorldPacketC1ERKS_" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1ERKS_" >WorldPacket</dfn>(<a class="type" href="#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a> <em>const</em>&amp; <dfn class="local col2 decl" id="42right" title='right' data-type='const WorldPacket &amp;' data-ref="42right" >right</dfn>) : <a class="type" href="ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a><a class="ref" href="ByteBuffer.h.html#_ZN10ByteBufferC1ERKS_" title='ByteBuffer::ByteBuffer' data-ref="_ZN10ByteBufferC1ERKS_" id="_ZN10ByteBufferC1ERKS_" >(</a><a class="local col2 ref" href="#42right" title='right' data-ref="42right" >right</a>), <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>(<a class="local col2 ref" href="#42right" title='right' data-ref="42right" >right</a>.<a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>)</td></tr>
+<tr><th id="40">40</th><td>        {</td></tr>
+<tr><th id="41">41</th><td>        }</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>        <a class="type" href="#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a>&amp; <dfn class="decl def" id="_ZN11WorldPacketaSERKS_" title='WorldPacket::operator=' data-ref="_ZN11WorldPacketaSERKS_" ><b>operator</b>=</dfn>(<a class="type" href="#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a> <em>const</em>&amp; <dfn class="local col3 decl" id="43right" title='right' data-type='const WorldPacket &amp;' data-ref="43right" >right</dfn>)</td></tr>
+<tr><th id="44">44</th><td>        {</td></tr>
+<tr><th id="45">45</th><td>            <b>if</b> (<b>this</b> != &amp;<a class="local col3 ref" href="#43right" title='right' data-ref="43right" >right</a>)</td></tr>
+<tr><th id="46">46</th><td>            {</td></tr>
+<tr><th id="47">47</th><td>                <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a> = <a class="local col3 ref" href="#43right" title='right' data-ref="43right" >right</a>.<a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>;</td></tr>
+<tr><th id="48">48</th><td>                <a class="type" href="ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a>::<a class="member" href="ByteBuffer.h.html#_ZN10ByteBufferaSERKS_" title='ByteBuffer::operator=' data-ref="_ZN10ByteBufferaSERKS_" id="_ZN10ByteBufferaSERKS_" ><b>operator</b> =</a>(<a class="local col3 ref" href="#43right" title='right' data-ref="43right" >right</a>);</td></tr>
+<tr><th id="49">49</th><td>            }</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>            <b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="52">52</th><td>        }</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>        <dfn class="decl def" id="_ZN11WorldPacketC1EtO13MessageBuffer" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1EtO13MessageBuffer" >WorldPacket</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="local col4 decl" id="44opcode" title='opcode' data-type='uint16' data-ref="44opcode" >opcode</dfn>, <a class="type" href="ByteBuffer.h.html#MessageBuffer" title='MessageBuffer' data-ref="MessageBuffer" >MessageBuffer</a>&amp;&amp; <dfn class="local col5 decl" id="45buffer" title='buffer' data-type='MessageBuffer &amp;&amp;' data-ref="45buffer" >buffer</dfn>) : <a class="type" href="ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a><a class="ref" href="ByteBuffer.h.html#_ZN10ByteBufferC1EO13MessageBuffer" title='ByteBuffer::ByteBuffer' data-ref="_ZN10ByteBufferC1EO13MessageBuffer" id="_ZN10ByteBufferC1EO13MessageBuffer" >(</a><span class="namespace">std::</span><a class="ref" href="../../../../../include/c++/4.9/bits/move.h.html#_ZSt4moveOT_" title='std::move' data-ref="_ZSt4moveOT_" id="_ZSt4moveOT_" >move</a>(<a class="local col5 ref" href="#45buffer" title='buffer' data-ref="45buffer" >buffer</a>)), <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>(<a class="local col4 ref" href="#44opcode" title='opcode' data-ref="44opcode" >opcode</a>) { }</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>        <em>void</em> <dfn class="decl def" id="_ZN11WorldPacket10InitializeEtm" title='WorldPacket::Initialize' data-ref="_ZN11WorldPacket10InitializeEtm" >Initialize</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="local col6 decl" id="46opcode" title='opcode' data-type='uint16' data-ref="46opcode" >opcode</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="47newres" title='newres' data-type='size_t' data-ref="47newres" >newres</dfn>=<var>200</var>)</td></tr>
+<tr><th id="57">57</th><td>        {</td></tr>
+<tr><th id="58">58</th><td>            <a class="member" href="ByteBuffer.h.html#_ZN10ByteBuffer5clearEv" title='ByteBuffer::clear' data-ref="_ZN10ByteBuffer5clearEv" id="_ZN10ByteBuffer5clearEv" >clear</a>();</td></tr>
+<tr><th id="59">59</th><td>            <a class="member" href="ByteBuffer.h.html#ByteBuffer::_storage" title='ByteBuffer::_storage' data-ref="ByteBuffer::_storage" id="ByteBuffer::_storage" >_storage</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNSt6vector7reserveEm" title='std::vector::reserve' data-ref="_ZNSt6vector7reserveEm" id="_ZNSt6vector7reserveEm" >reserve</a>(<a class="local col7 ref" href="#47newres" title='newres' data-ref="47newres" >newres</a>);</td></tr>
+<tr><th id="60">60</th><td>            <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a> = <a class="local col6 ref" href="#46opcode" title='opcode' data-ref="46opcode" >opcode</a>;</td></tr>
+<tr><th id="61">61</th><td>        }</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="decl def" id="_ZNK11WorldPacket9GetOpcodeEv" title='WorldPacket::GetOpcode' data-ref="_ZNK11WorldPacket9GetOpcodeEv" >GetOpcode</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a>; }</td></tr>
+<tr><th id="64">64</th><td>        <em>void</em> <dfn class="decl def" id="_ZN11WorldPacket9SetOpcodeEt" title='WorldPacket::SetOpcode' data-ref="_ZN11WorldPacket9SetOpcodeEt" >SetOpcode</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="local col8 decl" id="48opcode" title='opcode' data-type='uint16' data-ref="48opcode" >opcode</dfn>) { <a class="member" href="#WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</a> = <a class="local col8 ref" href="#48opcode" title='opcode' data-ref="48opcode" >opcode</a>; }</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="67">67</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="decl" id="WorldPacket::m_opcode" title='WorldPacket::m_opcode' data-ref="WorldPacket::m_opcode" >m_opcode</dfn>;</td></tr>
+<tr><th id="68">68</th><td>};</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../game/AI/CoreAI/TotemAI.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CoreAI/TotemAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

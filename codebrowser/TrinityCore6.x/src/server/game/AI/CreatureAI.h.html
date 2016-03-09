@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+<title>CreatureAI.h [TrinityCore6.x/src/server/game/AI/CreatureAI.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/AI/CreatureAI.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>AI</a>/CreatureAI.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_CREATUREAI_H">TRINITY_CREATUREAI_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_CREATUREAI_H" data-ref="_M/TRINITY_CREATUREAI_H">TRINITY_CREATUREAI_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Entities/Creature/Creature.h.html">"Creature.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="CoreAI/UnitAI.h.html">"UnitAI.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../common/Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>class</b> <a class="type" href="../Entities/Object/Object.h.html#WorldObject" title='WorldObject' data-ref="WorldObject" id="WorldObject" >WorldObject</a>;</td></tr>
+<tr><th id="27">27</th><td><b>class</b> <a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" id="Unit" >Unit</a>;</td></tr>
+<tr><th id="28">28</th><td><b>class</b> <a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" id="Creature" >Creature</a>;</td></tr>
+<tr><th id="29">29</th><td><b>class</b> <a class="type" href="../Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" id="Player" >Player</a>;</td></tr>
+<tr><th id="30">30</th><td><b>class</b> <a class="type" href="../Spells/SpellInfo.h.html#SpellInfo" title='SpellInfo' data-ref="SpellInfo" id="SpellInfo" >SpellInfo</a>;</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/TIME_INTERVAL_LOOK" data-ref="_M/TIME_INTERVAL_LOOK">TIME_INTERVAL_LOOK</dfn>   5000</u></td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/VISIBILITY_RANGE" data-ref="_M/VISIBILITY_RANGE">VISIBILITY_RANGE</dfn>    10000</u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i>//Spell targets used by SelectSpell</i></td></tr>
+<tr><th id="36">36</th><td><b>enum</b> <dfn class="type def" id="SelectTargetType" title='SelectTargetType' data-ref="SelectTargetType" >SelectTargetType</dfn></td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_DONTCARE" title='SelectTargetType::SELECT_TARGET_DONTCARE' data-ref="SelectTargetType::SELECT_TARGET_DONTCARE" >SELECT_TARGET_DONTCARE</dfn> = <var>0</var>,                             <i>//All target types allowed</i></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_SELF" title='SelectTargetType::SELECT_TARGET_SELF' data-ref="SelectTargetType::SELECT_TARGET_SELF" >SELECT_TARGET_SELF</dfn>,                                     <i>//Only Self casting</i></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_SINGLE_ENEMY" title='SelectTargetType::SELECT_TARGET_SINGLE_ENEMY' data-ref="SelectTargetType::SELECT_TARGET_SINGLE_ENEMY" >SELECT_TARGET_SINGLE_ENEMY</dfn>,                             <i>//Only Single Enemy</i></td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_AOE_ENEMY" title='SelectTargetType::SELECT_TARGET_AOE_ENEMY' data-ref="SelectTargetType::SELECT_TARGET_AOE_ENEMY" >SELECT_TARGET_AOE_ENEMY</dfn>,                                <i>//Only AoE Enemy</i></td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_ANY_ENEMY" title='SelectTargetType::SELECT_TARGET_ANY_ENEMY' data-ref="SelectTargetType::SELECT_TARGET_ANY_ENEMY" >SELECT_TARGET_ANY_ENEMY</dfn>,                                <i>//AoE or Single Enemy</i></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_SINGLE_FRIEND" title='SelectTargetType::SELECT_TARGET_SINGLE_FRIEND' data-ref="SelectTargetType::SELECT_TARGET_SINGLE_FRIEND" >SELECT_TARGET_SINGLE_FRIEND</dfn>,                            <i>//Only Single Friend</i></td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_AOE_FRIEND" title='SelectTargetType::SELECT_TARGET_AOE_FRIEND' data-ref="SelectTargetType::SELECT_TARGET_AOE_FRIEND" >SELECT_TARGET_AOE_FRIEND</dfn>,                               <i>//Only AoE Friend</i></td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="SelectTargetType::SELECT_TARGET_ANY_FRIEND" title='SelectTargetType::SELECT_TARGET_ANY_FRIEND' data-ref="SelectTargetType::SELECT_TARGET_ANY_FRIEND" >SELECT_TARGET_ANY_FRIEND</dfn>                                <i>//AoE or Single Friend</i></td></tr>
+<tr><th id="49">49</th><td>};</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><i>//Spell Effects used by SelectSpell</i></td></tr>
+<tr><th id="52">52</th><td><b>enum</b> <dfn class="type def" id="SelectEffect" title='SelectEffect' data-ref="SelectEffect" >SelectEffect</dfn></td></tr>
+<tr><th id="53">53</th><td>{</td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="SelectEffect::SELECT_EFFECT_DONTCARE" title='SelectEffect::SELECT_EFFECT_DONTCARE' data-ref="SelectEffect::SELECT_EFFECT_DONTCARE" >SELECT_EFFECT_DONTCARE</dfn> = <var>0</var>,                             <i>//All spell effects allowed</i></td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="SelectEffect::SELECT_EFFECT_DAMAGE" title='SelectEffect::SELECT_EFFECT_DAMAGE' data-ref="SelectEffect::SELECT_EFFECT_DAMAGE" >SELECT_EFFECT_DAMAGE</dfn>,                                   <i>//Spell does damage</i></td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="SelectEffect::SELECT_EFFECT_HEALING" title='SelectEffect::SELECT_EFFECT_HEALING' data-ref="SelectEffect::SELECT_EFFECT_HEALING" >SELECT_EFFECT_HEALING</dfn>,                                  <i>//Spell does healing</i></td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="SelectEffect::SELECT_EFFECT_AURA" title='SelectEffect::SELECT_EFFECT_AURA' data-ref="SelectEffect::SELECT_EFFECT_AURA" >SELECT_EFFECT_AURA</dfn>                                      <i>//Spell applies an aura</i></td></tr>
+<tr><th id="58">58</th><td>};</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><b>enum</b> <dfn class="type def" id="SCEquip" title='SCEquip' data-ref="SCEquip" >SCEquip</dfn></td></tr>
+<tr><th id="61">61</th><td>{</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="SCEquip::EQUIP_NO_CHANGE" title='SCEquip::EQUIP_NO_CHANGE' data-ref="SCEquip::EQUIP_NO_CHANGE" >EQUIP_NO_CHANGE</dfn> = -<var>1</var>,</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="enum" id="SCEquip::EQUIP_UNEQUIP" title='SCEquip::EQUIP_UNEQUIP' data-ref="SCEquip::EQUIP_UNEQUIP" >EQUIP_UNEQUIP</dfn>   = <var>0</var></td></tr>
+<tr><th id="64">64</th><td>};</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><b>class</b> <dfn class="type def" id="CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</dfn> : <b>public</b> <a class="type" href="CoreAI/UnitAI.h.html#UnitAI" title='UnitAI' data-ref="UnitAI" >UnitAI</a></td></tr>
+<tr><th id="67">67</th><td>{</td></tr>
+<tr><th id="68">68</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="69">69</th><td>        <a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <em>const</em> <dfn class="decl" id="CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" >me</dfn>;</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>        <em>bool</em> <dfn class="decl" id="_ZN10CreatureAI12UpdateVictimEv" title='CreatureAI::UpdateVictim' data-ref="_ZN10CreatureAI12UpdateVictimEv" >UpdateVictim</dfn>();</td></tr>
+<tr><th id="72">72</th><td>        <em>bool</em> <dfn class="decl" id="_ZN10CreatureAI20UpdateVictimWithGazeEv" title='CreatureAI::UpdateVictimWithGaze' data-ref="_ZN10CreatureAI20UpdateVictimWithGazeEv" >UpdateVictimWithGaze</dfn>();</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>        <em>void</em> <dfn class="decl" id="_ZN10CreatureAI9SetGazeOnEP4Unit" title='CreatureAI::SetGazeOn' data-ref="_ZN10CreatureAI9SetGazeOnEP4Unit" >SetGazeOn</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col3 decl" id="3203target" title='target' data-type='Unit *' data-ref="3203target" >target</dfn>);</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>        <a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="decl" id="_ZN10CreatureAI8DoSummonEjRK8Positionj14TempSummonType" title='CreatureAI::DoSummon' data-ref="_ZN10CreatureAI8DoSummonEjRK8Positionj14TempSummonType" >DoSummon</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="3204entry" title='entry' data-type='uint32' data-ref="3204entry" >entry</dfn>, <a class="type" href="../Entities/Object/Position.h.html#Position" title='Position' data-ref="Position" >Position</a> <em>const</em>&amp; <dfn class="local col5 decl" id="3205pos" title='pos' data-type='const Position &amp;' data-ref="3205pos" >pos</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="3206despawnTime" title='despawnTime' data-type='uint32' data-ref="3206despawnTime" >despawnTime</dfn> = <var>30000</var>, <a class="type" href="../Entities/Object/Object.h.html#TempSummonType" title='TempSummonType' data-ref="TempSummonType" >TempSummonType</a> <dfn class="local col7 decl" id="3207summonType" title='summonType' data-type='TempSummonType' data-ref="3207summonType" >summonType</dfn> = <a class="enum" href="../Entities/Object/Object.h.html#TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN" title='TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN' data-ref="TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN" >TEMPSUMMON_CORPSE_TIMED_DESPAWN</a>);</td></tr>
+<tr><th id="77">77</th><td>        <a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="decl" id="_ZN10CreatureAI8DoSummonEjP11WorldObjectfj14TempSummonType" title='CreatureAI::DoSummon' data-ref="_ZN10CreatureAI8DoSummonEjP11WorldObjectfj14TempSummonType" >DoSummon</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="3208entry" title='entry' data-type='uint32' data-ref="3208entry" >entry</dfn>, <a class="type" href="../Entities/Object/Object.h.html#WorldObject" title='WorldObject' data-ref="WorldObject" >WorldObject</a>* <dfn class="local col9 decl" id="3209obj" title='obj' data-type='WorldObject *' data-ref="3209obj" >obj</dfn>, <em>float</em> <dfn class="local col0 decl" id="3210radius" title='radius' data-type='float' data-ref="3210radius" >radius</dfn> = <var>5.0f</var>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="3211despawnTime" title='despawnTime' data-type='uint32' data-ref="3211despawnTime" >despawnTime</dfn> = <var>30000</var>, <a class="type" href="../Entities/Object/Object.h.html#TempSummonType" title='TempSummonType' data-ref="TempSummonType" >TempSummonType</a> <dfn class="local col2 decl" id="3212summonType" title='summonType' data-type='TempSummonType' data-ref="3212summonType" >summonType</dfn> = <a class="enum" href="../Entities/Object/Object.h.html#TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN" title='TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN' data-ref="TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN" >TEMPSUMMON_CORPSE_TIMED_DESPAWN</a>);</td></tr>
+<tr><th id="78">78</th><td>        <a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="decl" id="_ZN10CreatureAI13DoSummonFlyerEjP11WorldObjectffj14TempSummonType" title='CreatureAI::DoSummonFlyer' data-ref="_ZN10CreatureAI13DoSummonFlyerEjP11WorldObjectffj14TempSummonType" >DoSummonFlyer</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3213entry" title='entry' data-type='uint32' data-ref="3213entry" >entry</dfn>, <a class="type" href="../Entities/Object/Object.h.html#WorldObject" title='WorldObject' data-ref="WorldObject" >WorldObject</a>* <dfn class="local col4 decl" id="3214obj" title='obj' data-type='WorldObject *' data-ref="3214obj" >obj</dfn>, <em>float</em> <dfn class="local col5 decl" id="3215flightZ" title='flightZ' data-type='float' data-ref="3215flightZ" >flightZ</dfn>, <em>float</em> <dfn class="local col6 decl" id="3216radius" title='radius' data-type='float' data-ref="3216radius" >radius</dfn> = <var>5.0f</var>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="3217despawnTime" title='despawnTime' data-type='uint32' data-ref="3217despawnTime" >despawnTime</dfn> = <var>30000</var>, <a class="type" href="../Entities/Object/Object.h.html#TempSummonType" title='TempSummonType' data-ref="TempSummonType" >TempSummonType</a> <dfn class="local col8 decl" id="3218summonType" title='summonType' data-type='TempSummonType' data-ref="3218summonType" >summonType</dfn> = <a class="enum" href="../Entities/Object/Object.h.html#TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN" title='TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN' data-ref="TempSummonType::TEMPSUMMON_CORPSE_TIMED_DESPAWN" >TEMPSUMMON_CORPSE_TIMED_DESPAWN</a>);</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <b>public</b>:</td></tr>
+<tr><th id="81">81</th><td>        <em>void</em> <dfn class="decl" id="_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col9 decl" id="3219id" title='id' data-type='uint8' data-ref="3219id" >id</dfn>, <a class="type" href="../Entities/Object/Object.h.html#WorldObject" title='WorldObject' data-ref="WorldObject" >WorldObject</a> <em>const</em>* <dfn class="local col0 decl" id="3220whisperTarget" title='whisperTarget' data-type='const WorldObject *' data-ref="3220whisperTarget" >whisperTarget</dfn> = <b>nullptr</b>);</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>        <b>explicit</b> <dfn class="decl def" id="_ZN10CreatureAIC1EP8Creature" title='CreatureAI::CreatureAI' data-ref="_ZN10CreatureAIC1EP8Creature" >CreatureAI</dfn>(<a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="3221creature" title='creature' data-type='Creature *' data-ref="3221creature" >creature</dfn>) : <a class="type" href="CoreAI/UnitAI.h.html#UnitAI" title='UnitAI' data-ref="UnitAI" >UnitAI</a><a class="ref" href="CoreAI/UnitAI.h.html#_ZN6UnitAIC1EP4Unit" title='UnitAI::UnitAI' data-ref="_ZN6UnitAIC1EP4Unit" id="_ZN6UnitAIC1EP4Unit" >(</a><a class="local col1 ref" href="#3221creature" title='creature' data-ref="3221creature" >creature</a>), <a class="member" href="#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" >me</a>(<a class="local col1 ref" href="#3221creature" title='creature' data-ref="3221creature" >creature</a>), <a class="member" href="#CreatureAI::m_MoveInLineOfSight_locked" title='CreatureAI::m_MoveInLineOfSight_locked' data-ref="CreatureAI::m_MoveInLineOfSight_locked" >m_MoveInLineOfSight_locked</a>(<b>false</b>) { }</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>        <b>virtual</b> <dfn class="virtual decl def" id="_ZN10CreatureAID1Ev" title='CreatureAI::~CreatureAI' data-ref="_ZN10CreatureAID1Ev" >~CreatureAI</dfn>() { }</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>        <i class="doc">/// == Reactions At =================================</i></td></tr>
+<tr><th id="88">88</th><td><i class="doc"></i></td></tr>
+<tr><th id="89">89</th><td><i class="doc">        // Called if IsVisible(Unit* who) is true at each who move, reaction at visibility zone enter</i></td></tr>
+<tr><th id="90">90</th><td>        <em>void</em> <dfn class="decl" id="_ZN10CreatureAI22MoveInLineOfSight_SafeEP4Unit" title='CreatureAI::MoveInLineOfSight_Safe' data-ref="_ZN10CreatureAI22MoveInLineOfSight_SafeEP4Unit" >MoveInLineOfSight_Safe</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col2 decl" id="3222who" title='who' data-type='Unit *' data-ref="3222who" >who</dfn>);</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>        <i>// Trigger Creature "Alert" state (creature can see stealthed unit)</i></td></tr>
+<tr><th id="93">93</th><td>        <em>void</em> <dfn class="decl" id="_ZNK10CreatureAI12TriggerAlertEPK4Unit" title='CreatureAI::TriggerAlert' data-ref="_ZNK10CreatureAI12TriggerAlertEPK4Unit" >TriggerAlert</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a> <em>const</em>* <dfn class="local col3 decl" id="3223who" title='who' data-type='const Unit *' data-ref="3223who" >who</dfn>) <em>const</em>;</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>        <i>// Called in Creature::Update when deathstate = DEAD. Inherited classes may maniuplate the ability to respawn based on scripted events.</i></td></tr>
+<tr><th id="96">96</th><td>        <b>virtual</b> <em>bool</em> <dfn class="virtual decl def" id="_ZN10CreatureAI10CanRespawnEv" title='CreatureAI::CanRespawn' data-ref="_ZN10CreatureAI10CanRespawnEv" >CanRespawn</dfn>() { <b>return</b> <b>true</b>; }</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>        <i>// Called for reaction at stopping attack at no attackers or targets</i></td></tr>
+<tr><th id="99">99</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN10CreatureAI14EnterEvadeModeEv" title='CreatureAI::EnterEvadeMode' data-ref="_ZN10CreatureAI14EnterEvadeModeEv" >EnterEvadeMode</dfn>();</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>        <i>// Called for reaction at enter to combat if not in combat yet (enemy can be NULL)</i></td></tr>
+<tr><th id="102">102</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI11EnterCombatEP4Unit" title='CreatureAI::EnterCombat' data-ref="_ZN10CreatureAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*victim*/</i>) { }</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>        <i>// Called when the creature is killed</i></td></tr>
+<tr><th id="105">105</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI8JustDiedEP4Unit" title='CreatureAI::JustDied' data-ref="_ZN10CreatureAI8JustDiedEP4Unit" >JustDied</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*killer*/</i>) { }</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>        <i>// Called when the creature kills a unit</i></td></tr>
+<tr><th id="108">108</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI10KilledUnitEP4Unit" title='CreatureAI::KilledUnit' data-ref="_ZN10CreatureAI10KilledUnitEP4Unit" >KilledUnit</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*victim*/</i>) { }</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>        <i>// Called when the creature summon successfully other creature</i></td></tr>
+<tr><th id="111">111</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI12JustSummonedEP8Creature" title='CreatureAI::JustSummoned' data-ref="_ZN10CreatureAI12JustSummonedEP8Creature" >JustSummoned</dfn>(<a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <i>/*summon*/</i>) { }</td></tr>
+<tr><th id="112">112</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI12IsSummonedByEP4Unit" title='CreatureAI::IsSummonedBy' data-ref="_ZN10CreatureAI12IsSummonedByEP4Unit" >IsSummonedBy</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*summoner*/</i>) { }</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI23SummonedCreatureDespawnEP8Creature" title='CreatureAI::SummonedCreatureDespawn' data-ref="_ZN10CreatureAI23SummonedCreatureDespawnEP8Creature" >SummonedCreatureDespawn</dfn>(<a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <i>/*summon*/</i>) { }</td></tr>
+<tr><th id="115">115</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI20SummonedCreatureDiesEP8CreatureP4Unit" title='CreatureAI::SummonedCreatureDies' data-ref="_ZN10CreatureAI20SummonedCreatureDiesEP8CreatureP4Unit" >SummonedCreatureDies</dfn>(<a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <i>/*summon*/</i>, <a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*killer*/</i>) { }</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td>        <i>// Called when hit by a spell</i></td></tr>
+<tr><th id="118">118</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI8SpellHitEP4UnitPK9SpellInfo" title='CreatureAI::SpellHit' data-ref="_ZN10CreatureAI8SpellHitEP4UnitPK9SpellInfo" >SpellHit</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*caster*/</i>, <a class="type" href="../Spells/SpellInfo.h.html#SpellInfo" title='SpellInfo' data-ref="SpellInfo" >SpellInfo</a> <em>const</em>* <i>/*spell*/</i>) { }</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>        <i>// Called when spell hits a target</i></td></tr>
+<tr><th id="121">121</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI14SpellHitTargetEP4UnitPK9SpellInfo" title='CreatureAI::SpellHitTarget' data-ref="_ZN10CreatureAI14SpellHitTargetEP4UnitPK9SpellInfo" >SpellHitTarget</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*target*/</i>, <a class="type" href="../Spells/SpellInfo.h.html#SpellInfo" title='SpellInfo' data-ref="SpellInfo" >SpellInfo</a> <em>const</em>* <i>/*spell*/</i>) { }</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td>        <i>// Called when the creature is target of hostile action: swing, hostile spell landed, fear/etc)</i></td></tr>
+<tr><th id="124">124</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI10AttackedByEP4Unit" title='CreatureAI::AttackedBy' data-ref="_ZN10CreatureAI10AttackedByEP4Unit" >AttackedBy</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*attacker*/</i>) { }</td></tr>
+<tr><th id="125">125</th><td>        <b>virtual</b> <em>bool</em> <dfn class="virtual decl def" id="_ZNK10CreatureAI10IsEscortedEv" title='CreatureAI::IsEscorted' data-ref="_ZNK10CreatureAI10IsEscortedEv" >IsEscorted</dfn>() <em>const</em> { <b>return</b> <b>false</b>; }</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td>        <i>// Called when creature is spawned or respawned (for reseting variables)</i></td></tr>
+<tr><th id="128">128</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI13JustRespawnedEv" title='CreatureAI::JustRespawned' data-ref="_ZN10CreatureAI13JustRespawnedEv" >JustRespawned</dfn>() { <a class="virtual member" href="CoreAI/UnitAI.h.html#_ZN6UnitAI5ResetEv" title='UnitAI::Reset' data-ref="_ZN6UnitAI5ResetEv" id="_ZN6UnitAI5ResetEv" >Reset</a>(); }</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>        <i>// Called at waypoint reached or point movement finished</i></td></tr>
+<tr><th id="131">131</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI14MovementInformEjj" title='CreatureAI::MovementInform' data-ref="_ZN10CreatureAI14MovementInformEjj" >MovementInform</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <i>/*type*/</i>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <i>/*id*/</i>) { }</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN10CreatureAI9OnCharmedEb" title='CreatureAI::OnCharmed' data-ref="_ZN10CreatureAI9OnCharmedEb" >OnCharmed</dfn>(<em>bool</em> <dfn class="local col4 decl" id="3224apply" title='apply' data-type='bool' data-ref="3224apply" >apply</dfn>) override;</td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td>        <i>// Called at reaching home after evade</i></td></tr>
+<tr><th id="136">136</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI15JustReachedHomeEv" title='CreatureAI::JustReachedHome' data-ref="_ZN10CreatureAI15JustReachedHomeEv" >JustReachedHome</dfn>() { }</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>        <em>void</em> <dfn class="decl" id="_ZN10CreatureAI14DoZoneInCombatEP8Creaturef" title='CreatureAI::DoZoneInCombat' data-ref="_ZN10CreatureAI14DoZoneInCombatEP8Creaturef" >DoZoneInCombat</dfn>(<a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col5 decl" id="3225creature" title='creature' data-type='Creature *' data-ref="3225creature" >creature</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <em>float</em> <dfn class="local col6 decl" id="3226maxRangeToNearestTarget" title='maxRangeToNearestTarget' data-type='float' data-ref="3226maxRangeToNearestTarget" >maxRangeToNearestTarget</dfn> = <var>50.0f</var>);</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td>        <i>// Called at text emote receive from player</i></td></tr>
+<tr><th id="141">141</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI12ReceiveEmoteEP6Playerj" title='CreatureAI::ReceiveEmote' data-ref="_ZN10CreatureAI12ReceiveEmoteEP6Playerj" >ReceiveEmote</dfn>(<a class="type" href="../Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <i>/*player*/</i>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <i>/*emoteId*/</i>) { }</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td>        <i>// Called when owner takes damage</i></td></tr>
+<tr><th id="144">144</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI15OwnerAttackedByEP4Unit" title='CreatureAI::OwnerAttackedBy' data-ref="_ZN10CreatureAI15OwnerAttackedByEP4Unit" >OwnerAttackedBy</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*attacker*/</i>) { }</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td>        <i>// Called when owner attacks something</i></td></tr>
+<tr><th id="147">147</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI13OwnerAttackedEP4Unit" title='CreatureAI::OwnerAttacked' data-ref="_ZN10CreatureAI13OwnerAttackedEP4Unit" >OwnerAttacked</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*target*/</i>) { }</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td>        <i class="doc">/// == Triggered Actions Requested ==================</i></td></tr>
+<tr><th id="150">150</th><td><i class="doc"></i></td></tr>
+<tr><th id="151">151</th><td><i class="doc">        // Called when creature attack expected (if creature can and no have current victim)</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">        // Note: for reaction at hostile action must be called AttackedBy function.</i></td></tr>
+<tr><th id="153">153</th><td><i class="doc">        //virtual void AttackStart(Unit*) { }</i></td></tr>
+<tr><th id="154">154</th><td><i class="doc"></i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">        // Called at World update tick</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">        //virtual void UpdateAI(const uint32 /*diff*/) { }</i></td></tr>
+<tr><th id="157">157</th><td><i class="doc"></i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">        /// == State checks =================================</i></td></tr>
+<tr><th id="159">159</th><td><i class="doc"></i></td></tr>
+<tr><th id="160">160</th><td><i class="doc">        // Is unit visible for MoveInLineOfSight</i></td></tr>
+<tr><th id="161">161</th><td><i class="doc">        //virtual bool IsVisible(Unit*) const { return false; }</i></td></tr>
+<tr><th id="162">162</th><td><i class="doc"></i></td></tr>
+<tr><th id="163">163</th><td><i class="doc">        // called when the corpse of this creature gets removed</i></td></tr>
+<tr><th id="164">164</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI13CorpseRemovedERj" title='CreatureAI::CorpseRemoved' data-ref="_ZN10CreatureAI13CorpseRemovedERj" >CorpseRemoved</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&amp; <i>/*respawnDelay*/</i>) { }</td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td>        <i>// Called when victim entered water and creature can not enter water</i></td></tr>
+<tr><th id="167">167</th><td><i>        //virtual bool CanReachByRangeAttack(Unit*) { return false; }</i></td></tr>
+<tr><th id="168">168</th><td><i></i></td></tr>
+<tr><th id="169">169</th><td><i>        /// == Fields =======================================</i></td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI16PassengerBoardedEP4Unitab" title='CreatureAI::PassengerBoarded' data-ref="_ZN10CreatureAI16PassengerBoardedEP4Unitab" >PassengerBoarded</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*passenger*/</i>, <a class="typedef" href="../../../common/Define.h.html#int8" title='int8' data-type='int8_t' data-ref="int8" >int8</a> <i>/*seatId*/</i>, <em>bool</em> <i>/*apply*/</i>) { }</td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN10CreatureAI12OnSpellClickEP4UnitRb" title='CreatureAI::OnSpellClick' data-ref="_ZN10CreatureAI12OnSpellClickEP4UnitRb" >OnSpellClick</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*clicker*/</i>, <em>bool</em>&amp; <i>/*result*/</i>) { }</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td>        <b>virtual</b> <em>bool</em> <dfn class="virtual decl def" id="_ZN10CreatureAI12CanSeeAlwaysEPK11WorldObject" title='CreatureAI::CanSeeAlways' data-ref="_ZN10CreatureAI12CanSeeAlwaysEPK11WorldObject" >CanSeeAlways</dfn>(<a class="type" href="../Entities/Object/Object.h.html#WorldObject" title='WorldObject' data-ref="WorldObject" >WorldObject</a> <em>const</em>* <i>/*obj*/</i>) { <b>return</b> <b>false</b>; }</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="178">178</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN10CreatureAI17MoveInLineOfSightEP4Unit" title='CreatureAI::MoveInLineOfSight' data-ref="_ZN10CreatureAI17MoveInLineOfSightEP4Unit" >MoveInLineOfSight</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>);</td></tr>
+<tr><th id="179">179</th><td></td></tr>
+<tr><th id="180">180</th><td>        <em>bool</em> <dfn class="decl" id="_ZN10CreatureAI15_EnterEvadeModeEv" title='CreatureAI::_EnterEvadeMode' data-ref="_ZN10CreatureAI15_EnterEvadeModeEv" >_EnterEvadeMode</dfn>();</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>    <b>private</b>:</td></tr>
+<tr><th id="183">183</th><td>        <em>bool</em> <dfn class="decl" id="CreatureAI::m_MoveInLineOfSight_locked" title='CreatureAI::m_MoveInLineOfSight_locked' data-ref="CreatureAI::m_MoveInLineOfSight_locked" >m_MoveInLineOfSight_locked</dfn>;</td></tr>
+<tr><th id="184">184</th><td>};</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td><b>enum</b> <dfn class="type def" id="Permitions" title='Permitions' data-ref="Permitions" >Permitions</dfn></td></tr>
+<tr><th id="187">187</th><td>{</td></tr>
+<tr><th id="188">188</th><td>    <dfn class="enum" id="Permitions::PERMIT_BASE_NO" title='Permitions::PERMIT_BASE_NO' data-ref="Permitions::PERMIT_BASE_NO" >PERMIT_BASE_NO</dfn>                 = -<var>1</var>,</td></tr>
+<tr><th id="189">189</th><td>    <dfn class="enum" id="Permitions::PERMIT_BASE_IDLE" title='Permitions::PERMIT_BASE_IDLE' data-ref="Permitions::PERMIT_BASE_IDLE" >PERMIT_BASE_IDLE</dfn>               = <var>1</var>,</td></tr>
+<tr><th id="190">190</th><td>    <dfn class="enum" id="Permitions::PERMIT_BASE_REACTIVE" title='Permitions::PERMIT_BASE_REACTIVE' data-ref="Permitions::PERMIT_BASE_REACTIVE" >PERMIT_BASE_REACTIVE</dfn>           = <var>100</var>,</td></tr>
+<tr><th id="191">191</th><td>    <dfn class="enum" id="Permitions::PERMIT_BASE_PROACTIVE" title='Permitions::PERMIT_BASE_PROACTIVE' data-ref="Permitions::PERMIT_BASE_PROACTIVE" >PERMIT_BASE_PROACTIVE</dfn>          = <var>200</var>,</td></tr>
+<tr><th id="192">192</th><td>    <dfn class="enum" id="Permitions::PERMIT_BASE_FACTION_SPECIFIC" title='Permitions::PERMIT_BASE_FACTION_SPECIFIC' data-ref="Permitions::PERMIT_BASE_FACTION_SPECIFIC" >PERMIT_BASE_FACTION_SPECIFIC</dfn>   = <var>400</var>,</td></tr>
+<tr><th id="193">193</th><td>    <dfn class="enum" id="Permitions::PERMIT_BASE_SPECIAL" title='Permitions::PERMIT_BASE_SPECIAL' data-ref="Permitions::PERMIT_BASE_SPECIAL" >PERMIT_BASE_SPECIAL</dfn>            = <var>800</var></td></tr>
+<tr><th id="194">194</th><td>};</td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="197">197</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='CoreAI/CombatAI.cpp.html'>TrinityCore6.x/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

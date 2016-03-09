@@ -1,0 +1,54 @@
+<dec f='TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/prng.h' l='28'/>
+<doc f='TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/prng.h' l='4'>/*
+ * Simple linear congruential pseudo-random number generator:
+ *
+ *   prng(y) = (a*x + c) % m
+ *
+ * where the following constants ensure maximal period:
+ *
+ *   a == Odd number (relatively prime to 2^n), and (a-1) is a multiple of 4.
+ *   c == Odd number (relatively prime to 2^n).
+ *   m == 2^32
+ *
+ * See Knuth&apos;s TAOCP 3rd Ed., Vol. 2, pg. 17 for details on these constraints.
+ *
+ * This choice of m has the disadvantage that the quality of the bits is
+ * proportional to bit position.  For example. the lowest bit has a cycle of 2,
+ * the next has a cycle of 4, etc.  For this reason, we prefer to use the upper
+ * bits.
+ *
+ * Macro parameters:
+ *   uint32_t r          : Result.
+ *   unsigned lg_range   : (0..32], number of least significant bits to return.
+ *   uint32_t state      : Seed value.
+ *   const uint32_t a, c : See above discussion.
+ */</doc>
+<use f='TrinityCore3.3.5/dep/jemalloc/src/ckh.c' l='102' u='c'/>
+<use f='TrinityCore3.3.5/dep/jemalloc/src/ckh.c' l='144' u='c'/>
+<dec f='TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/prng.h' l='28'/>
+<doc f='TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/prng.h' l='4'>/*
+ * Simple linear congruential pseudo-random number generator:
+ *
+ *   prng(y) = (a*x + c) % m
+ *
+ * where the following constants ensure maximal period:
+ *
+ *   a == Odd number (relatively prime to 2^n), and (a-1) is a multiple of 4.
+ *   c == Odd number (relatively prime to 2^n).
+ *   m == 2^32
+ *
+ * See Knuth&apos;s TAOCP 3rd Ed., Vol. 2, pg. 17 for details on these constraints.
+ *
+ * This choice of m has the disadvantage that the quality of the bits is
+ * proportional to bit position.  For example. the lowest bit has a cycle of 2,
+ * the next has a cycle of 4, etc.  For this reason, we prefer to use the upper
+ * bits.
+ *
+ * Macro parameters:
+ *   uint32_t r          : Result.
+ *   unsigned lg_range   : (0..32], number of least significant bits to return.
+ *   uint32_t state      : Seed value.
+ *   const uint32_t a, c : See above discussion.
+ */</doc>
+<use f='TrinityCore6.x/dep/jemalloc/src/ckh.c' l='102' u='c'/>
+<use f='TrinityCore6.x/dep/jemalloc/src/ckh.c' l='144' u='c'/>

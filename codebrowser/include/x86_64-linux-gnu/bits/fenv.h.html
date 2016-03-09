@@ -121,48 +121,48 @@
 <tr><th id="108">108</th><td><i>/* Optimized versions.  */</i></td></tr>
 <tr><th id="109">109</th><td><b>extern</b> <em>int</em> <a class="macro" href="../sys/cdefs.h.html#180" title="__feraiseexcept_renamed (int) throw () __asm__ (&quot;&quot; &quot;feraiseexcept&quot;)" data-ref="_M/__REDIRECT_NTH">__REDIRECT_NTH</a> (<dfn class="decl" id="__feraiseexcept_renamed" title='__feraiseexcept_renamed' data-ref="__feraiseexcept_renamed" >__feraiseexcept_renamed</dfn>, (<em>int</em>), feraiseexcept);</td></tr>
 <tr><th id="110">110</th><td><a class="macro" href="../sys/cdefs.h.html#327" title="extern __inline __attribute__ ((__gnu_inline__))" data-ref="_M/__extern_inline">__extern_inline</a> <em>int</em></td></tr>
-<tr><th id="111">111</th><td><a class="macro" href="../sys/cdefs.h.html#62" title=" feraiseexcept (int __excepts) throw ()" data-ref="_M/__NTH">__NTH</a> (<dfn class="decl def" id="feraiseexcept" title='feraiseexcept' data-ref="feraiseexcept" >feraiseexcept</dfn> (<em>int</em> <dfn class="local col8 decl" id="768__excepts" title='__excepts' data-type='int' data-ref="768__excepts" >__excepts</dfn>))</td></tr>
+<tr><th id="111">111</th><td><a class="macro" href="../sys/cdefs.h.html#62" title=" feraiseexcept (int __excepts) throw ()" data-ref="_M/__NTH">__NTH</a> (<dfn class="decl def" id="feraiseexcept" title='feraiseexcept' data-ref="feraiseexcept" >feraiseexcept</dfn> (<em>int</em> <dfn class="local col2 decl" id="7042__excepts" title='__excepts' data-type='int' data-ref="7042__excepts" >__excepts</dfn>))</td></tr>
 <tr><th id="112">112</th><td>{</td></tr>
-<tr><th id="113">113</th><td>  <b>if</b> (<a class="ref" href="#__builtin_constant_p" title='__builtin_constant_p' data-ref="__builtin_constant_p" >__builtin_constant_p</a> (<a class="local col8 ref" href="#111" title='__excepts' data-ref="768__excepts" >__excepts</a>)</td></tr>
-<tr><th id="114">114</th><td>      &amp;&amp; (<a class="local col8 ref" href="#111" title='__excepts' data-ref="768__excepts" >__excepts</a> &amp; ~(<a class="macro" href="#27" title="0x01" data-ref="_M/FE_INVALID">FE_INVALID</a> | <a class="macro" href="#31" title="0x04" data-ref="_M/FE_DIVBYZERO">FE_DIVBYZERO</a>)) == <var>0</var>)</td></tr>
+<tr><th id="113">113</th><td>  <b>if</b> (<a class="ref" href="../../boost/asio/detail/impl/socket_ops.ipp.html#3083" title='__builtin_constant_p' data-ref="__builtin_constant_p" id="__builtin_constant_p" >__builtin_constant_p</a> (<a class="local col2 ref" href="#111" title='__excepts' data-ref="7042__excepts" >__excepts</a>)</td></tr>
+<tr><th id="114">114</th><td>      &amp;&amp; (<a class="local col2 ref" href="#111" title='__excepts' data-ref="7042__excepts" >__excepts</a> &amp; ~(<a class="macro" href="#27" title="0x01" data-ref="_M/FE_INVALID">FE_INVALID</a> | <a class="macro" href="#31" title="0x04" data-ref="_M/FE_DIVBYZERO">FE_DIVBYZERO</a>)) == <var>0</var>)</td></tr>
 <tr><th id="115">115</th><td>    {</td></tr>
-<tr><th id="116">116</th><td>      <b>if</b> ((<a class="macro" href="#27" title="0x01" data-ref="_M/FE_INVALID">FE_INVALID</a> &amp; <a class="local col8 ref" href="#111" title='__excepts' data-ref="768__excepts" >__excepts</a>) != <var>0</var>)</td></tr>
+<tr><th id="116">116</th><td>      <b>if</b> ((<a class="macro" href="#27" title="0x01" data-ref="_M/FE_INVALID">FE_INVALID</a> &amp; <a class="local col2 ref" href="#111" title='__excepts' data-ref="7042__excepts" >__excepts</a>) != <var>0</var>)</td></tr>
 <tr><th id="117">117</th><td>	{</td></tr>
 <tr><th id="118">118</th><td>	  <i>/* One example of an invalid operation is 0.0 / 0.0.  */</i></td></tr>
-<tr><th id="119">119</th><td>	  <em>float</em> <dfn class="local col9 decl" id="769__f" title='__f' data-type='float' data-ref="769__f" >__f</dfn> = <var>0.0</var>;</td></tr>
+<tr><th id="119">119</th><td>	  <em>float</em> <dfn class="local col3 decl" id="7043__f" title='__f' data-type='float' data-ref="7043__f" >__f</dfn> = <var>0.0</var>;</td></tr>
 <tr><th id="120">120</th><td></td></tr>
 <tr><th id="121">121</th><td><u># <span data-ppcond="121">ifdef</span> <span class="macro" data-ref="_M/__SSE_MATH__">__SSE_MATH__</span></u></td></tr>
-<tr><th id="122">122</th><td>	  <b>__asm__</b> <em>__volatile__</em> (<q>"divss %0, %0 "</q> : : <q>"x"</q> (<a class="local col9 ref" href="#769__f" title='__f' data-ref="769__f" >__f</a>));</td></tr>
+<tr><th id="122">122</th><td>	  <b>__asm__</b> <em>__volatile__</em> (<q>"divss %0, %0 "</q> : : <q>"x"</q> (<a class="local col3 ref" href="#7043__f" title='__f' data-ref="7043__f" >__f</a>));</td></tr>
 <tr><th id="123">123</th><td><u># <span data-ppcond="121">else</span></u></td></tr>
 <tr><th id="124">124</th><td>	  <b>__asm__</b> <em>__volatile__</em> (<q>"fdiv %%st, %%st(0); fwait"</q></td></tr>
 <tr><th id="125">125</th><td>				: <q>"=t"</q> (__f) : <q>"0"</q> (__f));</td></tr>
 <tr><th id="126">126</th><td><u># <span data-ppcond="121">endif</span></u></td></tr>
-<tr><th id="127">127</th><td>	  (<em>void</em>) &amp;<a class="local col9 ref" href="#769__f" title='__f' data-ref="769__f" >__f</a>;</td></tr>
+<tr><th id="127">127</th><td>	  (<em>void</em>) &amp;<a class="local col3 ref" href="#7043__f" title='__f' data-ref="7043__f" >__f</a>;</td></tr>
 <tr><th id="128">128</th><td>	}</td></tr>
-<tr><th id="129">129</th><td>      <b>if</b> ((<a class="macro" href="#31" title="0x04" data-ref="_M/FE_DIVBYZERO">FE_DIVBYZERO</a> &amp; <a class="local col8 ref" href="#111" title='__excepts' data-ref="768__excepts" >__excepts</a>) != <var>0</var>)</td></tr>
+<tr><th id="129">129</th><td>      <b>if</b> ((<a class="macro" href="#31" title="0x04" data-ref="_M/FE_DIVBYZERO">FE_DIVBYZERO</a> &amp; <a class="local col2 ref" href="#111" title='__excepts' data-ref="7042__excepts" >__excepts</a>) != <var>0</var>)</td></tr>
 <tr><th id="130">130</th><td>	{</td></tr>
-<tr><th id="131">131</th><td>	  <em>float</em> <dfn class="local col0 decl" id="770__f" title='__f' data-type='float' data-ref="770__f" >__f</dfn> = <var>1.0</var>;</td></tr>
-<tr><th id="132">132</th><td>	  <em>float</em> <dfn class="local col1 decl" id="771__g" title='__g' data-type='float' data-ref="771__g" >__g</dfn> = <var>0.0</var>;</td></tr>
+<tr><th id="131">131</th><td>	  <em>float</em> <dfn class="local col4 decl" id="7044__f" title='__f' data-type='float' data-ref="7044__f" >__f</dfn> = <var>1.0</var>;</td></tr>
+<tr><th id="132">132</th><td>	  <em>float</em> <dfn class="local col5 decl" id="7045__g" title='__g' data-type='float' data-ref="7045__g" >__g</dfn> = <var>0.0</var>;</td></tr>
 <tr><th id="133">133</th><td></td></tr>
 <tr><th id="134">134</th><td><u># <span data-ppcond="134">ifdef</span> <span class="macro" data-ref="_M/__SSE_MATH__">__SSE_MATH__</span></u></td></tr>
-<tr><th id="135">135</th><td>	  <b>__asm__</b> <em>__volatile__</em> (<q>"divss %1, %0"</q> : : <q>"x"</q> (<a class="local col0 ref" href="#770__f" title='__f' data-ref="770__f" >__f</a>), <q>"x"</q> (<a class="local col1 ref" href="#771__g" title='__g' data-ref="771__g" >__g</a>));</td></tr>
+<tr><th id="135">135</th><td>	  <b>__asm__</b> <em>__volatile__</em> (<q>"divss %1, %0"</q> : : <q>"x"</q> (<a class="local col4 ref" href="#7044__f" title='__f' data-ref="7044__f" >__f</a>), <q>"x"</q> (<a class="local col5 ref" href="#7045__g" title='__g' data-ref="7045__g" >__g</a>));</td></tr>
 <tr><th id="136">136</th><td><u># <span data-ppcond="134">else</span></u></td></tr>
 <tr><th id="137">137</th><td>	  <b>__asm__</b> <em>__volatile__</em> (<q>"fdivp %%st, %%st(1); fwait"</q></td></tr>
 <tr><th id="138">138</th><td>				: <q>"=t"</q> (__f) : <q>"0"</q> (__f), <q>"u"</q> (__g) : <q>"st(1)"</q>);</td></tr>
 <tr><th id="139">139</th><td><u># <span data-ppcond="134">endif</span></u></td></tr>
-<tr><th id="140">140</th><td>	  (<em>void</em>) &amp;<a class="local col0 ref" href="#770__f" title='__f' data-ref="770__f" >__f</a>;</td></tr>
+<tr><th id="140">140</th><td>	  (<em>void</em>) &amp;<a class="local col4 ref" href="#7044__f" title='__f' data-ref="7044__f" >__f</a>;</td></tr>
 <tr><th id="141">141</th><td>	}</td></tr>
 <tr><th id="142">142</th><td></td></tr>
 <tr><th id="143">143</th><td>      <b>return</b> <var>0</var>;</td></tr>
 <tr><th id="144">144</th><td>    }</td></tr>
 <tr><th id="145">145</th><td></td></tr>
-<tr><th id="146">146</th><td>  <b>return</b> <a class="ref" href="#109" title='__feraiseexcept_renamed' data-ref="__feraiseexcept_renamed" >__feraiseexcept_renamed</a> (<a class="local col8 ref" href="#111" title='__excepts' data-ref="768__excepts" >__excepts</a>);</td></tr>
+<tr><th id="146">146</th><td>  <b>return</b> <a class="ref" href="#109" title='__feraiseexcept_renamed' data-ref="__feraiseexcept_renamed" >__feraiseexcept_renamed</a> (<a class="local col2 ref" href="#111" title='__excepts' data-ref="7042__excepts" >__excepts</a>);</td></tr>
 <tr><th id="147">147</th><td>}</td></tr>
 <tr><th id="148">148</th><td></td></tr>
 <tr><th id="149">149</th><td><a class="macro" href="../sys/cdefs.h.html#99" title="}" data-ref="_M/__END_DECLS">__END_DECLS</a></td></tr>
 <tr><th id="150">150</th><td><u>#<span data-ppcond="105">endif</span></u></td></tr>
 <tr><th id="151">151</th><td></td></tr>
 </table><hr/><p id='footer'>
-Generated while processing <a href='../../../TrinityCore6.x/src/tools/connection_patcher/Program.cpp.html'>TrinityCore6.x/src/tools/connection_patcher/Program.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+Generated while processing <a href='../../../TrinityCore3.3.5/src/server/authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
 </p>
 </div></body></html>

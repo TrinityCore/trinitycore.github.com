@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<title>cs_script_loader.cpp [TrinityCore6.x/src/server/scripts/Commands/cs_script_loader.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/Commands/cs_script_loader.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>scripts</a>/<a href='./'>Commands</a>/cs_script_loader.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td><i></i></td></tr>
+<tr><th id="18">18</th><td><i>// This is where scripts' loading functions should be declared:</i></td></tr>
+<tr><th id="19">19</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_account_commandscriptv" title='AddSC_account_commandscript' data-ref="_Z27AddSC_account_commandscriptv" >AddSC_account_commandscript</dfn>();</td></tr>
+<tr><th id="20">20</th><td><em>void</em> <dfn class="decl" id="_Z31AddSC_achievement_commandscriptv" title='AddSC_achievement_commandscript' data-ref="_Z31AddSC_achievement_commandscriptv" >AddSC_achievement_commandscript</dfn>();</td></tr>
+<tr><th id="21">21</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_ahbot_commandscriptv" title='AddSC_ahbot_commandscript' data-ref="_Z25AddSC_ahbot_commandscriptv" >AddSC_ahbot_commandscript</dfn>();</td></tr>
+<tr><th id="22">22</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_arena_commandscriptv" title='AddSC_arena_commandscript' data-ref="_Z25AddSC_arena_commandscriptv" >AddSC_arena_commandscript</dfn>();</td></tr>
+<tr><th id="23">23</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_ban_commandscriptv" title='AddSC_ban_commandscript' data-ref="_Z23AddSC_ban_commandscriptv" >AddSC_ban_commandscript</dfn>();</td></tr>
+<tr><th id="24">24</th><td><em>void</em> <dfn class="decl" id="_Z37AddSC_battlenet_account_commandscriptv" title='AddSC_battlenet_account_commandscript' data-ref="_Z37AddSC_battlenet_account_commandscriptv" >AddSC_battlenet_account_commandscript</dfn>();</td></tr>
+<tr><th id="25">25</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_bf_commandscriptv" title='AddSC_bf_commandscript' data-ref="_Z22AddSC_bf_commandscriptv" >AddSC_bf_commandscript</dfn>();</td></tr>
+<tr><th id="26">26</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_cast_commandscriptv" title='AddSC_cast_commandscript' data-ref="_Z24AddSC_cast_commandscriptv" >AddSC_cast_commandscript</dfn>();</td></tr>
+<tr><th id="27">27</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_character_commandscriptv" title='AddSC_character_commandscript' data-ref="_Z29AddSC_character_commandscriptv" >AddSC_character_commandscript</dfn>();</td></tr>
+<tr><th id="28">28</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_cheat_commandscriptv" title='AddSC_cheat_commandscript' data-ref="_Z25AddSC_cheat_commandscriptv" >AddSC_cheat_commandscript</dfn>();</td></tr>
+<tr><th id="29">29</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_debug_commandscriptv" title='AddSC_debug_commandscript' data-ref="_Z25AddSC_debug_commandscriptv" >AddSC_debug_commandscript</dfn>();</td></tr>
+<tr><th id="30">30</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_deserter_commandscriptv" title='AddSC_deserter_commandscript' data-ref="_Z28AddSC_deserter_commandscriptv" >AddSC_deserter_commandscript</dfn>();</td></tr>
+<tr><th id="31">31</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_disable_commandscriptv" title='AddSC_disable_commandscript' data-ref="_Z27AddSC_disable_commandscriptv" >AddSC_disable_commandscript</dfn>();</td></tr>
+<tr><th id="32">32</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_event_commandscriptv" title='AddSC_event_commandscript' data-ref="_Z25AddSC_event_commandscriptv" >AddSC_event_commandscript</dfn>();</td></tr>
+<tr><th id="33">33</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_gm_commandscriptv" title='AddSC_gm_commandscript' data-ref="_Z22AddSC_gm_commandscriptv" >AddSC_gm_commandscript</dfn>();</td></tr>
+<tr><th id="34">34</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_go_commandscriptv" title='AddSC_go_commandscript' data-ref="_Z22AddSC_go_commandscriptv" >AddSC_go_commandscript</dfn>();</td></tr>
+<tr><th id="35">35</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_gobject_commandscriptv" title='AddSC_gobject_commandscript' data-ref="_Z27AddSC_gobject_commandscriptv" >AddSC_gobject_commandscript</dfn>();</td></tr>
+<tr><th id="36">36</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_group_commandscriptv" title='AddSC_group_commandscript' data-ref="_Z25AddSC_group_commandscriptv" >AddSC_group_commandscript</dfn>();</td></tr>
+<tr><th id="37">37</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_guild_commandscriptv" title='AddSC_guild_commandscript' data-ref="_Z25AddSC_guild_commandscriptv" >AddSC_guild_commandscript</dfn>();</td></tr>
+<tr><th id="38">38</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_honor_commandscriptv" title='AddSC_honor_commandscript' data-ref="_Z25AddSC_honor_commandscriptv" >AddSC_honor_commandscript</dfn>();</td></tr>
+<tr><th id="39">39</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_instance_commandscriptv" title='AddSC_instance_commandscript' data-ref="_Z28AddSC_instance_commandscriptv" >AddSC_instance_commandscript</dfn>();</td></tr>
+<tr><th id="40">40</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_learn_commandscriptv" title='AddSC_learn_commandscript' data-ref="_Z25AddSC_learn_commandscriptv" >AddSC_learn_commandscript</dfn>();</td></tr>
+<tr><th id="41">41</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_lfg_commandscriptv" title='AddSC_lfg_commandscript' data-ref="_Z23AddSC_lfg_commandscriptv" >AddSC_lfg_commandscript</dfn>();</td></tr>
+<tr><th id="42">42</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_list_commandscriptv" title='AddSC_list_commandscript' data-ref="_Z24AddSC_list_commandscriptv" >AddSC_list_commandscript</dfn>();</td></tr>
+<tr><th id="43">43</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_lookup_commandscriptv" title='AddSC_lookup_commandscript' data-ref="_Z26AddSC_lookup_commandscriptv" >AddSC_lookup_commandscript</dfn>();</td></tr>
+<tr><th id="44">44</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_message_commandscriptv" title='AddSC_message_commandscript' data-ref="_Z27AddSC_message_commandscriptv" >AddSC_message_commandscript</dfn>();</td></tr>
+<tr><th id="45">45</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_misc_commandscriptv" title='AddSC_misc_commandscript' data-ref="_Z24AddSC_misc_commandscriptv" >AddSC_misc_commandscript</dfn>();</td></tr>
+<tr><th id="46">46</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_mmaps_commandscriptv" title='AddSC_mmaps_commandscript' data-ref="_Z25AddSC_mmaps_commandscriptv" >AddSC_mmaps_commandscript</dfn>();</td></tr>
+<tr><th id="47">47</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_modify_commandscriptv" title='AddSC_modify_commandscript' data-ref="_Z26AddSC_modify_commandscriptv" >AddSC_modify_commandscript</dfn>();</td></tr>
+<tr><th id="48">48</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_npc_commandscriptv" title='AddSC_npc_commandscript' data-ref="_Z23AddSC_npc_commandscriptv" >AddSC_npc_commandscript</dfn>();</td></tr>
+<tr><th id="49">49</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_pet_commandscriptv" title='AddSC_pet_commandscript' data-ref="_Z23AddSC_pet_commandscriptv" >AddSC_pet_commandscript</dfn>();</td></tr>
+<tr><th id="50">50</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_quest_commandscriptv" title='AddSC_quest_commandscript' data-ref="_Z25AddSC_quest_commandscriptv" >AddSC_quest_commandscript</dfn>();</td></tr>
+<tr><th id="51">51</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_rbac_commandscriptv" title='AddSC_rbac_commandscript' data-ref="_Z24AddSC_rbac_commandscriptv" >AddSC_rbac_commandscript</dfn>();</td></tr>
+<tr><th id="52">52</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_reload_commandscriptv" title='AddSC_reload_commandscript' data-ref="_Z26AddSC_reload_commandscriptv" >AddSC_reload_commandscript</dfn>();</td></tr>
+<tr><th id="53">53</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_reset_commandscriptv" title='AddSC_reset_commandscript' data-ref="_Z25AddSC_reset_commandscriptv" >AddSC_reset_commandscript</dfn>();</td></tr>
+<tr><th id="54">54</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_send_commandscriptv" title='AddSC_send_commandscript' data-ref="_Z24AddSC_send_commandscriptv" >AddSC_send_commandscript</dfn>();</td></tr>
+<tr><th id="55">55</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_server_commandscriptv" title='AddSC_server_commandscript' data-ref="_Z26AddSC_server_commandscriptv" >AddSC_server_commandscript</dfn>();</td></tr>
+<tr><th id="56">56</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_tele_commandscriptv" title='AddSC_tele_commandscript' data-ref="_Z24AddSC_tele_commandscriptv" >AddSC_tele_commandscript</dfn>();</td></tr>
+<tr><th id="57">57</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_ticket_commandscriptv" title='AddSC_ticket_commandscript' data-ref="_Z26AddSC_ticket_commandscriptv" >AddSC_ticket_commandscript</dfn>();</td></tr>
+<tr><th id="58">58</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_titles_commandscriptv" title='AddSC_titles_commandscript' data-ref="_Z26AddSC_titles_commandscriptv" >AddSC_titles_commandscript</dfn>();</td></tr>
+<tr><th id="59">59</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_wp_commandscriptv" title='AddSC_wp_commandscript' data-ref="_Z22AddSC_wp_commandscriptv" >AddSC_wp_commandscript</dfn>();</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><i>// The name of this function should match:</i></td></tr>
+<tr><th id="62">62</th><td><i>// void Add${NameOfDirectory}Scripts()</i></td></tr>
+<tr><th id="63">63</th><td><em>void</em> <dfn class="decl def" id="_Z18AddCommandsScriptsv" title='AddCommandsScripts' data-ref="_Z18AddCommandsScriptsv" >AddCommandsScripts</dfn>()</td></tr>
+<tr><th id="64">64</th><td>{</td></tr>
+<tr><th id="65">65</th><td>    <a class="ref" href="#_Z27AddSC_account_commandscriptv" title='AddSC_account_commandscript' data-ref="_Z27AddSC_account_commandscriptv" >AddSC_account_commandscript</a>();</td></tr>
+<tr><th id="66">66</th><td>    <a class="ref" href="#_Z31AddSC_achievement_commandscriptv" title='AddSC_achievement_commandscript' data-ref="_Z31AddSC_achievement_commandscriptv" >AddSC_achievement_commandscript</a>();</td></tr>
+<tr><th id="67">67</th><td>    <a class="ref" href="#_Z25AddSC_ahbot_commandscriptv" title='AddSC_ahbot_commandscript' data-ref="_Z25AddSC_ahbot_commandscriptv" >AddSC_ahbot_commandscript</a>();</td></tr>
+<tr><th id="68">68</th><td>    <a class="ref" href="#_Z25AddSC_arena_commandscriptv" title='AddSC_arena_commandscript' data-ref="_Z25AddSC_arena_commandscriptv" >AddSC_arena_commandscript</a>();</td></tr>
+<tr><th id="69">69</th><td>    <a class="ref" href="#_Z23AddSC_ban_commandscriptv" title='AddSC_ban_commandscript' data-ref="_Z23AddSC_ban_commandscriptv" >AddSC_ban_commandscript</a>();</td></tr>
+<tr><th id="70">70</th><td>    <a class="ref" href="#_Z37AddSC_battlenet_account_commandscriptv" title='AddSC_battlenet_account_commandscript' data-ref="_Z37AddSC_battlenet_account_commandscriptv" >AddSC_battlenet_account_commandscript</a>();</td></tr>
+<tr><th id="71">71</th><td>    <a class="ref" href="#_Z22AddSC_bf_commandscriptv" title='AddSC_bf_commandscript' data-ref="_Z22AddSC_bf_commandscriptv" >AddSC_bf_commandscript</a>();</td></tr>
+<tr><th id="72">72</th><td>    <a class="ref" href="#_Z24AddSC_cast_commandscriptv" title='AddSC_cast_commandscript' data-ref="_Z24AddSC_cast_commandscriptv" >AddSC_cast_commandscript</a>();</td></tr>
+<tr><th id="73">73</th><td>    <a class="ref" href="#_Z29AddSC_character_commandscriptv" title='AddSC_character_commandscript' data-ref="_Z29AddSC_character_commandscriptv" >AddSC_character_commandscript</a>();</td></tr>
+<tr><th id="74">74</th><td>    <a class="ref" href="#_Z25AddSC_cheat_commandscriptv" title='AddSC_cheat_commandscript' data-ref="_Z25AddSC_cheat_commandscriptv" >AddSC_cheat_commandscript</a>();</td></tr>
+<tr><th id="75">75</th><td>    <a class="ref" href="#_Z25AddSC_debug_commandscriptv" title='AddSC_debug_commandscript' data-ref="_Z25AddSC_debug_commandscriptv" >AddSC_debug_commandscript</a>();</td></tr>
+<tr><th id="76">76</th><td>    <a class="ref" href="#_Z28AddSC_deserter_commandscriptv" title='AddSC_deserter_commandscript' data-ref="_Z28AddSC_deserter_commandscriptv" >AddSC_deserter_commandscript</a>();</td></tr>
+<tr><th id="77">77</th><td>    <a class="ref" href="#_Z27AddSC_disable_commandscriptv" title='AddSC_disable_commandscript' data-ref="_Z27AddSC_disable_commandscriptv" >AddSC_disable_commandscript</a>();</td></tr>
+<tr><th id="78">78</th><td>    <a class="ref" href="#_Z25AddSC_event_commandscriptv" title='AddSC_event_commandscript' data-ref="_Z25AddSC_event_commandscriptv" >AddSC_event_commandscript</a>();</td></tr>
+<tr><th id="79">79</th><td>    <a class="ref" href="#_Z22AddSC_gm_commandscriptv" title='AddSC_gm_commandscript' data-ref="_Z22AddSC_gm_commandscriptv" >AddSC_gm_commandscript</a>();</td></tr>
+<tr><th id="80">80</th><td>    <a class="ref" href="#_Z22AddSC_go_commandscriptv" title='AddSC_go_commandscript' data-ref="_Z22AddSC_go_commandscriptv" >AddSC_go_commandscript</a>();</td></tr>
+<tr><th id="81">81</th><td>    <a class="ref" href="#_Z27AddSC_gobject_commandscriptv" title='AddSC_gobject_commandscript' data-ref="_Z27AddSC_gobject_commandscriptv" >AddSC_gobject_commandscript</a>();</td></tr>
+<tr><th id="82">82</th><td>    <a class="ref" href="#_Z25AddSC_group_commandscriptv" title='AddSC_group_commandscript' data-ref="_Z25AddSC_group_commandscriptv" >AddSC_group_commandscript</a>();</td></tr>
+<tr><th id="83">83</th><td>    <a class="ref" href="#_Z25AddSC_guild_commandscriptv" title='AddSC_guild_commandscript' data-ref="_Z25AddSC_guild_commandscriptv" >AddSC_guild_commandscript</a>();</td></tr>
+<tr><th id="84">84</th><td>    <a class="ref" href="#_Z25AddSC_honor_commandscriptv" title='AddSC_honor_commandscript' data-ref="_Z25AddSC_honor_commandscriptv" >AddSC_honor_commandscript</a>();</td></tr>
+<tr><th id="85">85</th><td>    <a class="ref" href="#_Z28AddSC_instance_commandscriptv" title='AddSC_instance_commandscript' data-ref="_Z28AddSC_instance_commandscriptv" >AddSC_instance_commandscript</a>();</td></tr>
+<tr><th id="86">86</th><td>    <a class="ref" href="#_Z25AddSC_learn_commandscriptv" title='AddSC_learn_commandscript' data-ref="_Z25AddSC_learn_commandscriptv" >AddSC_learn_commandscript</a>();</td></tr>
+<tr><th id="87">87</th><td>    <a class="ref" href="#_Z26AddSC_lookup_commandscriptv" title='AddSC_lookup_commandscript' data-ref="_Z26AddSC_lookup_commandscriptv" >AddSC_lookup_commandscript</a>();</td></tr>
+<tr><th id="88">88</th><td>    <a class="ref" href="#_Z23AddSC_lfg_commandscriptv" title='AddSC_lfg_commandscript' data-ref="_Z23AddSC_lfg_commandscriptv" >AddSC_lfg_commandscript</a>();</td></tr>
+<tr><th id="89">89</th><td>    <a class="ref" href="#_Z24AddSC_list_commandscriptv" title='AddSC_list_commandscript' data-ref="_Z24AddSC_list_commandscriptv" >AddSC_list_commandscript</a>();</td></tr>
+<tr><th id="90">90</th><td>    <a class="ref" href="#_Z27AddSC_message_commandscriptv" title='AddSC_message_commandscript' data-ref="_Z27AddSC_message_commandscriptv" >AddSC_message_commandscript</a>();</td></tr>
+<tr><th id="91">91</th><td>    <a class="ref" href="#_Z24AddSC_misc_commandscriptv" title='AddSC_misc_commandscript' data-ref="_Z24AddSC_misc_commandscriptv" >AddSC_misc_commandscript</a>();</td></tr>
+<tr><th id="92">92</th><td>    <a class="ref" href="#_Z25AddSC_mmaps_commandscriptv" title='AddSC_mmaps_commandscript' data-ref="_Z25AddSC_mmaps_commandscriptv" >AddSC_mmaps_commandscript</a>();</td></tr>
+<tr><th id="93">93</th><td>    <a class="ref" href="#_Z26AddSC_modify_commandscriptv" title='AddSC_modify_commandscript' data-ref="_Z26AddSC_modify_commandscriptv" >AddSC_modify_commandscript</a>();</td></tr>
+<tr><th id="94">94</th><td>    <a class="ref" href="#_Z23AddSC_npc_commandscriptv" title='AddSC_npc_commandscript' data-ref="_Z23AddSC_npc_commandscriptv" >AddSC_npc_commandscript</a>();</td></tr>
+<tr><th id="95">95</th><td>    <a class="ref" href="#_Z25AddSC_quest_commandscriptv" title='AddSC_quest_commandscript' data-ref="_Z25AddSC_quest_commandscriptv" >AddSC_quest_commandscript</a>();</td></tr>
+<tr><th id="96">96</th><td>    <a class="ref" href="#_Z23AddSC_pet_commandscriptv" title='AddSC_pet_commandscript' data-ref="_Z23AddSC_pet_commandscriptv" >AddSC_pet_commandscript</a>();</td></tr>
+<tr><th id="97">97</th><td>    <a class="ref" href="#_Z24AddSC_rbac_commandscriptv" title='AddSC_rbac_commandscript' data-ref="_Z24AddSC_rbac_commandscriptv" >AddSC_rbac_commandscript</a>();</td></tr>
+<tr><th id="98">98</th><td>    <a class="ref" href="#_Z26AddSC_reload_commandscriptv" title='AddSC_reload_commandscript' data-ref="_Z26AddSC_reload_commandscriptv" >AddSC_reload_commandscript</a>();</td></tr>
+<tr><th id="99">99</th><td>    <a class="ref" href="#_Z25AddSC_reset_commandscriptv" title='AddSC_reset_commandscript' data-ref="_Z25AddSC_reset_commandscriptv" >AddSC_reset_commandscript</a>();</td></tr>
+<tr><th id="100">100</th><td>    <a class="ref" href="#_Z24AddSC_send_commandscriptv" title='AddSC_send_commandscript' data-ref="_Z24AddSC_send_commandscriptv" >AddSC_send_commandscript</a>();</td></tr>
+<tr><th id="101">101</th><td>    <a class="ref" href="#_Z26AddSC_server_commandscriptv" title='AddSC_server_commandscript' data-ref="_Z26AddSC_server_commandscriptv" >AddSC_server_commandscript</a>();</td></tr>
+<tr><th id="102">102</th><td>    <a class="ref" href="#_Z24AddSC_tele_commandscriptv" title='AddSC_tele_commandscript' data-ref="_Z24AddSC_tele_commandscriptv" >AddSC_tele_commandscript</a>();</td></tr>
+<tr><th id="103">103</th><td>    <a class="ref" href="#_Z26AddSC_ticket_commandscriptv" title='AddSC_ticket_commandscript' data-ref="_Z26AddSC_ticket_commandscriptv" >AddSC_ticket_commandscript</a>();</td></tr>
+<tr><th id="104">104</th><td>    <a class="ref" href="#_Z26AddSC_titles_commandscriptv" title='AddSC_titles_commandscript' data-ref="_Z26AddSC_titles_commandscriptv" >AddSC_titles_commandscript</a>();</td></tr>
+<tr><th id="105">105</th><td>    <a class="ref" href="#_Z22AddSC_wp_commandscriptv" title='AddSC_wp_commandscript' data-ref="_Z22AddSC_wp_commandscriptv" >AddSC_wp_commandscript</a>();</td></tr>
+<tr><th id="106">106</th><td>}</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

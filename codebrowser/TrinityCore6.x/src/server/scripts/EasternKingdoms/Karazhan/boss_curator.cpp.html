@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<title>boss_curator.cpp [TrinityCore6.x/src/server/scripts/EasternKingdoms/Karazhan/boss_curator.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/EasternKingdoms/Karazhan/boss_curator.cpp'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>scripts</a>/<a href='..'>EasternKingdoms</a>/<a href='./'>Karazhan</a>/boss_curator.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2006-2009 ScriptDev2 &lt;<a href="https://scriptdev">https://scriptdev</a>2.svn.sourceforge.net/&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i>/* ScriptData</i></td></tr>
+<tr><th id="20">20</th><td><i>SDName: Boss_Curator</i></td></tr>
+<tr><th id="21">21</th><td><i>SD%Complete: 100</i></td></tr>
+<tr><th id="22">22</th><td><i>SDComment:</i></td></tr>
+<tr><th id="23">23</th><td><i>SDCategory: Karazhan</i></td></tr>
+<tr><th id="24">24</th><td><i>EndScriptData */</i></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>enum</b> <dfn class="type def" id="Curator" title='Curator' data-ref="Curator" >Curator</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="Curator::SAY_AGGRO" title='Curator::SAY_AGGRO' data-ref="Curator::SAY_AGGRO" >SAY_AGGRO</dfn>                       = <var>0</var>,</td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="Curator::SAY_SUMMON" title='Curator::SAY_SUMMON' data-ref="Curator::SAY_SUMMON" >SAY_SUMMON</dfn>                      = <var>1</var>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="Curator::SAY_EVOCATE" title='Curator::SAY_EVOCATE' data-ref="Curator::SAY_EVOCATE" >SAY_EVOCATE</dfn>                     = <var>2</var>,</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="Curator::SAY_ENRAGE" title='Curator::SAY_ENRAGE' data-ref="Curator::SAY_ENRAGE" >SAY_ENRAGE</dfn>                      = <var>3</var>,</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="Curator::SAY_KILL" title='Curator::SAY_KILL' data-ref="Curator::SAY_KILL" >SAY_KILL</dfn>                        = <var>4</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="Curator::SAY_DEATH" title='Curator::SAY_DEATH' data-ref="Curator::SAY_DEATH" >SAY_DEATH</dfn>                       = <var>5</var>,</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>    <i>//Flare spell info</i></td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="Curator::SPELL_ASTRAL_FLARE_PASSIVE" title='Curator::SPELL_ASTRAL_FLARE_PASSIVE' data-ref="Curator::SPELL_ASTRAL_FLARE_PASSIVE" >SPELL_ASTRAL_FLARE_PASSIVE</dfn>      = <var>30234</var>,               <i>//Visual effect + Flare damage</i></td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <i>//Curator spell info</i></td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="Curator::SPELL_HATEFUL_BOLT" title='Curator::SPELL_HATEFUL_BOLT' data-ref="Curator::SPELL_HATEFUL_BOLT" >SPELL_HATEFUL_BOLT</dfn>              = <var>30383</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="Curator::SPELL_EVOCATION" title='Curator::SPELL_EVOCATION' data-ref="Curator::SPELL_EVOCATION" >SPELL_EVOCATION</dfn>                 = <var>30254</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="Curator::SPELL_ENRAGE" title='Curator::SPELL_ENRAGE' data-ref="Curator::SPELL_ENRAGE" >SPELL_ENRAGE</dfn>                    = <var>30403</var>,               <i>//Arcane Infusion: Transforms Curator and adds damage.</i></td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="Curator::SPELL_BERSERK" title='Curator::SPELL_BERSERK' data-ref="Curator::SPELL_BERSERK" >SPELL_BERSERK</dfn>                   = <var>26662</var>,</td></tr>
+<tr><th id="46">46</th><td>};</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><b>class</b> <dfn class="type def" id="boss_curator" title='boss_curator' data-ref="boss_curator" >boss_curator</dfn> : <b>public</b> <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="52">52</th><td>{</td></tr>
+<tr><th id="53">53</th><td><b>public</b>:</td></tr>
+<tr><th id="54">54</th><td>    <dfn class="tu decl def" id="_ZN12boss_curatorC1Ev" title='boss_curator::boss_curator' data-type='void boss_curator::boss_curator()' data-ref="_ZN12boss_curatorC1Ev" >boss_curator</dfn>() : <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"boss_curator"</q>) { }</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <a class="type" href="../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK12boss_curator5GetAIEP8Creature" title='boss_curator::GetAI' data-ref="_ZNK12boss_curator5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="57">57</th><td>    {</td></tr>
+<tr><th id="58">58</th><td>        <b>return</b> <b>new</b> <a class="tu type" href="#boss_curator::boss_curatorAI" title='boss_curator::boss_curatorAI' data-ref="boss_curator::boss_curatorAI" >boss_curatorAI</a><a class="tu ref" href="#_ZN12boss_curator14boss_curatorAIC1EP8Creature" title='boss_curator::boss_curatorAI::boss_curatorAI' data-use='c' data-ref="_ZN12boss_curator14boss_curatorAIC1EP8Creature" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>);</td></tr>
+<tr><th id="59">59</th><td>    }</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <b>struct</b> <dfn class="tu type def" id="boss_curator::boss_curatorAI" title='boss_curator::boss_curatorAI' data-ref="boss_curator::boss_curatorAI" >boss_curatorAI</dfn> : <b>public</b> <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#ScriptedAI" title='ScriptedAI' data-ref="ScriptedAI" >ScriptedAI</a></td></tr>
+<tr><th id="62">62</th><td>    {</td></tr>
+<tr><th id="63">63</th><td>        <dfn class="tu decl def" id="_ZN12boss_curator14boss_curatorAIC1EP8Creature" title='boss_curator::boss_curatorAI::boss_curatorAI' data-type='void boss_curator::boss_curatorAI::boss_curatorAI(Creature * creature)' data-ref="_ZN12boss_curator14boss_curatorAIC1EP8Creature" >boss_curatorAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col2 decl" id="2creature" title='creature' data-type='Creature *' data-ref="2creature" >creature</dfn>) : <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#ScriptedAI" title='ScriptedAI' data-ref="ScriptedAI" >ScriptedAI</a><a class="ref" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN10ScriptedAIC1EP8Creature" title='ScriptedAI::ScriptedAI' data-ref="_ZN10ScriptedAIC1EP8Creature" id="_ZN10ScriptedAIC1EP8Creature" >(</a><a class="local col2 ref" href="#2creature" title='creature' data-ref="2creature" >creature</a>)</td></tr>
+<tr><th id="64">64</th><td>        {</td></tr>
+<tr><th id="65">65</th><td>            <a class="tu member" href="#_ZN12boss_curator14boss_curatorAI10InitializeEv" title='boss_curator::boss_curatorAI::Initialize' data-use='c' data-ref="_ZN12boss_curator14boss_curatorAI10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="66">66</th><td>        }</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>        <em>void</em> <dfn class="tu decl def" id="_ZN12boss_curator14boss_curatorAI10InitializeEv" title='boss_curator::boss_curatorAI::Initialize' data-type='void boss_curator::boss_curatorAI::Initialize()' data-ref="_ZN12boss_curator14boss_curatorAI10InitializeEv" >Initialize</dfn>()</td></tr>
+<tr><th id="69">69</th><td>        {</td></tr>
+<tr><th id="70">70</th><td>            <a class="tu member" href="#boss_curator::boss_curatorAI::AddTimer" title='boss_curator::boss_curatorAI::AddTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::AddTimer" >AddTimer</a> = <var>10000</var>;</td></tr>
+<tr><th id="71">71</th><td>            <a class="tu member" href="#boss_curator::boss_curatorAI::HatefulBoltTimer" title='boss_curator::boss_curatorAI::HatefulBoltTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::HatefulBoltTimer" >HatefulBoltTimer</a> = <var>15000</var>;                           <i>//This time may be wrong</i></td></tr>
+<tr><th id="72">72</th><td>            <a class="tu member" href="#boss_curator::boss_curatorAI::BerserkTimer" title='boss_curator::boss_curatorAI::BerserkTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::BerserkTimer" >BerserkTimer</a> = <var>720000</var>;                              <i>//12 minutes</i></td></tr>
+<tr><th id="73">73</th><td>            <a class="tu member" href="#boss_curator::boss_curatorAI::Enraged" title='boss_curator::boss_curatorAI::Enraged' data-use='w' data-ref="boss_curator::boss_curatorAI::Enraged" >Enraged</a> = <b>false</b>;</td></tr>
+<tr><th id="74">74</th><td>            <a class="tu member" href="#boss_curator::boss_curatorAI::Evocating" title='boss_curator::boss_curatorAI::Evocating' data-use='w' data-ref="boss_curator::boss_curatorAI::Evocating" >Evocating</a> = <b>false</b>;</td></tr>
+<tr><th id="75">75</th><td>        }</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="tu decl" id="boss_curator::boss_curatorAI::AddTimer" title='boss_curator::boss_curatorAI::AddTimer' data-type='uint32' data-ref="boss_curator::boss_curatorAI::AddTimer" >AddTimer</dfn>;</td></tr>
+<tr><th id="78">78</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="tu decl" id="boss_curator::boss_curatorAI::HatefulBoltTimer" title='boss_curator::boss_curatorAI::HatefulBoltTimer' data-type='uint32' data-ref="boss_curator::boss_curatorAI::HatefulBoltTimer" >HatefulBoltTimer</dfn>;</td></tr>
+<tr><th id="79">79</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="tu decl" id="boss_curator::boss_curatorAI::BerserkTimer" title='boss_curator::boss_curatorAI::BerserkTimer' data-type='uint32' data-ref="boss_curator::boss_curatorAI::BerserkTimer" >BerserkTimer</dfn>;</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>        <em>bool</em> <dfn class="tu decl" id="boss_curator::boss_curatorAI::Enraged" title='boss_curator::boss_curatorAI::Enraged' data-type='bool' data-ref="boss_curator::boss_curatorAI::Enraged" >Enraged</dfn>;</td></tr>
+<tr><th id="82">82</th><td>        <em>bool</em> <dfn class="tu decl" id="boss_curator::boss_curatorAI::Evocating" title='boss_curator::boss_curatorAI::Evocating' data-type='bool' data-ref="boss_curator::boss_curatorAI::Evocating" >Evocating</dfn>;</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN12boss_curator14boss_curatorAI5ResetEv" title='boss_curator::boss_curatorAI::Reset' data-ref="_ZN12boss_curator14boss_curatorAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="85">85</th><td>        {</td></tr>
+<tr><th id="86">86</th><td>            <a class="tu member" href="#_ZN12boss_curator14boss_curatorAI10InitializeEv" title='boss_curator::boss_curatorAI::Initialize' data-use='c' data-ref="_ZN12boss_curator14boss_curatorAI10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>            <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZN4Unit16ApplySpellImmuneEjjjb" title='Unit::ApplySpellImmune' data-ref="_ZN4Unit16ApplySpellImmuneEjjjb" id="_ZN4Unit16ApplySpellImmuneEjjjb" >ApplySpellImmune</a>(<var>0</var>, <a class="enum" href="../../../game/Miscellaneous/SharedDefines.h.html#SpellImmunity::IMMUNITY_DAMAGE" title='SpellImmunity::IMMUNITY_DAMAGE' data-ref="SpellImmunity::IMMUNITY_DAMAGE" id="SpellImmunity::IMMUNITY_DAMAGE" >IMMUNITY_DAMAGE</a>, <a class="enum" href="../../../game/Miscellaneous/SharedDefines.h.html#SpellSchoolMask::SPELL_SCHOOL_MASK_ARCANE" title='SpellSchoolMask::SPELL_SCHOOL_MASK_ARCANE' data-ref="SpellSchoolMask::SPELL_SCHOOL_MASK_ARCANE" id="SpellSchoolMask::SPELL_SCHOOL_MASK_ARCANE" >SPELL_SCHOOL_MASK_ARCANE</a>, <b>true</b>);</td></tr>
+<tr><th id="89">89</th><td>        }</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN12boss_curator14boss_curatorAI10KilledUnitEP4Unit" title='boss_curator::boss_curatorAI::KilledUnit' data-ref="_ZN12boss_curator14boss_curatorAI10KilledUnitEP4Unit" >KilledUnit</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*victim*/</i>) override</td></tr>
+<tr><th id="92">92</th><td>        {</td></tr>
+<tr><th id="93">93</th><td>            <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Curator::SAY_KILL" title='Curator::SAY_KILL' data-ref="Curator::SAY_KILL" >SAY_KILL</a>);</td></tr>
+<tr><th id="94">94</th><td>        }</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN12boss_curator14boss_curatorAI8JustDiedEP4Unit" title='boss_curator::boss_curatorAI::JustDied' data-ref="_ZN12boss_curator14boss_curatorAI8JustDiedEP4Unit" >JustDied</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*killer*/</i>) override</td></tr>
+<tr><th id="97">97</th><td>        {</td></tr>
+<tr><th id="98">98</th><td>            <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Curator::SAY_DEATH" title='Curator::SAY_DEATH' data-ref="Curator::SAY_DEATH" >SAY_DEATH</a>);</td></tr>
+<tr><th id="99">99</th><td>        }</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN12boss_curator14boss_curatorAI11EnterCombatEP4Unit" title='boss_curator::boss_curatorAI::EnterCombat' data-ref="_ZN12boss_curator14boss_curatorAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override</td></tr>
+<tr><th id="102">102</th><td>        {</td></tr>
+<tr><th id="103">103</th><td>            <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Curator::SAY_AGGRO" title='Curator::SAY_AGGRO' data-ref="Curator::SAY_AGGRO" >SAY_AGGRO</a>);</td></tr>
+<tr><th id="104">104</th><td>        }</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN12boss_curator14boss_curatorAI8UpdateAIEj" title='boss_curator::boss_curatorAI::UpdateAI' data-ref="_ZN12boss_curator14boss_curatorAI8UpdateAIEj" >UpdateAI</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3diff" title='diff' data-type='uint32' data-ref="3diff" >diff</dfn>) override</td></tr>
+<tr><th id="107">107</th><td>        {</td></tr>
+<tr><th id="108">108</th><td>            <b>if</b> (!<a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI12UpdateVictimEv" title='CreatureAI::UpdateVictim' data-ref="_ZN10CreatureAI12UpdateVictimEv" id="_ZN10CreatureAI12UpdateVictimEv" >UpdateVictim</a>())</td></tr>
+<tr><th id="109">109</th><td>                <b>return</b>;</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>            <i>//always decrease BerserkTimer</i></td></tr>
+<tr><th id="112">112</th><td>            <b>if</b> (<a class="tu member" href="#boss_curator::boss_curatorAI::BerserkTimer" title='boss_curator::boss_curatorAI::BerserkTimer' data-use='r' data-ref="boss_curator::boss_curatorAI::BerserkTimer" >BerserkTimer</a> &lt;= <a class="local col3 ref" href="#3diff" title='diff' data-ref="3diff" >diff</a>)</td></tr>
+<tr><th id="113">113</th><td>            {</td></tr>
+<tr><th id="114">114</th><td>                <i>//if evocate, then break evocate</i></td></tr>
+<tr><th id="115">115</th><td>                <b>if</b> (<a class="tu member" href="#boss_curator::boss_curatorAI::Evocating" title='boss_curator::boss_curatorAI::Evocating' data-use='r' data-ref="boss_curator::boss_curatorAI::Evocating" >Evocating</a>)</td></tr>
+<tr><th id="116">116</th><td>                {</td></tr>
+<tr><th id="117">117</th><td>                    <b>if</b> (<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" title='Unit::HasAura' data-ref="_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" id="_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" >HasAura</a>(<a class="enum" href="#Curator::SPELL_EVOCATION" title='Curator::SPELL_EVOCATION' data-ref="Curator::SPELL_EVOCATION" >SPELL_EVOCATION</a>))</td></tr>
+<tr><th id="118">118</th><td>                        <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZN4Unit21RemoveAurasDueToSpellEj10ObjectGuidj14AuraRemoveMode" title='Unit::RemoveAurasDueToSpell' data-ref="_ZN4Unit21RemoveAurasDueToSpellEj10ObjectGuidj14AuraRemoveMode" id="_ZN4Unit21RemoveAurasDueToSpellEj10ObjectGuidj14AuraRemoveMode" >RemoveAurasDueToSpell</a>(<a class="enum" href="#Curator::SPELL_EVOCATION" title='Curator::SPELL_EVOCATION' data-ref="Curator::SPELL_EVOCATION" >SPELL_EVOCATION</a>);</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>                    <a class="tu member" href="#boss_curator::boss_curatorAI::Evocating" title='boss_curator::boss_curatorAI::Evocating' data-use='w' data-ref="boss_curator::boss_curatorAI::Evocating" >Evocating</a> = <b>false</b>;</td></tr>
+<tr><th id="121">121</th><td>                }</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td>                <i>//may not be correct SAY (generic hard enrage)</i></td></tr>
+<tr><th id="124">124</th><td>                <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Curator::SAY_ENRAGE" title='Curator::SAY_ENRAGE' data-ref="Curator::SAY_ENRAGE" >SAY_ENRAGE</a>);</td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td>                <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZN4Unit23InterruptNonMeleeSpellsEbjb" title='Unit::InterruptNonMeleeSpells' data-ref="_ZN4Unit23InterruptNonMeleeSpellsEbjb" id="_ZN4Unit23InterruptNonMeleeSpellsEbjb" >InterruptNonMeleeSpells</a>(<b>true</b>);</td></tr>
+<tr><th id="127">127</th><td>                <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Curator::SPELL_BERSERK" title='Curator::SPELL_BERSERK' data-ref="Curator::SPELL_BERSERK" >SPELL_BERSERK</a>);</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>                <i>//don't know if he's supposed to do summon/evocate after hard enrage (probably not)</i></td></tr>
+<tr><th id="130">130</th><td>                <a class="tu member" href="#boss_curator::boss_curatorAI::Enraged" title='boss_curator::boss_curatorAI::Enraged' data-use='w' data-ref="boss_curator::boss_curatorAI::Enraged" >Enraged</a> = <b>true</b>;</td></tr>
+<tr><th id="131">131</th><td>            } <b>else</b> <a class="tu member" href="#boss_curator::boss_curatorAI::BerserkTimer" title='boss_curator::boss_curatorAI::BerserkTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::BerserkTimer" >BerserkTimer</a> -= <a class="local col3 ref" href="#3diff" title='diff' data-ref="3diff" >diff</a>;</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>            <b>if</b> (<a class="tu member" href="#boss_curator::boss_curatorAI::Evocating" title='boss_curator::boss_curatorAI::Evocating' data-use='r' data-ref="boss_curator::boss_curatorAI::Evocating" >Evocating</a>)</td></tr>
+<tr><th id="134">134</th><td>            {</td></tr>
+<tr><th id="135">135</th><td>                <i>//not supposed to do anything while evocate</i></td></tr>
+<tr><th id="136">136</th><td>                <b>if</b> (<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" title='Unit::HasAura' data-ref="_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" id="_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" >HasAura</a>(<a class="enum" href="#Curator::SPELL_EVOCATION" title='Curator::SPELL_EVOCATION' data-ref="Curator::SPELL_EVOCATION" >SPELL_EVOCATION</a>))</td></tr>
+<tr><th id="137">137</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="138">138</th><td>                <b>else</b></td></tr>
+<tr><th id="139">139</th><td>                    <a class="tu member" href="#boss_curator::boss_curatorAI::Evocating" title='boss_curator::boss_curatorAI::Evocating' data-use='w' data-ref="boss_curator::boss_curatorAI::Evocating" >Evocating</a> = <b>false</b>;</td></tr>
+<tr><th id="140">140</th><td>            }</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td>            <b>if</b> (!<a class="tu member" href="#boss_curator::boss_curatorAI::Enraged" title='boss_curator::boss_curatorAI::Enraged' data-use='r' data-ref="boss_curator::boss_curatorAI::Enraged" >Enraged</a>)</td></tr>
+<tr><th id="143">143</th><td>            {</td></tr>
+<tr><th id="144">144</th><td>                <b>if</b> (<a class="tu member" href="#boss_curator::boss_curatorAI::AddTimer" title='boss_curator::boss_curatorAI::AddTimer' data-use='r' data-ref="boss_curator::boss_curatorAI::AddTimer" >AddTimer</a> &lt;= <a class="local col3 ref" href="#3diff" title='diff' data-ref="3diff" >diff</a>)</td></tr>
+<tr><th id="145">145</th><td>                {</td></tr>
+<tr><th id="146">146</th><td>                    <i>//Summon Astral Flare</i></td></tr>
+<tr><th id="147">147</th><td>                    <a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col4 decl" id="4AstralFlare" title='AstralFlare' data-type='Creature *' data-ref="4AstralFlare" >AstralFlare</dfn> = <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN10ScriptedAI15DoSpawnCreatureEjffffjj" title='ScriptedAI::DoSpawnCreature' data-ref="_ZN10ScriptedAI15DoSpawnCreatureEjffffjj" id="_ZN10ScriptedAI15DoSpawnCreatureEjffffjj" >DoSpawnCreature</a>(<var>17096</var>, <em>float</em>(<a class="ref" href="../../../../common/Utilities/Random.h.html#_Z6rand32v" title='rand32' data-ref="_Z6rand32v" id="_Z6rand32v" >rand32</a>() % <var>37</var>), <em>float</em>(<a class="ref" href="../../../../common/Utilities/Random.h.html#_Z6rand32v" title='rand32' data-ref="_Z6rand32v" id="_Z6rand32v" >rand32</a>() % <var>37</var>), <var>0</var>, <var>0</var>, <a class="enum" href="../../../game/Entities/Object/Object.h.html#TempSummonType::TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT" title='TempSummonType::TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT' data-ref="TempSummonType::TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT" id="TempSummonType::TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT" >TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT</a>, <var>5000</var>);</td></tr>
+<tr><th id="148">148</th><td>                    <a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col5 decl" id="5target" title='target' data-type='Unit *' data-ref="5target" >target</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="149">149</th><td>                    <a class="local col5 ref" href="#5target" title='target' data-ref="5target" >target</a> = <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" title='UnitAI::SelectTarget' data-ref="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" id="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" >SelectTarget</a>(<a class="enum" href="../../../game/AI/CoreAI/UnitAI.h.html#SelectAggroTarget::SELECT_TARGET_RANDOM" title='SelectAggroTarget::SELECT_TARGET_RANDOM' data-ref="SelectAggroTarget::SELECT_TARGET_RANDOM" id="SelectAggroTarget::SELECT_TARGET_RANDOM" >SELECT_TARGET_RANDOM</a>, <var>0</var>);</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>                    <b>if</b> (<a class="local col4 ref" href="#4AstralFlare" title='AstralFlare' data-ref="4AstralFlare" >AstralFlare</a> &amp;&amp; <a class="local col5 ref" href="#5target" title='target' data-ref="5target" >target</a>)</td></tr>
+<tr><th id="152">152</th><td>                    {</td></tr>
+<tr><th id="153">153</th><td>                        <a class="local col4 ref" href="#4AstralFlare" title='AstralFlare' data-ref="4AstralFlare" >AstralFlare</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" title='Unit::CastSpell' data-ref="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" id="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" >CastSpell</a>(<a class="local col4 ref" href="#4AstralFlare" title='AstralFlare' data-ref="4AstralFlare" >AstralFlare</a>, <a class="enum" href="#Curator::SPELL_ASTRAL_FLARE_PASSIVE" title='Curator::SPELL_ASTRAL_FLARE_PASSIVE' data-ref="Curator::SPELL_ASTRAL_FLARE_PASSIVE" >SPELL_ASTRAL_FLARE_PASSIVE</a>, <b>false</b>);</td></tr>
+<tr><th id="154">154</th><td>                        <a class="local col4 ref" href="#4AstralFlare" title='AstralFlare' data-ref="4AstralFlare" >AstralFlare</a>-&gt;<a class="ref" href="../../../game/Entities/Creature/Creature.h.html#_ZNK8Creature2AIEv" title='Creature::AI' data-ref="_ZNK8Creature2AIEv" id="_ZNK8Creature2AIEv" >AI</a>()-&gt;<a class="virtual member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI11AttackStartEP4Unit" title='UnitAI::AttackStart' data-ref="_ZN6UnitAI11AttackStartEP4Unit" id="_ZN6UnitAI11AttackStartEP4Unit" >AttackStart</a>(<a class="local col5 ref" href="#5target" title='target' data-ref="5target" >target</a>);</td></tr>
+<tr><th id="155">155</th><td>                    }</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>                    <i>//Reduce Mana by 10% of max health</i></td></tr>
+<tr><th id="158">158</th><td>                    <b>if</b> (<a class="typedef" href="../../../../common/Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col6 decl" id="6mana" title='mana' data-type='int32' data-ref="6mana" ><a class="local col6 ref" href="#6mana" title='mana' data-ref="6mana" >mana</a></dfn> = <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit11GetMaxPowerE6Powers" title='Unit::GetMaxPower' data-ref="_ZNK4Unit11GetMaxPowerE6Powers" id="_ZNK4Unit11GetMaxPowerE6Powers" >GetMaxPower</a>(<a class="enum" href="../../../game/Miscellaneous/SharedDefines.h.html#Powers::POWER_MANA" title='Powers::POWER_MANA' data-ref="Powers::POWER_MANA" id="Powers::POWER_MANA" >POWER_MANA</a>))</td></tr>
+<tr><th id="159">159</th><td>                    {</td></tr>
+<tr><th id="160">160</th><td>                        <a class="local col6 ref" href="#6mana" title='mana' data-ref="6mana" >mana</a> /= <var>10</var>;</td></tr>
+<tr><th id="161">161</th><td>                        <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZN4Unit11ModifyPowerE6Powersi" title='Unit::ModifyPower' data-ref="_ZN4Unit11ModifyPowerE6Powersi" id="_ZN4Unit11ModifyPowerE6Powersi" >ModifyPower</a>(<a class="enum" href="../../../game/Miscellaneous/SharedDefines.h.html#Powers::POWER_MANA" title='Powers::POWER_MANA' data-ref="Powers::POWER_MANA" id="Powers::POWER_MANA" >POWER_MANA</a>, -<a class="local col6 ref" href="#6mana" title='mana' data-ref="6mana" >mana</a>);</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td>                        <i>//if this get's us below 10%, then we evocate (the 10th should be summoned now)</i></td></tr>
+<tr><th id="164">164</th><td>                        <b>if</b> (<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit8GetPowerE6Powers" title='Unit::GetPower' data-ref="_ZNK4Unit8GetPowerE6Powers" id="_ZNK4Unit8GetPowerE6Powers" >GetPower</a>(<a class="enum" href="../../../game/Miscellaneous/SharedDefines.h.html#Powers::POWER_MANA" title='Powers::POWER_MANA' data-ref="Powers::POWER_MANA" id="Powers::POWER_MANA" >POWER_MANA</a>)*<var>100</var> / <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit11GetMaxPowerE6Powers" title='Unit::GetMaxPower' data-ref="_ZNK4Unit11GetMaxPowerE6Powers" id="_ZNK4Unit11GetMaxPowerE6Powers" >GetMaxPower</a>(<a class="enum" href="../../../game/Miscellaneous/SharedDefines.h.html#Powers::POWER_MANA" title='Powers::POWER_MANA' data-ref="Powers::POWER_MANA" id="Powers::POWER_MANA" >POWER_MANA</a>) &lt; <var>10</var>)</td></tr>
+<tr><th id="165">165</th><td>                        {</td></tr>
+<tr><th id="166">166</th><td>                            <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Curator::SAY_EVOCATE" title='Curator::SAY_EVOCATE' data-ref="Curator::SAY_EVOCATE" >SAY_EVOCATE</a>);</td></tr>
+<tr><th id="167">167</th><td>                            <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZN4Unit23InterruptNonMeleeSpellsEbjb" title='Unit::InterruptNonMeleeSpells' data-ref="_ZN4Unit23InterruptNonMeleeSpellsEbjb" id="_ZN4Unit23InterruptNonMeleeSpellsEbjb" >InterruptNonMeleeSpells</a>(<b>false</b>);</td></tr>
+<tr><th id="168">168</th><td>                            <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Curator::SPELL_EVOCATION" title='Curator::SPELL_EVOCATION' data-ref="Curator::SPELL_EVOCATION" >SPELL_EVOCATION</a>);</td></tr>
+<tr><th id="169">169</th><td>                            <a class="tu member" href="#boss_curator::boss_curatorAI::Evocating" title='boss_curator::boss_curatorAI::Evocating' data-use='w' data-ref="boss_curator::boss_curatorAI::Evocating" >Evocating</a> = <b>true</b>;</td></tr>
+<tr><th id="170">170</th><td>                            <i>//no AddTimer cooldown, this will make first flare appear instantly after evocate end, like expected</i></td></tr>
+<tr><th id="171">171</th><td>                            <b>return</b>;</td></tr>
+<tr><th id="172">172</th><td>                        }</td></tr>
+<tr><th id="173">173</th><td>                        <b>else</b></td></tr>
+<tr><th id="174">174</th><td>                        {</td></tr>
+<tr><th id="175">175</th><td>                            <b>if</b> (<a class="ref" href="../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>0</var>, <var>1</var>) == <var>0</var>)</td></tr>
+<tr><th id="176">176</th><td>                            {</td></tr>
+<tr><th id="177">177</th><td>                                <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Curator::SAY_SUMMON" title='Curator::SAY_SUMMON' data-ref="Curator::SAY_SUMMON" >SAY_SUMMON</a>);</td></tr>
+<tr><th id="178">178</th><td>                            }</td></tr>
+<tr><th id="179">179</th><td>                        }</td></tr>
+<tr><th id="180">180</th><td>                    }</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>                    <a class="tu member" href="#boss_curator::boss_curatorAI::AddTimer" title='boss_curator::boss_curatorAI::AddTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::AddTimer" >AddTimer</a> = <var>10000</var>;</td></tr>
+<tr><th id="183">183</th><td>                } <b>else</b> <a class="tu member" href="#boss_curator::boss_curatorAI::AddTimer" title='boss_curator::boss_curatorAI::AddTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::AddTimer" >AddTimer</a> -= <a class="local col3 ref" href="#3diff" title='diff' data-ref="3diff" >diff</a>;</td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td>                <b>if</b> (!<a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZNK10ScriptedAI14HealthAbovePctEj" title='ScriptedAI::HealthAbovePct' data-ref="_ZNK10ScriptedAI14HealthAbovePctEj" id="_ZNK10ScriptedAI14HealthAbovePctEj" >HealthAbovePct</a>(<var>15</var>))</td></tr>
+<tr><th id="186">186</th><td>                {</td></tr>
+<tr><th id="187">187</th><td>                    <a class="tu member" href="#boss_curator::boss_curatorAI::Enraged" title='boss_curator::boss_curatorAI::Enraged' data-use='w' data-ref="boss_curator::boss_curatorAI::Enraged" >Enraged</a> = <b>true</b>;</td></tr>
+<tr><th id="188">188</th><td>                    <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Curator::SPELL_ENRAGE" title='Curator::SPELL_ENRAGE' data-ref="Curator::SPELL_ENRAGE" >SPELL_ENRAGE</a>);</td></tr>
+<tr><th id="189">189</th><td>                    <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Curator::SAY_ENRAGE" title='Curator::SAY_ENRAGE' data-ref="Curator::SAY_ENRAGE" >SAY_ENRAGE</a>);</td></tr>
+<tr><th id="190">190</th><td>                }</td></tr>
+<tr><th id="191">191</th><td>            }</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td>            <b>if</b> (<a class="tu member" href="#boss_curator::boss_curatorAI::HatefulBoltTimer" title='boss_curator::boss_curatorAI::HatefulBoltTimer' data-use='r' data-ref="boss_curator::boss_curatorAI::HatefulBoltTimer" >HatefulBoltTimer</a> &lt;= <a class="local col3 ref" href="#3diff" title='diff' data-ref="3diff" >diff</a>)</td></tr>
+<tr><th id="194">194</th><td>            {</td></tr>
+<tr><th id="195">195</th><td>                <b>if</b> (<a class="tu member" href="#boss_curator::boss_curatorAI::Enraged" title='boss_curator::boss_curatorAI::Enraged' data-use='r' data-ref="boss_curator::boss_curatorAI::Enraged" >Enraged</a>)</td></tr>
+<tr><th id="196">196</th><td>                    <a class="tu member" href="#boss_curator::boss_curatorAI::HatefulBoltTimer" title='boss_curator::boss_curatorAI::HatefulBoltTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::HatefulBoltTimer" >HatefulBoltTimer</a> = <var>7000</var>;</td></tr>
+<tr><th id="197">197</th><td>                <b>else</b></td></tr>
+<tr><th id="198">198</th><td>                    <a class="tu member" href="#boss_curator::boss_curatorAI::HatefulBoltTimer" title='boss_curator::boss_curatorAI::HatefulBoltTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::HatefulBoltTimer" >HatefulBoltTimer</a> = <var>15000</var>;</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>                <b>if</b> (<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col7 decl" id="7target" title='target' data-type='Unit *' data-ref="7target" ><a class="local col7 ref" href="#7target" title='target' data-ref="7target" >target</a></dfn> = <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" title='UnitAI::SelectTarget' data-ref="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" id="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" >SelectTarget</a>(<a class="enum" href="../../../game/AI/CoreAI/UnitAI.h.html#SelectAggroTarget::SELECT_TARGET_TOPAGGRO" title='SelectAggroTarget::SELECT_TARGET_TOPAGGRO' data-ref="SelectAggroTarget::SELECT_TARGET_TOPAGGRO" id="SelectAggroTarget::SELECT_TARGET_TOPAGGRO" >SELECT_TARGET_TOPAGGRO</a>, <var>1</var>))</td></tr>
+<tr><th id="201">201</th><td>                    <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="local col7 ref" href="#7target" title='target' data-ref="7target" >target</a>, <a class="enum" href="#Curator::SPELL_HATEFUL_BOLT" title='Curator::SPELL_HATEFUL_BOLT' data-ref="Curator::SPELL_HATEFUL_BOLT" >SPELL_HATEFUL_BOLT</a>);</td></tr>
+<tr><th id="202">202</th><td>            } <b>else</b> <a class="tu member" href="#boss_curator::boss_curatorAI::HatefulBoltTimer" title='boss_curator::boss_curatorAI::HatefulBoltTimer' data-use='w' data-ref="boss_curator::boss_curatorAI::HatefulBoltTimer" >HatefulBoltTimer</a> -= <a class="local col3 ref" href="#3diff" title='diff' data-ref="3diff" >diff</a>;</td></tr>
+<tr><th id="203">203</th><td></td></tr>
+<tr><th id="204">204</th><td>            <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI20DoMeleeAttackIfReadyEv" title='UnitAI::DoMeleeAttackIfReady' data-ref="_ZN6UnitAI20DoMeleeAttackIfReadyEv" id="_ZN6UnitAI20DoMeleeAttackIfReadyEv" >DoMeleeAttackIfReady</a>();</td></tr>
+<tr><th id="205">205</th><td>        }</td></tr>
+<tr><th id="206">206</th><td>    };</td></tr>
+<tr><th id="207">207</th><td>};</td></tr>
+<tr><th id="208">208</th><td></td></tr>
+<tr><th id="209">209</th><td><em>void</em> <dfn class="decl def" id="_Z18AddSC_boss_curatorv" title='AddSC_boss_curator' data-ref="_Z18AddSC_boss_curatorv" >AddSC_boss_curator</dfn>()</td></tr>
+<tr><th id="210">210</th><td>{</td></tr>
+<tr><th id="211">211</th><td>    <b>new</b> <a class="type" href="#boss_curator" title='boss_curator' data-ref="boss_curator" >boss_curator</a><a class="tu ref" href="#_ZN12boss_curatorC1Ev" title='boss_curator::boss_curator' data-use='c' data-ref="_ZN12boss_curatorC1Ev" >(</a>);</td></tr>
+<tr><th id="212">212</th><td>}</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

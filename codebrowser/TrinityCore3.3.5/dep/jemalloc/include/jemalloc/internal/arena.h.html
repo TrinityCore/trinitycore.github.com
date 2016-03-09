@@ -1,0 +1,1081 @@
+<!doctype html>
+<html>
+<head>
+<title>arena.h [TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/arena.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/arena.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/arena.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>/*</i></td></tr>
+<tr><th id="5">5</th><td><i> * RUN_MAX_OVRHD indicates maximum desired run header overhead.  Runs are sized</i></td></tr>
+<tr><th id="6">6</th><td><i> * as small as possible such that this setting is still honored, without</i></td></tr>
+<tr><th id="7">7</th><td><i> * violating other constraints.  The goal is to make runs as small as possible</i></td></tr>
+<tr><th id="8">8</th><td><i> * without exceeding a per run external fragmentation threshold.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * We use binary fixed point math for overhead computations, where the binary</i></td></tr>
+<tr><th id="11">11</th><td><i> * point is implicitly RUN_BFP bits to the left.</i></td></tr>
+<tr><th id="12">12</th><td><i> *</i></td></tr>
+<tr><th id="13">13</th><td><i> * Note that it is possible to set RUN_MAX_OVRHD low enough that it cannot be</i></td></tr>
+<tr><th id="14">14</th><td><i> * honored for some/all object sizes, since when heap profiling is enabled</i></td></tr>
+<tr><th id="15">15</th><td><i> * there is one pointer of header overhead per object (plus a constant).  This</i></td></tr>
+<tr><th id="16">16</th><td><i> * constraint is relaxed (ignored) for runs that are so small that the</i></td></tr>
+<tr><th id="17">17</th><td><i> * per-region overhead is greater than:</i></td></tr>
+<tr><th id="18">18</th><td><i> *</i></td></tr>
+<tr><th id="19">19</th><td><i> *   (RUN_MAX_OVRHD / (reg_interval &lt;&lt; (3+RUN_BFP))</i></td></tr>
+<tr><th id="20">20</th><td><i> */</i></td></tr>
+<tr><th id="21">21</th><td><u>#define	<dfn class="macro" id="_M/RUN_BFP" data-ref="_M/RUN_BFP">RUN_BFP</dfn>			12</u></td></tr>
+<tr><th id="22">22</th><td><i>/*                                    \/   Implicit binary fixed point. */</i></td></tr>
+<tr><th id="23">23</th><td><u>#define	<dfn class="macro" id="_M/RUN_MAX_OVRHD" data-ref="_M/RUN_MAX_OVRHD">RUN_MAX_OVRHD</dfn>		0x0000003dU</u></td></tr>
+<tr><th id="24">24</th><td><u>#define	<dfn class="macro" id="_M/RUN_MAX_OVRHD_RELAX" data-ref="_M/RUN_MAX_OVRHD_RELAX">RUN_MAX_OVRHD_RELAX</dfn>	0x00001800U</u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>/* Maximum number of regions in one run. */</i></td></tr>
+<tr><th id="27">27</th><td><u>#define	<dfn class="macro" id="_M/LG_RUN_MAXREGS" data-ref="_M/LG_RUN_MAXREGS">LG_RUN_MAXREGS</dfn>		11</u></td></tr>
+<tr><th id="28">28</th><td><u>#define	<dfn class="macro" id="_M/RUN_MAXREGS" data-ref="_M/RUN_MAXREGS">RUN_MAXREGS</dfn>		(1U &lt;&lt; LG_RUN_MAXREGS)</u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i>/*</i></td></tr>
+<tr><th id="31">31</th><td><i> * Minimum redzone size.  Redzones may be larger than this if necessary to</i></td></tr>
+<tr><th id="32">32</th><td><i> * preserve region alignment.</i></td></tr>
+<tr><th id="33">33</th><td><i> */</i></td></tr>
+<tr><th id="34">34</th><td><u>#define	<dfn class="macro" id="_M/REDZONE_MINSIZE" data-ref="_M/REDZONE_MINSIZE">REDZONE_MINSIZE</dfn>		16</u></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><i>/*</i></td></tr>
+<tr><th id="37">37</th><td><i> * The minimum ratio of active:dirty pages per arena is computed as:</i></td></tr>
+<tr><th id="38">38</th><td><i> *</i></td></tr>
+<tr><th id="39">39</th><td><i> *   (nactive &gt;&gt; opt_lg_dirty_mult) &gt;= ndirty</i></td></tr>
+<tr><th id="40">40</th><td><i> *</i></td></tr>
+<tr><th id="41">41</th><td><i> * So, supposing that opt_lg_dirty_mult is 3, there can be no less than 8 times</i></td></tr>
+<tr><th id="42">42</th><td><i> * as many active pages as dirty pages.</i></td></tr>
+<tr><th id="43">43</th><td><i> */</i></td></tr>
+<tr><th id="44">44</th><td><u>#define	<dfn class="macro" id="_M/LG_DIRTY_MULT_DEFAULT" data-ref="_M/LG_DIRTY_MULT_DEFAULT">LG_DIRTY_MULT_DEFAULT</dfn>	3</u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><b>typedef</b> <b>struct</b> <a class="type" href="arena.h.html#arena_chunk_map_s" title='arena_chunk_map_s' data-ref="arena_chunk_map_s" id="arena_chunk_map_s" ><a class="type" href="arena.h.html#arena_chunk_map_s" title='arena_chunk_map_s' data-ref="arena_chunk_map_s" >arena_chunk_map_s</a></a> <dfn class="typedef" id="arena_chunk_map_t" title='arena_chunk_map_t' data-type='struct arena_chunk_map_s' data-ref="arena_chunk_map_t" >arena_chunk_map_t</dfn>;</td></tr>
+<tr><th id="47">47</th><td><b>typedef</b> <b>struct</b> <a class="type" href="arena.h.html#arena_chunk_s" title='arena_chunk_s' data-ref="arena_chunk_s" id="arena_chunk_s" ><a class="type" href="arena.h.html#arena_chunk_s" title='arena_chunk_s' data-ref="arena_chunk_s" >arena_chunk_s</a></a> <dfn class="typedef" id="arena_chunk_t" title='arena_chunk_t' data-type='struct arena_chunk_s' data-ref="arena_chunk_t" >arena_chunk_t</dfn>;</td></tr>
+<tr><th id="48">48</th><td><b>typedef</b> <b>struct</b> <a class="type" href="arena.h.html#arena_run_s" title='arena_run_s' data-ref="arena_run_s" id="arena_run_s" ><a class="type" href="arena.h.html#arena_run_s" title='arena_run_s' data-ref="arena_run_s" >arena_run_s</a></a> <dfn class="typedef" id="arena_run_t" title='arena_run_t' data-type='struct arena_run_s' data-ref="arena_run_t" >arena_run_t</dfn>;</td></tr>
+<tr><th id="49">49</th><td><b>typedef</b> <b>struct</b> <a class="type" href="arena.h.html#arena_bin_info_s" title='arena_bin_info_s' data-ref="arena_bin_info_s" id="arena_bin_info_s" ><a class="type" href="arena.h.html#arena_bin_info_s" title='arena_bin_info_s' data-ref="arena_bin_info_s" >arena_bin_info_s</a></a> <dfn class="typedef" id="arena_bin_info_t" title='arena_bin_info_t' data-type='struct arena_bin_info_s' data-ref="arena_bin_info_t" >arena_bin_info_t</dfn>;</td></tr>
+<tr><th id="50">50</th><td><b>typedef</b> <b>struct</b> <a class="type" href="arena.h.html#arena_bin_s" title='arena_bin_s' data-ref="arena_bin_s" id="arena_bin_s" ><a class="type" href="arena.h.html#arena_bin_s" title='arena_bin_s' data-ref="arena_bin_s" >arena_bin_s</a></a> <dfn class="typedef" id="arena_bin_t" title='arena_bin_t' data-type='struct arena_bin_s' data-ref="arena_bin_t" >arena_bin_t</dfn>;</td></tr>
+<tr><th id="51">51</th><td><b>typedef</b> <b>struct</b> <a class="type" href="arena.h.html#arena_s" title='arena_s' data-ref="arena_s" id="arena_s" ><a class="type" href="arena.h.html#arena_s" title='arena_s' data-ref="arena_s" >arena_s</a></a> <dfn class="typedef" id="arena_t" title='arena_t' data-type='struct arena_s' data-ref="arena_t" >arena_t</dfn>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="54">54</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="55">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><i>/* Each element of the chunk map corresponds to one page within the chunk. */</i></td></tr>
+<tr><th id="58">58</th><td><b>struct</b> arena_chunk_map_s {</td></tr>
+<tr><th id="59">59</th><td><u>#ifndef JEMALLOC_PROF</u></td></tr>
+<tr><th id="60">60</th><td>	<i>/*</i></td></tr>
+<tr><th id="61">61</th><td><i>	 * Overlay prof_ctx in order to allow it to be referenced by dead code.</i></td></tr>
+<tr><th id="62">62</th><td><i>	 * Such antics aren't warranted for per arena data structures, but</i></td></tr>
+<tr><th id="63">63</th><td><i>	 * chunk map overhead accounts for a percentage of memory, rather than</i></td></tr>
+<tr><th id="64">64</th><td><i>	 * being just a fixed cost.</i></td></tr>
+<tr><th id="65">65</th><td><i>	 */</i></td></tr>
+<tr><th id="66">66</th><td>	<b>union</b> {</td></tr>
+<tr><th id="67">67</th><td><u>#endif</u></td></tr>
+<tr><th id="68">68</th><td>	<b>union</b> {</td></tr>
+<tr><th id="69">69</th><td>		<i>/*</i></td></tr>
+<tr><th id="70">70</th><td><i>		 * Linkage for run trees.  There are two disjoint uses:</i></td></tr>
+<tr><th id="71">71</th><td><i>		 *</i></td></tr>
+<tr><th id="72">72</th><td><i>		 * 1) arena_t's runs_avail tree.</i></td></tr>
+<tr><th id="73">73</th><td><i>		 * 2) arena_run_t conceptually uses this linkage for in-use</i></td></tr>
+<tr><th id="74">74</th><td><i>		 *    non-full runs, rather than directly embedding linkage.</i></td></tr>
+<tr><th id="75">75</th><td><i>		 */</i></td></tr>
+<tr><th id="76">76</th><td>		rb_node(arena_chunk_map_t)	rb_link;</td></tr>
+<tr><th id="77">77</th><td>		<i>/*</i></td></tr>
+<tr><th id="78">78</th><td><i>		 * List of runs currently in purgatory.  arena_chunk_purge()</i></td></tr>
+<tr><th id="79">79</th><td><i>		 * temporarily allocates runs that contain dirty pages while</i></td></tr>
+<tr><th id="80">80</th><td><i>		 * purging, so that other threads cannot use the runs while the</i></td></tr>
+<tr><th id="81">81</th><td><i>		 * purging thread is operating without the arena lock held.</i></td></tr>
+<tr><th id="82">82</th><td><i>		 */</i></td></tr>
+<tr><th id="83">83</th><td>		ql_elm(arena_chunk_map_t)	ql_link;</td></tr>
+<tr><th id="84">84</th><td>	}				u;</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>	<i>/* Profile counters, used for large object runs. */</i></td></tr>
+<tr><th id="87">87</th><td>	prof_ctx_t			*prof_ctx;</td></tr>
+<tr><th id="88">88</th><td><u>#ifndef JEMALLOC_PROF</u></td></tr>
+<tr><th id="89">89</th><td>	}; <i>/* union { ... }; */</i></td></tr>
+<tr><th id="90">90</th><td><u>#endif</u></td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>	<i>/*</i></td></tr>
+<tr><th id="93">93</th><td><i>	 * Run address (or size) and various flags are stored together.  The bit</i></td></tr>
+<tr><th id="94">94</th><td><i>	 * layout looks like (assuming 32-bit system):</i></td></tr>
+<tr><th id="95">95</th><td><i>	 *</i></td></tr>
+<tr><th id="96">96</th><td><i>	 *   ???????? ???????? ????nnnn nnnndula</i></td></tr>
+<tr><th id="97">97</th><td><i>	 *</i></td></tr>
+<tr><th id="98">98</th><td><i>	 * ? : Unallocated: Run address for first/last pages, unset for internal</i></td></tr>
+<tr><th id="99">99</th><td><i>	 *                  pages.</i></td></tr>
+<tr><th id="100">100</th><td><i>	 *     Small: Run page offset.</i></td></tr>
+<tr><th id="101">101</th><td><i>	 *     Large: Run size for first page, unset for trailing pages.</i></td></tr>
+<tr><th id="102">102</th><td><i>	 * n : binind for small size class, BININD_INVALID for large size class.</i></td></tr>
+<tr><th id="103">103</th><td><i>	 * d : dirty?</i></td></tr>
+<tr><th id="104">104</th><td><i>	 * u : unzeroed?</i></td></tr>
+<tr><th id="105">105</th><td><i>	 * l : large?</i></td></tr>
+<tr><th id="106">106</th><td><i>	 * a : allocated?</i></td></tr>
+<tr><th id="107">107</th><td><i>	 *</i></td></tr>
+<tr><th id="108">108</th><td><i>	 * Following are example bit patterns for the three types of runs.</i></td></tr>
+<tr><th id="109">109</th><td><i>	 *</i></td></tr>
+<tr><th id="110">110</th><td><i>	 * p : run page offset</i></td></tr>
+<tr><th id="111">111</th><td><i>	 * s : run size</i></td></tr>
+<tr><th id="112">112</th><td><i>	 * n : binind for size class; large objects set these to BININD_INVALID</i></td></tr>
+<tr><th id="113">113</th><td><i>	 *     except for promoted allocations (see prof_promote)</i></td></tr>
+<tr><th id="114">114</th><td><i>	 * x : don't care</i></td></tr>
+<tr><th id="115">115</th><td><i>	 * - : 0</i></td></tr>
+<tr><th id="116">116</th><td><i>	 * + : 1</i></td></tr>
+<tr><th id="117">117</th><td><i>	 * [DULA] : bit set</i></td></tr>
+<tr><th id="118">118</th><td><i>	 * [dula] : bit unset</i></td></tr>
+<tr><th id="119">119</th><td><i>	 *</i></td></tr>
+<tr><th id="120">120</th><td><i>	 *   Unallocated (clean):</i></td></tr>
+<tr><th id="121">121</th><td><i>	 *     ssssssss ssssssss ssss++++ ++++du-a</i></td></tr>
+<tr><th id="122">122</th><td><i>	 *     xxxxxxxx xxxxxxxx xxxxxxxx xxxx-Uxx</i></td></tr>
+<tr><th id="123">123</th><td><i>	 *     ssssssss ssssssss ssss++++ ++++dU-a</i></td></tr>
+<tr><th id="124">124</th><td><i>	 *</i></td></tr>
+<tr><th id="125">125</th><td><i>	 *   Unallocated (dirty):</i></td></tr>
+<tr><th id="126">126</th><td><i>	 *     ssssssss ssssssss ssss++++ ++++D--a</i></td></tr>
+<tr><th id="127">127</th><td><i>	 *     xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx</i></td></tr>
+<tr><th id="128">128</th><td><i>	 *     ssssssss ssssssss ssss++++ ++++D--a</i></td></tr>
+<tr><th id="129">129</th><td><i>	 *</i></td></tr>
+<tr><th id="130">130</th><td><i>	 *   Small:</i></td></tr>
+<tr><th id="131">131</th><td><i>	 *     pppppppp pppppppp ppppnnnn nnnnd--A</i></td></tr>
+<tr><th id="132">132</th><td><i>	 *     pppppppp pppppppp ppppnnnn nnnn---A</i></td></tr>
+<tr><th id="133">133</th><td><i>	 *     pppppppp pppppppp ppppnnnn nnnnd--A</i></td></tr>
+<tr><th id="134">134</th><td><i>	 *</i></td></tr>
+<tr><th id="135">135</th><td><i>	 *   Large:</i></td></tr>
+<tr><th id="136">136</th><td><i>	 *     ssssssss ssssssss ssss++++ ++++D-LA</i></td></tr>
+<tr><th id="137">137</th><td><i>	 *     xxxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx</i></td></tr>
+<tr><th id="138">138</th><td><i>	 *     -------- -------- ----++++ ++++D-LA</i></td></tr>
+<tr><th id="139">139</th><td><i>	 *</i></td></tr>
+<tr><th id="140">140</th><td><i>	 *   Large (sampled, size &lt;= PAGE):</i></td></tr>
+<tr><th id="141">141</th><td><i>	 *     ssssssss ssssssss ssssnnnn nnnnD-LA</i></td></tr>
+<tr><th id="142">142</th><td><i>	 *</i></td></tr>
+<tr><th id="143">143</th><td><i>	 *   Large (not sampled, size == PAGE):</i></td></tr>
+<tr><th id="144">144</th><td><i>	 *     ssssssss ssssssss ssss++++ ++++D-LA</i></td></tr>
+<tr><th id="145">145</th><td><i>	 */</i></td></tr>
+<tr><th id="146">146</th><td>	size_t				bits;</td></tr>
+<tr><th id="147">147</th><td><u>#define	CHUNK_MAP_BININD_SHIFT	4</u></td></tr>
+<tr><th id="148">148</th><td><u>#define	BININD_INVALID		((size_t)0xffU)</u></td></tr>
+<tr><th id="149">149</th><td><i>/*     CHUNK_MAP_BININD_MASK == (BININD_INVALID &lt;&lt; CHUNK_MAP_BININD_SHIFT) */</i></td></tr>
+<tr><th id="150">150</th><td><u>#define	CHUNK_MAP_BININD_MASK	((size_t)0xff0U)</u></td></tr>
+<tr><th id="151">151</th><td><u>#define	CHUNK_MAP_BININD_INVALID CHUNK_MAP_BININD_MASK</u></td></tr>
+<tr><th id="152">152</th><td><u>#define	CHUNK_MAP_FLAGS_MASK	((size_t)0xcU)</u></td></tr>
+<tr><th id="153">153</th><td><u>#define	CHUNK_MAP_DIRTY		((size_t)0x8U)</u></td></tr>
+<tr><th id="154">154</th><td><u>#define	CHUNK_MAP_UNZEROED	((size_t)0x4U)</u></td></tr>
+<tr><th id="155">155</th><td><u>#define	CHUNK_MAP_LARGE		((size_t)0x2U)</u></td></tr>
+<tr><th id="156">156</th><td><u>#define	CHUNK_MAP_ALLOCATED	((size_t)0x1U)</u></td></tr>
+<tr><th id="157">157</th><td><u>#define	CHUNK_MAP_KEY		CHUNK_MAP_ALLOCATED</u></td></tr>
+<tr><th id="158">158</th><td>};</td></tr>
+<tr><th id="159">159</th><td><b>typedef</b> rb_tree(arena_chunk_map_t) arena_avail_tree_t;</td></tr>
+<tr><th id="160">160</th><td><b>typedef</b> rb_tree(arena_chunk_map_t) arena_run_tree_t;</td></tr>
+<tr><th id="161">161</th><td><b>typedef</b> ql_head(arena_chunk_map_t) arena_chunk_mapelms_t;</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td><i>/* Arena chunk header. */</i></td></tr>
+<tr><th id="164">164</th><td><b>struct</b> arena_chunk_s {</td></tr>
+<tr><th id="165">165</th><td>	<i>/* Arena that owns the chunk. */</i></td></tr>
+<tr><th id="166">166</th><td>	arena_t			*arena;</td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td>	<i>/* Linkage for tree of arena chunks that contain dirty runs. */</i></td></tr>
+<tr><th id="169">169</th><td>	rb_node(arena_chunk_t)	dirty_link;</td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td>	<i>/* Number of dirty pages. */</i></td></tr>
+<tr><th id="172">172</th><td>	size_t			ndirty;</td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td>	<i>/* Number of available runs. */</i></td></tr>
+<tr><th id="175">175</th><td>	size_t			nruns_avail;</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td>	<i>/*</i></td></tr>
+<tr><th id="178">178</th><td><i>	 * Number of available run adjacencies that purging could coalesce.</i></td></tr>
+<tr><th id="179">179</th><td><i>	 * Clean and dirty available runs are not coalesced, which causes</i></td></tr>
+<tr><th id="180">180</th><td><i>	 * virtual memory fragmentation.  The ratio of</i></td></tr>
+<tr><th id="181">181</th><td><i>	 * (nruns_avail-nruns_adjac):nruns_adjac is used for tracking this</i></td></tr>
+<tr><th id="182">182</th><td><i>	 * fragmentation.</i></td></tr>
+<tr><th id="183">183</th><td><i>	 */</i></td></tr>
+<tr><th id="184">184</th><td>	size_t			nruns_adjac;</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>	<i>/*</i></td></tr>
+<tr><th id="187">187</th><td><i>	 * Map of pages within chunk that keeps track of free/large/small.  The</i></td></tr>
+<tr><th id="188">188</th><td><i>	 * first map_bias entries are omitted, since the chunk header does not</i></td></tr>
+<tr><th id="189">189</th><td><i>	 * need to be tracked in the map.  This omission saves a header page</i></td></tr>
+<tr><th id="190">190</th><td><i>	 * for common chunk sizes (e.g. 4 MiB).</i></td></tr>
+<tr><th id="191">191</th><td><i>	 */</i></td></tr>
+<tr><th id="192">192</th><td>	arena_chunk_map_t	map[<var>1</var>]; <i>/* Dynamically sized. */</i></td></tr>
+<tr><th id="193">193</th><td>};</td></tr>
+<tr><th id="194">194</th><td><b>typedef</b> rb_tree(arena_chunk_t) arena_chunk_tree_t;</td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td><b>struct</b> arena_run_s {</td></tr>
+<tr><th id="197">197</th><td>	<i>/* Bin this run is associated with. */</i></td></tr>
+<tr><th id="198">198</th><td>	arena_bin_t	*bin;</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>	<i>/* Index of next region that has never been allocated, or nregs. */</i></td></tr>
+<tr><th id="201">201</th><td>	uint32_t	nextind;</td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td>	<i>/* Number of free regions in run. */</i></td></tr>
+<tr><th id="204">204</th><td>	<em>unsigned</em>	nfree;</td></tr>
+<tr><th id="205">205</th><td>};</td></tr>
+<tr><th id="206">206</th><td></td></tr>
+<tr><th id="207">207</th><td><i>/*</i></td></tr>
+<tr><th id="208">208</th><td><i> * Read-only information associated with each element of arena_t's bins array</i></td></tr>
+<tr><th id="209">209</th><td><i> * is stored separately, partly to reduce memory usage (only one copy, rather</i></td></tr>
+<tr><th id="210">210</th><td><i> * than one per arena), but mainly to avoid false cacheline sharing.</i></td></tr>
+<tr><th id="211">211</th><td><i> *</i></td></tr>
+<tr><th id="212">212</th><td><i> * Each run has the following layout:</i></td></tr>
+<tr><th id="213">213</th><td><i> *</i></td></tr>
+<tr><th id="214">214</th><td><i> *               /--------------------\</i></td></tr>
+<tr><th id="215">215</th><td><i> *               | arena_run_t header |</i></td></tr>
+<tr><th id="216">216</th><td><i> *               | ...                |</i></td></tr>
+<tr><th id="217">217</th><td><i> * bitmap_offset | bitmap             |</i></td></tr>
+<tr><th id="218">218</th><td><i> *               | ...                |</i></td></tr>
+<tr><th id="219">219</th><td><i> *   ctx0_offset | ctx map            |</i></td></tr>
+<tr><th id="220">220</th><td><i> *               | ...                |</i></td></tr>
+<tr><th id="221">221</th><td><i> *               |--------------------|</i></td></tr>
+<tr><th id="222">222</th><td><i> *               | redzone            |</i></td></tr>
+<tr><th id="223">223</th><td><i> *   reg0_offset | region 0           |</i></td></tr>
+<tr><th id="224">224</th><td><i> *               | redzone            |</i></td></tr>
+<tr><th id="225">225</th><td><i> *               |--------------------| \</i></td></tr>
+<tr><th id="226">226</th><td><i> *               | redzone            | |</i></td></tr>
+<tr><th id="227">227</th><td><i> *               | region 1           |  &gt; reg_interval</i></td></tr>
+<tr><th id="228">228</th><td><i> *               | redzone            | /</i></td></tr>
+<tr><th id="229">229</th><td><i> *               |--------------------|</i></td></tr>
+<tr><th id="230">230</th><td><i> *               | ...                |</i></td></tr>
+<tr><th id="231">231</th><td><i> *               | ...                |</i></td></tr>
+<tr><th id="232">232</th><td><i> *               | ...                |</i></td></tr>
+<tr><th id="233">233</th><td><i> *               |--------------------|</i></td></tr>
+<tr><th id="234">234</th><td><i> *               | redzone            |</i></td></tr>
+<tr><th id="235">235</th><td><i> *               | region nregs-1     |</i></td></tr>
+<tr><th id="236">236</th><td><i> *               | redzone            |</i></td></tr>
+<tr><th id="237">237</th><td><i> *               |--------------------|</i></td></tr>
+<tr><th id="238">238</th><td><i> *               | alignment pad?     |</i></td></tr>
+<tr><th id="239">239</th><td><i> *               \--------------------/</i></td></tr>
+<tr><th id="240">240</th><td><i> *</i></td></tr>
+<tr><th id="241">241</th><td><i> * reg_interval has at least the same minimum alignment as reg_size; this</i></td></tr>
+<tr><th id="242">242</th><td><i> * preserves the alignment constraint that sa2u() depends on.  Alignment pad is</i></td></tr>
+<tr><th id="243">243</th><td><i> * either 0 or redzone_size; it is present only if needed to align reg0_offset.</i></td></tr>
+<tr><th id="244">244</th><td><i> */</i></td></tr>
+<tr><th id="245">245</th><td><b>struct</b> arena_bin_info_s {</td></tr>
+<tr><th id="246">246</th><td>	<i>/* Size of regions in a run for this bin's size class. */</i></td></tr>
+<tr><th id="247">247</th><td>	size_t		reg_size;</td></tr>
+<tr><th id="248">248</th><td></td></tr>
+<tr><th id="249">249</th><td>	<i>/* Redzone size. */</i></td></tr>
+<tr><th id="250">250</th><td>	size_t		redzone_size;</td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td>	<i>/* Interval between regions (reg_size + (redzone_size &lt;&lt; 1)). */</i></td></tr>
+<tr><th id="253">253</th><td>	size_t		reg_interval;</td></tr>
+<tr><th id="254">254</th><td></td></tr>
+<tr><th id="255">255</th><td>	<i>/* Total size of a run for this bin's size class. */</i></td></tr>
+<tr><th id="256">256</th><td>	size_t		run_size;</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td>	<i>/* Total number of regions in a run for this bin's size class. */</i></td></tr>
+<tr><th id="259">259</th><td>	uint32_t	nregs;</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>	<i>/*</i></td></tr>
+<tr><th id="262">262</th><td><i>	 * Offset of first bitmap_t element in a run header for this bin's size</i></td></tr>
+<tr><th id="263">263</th><td><i>	 * class.</i></td></tr>
+<tr><th id="264">264</th><td><i>	 */</i></td></tr>
+<tr><th id="265">265</th><td>	uint32_t	bitmap_offset;</td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td>	<i>/*</i></td></tr>
+<tr><th id="268">268</th><td><i>	 * Metadata used to manipulate bitmaps for runs associated with this</i></td></tr>
+<tr><th id="269">269</th><td><i>	 * bin.</i></td></tr>
+<tr><th id="270">270</th><td><i>	 */</i></td></tr>
+<tr><th id="271">271</th><td>	bitmap_info_t	bitmap_info;</td></tr>
+<tr><th id="272">272</th><td></td></tr>
+<tr><th id="273">273</th><td>	<i>/*</i></td></tr>
+<tr><th id="274">274</th><td><i>	 * Offset of first (prof_ctx_t *) in a run header for this bin's size</i></td></tr>
+<tr><th id="275">275</th><td><i>	 * class, or 0 if (config_prof == false || opt_prof == false).</i></td></tr>
+<tr><th id="276">276</th><td><i>	 */</i></td></tr>
+<tr><th id="277">277</th><td>	uint32_t	ctx0_offset;</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td>	<i>/* Offset of first region in a run for this bin's size class. */</i></td></tr>
+<tr><th id="280">280</th><td>	uint32_t	reg0_offset;</td></tr>
+<tr><th id="281">281</th><td>};</td></tr>
+<tr><th id="282">282</th><td></td></tr>
+<tr><th id="283">283</th><td><b>struct</b> arena_bin_s {</td></tr>
+<tr><th id="284">284</th><td>	<i>/*</i></td></tr>
+<tr><th id="285">285</th><td><i>	 * All operations on runcur, runs, and stats require that lock be</i></td></tr>
+<tr><th id="286">286</th><td><i>	 * locked.  Run allocation/deallocation are protected by the arena lock,</i></td></tr>
+<tr><th id="287">287</th><td><i>	 * which may be acquired while holding one or more bin locks, but not</i></td></tr>
+<tr><th id="288">288</th><td><i>	 * vise versa.</i></td></tr>
+<tr><th id="289">289</th><td><i>	 */</i></td></tr>
+<tr><th id="290">290</th><td>	malloc_mutex_t	lock;</td></tr>
+<tr><th id="291">291</th><td></td></tr>
+<tr><th id="292">292</th><td>	<i>/*</i></td></tr>
+<tr><th id="293">293</th><td><i>	 * Current run being used to service allocations of this bin's size</i></td></tr>
+<tr><th id="294">294</th><td><i>	 * class.</i></td></tr>
+<tr><th id="295">295</th><td><i>	 */</i></td></tr>
+<tr><th id="296">296</th><td>	arena_run_t	*runcur;</td></tr>
+<tr><th id="297">297</th><td></td></tr>
+<tr><th id="298">298</th><td>	<i>/*</i></td></tr>
+<tr><th id="299">299</th><td><i>	 * Tree of non-full runs.  This tree is used when looking for an</i></td></tr>
+<tr><th id="300">300</th><td><i>	 * existing run when runcur is no longer usable.  We choose the</i></td></tr>
+<tr><th id="301">301</th><td><i>	 * non-full run that is lowest in memory; this policy tends to keep</i></td></tr>
+<tr><th id="302">302</th><td><i>	 * objects packed well, and it can also help reduce the number of</i></td></tr>
+<tr><th id="303">303</th><td><i>	 * almost-empty chunks.</i></td></tr>
+<tr><th id="304">304</th><td><i>	 */</i></td></tr>
+<tr><th id="305">305</th><td>	arena_run_tree_t runs;</td></tr>
+<tr><th id="306">306</th><td></td></tr>
+<tr><th id="307">307</th><td>	<i>/* Bin statistics. */</i></td></tr>
+<tr><th id="308">308</th><td>	malloc_bin_stats_t stats;</td></tr>
+<tr><th id="309">309</th><td>};</td></tr>
+<tr><th id="310">310</th><td></td></tr>
+<tr><th id="311">311</th><td><b>struct</b> arena_s {</td></tr>
+<tr><th id="312">312</th><td>	<i>/* This arena's index within the arenas array. */</i></td></tr>
+<tr><th id="313">313</th><td>	<em>unsigned</em>		ind;</td></tr>
+<tr><th id="314">314</th><td></td></tr>
+<tr><th id="315">315</th><td>	<i>/*</i></td></tr>
+<tr><th id="316">316</th><td><i>	 * Number of threads currently assigned to this arena.  This field is</i></td></tr>
+<tr><th id="317">317</th><td><i>	 * protected by arenas_lock.</i></td></tr>
+<tr><th id="318">318</th><td><i>	 */</i></td></tr>
+<tr><th id="319">319</th><td>	<em>unsigned</em>		nthreads;</td></tr>
+<tr><th id="320">320</th><td></td></tr>
+<tr><th id="321">321</th><td>	<i>/*</i></td></tr>
+<tr><th id="322">322</th><td><i>	 * There are three classes of arena operations from a locking</i></td></tr>
+<tr><th id="323">323</th><td><i>	 * perspective:</i></td></tr>
+<tr><th id="324">324</th><td><i>	 * 1) Thread asssignment (modifies nthreads) is protected by</i></td></tr>
+<tr><th id="325">325</th><td><i>	 *    arenas_lock.</i></td></tr>
+<tr><th id="326">326</th><td><i>	 * 2) Bin-related operations are protected by bin locks.</i></td></tr>
+<tr><th id="327">327</th><td><i>	 * 3) Chunk- and run-related operations are protected by this mutex.</i></td></tr>
+<tr><th id="328">328</th><td><i>	 */</i></td></tr>
+<tr><th id="329">329</th><td>	malloc_mutex_t		lock;</td></tr>
+<tr><th id="330">330</th><td></td></tr>
+<tr><th id="331">331</th><td>	arena_stats_t		stats;</td></tr>
+<tr><th id="332">332</th><td>	<i>/*</i></td></tr>
+<tr><th id="333">333</th><td><i>	 * List of tcaches for extant threads associated with this arena.</i></td></tr>
+<tr><th id="334">334</th><td><i>	 * Stats from these are merged incrementally, and at exit.</i></td></tr>
+<tr><th id="335">335</th><td><i>	 */</i></td></tr>
+<tr><th id="336">336</th><td>	ql_head(tcache_t)	tcache_ql;</td></tr>
+<tr><th id="337">337</th><td></td></tr>
+<tr><th id="338">338</th><td>	uint64_t		prof_accumbytes;</td></tr>
+<tr><th id="339">339</th><td></td></tr>
+<tr><th id="340">340</th><td>	dss_prec_t		dss_prec;</td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td>	<i>/* Tree of dirty-page-containing chunks this arena manages. */</i></td></tr>
+<tr><th id="343">343</th><td>	arena_chunk_tree_t	chunks_dirty;</td></tr>
+<tr><th id="344">344</th><td></td></tr>
+<tr><th id="345">345</th><td>	<i>/*</i></td></tr>
+<tr><th id="346">346</th><td><i>	 * In order to avoid rapid chunk allocation/deallocation when an arena</i></td></tr>
+<tr><th id="347">347</th><td><i>	 * oscillates right on the cusp of needing a new chunk, cache the most</i></td></tr>
+<tr><th id="348">348</th><td><i>	 * recently freed chunk.  The spare is left in the arena's chunk trees</i></td></tr>
+<tr><th id="349">349</th><td><i>	 * until it is deleted.</i></td></tr>
+<tr><th id="350">350</th><td><i>	 *</i></td></tr>
+<tr><th id="351">351</th><td><i>	 * There is one spare chunk per arena, rather than one spare total, in</i></td></tr>
+<tr><th id="352">352</th><td><i>	 * order to avoid interactions between multiple threads that could make</i></td></tr>
+<tr><th id="353">353</th><td><i>	 * a single spare inadequate.</i></td></tr>
+<tr><th id="354">354</th><td><i>	 */</i></td></tr>
+<tr><th id="355">355</th><td>	arena_chunk_t		*spare;</td></tr>
+<tr><th id="356">356</th><td></td></tr>
+<tr><th id="357">357</th><td>	<i>/* Number of pages in active runs. */</i></td></tr>
+<tr><th id="358">358</th><td>	size_t			nactive;</td></tr>
+<tr><th id="359">359</th><td></td></tr>
+<tr><th id="360">360</th><td>	<i>/*</i></td></tr>
+<tr><th id="361">361</th><td><i>	 * Current count of pages within unused runs that are potentially</i></td></tr>
+<tr><th id="362">362</th><td><i>	 * dirty, and for which madvise(... MADV_DONTNEED) has not been called.</i></td></tr>
+<tr><th id="363">363</th><td><i>	 * By tracking this, we can institute a limit on how much dirty unused</i></td></tr>
+<tr><th id="364">364</th><td><i>	 * memory is mapped for each arena.</i></td></tr>
+<tr><th id="365">365</th><td><i>	 */</i></td></tr>
+<tr><th id="366">366</th><td>	size_t			ndirty;</td></tr>
+<tr><th id="367">367</th><td></td></tr>
+<tr><th id="368">368</th><td>	<i>/*</i></td></tr>
+<tr><th id="369">369</th><td><i>	 * Approximate number of pages being purged.  It is possible for</i></td></tr>
+<tr><th id="370">370</th><td><i>	 * multiple threads to purge dirty pages concurrently, and they use</i></td></tr>
+<tr><th id="371">371</th><td><i>	 * npurgatory to indicate the total number of pages all threads are</i></td></tr>
+<tr><th id="372">372</th><td><i>	 * attempting to purge.</i></td></tr>
+<tr><th id="373">373</th><td><i>	 */</i></td></tr>
+<tr><th id="374">374</th><td>	size_t			npurgatory;</td></tr>
+<tr><th id="375">375</th><td></td></tr>
+<tr><th id="376">376</th><td>	<i>/*</i></td></tr>
+<tr><th id="377">377</th><td><i>	 * Size/address-ordered trees of this arena's available runs.  The trees</i></td></tr>
+<tr><th id="378">378</th><td><i>	 * are used for first-best-fit run allocation.</i></td></tr>
+<tr><th id="379">379</th><td><i>	 */</i></td></tr>
+<tr><th id="380">380</th><td>	arena_avail_tree_t	runs_avail;</td></tr>
+<tr><th id="381">381</th><td></td></tr>
+<tr><th id="382">382</th><td>	<i>/* bins is used to store trees of free regions. */</i></td></tr>
+<tr><th id="383">383</th><td>	arena_bin_t		bins[NBINS];</td></tr>
+<tr><th id="384">384</th><td>};</td></tr>
+<tr><th id="385">385</th><td></td></tr>
+<tr><th id="386">386</th><td><u>#<span data-ppcond="55">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="387">387</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="388">388</th><td><u>#<span data-ppcond="388">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="389">389</th><td></td></tr>
+<tr><th id="390">390</th><td><b>extern</b> ssize_t	opt_lg_dirty_mult;</td></tr>
+<tr><th id="391">391</th><td><i>/*</i></td></tr>
+<tr><th id="392">392</th><td><i> * small_size2bin is a compact lookup table that rounds request sizes up to</i></td></tr>
+<tr><th id="393">393</th><td><i> * size classes.  In order to reduce cache footprint, the table is compressed,</i></td></tr>
+<tr><th id="394">394</th><td><i> * and all accesses are via the SMALL_SIZE2BIN macro.</i></td></tr>
+<tr><th id="395">395</th><td><i> */</i></td></tr>
+<tr><th id="396">396</th><td><b>extern</b> uint8_t <em>const</em>	small_size2bin[];</td></tr>
+<tr><th id="397">397</th><td><u>#define	SMALL_SIZE2BIN(s)	(small_size2bin[(s-1) &gt;&gt; LG_TINY_MIN])</u></td></tr>
+<tr><th id="398">398</th><td></td></tr>
+<tr><th id="399">399</th><td><b>extern</b> arena_bin_info_t	arena_bin_info[NBINS];</td></tr>
+<tr><th id="400">400</th><td></td></tr>
+<tr><th id="401">401</th><td><i>/* Number of large size classes. */</i></td></tr>
+<tr><th id="402">402</th><td><u>#define			nlclasses (chunk_npages - map_bias)</u></td></tr>
+<tr><th id="403">403</th><td></td></tr>
+<tr><th id="404">404</th><td><em>void</em>	arena_purge_all(arena_t *arena);</td></tr>
+<tr><th id="405">405</th><td><em>void</em>	arena_tcache_fill_small(arena_t *arena, tcache_bin_t *tbin,</td></tr>
+<tr><th id="406">406</th><td>    size_t binind, uint64_t prof_accumbytes);</td></tr>
+<tr><th id="407">407</th><td><em>void</em>	arena_alloc_junk_small(<em>void</em> *ptr, arena_bin_info_t *bin_info,</td></tr>
+<tr><th id="408">408</th><td>    bool zero);</td></tr>
+<tr><th id="409">409</th><td><u>#ifdef JEMALLOC_JET</u></td></tr>
+<tr><th id="410">410</th><td><b>typedef</b> <em>void</em> (arena_redzone_corruption_t)(<em>void</em> *, size_t, bool, size_t,</td></tr>
+<tr><th id="411">411</th><td>    uint8_t);</td></tr>
+<tr><th id="412">412</th><td><b>extern</b> arena_redzone_corruption_t *arena_redzone_corruption;</td></tr>
+<tr><th id="413">413</th><td><b>typedef</b> <em>void</em> (arena_dalloc_junk_small_t)(<em>void</em> *, arena_bin_info_t *);</td></tr>
+<tr><th id="414">414</th><td><b>extern</b> arena_dalloc_junk_small_t *arena_dalloc_junk_small;</td></tr>
+<tr><th id="415">415</th><td><u>#else</u></td></tr>
+<tr><th id="416">416</th><td><em>void</em>	arena_dalloc_junk_small(<em>void</em> *ptr, arena_bin_info_t *bin_info);</td></tr>
+<tr><th id="417">417</th><td><u>#endif</u></td></tr>
+<tr><th id="418">418</th><td><em>void</em>	arena_quarantine_junk_small(<em>void</em> *ptr, size_t usize);</td></tr>
+<tr><th id="419">419</th><td><em>void</em>	*arena_malloc_small(arena_t *arena, size_t size, bool zero);</td></tr>
+<tr><th id="420">420</th><td><em>void</em>	*arena_malloc_large(arena_t *arena, size_t size, bool zero);</td></tr>
+<tr><th id="421">421</th><td><em>void</em>	*arena_palloc(arena_t *arena, size_t size, size_t alignment, bool zero);</td></tr>
+<tr><th id="422">422</th><td><em>void</em>	arena_prof_promoted(<em>const</em> <em>void</em> *ptr, size_t size);</td></tr>
+<tr><th id="423">423</th><td><em>void</em>	arena_dalloc_bin_locked(arena_t *arena, arena_chunk_t *chunk, <em>void</em> *ptr,</td></tr>
+<tr><th id="424">424</th><td>    arena_chunk_map_t *mapelm);</td></tr>
+<tr><th id="425">425</th><td><em>void</em>	arena_dalloc_bin(arena_t *arena, arena_chunk_t *chunk, <em>void</em> *ptr,</td></tr>
+<tr><th id="426">426</th><td>    size_t pageind, arena_chunk_map_t *mapelm);</td></tr>
+<tr><th id="427">427</th><td><em>void</em>	arena_dalloc_small(arena_t *arena, arena_chunk_t *chunk, <em>void</em> *ptr,</td></tr>
+<tr><th id="428">428</th><td>    size_t pageind);</td></tr>
+<tr><th id="429">429</th><td><u>#ifdef JEMALLOC_JET</u></td></tr>
+<tr><th id="430">430</th><td><b>typedef</b> <em>void</em> (arena_dalloc_junk_large_t)(<em>void</em> *, size_t);</td></tr>
+<tr><th id="431">431</th><td><b>extern</b> arena_dalloc_junk_large_t *arena_dalloc_junk_large;</td></tr>
+<tr><th id="432">432</th><td><u>#endif</u></td></tr>
+<tr><th id="433">433</th><td><em>void</em>	arena_dalloc_large_locked(arena_t *arena, arena_chunk_t *chunk,</td></tr>
+<tr><th id="434">434</th><td>    <em>void</em> *ptr);</td></tr>
+<tr><th id="435">435</th><td><em>void</em>	arena_dalloc_large(arena_t *arena, arena_chunk_t *chunk, <em>void</em> *ptr);</td></tr>
+<tr><th id="436">436</th><td><u>#ifdef JEMALLOC_JET</u></td></tr>
+<tr><th id="437">437</th><td><b>typedef</b> <em>void</em> (arena_ralloc_junk_large_t)(<em>void</em> *, size_t, size_t);</td></tr>
+<tr><th id="438">438</th><td><b>extern</b> arena_ralloc_junk_large_t *arena_ralloc_junk_large;</td></tr>
+<tr><th id="439">439</th><td><u>#endif</u></td></tr>
+<tr><th id="440">440</th><td>bool	arena_ralloc_no_move(<em>void</em> *ptr, size_t oldsize, size_t size,</td></tr>
+<tr><th id="441">441</th><td>    size_t extra, bool zero);</td></tr>
+<tr><th id="442">442</th><td><em>void</em>	*arena_ralloc(arena_t *arena, <em>void</em> *ptr, size_t oldsize, size_t size,</td></tr>
+<tr><th id="443">443</th><td>    size_t extra, size_t alignment, bool zero, bool try_tcache_alloc,</td></tr>
+<tr><th id="444">444</th><td>    bool try_tcache_dalloc);</td></tr>
+<tr><th id="445">445</th><td>dss_prec_t	arena_dss_prec_get(arena_t *arena);</td></tr>
+<tr><th id="446">446</th><td><em>void</em>	arena_dss_prec_set(arena_t *arena, dss_prec_t dss_prec);</td></tr>
+<tr><th id="447">447</th><td><em>void</em>	arena_stats_merge(arena_t *arena, <em>const</em> <em>char</em> **dss, size_t *nactive,</td></tr>
+<tr><th id="448">448</th><td>    size_t *ndirty, arena_stats_t *astats, malloc_bin_stats_t *bstats,</td></tr>
+<tr><th id="449">449</th><td>    malloc_large_stats_t *lstats);</td></tr>
+<tr><th id="450">450</th><td>bool	arena_new(arena_t *arena, <em>unsigned</em> ind);</td></tr>
+<tr><th id="451">451</th><td><em>void</em>	arena_boot(<em>void</em>);</td></tr>
+<tr><th id="452">452</th><td><em>void</em>	arena_prefork(arena_t *arena);</td></tr>
+<tr><th id="453">453</th><td><em>void</em>	arena_postfork_parent(arena_t *arena);</td></tr>
+<tr><th id="454">454</th><td><em>void</em>	arena_postfork_child(arena_t *arena);</td></tr>
+<tr><th id="455">455</th><td></td></tr>
+<tr><th id="456">456</th><td><u>#<span data-ppcond="388">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="457">457</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="458">458</th><td><u>#<span data-ppcond="458">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="459">459</th><td></td></tr>
+<tr><th id="460">460</th><td><u>#ifndef JEMALLOC_ENABLE_INLINE</u></td></tr>
+<tr><th id="461">461</th><td>arena_chunk_map_t	*arena_mapp_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="462">462</th><td>size_t	*arena_mapbitsp_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="463">463</th><td>size_t	arena_mapbitsp_read(size_t *mapbitsp);</td></tr>
+<tr><th id="464">464</th><td>size_t	arena_mapbits_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="465">465</th><td>size_t	arena_mapbits_unallocated_size_get(arena_chunk_t *chunk,</td></tr>
+<tr><th id="466">466</th><td>    size_t pageind);</td></tr>
+<tr><th id="467">467</th><td>size_t	arena_mapbits_large_size_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="468">468</th><td>size_t	arena_mapbits_small_runind_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="469">469</th><td>size_t	arena_mapbits_binind_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="470">470</th><td>size_t	arena_mapbits_dirty_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="471">471</th><td>size_t	arena_mapbits_unzeroed_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="472">472</th><td>size_t	arena_mapbits_large_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="473">473</th><td>size_t	arena_mapbits_allocated_get(arena_chunk_t *chunk, size_t pageind);</td></tr>
+<tr><th id="474">474</th><td><em>void</em>	arena_mapbitsp_write(size_t *mapbitsp, size_t mapbits);</td></tr>
+<tr><th id="475">475</th><td><em>void</em>	arena_mapbits_unallocated_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="476">476</th><td>    size_t size, size_t flags);</td></tr>
+<tr><th id="477">477</th><td><em>void</em>	arena_mapbits_unallocated_size_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="478">478</th><td>    size_t size);</td></tr>
+<tr><th id="479">479</th><td><em>void</em>	arena_mapbits_large_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="480">480</th><td>    size_t size, size_t flags);</td></tr>
+<tr><th id="481">481</th><td><em>void</em>	arena_mapbits_large_binind_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="482">482</th><td>    size_t binind);</td></tr>
+<tr><th id="483">483</th><td><em>void</em>	arena_mapbits_small_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="484">484</th><td>    size_t runind, size_t binind, size_t flags);</td></tr>
+<tr><th id="485">485</th><td><em>void</em>	arena_mapbits_unzeroed_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="486">486</th><td>    size_t unzeroed);</td></tr>
+<tr><th id="487">487</th><td>bool	arena_prof_accum_impl(arena_t *arena, uint64_t accumbytes);</td></tr>
+<tr><th id="488">488</th><td>bool	arena_prof_accum_locked(arena_t *arena, uint64_t accumbytes);</td></tr>
+<tr><th id="489">489</th><td>bool	arena_prof_accum(arena_t *arena, uint64_t accumbytes);</td></tr>
+<tr><th id="490">490</th><td>size_t	arena_ptr_small_binind_get(<em>const</em> <em>void</em> *ptr, size_t mapbits);</td></tr>
+<tr><th id="491">491</th><td>size_t	arena_bin_index(arena_t *arena, arena_bin_t *bin);</td></tr>
+<tr><th id="492">492</th><td><em>unsigned</em>	arena_run_regind(arena_run_t *run, arena_bin_info_t *bin_info,</td></tr>
+<tr><th id="493">493</th><td>    <em>const</em> <em>void</em> *ptr);</td></tr>
+<tr><th id="494">494</th><td>prof_ctx_t	*arena_prof_ctx_get(<em>const</em> <em>void</em> *ptr);</td></tr>
+<tr><th id="495">495</th><td><em>void</em>	arena_prof_ctx_set(<em>const</em> <em>void</em> *ptr, size_t usize, prof_ctx_t *ctx);</td></tr>
+<tr><th id="496">496</th><td><em>void</em>	*arena_malloc(arena_t *arena, size_t size, bool zero, bool try_tcache);</td></tr>
+<tr><th id="497">497</th><td>size_t	arena_salloc(<em>const</em> <em>void</em> *ptr, bool demote);</td></tr>
+<tr><th id="498">498</th><td><em>void</em>	arena_dalloc(arena_t *arena, arena_chunk_t *chunk, <em>void</em> *ptr,</td></tr>
+<tr><th id="499">499</th><td>    bool try_tcache);</td></tr>
+<tr><th id="500">500</th><td><u>#endif</u></td></tr>
+<tr><th id="501">501</th><td></td></tr>
+<tr><th id="502">502</th><td><u>#if (defined(JEMALLOC_ENABLE_INLINE) || defined(JEMALLOC_ARENA_C_))</u></td></tr>
+<tr><th id="503">503</th><td><u>#  ifdef JEMALLOC_ARENA_INLINE_A</u></td></tr>
+<tr><th id="504">504</th><td>JEMALLOC_ALWAYS_INLINE arena_chunk_map_t *</td></tr>
+<tr><th id="505">505</th><td>arena_mapp_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="506">506</th><td>{</td></tr>
+<tr><th id="507">507</th><td></td></tr>
+<tr><th id="508">508</th><td>	assert(pageind &gt;= map_bias);</td></tr>
+<tr><th id="509">509</th><td>	assert(pageind &lt; chunk_npages);</td></tr>
+<tr><th id="510">510</th><td></td></tr>
+<tr><th id="511">511</th><td>	<b>return</b> (&amp;chunk-&gt;map[pageind-map_bias]);</td></tr>
+<tr><th id="512">512</th><td>}</td></tr>
+<tr><th id="513">513</th><td></td></tr>
+<tr><th id="514">514</th><td>JEMALLOC_ALWAYS_INLINE size_t *</td></tr>
+<tr><th id="515">515</th><td>arena_mapbitsp_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="516">516</th><td>{</td></tr>
+<tr><th id="517">517</th><td></td></tr>
+<tr><th id="518">518</th><td>	<b>return</b> (&amp;arena_mapp_get(chunk, pageind)-&gt;bits);</td></tr>
+<tr><th id="519">519</th><td>}</td></tr>
+<tr><th id="520">520</th><td></td></tr>
+<tr><th id="521">521</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="522">522</th><td>arena_mapbitsp_read(size_t *mapbitsp)</td></tr>
+<tr><th id="523">523</th><td>{</td></tr>
+<tr><th id="524">524</th><td></td></tr>
+<tr><th id="525">525</th><td>	<b>return</b> (*mapbitsp);</td></tr>
+<tr><th id="526">526</th><td>}</td></tr>
+<tr><th id="527">527</th><td></td></tr>
+<tr><th id="528">528</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="529">529</th><td>arena_mapbits_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="530">530</th><td>{</td></tr>
+<tr><th id="531">531</th><td></td></tr>
+<tr><th id="532">532</th><td>	<b>return</b> (arena_mapbitsp_read(arena_mapbitsp_get(chunk, pageind)));</td></tr>
+<tr><th id="533">533</th><td>}</td></tr>
+<tr><th id="534">534</th><td></td></tr>
+<tr><th id="535">535</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="536">536</th><td>arena_mapbits_unallocated_size_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="537">537</th><td>{</td></tr>
+<tr><th id="538">538</th><td>	size_t mapbits;</td></tr>
+<tr><th id="539">539</th><td></td></tr>
+<tr><th id="540">540</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="541">541</th><td>	assert((mapbits &amp; (CHUNK_MAP_LARGE|CHUNK_MAP_ALLOCATED)) == <var>0</var>);</td></tr>
+<tr><th id="542">542</th><td>	<b>return</b> (mapbits &amp; ~PAGE_MASK);</td></tr>
+<tr><th id="543">543</th><td>}</td></tr>
+<tr><th id="544">544</th><td></td></tr>
+<tr><th id="545">545</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="546">546</th><td>arena_mapbits_large_size_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="547">547</th><td>{</td></tr>
+<tr><th id="548">548</th><td>	size_t mapbits;</td></tr>
+<tr><th id="549">549</th><td></td></tr>
+<tr><th id="550">550</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="551">551</th><td>	assert((mapbits &amp; (CHUNK_MAP_LARGE|CHUNK_MAP_ALLOCATED)) ==</td></tr>
+<tr><th id="552">552</th><td>	    (CHUNK_MAP_LARGE|CHUNK_MAP_ALLOCATED));</td></tr>
+<tr><th id="553">553</th><td>	<b>return</b> (mapbits &amp; ~PAGE_MASK);</td></tr>
+<tr><th id="554">554</th><td>}</td></tr>
+<tr><th id="555">555</th><td></td></tr>
+<tr><th id="556">556</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="557">557</th><td>arena_mapbits_small_runind_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="558">558</th><td>{</td></tr>
+<tr><th id="559">559</th><td>	size_t mapbits;</td></tr>
+<tr><th id="560">560</th><td></td></tr>
+<tr><th id="561">561</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="562">562</th><td>	assert((mapbits &amp; (CHUNK_MAP_LARGE|CHUNK_MAP_ALLOCATED)) ==</td></tr>
+<tr><th id="563">563</th><td>	    CHUNK_MAP_ALLOCATED);</td></tr>
+<tr><th id="564">564</th><td>	<b>return</b> (mapbits &gt;&gt; LG_PAGE);</td></tr>
+<tr><th id="565">565</th><td>}</td></tr>
+<tr><th id="566">566</th><td></td></tr>
+<tr><th id="567">567</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="568">568</th><td>arena_mapbits_binind_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="569">569</th><td>{</td></tr>
+<tr><th id="570">570</th><td>	size_t mapbits;</td></tr>
+<tr><th id="571">571</th><td>	size_t binind;</td></tr>
+<tr><th id="572">572</th><td></td></tr>
+<tr><th id="573">573</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="574">574</th><td>	binind = (mapbits &amp; CHUNK_MAP_BININD_MASK) &gt;&gt; CHUNK_MAP_BININD_SHIFT;</td></tr>
+<tr><th id="575">575</th><td>	assert(binind &lt; NBINS || binind == BININD_INVALID);</td></tr>
+<tr><th id="576">576</th><td>	<b>return</b> (binind);</td></tr>
+<tr><th id="577">577</th><td>}</td></tr>
+<tr><th id="578">578</th><td></td></tr>
+<tr><th id="579">579</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="580">580</th><td>arena_mapbits_dirty_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="581">581</th><td>{</td></tr>
+<tr><th id="582">582</th><td>	size_t mapbits;</td></tr>
+<tr><th id="583">583</th><td></td></tr>
+<tr><th id="584">584</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="585">585</th><td>	<b>return</b> (mapbits &amp; CHUNK_MAP_DIRTY);</td></tr>
+<tr><th id="586">586</th><td>}</td></tr>
+<tr><th id="587">587</th><td></td></tr>
+<tr><th id="588">588</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="589">589</th><td>arena_mapbits_unzeroed_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="590">590</th><td>{</td></tr>
+<tr><th id="591">591</th><td>	size_t mapbits;</td></tr>
+<tr><th id="592">592</th><td></td></tr>
+<tr><th id="593">593</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="594">594</th><td>	<b>return</b> (mapbits &amp; CHUNK_MAP_UNZEROED);</td></tr>
+<tr><th id="595">595</th><td>}</td></tr>
+<tr><th id="596">596</th><td></td></tr>
+<tr><th id="597">597</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="598">598</th><td>arena_mapbits_large_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="599">599</th><td>{</td></tr>
+<tr><th id="600">600</th><td>	size_t mapbits;</td></tr>
+<tr><th id="601">601</th><td></td></tr>
+<tr><th id="602">602</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="603">603</th><td>	<b>return</b> (mapbits &amp; CHUNK_MAP_LARGE);</td></tr>
+<tr><th id="604">604</th><td>}</td></tr>
+<tr><th id="605">605</th><td></td></tr>
+<tr><th id="606">606</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="607">607</th><td>arena_mapbits_allocated_get(arena_chunk_t *chunk, size_t pageind)</td></tr>
+<tr><th id="608">608</th><td>{</td></tr>
+<tr><th id="609">609</th><td>	size_t mapbits;</td></tr>
+<tr><th id="610">610</th><td></td></tr>
+<tr><th id="611">611</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="612">612</th><td>	<b>return</b> (mapbits &amp; CHUNK_MAP_ALLOCATED);</td></tr>
+<tr><th id="613">613</th><td>}</td></tr>
+<tr><th id="614">614</th><td></td></tr>
+<tr><th id="615">615</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="616">616</th><td>arena_mapbitsp_write(size_t *mapbitsp, size_t mapbits)</td></tr>
+<tr><th id="617">617</th><td>{</td></tr>
+<tr><th id="618">618</th><td></td></tr>
+<tr><th id="619">619</th><td>	*mapbitsp = mapbits;</td></tr>
+<tr><th id="620">620</th><td>}</td></tr>
+<tr><th id="621">621</th><td></td></tr>
+<tr><th id="622">622</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="623">623</th><td>arena_mapbits_unallocated_set(arena_chunk_t *chunk, size_t pageind, size_t size,</td></tr>
+<tr><th id="624">624</th><td>    size_t flags)</td></tr>
+<tr><th id="625">625</th><td>{</td></tr>
+<tr><th id="626">626</th><td>	size_t *mapbitsp = arena_mapbitsp_get(chunk, pageind);</td></tr>
+<tr><th id="627">627</th><td></td></tr>
+<tr><th id="628">628</th><td>	assert((size &amp; PAGE_MASK) == <var>0</var>);</td></tr>
+<tr><th id="629">629</th><td>	assert((flags &amp; ~CHUNK_MAP_FLAGS_MASK) == <var>0</var>);</td></tr>
+<tr><th id="630">630</th><td>	assert((flags &amp; (CHUNK_MAP_DIRTY|CHUNK_MAP_UNZEROED)) == flags);</td></tr>
+<tr><th id="631">631</th><td>	arena_mapbitsp_write(mapbitsp, size | CHUNK_MAP_BININD_INVALID | flags);</td></tr>
+<tr><th id="632">632</th><td>}</td></tr>
+<tr><th id="633">633</th><td></td></tr>
+<tr><th id="634">634</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="635">635</th><td>arena_mapbits_unallocated_size_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="636">636</th><td>    size_t size)</td></tr>
+<tr><th id="637">637</th><td>{</td></tr>
+<tr><th id="638">638</th><td>	size_t *mapbitsp = arena_mapbitsp_get(chunk, pageind);</td></tr>
+<tr><th id="639">639</th><td>	size_t mapbits = arena_mapbitsp_read(mapbitsp);</td></tr>
+<tr><th id="640">640</th><td></td></tr>
+<tr><th id="641">641</th><td>	assert((size &amp; PAGE_MASK) == <var>0</var>);</td></tr>
+<tr><th id="642">642</th><td>	assert((mapbits &amp; (CHUNK_MAP_LARGE|CHUNK_MAP_ALLOCATED)) == <var>0</var>);</td></tr>
+<tr><th id="643">643</th><td>	arena_mapbitsp_write(mapbitsp, size | (mapbits &amp; PAGE_MASK));</td></tr>
+<tr><th id="644">644</th><td>}</td></tr>
+<tr><th id="645">645</th><td></td></tr>
+<tr><th id="646">646</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="647">647</th><td>arena_mapbits_large_set(arena_chunk_t *chunk, size_t pageind, size_t size,</td></tr>
+<tr><th id="648">648</th><td>    size_t flags)</td></tr>
+<tr><th id="649">649</th><td>{</td></tr>
+<tr><th id="650">650</th><td>	size_t *mapbitsp = arena_mapbitsp_get(chunk, pageind);</td></tr>
+<tr><th id="651">651</th><td>	size_t mapbits = arena_mapbitsp_read(mapbitsp);</td></tr>
+<tr><th id="652">652</th><td>	size_t unzeroed;</td></tr>
+<tr><th id="653">653</th><td></td></tr>
+<tr><th id="654">654</th><td>	assert((size &amp; PAGE_MASK) == <var>0</var>);</td></tr>
+<tr><th id="655">655</th><td>	assert((flags &amp; CHUNK_MAP_DIRTY) == flags);</td></tr>
+<tr><th id="656">656</th><td>	unzeroed = mapbits &amp; CHUNK_MAP_UNZEROED; <i>/* Preserve unzeroed. */</i></td></tr>
+<tr><th id="657">657</th><td>	arena_mapbitsp_write(mapbitsp, size | CHUNK_MAP_BININD_INVALID | flags</td></tr>
+<tr><th id="658">658</th><td>	    | unzeroed | CHUNK_MAP_LARGE | CHUNK_MAP_ALLOCATED);</td></tr>
+<tr><th id="659">659</th><td>}</td></tr>
+<tr><th id="660">660</th><td></td></tr>
+<tr><th id="661">661</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="662">662</th><td>arena_mapbits_large_binind_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="663">663</th><td>    size_t binind)</td></tr>
+<tr><th id="664">664</th><td>{</td></tr>
+<tr><th id="665">665</th><td>	size_t *mapbitsp = arena_mapbitsp_get(chunk, pageind);</td></tr>
+<tr><th id="666">666</th><td>	size_t mapbits = arena_mapbitsp_read(mapbitsp);</td></tr>
+<tr><th id="667">667</th><td></td></tr>
+<tr><th id="668">668</th><td>	assert(binind &lt;= BININD_INVALID);</td></tr>
+<tr><th id="669">669</th><td>	assert(arena_mapbits_large_size_get(chunk, pageind) == PAGE);</td></tr>
+<tr><th id="670">670</th><td>	arena_mapbitsp_write(mapbitsp, (mapbits &amp; ~CHUNK_MAP_BININD_MASK) |</td></tr>
+<tr><th id="671">671</th><td>	    (binind &lt;&lt; CHUNK_MAP_BININD_SHIFT));</td></tr>
+<tr><th id="672">672</th><td>}</td></tr>
+<tr><th id="673">673</th><td></td></tr>
+<tr><th id="674">674</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="675">675</th><td>arena_mapbits_small_set(arena_chunk_t *chunk, size_t pageind, size_t runind,</td></tr>
+<tr><th id="676">676</th><td>    size_t binind, size_t flags)</td></tr>
+<tr><th id="677">677</th><td>{</td></tr>
+<tr><th id="678">678</th><td>	size_t *mapbitsp = arena_mapbitsp_get(chunk, pageind);</td></tr>
+<tr><th id="679">679</th><td>	size_t mapbits = arena_mapbitsp_read(mapbitsp);</td></tr>
+<tr><th id="680">680</th><td>	size_t unzeroed;</td></tr>
+<tr><th id="681">681</th><td></td></tr>
+<tr><th id="682">682</th><td>	assert(binind &lt; BININD_INVALID);</td></tr>
+<tr><th id="683">683</th><td>	assert(pageind - runind &gt;= map_bias);</td></tr>
+<tr><th id="684">684</th><td>	assert((flags &amp; CHUNK_MAP_DIRTY) == flags);</td></tr>
+<tr><th id="685">685</th><td>	unzeroed = mapbits &amp; CHUNK_MAP_UNZEROED; <i>/* Preserve unzeroed. */</i></td></tr>
+<tr><th id="686">686</th><td>	arena_mapbitsp_write(mapbitsp, (runind &lt;&lt; LG_PAGE) | (binind &lt;&lt;</td></tr>
+<tr><th id="687">687</th><td>	    CHUNK_MAP_BININD_SHIFT) | flags | unzeroed | CHUNK_MAP_ALLOCATED);</td></tr>
+<tr><th id="688">688</th><td>}</td></tr>
+<tr><th id="689">689</th><td></td></tr>
+<tr><th id="690">690</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="691">691</th><td>arena_mapbits_unzeroed_set(arena_chunk_t *chunk, size_t pageind,</td></tr>
+<tr><th id="692">692</th><td>    size_t unzeroed)</td></tr>
+<tr><th id="693">693</th><td>{</td></tr>
+<tr><th id="694">694</th><td>	size_t *mapbitsp = arena_mapbitsp_get(chunk, pageind);</td></tr>
+<tr><th id="695">695</th><td>	size_t mapbits = arena_mapbitsp_read(mapbitsp);</td></tr>
+<tr><th id="696">696</th><td></td></tr>
+<tr><th id="697">697</th><td>	arena_mapbitsp_write(mapbitsp, (mapbits &amp; ~CHUNK_MAP_UNZEROED) |</td></tr>
+<tr><th id="698">698</th><td>	    unzeroed);</td></tr>
+<tr><th id="699">699</th><td>}</td></tr>
+<tr><th id="700">700</th><td></td></tr>
+<tr><th id="701">701</th><td>JEMALLOC_INLINE bool</td></tr>
+<tr><th id="702">702</th><td>arena_prof_accum_impl(arena_t *arena, uint64_t accumbytes)</td></tr>
+<tr><th id="703">703</th><td>{</td></tr>
+<tr><th id="704">704</th><td></td></tr>
+<tr><th id="705">705</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="706">706</th><td>	assert(prof_interval != <var>0</var>);</td></tr>
+<tr><th id="707">707</th><td></td></tr>
+<tr><th id="708">708</th><td>	arena-&gt;prof_accumbytes += accumbytes;</td></tr>
+<tr><th id="709">709</th><td>	<b>if</b> (arena-&gt;prof_accumbytes &gt;= prof_interval) {</td></tr>
+<tr><th id="710">710</th><td>		arena-&gt;prof_accumbytes -= prof_interval;</td></tr>
+<tr><th id="711">711</th><td>		<b>return</b> (true);</td></tr>
+<tr><th id="712">712</th><td>	}</td></tr>
+<tr><th id="713">713</th><td>	<b>return</b> (false);</td></tr>
+<tr><th id="714">714</th><td>}</td></tr>
+<tr><th id="715">715</th><td></td></tr>
+<tr><th id="716">716</th><td>JEMALLOC_INLINE bool</td></tr>
+<tr><th id="717">717</th><td>arena_prof_accum_locked(arena_t *arena, uint64_t accumbytes)</td></tr>
+<tr><th id="718">718</th><td>{</td></tr>
+<tr><th id="719">719</th><td></td></tr>
+<tr><th id="720">720</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="721">721</th><td></td></tr>
+<tr><th id="722">722</th><td>	<b>if</b> (prof_interval == <var>0</var>)</td></tr>
+<tr><th id="723">723</th><td>		<b>return</b> (false);</td></tr>
+<tr><th id="724">724</th><td>	<b>return</b> (arena_prof_accum_impl(arena, accumbytes));</td></tr>
+<tr><th id="725">725</th><td>}</td></tr>
+<tr><th id="726">726</th><td></td></tr>
+<tr><th id="727">727</th><td>JEMALLOC_INLINE bool</td></tr>
+<tr><th id="728">728</th><td>arena_prof_accum(arena_t *arena, uint64_t accumbytes)</td></tr>
+<tr><th id="729">729</th><td>{</td></tr>
+<tr><th id="730">730</th><td></td></tr>
+<tr><th id="731">731</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="732">732</th><td></td></tr>
+<tr><th id="733">733</th><td>	<b>if</b> (prof_interval == <var>0</var>)</td></tr>
+<tr><th id="734">734</th><td>		<b>return</b> (false);</td></tr>
+<tr><th id="735">735</th><td></td></tr>
+<tr><th id="736">736</th><td>	{</td></tr>
+<tr><th id="737">737</th><td>		bool ret;</td></tr>
+<tr><th id="738">738</th><td></td></tr>
+<tr><th id="739">739</th><td>		malloc_mutex_lock(&amp;arena-&gt;lock);</td></tr>
+<tr><th id="740">740</th><td>		ret = arena_prof_accum_impl(arena, accumbytes);</td></tr>
+<tr><th id="741">741</th><td>		malloc_mutex_unlock(&amp;arena-&gt;lock);</td></tr>
+<tr><th id="742">742</th><td>		<b>return</b> (ret);</td></tr>
+<tr><th id="743">743</th><td>	}</td></tr>
+<tr><th id="744">744</th><td>}</td></tr>
+<tr><th id="745">745</th><td></td></tr>
+<tr><th id="746">746</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="747">747</th><td>arena_ptr_small_binind_get(<em>const</em> <em>void</em> *ptr, size_t mapbits)</td></tr>
+<tr><th id="748">748</th><td>{</td></tr>
+<tr><th id="749">749</th><td>	size_t binind;</td></tr>
+<tr><th id="750">750</th><td></td></tr>
+<tr><th id="751">751</th><td>	binind = (mapbits &amp; CHUNK_MAP_BININD_MASK) &gt;&gt; CHUNK_MAP_BININD_SHIFT;</td></tr>
+<tr><th id="752">752</th><td></td></tr>
+<tr><th id="753">753</th><td>	<b>if</b> (config_debug) {</td></tr>
+<tr><th id="754">754</th><td>		arena_chunk_t *chunk;</td></tr>
+<tr><th id="755">755</th><td>		arena_t *arena;</td></tr>
+<tr><th id="756">756</th><td>		size_t pageind;</td></tr>
+<tr><th id="757">757</th><td>		size_t actual_mapbits;</td></tr>
+<tr><th id="758">758</th><td>		arena_run_t *run;</td></tr>
+<tr><th id="759">759</th><td>		arena_bin_t *bin;</td></tr>
+<tr><th id="760">760</th><td>		size_t actual_binind;</td></tr>
+<tr><th id="761">761</th><td>		arena_bin_info_t *bin_info;</td></tr>
+<tr><th id="762">762</th><td></td></tr>
+<tr><th id="763">763</th><td>		assert(binind != BININD_INVALID);</td></tr>
+<tr><th id="764">764</th><td>		assert(binind &lt; NBINS);</td></tr>
+<tr><th id="765">765</th><td>		chunk = (arena_chunk_t *)CHUNK_ADDR2BASE(ptr);</td></tr>
+<tr><th id="766">766</th><td>		arena = chunk-&gt;arena;</td></tr>
+<tr><th id="767">767</th><td>		pageind = ((uintptr_t)ptr - (uintptr_t)chunk) &gt;&gt; LG_PAGE;</td></tr>
+<tr><th id="768">768</th><td>		actual_mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="769">769</th><td>		assert(mapbits == actual_mapbits);</td></tr>
+<tr><th id="770">770</th><td>		assert(arena_mapbits_large_get(chunk, pageind) == <var>0</var>);</td></tr>
+<tr><th id="771">771</th><td>		assert(arena_mapbits_allocated_get(chunk, pageind) != <var>0</var>);</td></tr>
+<tr><th id="772">772</th><td>		run = (arena_run_t *)((uintptr_t)chunk + (uintptr_t)((pageind -</td></tr>
+<tr><th id="773">773</th><td>		    (actual_mapbits &gt;&gt; LG_PAGE)) &lt;&lt; LG_PAGE));</td></tr>
+<tr><th id="774">774</th><td>		bin = run-&gt;bin;</td></tr>
+<tr><th id="775">775</th><td>		actual_binind = bin - arena-&gt;bins;</td></tr>
+<tr><th id="776">776</th><td>		assert(binind == actual_binind);</td></tr>
+<tr><th id="777">777</th><td>		bin_info = &amp;arena_bin_info[actual_binind];</td></tr>
+<tr><th id="778">778</th><td>		assert(((uintptr_t)ptr - ((uintptr_t)run +</td></tr>
+<tr><th id="779">779</th><td>		    (uintptr_t)bin_info-&gt;reg0_offset)) % bin_info-&gt;reg_interval</td></tr>
+<tr><th id="780">780</th><td>		    == <var>0</var>);</td></tr>
+<tr><th id="781">781</th><td>	}</td></tr>
+<tr><th id="782">782</th><td></td></tr>
+<tr><th id="783">783</th><td>	<b>return</b> (binind);</td></tr>
+<tr><th id="784">784</th><td>}</td></tr>
+<tr><th id="785">785</th><td><u>#  endif /* JEMALLOC_ARENA_INLINE_A */</u></td></tr>
+<tr><th id="786">786</th><td></td></tr>
+<tr><th id="787">787</th><td><u>#  ifdef JEMALLOC_ARENA_INLINE_B</u></td></tr>
+<tr><th id="788">788</th><td>JEMALLOC_INLINE size_t</td></tr>
+<tr><th id="789">789</th><td>arena_bin_index(arena_t *arena, arena_bin_t *bin)</td></tr>
+<tr><th id="790">790</th><td>{</td></tr>
+<tr><th id="791">791</th><td>	size_t binind = bin - arena-&gt;bins;</td></tr>
+<tr><th id="792">792</th><td>	assert(binind &lt; NBINS);</td></tr>
+<tr><th id="793">793</th><td>	<b>return</b> (binind);</td></tr>
+<tr><th id="794">794</th><td>}</td></tr>
+<tr><th id="795">795</th><td></td></tr>
+<tr><th id="796">796</th><td>JEMALLOC_INLINE <em>unsigned</em></td></tr>
+<tr><th id="797">797</th><td>arena_run_regind(arena_run_t *run, arena_bin_info_t *bin_info, <em>const</em> <em>void</em> *ptr)</td></tr>
+<tr><th id="798">798</th><td>{</td></tr>
+<tr><th id="799">799</th><td>	<em>unsigned</em> shift, diff, regind;</td></tr>
+<tr><th id="800">800</th><td>	size_t interval;</td></tr>
+<tr><th id="801">801</th><td></td></tr>
+<tr><th id="802">802</th><td>	<i>/*</i></td></tr>
+<tr><th id="803">803</th><td><i>	 * Freeing a pointer lower than region zero can cause assertion</i></td></tr>
+<tr><th id="804">804</th><td><i>	 * failure.</i></td></tr>
+<tr><th id="805">805</th><td><i>	 */</i></td></tr>
+<tr><th id="806">806</th><td>	assert((uintptr_t)ptr &gt;= (uintptr_t)run +</td></tr>
+<tr><th id="807">807</th><td>	    (uintptr_t)bin_info-&gt;reg0_offset);</td></tr>
+<tr><th id="808">808</th><td></td></tr>
+<tr><th id="809">809</th><td>	<i>/*</i></td></tr>
+<tr><th id="810">810</th><td><i>	 * Avoid doing division with a variable divisor if possible.  Using</i></td></tr>
+<tr><th id="811">811</th><td><i>	 * actual division here can reduce allocator throughput by over 20%!</i></td></tr>
+<tr><th id="812">812</th><td><i>	 */</i></td></tr>
+<tr><th id="813">813</th><td>	diff = (<em>unsigned</em>)((uintptr_t)ptr - (uintptr_t)run -</td></tr>
+<tr><th id="814">814</th><td>	    bin_info-&gt;reg0_offset);</td></tr>
+<tr><th id="815">815</th><td></td></tr>
+<tr><th id="816">816</th><td>	<i>/* Rescale (factor powers of 2 out of the numerator and denominator). */</i></td></tr>
+<tr><th id="817">817</th><td>	interval = bin_info-&gt;reg_interval;</td></tr>
+<tr><th id="818">818</th><td>	shift = ffs(interval) - <var>1</var>;</td></tr>
+<tr><th id="819">819</th><td>	diff &gt;&gt;= shift;</td></tr>
+<tr><th id="820">820</th><td>	interval &gt;&gt;= shift;</td></tr>
+<tr><th id="821">821</th><td></td></tr>
+<tr><th id="822">822</th><td>	<b>if</b> (interval == <var>1</var>) {</td></tr>
+<tr><th id="823">823</th><td>		<i>/* The divisor was a power of 2. */</i></td></tr>
+<tr><th id="824">824</th><td>		regind = diff;</td></tr>
+<tr><th id="825">825</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="826">826</th><td>		<i>/*</i></td></tr>
+<tr><th id="827">827</th><td><i>		 * To divide by a number D that is not a power of two we</i></td></tr>
+<tr><th id="828">828</th><td><i>		 * multiply by (2^21 / D) and then right shift by 21 positions.</i></td></tr>
+<tr><th id="829">829</th><td><i>		 *</i></td></tr>
+<tr><th id="830">830</th><td><i>		 *   X / D</i></td></tr>
+<tr><th id="831">831</th><td><i>		 *</i></td></tr>
+<tr><th id="832">832</th><td><i>		 * becomes</i></td></tr>
+<tr><th id="833">833</th><td><i>		 *</i></td></tr>
+<tr><th id="834">834</th><td><i>		 *   (X * interval_invs[D - 3]) &gt;&gt; SIZE_INV_SHIFT</i></td></tr>
+<tr><th id="835">835</th><td><i>		 *</i></td></tr>
+<tr><th id="836">836</th><td><i>		 * We can omit the first three elements, because we never</i></td></tr>
+<tr><th id="837">837</th><td><i>		 * divide by 0, and 1 and 2 are both powers of two, which are</i></td></tr>
+<tr><th id="838">838</th><td><i>		 * handled above.</i></td></tr>
+<tr><th id="839">839</th><td><i>		 */</i></td></tr>
+<tr><th id="840">840</th><td><u>#define	SIZE_INV_SHIFT	((sizeof(unsigned) &lt;&lt; 3) - LG_RUN_MAXREGS)</u></td></tr>
+<tr><th id="841">841</th><td><u>#define	SIZE_INV(s)	(((1U &lt;&lt; SIZE_INV_SHIFT) / (s)) + 1)</u></td></tr>
+<tr><th id="842">842</th><td>		<em>static</em> <em>const</em> <em>unsigned</em> interval_invs[] = {</td></tr>
+<tr><th id="843">843</th><td>		    SIZE_INV(<var>3</var>),</td></tr>
+<tr><th id="844">844</th><td>		    SIZE_INV(<var>4</var>), SIZE_INV(<var>5</var>), SIZE_INV(<var>6</var>), SIZE_INV(<var>7</var>),</td></tr>
+<tr><th id="845">845</th><td>		    SIZE_INV(<var>8</var>), SIZE_INV(<var>9</var>), SIZE_INV(<var>10</var>), SIZE_INV(<var>11</var>),</td></tr>
+<tr><th id="846">846</th><td>		    SIZE_INV(<var>12</var>), SIZE_INV(<var>13</var>), SIZE_INV(<var>14</var>), SIZE_INV(<var>15</var>),</td></tr>
+<tr><th id="847">847</th><td>		    SIZE_INV(<var>16</var>), SIZE_INV(<var>17</var>), SIZE_INV(<var>18</var>), SIZE_INV(<var>19</var>),</td></tr>
+<tr><th id="848">848</th><td>		    SIZE_INV(<var>20</var>), SIZE_INV(<var>21</var>), SIZE_INV(<var>22</var>), SIZE_INV(<var>23</var>),</td></tr>
+<tr><th id="849">849</th><td>		    SIZE_INV(<var>24</var>), SIZE_INV(<var>25</var>), SIZE_INV(<var>26</var>), SIZE_INV(<var>27</var>),</td></tr>
+<tr><th id="850">850</th><td>		    SIZE_INV(<var>28</var>), SIZE_INV(<var>29</var>), SIZE_INV(<var>30</var>), SIZE_INV(<var>31</var>)</td></tr>
+<tr><th id="851">851</th><td>		};</td></tr>
+<tr><th id="852">852</th><td></td></tr>
+<tr><th id="853">853</th><td>		<b>if</b> (interval &lt;= ((<b>sizeof</b>(interval_invs) / <b>sizeof</b>(<em>unsigned</em>)) +</td></tr>
+<tr><th id="854">854</th><td>		    <var>2</var>)) {</td></tr>
+<tr><th id="855">855</th><td>			regind = (diff * interval_invs[interval - <var>3</var>]) &gt;&gt;</td></tr>
+<tr><th id="856">856</th><td>			    SIZE_INV_SHIFT;</td></tr>
+<tr><th id="857">857</th><td>		} <b>else</b></td></tr>
+<tr><th id="858">858</th><td>			regind = diff / interval;</td></tr>
+<tr><th id="859">859</th><td><u>#undef SIZE_INV</u></td></tr>
+<tr><th id="860">860</th><td><u>#undef SIZE_INV_SHIFT</u></td></tr>
+<tr><th id="861">861</th><td>	}</td></tr>
+<tr><th id="862">862</th><td>	assert(diff == regind * interval);</td></tr>
+<tr><th id="863">863</th><td>	assert(regind &lt; bin_info-&gt;nregs);</td></tr>
+<tr><th id="864">864</th><td></td></tr>
+<tr><th id="865">865</th><td>	<b>return</b> (regind);</td></tr>
+<tr><th id="866">866</th><td>}</td></tr>
+<tr><th id="867">867</th><td></td></tr>
+<tr><th id="868">868</th><td>JEMALLOC_INLINE prof_ctx_t *</td></tr>
+<tr><th id="869">869</th><td>arena_prof_ctx_get(<em>const</em> <em>void</em> *ptr)</td></tr>
+<tr><th id="870">870</th><td>{</td></tr>
+<tr><th id="871">871</th><td>	prof_ctx_t *ret;</td></tr>
+<tr><th id="872">872</th><td>	arena_chunk_t *chunk;</td></tr>
+<tr><th id="873">873</th><td>	size_t pageind, mapbits;</td></tr>
+<tr><th id="874">874</th><td></td></tr>
+<tr><th id="875">875</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="876">876</th><td>	assert(ptr != NULL);</td></tr>
+<tr><th id="877">877</th><td>	assert(CHUNK_ADDR2BASE(ptr) != ptr);</td></tr>
+<tr><th id="878">878</th><td></td></tr>
+<tr><th id="879">879</th><td>	chunk = (arena_chunk_t *)CHUNK_ADDR2BASE(ptr);</td></tr>
+<tr><th id="880">880</th><td>	pageind = ((uintptr_t)ptr - (uintptr_t)chunk) &gt;&gt; LG_PAGE;</td></tr>
+<tr><th id="881">881</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="882">882</th><td>	assert((mapbits &amp; CHUNK_MAP_ALLOCATED) != <var>0</var>);</td></tr>
+<tr><th id="883">883</th><td>	<b>if</b> ((mapbits &amp; CHUNK_MAP_LARGE) == <var>0</var>) {</td></tr>
+<tr><th id="884">884</th><td>		<b>if</b> (prof_promote)</td></tr>
+<tr><th id="885">885</th><td>			ret = (prof_ctx_t *)(uintptr_t)<var>1U</var>;</td></tr>
+<tr><th id="886">886</th><td>		<b>else</b> {</td></tr>
+<tr><th id="887">887</th><td>			arena_run_t *run = (arena_run_t *)((uintptr_t)chunk +</td></tr>
+<tr><th id="888">888</th><td>			    (uintptr_t)((pageind - (mapbits &gt;&gt; LG_PAGE)) &lt;&lt;</td></tr>
+<tr><th id="889">889</th><td>			    LG_PAGE));</td></tr>
+<tr><th id="890">890</th><td>			size_t binind = arena_ptr_small_binind_get(ptr,</td></tr>
+<tr><th id="891">891</th><td>			    mapbits);</td></tr>
+<tr><th id="892">892</th><td>			arena_bin_info_t *bin_info = &amp;arena_bin_info[binind];</td></tr>
+<tr><th id="893">893</th><td>			<em>unsigned</em> regind;</td></tr>
+<tr><th id="894">894</th><td></td></tr>
+<tr><th id="895">895</th><td>			regind = arena_run_regind(run, bin_info, ptr);</td></tr>
+<tr><th id="896">896</th><td>			ret = *(prof_ctx_t **)((uintptr_t)run +</td></tr>
+<tr><th id="897">897</th><td>			    bin_info-&gt;ctx0_offset + (regind *</td></tr>
+<tr><th id="898">898</th><td>			    <b>sizeof</b>(prof_ctx_t *)));</td></tr>
+<tr><th id="899">899</th><td>		}</td></tr>
+<tr><th id="900">900</th><td>	} <b>else</b></td></tr>
+<tr><th id="901">901</th><td>		ret = arena_mapp_get(chunk, pageind)-&gt;prof_ctx;</td></tr>
+<tr><th id="902">902</th><td></td></tr>
+<tr><th id="903">903</th><td>	<b>return</b> (ret);</td></tr>
+<tr><th id="904">904</th><td>}</td></tr>
+<tr><th id="905">905</th><td></td></tr>
+<tr><th id="906">906</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="907">907</th><td>arena_prof_ctx_set(<em>const</em> <em>void</em> *ptr, size_t usize, prof_ctx_t *ctx)</td></tr>
+<tr><th id="908">908</th><td>{</td></tr>
+<tr><th id="909">909</th><td>	arena_chunk_t *chunk;</td></tr>
+<tr><th id="910">910</th><td>	size_t pageind;</td></tr>
+<tr><th id="911">911</th><td></td></tr>
+<tr><th id="912">912</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="913">913</th><td>	assert(ptr != NULL);</td></tr>
+<tr><th id="914">914</th><td>	assert(CHUNK_ADDR2BASE(ptr) != ptr);</td></tr>
+<tr><th id="915">915</th><td></td></tr>
+<tr><th id="916">916</th><td>	chunk = (arena_chunk_t *)CHUNK_ADDR2BASE(ptr);</td></tr>
+<tr><th id="917">917</th><td>	pageind = ((uintptr_t)ptr - (uintptr_t)chunk) &gt;&gt; LG_PAGE;</td></tr>
+<tr><th id="918">918</th><td>	assert(arena_mapbits_allocated_get(chunk, pageind) != <var>0</var>);</td></tr>
+<tr><th id="919">919</th><td></td></tr>
+<tr><th id="920">920</th><td>	<b>if</b> (usize &gt; SMALL_MAXCLASS || (prof_promote &amp;&amp;</td></tr>
+<tr><th id="921">921</th><td>	    ((uintptr_t)ctx != (uintptr_t)<var>1U</var> || arena_mapbits_large_get(chunk,</td></tr>
+<tr><th id="922">922</th><td>	    pageind) != <var>0</var>))) {</td></tr>
+<tr><th id="923">923</th><td>		assert(arena_mapbits_large_get(chunk, pageind) != <var>0</var>);</td></tr>
+<tr><th id="924">924</th><td>		arena_mapp_get(chunk, pageind)-&gt;prof_ctx = ctx;</td></tr>
+<tr><th id="925">925</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="926">926</th><td>		assert(arena_mapbits_large_get(chunk, pageind) == <var>0</var>);</td></tr>
+<tr><th id="927">927</th><td>		<b>if</b> (prof_promote == false) {</td></tr>
+<tr><th id="928">928</th><td>			size_t mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="929">929</th><td>			arena_run_t *run = (arena_run_t *)((uintptr_t)chunk +</td></tr>
+<tr><th id="930">930</th><td>			    (uintptr_t)((pageind - (mapbits &gt;&gt; LG_PAGE)) &lt;&lt;</td></tr>
+<tr><th id="931">931</th><td>			    LG_PAGE));</td></tr>
+<tr><th id="932">932</th><td>			size_t binind;</td></tr>
+<tr><th id="933">933</th><td>			arena_bin_info_t *bin_info;</td></tr>
+<tr><th id="934">934</th><td>			<em>unsigned</em> regind;</td></tr>
+<tr><th id="935">935</th><td></td></tr>
+<tr><th id="936">936</th><td>			binind = arena_ptr_small_binind_get(ptr, mapbits);</td></tr>
+<tr><th id="937">937</th><td>			bin_info = &amp;arena_bin_info[binind];</td></tr>
+<tr><th id="938">938</th><td>			regind = arena_run_regind(run, bin_info, ptr);</td></tr>
+<tr><th id="939">939</th><td></td></tr>
+<tr><th id="940">940</th><td>			*((prof_ctx_t **)((uintptr_t)run +</td></tr>
+<tr><th id="941">941</th><td>			    bin_info-&gt;ctx0_offset + (regind * <b>sizeof</b>(prof_ctx_t</td></tr>
+<tr><th id="942">942</th><td>			    *)))) = ctx;</td></tr>
+<tr><th id="943">943</th><td>		}</td></tr>
+<tr><th id="944">944</th><td>	}</td></tr>
+<tr><th id="945">945</th><td>}</td></tr>
+<tr><th id="946">946</th><td></td></tr>
+<tr><th id="947">947</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em> *</td></tr>
+<tr><th id="948">948</th><td>arena_malloc(arena_t *arena, size_t size, bool zero, bool try_tcache)</td></tr>
+<tr><th id="949">949</th><td>{</td></tr>
+<tr><th id="950">950</th><td>	tcache_t *tcache;</td></tr>
+<tr><th id="951">951</th><td></td></tr>
+<tr><th id="952">952</th><td>	assert(size != <var>0</var>);</td></tr>
+<tr><th id="953">953</th><td>	assert(size &lt;= arena_maxclass);</td></tr>
+<tr><th id="954">954</th><td></td></tr>
+<tr><th id="955">955</th><td>	<b>if</b> (size &lt;= SMALL_MAXCLASS) {</td></tr>
+<tr><th id="956">956</th><td>		<b>if</b> (try_tcache &amp;&amp; (tcache = tcache_get(true)) != NULL)</td></tr>
+<tr><th id="957">957</th><td>			<b>return</b> (tcache_alloc_small(tcache, size, zero));</td></tr>
+<tr><th id="958">958</th><td>		<b>else</b> {</td></tr>
+<tr><th id="959">959</th><td>			<b>return</b> (arena_malloc_small(choose_arena(arena), size,</td></tr>
+<tr><th id="960">960</th><td>			    zero));</td></tr>
+<tr><th id="961">961</th><td>		}</td></tr>
+<tr><th id="962">962</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="963">963</th><td>		<i>/*</i></td></tr>
+<tr><th id="964">964</th><td><i>		 * Initialize tcache after checking size in order to avoid</i></td></tr>
+<tr><th id="965">965</th><td><i>		 * infinite recursion during tcache initialization.</i></td></tr>
+<tr><th id="966">966</th><td><i>		 */</i></td></tr>
+<tr><th id="967">967</th><td>		<b>if</b> (try_tcache &amp;&amp; size &lt;= tcache_maxclass &amp;&amp; (tcache =</td></tr>
+<tr><th id="968">968</th><td>		    tcache_get(true)) != NULL)</td></tr>
+<tr><th id="969">969</th><td>			<b>return</b> (tcache_alloc_large(tcache, size, zero));</td></tr>
+<tr><th id="970">970</th><td>		<b>else</b> {</td></tr>
+<tr><th id="971">971</th><td>			<b>return</b> (arena_malloc_large(choose_arena(arena), size,</td></tr>
+<tr><th id="972">972</th><td>			    zero));</td></tr>
+<tr><th id="973">973</th><td>		}</td></tr>
+<tr><th id="974">974</th><td>	}</td></tr>
+<tr><th id="975">975</th><td>}</td></tr>
+<tr><th id="976">976</th><td></td></tr>
+<tr><th id="977">977</th><td><i>/* Return the size of the allocation pointed to by ptr. */</i></td></tr>
+<tr><th id="978">978</th><td>JEMALLOC_ALWAYS_INLINE size_t</td></tr>
+<tr><th id="979">979</th><td>arena_salloc(<em>const</em> <em>void</em> *ptr, bool demote)</td></tr>
+<tr><th id="980">980</th><td>{</td></tr>
+<tr><th id="981">981</th><td>	size_t ret;</td></tr>
+<tr><th id="982">982</th><td>	arena_chunk_t *chunk;</td></tr>
+<tr><th id="983">983</th><td>	size_t pageind, binind;</td></tr>
+<tr><th id="984">984</th><td></td></tr>
+<tr><th id="985">985</th><td>	assert(ptr != NULL);</td></tr>
+<tr><th id="986">986</th><td>	assert(CHUNK_ADDR2BASE(ptr) != ptr);</td></tr>
+<tr><th id="987">987</th><td></td></tr>
+<tr><th id="988">988</th><td>	chunk = (arena_chunk_t *)CHUNK_ADDR2BASE(ptr);</td></tr>
+<tr><th id="989">989</th><td>	pageind = ((uintptr_t)ptr - (uintptr_t)chunk) &gt;&gt; LG_PAGE;</td></tr>
+<tr><th id="990">990</th><td>	assert(arena_mapbits_allocated_get(chunk, pageind) != <var>0</var>);</td></tr>
+<tr><th id="991">991</th><td>	binind = arena_mapbits_binind_get(chunk, pageind);</td></tr>
+<tr><th id="992">992</th><td>	<b>if</b> (binind == BININD_INVALID || (config_prof &amp;&amp; demote == false &amp;&amp;</td></tr>
+<tr><th id="993">993</th><td>	    prof_promote &amp;&amp; arena_mapbits_large_get(chunk, pageind) != <var>0</var>)) {</td></tr>
+<tr><th id="994">994</th><td>		<i>/*</i></td></tr>
+<tr><th id="995">995</th><td><i>		 * Large allocation.  In the common case (demote == true), and</i></td></tr>
+<tr><th id="996">996</th><td><i>		 * as this is an inline function, most callers will only end up</i></td></tr>
+<tr><th id="997">997</th><td><i>		 * looking at binind to determine that ptr is a small</i></td></tr>
+<tr><th id="998">998</th><td><i>		 * allocation.</i></td></tr>
+<tr><th id="999">999</th><td><i>		 */</i></td></tr>
+<tr><th id="1000">1000</th><td>		assert(((uintptr_t)ptr &amp; PAGE_MASK) == <var>0</var>);</td></tr>
+<tr><th id="1001">1001</th><td>		ret = arena_mapbits_large_size_get(chunk, pageind);</td></tr>
+<tr><th id="1002">1002</th><td>		assert(ret != <var>0</var>);</td></tr>
+<tr><th id="1003">1003</th><td>		assert(pageind + (ret&gt;&gt;LG_PAGE) &lt;= chunk_npages);</td></tr>
+<tr><th id="1004">1004</th><td>		assert(ret == PAGE || arena_mapbits_large_size_get(chunk,</td></tr>
+<tr><th id="1005">1005</th><td>		    pageind+(ret&gt;&gt;LG_PAGE)-<var>1</var>) == <var>0</var>);</td></tr>
+<tr><th id="1006">1006</th><td>		assert(binind == arena_mapbits_binind_get(chunk,</td></tr>
+<tr><th id="1007">1007</th><td>		    pageind+(ret&gt;&gt;LG_PAGE)-<var>1</var>));</td></tr>
+<tr><th id="1008">1008</th><td>		assert(arena_mapbits_dirty_get(chunk, pageind) ==</td></tr>
+<tr><th id="1009">1009</th><td>		    arena_mapbits_dirty_get(chunk, pageind+(ret&gt;&gt;LG_PAGE)-<var>1</var>));</td></tr>
+<tr><th id="1010">1010</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="1011">1011</th><td>		<i>/*</i></td></tr>
+<tr><th id="1012">1012</th><td><i>		 * Small allocation (possibly promoted to a large object due to</i></td></tr>
+<tr><th id="1013">1013</th><td><i>		 * prof_promote).</i></td></tr>
+<tr><th id="1014">1014</th><td><i>		 */</i></td></tr>
+<tr><th id="1015">1015</th><td>		assert(arena_mapbits_large_get(chunk, pageind) != <var>0</var> ||</td></tr>
+<tr><th id="1016">1016</th><td>		    arena_ptr_small_binind_get(ptr, arena_mapbits_get(chunk,</td></tr>
+<tr><th id="1017">1017</th><td>		    pageind)) == binind);</td></tr>
+<tr><th id="1018">1018</th><td>		ret = arena_bin_info[binind].reg_size;</td></tr>
+<tr><th id="1019">1019</th><td>	}</td></tr>
+<tr><th id="1020">1020</th><td></td></tr>
+<tr><th id="1021">1021</th><td>	<b>return</b> (ret);</td></tr>
+<tr><th id="1022">1022</th><td>}</td></tr>
+<tr><th id="1023">1023</th><td></td></tr>
+<tr><th id="1024">1024</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="1025">1025</th><td>arena_dalloc(arena_t *arena, arena_chunk_t *chunk, <em>void</em> *ptr, bool try_tcache)</td></tr>
+<tr><th id="1026">1026</th><td>{</td></tr>
+<tr><th id="1027">1027</th><td>	size_t pageind, mapbits;</td></tr>
+<tr><th id="1028">1028</th><td>	tcache_t *tcache;</td></tr>
+<tr><th id="1029">1029</th><td></td></tr>
+<tr><th id="1030">1030</th><td>	assert(arena != NULL);</td></tr>
+<tr><th id="1031">1031</th><td>	assert(chunk-&gt;arena == arena);</td></tr>
+<tr><th id="1032">1032</th><td>	assert(ptr != NULL);</td></tr>
+<tr><th id="1033">1033</th><td>	assert(CHUNK_ADDR2BASE(ptr) != ptr);</td></tr>
+<tr><th id="1034">1034</th><td></td></tr>
+<tr><th id="1035">1035</th><td>	pageind = ((uintptr_t)ptr - (uintptr_t)chunk) &gt;&gt; LG_PAGE;</td></tr>
+<tr><th id="1036">1036</th><td>	mapbits = arena_mapbits_get(chunk, pageind);</td></tr>
+<tr><th id="1037">1037</th><td>	assert(arena_mapbits_allocated_get(chunk, pageind) != <var>0</var>);</td></tr>
+<tr><th id="1038">1038</th><td>	<b>if</b> ((mapbits &amp; CHUNK_MAP_LARGE) == <var>0</var>) {</td></tr>
+<tr><th id="1039">1039</th><td>		<i>/* Small allocation. */</i></td></tr>
+<tr><th id="1040">1040</th><td>		<b>if</b> (try_tcache &amp;&amp; (tcache = tcache_get(false)) != NULL) {</td></tr>
+<tr><th id="1041">1041</th><td>			size_t binind;</td></tr>
+<tr><th id="1042">1042</th><td></td></tr>
+<tr><th id="1043">1043</th><td>			binind = arena_ptr_small_binind_get(ptr, mapbits);</td></tr>
+<tr><th id="1044">1044</th><td>			tcache_dalloc_small(tcache, ptr, binind);</td></tr>
+<tr><th id="1045">1045</th><td>		} <b>else</b></td></tr>
+<tr><th id="1046">1046</th><td>			arena_dalloc_small(arena, chunk, ptr, pageind);</td></tr>
+<tr><th id="1047">1047</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="1048">1048</th><td>		size_t size = arena_mapbits_large_size_get(chunk, pageind);</td></tr>
+<tr><th id="1049">1049</th><td></td></tr>
+<tr><th id="1050">1050</th><td>		assert(((uintptr_t)ptr &amp; PAGE_MASK) == <var>0</var>);</td></tr>
+<tr><th id="1051">1051</th><td></td></tr>
+<tr><th id="1052">1052</th><td>		<b>if</b> (try_tcache &amp;&amp; size &lt;= tcache_maxclass &amp;&amp; (tcache =</td></tr>
+<tr><th id="1053">1053</th><td>		    tcache_get(false)) != NULL) {</td></tr>
+<tr><th id="1054">1054</th><td>			tcache_dalloc_large(tcache, ptr, size);</td></tr>
+<tr><th id="1055">1055</th><td>		} <b>else</b></td></tr>
+<tr><th id="1056">1056</th><td>			arena_dalloc_large(arena, chunk, ptr);</td></tr>
+<tr><th id="1057">1057</th><td>	}</td></tr>
+<tr><th id="1058">1058</th><td>}</td></tr>
+<tr><th id="1059">1059</th><td><u>#  endif /* JEMALLOC_ARENA_INLINE_B */</u></td></tr>
+<tr><th id="1060">1060</th><td><u>#endif</u></td></tr>
+<tr><th id="1061">1061</th><td></td></tr>
+<tr><th id="1062">1062</th><td><u>#<span data-ppcond="458">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="1063">1063</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="1064">1064</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore3.3.5/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

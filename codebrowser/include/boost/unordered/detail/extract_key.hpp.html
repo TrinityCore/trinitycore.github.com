@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+<title>extract_key.hpp [include/boost/unordered/detail/extract_key.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/unordered/detail/extract_key.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>unordered</a>/<a href='./'>detail</a>/extract_key.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td></td></tr>
+<tr><th id="2">2</th><td><i>// Copyright (C) 2005-2011 Daniel James</i></td></tr>
+<tr><th id="3">3</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="4">4</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="5">5</th><td></td></tr>
+<tr><th id="6">6</th><td><u>#<span data-ppcond="6">ifndef</span> <span class="macro" data-ref="_M/BOOST_UNORDERED_DETAIL_EXTRACT_KEY_HPP_INCLUDED">BOOST_UNORDERED_DETAIL_EXTRACT_KEY_HPP_INCLUDED</span></u></td></tr>
+<tr><th id="7">7</th><td><u>#define <dfn class="macro" id="_M/BOOST_UNORDERED_DETAIL_EXTRACT_KEY_HPP_INCLUDED" data-ref="_M/BOOST_UNORDERED_DETAIL_EXTRACT_KEY_HPP_INCLUDED">BOOST_UNORDERED_DETAIL_EXTRACT_KEY_HPP_INCLUDED</dfn></u></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#include <a href="table.hpp.html">&lt;boost/unordered/detail/table.hpp&gt;</a></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="12">12</th><td><b>namespace</b> <span class="namespace">unordered</span> {</td></tr>
+<tr><th id="13">13</th><td><b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td>    <i>// key extractors</i></td></tr>
+<tr><th id="16">16</th><td><i>    //</i></td></tr>
+<tr><th id="17">17</th><td><i>    // no throw</i></td></tr>
+<tr><th id="18">18</th><td><i>    //</i></td></tr>
+<tr><th id="19">19</th><td><i>    // 'extract_key' is called with the emplace parameters to return a</i></td></tr>
+<tr><th id="20">20</th><td><i>    // key if available or 'no_key' is one isn't and will need to be</i></td></tr>
+<tr><th id="21">21</th><td><i>    // constructed. This could be done by overloading the emplace implementation</i></td></tr>
+<tr><th id="22">22</th><td><i>    // for the different cases, but that's a bit tricky on compilers without</i></td></tr>
+<tr><th id="23">23</th><td><i>    // variadic templates.</i></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td>    <b>struct</b> <dfn class="type def" id="boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</dfn> {</td></tr>
+<tr><th id="26">26</th><td>        <dfn class="decl def" id="_ZN5boost9unordered6detail6no_keyC1Ev" title='boost::unordered::detail::no_key::no_key' data-ref="_ZN5boost9unordered6detail6no_keyC1Ev" >no_key</dfn>() {}</td></tr>
+<tr><th id="27">27</th><td>        <b>template</b> &lt;<b>class</b> T&gt; <dfn class="decl def" id="_ZN5boost9unordered6detail6no_keyC1ERKT_" title='boost::unordered::detail::no_key::no_key' data-ref="_ZN5boost9unordered6detail6no_keyC1ERKT_" >no_key</dfn>(T <em>const</em>&amp;) {}</td></tr>
+<tr><th id="28">28</th><td>    };</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td>    <b>template</b> &lt;<b>typename</b> Key, <b>typename</b> T&gt;</td></tr>
+<tr><th id="31">31</th><td>    <b>struct</b> <dfn class="type def" id="boost::unordered::detail::is_key" title='boost::unordered::detail::is_key' data-ref="boost::unordered::detail::is_key" >is_key</dfn> {</td></tr>
+<tr><th id="32">32</th><td>        <b>template</b> &lt;<b>typename</b> T2&gt;</td></tr>
+<tr><th id="33">33</th><td>        <em>static</em> <a class="type" href="allocate.hpp.html#boost::unordered::detail::choice1" title='boost::unordered::detail::choice1' data-ref="boost::unordered::detail::choice1" >choice1</a>::<a class="typedef" href="allocate.hpp.html#boost::unordered::detail::choice1::type" title='boost::unordered::detail::choice1::type' data-type='char (&amp;)[1]' data-ref="boost::unordered::detail::choice1::type" >type</a> <dfn class="decl" id="_ZN5boost9unordered6detail6is_key4testERKT_" title='boost::unordered::detail::is_key::test' data-ref="_ZN5boost9unordered6detail6is_key4testERKT_" >test</dfn>(T2 <em>const</em>&amp;);</td></tr>
+<tr><th id="34">34</th><td>        <em>static</em> <a class="type" href="allocate.hpp.html#boost::unordered::detail::choice2" title='boost::unordered::detail::choice2' data-ref="boost::unordered::detail::choice2" >choice2</a>::<a class="typedef" href="allocate.hpp.html#boost::unordered::detail::choice2::type" title='boost::unordered::detail::choice2::type' data-type='char (&amp;)[2]' data-ref="boost::unordered::detail::choice2::type" >type</a> <dfn class="decl" id="_ZN5boost9unordered6detail6is_key4testERKT_" title='boost::unordered::detail::is_key::test' data-ref="_ZN5boost9unordered6detail6is_key4testERKT_" >test</dfn>(Key <em>const</em>&amp;);</td></tr>
+<tr><th id="35">35</th><td>        </td></tr>
+<tr><th id="36">36</th><td>        <b>enum</b> { <dfn class="enum" id="boost::unordered::detail::is_key::::value" title='boost::unordered::detail::is_key::::value' data-ref="boost::unordered::detail::is_key::::value" >value</dfn> = <b>sizeof</b>(test(<span class="namespace">boost::unordered::detail::</span>make&lt;T&gt;())) ==</td></tr>
+<tr><th id="37">37</th><td>            <b>sizeof</b>(<a class="type" href="allocate.hpp.html#boost::unordered::detail::choice2" title='boost::unordered::detail::choice2' data-ref="boost::unordered::detail::choice2" >choice2</a>::<a class="typedef" href="allocate.hpp.html#boost::unordered::detail::choice2::type" title='boost::unordered::detail::choice2::type' data-type='char (&amp;)[2]' data-ref="boost::unordered::detail::choice2::type" >type</a>) };</td></tr>
+<tr><th id="38">38</th><td>        </td></tr>
+<tr><th id="39">39</th><td>        <b>typedef</b> <b>typename</b> <span class="namespace"><span class="namespace">boost::detail::</span></span><a class="type" href="../../detail/select_type.hpp.html#boost::detail::if_true" title='boost::detail::if_true' data-ref="boost::detail::if_true" ><a class="type" href="../../detail/select_type.hpp.html#boost::detail::if_true" title='boost::detail::if_true' data-ref="boost::detail::if_true" >if_true</a></a>&lt;<a class="enum" href="#boost::unordered::detail::is_key::::value" title='boost::unordered::detail::is_key::::value' data-ref="boost::unordered::detail::is_key::::value" ><a class="enum" href="#boost::unordered::detail::is_key::::value" title='boost::unordered::detail::is_key::::value' data-ref="boost::unordered::detail::is_key::::value" >value</a></a>&gt;::</td></tr>
+<tr><th id="40">40</th><td>            <a class="macro" href="../../config/suffix.hpp.html#437" title="template" data-ref="_M/BOOST_NESTED_TEMPLATE">BOOST_NESTED_TEMPLATE</a> then&lt;Key <em>const</em>&amp;, <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a>&gt;::type <dfn class="typedef" id="boost::unordered::detail::is_key::type" title='boost::unordered::detail::is_key::type' data-type='typename boost::detail::if_true&lt;value&gt;::template boost::detail::if_true&lt;value&gt;::then&lt;const Key &amp;, no_key&gt;::type' data-ref="boost::unordered::detail::is_key::type" >type</dfn>;</td></tr>
+<tr><th id="41">41</th><td>    };</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <b>template</b> &lt;<b>class</b> ValueType&gt;</td></tr>
+<tr><th id="44">44</th><td>    <b>struct</b> <dfn class="type def" id="boost::unordered::detail::set_extractor" title='boost::unordered::detail::set_extractor' data-ref="boost::unordered::detail::set_extractor" >set_extractor</dfn></td></tr>
+<tr><th id="45">45</th><td>    {</td></tr>
+<tr><th id="46">46</th><td>        <b>typedef</b> ValueType <dfn class="typedef" id="boost::unordered::detail::set_extractor::value_type" title='boost::unordered::detail::set_extractor::value_type' data-type='ValueType' data-ref="boost::unordered::detail::set_extractor::value_type" >value_type</dfn>;</td></tr>
+<tr><th id="47">47</th><td>        <b>typedef</b> ValueType <dfn class="typedef" id="boost::unordered::detail::set_extractor::key_type" title='boost::unordered::detail::set_extractor::key_type' data-type='ValueType' data-ref="boost::unordered::detail::set_extractor::key_type" >key_type</dfn>;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>        <em>static</em> <a class="typedef" href="#boost::unordered::detail::set_extractor::key_type" title='boost::unordered::detail::set_extractor::key_type' data-type='ValueType' data-ref="boost::unordered::detail::set_extractor::key_type" >key_type</a> <em>const</em>&amp; <dfn class="decl def" id="_ZN5boost9unordered6detail13set_extractor7extractERKT_" title='boost::unordered::detail::set_extractor::extract' data-ref="_ZN5boost9unordered6detail13set_extractor7extractERKT_" >extract</dfn>(<a class="typedef" href="#boost::unordered::detail::set_extractor::key_type" title='boost::unordered::detail::set_extractor::key_type' data-type='ValueType' data-ref="boost::unordered::detail::set_extractor::key_type" >key_type</a> <em>const</em>&amp; <dfn class="local col1 decl" id="331v" title='v' data-type='const key_type &amp;' data-ref="331v" >v</dfn>)</td></tr>
+<tr><th id="50">50</th><td>        {</td></tr>
+<tr><th id="51">51</th><td>            <b>return</b> <a class="local col1 ref" href="#331v" title='v' data-ref="331v" >v</a>;</td></tr>
+<tr><th id="52">52</th><td>        }</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>        <em>static</em> <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a> <dfn class="decl def" id="_ZN5boost9unordered6detail13set_extractor7extractEv" title='boost::unordered::detail::set_extractor::extract' data-ref="_ZN5boost9unordered6detail13set_extractor7extractEv" >extract</dfn>()</td></tr>
+<tr><th id="55">55</th><td>        {</td></tr>
+<tr><th id="56">56</th><td>            <b>return</b> <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a><a class="ref" href="#_ZN5boost9unordered6detail6no_keyC1Ev" title='boost::unordered::detail::no_key::no_key' data-ref="_ZN5boost9unordered6detail6no_keyC1Ev" >(</a>);</td></tr>
+<tr><th id="57">57</th><td>        }</td></tr>
+<tr><th id="58">58</th><td>        </td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="59">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="60">60</th><td>        <b>template</b> &lt;<b>class</b>... Args&gt;</td></tr>
+<tr><th id="61">61</th><td>        <em>static</em> <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a> <dfn class="decl def" id="_ZN5boost9unordered6detail13set_extractor7extractEDpRKT_" title='boost::unordered::detail::set_extractor::extract' data-ref="_ZN5boost9unordered6detail13set_extractor7extractEDpRKT_" >extract</dfn>(Args <em>const</em>&amp;...)</td></tr>
+<tr><th id="62">62</th><td>        {</td></tr>
+<tr><th id="63">63</th><td>            <b>return</b> <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a><a class="ref" href="#_ZN5boost9unordered6detail6no_keyC1Ev" title='boost::unordered::detail::no_key::no_key' data-ref="_ZN5boost9unordered6detail6no_keyC1Ev" >(</a>);</td></tr>
+<tr><th id="64">64</th><td>        }</td></tr>
+<tr><th id="65">65</th><td><u>#<span data-ppcond="59">else</span></u></td></tr>
+<tr><th id="66">66</th><td>        <b>template</b> &lt;<b>class</b> Arg&gt;</td></tr>
+<tr><th id="67">67</th><td>        <em>static</em> no_key extract(Arg <em>const</em>&amp;)</td></tr>
+<tr><th id="68">68</th><td>        {</td></tr>
+<tr><th id="69">69</th><td>            <b>return</b> no_key();</td></tr>
+<tr><th id="70">70</th><td>        }</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>        <b>template</b> &lt;<b>class</b> Arg1, <b>class</b> Arg2&gt;</td></tr>
+<tr><th id="73">73</th><td>        <em>static</em> no_key extract(Arg1 <em>const</em>&amp;, Arg2 <em>const</em>&amp;)</td></tr>
+<tr><th id="74">74</th><td>        {</td></tr>
+<tr><th id="75">75</th><td>            <b>return</b> no_key();</td></tr>
+<tr><th id="76">76</th><td>        }</td></tr>
+<tr><th id="77">77</th><td><u>#<span data-ppcond="59">endif</span></u></td></tr>
+<tr><th id="78">78</th><td>    };</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <b>template</b> &lt;<b>class</b> Key, <b>class</b> ValueType&gt;</td></tr>
+<tr><th id="81">81</th><td>    <b>struct</b> <dfn class="type def" id="boost::unordered::detail::map_extractor" title='boost::unordered::detail::map_extractor' data-ref="boost::unordered::detail::map_extractor" >map_extractor</dfn></td></tr>
+<tr><th id="82">82</th><td>    {</td></tr>
+<tr><th id="83">83</th><td>        <b>typedef</b> ValueType <dfn class="typedef" id="boost::unordered::detail::map_extractor::value_type" title='boost::unordered::detail::map_extractor::value_type' data-type='ValueType' data-ref="boost::unordered::detail::map_extractor::value_type" >value_type</dfn>;</td></tr>
+<tr><th id="84">84</th><td>        <b>typedef</b> <b>typename</b> <span class="namespace">boost::</span><a class="type" href="../../type_traits/remove_const.hpp.html#73" title='boost::remove_const' data-ref="boost::remove_const" >remove_const</a>&lt;Key&gt;::type <dfn class="typedef" id="boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</dfn>;</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>        <em>static</em> <a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a> <em>const</em>&amp; <dfn class="decl def" id="_ZN5boost9unordered6detail13map_extractor7extractERKT0_" title='boost::unordered::detail::map_extractor::extract' data-ref="_ZN5boost9unordered6detail13map_extractor7extractERKT0_" >extract</dfn>(<a class="typedef" href="#boost::unordered::detail::map_extractor::value_type" title='boost::unordered::detail::map_extractor::value_type' data-type='ValueType' data-ref="boost::unordered::detail::map_extractor::value_type" >value_type</a> <em>const</em>&amp; <dfn class="local col2 decl" id="332v" title='v' data-type='const value_type &amp;' data-ref="332v" >v</dfn>)</td></tr>
+<tr><th id="87">87</th><td>        {</td></tr>
+<tr><th id="88">88</th><td>            <b>return</b> <a class="local col2 ref" href="#332v" title='v' data-ref="332v" >v</a>.first;</td></tr>
+<tr><th id="89">89</th><td>        }</td></tr>
+<tr><th id="90">90</th><td>            </td></tr>
+<tr><th id="91">91</th><td>        <b>template</b> &lt;<b>class</b> Second&gt;</td></tr>
+<tr><th id="92">92</th><td>        <em>static</em> <a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a> <em>const</em>&amp; <dfn class="decl def" id="_ZN5boost9unordered6detail13map_extractor7extractERKSt4pairINS_12remove_constIT_E4typeET_E" title='boost::unordered::detail::map_extractor::extract' data-ref="_ZN5boost9unordered6detail13map_extractor7extractERKSt4pairINS_12remove_constIT_E4typeET_E" >extract</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_pair.h.html#std::pair" title='std::pair' data-ref="std::pair" >pair</a>&lt;<a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a>, Second&gt; <em>const</em>&amp; <dfn class="local col3 decl" id="333v" title='v' data-type='const std::pair&lt;key_type, Second&gt; &amp;' data-ref="333v" >v</dfn>)</td></tr>
+<tr><th id="93">93</th><td>        {</td></tr>
+<tr><th id="94">94</th><td>            <b>return</b> <a class="local col3 ref" href="#333v" title='v' data-ref="333v" >v</a>.first;</td></tr>
+<tr><th id="95">95</th><td>        }</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td>        <b>template</b> &lt;<b>class</b> Second&gt;</td></tr>
+<tr><th id="98">98</th><td>        <em>static</em> <a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a> <em>const</em>&amp; <dfn class="decl def" id="_ZN5boost9unordered6detail13map_extractor7extractERKSt4pairIKNS_12remove_constIT_E4typeET_E" title='boost::unordered::detail::map_extractor::extract' data-ref="_ZN5boost9unordered6detail13map_extractor7extractERKSt4pairIKNS_12remove_constIT_E4typeET_E" >extract</dfn>(</td></tr>
+<tr><th id="99">99</th><td>            <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/bits/stl_pair.h.html#std::pair" title='std::pair' data-ref="std::pair" >pair</a>&lt;<a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a> <em>const</em>, Second&gt; <em>const</em>&amp; <dfn class="local col4 decl" id="334v" title='v' data-type='const std::pair&lt;const key_type, Second&gt; &amp;' data-ref="334v" >v</dfn>)</td></tr>
+<tr><th id="100">100</th><td>        {</td></tr>
+<tr><th id="101">101</th><td>            <b>return</b> <a class="local col4 ref" href="#334v" title='v' data-ref="334v" >v</a>.first;</td></tr>
+<tr><th id="102">102</th><td>        }</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>        <b>template</b> &lt;<b>class</b> Arg1&gt;</td></tr>
+<tr><th id="105">105</th><td>        <em>static</em> <a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a> <em>const</em>&amp; <dfn class="decl def" id="_ZN5boost9unordered6detail13map_extractor7extractERKNS_12remove_constIT_E4typeERKT_" title='boost::unordered::detail::map_extractor::extract' data-ref="_ZN5boost9unordered6detail13map_extractor7extractERKNS_12remove_constIT_E4typeERKT_" >extract</dfn>(<a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a> <em>const</em>&amp; <dfn class="local col5 decl" id="335k" title='k' data-type='const key_type &amp;' data-ref="335k" >k</dfn>, Arg1 <em>const</em>&amp;)</td></tr>
+<tr><th id="106">106</th><td>        {</td></tr>
+<tr><th id="107">107</th><td>            <b>return</b> <a class="local col5 ref" href="#335k" title='k' data-ref="335k" >k</a>;</td></tr>
+<tr><th id="108">108</th><td>        }</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td><u>#<span data-ppcond="110">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="111">111</th><td>        <b>template</b> &lt;<b>class</b>... Args&gt;</td></tr>
+<tr><th id="112">112</th><td>        <em>static</em> <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a> <dfn class="decl def" id="_ZN5boost9unordered6detail13map_extractor7extractEDpRKT_" title='boost::unordered::detail::map_extractor::extract' data-ref="_ZN5boost9unordered6detail13map_extractor7extractEDpRKT_" >extract</dfn>(Args <em>const</em>&amp;...)</td></tr>
+<tr><th id="113">113</th><td>        {</td></tr>
+<tr><th id="114">114</th><td>            <b>return</b> <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a><a class="ref" href="#_ZN5boost9unordered6detail6no_keyC1Ev" title='boost::unordered::detail::no_key::no_key' data-ref="_ZN5boost9unordered6detail6no_keyC1Ev" >(</a>);</td></tr>
+<tr><th id="115">115</th><td>        }</td></tr>
+<tr><th id="116">116</th><td><u>#<span data-ppcond="110">else</span></u></td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>        <em>static</em> no_key extract()</td></tr>
+<tr><th id="119">119</th><td>        {</td></tr>
+<tr><th id="120">120</th><td>            <b>return</b> no_key();</td></tr>
+<tr><th id="121">121</th><td>        }</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td>        <b>template</b> &lt;<b>class</b> Arg&gt;</td></tr>
+<tr><th id="124">124</th><td>        <em>static</em> no_key extract(Arg <em>const</em>&amp;)</td></tr>
+<tr><th id="125">125</th><td>        {</td></tr>
+<tr><th id="126">126</th><td>            <b>return</b> no_key();</td></tr>
+<tr><th id="127">127</th><td>        }</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>        <b>template</b> &lt;<b>class</b> Arg, <b>class</b> Arg1&gt;</td></tr>
+<tr><th id="130">130</th><td>        <em>static</em> no_key extract(Arg <em>const</em>&amp;, Arg1 <em>const</em>&amp;)</td></tr>
+<tr><th id="131">131</th><td>        {</td></tr>
+<tr><th id="132">132</th><td>            <b>return</b> no_key();</td></tr>
+<tr><th id="133">133</th><td>        }</td></tr>
+<tr><th id="134">134</th><td><u>#<span data-ppcond="110">endif</span></u></td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td><u>#<span data-ppcond="136">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td><u>#define <dfn class="macro" id="_M/BOOST_UNORDERED_KEY_FROM_TUPLE" data-ref="_M/BOOST_UNORDERED_KEY_FROM_TUPLE">BOOST_UNORDERED_KEY_FROM_TUPLE</dfn>(namespace_)                          \</u></td></tr>
+<tr><th id="139">139</th><td><u>        template &lt;typename T2&gt;                                              \</u></td></tr>
+<tr><th id="140">140</th><td><u>        static <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a> <dfn class="decl def" id="_ZN5boost9unordered6detail13map_extractor7extractENS0_21piecewise_construct_tERKNS_6tuples5tupleINS4_9null_typeES6_S6_S6_S6_S6_S6_S6_S6_S6_EERKT_" title='boost::unordered::detail::map_extractor::extract' data-ref="_ZN5boost9unordered6detail13map_extractor7extractENS0_21piecewise_construct_tERKNS_6tuples5tupleINS4_9null_typeES6_S6_S6_S6_S6_S6_S6_S6_S6_EERKT_" >extract</dfn>(boost::unordered::<a class="type" href="fwd.hpp.html#boost::unordered::piecewise_construct_t" title='boost::unordered::piecewise_construct_t' data-ref="boost::unordered::piecewise_construct_t" >piecewise_construct_t</a>,      \</u></td></tr>
+<tr><th id="141">141</th><td><u>                namespace_ <a class="type" href="../../tuple/detail/tuple_basic.hpp.html#boost::tuples::tuple" title='boost::tuples::tuple' data-ref="boost::tuples::tuple" >tuple</a>&lt;&gt; const&amp;, T2 const&amp;)                       \</u></td></tr>
+<tr><th id="142">142</th><td><u>        {                                                                   \</u></td></tr>
+<tr><th id="143">143</th><td><u>            return <a class="type" href="#boost::unordered::detail::no_key" title='boost::unordered::detail::no_key' data-ref="boost::unordered::detail::no_key" >no_key</a><a class="ref" href="#_ZN5boost9unordered6detail6no_keyC1Ev" title='boost::unordered::detail::no_key::no_key' data-ref="_ZN5boost9unordered6detail6no_keyC1Ev" >(</a>);                                                \</u></td></tr>
+<tr><th id="144">144</th><td><u>        }                                                                   \</u></td></tr>
+<tr><th id="145">145</th><td><u>                                                                            \</u></td></tr>
+<tr><th id="146">146</th><td><u>        template &lt;typename T, typename T2&gt;                                  \</u></td></tr>
+<tr><th id="147">147</th><td><u>        static typename <a class="type" href="#boost::unordered::detail::is_key" title='boost::unordered::detail::is_key' data-ref="boost::unordered::detail::is_key" >is_key</a>&lt;<a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a>, T&gt;::type                           \</u></td></tr>
+<tr><th id="148">148</th><td><u>            <dfn class="decl def" id="_ZN5boost9unordered6detail13map_extractor7extractENS0_21piecewise_construct_tERKNS_6tuples5tupleIT_NS4_9null_typeES7_S7_S7_S7_S7_S7_S7_S7_EERKT0_" title='boost::unordered::detail::map_extractor::extract' data-ref="_ZN5boost9unordered6detail13map_extractor7extractENS0_21piecewise_construct_tERKNS_6tuples5tupleIT_NS4_9null_typeES7_S7_S7_S7_S7_S7_S7_S7_EERKT0_" >extract</dfn>(boost::unordered::<a class="type" href="fwd.hpp.html#boost::unordered::piecewise_construct_t" title='boost::unordered::piecewise_construct_t' data-ref="boost::unordered::piecewise_construct_t" >piecewise_construct_t</a>,                \</u></td></tr>
+<tr><th id="149">149</th><td><u>                namespace_ <a class="type" href="../../tuple/detail/tuple_basic.hpp.html#boost::tuples::tuple" title='boost::tuples::tuple' data-ref="boost::tuples::tuple" >tuple</a>&lt;T&gt; const&amp; <dfn class="local col6 decl" id="336k" title='k' data-type='const boost::tuple&lt;T&gt; &amp;' data-ref="336k" >k</dfn>, T2 const&amp;)                    \</u></td></tr>
+<tr><th id="150">150</th><td><u>        {                                                                   \</u></td></tr>
+<tr><th id="151">151</th><td><u>            return typename <a class="type" href="#boost::unordered::detail::is_key" title='boost::unordered::detail::is_key' data-ref="boost::unordered::detail::is_key" >is_key</a>&lt;<a class="typedef" href="#boost::unordered::detail::map_extractor::key_type" title='boost::unordered::detail::map_extractor::key_type' data-type='typename boost::remove_const&lt;Key&gt;::type' data-ref="boost::unordered::detail::map_extractor::key_type" >key_type</a>, T&gt;::type(                      \</u></td></tr>
+<tr><th id="152">152</th><td><u>                namespace_ get&lt;0&gt;(<a class="local col6 ref" href="#175" title='k' data-ref="336k" >k</a>));                                      \</u></td></tr>
+<tr><th id="153">153</th><td><u>        }</u></td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><u>#<span data-ppcond="136">else</span></u></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td><u>#define BOOST_UNORDERED_KEY_FROM_TUPLE(namespace_)                          \</u></td></tr>
+<tr><th id="158">158</th><td><u>        static no_key extract(boost::unordered::piecewise_construct_t,      \</u></td></tr>
+<tr><th id="159">159</th><td><u>                namespace_ tuple&lt;&gt; const&amp;)                                  \</u></td></tr>
+<tr><th id="160">160</th><td><u>        {                                                                   \</u></td></tr>
+<tr><th id="161">161</th><td><u>            return no_key();                                                \</u></td></tr>
+<tr><th id="162">162</th><td><u>        }                                                                   \</u></td></tr>
+<tr><th id="163">163</th><td><u>                                                                            \</u></td></tr>
+<tr><th id="164">164</th><td><u>        template &lt;typename T&gt;                                               \</u></td></tr>
+<tr><th id="165">165</th><td><u>        static typename is_key&lt;key_type, T&gt;::type                           \</u></td></tr>
+<tr><th id="166">166</th><td><u>            extract(boost::unordered::piecewise_construct_t,                \</u></td></tr>
+<tr><th id="167">167</th><td><u>                namespace_ tuple&lt;T&gt; const&amp; k)                               \</u></td></tr>
+<tr><th id="168">168</th><td><u>        {                                                                   \</u></td></tr>
+<tr><th id="169">169</th><td><u>            return typename is_key&lt;key_type, T&gt;::type(                      \</u></td></tr>
+<tr><th id="170">170</th><td><u>                namespace_ get&lt;0&gt;(k));                                      \</u></td></tr>
+<tr><th id="171">171</th><td><u>        }</u></td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td><u>#<span data-ppcond="136">endif</span></u></td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td><a class="macro" href="#138" title="template &lt;typename T2&gt; static no_key extract(boost::unordered::piecewise_construct_t, boost:: tuple&lt;&gt; const&amp;, T2 const&amp;) { return no_key(); } template &lt;typename T, typename T2&gt; static typename is_key&lt;key_type, T&gt;::type extract(boost::unordered::piecewise_construct_t, boost:: tuple&lt;T&gt; const&amp; k, T2 const&amp;) { return typename is_key&lt;key_type, T&gt;::type( boost:: get&lt;0&gt;(k)); }" data-ref="_M/BOOST_UNORDERED_KEY_FROM_TUPLE">BOOST_UNORDERED_KEY_FROM_TUPLE</a>(boost::)</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td><u>#<span data-ppcond="177">if</span> !defined(<a class="macro" href="../../config/stdlib/libstdcpp3.hpp.html#111" data-ref="_M/BOOST_NO_CXX11_HDR_TUPLE">BOOST_NO_CXX11_HDR_TUPLE</a>)</u></td></tr>
+<tr><th id="178">178</th><td>BOOST_UNORDERED_KEY_FROM_TUPLE(std::)</td></tr>
+<tr><th id="179">179</th><td><u>#<span data-ppcond="177">endif</span></u></td></tr>
+<tr><th id="180">180</th><td>    };</td></tr>
+<tr><th id="181">181</th><td>}}}</td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td><u>#<span data-ppcond="6">endif</span></u></td></tr>
+<tr><th id="184">184</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp.html'>TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

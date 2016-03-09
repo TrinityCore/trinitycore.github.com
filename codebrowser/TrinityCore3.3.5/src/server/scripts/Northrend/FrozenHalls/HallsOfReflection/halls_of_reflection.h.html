@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+<title>halls_of_reflection.h [TrinityCore3.3.5/src/server/scripts/Northrend/FrozenHalls/HallsOfReflection/halls_of_reflection.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/scripts/Northrend/FrozenHalls/HallsOfReflection/halls_of_reflection.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore3.3.5</a>/<a href='../../../../..'>src</a>/<a href='../../../..'>server</a>/<a href='../../..'>scripts</a>/<a href='../..'>Northrend</a>/<a href='..'>FrozenHalls</a>/<a href='./'>HallsOfReflection</a>/halls_of_reflection.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/HALLS_OF_REFLECTION_H_">HALLS_OF_REFLECTION_H_</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/HALLS_OF_REFLECTION_H_" data-ref="_M/HALLS_OF_REFLECTION_H_">HALLS_OF_REFLECTION_H_</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/HoRScriptName" data-ref="_M/HoRScriptName">HoRScriptName</dfn> "instance_halls_of_reflection"</u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/DataHeader" data-ref="_M/DataHeader">DataHeader</dfn>    "HOR"</u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <em>const</em> <dfn class="decl def" id="_ZL14EncounterCount" title='EncounterCount' data-ref="_ZL14EncounterCount" >EncounterCount</dfn> = <var>3</var>;</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>/* Halls of Reflection encounters:</i></td></tr>
+<tr><th id="27">27</th><td><i> 0 - Falric</i></td></tr>
+<tr><th id="28">28</th><td><i> 1 - Marwyn</i></td></tr>
+<tr><th id="29">29</th><td><i> 2 - The Lich King</i></td></tr>
+<tr><th id="30">30</th><td><i>*/</i></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>enum</b> <dfn class="type def" id="DataTypes" title='DataTypes' data-ref="DataTypes" >DataTypes</dfn></td></tr>
+<tr><th id="33">33</th><td>{</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="DataTypes::DATA_FALRIC" title='DataTypes::DATA_FALRIC' data-ref="DataTypes::DATA_FALRIC" >DATA_FALRIC</dfn>                                 = <var>0</var>,</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="DataTypes::DATA_MARWYN" title='DataTypes::DATA_MARWYN' data-ref="DataTypes::DATA_MARWYN" >DATA_MARWYN</dfn>                                 = <var>1</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="DataTypes::DATA_THE_LICH_KING_ESCAPE" title='DataTypes::DATA_THE_LICH_KING_ESCAPE' data-ref="DataTypes::DATA_THE_LICH_KING_ESCAPE" >DATA_THE_LICH_KING_ESCAPE</dfn>                   = <var>2</var>,</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="DataTypes::DATA_INTRO_EVENT" title='DataTypes::DATA_INTRO_EVENT' data-ref="DataTypes::DATA_INTRO_EVENT" >DATA_INTRO_EVENT</dfn>                            = <var>3</var>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="DataTypes::DATA_FROSTSWORN_GENERAL" title='DataTypes::DATA_FROSTSWORN_GENERAL' data-ref="DataTypes::DATA_FROSTSWORN_GENERAL" >DATA_FROSTSWORN_GENERAL</dfn>                     = <var>4</var>,</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="DataTypes::DATA_KORELN_LORALEN" title='DataTypes::DATA_KORELN_LORALEN' data-ref="DataTypes::DATA_KORELN_LORALEN" >DATA_KORELN_LORALEN</dfn>                         = <var>5</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="DataTypes::DATA_WAVE_COUNT" title='DataTypes::DATA_WAVE_COUNT' data-ref="DataTypes::DATA_WAVE_COUNT" >DATA_WAVE_COUNT</dfn>                             = <var>6</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="DataTypes::DATA_TEAM_IN_INSTANCE" title='DataTypes::DATA_TEAM_IN_INSTANCE' data-ref="DataTypes::DATA_TEAM_IN_INSTANCE" >DATA_TEAM_IN_INSTANCE</dfn>                       = <var>7</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="DataTypes::DATA_FROSTMOURNE" title='DataTypes::DATA_FROSTMOURNE' data-ref="DataTypes::DATA_FROSTMOURNE" >DATA_FROSTMOURNE</dfn>                            = <var>8</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="DataTypes::DATA_IMPENETRABLE_DOOR" title='DataTypes::DATA_IMPENETRABLE_DOOR' data-ref="DataTypes::DATA_IMPENETRABLE_DOOR" >DATA_IMPENETRABLE_DOOR</dfn>                      = <var>9</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="DataTypes::DATA_ESCAPE_LEADER" title='DataTypes::DATA_ESCAPE_LEADER' data-ref="DataTypes::DATA_ESCAPE_LEADER" >DATA_ESCAPE_LEADER</dfn>                          = <var>10</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="DataTypes::DATA_ICEWALL" title='DataTypes::DATA_ICEWALL' data-ref="DataTypes::DATA_ICEWALL" >DATA_ICEWALL</dfn>                                = <var>11</var>,</td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="DataTypes::DATA_ICEWALL_TARGET" title='DataTypes::DATA_ICEWALL_TARGET' data-ref="DataTypes::DATA_ICEWALL_TARGET" >DATA_ICEWALL_TARGET</dfn>                         = <var>12</var>,</td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="DataTypes::DATA_GUNSHIP" title='DataTypes::DATA_GUNSHIP' data-ref="DataTypes::DATA_GUNSHIP" >DATA_GUNSHIP</dfn>                                = <var>13</var>,</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <i>// Quest stuff</i></td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="DataTypes::DATA_QUEL_DELAR_EVENT" title='DataTypes::DATA_QUEL_DELAR_EVENT' data-ref="DataTypes::DATA_QUEL_DELAR_EVENT" >DATA_QUEL_DELAR_EVENT</dfn>                       = <var>14</var>,</td></tr>
+<tr><th id="53">53</th><td>    <dfn class="enum" id="DataTypes::DATA_FROSTMOURNE_ALTAR_BUNNY" title='DataTypes::DATA_FROSTMOURNE_ALTAR_BUNNY' data-ref="DataTypes::DATA_FROSTMOURNE_ALTAR_BUNNY" >DATA_FROSTMOURNE_ALTAR_BUNNY</dfn>                = <var>15</var>,</td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="DataTypes::DATA_UTHER_QUEL_DELAR" title='DataTypes::DATA_UTHER_QUEL_DELAR' data-ref="DataTypes::DATA_UTHER_QUEL_DELAR" >DATA_UTHER_QUEL_DELAR</dfn>                       = <var>16</var>,</td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="DataTypes::DATA_QUEL_DELAR_INVOKER" title='DataTypes::DATA_QUEL_DELAR_INVOKER' data-ref="DataTypes::DATA_QUEL_DELAR_INVOKER" >DATA_QUEL_DELAR_INVOKER</dfn>                     = <var>17</var></td></tr>
+<tr><th id="56">56</th><td>};</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><b>enum</b> <dfn class="type def" id="CreatureIds" title='CreatureIds' data-ref="CreatureIds" >CreatureIds</dfn></td></tr>
+<tr><th id="59">59</th><td>{</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="CreatureIds::NPC_JAINA_INTRO" title='CreatureIds::NPC_JAINA_INTRO' data-ref="CreatureIds::NPC_JAINA_INTRO" >NPC_JAINA_INTRO</dfn>                             = <var>37221</var>,</td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="CreatureIds::NPC_SYLVANAS_INTRO" title='CreatureIds::NPC_SYLVANAS_INTRO' data-ref="CreatureIds::NPC_SYLVANAS_INTRO" >NPC_SYLVANAS_INTRO</dfn>                          = <var>37223</var>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="CreatureIds::NPC_UTHER" title='CreatureIds::NPC_UTHER' data-ref="CreatureIds::NPC_UTHER" >NPC_UTHER</dfn>                                   = <var>37225</var>,</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="enum" id="CreatureIds::NPC_THE_LICH_KING_INTRO" title='CreatureIds::NPC_THE_LICH_KING_INTRO' data-ref="CreatureIds::NPC_THE_LICH_KING_INTRO" >NPC_THE_LICH_KING_INTRO</dfn>                     = <var>37226</var>,</td></tr>
+<tr><th id="64">64</th><td>    <dfn class="enum" id="CreatureIds::NPC_KORELN" title='CreatureIds::NPC_KORELN' data-ref="CreatureIds::NPC_KORELN" >NPC_KORELN</dfn>                                  = <var>37582</var>,</td></tr>
+<tr><th id="65">65</th><td>    <dfn class="enum" id="CreatureIds::NPC_LORALEN" title='CreatureIds::NPC_LORALEN' data-ref="CreatureIds::NPC_LORALEN" >NPC_LORALEN</dfn>                                 = <var>37779</var>,</td></tr>
+<tr><th id="66">66</th><td>    <dfn class="enum" id="CreatureIds::NPC_FROSTMOUNRE_ALTAR_BUNNY" title='CreatureIds::NPC_FROSTMOUNRE_ALTAR_BUNNY' data-ref="CreatureIds::NPC_FROSTMOUNRE_ALTAR_BUNNY" >NPC_FROSTMOUNRE_ALTAR_BUNNY</dfn>                 = <var>37704</var>,</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <dfn class="enum" id="CreatureIds::NPC_FALRIC" title='CreatureIds::NPC_FALRIC' data-ref="CreatureIds::NPC_FALRIC" >NPC_FALRIC</dfn>                                  = <var>38112</var>,</td></tr>
+<tr><th id="69">69</th><td>    <dfn class="enum" id="CreatureIds::NPC_MARWYN" title='CreatureIds::NPC_MARWYN' data-ref="CreatureIds::NPC_MARWYN" >NPC_MARWYN</dfn>                                  = <var>38113</var>,</td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="CreatureIds::NPC_WAVE_MERCENARY" title='CreatureIds::NPC_WAVE_MERCENARY' data-ref="CreatureIds::NPC_WAVE_MERCENARY" >NPC_WAVE_MERCENARY</dfn>                          = <var>38177</var>,</td></tr>
+<tr><th id="71">71</th><td>    <dfn class="enum" id="CreatureIds::NPC_WAVE_FOOTMAN" title='CreatureIds::NPC_WAVE_FOOTMAN' data-ref="CreatureIds::NPC_WAVE_FOOTMAN" >NPC_WAVE_FOOTMAN</dfn>                            = <var>38173</var>,</td></tr>
+<tr><th id="72">72</th><td>    <dfn class="enum" id="CreatureIds::NPC_WAVE_RIFLEMAN" title='CreatureIds::NPC_WAVE_RIFLEMAN' data-ref="CreatureIds::NPC_WAVE_RIFLEMAN" >NPC_WAVE_RIFLEMAN</dfn>                           = <var>38176</var>,</td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="CreatureIds::NPC_WAVE_PRIEST" title='CreatureIds::NPC_WAVE_PRIEST' data-ref="CreatureIds::NPC_WAVE_PRIEST" >NPC_WAVE_PRIEST</dfn>                             = <var>38175</var>,</td></tr>
+<tr><th id="74">74</th><td>    <dfn class="enum" id="CreatureIds::NPC_WAVE_MAGE" title='CreatureIds::NPC_WAVE_MAGE' data-ref="CreatureIds::NPC_WAVE_MAGE" >NPC_WAVE_MAGE</dfn>                               = <var>38172</var>,</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>    <dfn class="enum" id="CreatureIds::NPC_FROSTSWORN_GENERAL" title='CreatureIds::NPC_FROSTSWORN_GENERAL' data-ref="CreatureIds::NPC_FROSTSWORN_GENERAL" >NPC_FROSTSWORN_GENERAL</dfn>                      = <var>36723</var>,</td></tr>
+<tr><th id="77">77</th><td>    <dfn class="enum" id="CreatureIds::NPC_REFLECTION" title='CreatureIds::NPC_REFLECTION' data-ref="CreatureIds::NPC_REFLECTION" >NPC_REFLECTION</dfn>                              = <var>37068</var>, <i>// 37107 for tank only?</i></td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>    <dfn class="enum" id="CreatureIds::NPC_JAINA_ESCAPE" title='CreatureIds::NPC_JAINA_ESCAPE' data-ref="CreatureIds::NPC_JAINA_ESCAPE" >NPC_JAINA_ESCAPE</dfn>                            = <var>36955</var>,</td></tr>
+<tr><th id="80">80</th><td>    <dfn class="enum" id="CreatureIds::NPC_SYLVANAS_ESCAPE" title='CreatureIds::NPC_SYLVANAS_ESCAPE' data-ref="CreatureIds::NPC_SYLVANAS_ESCAPE" >NPC_SYLVANAS_ESCAPE</dfn>                         = <var>37554</var>,</td></tr>
+<tr><th id="81">81</th><td>    <dfn class="enum" id="CreatureIds::NPC_THE_LICH_KING_ESCAPE" title='CreatureIds::NPC_THE_LICH_KING_ESCAPE' data-ref="CreatureIds::NPC_THE_LICH_KING_ESCAPE" >NPC_THE_LICH_KING_ESCAPE</dfn>                    = <var>36954</var>,</td></tr>
+<tr><th id="82">82</th><td>    <dfn class="enum" id="CreatureIds::NPC_ICE_WALL_TARGET" title='CreatureIds::NPC_ICE_WALL_TARGET' data-ref="CreatureIds::NPC_ICE_WALL_TARGET" >NPC_ICE_WALL_TARGET</dfn>                         = <var>37014</var>,</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>    <dfn class="enum" id="CreatureIds::NPC_RAGING_GHOUL" title='CreatureIds::NPC_RAGING_GHOUL' data-ref="CreatureIds::NPC_RAGING_GHOUL" >NPC_RAGING_GHOUL</dfn>                            = <var>36940</var>,</td></tr>
+<tr><th id="85">85</th><td>    <dfn class="enum" id="CreatureIds::NPC_RISEN_WITCH_DOCTOR" title='CreatureIds::NPC_RISEN_WITCH_DOCTOR' data-ref="CreatureIds::NPC_RISEN_WITCH_DOCTOR" >NPC_RISEN_WITCH_DOCTOR</dfn>                      = <var>36941</var>,</td></tr>
+<tr><th id="86">86</th><td>    <dfn class="enum" id="CreatureIds::NPC_LUMBERING_ABOMINATION" title='CreatureIds::NPC_LUMBERING_ABOMINATION' data-ref="CreatureIds::NPC_LUMBERING_ABOMINATION" >NPC_LUMBERING_ABOMINATION</dfn>                   = <var>37069</var>,</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>    <dfn class="enum" id="CreatureIds::NPC_GUNSHIP_CANNON_HORDE" title='CreatureIds::NPC_GUNSHIP_CANNON_HORDE' data-ref="CreatureIds::NPC_GUNSHIP_CANNON_HORDE" >NPC_GUNSHIP_CANNON_HORDE</dfn>                    = <var>37593</var>,</td></tr>
+<tr><th id="89">89</th><td>    <dfn class="enum" id="CreatureIds::NPC_JUSTIN_BARTLETT" title='CreatureIds::NPC_JUSTIN_BARTLETT' data-ref="CreatureIds::NPC_JUSTIN_BARTLETT" >NPC_JUSTIN_BARTLETT</dfn>                         = <var>30344</var>,</td></tr>
+<tr><th id="90">90</th><td>    <dfn class="enum" id="CreatureIds::NPC_KORM_BLACKSCAR" title='CreatureIds::NPC_KORM_BLACKSCAR' data-ref="CreatureIds::NPC_KORM_BLACKSCAR" >NPC_KORM_BLACKSCAR</dfn>                          = <var>30824</var>,</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>    <dfn class="enum" id="CreatureIds::NPC_WORLD_TRIGGER" title='CreatureIds::NPC_WORLD_TRIGGER' data-ref="CreatureIds::NPC_WORLD_TRIGGER" >NPC_WORLD_TRIGGER</dfn>                           = <var>22515</var></td></tr>
+<tr><th id="93">93</th><td>};</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td><b>enum</b> <dfn class="type def" id="GameObjectIds" title='GameObjectIds' data-ref="GameObjectIds" >GameObjectIds</dfn></td></tr>
+<tr><th id="96">96</th><td>{</td></tr>
+<tr><th id="97">97</th><td>    <dfn class="enum" id="GameObjectIds::GO_FROSTMOURNE" title='GameObjectIds::GO_FROSTMOURNE' data-ref="GameObjectIds::GO_FROSTMOURNE" >GO_FROSTMOURNE</dfn>                              = <var>202302</var>,</td></tr>
+<tr><th id="98">98</th><td>    <dfn class="enum" id="GameObjectIds::GO_ENTRANCE_DOOR" title='GameObjectIds::GO_ENTRANCE_DOOR' data-ref="GameObjectIds::GO_ENTRANCE_DOOR" >GO_ENTRANCE_DOOR</dfn>                            = <var>201976</var>,</td></tr>
+<tr><th id="99">99</th><td>    <dfn class="enum" id="GameObjectIds::GO_IMPENETRABLE_DOOR" title='GameObjectIds::GO_IMPENETRABLE_DOOR' data-ref="GameObjectIds::GO_IMPENETRABLE_DOOR" >GO_IMPENETRABLE_DOOR</dfn>                        = <var>197341</var>,</td></tr>
+<tr><th id="100">100</th><td>    <dfn class="enum" id="GameObjectIds::GO_SHADOW_THRONE_DOOR" title='GameObjectIds::GO_SHADOW_THRONE_DOOR' data-ref="GameObjectIds::GO_SHADOW_THRONE_DOOR" >GO_SHADOW_THRONE_DOOR</dfn>                       = <var>197342</var>,</td></tr>
+<tr><th id="101">101</th><td>    <dfn class="enum" id="GameObjectIds::GO_ESCAPE_DOOR" title='GameObjectIds::GO_ESCAPE_DOOR' data-ref="GameObjectIds::GO_ESCAPE_DOOR" >GO_ESCAPE_DOOR</dfn>                              = <var>197343</var>, <i>// always open ?</i></td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>    <dfn class="enum" id="GameObjectIds::GO_ICE_WALL" title='GameObjectIds::GO_ICE_WALL' data-ref="GameObjectIds::GO_ICE_WALL" >GO_ICE_WALL</dfn>                                 = <var>201385</var>,</td></tr>
+<tr><th id="104">104</th><td>    <dfn class="enum" id="GameObjectIds::GO_CAVE_IN" title='GameObjectIds::GO_CAVE_IN' data-ref="GameObjectIds::GO_CAVE_IN" >GO_CAVE_IN</dfn>                                  = <var>201596</var>,</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>    <dfn class="enum" id="GameObjectIds::GO_THE_SKYBREAKER" title='GameObjectIds::GO_THE_SKYBREAKER' data-ref="GameObjectIds::GO_THE_SKYBREAKER" >GO_THE_SKYBREAKER</dfn>                           = <var>201598</var>,</td></tr>
+<tr><th id="107">107</th><td>    <dfn class="enum" id="GameObjectIds::GO_ORGRIMS_HAMMER" title='GameObjectIds::GO_ORGRIMS_HAMMER' data-ref="GameObjectIds::GO_ORGRIMS_HAMMER" >GO_ORGRIMS_HAMMER</dfn>                           = <var>201599</var>,</td></tr>
+<tr><th id="108">108</th><td>    <dfn class="enum" id="GameObjectIds::GO_THE_SKYBREAKER_STAIRS" title='GameObjectIds::GO_THE_SKYBREAKER_STAIRS' data-ref="GameObjectIds::GO_THE_SKYBREAKER_STAIRS" >GO_THE_SKYBREAKER_STAIRS</dfn>                    = <var>201709</var>,</td></tr>
+<tr><th id="109">109</th><td>    <dfn class="enum" id="GameObjectIds::GO_ORGRIMS_HAMMER_STAIRS" title='GameObjectIds::GO_ORGRIMS_HAMMER_STAIRS' data-ref="GameObjectIds::GO_ORGRIMS_HAMMER_STAIRS" >GO_ORGRIMS_HAMMER_STAIRS</dfn>                    = <var>202211</var>,</td></tr>
+<tr><th id="110">110</th><td>    <dfn class="enum" id="GameObjectIds::GO_PORTAL_TO_DALARAN" title='GameObjectIds::GO_PORTAL_TO_DALARAN' data-ref="GameObjectIds::GO_PORTAL_TO_DALARAN" >GO_PORTAL_TO_DALARAN</dfn>                        = <var>195682</var>,</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>    <dfn class="enum" id="GameObjectIds::GO_THE_CAPTAIN_CHEST_ALLIANCE_NORMAL" title='GameObjectIds::GO_THE_CAPTAIN_CHEST_ALLIANCE_NORMAL' data-ref="GameObjectIds::GO_THE_CAPTAIN_CHEST_ALLIANCE_NORMAL" >GO_THE_CAPTAIN_CHEST_ALLIANCE_NORMAL</dfn>        = <var>201710</var>,</td></tr>
+<tr><th id="113">113</th><td>    <dfn class="enum" id="GameObjectIds::GO_THE_CAPTAIN_CHEST_HORDE_NORMAL" title='GameObjectIds::GO_THE_CAPTAIN_CHEST_HORDE_NORMAL' data-ref="GameObjectIds::GO_THE_CAPTAIN_CHEST_HORDE_NORMAL" >GO_THE_CAPTAIN_CHEST_HORDE_NORMAL</dfn>           = <var>202212</var>,</td></tr>
+<tr><th id="114">114</th><td>    <dfn class="enum" id="GameObjectIds::GO_THE_CAPTAIN_CHEST_ALLIANCE_HEROIC" title='GameObjectIds::GO_THE_CAPTAIN_CHEST_ALLIANCE_HEROIC' data-ref="GameObjectIds::GO_THE_CAPTAIN_CHEST_ALLIANCE_HEROIC" >GO_THE_CAPTAIN_CHEST_ALLIANCE_HEROIC</dfn>        = <var>202336</var>,</td></tr>
+<tr><th id="115">115</th><td>    <dfn class="enum" id="GameObjectIds::GO_THE_CAPTAIN_CHEST_HORDE_HEROIC" title='GameObjectIds::GO_THE_CAPTAIN_CHEST_HORDE_HEROIC' data-ref="GameObjectIds::GO_THE_CAPTAIN_CHEST_HORDE_HEROIC" >GO_THE_CAPTAIN_CHEST_HORDE_HEROIC</dfn>           = <var>202337</var></td></tr>
+<tr><th id="116">116</th><td>};</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><b>enum</b> <dfn class="type def" id="Achievements" title='Achievements' data-ref="Achievements" >Achievements</dfn></td></tr>
+<tr><th id="119">119</th><td>{</td></tr>
+<tr><th id="120">120</th><td>    <dfn class="enum" id="Achievements::ACHIEV_NOT_RETREATING_EVENT" title='Achievements::ACHIEV_NOT_RETREATING_EVENT' data-ref="Achievements::ACHIEV_NOT_RETREATING_EVENT" >ACHIEV_NOT_RETREATING_EVENT</dfn>                 = <var>22615</var>,</td></tr>
+<tr><th id="121">121</th><td>    <dfn class="enum" id="Achievements::SPELL_ACHIEV_CHECK" title='Achievements::SPELL_ACHIEV_CHECK' data-ref="Achievements::SPELL_ACHIEV_CHECK" >SPELL_ACHIEV_CHECK</dfn>                          = <var>72830</var></td></tr>
+<tr><th id="122">122</th><td>};</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><i>// Common actions from Instance Script to Boss Script</i></td></tr>
+<tr><th id="125">125</th><td><b>enum</b> <dfn class="type def" id="Actions" title='Actions' data-ref="Actions" >Actions</dfn></td></tr>
+<tr><th id="126">126</th><td>{</td></tr>
+<tr><th id="127">127</th><td>    <dfn class="enum" id="Actions::ACTION_ENTER_COMBAT" title='Actions::ACTION_ENTER_COMBAT' data-ref="Actions::ACTION_ENTER_COMBAT" >ACTION_ENTER_COMBAT</dfn>                         = -<var>668001</var>,</td></tr>
+<tr><th id="128">128</th><td>    <dfn class="enum" id="Actions::ACTION_START_PREFIGHT" title='Actions::ACTION_START_PREFIGHT' data-ref="Actions::ACTION_START_PREFIGHT" >ACTION_START_PREFIGHT</dfn>                       = -<var>668002</var>,</td></tr>
+<tr><th id="129">129</th><td>    <dfn class="enum" id="Actions::ACTION_WALL_BROKEN" title='Actions::ACTION_WALL_BROKEN' data-ref="Actions::ACTION_WALL_BROKEN" >ACTION_WALL_BROKEN</dfn>                          = -<var>668003</var>,</td></tr>
+<tr><th id="130">130</th><td>    <dfn class="enum" id="Actions::ACTION_GUNSHIP_ARRIVAL" title='Actions::ACTION_GUNSHIP_ARRIVAL' data-ref="Actions::ACTION_GUNSHIP_ARRIVAL" >ACTION_GUNSHIP_ARRIVAL</dfn>                      = -<var>668004</var>,</td></tr>
+<tr><th id="131">131</th><td>    <dfn class="enum" id="Actions::ACTION_GUNSHIP_ARRIVAL_2" title='Actions::ACTION_GUNSHIP_ARRIVAL_2' data-ref="Actions::ACTION_GUNSHIP_ARRIVAL_2" >ACTION_GUNSHIP_ARRIVAL_2</dfn>                    = -<var>668005</var></td></tr>
+<tr><th id="132">132</th><td>};</td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><b>enum</b> <dfn class="type def" id="InstanceEvents" title='InstanceEvents' data-ref="InstanceEvents" >InstanceEvents</dfn></td></tr>
+<tr><th id="135">135</th><td>{</td></tr>
+<tr><th id="136">136</th><td>    <dfn class="enum" id="InstanceEvents::EVENT_SPAWN_WAVES" title='InstanceEvents::EVENT_SPAWN_WAVES' data-ref="InstanceEvents::EVENT_SPAWN_WAVES" >EVENT_SPAWN_WAVES</dfn>                           = <var>1</var>,</td></tr>
+<tr><th id="137">137</th><td>    <dfn class="enum" id="InstanceEvents::EVENT_NEXT_WAVE" title='InstanceEvents::EVENT_NEXT_WAVE' data-ref="InstanceEvents::EVENT_NEXT_WAVE" >EVENT_NEXT_WAVE</dfn>                             = <var>2</var>,</td></tr>
+<tr><th id="138">138</th><td>    <dfn class="enum" id="InstanceEvents::EVENT_DO_WIPE" title='InstanceEvents::EVENT_DO_WIPE' data-ref="InstanceEvents::EVENT_DO_WIPE" >EVENT_DO_WIPE</dfn>                               = <var>3</var>,</td></tr>
+<tr><th id="139">139</th><td>    <dfn class="enum" id="InstanceEvents::EVENT_ADD_WAVE" title='InstanceEvents::EVENT_ADD_WAVE' data-ref="InstanceEvents::EVENT_ADD_WAVE" >EVENT_ADD_WAVE</dfn>                              = <var>4</var>,</td></tr>
+<tr><th id="140">140</th><td>    <dfn class="enum" id="InstanceEvents::EVENT_SPAWN_ESCAPE_EVENT" title='InstanceEvents::EVENT_SPAWN_ESCAPE_EVENT' data-ref="InstanceEvents::EVENT_SPAWN_ESCAPE_EVENT" >EVENT_SPAWN_ESCAPE_EVENT</dfn>                    = <var>5</var>,</td></tr>
+<tr><th id="141">141</th><td>    <dfn class="enum" id="InstanceEvents::EVENT_QUEL_DELAR_SUMMON_UTHER" title='InstanceEvents::EVENT_QUEL_DELAR_SUMMON_UTHER' data-ref="InstanceEvents::EVENT_QUEL_DELAR_SUMMON_UTHER" >EVENT_QUEL_DELAR_SUMMON_UTHER</dfn>               = <var>6</var></td></tr>
+<tr><th id="142">142</th><td>};</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td><b>enum</b> <dfn class="type def" id="InstanceEventIds" title='InstanceEventIds' data-ref="InstanceEventIds" >InstanceEventIds</dfn></td></tr>
+<tr><th id="145">145</th><td>{</td></tr>
+<tr><th id="146">146</th><td>    <dfn class="enum" id="InstanceEventIds::EVENT_GUNSHIP_ARRIVAL" title='InstanceEventIds::EVENT_GUNSHIP_ARRIVAL' data-ref="InstanceEventIds::EVENT_GUNSHIP_ARRIVAL" >EVENT_GUNSHIP_ARRIVAL</dfn>                       = <var>22709</var>,</td></tr>
+<tr><th id="147">147</th><td>    <dfn class="enum" id="InstanceEventIds::EVENT_GUNSHIP_ARRIVAL_2" title='InstanceEventIds::EVENT_GUNSHIP_ARRIVAL_2' data-ref="InstanceEventIds::EVENT_GUNSHIP_ARRIVAL_2" >EVENT_GUNSHIP_ARRIVAL_2</dfn>                     = <var>22714</var>,</td></tr>
+<tr><th id="148">148</th><td>    <dfn class="enum" id="InstanceEventIds::EVENT_ICE_WALL_SUMMONED" title='InstanceEventIds::EVENT_ICE_WALL_SUMMONED' data-ref="InstanceEventIds::EVENT_ICE_WALL_SUMMONED" >EVENT_ICE_WALL_SUMMONED</dfn>                     = <var>22795</var></td></tr>
+<tr><th id="149">149</th><td>};</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><b>enum</b> <dfn class="type def" id="InstanceSpells" title='InstanceSpells' data-ref="InstanceSpells" >InstanceSpells</dfn></td></tr>
+<tr><th id="152">152</th><td>{</td></tr>
+<tr><th id="153">153</th><td>    <i>// Trash</i></td></tr>
+<tr><th id="154">154</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_WELL_OF_SOULS" title='InstanceSpells::SPELL_WELL_OF_SOULS' data-ref="InstanceSpells::SPELL_WELL_OF_SOULS" >SPELL_WELL_OF_SOULS</dfn>                         = <var>72630</var>, <i>// cast when spawn (become visible)</i></td></tr>
+<tr><th id="155">155</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_SPIRIT_ACTIVATE" title='InstanceSpells::SPELL_SPIRIT_ACTIVATE' data-ref="InstanceSpells::SPELL_SPIRIT_ACTIVATE" >SPELL_SPIRIT_ACTIVATE</dfn>                       = <var>72130</var>, <i>// cast when unit activates</i></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>    <i>// Start Quests</i></td></tr>
+<tr><th id="158">158</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_A" title='InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_A' data-ref="InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_A" >SPELL_START_HALLS_OF_REFLECTION_QUEST_A</dfn>     = <var>71351</var>,</td></tr>
+<tr><th id="159">159</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_H" title='InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_H' data-ref="InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_H" >SPELL_START_HALLS_OF_REFLECTION_QUEST_H</dfn>     = <var>71542</var>,</td></tr>
+<tr><th id="160">160</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_AE" title='InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_AE' data-ref="InstanceSpells::SPELL_START_HALLS_OF_REFLECTION_QUEST_AE" >SPELL_START_HALLS_OF_REFLECTION_QUEST_AE</dfn>    = <var>72900</var>,</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>    <i>// Quest Credits</i></td></tr>
+<tr><th id="163">163</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_CREDIT_FINDING_SYLVANAS" title='InstanceSpells::SPELL_CREDIT_FINDING_SYLVANAS' data-ref="InstanceSpells::SPELL_CREDIT_FINDING_SYLVANAS" >SPELL_CREDIT_FINDING_SYLVANAS</dfn>               = <var>71536</var>,</td></tr>
+<tr><th id="164">164</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_CREDIT_FINDING_JAINA" title='InstanceSpells::SPELL_CREDIT_FINDING_JAINA' data-ref="InstanceSpells::SPELL_CREDIT_FINDING_JAINA" >SPELL_CREDIT_FINDING_JAINA</dfn>                  = <var>71538</var>,</td></tr>
+<tr><th id="165">165</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_CREDIT_ESCAPING_ARTHAS" title='InstanceSpells::SPELL_CREDIT_ESCAPING_ARTHAS' data-ref="InstanceSpells::SPELL_CREDIT_ESCAPING_ARTHAS" >SPELL_CREDIT_ESCAPING_ARTHAS</dfn>                = <var>71352</var>,</td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td>    <i>// Gunship</i></td></tr>
+<tr><th id="168">168</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE" title='InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE' data-ref="InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE" >SPELL_GUNSHIP_CANNON_FIRE</dfn>                   = <var>70017</var>,</td></tr>
+<tr><th id="169">169</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE_MISSILE_ALLIANCE" title='InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE_MISSILE_ALLIANCE' data-ref="InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE_MISSILE_ALLIANCE" >SPELL_GUNSHIP_CANNON_FIRE_MISSILE_ALLIANCE</dfn>  = <var>70021</var>,</td></tr>
+<tr><th id="170">170</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE_MISSILE_HORDE" title='InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE_MISSILE_HORDE' data-ref="InstanceSpells::SPELL_GUNSHIP_CANNON_FIRE_MISSILE_HORDE" >SPELL_GUNSHIP_CANNON_FIRE_MISSILE_HORDE</dfn>     = <var>70246</var>,</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>    <i>// Halls of Reflection quest</i></td></tr>
+<tr><th id="173">173</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_QUEL_DELAR_COMPULSION" title='InstanceSpells::SPELL_QUEL_DELAR_COMPULSION' data-ref="InstanceSpells::SPELL_QUEL_DELAR_COMPULSION" >SPELL_QUEL_DELAR_COMPULSION</dfn>                 = <var>70013</var>,</td></tr>
+<tr><th id="174">174</th><td>    <dfn class="enum" id="InstanceSpells::SPELL_ESSENCE_OF_CAPTURED" title='InstanceSpells::SPELL_ESSENCE_OF_CAPTURED' data-ref="InstanceSpells::SPELL_ESSENCE_OF_CAPTURED" >SPELL_ESSENCE_OF_CAPTURED</dfn>                   = <var>70720</var></td></tr>
+<tr><th id="175">175</th><td>};</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td><b>enum</b> <dfn class="type def" id="InstanceQuests" title='InstanceQuests' data-ref="InstanceQuests" >InstanceQuests</dfn></td></tr>
+<tr><th id="178">178</th><td>{</td></tr>
+<tr><th id="179">179</th><td>    <dfn class="enum" id="InstanceQuests::QUEST_HALLS_OF_REFLECTION_ALLIANCE" title='InstanceQuests::QUEST_HALLS_OF_REFLECTION_ALLIANCE' data-ref="InstanceQuests::QUEST_HALLS_OF_REFLECTION_ALLIANCE" >QUEST_HALLS_OF_REFLECTION_ALLIANCE</dfn>          = <var>24480</var>,</td></tr>
+<tr><th id="180">180</th><td>    <dfn class="enum" id="InstanceQuests::QUEST_HALLS_OF_REFLECTION_HORDE" title='InstanceQuests::QUEST_HALLS_OF_REFLECTION_HORDE' data-ref="InstanceQuests::QUEST_HALLS_OF_REFLECTION_HORDE" >QUEST_HALLS_OF_REFLECTION_HORDE</dfn>             = <var>24561</var></td></tr>
+<tr><th id="181">181</th><td>};</td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td><b>enum</b> <dfn class="type def" id="InstanceWorldStates" title='InstanceWorldStates' data-ref="InstanceWorldStates" >InstanceWorldStates</dfn></td></tr>
+<tr><th id="184">184</th><td>{</td></tr>
+<tr><th id="185">185</th><td>    <dfn class="enum" id="InstanceWorldStates::WORLD_STATE_HOR_WAVES_ENABLED" title='InstanceWorldStates::WORLD_STATE_HOR_WAVES_ENABLED' data-ref="InstanceWorldStates::WORLD_STATE_HOR_WAVES_ENABLED" >WORLD_STATE_HOR_WAVES_ENABLED</dfn>               = <var>4884</var>,</td></tr>
+<tr><th id="186">186</th><td>    <dfn class="enum" id="InstanceWorldStates::WORLD_STATE_HOR_WAVE_COUNT" title='InstanceWorldStates::WORLD_STATE_HOR_WAVE_COUNT' data-ref="InstanceWorldStates::WORLD_STATE_HOR_WAVE_COUNT" >WORLD_STATE_HOR_WAVE_COUNT</dfn>                  = <var>4882</var></td></tr>
+<tr><th id="187">187</th><td>};</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td><b>enum</b> <dfn class="type def" id="InstanceYells" title='InstanceYells' data-ref="InstanceYells" >InstanceYells</dfn></td></tr>
+<tr><th id="190">190</th><td>{</td></tr>
+<tr><th id="191">191</th><td>    <dfn class="enum" id="InstanceYells::SAY_CAPTAIN_FIRE" title='InstanceYells::SAY_CAPTAIN_FIRE' data-ref="InstanceYells::SAY_CAPTAIN_FIRE" >SAY_CAPTAIN_FIRE</dfn>                            = <var>0</var>,</td></tr>
+<tr><th id="192">192</th><td>    <dfn class="enum" id="InstanceYells::SAY_CAPTAIN_FINAL" title='InstanceYells::SAY_CAPTAIN_FINAL' data-ref="InstanceYells::SAY_CAPTAIN_FINAL" >SAY_CAPTAIN_FINAL</dfn>                           = <var>1</var></td></tr>
+<tr><th id="193">193</th><td>};</td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td><i>// Base class for FALRIC and MARWYN</i></td></tr>
+<tr><th id="196">196</th><td><b>struct</b> <dfn class="type def" id="boss_horAI" title='boss_horAI' data-ref="boss_horAI" >boss_horAI</dfn> : <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a></td></tr>
+<tr><th id="197">197</th><td>{</td></tr>
+<tr><th id="198">198</th><td>    <dfn class="decl def" id="_ZN10boss_horAIC1EP8Creaturej" title='boss_horAI::boss_horAI' data-ref="_ZN10boss_horAIC1EP8Creaturej" >boss_horAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>, <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="2bossId" title='bossId' data-type='uint32' data-ref="2bossId" >bossId</dfn>) : <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a><a class="ref" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAIC1EP8Creaturej" title='BossAI::BossAI' data-ref="_ZN6BossAIC1EP8Creaturej" id="_ZN6BossAIC1EP8Creaturej" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="local col2 ref" href="#2bossId" title='bossId' data-ref="2bossId" >bossId</a>) { }</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>    <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_horAI5ResetEv" title='boss_horAI::Reset' data-ref="_ZN10boss_horAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="201">201</th><td>    {</td></tr>
+<tr><th id="202">202</th><td>        <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI6_ResetEv" title='BossAI::_Reset' data-ref="_ZN6BossAI6_ResetEv" id="_ZN6BossAI6_ResetEv" >_Reset</a>();</td></tr>
+<tr><th id="203">203</th><td>        <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Unit/Unit.h.html#_ZN4Unit10SetVisibleEb" title='Unit::SetVisible' data-ref="_ZN4Unit10SetVisibleEb" id="_ZN4Unit10SetVisibleEb" >SetVisible</a>(<b>false</b>);</td></tr>
+<tr><th id="204">204</th><td>        <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Object/Object.h.html#_ZN6Object7SetFlagEtj" title='Object::SetFlag' data-ref="_ZN6Object7SetFlagEtj" id="_ZN6Object7SetFlagEtj" >SetFlag</a>(<a class="enum" href="../../../../game/Entities/Object/Updates/UpdateFields.h.html#EUnitFields::UNIT_FIELD_FLAGS" title='EUnitFields::UNIT_FIELD_FLAGS' data-ref="EUnitFields::UNIT_FIELD_FLAGS" id="EUnitFields::UNIT_FIELD_FLAGS" >UNIT_FIELD_FLAGS</a>, <a class="enum" href="../../../../game/Entities/Unit/Unit.h.html#UnitFlags::UNIT_FLAG_IMMUNE_TO_PC" title='UnitFlags::UNIT_FLAG_IMMUNE_TO_PC' data-ref="UnitFlags::UNIT_FLAG_IMMUNE_TO_PC" id="UnitFlags::UNIT_FLAG_IMMUNE_TO_PC" >UNIT_FLAG_IMMUNE_TO_PC</a> | <a class="enum" href="../../../../game/Entities/Unit/Unit.h.html#UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC" title='UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC' data-ref="UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC" id="UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC" >UNIT_FLAG_IMMUNE_TO_NPC</a>);</td></tr>
+<tr><th id="205">205</th><td>        <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Creature/Creature.h.html#_ZN8Creature13SetReactStateE11ReactStates" title='Creature::SetReactState' data-ref="_ZN8Creature13SetReactStateE11ReactStates" id="_ZN8Creature13SetReactStateE11ReactStates" >SetReactState</a>(<a class="enum" href="../../../../game/Entities/Unit/Unit.h.html#ReactStates::REACT_PASSIVE" title='ReactStates::REACT_PASSIVE' data-ref="ReactStates::REACT_PASSIVE" id="ReactStates::REACT_PASSIVE" >REACT_PASSIVE</a>);</td></tr>
+<tr><th id="206">206</th><td>        <b>if</b> (<a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::instance" title='BossAI::instance' data-ref="BossAI::instance" id="BossAI::instance" >instance</a>-&gt;<a class="virtual ref" href="../../../../game/Maps/ZoneScript.h.html#_ZNK10ZoneScript7GetDataEj" title='ZoneScript::GetData' data-ref="_ZNK10ZoneScript7GetDataEj" id="_ZNK10ZoneScript7GetDataEj" >GetData</a>(<a class="enum" href="#DataTypes::DATA_WAVE_COUNT" title='DataTypes::DATA_WAVE_COUNT' data-ref="DataTypes::DATA_WAVE_COUNT" >DATA_WAVE_COUNT</a>) != <a class="enum" href="../../../../game/Instances/InstanceScript.h.html#EncounterState::NOT_STARTED" title='EncounterState::NOT_STARTED' data-ref="EncounterState::NOT_STARTED" id="EncounterState::NOT_STARTED" >NOT_STARTED</a>)</td></tr>
+<tr><th id="207">207</th><td>            <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::instance" title='BossAI::instance' data-ref="BossAI::instance" id="BossAI::instance" >instance</a>-&gt;<a class="virtual ref" href="../../../../game/Maps/ZoneScript.h.html#_ZN10ZoneScript12ProcessEventEP11WorldObjectj" title='ZoneScript::ProcessEvent' data-ref="_ZN10ZoneScript12ProcessEventEP11WorldObjectj" id="_ZN10ZoneScript12ProcessEventEP11WorldObjectj" >ProcessEvent</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <a class="enum" href="#InstanceEvents::EVENT_DO_WIPE" title='InstanceEvents::EVENT_DO_WIPE' data-ref="InstanceEvents::EVENT_DO_WIPE" >EVENT_DO_WIPE</a>);</td></tr>
+<tr><th id="208">208</th><td>    }</td></tr>
+<tr><th id="209">209</th><td></td></tr>
+<tr><th id="210">210</th><td>    <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_horAI8DoActionEi" title='boss_horAI::DoAction' data-ref="_ZN10boss_horAI8DoActionEi" >DoAction</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col3 decl" id="3actionId" title='actionId' data-type='int32' data-ref="3actionId" >actionId</dfn>) override</td></tr>
+<tr><th id="211">211</th><td>    {</td></tr>
+<tr><th id="212">212</th><td>        <b>switch</b> (<a class="local col3 ref" href="#3actionId" title='actionId' data-ref="3actionId" >actionId</a>)</td></tr>
+<tr><th id="213">213</th><td>        {</td></tr>
+<tr><th id="214">214</th><td>            <b>case</b> <a class="enum" href="#Actions::ACTION_ENTER_COMBAT" title='Actions::ACTION_ENTER_COMBAT' data-ref="Actions::ACTION_ENTER_COMBAT" >ACTION_ENTER_COMBAT</a>: <i>// called by InstanceScript when boss shall enter in combat.</i></td></tr>
+<tr><th id="215">215</th><td>                <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Object/Object.h.html#_ZN6Object10RemoveFlagEtj" title='Object::RemoveFlag' data-ref="_ZN6Object10RemoveFlagEtj" id="_ZN6Object10RemoveFlagEtj" >RemoveFlag</a>(<a class="enum" href="../../../../game/Entities/Object/Updates/UpdateFields.h.html#EUnitFields::UNIT_FIELD_FLAGS" title='EUnitFields::UNIT_FIELD_FLAGS' data-ref="EUnitFields::UNIT_FIELD_FLAGS" id="EUnitFields::UNIT_FIELD_FLAGS" >UNIT_FIELD_FLAGS</a>, <a class="enum" href="../../../../game/Entities/Unit/Unit.h.html#UnitFlags::UNIT_FLAG_IMMUNE_TO_PC" title='UnitFlags::UNIT_FLAG_IMMUNE_TO_PC' data-ref="UnitFlags::UNIT_FLAG_IMMUNE_TO_PC" id="UnitFlags::UNIT_FLAG_IMMUNE_TO_PC" >UNIT_FLAG_IMMUNE_TO_PC</a> | <a class="enum" href="../../../../game/Entities/Unit/Unit.h.html#UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC" title='UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC' data-ref="UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC" id="UnitFlags::UNIT_FLAG_IMMUNE_TO_NPC" >UNIT_FLAG_IMMUNE_TO_NPC</a>);</td></tr>
+<tr><th id="216">216</th><td>                <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Creature/Creature.h.html#_ZN8Creature13SetReactStateE11ReactStates" title='Creature::SetReactState' data-ref="_ZN8Creature13SetReactStateE11ReactStates" id="_ZN8Creature13SetReactStateE11ReactStates" >SetReactState</a>(<a class="enum" href="../../../../game/Entities/Unit/Unit.h.html#ReactStates::REACT_AGGRESSIVE" title='ReactStates::REACT_AGGRESSIVE' data-ref="ReactStates::REACT_AGGRESSIVE" id="ReactStates::REACT_AGGRESSIVE" >REACT_AGGRESSIVE</a>);</td></tr>
+<tr><th id="217">217</th><td>                <a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI14DoZoneInCombatEP8Creaturef" title='CreatureAI::DoZoneInCombat' data-ref="_ZN10CreatureAI14DoZoneInCombatEP8Creaturef" id="_ZN10CreatureAI14DoZoneInCombatEP8Creaturef" >DoZoneInCombat</a>(<a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <var>150.0f</var>);</td></tr>
+<tr><th id="218">218</th><td>                <b>break</b>;</td></tr>
+<tr><th id="219">219</th><td>            <b>default</b>:</td></tr>
+<tr><th id="220">220</th><td>                <b>break</b>;</td></tr>
+<tr><th id="221">221</th><td>        }</td></tr>
+<tr><th id="222">222</th><td>    }</td></tr>
+<tr><th id="223">223</th><td></td></tr>
+<tr><th id="224">224</th><td>    <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_horAI12JustSummonedEP8Creature" title='boss_horAI::JustSummoned' data-ref="_ZN10boss_horAI12JustSummonedEP8Creature" >JustSummoned</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col4 decl" id="4summon" title='summon' data-type='Creature *' data-ref="4summon" >summon</dfn>) override</td></tr>
+<tr><th id="225">225</th><td>    {</td></tr>
+<tr><th id="226">226</th><td>        <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::summons" title='BossAI::summons' data-ref="BossAI::summons" id="BossAI::summons" >summons</a>.<a class="ref" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN10SummonList6SummonEPK8Creature" title='SummonList::Summon' data-ref="_ZN10SummonList6SummonEPK8Creature" id="_ZN10SummonList6SummonEPK8Creature" >Summon</a>(<a class="local col4 ref" href="#4summon" title='summon' data-ref="4summon" >summon</a>);</td></tr>
+<tr><th id="227">227</th><td>    }</td></tr>
+<tr><th id="228">228</th><td>};</td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td><b>class</b> <dfn class="type def" id="GameObjectDeleteDelayEvent" title='GameObjectDeleteDelayEvent' data-ref="GameObjectDeleteDelayEvent" >GameObjectDeleteDelayEvent</dfn> : <b>public</b> <a class="type" href="../../../../../common/Utilities/EventProcessor.h.html#BasicEvent" title='BasicEvent' data-ref="BasicEvent" >BasicEvent</a></td></tr>
+<tr><th id="231">231</th><td>{</td></tr>
+<tr><th id="232">232</th><td>    <b>public</b>:</td></tr>
+<tr><th id="233">233</th><td>        <dfn class="decl def" id="_ZN26GameObjectDeleteDelayEventC1EP4Unit10ObjectGuid" title='GameObjectDeleteDelayEvent::GameObjectDeleteDelayEvent' data-ref="_ZN26GameObjectDeleteDelayEventC1EP4Unit10ObjectGuid" >GameObjectDeleteDelayEvent</dfn>(<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col5 decl" id="5owner" title='owner' data-type='Unit *' data-ref="5owner" >owner</dfn>, <a class="type" href="../../../../game/Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="local col6 decl" id="6gameObjectGUID" title='gameObjectGUID' data-type='ObjectGuid' data-ref="6gameObjectGUID" >gameObjectGUID</dfn>) : <a class="member" href="#GameObjectDeleteDelayEvent::_owner" title='GameObjectDeleteDelayEvent::_owner' data-ref="GameObjectDeleteDelayEvent::_owner" >_owner</a>(<a class="local col5 ref" href="#5owner" title='owner' data-ref="5owner" >owner</a>), <a class="member" href="#GameObjectDeleteDelayEvent::_gameObjectGUID" title='GameObjectDeleteDelayEvent::_gameObjectGUID' data-ref="GameObjectDeleteDelayEvent::_gameObjectGUID" >_gameObjectGUID</a><a class="ref" href="../../../../game/Entities/Object/ObjectGuid.h.html#_ZN10ObjectGuidC1ERKS_" title='ObjectGuid::ObjectGuid' data-ref="_ZN10ObjectGuidC1ERKS_" id="_ZN10ObjectGuidC1ERKS_" >(</a><a class="local col6 ref" href="#6gameObjectGUID" title='gameObjectGUID' data-ref="6gameObjectGUID" >gameObjectGUID</a>) { }</td></tr>
+<tr><th id="234">234</th><td></td></tr>
+<tr><th id="235">235</th><td>        <em>void</em> <dfn class="decl def" id="_ZN26GameObjectDeleteDelayEvent16DeleteGameObjectEv" title='GameObjectDeleteDelayEvent::DeleteGameObject' data-ref="_ZN26GameObjectDeleteDelayEvent16DeleteGameObjectEv" >DeleteGameObject</dfn>()</td></tr>
+<tr><th id="236">236</th><td>        {</td></tr>
+<tr><th id="237">237</th><td>            <b>if</b> (<a class="type" href="../../../../game/Entities/GameObject/GameObject.h.html#GameObject" title='GameObject' data-ref="GameObject" >GameObject</a>* <dfn class="local col7 decl" id="7go" title='go' data-type='GameObject *' data-ref="7go" ><a class="local col7 ref" href="#7go" title='go' data-ref="7go" >go</a></dfn> = <span class="namespace">ObjectAccessor::</span><a class="ref" href="../../../../game/Globals/ObjectAccessor.h.html#_ZN14ObjectAccessor13GetGameObjectERK11WorldObjectRK10ObjectGuid" title='ObjectAccessor::GetGameObject' data-ref="_ZN14ObjectAccessor13GetGameObjectERK11WorldObjectRK10ObjectGuid" id="_ZN14ObjectAccessor13GetGameObjectERK11WorldObjectRK10ObjectGuid" >GetGameObject</a>(*<a class="member" href="#GameObjectDeleteDelayEvent::_owner" title='GameObjectDeleteDelayEvent::_owner' data-ref="GameObjectDeleteDelayEvent::_owner" >_owner</a>, <a class="member" href="#GameObjectDeleteDelayEvent::_gameObjectGUID" title='GameObjectDeleteDelayEvent::_gameObjectGUID' data-ref="GameObjectDeleteDelayEvent::_gameObjectGUID" >_gameObjectGUID</a>))</td></tr>
+<tr><th id="238">238</th><td>                <a class="local col7 ref" href="#7go" title='go' data-ref="7go" >go</a>-&gt;<a class="ref" href="../../../../game/Entities/GameObject/GameObject.h.html#_ZN10GameObject6DeleteEv" title='GameObject::Delete' data-ref="_ZN10GameObject6DeleteEv" id="_ZN10GameObject6DeleteEv" >Delete</a>();</td></tr>
+<tr><th id="239">239</th><td>        }</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>        <em>bool</em> <dfn class="virtual decl def" id="_ZN26GameObjectDeleteDelayEvent7ExecuteEmj" title='GameObjectDeleteDelayEvent::Execute' data-ref="_ZN26GameObjectDeleteDelayEvent7ExecuteEmj" >Execute</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint64" title='uint64' data-type='uint64_t' data-ref="uint64" >uint64</a> <i>/*execTime*/</i>, <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <i>/*diff*/</i>) override</td></tr>
+<tr><th id="242">242</th><td>        {</td></tr>
+<tr><th id="243">243</th><td>            <a class="member" href="#_ZN26GameObjectDeleteDelayEvent16DeleteGameObjectEv" title='GameObjectDeleteDelayEvent::DeleteGameObject' data-ref="_ZN26GameObjectDeleteDelayEvent16DeleteGameObjectEv" >DeleteGameObject</a>();</td></tr>
+<tr><th id="244">244</th><td>            <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="245">245</th><td>        }</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN26GameObjectDeleteDelayEvent5AbortEm" title='GameObjectDeleteDelayEvent::Abort' data-ref="_ZN26GameObjectDeleteDelayEvent5AbortEm" >Abort</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint64" title='uint64' data-type='uint64_t' data-ref="uint64" >uint64</a> <i>/*execTime*/</i>) override</td></tr>
+<tr><th id="248">248</th><td>        {</td></tr>
+<tr><th id="249">249</th><td>            <a class="member" href="#_ZN26GameObjectDeleteDelayEvent16DeleteGameObjectEv" title='GameObjectDeleteDelayEvent::DeleteGameObject' data-ref="_ZN26GameObjectDeleteDelayEvent16DeleteGameObjectEv" >DeleteGameObject</a>();</td></tr>
+<tr><th id="250">250</th><td>        }</td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td>    <b>private</b>:</td></tr>
+<tr><th id="253">253</th><td>        <a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="decl" id="GameObjectDeleteDelayEvent::_owner" title='GameObjectDeleteDelayEvent::_owner' data-ref="GameObjectDeleteDelayEvent::_owner" >_owner</dfn>;</td></tr>
+<tr><th id="254">254</th><td>        <a class="type" href="../../../../game/Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="decl" id="GameObjectDeleteDelayEvent::_gameObjectGUID" title='GameObjectDeleteDelayEvent::_gameObjectGUID' data-ref="GameObjectDeleteDelayEvent::_gameObjectGUID" >_gameObjectGUID</dfn>;</td></tr>
+<tr><th id="255">255</th><td>};</td></tr>
+<tr><th id="256">256</th><td></td></tr>
+<tr><th id="257">257</th><td><b>template</b>&lt;<b>class</b> AI&gt;</td></tr>
+<tr><th id="258">258</th><td>AI* <dfn class="decl def" id="_Z22GetHallsOfReflectionAIP8Creature" title='GetHallsOfReflectionAI' data-ref="_Z22GetHallsOfReflectionAIP8Creature" >GetHallsOfReflectionAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col8 decl" id="8creature" title='creature' data-type='Creature *' data-ref="8creature" >creature</dfn>)</td></tr>
+<tr><th id="259">259</th><td>{</td></tr>
+<tr><th id="260">260</th><td>    <b>return</b> GetInstanceAI&lt;AI&gt;(<a class="local col8 ref" href="#8creature" title='creature' data-ref="8creature" >creature</a>, <a class="macro" href="#21" title="&quot;instance_halls_of_reflection&quot;" data-ref="_M/HoRScriptName">HoRScriptName</a>);</td></tr>
+<tr><th id="261">261</th><td>}</td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td><u>#<span data-ppcond="18">endif</span> // HALLS_OF_REFLECTION_H_</u></td></tr>
+<tr><th id="264">264</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='boss_falric.cpp.html'>TrinityCore3.3.5/src/server/scripts/Northrend/FrozenHalls/HallsOfReflection/boss_falric.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

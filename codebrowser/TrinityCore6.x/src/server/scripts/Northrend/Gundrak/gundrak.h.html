@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<title>gundrak.h [TrinityCore6.x/src/server/scripts/Northrend/Gundrak/gundrak.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/Northrend/Gundrak/gundrak.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>scripts</a>/<a href='..'>Northrend</a>/<a href='./'>Gundrak</a>/gundrak.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/GUNDRAK_H_">GUNDRAK_H_</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/GUNDRAK_H_" data-ref="_M/GUNDRAK_H_">GUNDRAK_H_</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/GundrakScriptName" data-ref="_M/GundrakScriptName">GundrakScriptName</dfn> "instance_gundrak"</u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/DataHeader" data-ref="_M/DataHeader">DataHeader</dfn> "GD"</u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <em>const</em> <dfn class="decl def" id="_ZL14EncounterCount" title='EncounterCount' data-ref="_ZL14EncounterCount" >EncounterCount</dfn> = <var>5</var>;</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>enum</b> <dfn class="type def" id="DataTypes" title='DataTypes' data-ref="DataTypes" >DataTypes</dfn></td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td>    <i>// Encounter Ids // Encounter States // Boss GUIDs</i></td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="DataTypes::DATA_SLAD_RAN" title='DataTypes::DATA_SLAD_RAN' data-ref="DataTypes::DATA_SLAD_RAN" >DATA_SLAD_RAN</dfn>                    = <var>0</var>,</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="DataTypes::DATA_DRAKKARI_COLOSSUS" title='DataTypes::DATA_DRAKKARI_COLOSSUS' data-ref="DataTypes::DATA_DRAKKARI_COLOSSUS" >DATA_DRAKKARI_COLOSSUS</dfn>           = <var>1</var>,</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="DataTypes::DATA_MOORABI" title='DataTypes::DATA_MOORABI' data-ref="DataTypes::DATA_MOORABI" >DATA_MOORABI</dfn>                     = <var>2</var>,</td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="DataTypes::DATA_GAL_DARAH" title='DataTypes::DATA_GAL_DARAH' data-ref="DataTypes::DATA_GAL_DARAH" >DATA_GAL_DARAH</dfn>                   = <var>3</var>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="DataTypes::DATA_ECK_THE_FEROCIOUS" title='DataTypes::DATA_ECK_THE_FEROCIOUS' data-ref="DataTypes::DATA_ECK_THE_FEROCIOUS" >DATA_ECK_THE_FEROCIOUS</dfn>           = <var>4</var>,</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>    <i>// Additional Objects</i></td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="DataTypes::DATA_SLAD_RAN_ALTAR" title='DataTypes::DATA_SLAD_RAN_ALTAR' data-ref="DataTypes::DATA_SLAD_RAN_ALTAR" >DATA_SLAD_RAN_ALTAR</dfn>              = <var>5</var>,</td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="DataTypes::DATA_DRAKKARI_COLOSSUS_ALTAR" title='DataTypes::DATA_DRAKKARI_COLOSSUS_ALTAR' data-ref="DataTypes::DATA_DRAKKARI_COLOSSUS_ALTAR" >DATA_DRAKKARI_COLOSSUS_ALTAR</dfn>     = <var>6</var>,</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="DataTypes::DATA_MOORABI_ALTAR" title='DataTypes::DATA_MOORABI_ALTAR' data-ref="DataTypes::DATA_MOORABI_ALTAR" >DATA_MOORABI_ALTAR</dfn>               = <var>7</var>,</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="DataTypes::DATA_SLAD_RAN_STATUE" title='DataTypes::DATA_SLAD_RAN_STATUE' data-ref="DataTypes::DATA_SLAD_RAN_STATUE" >DATA_SLAD_RAN_STATUE</dfn>             = <var>8</var>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="DataTypes::DATA_DRAKKARI_COLOSSUS_STATUE" title='DataTypes::DATA_DRAKKARI_COLOSSUS_STATUE' data-ref="DataTypes::DATA_DRAKKARI_COLOSSUS_STATUE" >DATA_DRAKKARI_COLOSSUS_STATUE</dfn>    = <var>9</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="DataTypes::DATA_MOORABI_STATUE" title='DataTypes::DATA_MOORABI_STATUE' data-ref="DataTypes::DATA_MOORABI_STATUE" >DATA_MOORABI_STATUE</dfn>              = <var>10</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="DataTypes::DATA_GAL_DARAH_STATUE" title='DataTypes::DATA_GAL_DARAH_STATUE' data-ref="DataTypes::DATA_GAL_DARAH_STATUE" >DATA_GAL_DARAH_STATUE</dfn>            = <var>11</var>,</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="DataTypes::DATA_TRAPDOOR" title='DataTypes::DATA_TRAPDOOR' data-ref="DataTypes::DATA_TRAPDOOR" >DATA_TRAPDOOR</dfn>                    = <var>12</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="DataTypes::DATA_COLLISION" title='DataTypes::DATA_COLLISION' data-ref="DataTypes::DATA_COLLISION" >DATA_COLLISION</dfn>                   = <var>13</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="DataTypes::DATA_BRIDGE" title='DataTypes::DATA_BRIDGE' data-ref="DataTypes::DATA_BRIDGE" >DATA_BRIDGE</dfn>                      = <var>14</var>,</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="DataTypes::DATA_STATUE_ACTIVATE" title='DataTypes::DATA_STATUE_ACTIVATE' data-ref="DataTypes::DATA_STATUE_ACTIVATE" >DATA_STATUE_ACTIVATE</dfn>             = <var>15</var>,</td></tr>
+<tr><th id="50">50</th><td>};</td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td><b>enum</b> <dfn class="type def" id="CreatureIds" title='CreatureIds' data-ref="CreatureIds" >CreatureIds</dfn></td></tr>
+<tr><th id="53">53</th><td>{</td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="CreatureIds::NPC_SLAD_RAN" title='CreatureIds::NPC_SLAD_RAN' data-ref="CreatureIds::NPC_SLAD_RAN" >NPC_SLAD_RAN</dfn>                     = <var>29304</var>,</td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="CreatureIds::NPC_MOORABI" title='CreatureIds::NPC_MOORABI' data-ref="CreatureIds::NPC_MOORABI" >NPC_MOORABI</dfn>                      = <var>29305</var>,</td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="CreatureIds::NPC_GAL_DARAH" title='CreatureIds::NPC_GAL_DARAH' data-ref="CreatureIds::NPC_GAL_DARAH" >NPC_GAL_DARAH</dfn>                    = <var>29306</var>,</td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="CreatureIds::NPC_DRAKKARI_COLOSSUS" title='CreatureIds::NPC_DRAKKARI_COLOSSUS' data-ref="CreatureIds::NPC_DRAKKARI_COLOSSUS" >NPC_DRAKKARI_COLOSSUS</dfn>            = <var>29307</var>,</td></tr>
+<tr><th id="58">58</th><td>    <dfn class="enum" id="CreatureIds::NPC_RUIN_DWELLER" title='CreatureIds::NPC_RUIN_DWELLER' data-ref="CreatureIds::NPC_RUIN_DWELLER" >NPC_RUIN_DWELLER</dfn>                 = <var>29920</var>,</td></tr>
+<tr><th id="59">59</th><td>    <dfn class="enum" id="CreatureIds::NPC_ECK_THE_FEROCIOUS" title='CreatureIds::NPC_ECK_THE_FEROCIOUS' data-ref="CreatureIds::NPC_ECK_THE_FEROCIOUS" >NPC_ECK_THE_FEROCIOUS</dfn>            = <var>29932</var>,</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="CreatureIds::NPC_ALTAR_TRIGGER" title='CreatureIds::NPC_ALTAR_TRIGGER' data-ref="CreatureIds::NPC_ALTAR_TRIGGER" >NPC_ALTAR_TRIGGER</dfn>                = <var>30298</var></td></tr>
+<tr><th id="61">61</th><td>};</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td><b>enum</b> <dfn class="type def" id="GameObjectIds" title='GameObjectIds' data-ref="GameObjectIds" >GameObjectIds</dfn></td></tr>
+<tr><th id="64">64</th><td>{</td></tr>
+<tr><th id="65">65</th><td>    <dfn class="enum" id="GameObjectIds::GO_SLAD_RAN_ALTAR" title='GameObjectIds::GO_SLAD_RAN_ALTAR' data-ref="GameObjectIds::GO_SLAD_RAN_ALTAR" >GO_SLAD_RAN_ALTAR</dfn>                = <var>192518</var>,</td></tr>
+<tr><th id="66">66</th><td>    <dfn class="enum" id="GameObjectIds::GO_MOORABI_ALTAR" title='GameObjectIds::GO_MOORABI_ALTAR' data-ref="GameObjectIds::GO_MOORABI_ALTAR" >GO_MOORABI_ALTAR</dfn>                 = <var>192519</var>,</td></tr>
+<tr><th id="67">67</th><td>    <dfn class="enum" id="GameObjectIds::GO_DRAKKARI_COLOSSUS_ALTAR" title='GameObjectIds::GO_DRAKKARI_COLOSSUS_ALTAR' data-ref="GameObjectIds::GO_DRAKKARI_COLOSSUS_ALTAR" >GO_DRAKKARI_COLOSSUS_ALTAR</dfn>       = <var>192520</var>,</td></tr>
+<tr><th id="68">68</th><td>    <dfn class="enum" id="GameObjectIds::GO_SLAD_RAN_STATUE" title='GameObjectIds::GO_SLAD_RAN_STATUE' data-ref="GameObjectIds::GO_SLAD_RAN_STATUE" >GO_SLAD_RAN_STATUE</dfn>               = <var>192564</var>,</td></tr>
+<tr><th id="69">69</th><td>    <dfn class="enum" id="GameObjectIds::GO_MOORABI_STATUE" title='GameObjectIds::GO_MOORABI_STATUE' data-ref="GameObjectIds::GO_MOORABI_STATUE" >GO_MOORABI_STATUE</dfn>                = <var>192565</var>,</td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="GameObjectIds::GO_GAL_DARAH_STATUE" title='GameObjectIds::GO_GAL_DARAH_STATUE' data-ref="GameObjectIds::GO_GAL_DARAH_STATUE" >GO_GAL_DARAH_STATUE</dfn>              = <var>192566</var>,</td></tr>
+<tr><th id="71">71</th><td>    <dfn class="enum" id="GameObjectIds::GO_DRAKKARI_COLOSSUS_STATUE" title='GameObjectIds::GO_DRAKKARI_COLOSSUS_STATUE' data-ref="GameObjectIds::GO_DRAKKARI_COLOSSUS_STATUE" >GO_DRAKKARI_COLOSSUS_STATUE</dfn>      = <var>192567</var>,</td></tr>
+<tr><th id="72">72</th><td>    <dfn class="enum" id="GameObjectIds::GO_ECK_THE_FEROCIOUS_DOOR" title='GameObjectIds::GO_ECK_THE_FEROCIOUS_DOOR' data-ref="GameObjectIds::GO_ECK_THE_FEROCIOUS_DOOR" >GO_ECK_THE_FEROCIOUS_DOOR</dfn>        = <var>192632</var>,</td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="GameObjectIds::GO_ECK_THE_FEROCIOUS_DOOR_BEHIND" title='GameObjectIds::GO_ECK_THE_FEROCIOUS_DOOR_BEHIND' data-ref="GameObjectIds::GO_ECK_THE_FEROCIOUS_DOOR_BEHIND" >GO_ECK_THE_FEROCIOUS_DOOR_BEHIND</dfn> = <var>192569</var>,</td></tr>
+<tr><th id="74">74</th><td>    <dfn class="enum" id="GameObjectIds::GO_GAL_DARAH_DOOR_1" title='GameObjectIds::GO_GAL_DARAH_DOOR_1' data-ref="GameObjectIds::GO_GAL_DARAH_DOOR_1" >GO_GAL_DARAH_DOOR_1</dfn>              = <var>193208</var>,</td></tr>
+<tr><th id="75">75</th><td>    <dfn class="enum" id="GameObjectIds::GO_GAL_DARAH_DOOR_2" title='GameObjectIds::GO_GAL_DARAH_DOOR_2' data-ref="GameObjectIds::GO_GAL_DARAH_DOOR_2" >GO_GAL_DARAH_DOOR_2</dfn>              = <var>193209</var>,</td></tr>
+<tr><th id="76">76</th><td>    <dfn class="enum" id="GameObjectIds::GO_GAL_DARAH_DOOR_3" title='GameObjectIds::GO_GAL_DARAH_DOOR_3' data-ref="GameObjectIds::GO_GAL_DARAH_DOOR_3" >GO_GAL_DARAH_DOOR_3</dfn>              = <var>192568</var>,</td></tr>
+<tr><th id="77">77</th><td>    <dfn class="enum" id="GameObjectIds::GO_TRAPDOOR" title='GameObjectIds::GO_TRAPDOOR' data-ref="GameObjectIds::GO_TRAPDOOR" >GO_TRAPDOOR</dfn>                      = <var>193188</var>,</td></tr>
+<tr><th id="78">78</th><td>    <dfn class="enum" id="GameObjectIds::GO_COLLISION" title='GameObjectIds::GO_COLLISION' data-ref="GameObjectIds::GO_COLLISION" >GO_COLLISION</dfn>                     = <var>192633</var>,</td></tr>
+<tr><th id="79">79</th><td>};</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><b>enum</b> <dfn class="type def" id="SpellIds" title='SpellIds' data-ref="SpellIds" >SpellIds</dfn></td></tr>
+<tr><th id="82">82</th><td>{</td></tr>
+<tr><th id="83">83</th><td>    <dfn class="enum" id="SpellIds::SPELL_FIRE_BEAM_MAMMOTH" title='SpellIds::SPELL_FIRE_BEAM_MAMMOTH' data-ref="SpellIds::SPELL_FIRE_BEAM_MAMMOTH" >SPELL_FIRE_BEAM_MAMMOTH</dfn>          = <var>57068</var>,</td></tr>
+<tr><th id="84">84</th><td>    <dfn class="enum" id="SpellIds::SPELL_FIRE_BEAM_SNAKE" title='SpellIds::SPELL_FIRE_BEAM_SNAKE' data-ref="SpellIds::SPELL_FIRE_BEAM_SNAKE" >SPELL_FIRE_BEAM_SNAKE</dfn>            = <var>57071</var>,</td></tr>
+<tr><th id="85">85</th><td>    <dfn class="enum" id="SpellIds::SPELL_FIRE_BEAM_ELEMENTAL" title='SpellIds::SPELL_FIRE_BEAM_ELEMENTAL' data-ref="SpellIds::SPELL_FIRE_BEAM_ELEMENTAL" >SPELL_FIRE_BEAM_ELEMENTAL</dfn>        = <var>57072</var></td></tr>
+<tr><th id="86">86</th><td>};</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><b>enum</b> <dfn class="type def" id="InstanceMisc" title='InstanceMisc' data-ref="InstanceMisc" >InstanceMisc</dfn></td></tr>
+<tr><th id="89">89</th><td>{</td></tr>
+<tr><th id="90">90</th><td>    <dfn class="enum" id="InstanceMisc::TIMER_STATUE_ACTIVATION" title='InstanceMisc::TIMER_STATUE_ACTIVATION' data-ref="InstanceMisc::TIMER_STATUE_ACTIVATION" >TIMER_STATUE_ACTIVATION</dfn>          = <var>3500</var></td></tr>
+<tr><th id="91">91</th><td>};</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><b>template</b>&lt;<b>class</b> AI&gt;</td></tr>
+<tr><th id="94">94</th><td><b>inline</b> AI* <dfn class="decl def" id="_Z12GetGundrakAIP8Creature" title='GetGundrakAI' data-ref="_Z12GetGundrakAIP8Creature" >GetGundrakAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>)</td></tr>
+<tr><th id="95">95</th><td>{</td></tr>
+<tr><th id="96">96</th><td>    <b>return</b> GetInstanceAI&lt;AI&gt;(<a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="macro" href="#21" title="&quot;instance_gundrak&quot;" data-ref="_M/GundrakScriptName">GundrakScriptName</a>);</td></tr>
+<tr><th id="97">97</th><td>}</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td><u>#<span data-ppcond="18">endif</span> // GUNDRAK_H_</u></td></tr>
+<tr><th id="100">100</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='boss_drakkari_colossus.cpp.html'>TrinityCore6.x/src/server/scripts/Northrend/Gundrak/boss_drakkari_colossus.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

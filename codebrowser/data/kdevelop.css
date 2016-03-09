@@ -1,0 +1,108 @@
+@import "jquery/jquery-ui.css";
+
+/* layout */
+body { color:#000000; background-color:#ffffff; padding:0; margin: 0;  font-family: Helvetica,sans-serif; }
+a { color: #037; border: none; text-decoration: none }
+a:hover{  text-decoration: underline }
+
+div#header { position:fixed; top:0; left:0; right:0; background-color: #ffffff; z-index:2; height: 5.2em; overflow: clip; }
+div#header+hr {position:fixed; top:5.2em; left:0; right:0; background-color: #ffffff; z-index:2}
+div#content { margin-top: 5.3em;}
+
+.code { border-collapse:collapse; width:100%; padding:0 }
+.code { font-family: monospace; }
+.code th { /*width:2.5em;*/ padding-right:1ex; background-color:#eeeeee ;
+            text-align:right; color:black; font-weight:normal;
+            -moz-user-select: none; }
+.code td { padding-left: 1ex; white-space: pre }
+
+#footer { font-size: smaller; margin:1ex; color: #333; text-align: right }
+#footer img { vertical-align: middle; }
+img { border: none; }
+input#searchline { margin: 1ex;  width: 30em; max-width: 50%; }
+#breadcrumb { padding:0; margin: 0 1ex 2ex 1ex; font-size:inherit; font-weight: normal }
+hr { margin: 0; }
+p#options { font-size: small; position: absolute; right:1ex; top:48px; margin: 0 1ex 0 0  }
+a.logo { float:right }
+#breadcrumb_symbol a { color:inherit }
+
+
+#tooltip {
+    position:absolute;
+    display:none;
+    padding:1em;
+    padding-top:1ex;
+    border: 1px solid gray;
+    background-color: white;
+    font-size: smaller;
+    opacity: 0.9;
+    border-radius: 4px;
+    max-width: 80%;
+    box-shadow:1px 1px 7px gray;
+    z-index:2;
+}
+#tooltip ul { margin:0; padding-left: 1em }
+#tooltip a.showuse {color:inherit; text-decoration:underline}
+#tooltip b a { color:inherit }
+#tooltip abbr  { cursor: help; border-bottom: 1px dashed #000; }
+/*#tooltip li { border: 1px solid blue; margin:0 }*/
+
+p.warnmsg { color: #a00; padding: 0 1ex; margin: 0.3ex 0 }
+
+.code a { text-decoration:none; color:inherit }
+.code a:hover {  text-decoration: none }
+
+
+
+/* color style */
+/*.comment, */  .code i { color: #888; font-style: oblique }
+                .code i.doc { color: #00f; font-style: oblique }
+                .code i .command { color: #CA60CA; font-weight: bold; font-style: normal;}
+                .code i .arg { color: #0095FF; font-weight: bold; font-style: normal;}
+                .code i .tag { color: #000; font-weight: bold; font-style: normal;}
+                .code i .verb { color: #888; }
+                .code i .command  + .verb, .code i .command  + a .verb { color: #f00; font-style:normal }
+                .code i a { color: #037; }
+/*.keyword, */  .code b { font-weight: bold; }
+/*.keytype, */  .code em { color: #0057AE; font-style:normal }
+/*.string,  */  .code q { color: #BF0303; font-style: normal }
+.code q::before , .code q::after { content:none; }
+/*.directive,*/ .code u { color: #063; text-decoration:none; }
+/*.num,      */ .code var { color: #B08000; font-style: normal; }
+/*.char,     */ .code kdb { color: #FF80E0 }
+
+/* code a,  code dfn  */
+.code .ref { color: #208 }
+.code .type , #tooltip .type { color: #061 }
+.code .typedef { color: #35938D }
+.code .member { color: #B08000 }
+.code .call { color: #207 }
+.code .namespace, .code .enum { color: #862a38 }
+.code .decl { color: #205; font-weight:bold; }
+.code .macro { background-color:#efe; color: inherit; }
+.code .macro:hover { background-color:#BEFF9B; }
+.code .macro.highlight { background-color:#BEFF9B !important; }
+
+.code .col0 {color:#2400FF} .code .col1 {color:#9C00FF} .code .col2 {color:#D1008A} .code .col3 {color:#FF0000} .code .col4 {color:#FF4F00}
+.code .col5 {color:#F69D00} .code .col6 {color:#72D200} .code .col7 {color:#00F718} .code .col8 {color:#00BBCD} .code .col9 {color:#0053FF}
+
+.code dfn {  font-style:normal }
+.code .virtual { font-style: italic; }
+
+
+.error { border-bottom: 1px dashed red }
+.warning { border-bottom: 1px dotted #c90; }
+.highlight { background-color: #FBFA96 !important; color: black !important;}
+
+#tooltip i { color: #888; white-space: pre-wrap; font-family: monospace }
+#tooltip .ppcond { color: #063; white-space: pre-wrap; font-family: monospace; font-weight:bold  }
+#tooltip .ppcond a { font-weight: normal; color:inherit  }
+
+/* disable the keywords in strings  (macro have that)  */
+.code q em, .code q b, .code q var { color:inherit; font-style:inherit; font-weight:inherit; }
+
+ /* Old Macro expansions.*/
+ .expansion { display: none;  }
+
+
+

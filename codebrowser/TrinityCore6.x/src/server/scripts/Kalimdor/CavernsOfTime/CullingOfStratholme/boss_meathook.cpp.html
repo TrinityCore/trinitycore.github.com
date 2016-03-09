@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+<title>boss_meathook.cpp [TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/CullingOfStratholme/boss_meathook.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/CullingOfStratholme/boss_meathook.cpp'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>src</a>/<a href='../../../..'>server</a>/<a href='../../..'>scripts</a>/<a href='../..'>Kalimdor</a>/<a href='..'>CavernsOfTime</a>/<a href='./'>CullingOfStratholme</a>/boss_meathook.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="culling_of_stratholme.h.html">"culling_of_stratholme.h"</a></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><b>enum</b> <dfn class="type def" id="Spells" title='Spells' data-ref="Spells" >Spells</dfn></td></tr>
+<tr><th id="23">23</th><td>{</td></tr>
+<tr><th id="24">24</th><td>    <dfn class="enum" id="Spells::SPELL_CONSTRICTING_CHAINS" title='Spells::SPELL_CONSTRICTING_CHAINS' data-ref="Spells::SPELL_CONSTRICTING_CHAINS" >SPELL_CONSTRICTING_CHAINS</dfn>                   = <var>52696</var>, <i>//Encases the targets in chains, dealing 1800 Physical damage every 1 sec. and stunning the target for 5 sec.</i></td></tr>
+<tr><th id="25">25</th><td>    <dfn class="enum" id="Spells::SPELL_DISEASE_EXPULSION" title='Spells::SPELL_DISEASE_EXPULSION' data-ref="Spells::SPELL_DISEASE_EXPULSION" >SPELL_DISEASE_EXPULSION</dfn>                     = <var>52666</var>, <i>//Meathook belches out a cloud of disease, dealing 1710 to 1890 Nature damage and interrupting the spell casting of nearby enemy targets for 4 sec.</i></td></tr>
+<tr><th id="26">26</th><td>    <dfn class="enum" id="Spells::SPELL_FRENZY" title='Spells::SPELL_FRENZY' data-ref="Spells::SPELL_FRENZY" >SPELL_FRENZY</dfn>                                = <var>58841</var> <i>//Increases the caster's Physical damage by 10% for 30 sec.</i></td></tr>
+<tr><th id="27">27</th><td>};</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>enum</b> <dfn class="type def" id="Yells" title='Yells' data-ref="Yells" >Yells</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="Yells::SAY_AGGRO" title='Yells::SAY_AGGRO' data-ref="Yells::SAY_AGGRO" >SAY_AGGRO</dfn>                                   = <var>0</var>,</td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="Yells::SAY_SLAY" title='Yells::SAY_SLAY' data-ref="Yells::SAY_SLAY" >SAY_SLAY</dfn>                                    = <var>1</var>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="Yells::SAY_SPAWN" title='Yells::SAY_SPAWN' data-ref="Yells::SAY_SPAWN" >SAY_SPAWN</dfn>                                   = <var>2</var>,</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="Yells::SAY_DEATH" title='Yells::SAY_DEATH' data-ref="Yells::SAY_DEATH" >SAY_DEATH</dfn>                                   = <var>3</var></td></tr>
+<tr><th id="35">35</th><td>};</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>enum</b> <dfn class="type def" id="Events" title='Events' data-ref="Events" >Events</dfn></td></tr>
+<tr><th id="38">38</th><td>{</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="Events::EVENT_CHAIN" title='Events::EVENT_CHAIN' data-ref="Events::EVENT_CHAIN" >EVENT_CHAIN</dfn>                                 = <var>1</var>,</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="Events::EVENT_DISEASE" title='Events::EVENT_DISEASE' data-ref="Events::EVENT_DISEASE" >EVENT_DISEASE</dfn>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="Events::EVENT_FRENZY" title='Events::EVENT_FRENZY' data-ref="Events::EVENT_FRENZY" >EVENT_FRENZY</dfn></td></tr>
+<tr><th id="42">42</th><td>};</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><b>class</b> <dfn class="type def" id="boss_meathook" title='boss_meathook' data-ref="boss_meathook" >boss_meathook</dfn> : <b>public</b> <a class="type" href="../../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="45">45</th><td>{</td></tr>
+<tr><th id="46">46</th><td>    <b>public</b>:</td></tr>
+<tr><th id="47">47</th><td>        <dfn class="tu decl def" id="_ZN13boss_meathookC1Ev" title='boss_meathook::boss_meathook' data-type='void boss_meathook::boss_meathook()' data-ref="_ZN13boss_meathookC1Ev" >boss_meathook</dfn>() : <a class="type" href="../../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"boss_meathook"</q>) { }</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>        <b>struct</b> <dfn class="tu type def" id="boss_meathook::boss_meathookAI" title='boss_meathook::boss_meathookAI' data-ref="boss_meathook::boss_meathookAI" >boss_meathookAI</dfn> : <b>public</b> <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a></td></tr>
+<tr><th id="50">50</th><td>        {</td></tr>
+<tr><th id="51">51</th><td>            <dfn class="tu decl def" id="_ZN13boss_meathook15boss_meathookAIC1EP8Creature" title='boss_meathook::boss_meathookAI::boss_meathookAI' data-type='void boss_meathook::boss_meathookAI::boss_meathookAI(Creature * creature)' data-ref="_ZN13boss_meathook15boss_meathookAIC1EP8Creature" >boss_meathookAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) : <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a><a class="ref" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAIC1EP8Creaturej" title='BossAI::BossAI' data-ref="_ZN6BossAIC1EP8Creaturej" id="_ZN6BossAIC1EP8Creaturej" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="enum" href="culling_of_stratholme.h.html#DataTypes::DATA_MEATHOOK" title='DataTypes::DATA_MEATHOOK' data-ref="DataTypes::DATA_MEATHOOK" id="DataTypes::DATA_MEATHOOK" >DATA_MEATHOOK</a>)</td></tr>
+<tr><th id="52">52</th><td>            {</td></tr>
+<tr><th id="53">53</th><td>                <a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Yells::SAY_SPAWN" title='Yells::SAY_SPAWN' data-ref="Yells::SAY_SPAWN" >SAY_SPAWN</a>);</td></tr>
+<tr><th id="54">54</th><td>            }</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_meathook15boss_meathookAI11EnterCombatEP4Unit" title='boss_meathook::boss_meathookAI::EnterCombat' data-ref="_ZN13boss_meathook15boss_meathookAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override</td></tr>
+<tr><th id="57">57</th><td>            {</td></tr>
+<tr><th id="58">58</th><td>                <a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Yells::SAY_AGGRO" title='Yells::SAY_AGGRO' data-ref="Yells::SAY_AGGRO" >SAY_AGGRO</a>);</td></tr>
+<tr><th id="59">59</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI12_EnterCombatEv" title='BossAI::_EnterCombat' data-ref="_ZN6BossAI12_EnterCombatEv" id="_ZN6BossAI12_EnterCombatEv" >_EnterCombat</a>();</td></tr>
+<tr><th id="60">60</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_CHAIN" title='Events::EVENT_CHAIN' data-ref="Events::EVENT_CHAIN" >EVENT_CHAIN</a>, <a class="ref" href="../../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>12000</var>, <var>17000</var>));</td></tr>
+<tr><th id="61">61</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_DISEASE" title='Events::EVENT_DISEASE' data-ref="Events::EVENT_DISEASE" >EVENT_DISEASE</a>, <a class="ref" href="../../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>2000</var>, <var>4000</var>));</td></tr>
+<tr><th id="62">62</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_FRENZY" title='Events::EVENT_FRENZY' data-ref="Events::EVENT_FRENZY" >EVENT_FRENZY</a>, <a class="ref" href="../../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>21000</var>, <var>26000</var>));</td></tr>
+<tr><th id="63">63</th><td>            }</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_meathook15boss_meathookAI12ExecuteEventEj" title='boss_meathook::boss_meathookAI::ExecuteEvent' data-ref="_ZN13boss_meathook15boss_meathookAI12ExecuteEventEj" >ExecuteEvent</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="2eventId" title='eventId' data-type='uint32' data-ref="2eventId" >eventId</dfn>) override</td></tr>
+<tr><th id="66">66</th><td>            {</td></tr>
+<tr><th id="67">67</th><td>                <b>switch</b> (<a class="local col2 ref" href="#2eventId" title='eventId' data-ref="2eventId" >eventId</a>)</td></tr>
+<tr><th id="68">68</th><td>                {</td></tr>
+<tr><th id="69">69</th><td>                    <b>case</b> <a class="enum" href="#Events::EVENT_CHAIN" title='Events::EVENT_CHAIN' data-ref="Events::EVENT_CHAIN" >EVENT_CHAIN</a>:</td></tr>
+<tr><th id="70">70</th><td>                        <b>if</b> (<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col3 decl" id="3target" title='target' data-type='Unit *' data-ref="3target" ><a class="local col3 ref" href="#3target" title='target' data-ref="3target" >target</a></dfn> = <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" title='UnitAI::SelectTarget' data-ref="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" id="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" >SelectTarget</a>(<a class="enum" href="../../../../game/AI/CoreAI/UnitAI.h.html#SelectAggroTarget::SELECT_TARGET_RANDOM" title='SelectAggroTarget::SELECT_TARGET_RANDOM' data-ref="SelectAggroTarget::SELECT_TARGET_RANDOM" id="SelectAggroTarget::SELECT_TARGET_RANDOM" >SELECT_TARGET_RANDOM</a>, <var>0</var>, <var>100.0f</var>, <b>true</b>))</td></tr>
+<tr><th id="71">71</th><td>                            <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="local col3 ref" href="#3target" title='target' data-ref="3target" >target</a>, <a class="enum" href="#Spells::SPELL_CONSTRICTING_CHAINS" title='Spells::SPELL_CONSTRICTING_CHAINS' data-ref="Spells::SPELL_CONSTRICTING_CHAINS" >SPELL_CONSTRICTING_CHAINS</a>);</td></tr>
+<tr><th id="72">72</th><td>                        <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_CHAIN" title='Events::EVENT_CHAIN' data-ref="Events::EVENT_CHAIN" >EVENT_CHAIN</a>, <a class="ref" href="../../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>2000</var>, <var>4000</var>));</td></tr>
+<tr><th id="73">73</th><td>                        <b>break</b>;</td></tr>
+<tr><th id="74">74</th><td>                    <b>case</b> <a class="enum" href="#Events::EVENT_DISEASE" title='Events::EVENT_DISEASE' data-ref="Events::EVENT_DISEASE" >EVENT_DISEASE</a>:</td></tr>
+<tr><th id="75">75</th><td>                        <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI9DoCastAOEEjb" title='UnitAI::DoCastAOE' data-ref="_ZN6UnitAI9DoCastAOEEjb" id="_ZN6UnitAI9DoCastAOEEjb" >DoCastAOE</a>(<a class="enum" href="#Spells::SPELL_DISEASE_EXPULSION" title='Spells::SPELL_DISEASE_EXPULSION' data-ref="Spells::SPELL_DISEASE_EXPULSION" >SPELL_DISEASE_EXPULSION</a>);</td></tr>
+<tr><th id="76">76</th><td>                        <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_DISEASE" title='Events::EVENT_DISEASE' data-ref="Events::EVENT_DISEASE" >EVENT_DISEASE</a>, <a class="ref" href="../../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>1500</var>, <var>4000</var>));</td></tr>
+<tr><th id="77">77</th><td>                        <b>break</b>;</td></tr>
+<tr><th id="78">78</th><td>                    <b>case</b> <a class="enum" href="#Events::EVENT_FRENZY" title='Events::EVENT_FRENZY' data-ref="Events::EVENT_FRENZY" >EVENT_FRENZY</a>:</td></tr>
+<tr><th id="79">79</th><td>                        <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Spells::SPELL_FRENZY" title='Spells::SPELL_FRENZY' data-ref="Spells::SPELL_FRENZY" >SPELL_FRENZY</a>);</td></tr>
+<tr><th id="80">80</th><td>                        <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_FRENZY" title='Events::EVENT_FRENZY' data-ref="Events::EVENT_FRENZY" >EVENT_FRENZY</a>, <a class="ref" href="../../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>21000</var>, <var>26000</var>));</td></tr>
+<tr><th id="81">81</th><td>                        <b>break</b>;</td></tr>
+<tr><th id="82">82</th><td>                    <b>default</b>:</td></tr>
+<tr><th id="83">83</th><td>                        <b>break</b>;</td></tr>
+<tr><th id="84">84</th><td>                }</td></tr>
+<tr><th id="85">85</th><td>            }</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_meathook15boss_meathookAI8JustDiedEP4Unit" title='boss_meathook::boss_meathookAI::JustDied' data-ref="_ZN13boss_meathook15boss_meathookAI8JustDiedEP4Unit" >JustDied</dfn>(<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*killer*/</i>) override</td></tr>
+<tr><th id="88">88</th><td>            {</td></tr>
+<tr><th id="89">89</th><td>                <a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Yells::SAY_DEATH" title='Yells::SAY_DEATH' data-ref="Yells::SAY_DEATH" >SAY_DEATH</a>);</td></tr>
+<tr><th id="90">90</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI9_JustDiedEv" title='BossAI::_JustDied' data-ref="_ZN6BossAI9_JustDiedEv" id="_ZN6BossAI9_JustDiedEv" >_JustDied</a>();</td></tr>
+<tr><th id="91">91</th><td>            }</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_meathook15boss_meathookAI10KilledUnitEP4Unit" title='boss_meathook::boss_meathookAI::KilledUnit' data-ref="_ZN13boss_meathook15boss_meathookAI10KilledUnitEP4Unit" >KilledUnit</dfn>(<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col4 decl" id="4victim" title='victim' data-type='Unit *' data-ref="4victim" >victim</dfn>) override</td></tr>
+<tr><th id="94">94</th><td>            {</td></tr>
+<tr><th id="95">95</th><td>                <b>if</b> (<a class="local col4 ref" href="#4victim" title='victim' data-ref="4victim" >victim</a>-&gt;<a class="ref" href="../../../../game/Entities/Object/Object.h.html#_ZNK6Object9GetTypeIdEv" title='Object::GetTypeId' data-ref="_ZNK6Object9GetTypeIdEv" id="_ZNK6Object9GetTypeIdEv" >GetTypeId</a>() == <a class="enum" href="../../../../game/Entities/Object/ObjectGuid.h.html#TypeID::TYPEID_PLAYER" title='TypeID::TYPEID_PLAYER' data-ref="TypeID::TYPEID_PLAYER" id="TypeID::TYPEID_PLAYER" >TYPEID_PLAYER</a>)</td></tr>
+<tr><th id="96">96</th><td>                    <a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Yells::SAY_SLAY" title='Yells::SAY_SLAY' data-ref="Yells::SAY_SLAY" >SAY_SLAY</a>);</td></tr>
+<tr><th id="97">97</th><td>            }</td></tr>
+<tr><th id="98">98</th><td>        };</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>        <a class="type" href="../../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK13boss_meathook5GetAIEP8Creature" title='boss_meathook::GetAI' data-ref="_ZNK13boss_meathook5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col5 decl" id="5creature" title='creature' data-type='Creature *' data-ref="5creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="101">101</th><td>        {</td></tr>
+<tr><th id="102">102</th><td>            <b>return</b> <a class="ref" href="../../../../game/Instances/InstanceScript.h.html#_Z13GetInstanceAIPT0_" title='GetInstanceAI' data-ref="_Z13GetInstanceAIPT0_" id="_Z13GetInstanceAIPT0_" >GetInstanceAI</a>&lt;<a class="tu type" href="#boss_meathook::boss_meathookAI" title='boss_meathook::boss_meathookAI' data-ref="boss_meathook::boss_meathookAI" >boss_meathookAI</a>&gt;(<a class="local col5 ref" href="#5creature" title='creature' data-ref="5creature" >creature</a>);</td></tr>
+<tr><th id="103">103</th><td>        }</td></tr>
+<tr><th id="104">104</th><td>};</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td><em>void</em> <dfn class="decl def" id="_Z19AddSC_boss_meathookv" title='AddSC_boss_meathook' data-ref="_Z19AddSC_boss_meathookv" >AddSC_boss_meathook</dfn>()</td></tr>
+<tr><th id="107">107</th><td>{</td></tr>
+<tr><th id="108">108</th><td>    <b>new</b> <a class="type" href="#boss_meathook" title='boss_meathook' data-ref="boss_meathook" >boss_meathook</a><a class="tu ref" href="#_ZN13boss_meathookC1Ev" title='boss_meathook::boss_meathook' data-use='c' data-ref="_ZN13boss_meathookC1Ev" >(</a>);</td></tr>
+<tr><th id="109">109</th><td>}</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

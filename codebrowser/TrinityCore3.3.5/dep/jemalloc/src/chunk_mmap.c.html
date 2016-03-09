@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+<head>
+<title>chunk_mmap.c [TrinityCore3.3.5/dep/jemalloc/src/chunk_mmap.c] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/jemalloc/src/chunk_mmap.c'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>dep</a>/<a href='..'>jemalloc</a>/<a href='./'>src</a>/chunk_mmap.c</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_CHUNK_MMAP_C_" data-ref="_M/JEMALLOC_CHUNK_MMAP_C_">JEMALLOC_CHUNK_MMAP_C_</dfn></u></td></tr>
+<tr><th id="2">2</th><td><u>#include <a href="../include/jemalloc/internal/jemalloc_internal.h.html">"jemalloc/internal/jemalloc_internal.h"</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="5">5</th><td><i  data-doc="pages_map">/* Function prototypes for non-inline static functions. */</i></td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td><em>static</em> <em>void</em>	*<a class="tu decl" href="#pages_map" title='pages_map' data-type='void * pages_map(void * addr, size_t size)' data-ref="pages_map" >pages_map</a>(<em>void</em> *<dfn class="local col1 decl" id="1addr" title='addr' data-type='void *' data-ref="1addr" >addr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="2size" title='size' data-type='size_t' data-ref="2size" >size</dfn>);</td></tr>
+<tr><th id="8">8</th><td><em>static</em> <em>void</em>	<a class="tu decl" href="#pages_unmap" title='pages_unmap' data-type='void pages_unmap(void * addr, size_t size)' data-ref="pages_unmap" >pages_unmap</a>(<em>void</em> *<dfn class="local col3 decl" id="3addr" title='addr' data-type='void *' data-ref="3addr" >addr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4size" title='size' data-type='size_t' data-ref="4size" >size</dfn>);</td></tr>
+<tr><th id="9">9</th><td><em>static</em> <em>void</em>	*<a class="tu decl" href="#chunk_alloc_mmap_slow" title='chunk_alloc_mmap_slow' data-type='void * chunk_alloc_mmap_slow(size_t size, size_t alignment, _Bool * zero)' data-ref="chunk_alloc_mmap_slow" >chunk_alloc_mmap_slow</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="5size" title='size' data-type='size_t' data-ref="5size" >size</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="6alignment" title='alignment' data-type='size_t' data-ref="6alignment" >alignment</dfn>,</td></tr>
+<tr><th id="10">10</th><td>    <span class="macro" title="_Bool" data-ref="_M/bool">bool</span> *<dfn class="local col7 decl" id="7zero" title='zero' data-type='_Bool *' data-ref="7zero" >zero</dfn>);</td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><i  data-doc="pages_map">/******************************************************************************/</i></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><em>static</em> <em>void</em> *</td></tr>
+<tr><th id="15">15</th><td><dfn class="tu decl def" id="pages_map" title='pages_map' data-type='void * pages_map(void * addr, size_t size)' data-ref="pages_map" >pages_map</dfn>(<em>void</em> *<dfn class="local col8 decl" id="8addr" title='addr' data-type='void *' data-ref="8addr" >addr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="9size" title='size' data-type='size_t' data-ref="9size" >size</dfn>)</td></tr>
+<tr><th id="16">16</th><td>{</td></tr>
+<tr><th id="17">17</th><td>	<em>void</em> *<dfn class="local col0 decl" id="10ret" title='ret' data-type='void *' data-ref="10ret" >ret</dfn>;</td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !(size != 0)) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 19, &quot;size != 0&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>(<a class="local col9 ref" href="#9size" title='size' data-ref="9size" >size</a> != <var>0</var>);</td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#<span data-ppcond="21">ifdef</span> <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="22">22</th><td>	<i>/*</i></td></tr>
+<tr><th id="23">23</th><td><i>	 * If VirtualAlloc can't allocate at the given address when one is</i></td></tr>
+<tr><th id="24">24</th><td><i>	 * given, it fails and returns NULL.</i></td></tr>
+<tr><th id="25">25</th><td><i>	 */</i></td></tr>
+<tr><th id="26">26</th><td>	ret = VirtualAlloc(addr, size, MEM_COMMIT | MEM_RESERVE,</td></tr>
+<tr><th id="27">27</th><td>	    PAGE_READWRITE);</td></tr>
+<tr><th id="28">28</th><td><u>#<span data-ppcond="21">else</span></u></td></tr>
+<tr><th id="29">29</th><td>	<i>/*</i></td></tr>
+<tr><th id="30">30</th><td><i>	 * We don't use MAP_FIXED here, because it can cause the *replacement*</i></td></tr>
+<tr><th id="31">31</th><td><i>	 * of existing mappings, and we only want to create new mappings.</i></td></tr>
+<tr><th id="32">32</th><td><i>	 */</i></td></tr>
+<tr><th id="33">33</th><td>	<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> = <a class="ref" href="../../../../include/x86_64-linux-gnu/sys/mman.h.html#mmap" title='mmap' data-ref="mmap" id="mmap" >mmap</a>(<a class="local col8 ref" href="#8addr" title='addr' data-ref="8addr" >addr</a>, <a class="local col9 ref" href="#9size" title='size' data-ref="9size" >size</a>, <a class="macro" href="../../../../include/x86_64-linux-gnu/bits/mman-linux.h.html#32" title="0x1" data-ref="_M/PROT_READ">PROT_READ</a> | <a class="macro" href="../../../../include/x86_64-linux-gnu/bits/mman-linux.h.html#33" title="0x2" data-ref="_M/PROT_WRITE">PROT_WRITE</a>, <a class="macro" href="../../../../include/x86_64-linux-gnu/bits/mman-linux.h.html#43" title="0x02" data-ref="_M/MAP_PRIVATE">MAP_PRIVATE</a> | <a class="macro" href="../../../../include/x86_64-linux-gnu/bits/mman-linux.h.html#57" title="0x20" data-ref="_M/MAP_ANON">MAP_ANON</a>,</td></tr>
+<tr><th id="34">34</th><td>	    -<var>1</var>, <var>0</var>);</td></tr>
+<tr><th id="35">35</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !(ret != ((void*)0))) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 35, &quot;ret != NULL&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>(<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>	<b>if</b> (<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> == <a class="macro" href="../../../../include/x86_64-linux-gnu/sys/mman.h.html#44" title="((void *) -1)" data-ref="_M/MAP_FAILED">MAP_FAILED</a>)</td></tr>
+<tr><th id="38">38</th><td>		<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> = <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="39">39</th><td>	<b>else</b> <b>if</b> (<a class="local col8 ref" href="#8addr" title='addr' data-ref="8addr" >addr</a> != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span> &amp;&amp; <a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> != <a class="local col8 ref" href="#8addr" title='addr' data-ref="8addr" >addr</a>) {</td></tr>
+<tr><th id="40">40</th><td>		<i>/*</i></td></tr>
+<tr><th id="41">41</th><td><i>		 * We succeeded in mapping memory, but not in the right place.</i></td></tr>
+<tr><th id="42">42</th><td><i>		 */</i></td></tr>
+<tr><th id="43">43</th><td>		<b>if</b> (<a class="ref" href="../../../../include/x86_64-linux-gnu/sys/mman.h.html#munmap" title='munmap' data-ref="munmap" id="munmap" >munmap</a>(<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a>, <a class="local col9 ref" href="#9size" title='size' data-ref="9size" >size</a>) == -<var>1</var>) {</td></tr>
+<tr><th id="44">44</th><td>			<em>char</em> <dfn class="local col1 decl" id="11buf" title='buf' data-type='char [64]' data-ref="11buf" >buf</dfn>[<a class="macro" href="../include/jemalloc/internal/util.h.html#5" title="64" data-ref="_M/BUFERROR_BUF">BUFERROR_BUF</a>];</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>			<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#103" title="buferror" data-ref="_M/buferror">buferror</a>(<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#185" title="get_errno" data-ref="_M/get_errno">get_errno</a>(), <a class="local col1 ref" href="#11buf" title='buf' data-ref="11buf" >buf</a>, <b>sizeof</b>(<a class="local col1 ref" href="#11buf" title='buf' data-ref="11buf" >buf</a>));</td></tr>
+<tr><th id="47">47</th><td>			<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#242" title="malloc_printf" data-ref="_M/malloc_printf">malloc_printf</a>(<q>"&lt;jemalloc: Error in munmap(): %s\n"</q>,</td></tr>
+<tr><th id="48">48</th><td>			    <a class="local col1 ref" href="#11buf" title='buf' data-ref="11buf" >buf</a>);</td></tr>
+<tr><th id="49">49</th><td>			<b>if</b> (<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#261" title="opt_abort" data-ref="_M/opt_abort">opt_abort</a>)</td></tr>
+<tr><th id="50">50</th><td>				<a class="ref" href="../../../../include/stdlib.h.html#abort" title='abort' data-ref="abort" id="abort" >abort</a>();</td></tr>
+<tr><th id="51">51</th><td>		}</td></tr>
+<tr><th id="52">52</th><td>		<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> = <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>;</td></tr>
+<tr><th id="53">53</th><td>	}</td></tr>
+<tr><th id="54">54</th><td><u>#<span data-ppcond="21">endif</span></u></td></tr>
+<tr><th id="55">55</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !(ret == ((void*)0) || (addr == ((void*)0) &amp;&amp; ret != addr) || (addr != ((void*)0) &amp;&amp; ret == addr))) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 56, &quot;ret == NULL || (addr == NULL &amp;&amp; ret != addr) || (addr != NULL &amp;&amp; ret == addr)&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>(<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> == <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span> || (<a class="local col8 ref" href="#8addr" title='addr' data-ref="8addr" >addr</a> == <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span> &amp;&amp; <a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> != <a class="local col8 ref" href="#8addr" title='addr' data-ref="8addr" >addr</a>)</td></tr>
+<tr><th id="56">56</th><td>	    || (<a class="local col8 ref" href="#8addr" title='addr' data-ref="8addr" >addr</a> != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span> &amp;&amp; <a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a> == <a class="local col8 ref" href="#8addr" title='addr' data-ref="8addr" >addr</a>));</td></tr>
+<tr><th id="57">57</th><td>	<b>return</b> (<a class="local col0 ref" href="#10ret" title='ret' data-ref="10ret" >ret</a>);</td></tr>
+<tr><th id="58">58</th><td>}</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><em>static</em> <em>void</em></td></tr>
+<tr><th id="61">61</th><td><dfn class="tu decl def" id="pages_unmap" title='pages_unmap' data-type='void pages_unmap(void * addr, size_t size)' data-ref="pages_unmap" >pages_unmap</dfn>(<em>void</em> *<dfn class="local col2 decl" id="12addr" title='addr' data-type='void *' data-ref="12addr" >addr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="13size" title='size' data-type='size_t' data-ref="13size" >size</dfn>)</td></tr>
+<tr><th id="62">62</th><td>{</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="64">ifdef</span> <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="65">65</th><td>	<b>if</b> (VirtualFree(addr, <var>0</var>, MEM_RELEASE) == <var>0</var>)</td></tr>
+<tr><th id="66">66</th><td><u>#<span data-ppcond="64">else</span></u></td></tr>
+<tr><th id="67">67</th><td>	<b>if</b> (<a class="ref" href="../../../../include/x86_64-linux-gnu/sys/mman.h.html#munmap" title='munmap' data-ref="munmap" id="munmap" >munmap</a>(<a class="local col2 ref" href="#12addr" title='addr' data-ref="12addr" >addr</a>, <a class="local col3 ref" href="#13size" title='size' data-ref="13size" >size</a>) == -<var>1</var>)</td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="64">endif</span></u></td></tr>
+<tr><th id="69">69</th><td>	{</td></tr>
+<tr><th id="70">70</th><td>		<em>char</em> <dfn class="local col4 decl" id="14buf" title='buf' data-type='char [64]' data-ref="14buf" >buf</dfn>[<a class="macro" href="../include/jemalloc/internal/util.h.html#5" title="64" data-ref="_M/BUFERROR_BUF">BUFERROR_BUF</a>];</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>		<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#103" title="buferror" data-ref="_M/buferror">buferror</a>(<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#185" title="get_errno" data-ref="_M/get_errno">get_errno</a>(), <a class="local col4 ref" href="#14buf" title='buf' data-ref="14buf" >buf</a>, <b>sizeof</b>(<a class="local col4 ref" href="#14buf" title='buf' data-ref="14buf" >buf</a>));</td></tr>
+<tr><th id="73">73</th><td>		<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#242" title="malloc_printf" data-ref="_M/malloc_printf">malloc_printf</a>(<q>"&lt;jemalloc&gt;: Error in "</q></td></tr>
+<tr><th id="74">74</th><td><u>#<span data-ppcond="74">ifdef</span> <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="75">75</th><td>		              <q>"VirtualFree"</q></td></tr>
+<tr><th id="76">76</th><td><u>#<span data-ppcond="74">else</span></u></td></tr>
+<tr><th id="77">77</th><td>		              <q>"munmap"</q></td></tr>
+<tr><th id="78">78</th><td><u>#<span data-ppcond="74">endif</span></u></td></tr>
+<tr><th id="79">79</th><td>		              <q>"(): %s\n"</q>, <a class="local col4 ref" href="#14buf" title='buf' data-ref="14buf" >buf</a>);</td></tr>
+<tr><th id="80">80</th><td>		<b>if</b> (<a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#261" title="opt_abort" data-ref="_M/opt_abort">opt_abort</a>)</td></tr>
+<tr><th id="81">81</th><td>			<a class="ref" href="../../../../include/stdlib.h.html#abort" title='abort' data-ref="abort" id="abort" >abort</a>();</td></tr>
+<tr><th id="82">82</th><td>	}</td></tr>
+<tr><th id="83">83</th><td>}</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><em>static</em> <em>void</em> *</td></tr>
+<tr><th id="86">86</th><td><dfn class="tu decl def" id="pages_trim" title='pages_trim' data-type='void * pages_trim(void * addr, size_t alloc_size, size_t leadsize, size_t size)' data-ref="pages_trim" >pages_trim</dfn>(<em>void</em> *<dfn class="local col5 decl" id="15addr" title='addr' data-type='void *' data-ref="15addr" >addr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="16alloc_size" title='alloc_size' data-type='size_t' data-ref="16alloc_size" >alloc_size</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="17leadsize" title='leadsize' data-type='size_t' data-ref="17leadsize" >leadsize</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="18size" title='size' data-type='size_t' data-ref="18size" >size</dfn>)</td></tr>
+<tr><th id="87">87</th><td>{</td></tr>
+<tr><th id="88">88</th><td>	<em>void</em> *<dfn class="local col9 decl" id="19ret" title='ret' data-type='void *' data-ref="19ret" >ret</dfn> = (<em>void</em> *)((<a class="typedef" href="../../../../include/stdint.h.html#uintptr_t" title='uintptr_t' data-type='unsigned long' data-ref="uintptr_t" >uintptr_t</a>)<a class="local col5 ref" href="#15addr" title='addr' data-ref="15addr" >addr</a> + <a class="local col7 ref" href="#17leadsize" title='leadsize' data-ref="17leadsize" >leadsize</a>);</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !(alloc_size &gt;= leadsize + size)) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 90, &quot;alloc_size &gt;= leadsize + size&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>(<a class="local col6 ref" href="#16alloc_size" title='alloc_size' data-ref="16alloc_size" >alloc_size</a> &gt;= <a class="local col7 ref" href="#17leadsize" title='leadsize' data-ref="17leadsize" >leadsize</a> + <a class="local col8 ref" href="#18size" title='size' data-ref="18size" >size</a>);</td></tr>
+<tr><th id="91">91</th><td><u>#<span data-ppcond="91">ifdef</span> <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="92">92</th><td>	{</td></tr>
+<tr><th id="93">93</th><td>		<em>void</em> *new_addr;</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>		pages_unmap(addr, alloc_size);</td></tr>
+<tr><th id="96">96</th><td>		new_addr = pages_map(ret, size);</td></tr>
+<tr><th id="97">97</th><td>		<b>if</b> (new_addr == ret)</td></tr>
+<tr><th id="98">98</th><td>			<b>return</b> (ret);</td></tr>
+<tr><th id="99">99</th><td>		<b>if</b> (new_addr)</td></tr>
+<tr><th id="100">100</th><td>			pages_unmap(new_addr, size);</td></tr>
+<tr><th id="101">101</th><td>		<b>return</b> (NULL);</td></tr>
+<tr><th id="102">102</th><td>	}</td></tr>
+<tr><th id="103">103</th><td><u>#<span data-ppcond="91">else</span></u></td></tr>
+<tr><th id="104">104</th><td>	{</td></tr>
+<tr><th id="105">105</th><td>		<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="20trailsize" title='trailsize' data-type='size_t' data-ref="20trailsize" >trailsize</dfn> = <a class="local col6 ref" href="#16alloc_size" title='alloc_size' data-ref="16alloc_size" >alloc_size</a> - <a class="local col7 ref" href="#17leadsize" title='leadsize' data-ref="17leadsize" >leadsize</a> - <a class="local col8 ref" href="#18size" title='size' data-ref="18size" >size</a>;</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>		<b>if</b> (<a class="local col7 ref" href="#17leadsize" title='leadsize' data-ref="17leadsize" >leadsize</a> != <var>0</var>)</td></tr>
+<tr><th id="108">108</th><td>			<a class="tu ref" href="#pages_unmap" title='pages_unmap' data-use='c' data-ref="pages_unmap" >pages_unmap</a>(<a class="local col5 ref" href="#15addr" title='addr' data-ref="15addr" >addr</a>, <a class="local col7 ref" href="#17leadsize" title='leadsize' data-ref="17leadsize" >leadsize</a>);</td></tr>
+<tr><th id="109">109</th><td>		<b>if</b> (<a class="local col0 ref" href="#20trailsize" title='trailsize' data-ref="20trailsize" >trailsize</a> != <var>0</var>)</td></tr>
+<tr><th id="110">110</th><td>			<a class="tu ref" href="#pages_unmap" title='pages_unmap' data-use='c' data-ref="pages_unmap" >pages_unmap</a>((<em>void</em> *)((<a class="typedef" href="../../../../include/stdint.h.html#uintptr_t" title='uintptr_t' data-type='unsigned long' data-ref="uintptr_t" >uintptr_t</a>)<a class="local col9 ref" href="#19ret" title='ret' data-ref="19ret" >ret</a> + <a class="local col8 ref" href="#18size" title='size' data-ref="18size" >size</a>), <a class="local col0 ref" href="#20trailsize" title='trailsize' data-ref="20trailsize" >trailsize</a>);</td></tr>
+<tr><th id="111">111</th><td>		<b>return</b> (<a class="local col9 ref" href="#19ret" title='ret' data-ref="19ret" >ret</a>);</td></tr>
+<tr><th id="112">112</th><td>	}</td></tr>
+<tr><th id="113">113</th><td><u>#<span data-ppcond="91">endif</span></u></td></tr>
+<tr><th id="114">114</th><td>}</td></tr>
+<tr><th id="115">115</th><td></td></tr>
+<tr><th id="116">116</th><td><span class="macro" title="_Bool" data-ref="_M/bool">bool</span></td></tr>
+<tr><th id="117">117</th><td><a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#286" title="pages_purge" data-ref="_M/pages_purge">pages_purge</a>(<em>void</em> *<dfn class="local col1 decl" id="21addr" title='addr' data-type='void *' data-ref="21addr" >addr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="22length" title='length' data-type='size_t' data-ref="22length" >length</dfn>)</td></tr>
+<tr><th id="118">118</th><td>{</td></tr>
+<tr><th id="119">119</th><td>	<span class="macro" title="_Bool" data-ref="_M/bool">bool</span> <dfn class="local col3 decl" id="23unzeroed" title='unzeroed' data-type='_Bool' data-ref="23unzeroed" >unzeroed</dfn>;</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="121">ifdef</span> <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="122">122</th><td>	VirtualAlloc(addr, length, MEM_RESET, PAGE_READWRITE);</td></tr>
+<tr><th id="123">123</th><td>	unzeroed = true;</td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="121">else</span></u></td></tr>
+<tr><th id="125">125</th><td><u>#  <span data-ppcond="125">ifdef</span> <a class="macro" href="../../../build/jemalloc_defs.h.html#250" data-ref="_M/JEMALLOC_PURGE_MADVISE_DONTNEED">JEMALLOC_PURGE_MADVISE_DONTNEED</a></u></td></tr>
+<tr><th id="126">126</th><td><u>#    define <dfn class="macro" id="_M/JEMALLOC_MADV_PURGE" data-ref="_M/JEMALLOC_MADV_PURGE">JEMALLOC_MADV_PURGE</dfn> MADV_DONTNEED</u></td></tr>
+<tr><th id="127">127</th><td><u>#    define <dfn class="macro" id="_M/JEMALLOC_MADV_ZEROS" data-ref="_M/JEMALLOC_MADV_ZEROS">JEMALLOC_MADV_ZEROS</dfn> true</u></td></tr>
+<tr><th id="128">128</th><td><u>#  <span data-ppcond="125">elif</span> defined(JEMALLOC_PURGE_MADVISE_FREE)</u></td></tr>
+<tr><th id="129">129</th><td><u>#    define JEMALLOC_MADV_PURGE MADV_FREE</u></td></tr>
+<tr><th id="130">130</th><td><u>#    define JEMALLOC_MADV_ZEROS false</u></td></tr>
+<tr><th id="131">131</th><td><u>#  else</u></td></tr>
+<tr><th id="132">132</th><td><u>#    error "No method defined for purging unused dirty pages."</u></td></tr>
+<tr><th id="133">133</th><td><u>#  <span data-ppcond="125">endif</span></u></td></tr>
+<tr><th id="134">134</th><td>	<em>int</em> <dfn class="local col4 decl" id="24err" title='err' data-type='int' data-ref="24err" >err</dfn> = <a class="ref" href="../../../../include/x86_64-linux-gnu/sys/mman.h.html#madvise" title='madvise' data-ref="madvise" id="madvise" >madvise</a>(<a class="local col1 ref" href="#21addr" title='addr' data-ref="21addr" >addr</a>, <a class="local col2 ref" href="#22length" title='length' data-ref="22length" >length</a>, <a class="macro" href="#126" title="4" data-ref="_M/JEMALLOC_MADV_PURGE">JEMALLOC_MADV_PURGE</a>);</td></tr>
+<tr><th id="135">135</th><td>	<a class="local col3 ref" href="#23unzeroed" title='unzeroed' data-ref="23unzeroed" >unzeroed</a> = (<a class="macro" href="#127" title="1" data-ref="_M/JEMALLOC_MADV_ZEROS">JEMALLOC_MADV_ZEROS</a> == <span class="macro" title="0" data-ref="_M/false">false</span> || <a class="local col4 ref" href="#24err" title='err' data-ref="24err" >err</a> != <var>0</var>);</td></tr>
+<tr><th id="136">136</th><td><u>#  undef <a class="macro" href="#126" data-ref="_M/JEMALLOC_MADV_PURGE">JEMALLOC_MADV_PURGE</a></u></td></tr>
+<tr><th id="137">137</th><td><u>#  undef <a class="macro" href="#127" data-ref="_M/JEMALLOC_MADV_ZEROS">JEMALLOC_MADV_ZEROS</a></u></td></tr>
+<tr><th id="138">138</th><td><u>#<span data-ppcond="121">endif</span></u></td></tr>
+<tr><th id="139">139</th><td>	<b>return</b> (<a class="local col3 ref" href="#23unzeroed" title='unzeroed' data-ref="23unzeroed" >unzeroed</a>);</td></tr>
+<tr><th id="140">140</th><td>}</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td><em>static</em> <em>void</em> *</td></tr>
+<tr><th id="143">143</th><td><dfn class="tu decl def" id="chunk_alloc_mmap_slow" title='chunk_alloc_mmap_slow' data-type='void * chunk_alloc_mmap_slow(size_t size, size_t alignment, _Bool * zero)' data-ref="chunk_alloc_mmap_slow" >chunk_alloc_mmap_slow</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="25size" title='size' data-type='size_t' data-ref="25size" >size</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="26alignment" title='alignment' data-type='size_t' data-ref="26alignment" >alignment</dfn>, <span class="macro" title="_Bool" data-ref="_M/bool">bool</span> *<dfn class="local col7 decl" id="27zero" title='zero' data-type='_Bool *' data-ref="27zero" >zero</dfn>)</td></tr>
+<tr><th id="144">144</th><td>{</td></tr>
+<tr><th id="145">145</th><td>	<em>void</em> *<dfn class="local col8 decl" id="28ret" title='ret' data-type='void *' data-ref="28ret" >ret</dfn>, *<dfn class="local col9 decl" id="29pages" title='pages' data-type='void *' data-ref="29pages" >pages</dfn>;</td></tr>
+<tr><th id="146">146</th><td>	<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" ><span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span></span> <dfn class="local col0 decl" id="30alloc_size" title='alloc_size' data-type='size_t' data-ref="30alloc_size" >alloc_size</dfn>, <dfn class="local col1 decl" id="31leadsize" title='leadsize' data-type='size_t' data-ref="31leadsize" >leadsize</dfn>;</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td>	<a class="local col0 ref" href="#30alloc_size" title='alloc_size' data-ref="30alloc_size" >alloc_size</a> = <a class="local col5 ref" href="#25size" title='size' data-ref="25size" >size</a> + <a class="local col6 ref" href="#26alignment" title='alignment' data-ref="26alignment" >alignment</a> - <a class="macro" href="../include/jemalloc/internal/jemalloc_internal.h.html#360" title="((size_t)(1U &lt;&lt; 12))" data-ref="_M/PAGE">PAGE</a>;</td></tr>
+<tr><th id="149">149</th><td>	<i>/* Beware size_t wrap-around. */</i></td></tr>
+<tr><th id="150">150</th><td>	<b>if</b> (<a class="local col0 ref" href="#30alloc_size" title='alloc_size' data-ref="30alloc_size" >alloc_size</a> &lt; <a class="local col5 ref" href="#25size" title='size' data-ref="25size" >size</a>)</td></tr>
+<tr><th id="151">151</th><td>		<b>return</b> (<span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="152">152</th><td>	<b>do</b> {</td></tr>
+<tr><th id="153">153</th><td>		<a class="local col9 ref" href="#29pages" title='pages' data-ref="29pages" >pages</a> = <a class="tu ref" href="#pages_map" title='pages_map' data-use='c' data-ref="pages_map" >pages_map</a>(<span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>, <a class="local col0 ref" href="#30alloc_size" title='alloc_size' data-ref="30alloc_size" >alloc_size</a>);</td></tr>
+<tr><th id="154">154</th><td>		<b>if</b> (<a class="local col9 ref" href="#29pages" title='pages' data-ref="29pages" >pages</a> == <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="155">155</th><td>			<b>return</b> (<span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="156">156</th><td>		<a class="local col1 ref" href="#31leadsize" title='leadsize' data-ref="31leadsize" >leadsize</a> = <a class="macro" href="../include/jemalloc/internal/jemalloc_internal.h.html#376" title="((((uintptr_t)pages) + (alignment - 1)) &amp; (-(alignment)))" data-ref="_M/ALIGNMENT_CEILING">ALIGNMENT_CEILING</a>((<a class="typedef" href="../../../../include/stdint.h.html#uintptr_t" title='uintptr_t' data-type='unsigned long' data-ref="uintptr_t" >uintptr_t</a>)<a class="local col9 ref" href="#29pages" title='pages' data-ref="29pages" >pages</a>, <a class="local col6 ref" href="#26alignment" title='alignment' data-ref="26alignment" ><a class="local col6 ref" href="#26alignment" title='alignment' data-ref="26alignment" >alignment</a></a>) -</td></tr>
+<tr><th id="157">157</th><td>		    (<a class="typedef" href="../../../../include/stdint.h.html#uintptr_t" title='uintptr_t' data-type='unsigned long' data-ref="uintptr_t" >uintptr_t</a>)<a class="local col9 ref" href="#29pages" title='pages' data-ref="29pages" >pages</a>;</td></tr>
+<tr><th id="158">158</th><td>		<a class="local col8 ref" href="#28ret" title='ret' data-ref="28ret" >ret</a> = <a class="tu ref" href="#pages_trim" title='pages_trim' data-use='c' data-ref="pages_trim" >pages_trim</a>(<a class="local col9 ref" href="#29pages" title='pages' data-ref="29pages" >pages</a>, <a class="local col0 ref" href="#30alloc_size" title='alloc_size' data-ref="30alloc_size" >alloc_size</a>, <a class="local col1 ref" href="#31leadsize" title='leadsize' data-ref="31leadsize" >leadsize</a>, <a class="local col5 ref" href="#25size" title='size' data-ref="25size" >size</a>);</td></tr>
+<tr><th id="159">159</th><td>	} <b>while</b> (<a class="local col8 ref" href="#28ret" title='ret' data-ref="28ret" >ret</a> == <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !(ret != ((void*)0))) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 161, &quot;ret != NULL&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>(<a class="local col8 ref" href="#28ret" title='ret' data-ref="28ret" >ret</a> != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="162">162</th><td>	*<a class="local col7 ref" href="#27zero" title='zero' data-ref="27zero" >zero</a> = <span class="macro" title="1" data-ref="_M/true">true</span>;</td></tr>
+<tr><th id="163">163</th><td>	<b>return</b> (<a class="local col8 ref" href="#28ret" title='ret' data-ref="28ret" >ret</a>);</td></tr>
+<tr><th id="164">164</th><td>}</td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td><em>void</em> *</td></tr>
+<tr><th id="167">167</th><td><a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#108" title="chunk_alloc_mmap" data-ref="_M/chunk_alloc_mmap">chunk_alloc_mmap</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="32size" title='size' data-type='size_t' data-ref="32size" >size</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="33alignment" title='alignment' data-type='size_t' data-ref="33alignment" >alignment</dfn>, <span class="macro" title="_Bool" data-ref="_M/bool">bool</span> *<dfn class="local col4 decl" id="34zero" title='zero' data-type='_Bool *' data-ref="34zero" >zero</dfn>)</td></tr>
+<tr><th id="168">168</th><td>{</td></tr>
+<tr><th id="169">169</th><td>	<em>void</em> *<dfn class="local col5 decl" id="35ret" title='ret' data-type='void *' data-ref="35ret" >ret</dfn>;</td></tr>
+<tr><th id="170">170</th><td>	<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="36offset" title='offset' data-type='size_t' data-ref="36offset" >offset</dfn>;</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>	<i>/*</i></td></tr>
+<tr><th id="173">173</th><td><i>	 * Ideally, there would be a way to specify alignment to mmap() (like</i></td></tr>
+<tr><th id="174">174</th><td><i>	 * NetBSD has), but in the absence of such a feature, we have to work</i></td></tr>
+<tr><th id="175">175</th><td><i>	 * hard to efficiently create aligned mappings.  The reliable, but</i></td></tr>
+<tr><th id="176">176</th><td><i>	 * slow method is to create a mapping that is over-sized, then trim the</i></td></tr>
+<tr><th id="177">177</th><td><i>	 * excess.  However, that always results in one or two calls to</i></td></tr>
+<tr><th id="178">178</th><td><i>	 * pages_unmap().</i></td></tr>
+<tr><th id="179">179</th><td><i>	 *</i></td></tr>
+<tr><th id="180">180</th><td><i>	 * Optimistically try mapping precisely the right amount before falling</i></td></tr>
+<tr><th id="181">181</th><td><i>	 * back to the slow method, with the expectation that the optimistic</i></td></tr>
+<tr><th id="182">182</th><td><i>	 * approach works most of the time.</i></td></tr>
+<tr><th id="183">183</th><td><i>	 */</i></td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !(alignment != 0)) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 185, &quot;alignment != 0&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>(<a class="local col3 ref" href="#33alignment" title='alignment' data-ref="33alignment" >alignment</a> != <var>0</var>);</td></tr>
+<tr><th id="186">186</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !((alignment &amp; chunksize_mask) == 0)) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 186, &quot;(alignment &amp; chunksize_mask) == 0&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>((<a class="local col3 ref" href="#33alignment" title='alignment' data-ref="33alignment" >alignment</a> &amp; <a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#127" title="chunksize_mask" data-ref="_M/chunksize_mask">chunksize_mask</a>) == <var>0</var>);</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>	<a class="local col5 ref" href="#35ret" title='ret' data-ref="35ret" >ret</a> = <a class="tu ref" href="#pages_map" title='pages_map' data-use='c' data-ref="pages_map" >pages_map</a>(<span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>, <a class="local col2 ref" href="#32size" title='size' data-ref="32size" >size</a>);</td></tr>
+<tr><th id="189">189</th><td>	<b>if</b> (<a class="local col5 ref" href="#35ret" title='ret' data-ref="35ret" >ret</a> == <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>)</td></tr>
+<tr><th id="190">190</th><td>		<b>return</b> (<span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="191">191</th><td>	<a class="local col6 ref" href="#36offset" title='offset' data-ref="36offset" >offset</a> = <a class="macro" href="../include/jemalloc/internal/jemalloc_internal.h.html#372" title="((size_t)((uintptr_t)(ret) &amp; (alignment - 1)))" data-ref="_M/ALIGNMENT_ADDR2OFFSET">ALIGNMENT_ADDR2OFFSET</a>(<a class="local col5 ref" href="#35ret" title='ret' data-ref="35ret" >ret</a>, <a class="local col3 ref" href="#33alignment" title='alignment' data-ref="33alignment" >alignment</a>);</td></tr>
+<tr><th id="192">192</th><td>	<b>if</b> (<a class="local col6 ref" href="#36offset" title='offset' data-ref="36offset" >offset</a> != <var>0</var>) {</td></tr>
+<tr><th id="193">193</th><td>		<a class="tu ref" href="#pages_unmap" title='pages_unmap' data-use='c' data-ref="pages_unmap" >pages_unmap</a>(<a class="local col5 ref" href="#35ret" title='ret' data-ref="35ret" >ret</a>, <a class="local col2 ref" href="#32size" title='size' data-ref="32size" >size</a>);</td></tr>
+<tr><th id="194">194</th><td>		<b>return</b> (<a class="tu ref" href="#chunk_alloc_mmap_slow" title='chunk_alloc_mmap_slow' data-use='c' data-ref="chunk_alloc_mmap_slow" >chunk_alloc_mmap_slow</a>(<a class="local col2 ref" href="#32size" title='size' data-ref="32size" >size</a>, <a class="local col3 ref" href="#33alignment" title='alignment' data-ref="33alignment" >alignment</a>, <a class="local col4 ref" href="#34zero" title='zero' data-ref="34zero" >zero</a>));</td></tr>
+<tr><th id="195">195</th><td>	}</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td>	<a class="macro" href="../include/jemalloc/internal/util.h.html#35" title="do { if (config_debug &amp;&amp; !(ret != ((void*)0))) { malloc_printf( &quot;&lt;jemalloc&gt;: %s:%d: Failed assertion: \&quot;%s\&quot;\n&quot;, &quot;/home/nayd/TrinityCore/dep/jemalloc/src/chunk_mmap.c&quot;, 197, &quot;ret != NULL&quot;); abort(); } } while (0)" data-ref="_M/assert">assert</a>(<a class="local col5 ref" href="#35ret" title='ret' data-ref="35ret" >ret</a> != <span class="macro" title="((void*)0)" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="198">198</th><td>	*<a class="local col4 ref" href="#34zero" title='zero' data-ref="34zero" >zero</a> = <span class="macro" title="1" data-ref="_M/true">true</span>;</td></tr>
+<tr><th id="199">199</th><td>	<b>return</b> (<a class="local col5 ref" href="#35ret" title='ret' data-ref="35ret" >ret</a>);</td></tr>
+<tr><th id="200">200</th><td>}</td></tr>
+<tr><th id="201">201</th><td></td></tr>
+<tr><th id="202">202</th><td><span class="macro" title="_Bool" data-ref="_M/bool">bool</span></td></tr>
+<tr><th id="203">203</th><td><a class="macro" href="../include/jemalloc/internal/private_namespace.h.html#111" title="chunk_dealloc_mmap" data-ref="_M/chunk_dealloc_mmap">chunk_dealloc_mmap</a>(<em>void</em> *<dfn class="local col7 decl" id="37chunk" title='chunk' data-type='void *' data-ref="37chunk" >chunk</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="38size" title='size' data-type='size_t' data-ref="38size" >size</dfn>)</td></tr>
+<tr><th id="204">204</th><td>{</td></tr>
+<tr><th id="205">205</th><td></td></tr>
+<tr><th id="206">206</th><td>	<b>if</b> (<a class="ref" href="../include/jemalloc/internal/jemalloc_internal.h.html#config_munmap" title='config_munmap' data-ref="config_munmap" id="config_munmap" >config_munmap</a>)</td></tr>
+<tr><th id="207">207</th><td>		<a class="tu ref" href="#pages_unmap" title='pages_unmap' data-use='c' data-ref="pages_unmap" >pages_unmap</a>(<a class="local col7 ref" href="#37chunk" title='chunk' data-ref="37chunk" >chunk</a>, <a class="local col8 ref" href="#38size" title='size' data-ref="38size" >size</a>);</td></tr>
+<tr><th id="208">208</th><td></td></tr>
+<tr><th id="209">209</th><td>	<b>return</b> (<a class="ref" href="../include/jemalloc/internal/jemalloc_internal.h.html#config_munmap" title='config_munmap' data-ref="config_munmap" id="config_munmap" >config_munmap</a> == <span class="macro" title="0" data-ref="_M/false">false</span>);</td></tr>
+<tr><th id="210">210</th><td>}</td></tr>
+<tr><th id="211">211</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

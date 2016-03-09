@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<title>CreatureAIImpl.h [TrinityCore6.x/src/server/game/AI/CreatureAIImpl.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/AI/CreatureAIImpl.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>AI</a>/CreatureAIImpl.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td><u>#<span data-ppcond="17">ifndef</span> <span class="macro" data-ref="_M/CREATUREAIIMPL_H">CREATUREAIIMPL_H</span></u></td></tr>
+<tr><th id="18">18</th><td><u>#define <dfn class="macro" id="_M/CREATUREAIIMPL_H" data-ref="_M/CREATUREAIIMPL_H">CREATUREAIIMPL_H</dfn></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../../common/Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../common/Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Entities/Creature/TemporarySummon.h.html">"TemporarySummon.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="CreatureAI.h.html">"CreatureAI.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../Spells/SpellMgr.h.html">"SpellMgr.h"</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../../../../include/c++/4.9/functional.html">&lt;functional&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="../../../../../include/c++/4.9/type_traits.html">&lt;type_traits&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>template</b>&lt;<b>typename</b> First, <b>typename</b> Second, <b>typename</b>... Rest&gt;</td></tr>
+<tr><th id="30">30</th><td><em>static</em> <b>inline</b> First <em>const</em>&amp; <dfn class="decl def" id="_ZL4RANDRKT_RKT0_DpRKT1_" title='RAND' data-ref="_ZL4RANDRKT_RKT0_DpRKT1_" >RAND</dfn>(First <em>const</em>&amp; <dfn class="local col7 decl" id="3347first" title='first' data-type='const First &amp;' data-ref="3347first" >first</dfn>, Second <em>const</em>&amp; <dfn class="local col8 decl" id="3348second" title='second' data-type='const Second &amp;' data-ref="3348second" >second</dfn>, Rest <em>const</em>&amp;... <dfn class="local col9 decl" id="3349rest" title='rest' data-type='const Rest &amp;...' data-ref="3349rest" >rest</dfn>)</td></tr>
+<tr><th id="31">31</th><td>{</td></tr>
+<tr><th id="32">32</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/type_traits.html#std::reference_wrapper" title='std::reference_wrapper' data-ref="std::reference_wrapper" >reference_wrapper</a>&lt;<b>typename</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/type_traits.html#std::add_const" title='std::add_const' data-ref="std::add_const" >add_const</a>&lt;First&gt;::type&gt; <em>const</em> <dfn class="local col0 decl" id="3350pack" title='pack' data-type='const std::reference_wrapper&lt;typename std::add_const&lt;First&gt;::type&gt; []' data-ref="3350pack" >pack</dfn>[] = { <a class="local col7 ref" href="#3347first" title='first' data-ref="3347first" >first</a>, <a class="local col8 ref" href="#3348second" title='second' data-ref="3348second" >second</a>, <a class="local col9 ref" href="#3349rest" title='rest' data-ref="3349rest" >rest</a>... };</td></tr>
+<tr><th id="33">33</th><td>    <b>return</b> <a class="local col0 ref" href="#3350pack" title='pack' data-ref="3350pack" >pack</a>[<a class="ref" href="../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>0</var>, <b>sizeof</b>...(rest) + <var>1</var>)].get();</td></tr>
+<tr><th id="34">34</th><td>}</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><b>enum</b> <dfn class="type def" id="AITarget" title='AITarget' data-ref="AITarget" >AITarget</dfn></td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="AITarget::AITARGET_SELF" title='AITarget::AITARGET_SELF' data-ref="AITarget::AITARGET_SELF" >AITARGET_SELF</dfn>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="AITarget::AITARGET_VICTIM" title='AITarget::AITARGET_VICTIM' data-ref="AITarget::AITARGET_VICTIM" >AITARGET_VICTIM</dfn>,</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="AITarget::AITARGET_ENEMY" title='AITarget::AITARGET_ENEMY' data-ref="AITarget::AITARGET_ENEMY" >AITARGET_ENEMY</dfn>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="AITarget::AITARGET_ALLY" title='AITarget::AITARGET_ALLY' data-ref="AITarget::AITARGET_ALLY" >AITARGET_ALLY</dfn>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="AITarget::AITARGET_BUFF" title='AITarget::AITARGET_BUFF' data-ref="AITarget::AITARGET_BUFF" >AITARGET_BUFF</dfn>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="AITarget::AITARGET_DEBUFF" title='AITarget::AITARGET_DEBUFF' data-ref="AITarget::AITARGET_DEBUFF" >AITARGET_DEBUFF</dfn></td></tr>
+<tr><th id="44">44</th><td>};</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><b>enum</b> <dfn class="type def" id="AICondition" title='AICondition' data-ref="AICondition" >AICondition</dfn></td></tr>
+<tr><th id="47">47</th><td>{</td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="AICondition::AICOND_AGGRO" title='AICondition::AICOND_AGGRO' data-ref="AICondition::AICOND_AGGRO" >AICOND_AGGRO</dfn>,</td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="AICondition::AICOND_COMBAT" title='AICondition::AICOND_COMBAT' data-ref="AICondition::AICOND_COMBAT" >AICOND_COMBAT</dfn>,</td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="AICondition::AICOND_DIE" title='AICondition::AICOND_DIE' data-ref="AICondition::AICOND_DIE" >AICOND_DIE</dfn></td></tr>
+<tr><th id="51">51</th><td>};</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><u>#define <dfn class="macro" id="_M/AI_DEFAULT_COOLDOWN" data-ref="_M/AI_DEFAULT_COOLDOWN">AI_DEFAULT_COOLDOWN</dfn> 5000</u></td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><b>struct</b> <dfn class="type def" id="AISpellInfoType" title='AISpellInfoType' data-ref="AISpellInfoType" >AISpellInfoType</dfn></td></tr>
+<tr><th id="56">56</th><td>{</td></tr>
+<tr><th id="57">57</th><td>    <dfn class="decl def" id="_ZN15AISpellInfoTypeC1Ev" title='AISpellInfoType::AISpellInfoType' data-ref="_ZN15AISpellInfoTypeC1Ev" >AISpellInfoType</dfn>() : <a class="member" href="#AISpellInfoType::target" title='AISpellInfoType::target' data-ref="AISpellInfoType::target" >target</a>(<a class="enum" href="#AITarget::AITARGET_SELF" title='AITarget::AITARGET_SELF' data-ref="AITarget::AITARGET_SELF" >AITARGET_SELF</a>), <a class="member" href="#AISpellInfoType::condition" title='AISpellInfoType::condition' data-ref="AISpellInfoType::condition" >condition</a>(<a class="enum" href="#AICondition::AICOND_COMBAT" title='AICondition::AICOND_COMBAT' data-ref="AICondition::AICOND_COMBAT" >AICOND_COMBAT</a>)</td></tr>
+<tr><th id="58">58</th><td>        , <a class="member" href="#AISpellInfoType::cooldown" title='AISpellInfoType::cooldown' data-ref="AISpellInfoType::cooldown" >cooldown</a>(<a class="macro" href="#53" title="5000" data-ref="_M/AI_DEFAULT_COOLDOWN">AI_DEFAULT_COOLDOWN</a>), <a class="member" href="#AISpellInfoType::realCooldown" title='AISpellInfoType::realCooldown' data-ref="AISpellInfoType::realCooldown" >realCooldown</a>(<var>0</var>), <a class="member" href="#AISpellInfoType::maxRange" title='AISpellInfoType::maxRange' data-ref="AISpellInfoType::maxRange" >maxRange</a>(<var>0.0f</var>){ }</td></tr>
+<tr><th id="59">59</th><td>    <a class="type" href="#AITarget" title='AITarget' data-ref="AITarget" >AITarget</a> <dfn class="decl" id="AISpellInfoType::target" title='AISpellInfoType::target' data-ref="AISpellInfoType::target" >target</dfn>;</td></tr>
+<tr><th id="60">60</th><td>    <a class="type" href="#AICondition" title='AICondition' data-ref="AICondition" >AICondition</a> <dfn class="decl" id="AISpellInfoType::condition" title='AISpellInfoType::condition' data-ref="AISpellInfoType::condition" >condition</dfn>;</td></tr>
+<tr><th id="61">61</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="AISpellInfoType::cooldown" title='AISpellInfoType::cooldown' data-ref="AISpellInfoType::cooldown" >cooldown</dfn>;</td></tr>
+<tr><th id="62">62</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="AISpellInfoType::realCooldown" title='AISpellInfoType::realCooldown' data-ref="AISpellInfoType::realCooldown" >realCooldown</dfn>;</td></tr>
+<tr><th id="63">63</th><td>    <em>float</em> <dfn class="decl" id="AISpellInfoType::maxRange" title='AISpellInfoType::maxRange' data-ref="AISpellInfoType::maxRange" >maxRange</dfn>;</td></tr>
+<tr><th id="64">64</th><td>};</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><a class="type" href="#AISpellInfoType" title='AISpellInfoType' data-ref="AISpellInfoType" >AISpellInfoType</a>* <dfn class="decl" id="_Z14GetAISpellInfoj" title='GetAISpellInfo' data-ref="_Z14GetAISpellInfoj" >GetAISpellInfo</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="3351i" title='i' data-type='uint32' data-ref="3351i" >i</dfn>);</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="17">endif</span></u></td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='CoreAI/CombatAI.cpp.html'>TrinityCore6.x/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

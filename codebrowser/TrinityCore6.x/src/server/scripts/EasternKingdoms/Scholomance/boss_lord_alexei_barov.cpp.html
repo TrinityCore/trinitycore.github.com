@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<title>boss_lord_alexei_barov.cpp [TrinityCore6.x/src/server/scripts/EasternKingdoms/Scholomance/boss_lord_alexei_barov.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/EasternKingdoms/Scholomance/boss_lord_alexei_barov.cpp'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>scripts</a>/<a href='..'>EasternKingdoms</a>/<a href='./'>Scholomance</a>/boss_lord_alexei_barov.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><i>/* ScriptData</i></td></tr>
+<tr><th id="19">19</th><td><i>SDName: Boss_Lord_Alexei_Barov</i></td></tr>
+<tr><th id="20">20</th><td><i>SD%Complete: 100</i></td></tr>
+<tr><th id="21">21</th><td><i>SDComment: aura applied/defined in database</i></td></tr>
+<tr><th id="22">22</th><td><i>SDCategory: Scholomance</i></td></tr>
+<tr><th id="23">23</th><td><i>EndScriptData */</i></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="scholomance.h.html">"scholomance.h"</a></u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>enum</b> <dfn class="type def" id="Spells" title='Spells' data-ref="Spells" >Spells</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="Spells::SPELL_IMMOLATE" title='Spells::SPELL_IMMOLATE' data-ref="Spells::SPELL_IMMOLATE" >SPELL_IMMOLATE</dfn>                  = <var>20294</var>,</td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="Spells::SPELL_VEILOFSHADOW" title='Spells::SPELL_VEILOFSHADOW' data-ref="Spells::SPELL_VEILOFSHADOW" >SPELL_VEILOFSHADOW</dfn>              = <var>17820</var>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="Spells::SPELL_UNHOLY_AURA" title='Spells::SPELL_UNHOLY_AURA' data-ref="Spells::SPELL_UNHOLY_AURA" >SPELL_UNHOLY_AURA</dfn>               = <var>17467</var></td></tr>
+<tr><th id="34">34</th><td>};</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><b>enum</b> <dfn class="type def" id="Events" title='Events' data-ref="Events" >Events</dfn></td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="Events::EVENT_IMMOLATE" title='Events::EVENT_IMMOLATE' data-ref="Events::EVENT_IMMOLATE" >EVENT_IMMOLATE</dfn>                  = <var>1</var>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="Events::EVENT_VEILOFSHADOW" title='Events::EVENT_VEILOFSHADOW' data-ref="Events::EVENT_VEILOFSHADOW" >EVENT_VEILOFSHADOW</dfn>              = <var>2</var></td></tr>
+<tr><th id="40">40</th><td>};</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>class</b> <dfn class="type def" id="boss_lord_alexei_barov" title='boss_lord_alexei_barov' data-ref="boss_lord_alexei_barov" >boss_lord_alexei_barov</dfn> : <b>public</b> <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="43">43</th><td>{</td></tr>
+<tr><th id="44">44</th><td>    <b>public</b>: <dfn class="tu decl def" id="_ZN22boss_lord_alexei_barovC1Ev" title='boss_lord_alexei_barov::boss_lord_alexei_barov' data-type='void boss_lord_alexei_barov::boss_lord_alexei_barov()' data-ref="_ZN22boss_lord_alexei_barovC1Ev" >boss_lord_alexei_barov</dfn>() : <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"boss_lord_alexei_barov"</q>) { }</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>        <b>struct</b> <dfn class="tu type def" id="boss_lord_alexei_barov::boss_lordalexeibarovAI" title='boss_lord_alexei_barov::boss_lordalexeibarovAI' data-ref="boss_lord_alexei_barov::boss_lordalexeibarovAI" >boss_lordalexeibarovAI</dfn> : <b>public</b> <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a></td></tr>
+<tr><th id="47">47</th><td>        {</td></tr>
+<tr><th id="48">48</th><td>            <dfn class="tu decl def" id="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAIC1EP8Creature" title='boss_lord_alexei_barov::boss_lordalexeibarovAI::boss_lordalexeibarovAI' data-type='void boss_lord_alexei_barov::boss_lordalexeibarovAI::boss_lordalexeibarovAI(Creature * creature)' data-ref="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAIC1EP8Creature" >boss_lordalexeibarovAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) : <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a><a class="ref" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAIC1EP8Creaturej" title='BossAI::BossAI' data-ref="_ZN6BossAIC1EP8Creaturej" id="_ZN6BossAIC1EP8Creaturej" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="enum" href="scholomance.h.html#DataTypes::DATA_LORDALEXEIBAROV" title='DataTypes::DATA_LORDALEXEIBAROV' data-ref="DataTypes::DATA_LORDALEXEIBAROV" id="DataTypes::DATA_LORDALEXEIBAROV" >DATA_LORDALEXEIBAROV</a>) { }</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAI5ResetEv" title='boss_lord_alexei_barov::boss_lordalexeibarovAI::Reset' data-ref="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="51">51</th><td>            {</td></tr>
+<tr><th id="52">52</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI6_ResetEv" title='BossAI::_Reset' data-ref="_ZN6BossAI6_ResetEv" id="_ZN6BossAI6_ResetEv" >_Reset</a>();</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>                <b>if</b> (!<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" title='Unit::HasAura' data-ref="_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" id="_ZNK4Unit7HasAuraEj10ObjectGuidS0_j" >HasAura</a>(<a class="enum" href="#Spells::SPELL_UNHOLY_AURA" title='Spells::SPELL_UNHOLY_AURA' data-ref="Spells::SPELL_UNHOLY_AURA" >SPELL_UNHOLY_AURA</a>))</td></tr>
+<tr><th id="55">55</th><td>                    <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Spells::SPELL_UNHOLY_AURA" title='Spells::SPELL_UNHOLY_AURA' data-ref="Spells::SPELL_UNHOLY_AURA" >SPELL_UNHOLY_AURA</a>);</td></tr>
+<tr><th id="56">56</th><td>            }</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAI11EnterCombatEP4Unit" title='boss_lord_alexei_barov::boss_lordalexeibarovAI::EnterCombat' data-ref="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override</td></tr>
+<tr><th id="59">59</th><td>            {</td></tr>
+<tr><th id="60">60</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI12_EnterCombatEv" title='BossAI::_EnterCombat' data-ref="_ZN6BossAI12_EnterCombatEv" id="_ZN6BossAI12_EnterCombatEv" >_EnterCombat</a>();</td></tr>
+<tr><th id="61">61</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_IMMOLATE" title='Events::EVENT_IMMOLATE' data-ref="Events::EVENT_IMMOLATE" >EVENT_IMMOLATE</a>, <var>7000</var>);</td></tr>
+<tr><th id="62">62</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_VEILOFSHADOW" title='Events::EVENT_VEILOFSHADOW' data-ref="Events::EVENT_VEILOFSHADOW" >EVENT_VEILOFSHADOW</a>, <var>15000</var>);</td></tr>
+<tr><th id="63">63</th><td>            }</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAI8UpdateAIEj" title='boss_lord_alexei_barov::boss_lordalexeibarovAI::UpdateAI' data-ref="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAI8UpdateAIEj" >UpdateAI</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="2diff" title='diff' data-type='uint32' data-ref="2diff" >diff</dfn>) override</td></tr>
+<tr><th id="66">66</th><td>            {</td></tr>
+<tr><th id="67">67</th><td>                <b>if</b> (!<a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI12UpdateVictimEv" title='CreatureAI::UpdateVictim' data-ref="_ZN10CreatureAI12UpdateVictimEv" id="_ZN10CreatureAI12UpdateVictimEv" >UpdateVictim</a>())</td></tr>
+<tr><th id="68">68</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap6UpdateEj" title='EventMap::Update' data-ref="_ZN8EventMap6UpdateEj" id="_ZN8EventMap6UpdateEj" >Update</a>(<a class="local col2 ref" href="#2diff" title='diff' data-ref="2diff" >diff</a>);</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>                <b>if</b> (<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit12HasUnitStateEj" title='Unit::HasUnitState' data-ref="_ZNK4Unit12HasUnitStateEj" id="_ZNK4Unit12HasUnitStateEj" >HasUnitState</a>(<a class="enum" href="../../../game/Entities/Unit/Unit.h.html#UnitState::UNIT_STATE_CASTING" title='UnitState::UNIT_STATE_CASTING' data-ref="UnitState::UNIT_STATE_CASTING" id="UnitState::UNIT_STATE_CASTING" >UNIT_STATE_CASTING</a>))</td></tr>
+<tr><th id="73">73</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>                <b>while</b> (<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3eventId" title='eventId' data-type='uint32' data-ref="3eventId" ><a class="local col3 ref" href="#3eventId" title='eventId' data-ref="3eventId" >eventId</a></dfn> = <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap12ExecuteEventEv" title='EventMap::ExecuteEvent' data-ref="_ZN8EventMap12ExecuteEventEv" id="_ZN8EventMap12ExecuteEventEv" >ExecuteEvent</a>())</td></tr>
+<tr><th id="76">76</th><td>                {</td></tr>
+<tr><th id="77">77</th><td>                    <b>switch</b> (<a class="local col3 ref" href="#3eventId" title='eventId' data-ref="3eventId" >eventId</a>)</td></tr>
+<tr><th id="78">78</th><td>                    {</td></tr>
+<tr><th id="79">79</th><td>                        <b>case</b> <a class="enum" href="#Events::EVENT_IMMOLATE" title='Events::EVENT_IMMOLATE' data-ref="Events::EVENT_IMMOLATE" >EVENT_IMMOLATE</a>:</td></tr>
+<tr><th id="80">80</th><td>                            <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" title='UnitAI::SelectTarget' data-ref="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" id="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" >SelectTarget</a>(<a class="enum" href="../../../game/AI/CoreAI/UnitAI.h.html#SelectAggroTarget::SELECT_TARGET_RANDOM" title='SelectAggroTarget::SELECT_TARGET_RANDOM' data-ref="SelectAggroTarget::SELECT_TARGET_RANDOM" id="SelectAggroTarget::SELECT_TARGET_RANDOM" >SELECT_TARGET_RANDOM</a>, <var>0</var>, <var>100</var>, <b>true</b>), <a class="enum" href="#Spells::SPELL_IMMOLATE" title='Spells::SPELL_IMMOLATE' data-ref="Spells::SPELL_IMMOLATE" >SPELL_IMMOLATE</a>, <b>true</b>);</td></tr>
+<tr><th id="81">81</th><td>                            <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_IMMOLATE" title='Events::EVENT_IMMOLATE' data-ref="Events::EVENT_IMMOLATE" >EVENT_IMMOLATE</a>, <var>12000</var>);</td></tr>
+<tr><th id="82">82</th><td>                            <b>break</b>;</td></tr>
+<tr><th id="83">83</th><td>                        <b>case</b> <a class="enum" href="#Events::EVENT_VEILOFSHADOW" title='Events::EVENT_VEILOFSHADOW' data-ref="Events::EVENT_VEILOFSHADOW" >EVENT_VEILOFSHADOW</a>:</td></tr>
+<tr><th id="84">84</th><td>                            <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12DoCastVictimEjb" title='UnitAI::DoCastVictim' data-ref="_ZN6UnitAI12DoCastVictimEjb" id="_ZN6UnitAI12DoCastVictimEjb" >DoCastVictim</a>(<a class="enum" href="#Spells::SPELL_VEILOFSHADOW" title='Spells::SPELL_VEILOFSHADOW' data-ref="Spells::SPELL_VEILOFSHADOW" >SPELL_VEILOFSHADOW</a>, <b>true</b>);</td></tr>
+<tr><th id="85">85</th><td>                            <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_VEILOFSHADOW" title='Events::EVENT_VEILOFSHADOW' data-ref="Events::EVENT_VEILOFSHADOW" >EVENT_VEILOFSHADOW</a>, <var>20000</var>);</td></tr>
+<tr><th id="86">86</th><td>                            <b>break</b>;</td></tr>
+<tr><th id="87">87</th><td>                        <b>default</b>:</td></tr>
+<tr><th id="88">88</th><td>                            <b>break</b>;</td></tr>
+<tr><th id="89">89</th><td>                    }</td></tr>
+<tr><th id="90">90</th><td>                }</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>                <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI20DoMeleeAttackIfReadyEv" title='UnitAI::DoMeleeAttackIfReady' data-ref="_ZN6UnitAI20DoMeleeAttackIfReadyEv" id="_ZN6UnitAI20DoMeleeAttackIfReadyEv" >DoMeleeAttackIfReady</a>();</td></tr>
+<tr><th id="93">93</th><td>            }</td></tr>
+<tr><th id="94">94</th><td>        };</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>        <a class="type" href="../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK22boss_lord_alexei_barov5GetAIEP8Creature" title='boss_lord_alexei_barov::GetAI' data-ref="_ZNK22boss_lord_alexei_barov5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col4 decl" id="4creature" title='creature' data-type='Creature *' data-ref="4creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="97">97</th><td>        {</td></tr>
+<tr><th id="98">98</th><td>            <b>return</b> <b>new</b> <a class="tu type" href="#boss_lord_alexei_barov::boss_lordalexeibarovAI" title='boss_lord_alexei_barov::boss_lordalexeibarovAI' data-ref="boss_lord_alexei_barov::boss_lordalexeibarovAI" >boss_lordalexeibarovAI</a><a class="tu ref" href="#_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAIC1EP8Creature" title='boss_lord_alexei_barov::boss_lordalexeibarovAI::boss_lordalexeibarovAI' data-use='c' data-ref="_ZN22boss_lord_alexei_barov22boss_lordalexeibarovAIC1EP8Creature" >(</a><a class="local col4 ref" href="#4creature" title='creature' data-ref="4creature" >creature</a>);</td></tr>
+<tr><th id="99">99</th><td>        }</td></tr>
+<tr><th id="100">100</th><td>};</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td><em>void</em> <dfn class="decl def" id="_Z26AddSC_boss_lordalexeibarovv" title='AddSC_boss_lordalexeibarov' data-ref="_Z26AddSC_boss_lordalexeibarovv" >AddSC_boss_lordalexeibarov</dfn>()</td></tr>
+<tr><th id="103">103</th><td>{</td></tr>
+<tr><th id="104">104</th><td>    <b>new</b> <a class="type" href="#boss_lord_alexei_barov" title='boss_lord_alexei_barov' data-ref="boss_lord_alexei_barov" >boss_lord_alexei_barov</a><a class="tu ref" href="#_ZN22boss_lord_alexei_barovC1Ev" title='boss_lord_alexei_barov::boss_lord_alexei_barov' data-use='c' data-ref="_ZN22boss_lord_alexei_barovC1Ev" >(</a>);</td></tr>
+<tr><th id="105">105</th><td>}</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

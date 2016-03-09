@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+<title>array_utility.hpp [include/boost/smart_ptr/detail/array_utility.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/smart_ptr/detail/array_utility.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>smart_ptr</a>/<a href='./'>detail</a>/array_utility.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (c) 2012 Glen Joseph Fernandes </i></td></tr>
+<tr><th id="3">3</th><td><i> * glenfe at live dot com</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * Distributed under the Boost Software License, </i></td></tr>
+<tr><th id="6">6</th><td><i> * Version 1.0. (See accompanying file LICENSE_1_0.txt </i></td></tr>
+<tr><th id="7">7</th><td><i> * or copy at <a href="http://boost.org/LICENSE_">http://boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="8">8</th><td><i> */</i></td></tr>
+<tr><th id="9">9</th><td><u>#<span data-ppcond="9">ifndef</span> <span class="macro" data-ref="_M/BOOST_SMART_PTR_DETAIL_ARRAY_UTILITY_HPP">BOOST_SMART_PTR_DETAIL_ARRAY_UTILITY_HPP</span></u></td></tr>
+<tr><th id="10">10</th><td><u>#define <dfn class="macro" id="_M/BOOST_SMART_PTR_DETAIL_ARRAY_UTILITY_HPP" data-ref="_M/BOOST_SMART_PTR_DETAIL_ARRAY_UTILITY_HPP">BOOST_SMART_PTR_DETAIL_ARRAY_UTILITY_HPP</dfn></u></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../../config.hpp.html">&lt;boost/config.hpp&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../../type_traits/has_trivial_constructor.hpp.html">&lt;boost/type_traits/has_trivial_constructor.hpp&gt;</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="../../type_traits/has_trivial_destructor.hpp.html">&lt;boost/type_traits/has_trivial_destructor.hpp&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="17">17</th><td>    <b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="18">18</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="19">19</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail13array_destroyEPT_mNS_17integral_constantIbLb1EEE" title='boost::detail::array_destroy' data-ref="_ZN5boost6detail13array_destroyEPT_mNS_17integral_constantIbLb1EEE" >array_destroy</dfn>(T*, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>, <span class="namespace">boost::</span><a class="typedef" href="../../type_traits/integral_constant.hpp.html#boost::true_type" title='boost::true_type' data-type='integral_constant&lt;bool, true&gt;' data-ref="boost::true_type" >true_type</a>) {</td></tr>
+<tr><th id="20">20</th><td>        }</td></tr>
+<tr><th id="21">21</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="22">22</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail13array_destroyEPT_mNS_17integral_constantIbLb0EEE" title='boost::detail::array_destroy' data-ref="_ZN5boost6detail13array_destroyEPT_mNS_17integral_constantIbLb0EEE" >array_destroy</dfn>(T* <dfn class="local col6 decl" id="2966memory" title='memory' data-type='T *' data-ref="2966memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col7 decl" id="2967size" title='size' data-type='std::size_t' data-ref="2967size" >size</dfn>, <span class="namespace">boost::</span><a class="typedef" href="../../type_traits/integral_constant.hpp.html#boost::false_type" title='boost::false_type' data-type='integral_constant&lt;bool, false&gt;' data-ref="boost::false_type" >false_type</a>) {</td></tr>
+<tr><th id="23">23</th><td>            <b>for</b> (<span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col8 decl" id="2968i" title='i' data-type='std::size_t' data-ref="2968i" >i</dfn> = <a class="local col7 ref" href="#2967size" title='size' data-ref="2967size" >size</a>; <a class="local col8 ref" href="#2968i" title='i' data-ref="2968i" >i</a> &gt; <var>0</var>; ) {</td></tr>
+<tr><th id="24">24</th><td>                <a class="local col6 ref" href="#2966memory" title='memory' data-ref="2966memory" >memory</a>[--<a class="local col8 ref" href="#2968i" title='i' data-ref="2968i" >i</a>].~T();</td></tr>
+<tr><th id="25">25</th><td>            }</td></tr>
+<tr><th id="26">26</th><td>        }</td></tr>
+<tr><th id="27">27</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="28">28</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail13array_destroyEPT_m" title='boost::detail::array_destroy' data-ref="_ZN5boost6detail13array_destroyEPT_m" >array_destroy</dfn>(T* <dfn class="local col9 decl" id="2969memory" title='memory' data-type='T *' data-ref="2969memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col0 decl" id="2970size" title='size' data-type='std::size_t' data-ref="2970size" >size</dfn>) {</td></tr>
+<tr><th id="29">29</th><td>            <span class="namespace">boost::</span><a class="type" href="../../type_traits/has_trivial_destructor.hpp.html#36" title='boost::has_trivial_destructor' data-ref="boost::has_trivial_destructor" >has_trivial_destructor</a>&lt;T&gt; <dfn class="local col1 decl" id="2971type" title='type' data-type='boost::has_trivial_destructor&lt;T&gt;' data-ref="2971type" >type</dfn>;</td></tr>
+<tr><th id="30">30</th><td>            array_destroy(<a class="local col9 ref" href="#2969memory" title='memory' data-ref="2969memory" >memory</a>, <a class="local col0 ref" href="#2970size" title='size' data-ref="2970size" >size</a>, <a class="local col1 ref" href="#2971type" title='type' data-ref="2971type" >type</a>);</td></tr>
+<tr><th id="31">31</th><td>        }</td></tr>
+<tr><th id="32">32</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="33">33</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail10array_initEPT_mNS_17integral_constantIbLb1EEE" title='boost::detail::array_init' data-ref="_ZN5boost6detail10array_initEPT_mNS_17integral_constantIbLb1EEE" >array_init</dfn>(T* <dfn class="local col2 decl" id="2972memory" title='memory' data-type='T *' data-ref="2972memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col3 decl" id="2973size" title='size' data-type='std::size_t' data-ref="2973size" >size</dfn>, <span class="namespace">boost::</span><a class="typedef" href="../../type_traits/integral_constant.hpp.html#boost::true_type" title='boost::true_type' data-type='integral_constant&lt;bool, true&gt;' data-ref="boost::true_type" >true_type</a>) {</td></tr>
+<tr><th id="34">34</th><td>            <b>for</b> (<span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col4 decl" id="2974i" title='i' data-type='std::size_t' data-ref="2974i" >i</dfn> = <var>0</var>; <a class="local col4 ref" href="#2974i" title='i' data-ref="2974i" >i</a> &lt; <a class="local col3 ref" href="#2973size" title='size' data-ref="2973size" >size</a>; <a class="local col4 ref" href="#2974i" title='i' data-ref="2974i" >i</a>++) {</td></tr>
+<tr><th id="35">35</th><td>                <a class="local col2 ref" href="#2972memory" title='memory' data-ref="2972memory" >memory</a>[<a class="local col4 ref" href="#2974i" title='i' data-ref="2974i" >i</a>] = T();</td></tr>
+<tr><th id="36">36</th><td>            }</td></tr>
+<tr><th id="37">37</th><td>        }</td></tr>
+<tr><th id="38">38</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="39">39</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail10array_initEPT_mNS_17integral_constantIbLb0EEE" title='boost::detail::array_init' data-ref="_ZN5boost6detail10array_initEPT_mNS_17integral_constantIbLb0EEE" >array_init</dfn>(T* <dfn class="local col5 decl" id="2975memory" title='memory' data-type='T *' data-ref="2975memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col6 decl" id="2976size" title='size' data-type='std::size_t' data-ref="2976size" >size</dfn>, <span class="namespace">boost::</span><a class="typedef" href="../../type_traits/integral_constant.hpp.html#boost::false_type" title='boost::false_type' data-type='integral_constant&lt;bool, false&gt;' data-ref="boost::false_type" >false_type</a>) {</td></tr>
+<tr><th id="40">40</th><td><u>#<span data-ppcond="40">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_EXCEPTIONS">BOOST_NO_EXCEPTIONS</span>)</u></td></tr>
+<tr><th id="41">41</th><td>            <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col7 decl" id="2977i" title='i' data-type='std::size_t' data-ref="2977i" >i</dfn> = <var>0</var>;</td></tr>
+<tr><th id="42">42</th><td>            <b>try</b> {</td></tr>
+<tr><th id="43">43</th><td>                <b>for</b> (; <a class="local col7 ref" href="#2977i" title='i' data-ref="2977i" >i</a> &lt; <a class="local col6 ref" href="#2976size" title='size' data-ref="2976size" >size</a>; <a class="local col7 ref" href="#2977i" title='i' data-ref="2977i" >i</a>++) {</td></tr>
+<tr><th id="44">44</th><td>                    <em>void</em>* <dfn class="local col8 decl" id="2978p1" title='p1' data-type='void *' data-ref="2978p1" >p1</dfn> = <a class="local col5 ref" href="#2975memory" title='memory' data-ref="2975memory" >memory</a> + <a class="local col7 ref" href="#2977i" title='i' data-ref="2977i" >i</a>;</td></tr>
+<tr><th id="45">45</th><td>                    ::<b>new</b>(<a class="local col8 ref" href="#2978p1" title='p1' data-ref="2978p1" >p1</a>) T();</td></tr>
+<tr><th id="46">46</th><td>                }</td></tr>
+<tr><th id="47">47</th><td>            } <b>catch</b> (...) {</td></tr>
+<tr><th id="48">48</th><td>                array_destroy(<a class="local col5 ref" href="#2975memory" title='memory' data-ref="2975memory" >memory</a>, <a class="local col7 ref" href="#2977i" title='i' data-ref="2977i" >i</a>);</td></tr>
+<tr><th id="49">49</th><td>                <b>throw</b>;</td></tr>
+<tr><th id="50">50</th><td>            }</td></tr>
+<tr><th id="51">51</th><td><u>#<span data-ppcond="40">else</span></u></td></tr>
+<tr><th id="52">52</th><td>            <b>for</b> (std::size_t i = <var>0</var>; i &lt; size; i++) {</td></tr>
+<tr><th id="53">53</th><td>                <em>void</em>* p1 = memory + i;</td></tr>
+<tr><th id="54">54</th><td>                ::<b>new</b>(p1) T();</td></tr>
+<tr><th id="55">55</th><td>            }</td></tr>
+<tr><th id="56">56</th><td><u>#<span data-ppcond="40">endif</span></u></td></tr>
+<tr><th id="57">57</th><td>        }</td></tr>
+<tr><th id="58">58</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="59">59</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail10array_initEPT_m" title='boost::detail::array_init' data-ref="_ZN5boost6detail10array_initEPT_m" >array_init</dfn>(T* <dfn class="local col9 decl" id="2979memory" title='memory' data-type='T *' data-ref="2979memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col0 decl" id="2980size" title='size' data-type='std::size_t' data-ref="2980size" >size</dfn>) {</td></tr>
+<tr><th id="60">60</th><td>            <span class="namespace">boost::</span><a class="type" href="../../type_traits/has_trivial_constructor.hpp.html#45" title='boost::has_trivial_default_constructor' data-ref="boost::has_trivial_default_constructor" >has_trivial_default_constructor</a>&lt;T&gt; <dfn class="local col1 decl" id="2981type" title='type' data-type='boost::has_trivial_default_constructor&lt;T&gt;' data-ref="2981type" >type</dfn>;            </td></tr>
+<tr><th id="61">61</th><td>            array_init(<a class="local col9 ref" href="#2979memory" title='memory' data-ref="2979memory" >memory</a>, <a class="local col0 ref" href="#2980size" title='size' data-ref="2980size" >size</a>, <a class="local col1 ref" href="#2981type" title='type' data-ref="2981type" >type</a>);</td></tr>
+<tr><th id="62">62</th><td>        }</td></tr>
+<tr><th id="63">63</th><td><u>#<span data-ppcond="63">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span>)</u></td></tr>
+<tr><th id="64">64</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="65">65</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail16array_init_valueEPT_mOS1_" title='boost::detail::array_init_value' data-ref="_ZN5boost6detail16array_init_valueEPT_mOS1_" >array_init_value</dfn>(T* <dfn class="local col2 decl" id="2982memory" title='memory' data-type='T *' data-ref="2982memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col3 decl" id="2983size" title='size' data-type='std::size_t' data-ref="2983size" >size</dfn>, T&amp;&amp; <dfn class="local col4 decl" id="2984value" title='value' data-type='T &amp;&amp;' data-ref="2984value" >value</dfn>) {</td></tr>
+<tr><th id="66">66</th><td><u>#<span data-ppcond="66">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_EXCEPTIONS">BOOST_NO_EXCEPTIONS</span>)</u></td></tr>
+<tr><th id="67">67</th><td>            <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col5 decl" id="2985i" title='i' data-type='std::size_t' data-ref="2985i" >i</dfn> = <var>0</var>;</td></tr>
+<tr><th id="68">68</th><td>            <b>try</b> {</td></tr>
+<tr><th id="69">69</th><td>                <b>for</b> (; <a class="local col5 ref" href="#2985i" title='i' data-ref="2985i" >i</a> &lt; <a class="local col3 ref" href="#2983size" title='size' data-ref="2983size" >size</a>; <a class="local col5 ref" href="#2985i" title='i' data-ref="2985i" >i</a>++) {</td></tr>
+<tr><th id="70">70</th><td>                    <em>void</em>* <dfn class="local col6 decl" id="2986p1" title='p1' data-type='void *' data-ref="2986p1" >p1</dfn> = <a class="local col2 ref" href="#2982memory" title='memory' data-ref="2982memory" >memory</a> + <a class="local col5 ref" href="#2985i" title='i' data-ref="2985i" >i</a>;</td></tr>
+<tr><th id="71">71</th><td>                    ::<b>new</b>(<a class="local col6 ref" href="#2986p1" title='p1' data-ref="2986p1" >p1</a>) T(<a class="local col4 ref" href="#2984value" title='value' data-ref="2984value" >value</a>);</td></tr>
+<tr><th id="72">72</th><td>                }</td></tr>
+<tr><th id="73">73</th><td>            } <b>catch</b> (...) {</td></tr>
+<tr><th id="74">74</th><td>                array_destroy(<a class="local col2 ref" href="#2982memory" title='memory' data-ref="2982memory" >memory</a>, <a class="local col5 ref" href="#2985i" title='i' data-ref="2985i" >i</a>);</td></tr>
+<tr><th id="75">75</th><td>                <b>throw</b>;</td></tr>
+<tr><th id="76">76</th><td>            }</td></tr>
+<tr><th id="77">77</th><td><u>#<span data-ppcond="66">else</span></u></td></tr>
+<tr><th id="78">78</th><td>            <b>for</b> (std::size_t i = <var>0</var>; i &lt; size; i++) {</td></tr>
+<tr><th id="79">79</th><td>                <em>void</em>* p1 = memory + i;</td></tr>
+<tr><th id="80">80</th><td>                ::<b>new</b>(p1) T(value);</td></tr>
+<tr><th id="81">81</th><td>            }</td></tr>
+<tr><th id="82">82</th><td><u>#<span data-ppcond="66">endif</span></u></td></tr>
+<tr><th id="83">83</th><td>        }</td></tr>
+<tr><th id="84">84</th><td><u>#<span data-ppcond="84">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="85">85</th><td>        <b>template</b>&lt;<b>typename</b> T, <b>typename</b>... Args&gt;</td></tr>
+<tr><th id="86">86</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail15array_init_argsEPT_mDpOT0_" title='boost::detail::array_init_args' data-ref="_ZN5boost6detail15array_init_argsEPT_mDpOT0_" >array_init_args</dfn>(T* <dfn class="local col7 decl" id="2987memory" title='memory' data-type='T *' data-ref="2987memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col8 decl" id="2988size" title='size' data-type='std::size_t' data-ref="2988size" >size</dfn>, Args&amp;&amp;... <dfn class="local col9 decl" id="2989args" title='args' data-type='Args &amp;&amp;...' data-ref="2989args" >args</dfn>) {</td></tr>
+<tr><th id="87">87</th><td><u>#<span data-ppcond="87">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_EXCEPTIONS">BOOST_NO_EXCEPTIONS</span>)</u></td></tr>
+<tr><th id="88">88</th><td>            <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col0 decl" id="2990i" title='i' data-type='std::size_t' data-ref="2990i" >i</dfn> = <var>0</var>;</td></tr>
+<tr><th id="89">89</th><td>            <b>try</b> {</td></tr>
+<tr><th id="90">90</th><td>                <b>for</b> (; <a class="local col0 ref" href="#2990i" title='i' data-ref="2990i" >i</a> &lt; <a class="local col8 ref" href="#2988size" title='size' data-ref="2988size" >size</a>; <a class="local col0 ref" href="#2990i" title='i' data-ref="2990i" >i</a>++) {</td></tr>
+<tr><th id="91">91</th><td>                    <em>void</em>* <dfn class="local col1 decl" id="2991p1" title='p1' data-type='void *' data-ref="2991p1" >p1</dfn> = <a class="local col7 ref" href="#2987memory" title='memory' data-ref="2987memory" >memory</a> + <a class="local col0 ref" href="#2990i" title='i' data-ref="2990i" >i</a>;</td></tr>
+<tr><th id="92">92</th><td>                    ::<b>new</b>(<a class="local col1 ref" href="#2991p1" title='p1' data-ref="2991p1" >p1</a>) T(<a class="local col9 ref" href="#2989args" title='args' data-ref="2989args" >args</a>...);</td></tr>
+<tr><th id="93">93</th><td>                }</td></tr>
+<tr><th id="94">94</th><td>            } <b>catch</b> (...) {</td></tr>
+<tr><th id="95">95</th><td>                array_destroy(<a class="local col7 ref" href="#2987memory" title='memory' data-ref="2987memory" >memory</a>, <a class="local col0 ref" href="#2990i" title='i' data-ref="2990i" >i</a>);</td></tr>
+<tr><th id="96">96</th><td>                <b>throw</b>;</td></tr>
+<tr><th id="97">97</th><td>            }</td></tr>
+<tr><th id="98">98</th><td><u>#<span data-ppcond="87">else</span></u></td></tr>
+<tr><th id="99">99</th><td>            <b>for</b> (std::size_t i = <var>0</var>; i &lt; size; i++) {</td></tr>
+<tr><th id="100">100</th><td>                <em>void</em>* p1 = memory + i;</td></tr>
+<tr><th id="101">101</th><td>                ::<b>new</b>(p1) T(args...);</td></tr>
+<tr><th id="102">102</th><td>            }</td></tr>
+<tr><th id="103">103</th><td><u>#<span data-ppcond="87">endif</span></u></td></tr>
+<tr><th id="104">104</th><td>        }</td></tr>
+<tr><th id="105">105</th><td><u>#<span data-ppcond="84">endif</span></u></td></tr>
+<tr><th id="106">106</th><td><u>#<span data-ppcond="63">endif</span></u></td></tr>
+<tr><th id="107">107</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="108">108</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail15array_init_listEPT_mPKS1_" title='boost::detail::array_init_list' data-ref="_ZN5boost6detail15array_init_listEPT_mPKS1_" >array_init_list</dfn>(T* <dfn class="local col2 decl" id="2992memory" title='memory' data-type='T *' data-ref="2992memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col3 decl" id="2993size" title='size' data-type='std::size_t' data-ref="2993size" >size</dfn>, <em>const</em> T* <dfn class="local col4 decl" id="2994list" title='list' data-type='const T *' data-ref="2994list" >list</dfn>) {</td></tr>
+<tr><th id="109">109</th><td><u>#<span data-ppcond="109">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_EXCEPTIONS">BOOST_NO_EXCEPTIONS</span>)</u></td></tr>
+<tr><th id="110">110</th><td>            <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col5 decl" id="2995i" title='i' data-type='std::size_t' data-ref="2995i" >i</dfn> = <var>0</var>;</td></tr>
+<tr><th id="111">111</th><td>            <b>try</b> {</td></tr>
+<tr><th id="112">112</th><td>                <b>for</b> (; <a class="local col5 ref" href="#2995i" title='i' data-ref="2995i" >i</a> &lt; <a class="local col3 ref" href="#2993size" title='size' data-ref="2993size" >size</a>; <a class="local col5 ref" href="#2995i" title='i' data-ref="2995i" >i</a>++) {</td></tr>
+<tr><th id="113">113</th><td>                    <em>void</em>* <dfn class="local col6 decl" id="2996p1" title='p1' data-type='void *' data-ref="2996p1" >p1</dfn> = <a class="local col2 ref" href="#2992memory" title='memory' data-ref="2992memory" >memory</a> + <a class="local col5 ref" href="#2995i" title='i' data-ref="2995i" >i</a>;</td></tr>
+<tr><th id="114">114</th><td>                    ::<b>new</b>(<a class="local col6 ref" href="#2996p1" title='p1' data-ref="2996p1" >p1</a>) T(<a class="local col4 ref" href="#2994list" title='list' data-ref="2994list" >list</a>[<a class="local col5 ref" href="#2995i" title='i' data-ref="2995i" >i</a>]);</td></tr>
+<tr><th id="115">115</th><td>                }</td></tr>
+<tr><th id="116">116</th><td>            } <b>catch</b> (...) {</td></tr>
+<tr><th id="117">117</th><td>                array_destroy(<a class="local col2 ref" href="#2992memory" title='memory' data-ref="2992memory" >memory</a>, <a class="local col5 ref" href="#2995i" title='i' data-ref="2995i" >i</a>);</td></tr>
+<tr><th id="118">118</th><td>                <b>throw</b>;</td></tr>
+<tr><th id="119">119</th><td>            }</td></tr>
+<tr><th id="120">120</th><td><u>#<span data-ppcond="109">else</span></u></td></tr>
+<tr><th id="121">121</th><td>            <b>for</b> (std::size_t i = <var>0</var>; i &lt; size; i++) {</td></tr>
+<tr><th id="122">122</th><td>                <em>void</em>* p1 = memory + i;</td></tr>
+<tr><th id="123">123</th><td>                ::<b>new</b>(p1) T(list[i]);</td></tr>
+<tr><th id="124">124</th><td>            }</td></tr>
+<tr><th id="125">125</th><td><u>#<span data-ppcond="109">endif</span></u></td></tr>
+<tr><th id="126">126</th><td>        }</td></tr>
+<tr><th id="127">127</th><td>        <b>template</b>&lt;<b>typename</b> T, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> N&gt;</td></tr>
+<tr><th id="128">128</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail15array_init_listEPT_mPKS1_" title='boost::detail::array_init_list' data-ref="_ZN5boost6detail15array_init_listEPT_mPKS1_" >array_init_list</dfn>(T* <dfn class="local col7 decl" id="2997memory" title='memory' data-type='T *' data-ref="2997memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col8 decl" id="2998size" title='size' data-type='std::size_t' data-ref="2998size" >size</dfn>, <em>const</em> T* <dfn class="local col9 decl" id="2999list" title='list' data-type='const T *' data-ref="2999list" >list</dfn>) {</td></tr>
+<tr><th id="129">129</th><td><u>#<span data-ppcond="129">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_EXCEPTIONS">BOOST_NO_EXCEPTIONS</span>)</u></td></tr>
+<tr><th id="130">130</th><td>            <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col0 decl" id="3000i" title='i' data-type='std::size_t' data-ref="3000i" >i</dfn> = <var>0</var>;</td></tr>
+<tr><th id="131">131</th><td>            <b>try</b> {</td></tr>
+<tr><th id="132">132</th><td>                <b>for</b> (; <a class="local col0 ref" href="#3000i" title='i' data-ref="3000i" >i</a> &lt; <a class="local col8 ref" href="#2998size" title='size' data-ref="2998size" >size</a>; <a class="local col0 ref" href="#3000i" title='i' data-ref="3000i" >i</a>++) {</td></tr>
+<tr><th id="133">133</th><td>                    <em>void</em>* <dfn class="local col1 decl" id="3001p1" title='p1' data-type='void *' data-ref="3001p1" >p1</dfn> = <a class="local col7 ref" href="#2997memory" title='memory' data-ref="2997memory" >memory</a> + <a class="local col0 ref" href="#3000i" title='i' data-ref="3000i" >i</a>;</td></tr>
+<tr><th id="134">134</th><td>                    ::<b>new</b>(<a class="local col1 ref" href="#3001p1" title='p1' data-ref="3001p1" >p1</a>) T(<a class="local col9 ref" href="#2999list" title='list' data-ref="2999list" >list</a>[<a class="local col0 ref" href="#3000i" title='i' data-ref="3000i" >i</a> % <a class="tu ref" href="#N" title='N' data-use='r' data-ref="N" >N</a>]);</td></tr>
+<tr><th id="135">135</th><td>                }</td></tr>
+<tr><th id="136">136</th><td>            } <b>catch</b> (...) {</td></tr>
+<tr><th id="137">137</th><td>                array_destroy(<a class="local col7 ref" href="#2997memory" title='memory' data-ref="2997memory" >memory</a>, <a class="local col0 ref" href="#3000i" title='i' data-ref="3000i" >i</a>);</td></tr>
+<tr><th id="138">138</th><td>                <b>throw</b>;</td></tr>
+<tr><th id="139">139</th><td>            }</td></tr>
+<tr><th id="140">140</th><td><u>#<span data-ppcond="129">else</span></u></td></tr>
+<tr><th id="141">141</th><td>            <b>for</b> (std::size_t i = <var>0</var>; i &lt; size; i++) {</td></tr>
+<tr><th id="142">142</th><td>                <em>void</em>* p1 = memory + i;</td></tr>
+<tr><th id="143">143</th><td>                ::<b>new</b>(p1) T(list[i % N]);</td></tr>
+<tr><th id="144">144</th><td>            }</td></tr>
+<tr><th id="145">145</th><td><u>#<span data-ppcond="129">endif</span></u></td></tr>
+<tr><th id="146">146</th><td>        }</td></tr>
+<tr><th id="147">147</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="148">148</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail12array_noinitEPT_mNS_17integral_constantIbLb1EEE" title='boost::detail::array_noinit' data-ref="_ZN5boost6detail12array_noinitEPT_mNS_17integral_constantIbLb1EEE" >array_noinit</dfn>(T*, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a>, <span class="namespace">boost::</span><a class="typedef" href="../../type_traits/integral_constant.hpp.html#boost::true_type" title='boost::true_type' data-type='integral_constant&lt;bool, true&gt;' data-ref="boost::true_type" >true_type</a>) {</td></tr>
+<tr><th id="149">149</th><td>        }</td></tr>
+<tr><th id="150">150</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="151">151</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail12array_noinitEPT_mNS_17integral_constantIbLb0EEE" title='boost::detail::array_noinit' data-ref="_ZN5boost6detail12array_noinitEPT_mNS_17integral_constantIbLb0EEE" >array_noinit</dfn>(T* <dfn class="local col2 decl" id="3002memory" title='memory' data-type='T *' data-ref="3002memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col3 decl" id="3003size" title='size' data-type='std::size_t' data-ref="3003size" >size</dfn>, <span class="namespace">boost::</span><a class="typedef" href="../../type_traits/integral_constant.hpp.html#boost::false_type" title='boost::false_type' data-type='integral_constant&lt;bool, false&gt;' data-ref="boost::false_type" >false_type</a>) {</td></tr>
+<tr><th id="152">152</th><td><u>#<span data-ppcond="152">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_EXCEPTIONS">BOOST_NO_EXCEPTIONS</span>)</u></td></tr>
+<tr><th id="153">153</th><td>            <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col4 decl" id="3004i" title='i' data-type='std::size_t' data-ref="3004i" >i</dfn> = <var>0</var>;</td></tr>
+<tr><th id="154">154</th><td>            <b>try</b> {</td></tr>
+<tr><th id="155">155</th><td>                <b>for</b> (; <a class="local col4 ref" href="#3004i" title='i' data-ref="3004i" >i</a> &lt; <a class="local col3 ref" href="#3003size" title='size' data-ref="3003size" >size</a>; <a class="local col4 ref" href="#3004i" title='i' data-ref="3004i" >i</a>++) {</td></tr>
+<tr><th id="156">156</th><td>                    <em>void</em>* <dfn class="local col5 decl" id="3005p1" title='p1' data-type='void *' data-ref="3005p1" >p1</dfn> = <a class="local col2 ref" href="#3002memory" title='memory' data-ref="3002memory" >memory</a> + <a class="local col4 ref" href="#3004i" title='i' data-ref="3004i" >i</a>;</td></tr>
+<tr><th id="157">157</th><td>                    ::<b>new</b>(<a class="local col5 ref" href="#3005p1" title='p1' data-ref="3005p1" >p1</a>) T;</td></tr>
+<tr><th id="158">158</th><td>                }</td></tr>
+<tr><th id="159">159</th><td>            } <b>catch</b> (...) {</td></tr>
+<tr><th id="160">160</th><td>                array_destroy(<a class="local col2 ref" href="#3002memory" title='memory' data-ref="3002memory" >memory</a>, <a class="local col4 ref" href="#3004i" title='i' data-ref="3004i" >i</a>);</td></tr>
+<tr><th id="161">161</th><td>                <b>throw</b>;</td></tr>
+<tr><th id="162">162</th><td>            }</td></tr>
+<tr><th id="163">163</th><td><u>#<span data-ppcond="152">else</span></u></td></tr>
+<tr><th id="164">164</th><td>            <b>for</b> (std::size_t i = <var>0</var>; i &lt; size; i++) {</td></tr>
+<tr><th id="165">165</th><td>                <em>void</em>* p1 = memory + i;</td></tr>
+<tr><th id="166">166</th><td>                ::<b>new</b>(p1) T;</td></tr>
+<tr><th id="167">167</th><td>            }</td></tr>
+<tr><th id="168">168</th><td><u>#<span data-ppcond="152">endif</span></u></td></tr>
+<tr><th id="169">169</th><td>        }</td></tr>
+<tr><th id="170">170</th><td>        <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="171">171</th><td>        <b>inline</b> <em>void</em> <dfn class="decl def" id="_ZN5boost6detail12array_noinitEPT_m" title='boost::detail::array_noinit' data-ref="_ZN5boost6detail12array_noinitEPT_m" >array_noinit</dfn>(T* <dfn class="local col6 decl" id="3006memory" title='memory' data-type='T *' data-ref="3006memory" >memory</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col7 decl" id="3007size" title='size' data-type='std::size_t' data-ref="3007size" >size</dfn>) {</td></tr>
+<tr><th id="172">172</th><td>            <span class="namespace">boost::</span><a class="type" href="../../type_traits/has_trivial_constructor.hpp.html#45" title='boost::has_trivial_default_constructor' data-ref="boost::has_trivial_default_constructor" >has_trivial_default_constructor</a>&lt;T&gt; <dfn class="local col8 decl" id="3008type" title='type' data-type='boost::has_trivial_default_constructor&lt;T&gt;' data-ref="3008type" >type</dfn>;</td></tr>
+<tr><th id="173">173</th><td>            array_noinit(<a class="local col6 ref" href="#3006memory" title='memory' data-ref="3006memory" >memory</a>, <a class="local col7 ref" href="#3007size" title='size' data-ref="3007size" >size</a>, <a class="local col8 ref" href="#3008type" title='type' data-ref="3008type" >type</a>);</td></tr>
+<tr><th id="174">174</th><td>        }</td></tr>
+<tr><th id="175">175</th><td>    }</td></tr>
+<tr><th id="176">176</th><td>}</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td><u>#<span data-ppcond="9">endif</span></u></td></tr>
+<tr><th id="179">179</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp.html'>TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

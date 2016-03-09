@@ -1,0 +1,25 @@
+<def f='include/boost/chrono/duration.hpp' l='234'/>
+<def f='include/boost/chrono/duration.hpp' l='249'/>
+<def f='include/boost/chrono/duration.hpp' l='268'/>
+<def f='include/boost/chrono/duration.hpp' l='288'/>
+<doc f='include/boost/chrono/duration.hpp' l='229'>// When the two periods are the same, all that is left to do is static_cast from
+    //   the source representation to the target representation (which may be a no-op).
+    //   This conversion is always exact as long as the static_cast from the source
+    //   representation to the destination representation is exact.</doc>
+<doc f='include/boost/chrono/duration.hpp' l='242'>// When the numerator of FromPeriod / ToPeriod is 1, then all we need to do is
+    //   divide by the denominator of FromPeriod / ToPeriod.  The common_type of
+    //   the two representations is used for the intermediate computation before
+    //   static_cast&apos;ing to the destination.
+    //   This conversion is generally not exact because of the division (but could be
+    //   if you get lucky on the run time value of fd.count()).</doc>
+<doc f='include/boost/chrono/duration.hpp' l='262'>// When the denominator of FromPeriod / ToPeriod is 1, then all we need to do is
+    //   multiply by the numerator of FromPeriod / ToPeriod.  The common_type of
+    //   the two representations is used for the intermediate computation before
+    //   static_cast&apos;ing to the destination.
+    //   This conversion is always exact as long as the static_cast&apos;s involved are exact.</doc>
+<doc f='include/boost/chrono/duration.hpp' l='281'>// When neither the numerator or denominator of FromPeriod / ToPeriod is 1, then we need to
+    //   multiply by the numerator and divide by the denominator of FromPeriod / ToPeriod.  The
+    //   common_type of the two representations is used for the intermediate computation before
+    //   static_cast&apos;ing to the destination.
+    //   This conversion is generally not exact because of the division (but could be
+    //   if you get lucky on the run time value of fd.count()).</doc>

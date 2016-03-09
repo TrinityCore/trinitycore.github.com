@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<title>ckh.h [TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/ckh.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/ckh.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/ckh.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><b>typedef</b> <b>struct</b> <a class="type" href="ckh.h.html#ckh_s" title='ckh_s' data-ref="ckh_s" id="ckh_s" ><a class="type" href="ckh.h.html#ckh_s" title='ckh_s' data-ref="ckh_s" >ckh_s</a></a> <dfn class="typedef" id="ckh_t" title='ckh_t' data-type='struct ckh_s' data-ref="ckh_t" >ckh_t</dfn>;</td></tr>
+<tr><th id="5">5</th><td><b>typedef</b> <b>struct</b> <a class="type" href="ckh.h.html#ckhc_s" title='ckhc_s' data-ref="ckhc_s" id="ckhc_s" ><a class="type" href="ckh.h.html#ckhc_s" title='ckhc_s' data-ref="ckhc_s" >ckhc_s</a></a> <dfn class="typedef" id="ckhc_t" title='ckhc_t' data-type='struct ckhc_s' data-ref="ckhc_t" >ckhc_t</dfn>;</td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td><i>/* Typedefs to allow easy function pointer passing. */</i></td></tr>
+<tr><th id="8">8</th><td><b>typedef</b> <em>void</em> <dfn class="typedef" id="ckh_hash_t" title='ckh_hash_t' data-type='void (const void *, size_t *)' data-ref="ckh_hash_t" >ckh_hash_t</dfn> (<em>const</em> <em>void</em> *, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>[<var>2</var>]);</td></tr>
+<tr><th id="9">9</th><td><b>typedef</b> <span class="macro" title="_Bool" data-ref="_M/bool">bool</span> <dfn class="typedef" id="ckh_keycomp_t" title='ckh_keycomp_t' data-type='_Bool (const void *, const void *)' data-ref="ckh_keycomp_t" >ckh_keycomp_t</dfn> (<em>const</em> <em>void</em> *, <em>const</em> <em>void</em> *);</td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><i>/* Maintain counters used to get an idea of performance. */</i></td></tr>
+<tr><th id="12">12</th><td><i>/* #define	CKH_COUNT */</i></td></tr>
+<tr><th id="13">13</th><td><i>/* Print counter values in ckh_delete() (requires CKH_COUNT). */</i></td></tr>
+<tr><th id="14">14</th><td><i>/* #define	CKH_VERBOSE */</i></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><i>/*</i></td></tr>
+<tr><th id="17">17</th><td><i> * There are 2^LG_CKH_BUCKET_CELLS cells in each hash table bucket.  Try to fit</i></td></tr>
+<tr><th id="18">18</th><td><i> * one bucket per L1 cache line.</i></td></tr>
+<tr><th id="19">19</th><td><i> */</i></td></tr>
+<tr><th id="20">20</th><td><u>#define	<dfn class="macro" id="_M/LG_CKH_BUCKET_CELLS" data-ref="_M/LG_CKH_BUCKET_CELLS">LG_CKH_BUCKET_CELLS</dfn> (LG_CACHELINE - LG_SIZEOF_PTR - 1)</u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="23">23</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="24">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>/* Hash table cell. */</i></td></tr>
+<tr><th id="27">27</th><td><b>struct</b> ckhc_s {</td></tr>
+<tr><th id="28">28</th><td>	<em>const</em> <em>void</em>	*key;</td></tr>
+<tr><th id="29">29</th><td>	<em>const</em> <em>void</em>	*data;</td></tr>
+<tr><th id="30">30</th><td>};</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>struct</b> ckh_s {</td></tr>
+<tr><th id="33">33</th><td><u>#ifdef CKH_COUNT</u></td></tr>
+<tr><th id="34">34</th><td>	<i>/* Counters used to get an idea of performance. */</i></td></tr>
+<tr><th id="35">35</th><td>	uint64_t	ngrows;</td></tr>
+<tr><th id="36">36</th><td>	uint64_t	nshrinks;</td></tr>
+<tr><th id="37">37</th><td>	uint64_t	nshrinkfails;</td></tr>
+<tr><th id="38">38</th><td>	uint64_t	ninserts;</td></tr>
+<tr><th id="39">39</th><td>	uint64_t	nrelocs;</td></tr>
+<tr><th id="40">40</th><td><u>#endif</u></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>	<i>/* Used for pseudo-random number generation. */</i></td></tr>
+<tr><th id="43">43</th><td><u>#define	CKH_A		1103515241</u></td></tr>
+<tr><th id="44">44</th><td><u>#define	CKH_C		12347</u></td></tr>
+<tr><th id="45">45</th><td>	uint32_t	prng_state;</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>	<i>/* Total number of items. */</i></td></tr>
+<tr><th id="48">48</th><td>	size_t		count;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>	<i>/*</i></td></tr>
+<tr><th id="51">51</th><td><i>	 * Minimum and current number of hash table buckets.  There are</i></td></tr>
+<tr><th id="52">52</th><td><i>	 * 2^LG_CKH_BUCKET_CELLS cells per bucket.</i></td></tr>
+<tr><th id="53">53</th><td><i>	 */</i></td></tr>
+<tr><th id="54">54</th><td>	<em>unsigned</em>	lg_minbuckets;</td></tr>
+<tr><th id="55">55</th><td>	<em>unsigned</em>	lg_curbuckets;</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>	<i>/* Hash and comparison functions. */</i></td></tr>
+<tr><th id="58">58</th><td>	ckh_hash_t	*hash;</td></tr>
+<tr><th id="59">59</th><td>	ckh_keycomp_t	*keycomp;</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>	<i>/* Hash table with 2^lg_curbuckets buckets. */</i></td></tr>
+<tr><th id="62">62</th><td>	ckhc_t		*tab;</td></tr>
+<tr><th id="63">63</th><td>};</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><u>#<span data-ppcond="24">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="66">66</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="67">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>bool	ckh_new(ckh_t *ckh, size_t minitems, ckh_hash_t *hash,</td></tr>
+<tr><th id="70">70</th><td>    ckh_keycomp_t *keycomp);</td></tr>
+<tr><th id="71">71</th><td><em>void</em>	ckh_delete(ckh_t *ckh);</td></tr>
+<tr><th id="72">72</th><td>size_t	ckh_count(ckh_t *ckh);</td></tr>
+<tr><th id="73">73</th><td>bool	ckh_iter(ckh_t *ckh, size_t *tabind, <em>void</em> **key, <em>void</em> **data);</td></tr>
+<tr><th id="74">74</th><td>bool	ckh_insert(ckh_t *ckh, <em>const</em> <em>void</em> *key, <em>const</em> <em>void</em> *data);</td></tr>
+<tr><th id="75">75</th><td>bool	ckh_remove(ckh_t *ckh, <em>const</em> <em>void</em> *searchkey, <em>void</em> **key,</td></tr>
+<tr><th id="76">76</th><td>    <em>void</em> **data);</td></tr>
+<tr><th id="77">77</th><td>bool	ckh_search(ckh_t *ckh, <em>const</em> <em>void</em> *seachkey, <em>void</em> **key, <em>void</em> **data);</td></tr>
+<tr><th id="78">78</th><td><em>void</em>	ckh_string_hash(<em>const</em> <em>void</em> *key, size_t r_hash[<var>2</var>]);</td></tr>
+<tr><th id="79">79</th><td>bool	ckh_string_keycomp(<em>const</em> <em>void</em> *k1, <em>const</em> <em>void</em> *k2);</td></tr>
+<tr><th id="80">80</th><td><em>void</em>	ckh_pointer_hash(<em>const</em> <em>void</em> *key, size_t r_hash[<var>2</var>]);</td></tr>
+<tr><th id="81">81</th><td>bool	ckh_pointer_keycomp(<em>const</em> <em>void</em> *k1, <em>const</em> <em>void</em> *k2);</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td><u>#<span data-ppcond="67">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="84">84</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="85">85</th><td><u>#<span data-ppcond="85">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td><u>#<span data-ppcond="85">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="88">88</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore3.3.5/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<title>BattlegroundDS.h [TrinityCore6.x/src/server/game/Battlegrounds/Zones/BattlegroundDS.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/Battlegrounds/Zones/BattlegroundDS.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>Battlegrounds</a>/<a href='./'>Zones</a>/BattlegroundDS.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/__BATTLEGROUNDDS_H">__BATTLEGROUNDDS_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/__BATTLEGROUNDDS_H" data-ref="_M/__BATTLEGROUNDDS_H">__BATTLEGROUNDDS_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Arena.h.html">"Arena.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>enum</b> <dfn class="type def" id="BattlegroundDSObjectTypes" title='BattlegroundDSObjectTypes' data-ref="BattlegroundDSObjectTypes" >BattlegroundDSObjectTypes</dfn></td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td>    <dfn class="enum" id="BattlegroundDSObjectTypes::BG_DS_OBJECT_DOOR_1" title='BattlegroundDSObjectTypes::BG_DS_OBJECT_DOOR_1' data-ref="BattlegroundDSObjectTypes::BG_DS_OBJECT_DOOR_1" >BG_DS_OBJECT_DOOR_1</dfn>         = <var>0</var>,</td></tr>
+<tr><th id="27">27</th><td>    <dfn class="enum" id="BattlegroundDSObjectTypes::BG_DS_OBJECT_DOOR_2" title='BattlegroundDSObjectTypes::BG_DS_OBJECT_DOOR_2' data-ref="BattlegroundDSObjectTypes::BG_DS_OBJECT_DOOR_2" >BG_DS_OBJECT_DOOR_2</dfn>         = <var>1</var>,</td></tr>
+<tr><th id="28">28</th><td>    <dfn class="enum" id="BattlegroundDSObjectTypes::BG_DS_OBJECT_WATER_1" title='BattlegroundDSObjectTypes::BG_DS_OBJECT_WATER_1' data-ref="BattlegroundDSObjectTypes::BG_DS_OBJECT_WATER_1" >BG_DS_OBJECT_WATER_1</dfn>        = <var>2</var>, <i>// Collision</i></td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="BattlegroundDSObjectTypes::BG_DS_OBJECT_WATER_2" title='BattlegroundDSObjectTypes::BG_DS_OBJECT_WATER_2' data-ref="BattlegroundDSObjectTypes::BG_DS_OBJECT_WATER_2" >BG_DS_OBJECT_WATER_2</dfn>        = <var>3</var>,</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="BattlegroundDSObjectTypes::BG_DS_OBJECT_BUFF_1" title='BattlegroundDSObjectTypes::BG_DS_OBJECT_BUFF_1' data-ref="BattlegroundDSObjectTypes::BG_DS_OBJECT_BUFF_1" >BG_DS_OBJECT_BUFF_1</dfn>         = <var>4</var>,</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="BattlegroundDSObjectTypes::BG_DS_OBJECT_BUFF_2" title='BattlegroundDSObjectTypes::BG_DS_OBJECT_BUFF_2' data-ref="BattlegroundDSObjectTypes::BG_DS_OBJECT_BUFF_2" >BG_DS_OBJECT_BUFF_2</dfn>         = <var>5</var>,</td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="BattlegroundDSObjectTypes::BG_DS_OBJECT_MAX" title='BattlegroundDSObjectTypes::BG_DS_OBJECT_MAX' data-ref="BattlegroundDSObjectTypes::BG_DS_OBJECT_MAX" >BG_DS_OBJECT_MAX</dfn>            = <var>6</var></td></tr>
+<tr><th id="33">33</th><td>};</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><b>enum</b> <dfn class="type def" id="BattlegroundDSGameObjects" title='BattlegroundDSGameObjects' data-ref="BattlegroundDSGameObjects" >BattlegroundDSGameObjects</dfn></td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_DOOR_1" title='BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_DOOR_1' data-ref="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_DOOR_1" >BG_DS_OBJECT_TYPE_DOOR_1</dfn>    = <var>192642</var>,</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_DOOR_2" title='BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_DOOR_2' data-ref="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_DOOR_2" >BG_DS_OBJECT_TYPE_DOOR_2</dfn>    = <var>192643</var>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_WATER_1" title='BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_WATER_1' data-ref="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_WATER_1" >BG_DS_OBJECT_TYPE_WATER_1</dfn>   = <var>194395</var>, <i>// Collision</i></td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_WATER_2" title='BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_WATER_2' data-ref="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_WATER_2" >BG_DS_OBJECT_TYPE_WATER_2</dfn>   = <var>191877</var>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_BUFF_1" title='BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_BUFF_1' data-ref="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_BUFF_1" >BG_DS_OBJECT_TYPE_BUFF_1</dfn>    = <var>184663</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_BUFF_2" title='BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_BUFF_2' data-ref="BattlegroundDSGameObjects::BG_DS_OBJECT_TYPE_BUFF_2" >BG_DS_OBJECT_TYPE_BUFF_2</dfn>    = <var>184664</var></td></tr>
+<tr><th id="43">43</th><td>};</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><b>enum</b> <dfn class="type def" id="BattlegroundDSCreatureTypes" title='BattlegroundDSCreatureTypes' data-ref="BattlegroundDSCreatureTypes" >BattlegroundDSCreatureTypes</dfn></td></tr>
+<tr><th id="46">46</th><td>{</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="BattlegroundDSCreatureTypes::BG_DS_NPC_WATERFALL_KNOCKBACK" title='BattlegroundDSCreatureTypes::BG_DS_NPC_WATERFALL_KNOCKBACK' data-ref="BattlegroundDSCreatureTypes::BG_DS_NPC_WATERFALL_KNOCKBACK" >BG_DS_NPC_WATERFALL_KNOCKBACK</dfn> = <var>0</var>,</td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="BattlegroundDSCreatureTypes::BG_DS_NPC_PIPE_KNOCKBACK_1" title='BattlegroundDSCreatureTypes::BG_DS_NPC_PIPE_KNOCKBACK_1' data-ref="BattlegroundDSCreatureTypes::BG_DS_NPC_PIPE_KNOCKBACK_1" >BG_DS_NPC_PIPE_KNOCKBACK_1</dfn>    = <var>1</var>,</td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="BattlegroundDSCreatureTypes::BG_DS_NPC_PIPE_KNOCKBACK_2" title='BattlegroundDSCreatureTypes::BG_DS_NPC_PIPE_KNOCKBACK_2' data-ref="BattlegroundDSCreatureTypes::BG_DS_NPC_PIPE_KNOCKBACK_2" >BG_DS_NPC_PIPE_KNOCKBACK_2</dfn>    = <var>2</var>,</td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="BattlegroundDSCreatureTypes::BG_DS_NPC_MAX" title='BattlegroundDSCreatureTypes::BG_DS_NPC_MAX' data-ref="BattlegroundDSCreatureTypes::BG_DS_NPC_MAX" >BG_DS_NPC_MAX</dfn>                 = <var>3</var></td></tr>
+<tr><th id="51">51</th><td>};</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><b>enum</b> <dfn class="type def" id="BattlegroundDSCreatures" title='BattlegroundDSCreatures' data-ref="BattlegroundDSCreatures" >BattlegroundDSCreatures</dfn></td></tr>
+<tr><th id="54">54</th><td>{</td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="BattlegroundDSCreatures::BG_DS_NPC_TYPE_WATER_SPOUT" title='BattlegroundDSCreatures::BG_DS_NPC_TYPE_WATER_SPOUT' data-ref="BattlegroundDSCreatures::BG_DS_NPC_TYPE_WATER_SPOUT" >BG_DS_NPC_TYPE_WATER_SPOUT</dfn>    = <var>28567</var></td></tr>
+<tr><th id="56">56</th><td>};</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><b>enum</b> <dfn class="type def" id="BattlegroundDSSpells" title='BattlegroundDSSpells' data-ref="BattlegroundDSSpells" >BattlegroundDSSpells</dfn></td></tr>
+<tr><th id="59">59</th><td>{</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="BattlegroundDSSpells::BG_DS_SPELL_FLUSH" title='BattlegroundDSSpells::BG_DS_SPELL_FLUSH' data-ref="BattlegroundDSSpells::BG_DS_SPELL_FLUSH" >BG_DS_SPELL_FLUSH</dfn>             = <var>57405</var>, <i>// Visual and target selector for the starting knockback from the pipe</i></td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="BattlegroundDSSpells::BG_DS_SPELL_FLUSH_KNOCKBACK" title='BattlegroundDSSpells::BG_DS_SPELL_FLUSH_KNOCKBACK' data-ref="BattlegroundDSSpells::BG_DS_SPELL_FLUSH_KNOCKBACK" >BG_DS_SPELL_FLUSH_KNOCKBACK</dfn>   = <var>61698</var>, <i>// Knockback effect for previous spell (triggered, not needed to be cast)</i></td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="BattlegroundDSSpells::BG_DS_SPELL_WATER_SPOUT" title='BattlegroundDSSpells::BG_DS_SPELL_WATER_SPOUT' data-ref="BattlegroundDSSpells::BG_DS_SPELL_WATER_SPOUT" >BG_DS_SPELL_WATER_SPOUT</dfn>       = <var>58873</var>, <i>// Knockback effect of the central waterfall</i></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>    <dfn class="enum" id="BattlegroundDSSpells::SPELL_WARL_DEMONIC_CIRCLE" title='BattlegroundDSSpells::SPELL_WARL_DEMONIC_CIRCLE' data-ref="BattlegroundDSSpells::SPELL_WARL_DEMONIC_CIRCLE" >SPELL_WARL_DEMONIC_CIRCLE</dfn>     = <var>48018</var>  <i>// Demonic Circle Summon</i></td></tr>
+<tr><th id="65">65</th><td>};</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><b>enum</b> <dfn class="type def" id="BattlegroundDSData" title='BattlegroundDSData' data-ref="BattlegroundDSData" >BattlegroundDSData</dfn></td></tr>
+<tr><th id="68">68</th><td>{</td></tr>
+<tr><th id="69">69</th><td>    <i>// These values are NOT blizzlike... need the correct data!</i></td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_WATERFALL_TIMER_MIN" title='BattlegroundDSData::BG_DS_WATERFALL_TIMER_MIN' data-ref="BattlegroundDSData::BG_DS_WATERFALL_TIMER_MIN" >BG_DS_WATERFALL_TIMER_MIN</dfn>           = <var>30000</var>,</td></tr>
+<tr><th id="71">71</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_WATERFALL_TIMER_MAX" title='BattlegroundDSData::BG_DS_WATERFALL_TIMER_MAX' data-ref="BattlegroundDSData::BG_DS_WATERFALL_TIMER_MAX" >BG_DS_WATERFALL_TIMER_MAX</dfn>           = <var>60000</var>,</td></tr>
+<tr><th id="72">72</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_WATERFALL_WARNING_DURATION" title='BattlegroundDSData::BG_DS_WATERFALL_WARNING_DURATION' data-ref="BattlegroundDSData::BG_DS_WATERFALL_WARNING_DURATION" >BG_DS_WATERFALL_WARNING_DURATION</dfn>    = <var>5000</var>,</td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_WATERFALL_DURATION" title='BattlegroundDSData::BG_DS_WATERFALL_DURATION' data-ref="BattlegroundDSData::BG_DS_WATERFALL_DURATION" >BG_DS_WATERFALL_DURATION</dfn>            = <var>30000</var>,</td></tr>
+<tr><th id="74">74</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_WATERFALL_KNOCKBACK_TIMER" title='BattlegroundDSData::BG_DS_WATERFALL_KNOCKBACK_TIMER' data-ref="BattlegroundDSData::BG_DS_WATERFALL_KNOCKBACK_TIMER" >BG_DS_WATERFALL_KNOCKBACK_TIMER</dfn>     = <var>1500</var>,</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_FIRST_DELAY" title='BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_FIRST_DELAY' data-ref="BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_FIRST_DELAY" >BG_DS_PIPE_KNOCKBACK_FIRST_DELAY</dfn>    = <var>5000</var>,</td></tr>
+<tr><th id="77">77</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_DELAY" title='BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_DELAY' data-ref="BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_DELAY" >BG_DS_PIPE_KNOCKBACK_DELAY</dfn>          = <var>3000</var>,</td></tr>
+<tr><th id="78">78</th><td>    <dfn class="enum" id="BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_TOTAL_COUNT" title='BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_TOTAL_COUNT' data-ref="BattlegroundDSData::BG_DS_PIPE_KNOCKBACK_TOTAL_COUNT" >BG_DS_PIPE_KNOCKBACK_TOTAL_COUNT</dfn>    = <var>2</var>,</td></tr>
+<tr><th id="79">79</th><td>};</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><b>enum</b> <dfn class="type def" id="BattlegroundDSEvents" title='BattlegroundDSEvents' data-ref="BattlegroundDSEvents" >BattlegroundDSEvents</dfn></td></tr>
+<tr><th id="82">82</th><td>{</td></tr>
+<tr><th id="83">83</th><td>    <dfn class="enum" id="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_WARNING" title='BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_WARNING' data-ref="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_WARNING" >BG_DS_EVENT_WATERFALL_WARNING</dfn>       = <var>1</var>, <i>// Water starting to fall, but no LoS Blocking nor movement blocking</i></td></tr>
+<tr><th id="84">84</th><td>    <dfn class="enum" id="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_ON" title='BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_ON' data-ref="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_ON" >BG_DS_EVENT_WATERFALL_ON</dfn>            = <var>2</var>, <i>// LoS and Movement blocking active</i></td></tr>
+<tr><th id="85">85</th><td>    <dfn class="enum" id="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_OFF" title='BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_OFF' data-ref="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_OFF" >BG_DS_EVENT_WATERFALL_OFF</dfn>           = <var>3</var>,</td></tr>
+<tr><th id="86">86</th><td>    <dfn class="enum" id="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_KNOCKBACK" title='BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_KNOCKBACK' data-ref="BattlegroundDSEvents::BG_DS_EVENT_WATERFALL_KNOCKBACK" >BG_DS_EVENT_WATERFALL_KNOCKBACK</dfn>     = <var>4</var>,</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>    <dfn class="enum" id="BattlegroundDSEvents::BG_DS_EVENT_PIPE_KNOCKBACK" title='BattlegroundDSEvents::BG_DS_EVENT_PIPE_KNOCKBACK' data-ref="BattlegroundDSEvents::BG_DS_EVENT_PIPE_KNOCKBACK" >BG_DS_EVENT_PIPE_KNOCKBACK</dfn>          = <var>5</var></td></tr>
+<tr><th id="89">89</th><td>};</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><b>class</b> <dfn class="type def" id="BattlegroundDS" title='BattlegroundDS' data-ref="BattlegroundDS" >BattlegroundDS</dfn> : <b>public</b> <a class="type" href="../Arena.h.html#Arena" title='Arena' data-ref="Arena" >Arena</a></td></tr>
+<tr><th id="92">92</th><td>{</td></tr>
+<tr><th id="93">93</th><td>    <b>public</b>:</td></tr>
+<tr><th id="94">94</th><td>        <dfn class="decl" id="_ZN14BattlegroundDSC1Ev" title='BattlegroundDS::BattlegroundDS' data-ref="_ZN14BattlegroundDSC1Ev" >BattlegroundDS</dfn>();</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>        <i>/* inherited from BattlegroundClass */</i></td></tr>
+<tr><th id="97">97</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN14BattlegroundDS23StartingEventCloseDoorsEv" title='BattlegroundDS::StartingEventCloseDoors' data-ref="_ZN14BattlegroundDS23StartingEventCloseDoorsEv" >StartingEventCloseDoors</dfn>() override;</td></tr>
+<tr><th id="98">98</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN14BattlegroundDS22StartingEventOpenDoorsEv" title='BattlegroundDS::StartingEventOpenDoors' data-ref="_ZN14BattlegroundDS22StartingEventOpenDoorsEv" >StartingEventOpenDoors</dfn>() override;</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN14BattlegroundDS17HandleAreaTriggerEP6Playerjb" title='BattlegroundDS::HandleAreaTrigger' data-ref="_ZN14BattlegroundDS17HandleAreaTriggerEP6Playerjb" >HandleAreaTrigger</dfn>(<a class="type" href="../../Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col2 decl" id="262source" title='source' data-type='Player *' data-ref="262source" >source</dfn>, <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="263trigger" title='trigger' data-type='uint32' data-ref="263trigger" >trigger</dfn>, <em>bool</em> <dfn class="local col4 decl" id="264entered" title='entered' data-type='bool' data-ref="264entered" >entered</dfn>) override;</td></tr>
+<tr><th id="101">101</th><td>        <em>bool</em> <dfn class="virtual decl" id="_ZN14BattlegroundDS17SetupBattlegroundEv" title='BattlegroundDS::SetupBattleground' data-ref="_ZN14BattlegroundDS17SetupBattlegroundEv" >SetupBattleground</dfn>() override;</td></tr>
+<tr><th id="102">102</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN14BattlegroundDS22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" title='BattlegroundDS::FillInitialWorldStates' data-ref="_ZN14BattlegroundDS22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" >FillInitialWorldStates</dfn>(<span class="namespace">WorldPackets::WorldState::</span><a class="type" href="../../Server/Packets/WorldStatePackets.h.html#WorldPackets::WorldState::InitWorldStates" title='WorldPackets::WorldState::InitWorldStates' data-ref="WorldPackets::WorldState::InitWorldStates" >InitWorldStates</a>&amp; <dfn class="local col5 decl" id="265packet" title='packet' data-type='WorldPackets::WorldState::InitWorldStates &amp;' data-ref="265packet" >packet</dfn>) override;</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>    <b>private</b>:</td></tr>
+<tr><th id="105">105</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN14BattlegroundDS14PostUpdateImplEj" title='BattlegroundDS::PostUpdateImpl' data-ref="_ZN14BattlegroundDS14PostUpdateImplEj" >PostUpdateImpl</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="266diff" title='diff' data-type='uint32' data-ref="266diff" >diff</dfn>) override;</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>        <a class="type" href="../../../../common/Utilities/EventMap.h.html#EventMap" title='EventMap' data-ref="EventMap" >EventMap</a> <dfn class="decl" id="BattlegroundDS::_events" title='BattlegroundDS::_events' data-ref="BattlegroundDS::_events" >_events</dfn>;</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BattlegroundDS::_pipeKnockBackTimer" title='BattlegroundDS::_pipeKnockBackTimer' data-ref="BattlegroundDS::_pipeKnockBackTimer" >_pipeKnockBackTimer</dfn>;</td></tr>
+<tr><th id="110">110</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="BattlegroundDS::_pipeKnockBackCount" title='BattlegroundDS::_pipeKnockBackCount' data-ref="BattlegroundDS::_pipeKnockBackCount" >_pipeKnockBackCount</dfn>;</td></tr>
+<tr><th id="111">111</th><td>};</td></tr>
+<tr><th id="112">112</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="113">113</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../BattlegroundMgr.cpp.html'>TrinityCore6.x/src/server/game/Battlegrounds/BattlegroundMgr.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

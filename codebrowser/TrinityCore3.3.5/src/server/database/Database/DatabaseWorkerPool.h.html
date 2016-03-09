@@ -1,0 +1,325 @@
+<!doctype html>
+<html>
+<head>
+<title>DatabaseWorkerPool.h [TrinityCore3.3.5/src/server/database/Database/DatabaseWorkerPool.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/database/Database/DatabaseWorkerPool.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>database</a>/<a href='./'>Database</a>/DatabaseWorkerPool.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/_DATABASEWORKERPOOL_H">_DATABASEWORKERPOOL_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/_DATABASEWORKERPOOL_H" data-ref="_M/_DATABASEWORKERPOOL_H">_DATABASEWORKERPOOL_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../common/Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../common/Threading/Callback.h.html">"Callback.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="MySQLConnection.h.html">"MySQLConnection.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="Transaction.h.html">"Transaction.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="DatabaseWorker.h.html">"DatabaseWorker.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="PreparedStatement.h.html">"PreparedStatement.h"</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="../../../common/Logging/Log.h.html">"Log.h"</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="QueryResult.h.html">"QueryResult.h"</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="QueryHolder.h.html">"QueryHolder.h"</a></u></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="AdhocStatement.h.html">"AdhocStatement.h"</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="../../../common/Utilities/StringFormat.h.html">"StringFormat.h"</a></u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><u>#include <a href="../../../../../include/mysql/mysqld_error.h.html">&lt;mysqld_error.h&gt;</a></u></td></tr>
+<tr><th id="34">34</th><td><u>#include <a href="../../../../../include/c++/4.9/memory.html">&lt;memory&gt;</a></u></td></tr>
+<tr><th id="35">35</th><td><u>#include <a href="../../../../../include/c++/4.9/array.html">&lt;array&gt;</a></u></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>class</b> <dfn class="type def" id="PingOperation" title='PingOperation' data-ref="PingOperation" >PingOperation</dfn> : <b>public</b> <a class="type" href="SQLOperation.h.html#SQLOperation" title='SQLOperation' data-ref="SQLOperation" >SQLOperation</a></td></tr>
+<tr><th id="38">38</th><td>{</td></tr>
+<tr><th id="39">39</th><td>    <i class="doc">//! Operation for idle delaythreads</i></td></tr>
+<tr><th id="40">40</th><td>    <em>bool</em> <dfn class="virtual decl def" id="_ZN13PingOperation7ExecuteEv" title='PingOperation::Execute' data-ref="_ZN13PingOperation7ExecuteEv" >Execute</dfn>() override</td></tr>
+<tr><th id="41">41</th><td>    {</td></tr>
+<tr><th id="42">42</th><td>        <a class="member" href="SQLOperation.h.html#SQLOperation::m_conn" title='SQLOperation::m_conn' data-ref="SQLOperation::m_conn" id="SQLOperation::m_conn" >m_conn</a>-&gt;<a class="ref" href="MySQLConnection.h.html#_ZN15MySQLConnection4PingEv" title='MySQLConnection::Ping' data-ref="_ZN15MySQLConnection4PingEv" id="_ZN15MySQLConnection4PingEv" >Ping</a>();</td></tr>
+<tr><th id="43">43</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="44">44</th><td>    }</td></tr>
+<tr><th id="45">45</th><td>};</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="48">48</th><td><b>class</b> <dfn class="type def" id="DatabaseWorkerPool" title='DatabaseWorkerPool' data-ref="DatabaseWorkerPool" >DatabaseWorkerPool</dfn></td></tr>
+<tr><th id="49">49</th><td>{</td></tr>
+<tr><th id="50">50</th><td>    <b>private</b>:</td></tr>
+<tr><th id="51">51</th><td>        <b>enum</b> <dfn class="type def" id="DatabaseWorkerPool::InternalIndex" title='DatabaseWorkerPool::InternalIndex' data-ref="DatabaseWorkerPool::InternalIndex" >InternalIndex</dfn></td></tr>
+<tr><th id="52">52</th><td>        {</td></tr>
+<tr><th id="53">53</th><td>            <dfn class="enum" id="DatabaseWorkerPool::InternalIndex::IDX_ASYNC" title='DatabaseWorkerPool::InternalIndex::IDX_ASYNC' data-ref="DatabaseWorkerPool::InternalIndex::IDX_ASYNC" >IDX_ASYNC</dfn>,</td></tr>
+<tr><th id="54">54</th><td>            <dfn class="enum" id="DatabaseWorkerPool::InternalIndex::IDX_SYNCH" title='DatabaseWorkerPool::InternalIndex::IDX_SYNCH' data-ref="DatabaseWorkerPool::InternalIndex::IDX_SYNCH" >IDX_SYNCH</dfn>,</td></tr>
+<tr><th id="55">55</th><td>            <dfn class="enum" id="DatabaseWorkerPool::InternalIndex::IDX_SIZE" title='DatabaseWorkerPool::InternalIndex::IDX_SIZE' data-ref="DatabaseWorkerPool::InternalIndex::IDX_SIZE" >IDX_SIZE</dfn></td></tr>
+<tr><th id="56">56</th><td>        };</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <b>public</b>:</td></tr>
+<tr><th id="59">59</th><td>        <i>/* Activity state */</i></td></tr>
+<tr><th id="60">60</th><td>        <dfn class="decl" id="_ZN18DatabaseWorkerPoolC1Ev" title='DatabaseWorkerPool::DatabaseWorkerPool&lt;T&gt;' data-ref="_ZN18DatabaseWorkerPoolC1Ev" >DatabaseWorkerPool</dfn>();</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>        <dfn class="decl def" id="_ZN18DatabaseWorkerPoolD1Ev" title='DatabaseWorkerPool::~DatabaseWorkerPool&lt;T&gt;' data-ref="_ZN18DatabaseWorkerPoolD1Ev" >~DatabaseWorkerPool</dfn>()</td></tr>
+<tr><th id="63">63</th><td>        {</td></tr>
+<tr><th id="64">64</th><td>            <a class="member" href="#DatabaseWorkerPool::_queue" title='DatabaseWorkerPool::_queue' data-ref="DatabaseWorkerPool::_queue" >_queue</a><a class="ref" href="../../../../../include/c++/4.9/bits/unique_ptr.h.html#_ZNKSt10unique_ptrptEv" title='std::unique_ptr::operator-&gt;' data-ref="_ZNKSt10unique_ptrptEv" id="_ZNKSt10unique_ptrptEv" >-&gt;</a><a class="ref" href="../../../common/Threading/ProducerConsumerQueue.h.html#_ZN21ProducerConsumerQueue6CancelEv" title='ProducerConsumerQueue::Cancel' data-ref="_ZN21ProducerConsumerQueue6CancelEv" id="_ZN21ProducerConsumerQueue6CancelEv" >Cancel</a>();</td></tr>
+<tr><th id="65">65</th><td>        }</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>        <em>void</em> <dfn class="decl" id="_ZN18DatabaseWorkerPool17SetConnectionInfoERKSshh" title='DatabaseWorkerPool::SetConnectionInfo' data-ref="_ZN18DatabaseWorkerPool17SetConnectionInfoERKSshh" >SetConnectionInfo</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col3 decl" id="6603infoString" title='infoString' data-type='const std::string &amp;' data-ref="6603infoString" >infoString</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <em>const</em> <dfn class="local col4 decl" id="6604asyncThreads" title='asyncThreads' data-type='const uint8' data-ref="6604asyncThreads" >asyncThreads</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <em>const</em> <dfn class="local col5 decl" id="6605synchThreads" title='synchThreads' data-type='const uint8' data-ref="6605synchThreads" >synchThreads</dfn>);</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="_ZN18DatabaseWorkerPool4OpenEv" title='DatabaseWorkerPool::Open' data-ref="_ZN18DatabaseWorkerPool4OpenEv" >Open</dfn>();</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>        <em>void</em> <dfn class="decl" id="_ZN18DatabaseWorkerPool5CloseEv" title='DatabaseWorkerPool::Close' data-ref="_ZN18DatabaseWorkerPool5CloseEv" >Close</dfn>();</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>        <i class="doc">//! Prepares all prepared statements</i></td></tr>
+<tr><th id="74">74</th><td>        <em>bool</em> <dfn class="decl" id="_ZN18DatabaseWorkerPool17PrepareStatementsEv" title='DatabaseWorkerPool::PrepareStatements' data-ref="_ZN18DatabaseWorkerPool17PrepareStatementsEv" >PrepareStatements</dfn>();</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>        <b>inline</b> <a class="type" href="MySQLConnection.h.html#MySQLConnectionInfo" title='MySQLConnectionInfo' data-ref="MySQLConnectionInfo" >MySQLConnectionInfo</a> <em>const</em>* <dfn class="decl def" id="_ZNK18DatabaseWorkerPool17GetConnectionInfoEv" title='DatabaseWorkerPool::GetConnectionInfo' data-ref="_ZNK18DatabaseWorkerPool17GetConnectionInfoEv" >GetConnectionInfo</dfn>() <em>const</em></td></tr>
+<tr><th id="77">77</th><td>        {</td></tr>
+<tr><th id="78">78</th><td>            <b>return</b> <a class="member" href="#DatabaseWorkerPool::_connectionInfo" title='DatabaseWorkerPool::_connectionInfo' data-ref="DatabaseWorkerPool::_connectionInfo" >_connectionInfo</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/unique_ptr.h.html#_ZNKSt10unique_ptr3getEv" title='std::unique_ptr::get' data-ref="_ZNKSt10unique_ptr3getEv" id="_ZNKSt10unique_ptr3getEv" >get</a>();</td></tr>
+<tr><th id="79">79</th><td>        }</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">            Delayed one-way statement methods.</i></td></tr>
+<tr><th id="83">83</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc"></i></td></tr>
+<tr><th id="85">85</th><td><i class="doc">        //! Enqueues a one-way SQL operation in string format that will be executed asynchronously.</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc">        //! This method should only be used for queries that are only executed once, e.g during startup.</i></td></tr>
+<tr><th id="87">87</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool7ExecuteEPKc" title='DatabaseWorkerPool::Execute' data-ref="_ZN18DatabaseWorkerPool7ExecuteEPKc" >Execute</dfn>(<em>const</em> <em>char</em>* <dfn class="local col6 decl" id="6606sql" title='sql' data-type='const char *' data-ref="6606sql" >sql</dfn>)</td></tr>
+<tr><th id="88">88</th><td>        {</td></tr>
+<tr><th id="89">89</th><td>            <b>if</b> (<span class="namespace">Trinity::</span><a class="ref" href="../../../common/Utilities/StringFormat.h.html#_ZN7Trinity19IsFormatEmptyOrNullEPKc" title='Trinity::IsFormatEmptyOrNull' data-ref="_ZN7Trinity19IsFormatEmptyOrNullEPKc" id="_ZN7Trinity19IsFormatEmptyOrNullEPKc" >IsFormatEmptyOrNull</a>(<a class="local col6 ref" href="#6606sql" title='sql' data-ref="6606sql" >sql</a>))</td></tr>
+<tr><th id="90">90</th><td>                <b>return</b>;</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>            <a class="type" href="AdhocStatement.h.html#BasicStatementTask" title='BasicStatementTask' data-ref="BasicStatementTask" >BasicStatementTask</a>* <dfn class="local col7 decl" id="6607task" title='task' data-type='BasicStatementTask *' data-ref="6607task" >task</dfn> = <b>new</b> <a class="type" href="AdhocStatement.h.html#BasicStatementTask" title='BasicStatementTask' data-ref="BasicStatementTask" >BasicStatementTask</a><a class="ref" href="AdhocStatement.h.html#_ZN18BasicStatementTaskC1EPKcb" title='BasicStatementTask::BasicStatementTask' data-ref="_ZN18BasicStatementTaskC1EPKcb" id="_ZN18BasicStatementTaskC1EPKcb" >(</a><a class="local col6 ref" href="#6606sql" title='sql' data-ref="6606sql" >sql</a>);</td></tr>
+<tr><th id="93">93</th><td>            <a class="member" href="#_ZN18DatabaseWorkerPool7EnqueueEP12SQLOperation" title='DatabaseWorkerPool::Enqueue' data-ref="_ZN18DatabaseWorkerPool7EnqueueEP12SQLOperation" >Enqueue</a>(<a class="local col7 ref" href="#6607task" title='task' data-ref="6607task" >task</a>);</td></tr>
+<tr><th id="94">94</th><td>        }</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td>        <i class="doc">//! Enqueues a one-way SQL operation in string format -with variable args- that will be executed asynchronously.</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">        //! This method should only be used for queries that are only executed once, e.g during startup.</i></td></tr>
+<tr><th id="98">98</th><td>        <b>template</b>&lt;<b>typename</b> Format, <b>typename</b>... Args&gt;</td></tr>
+<tr><th id="99">99</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool8PExecuteEOT_DpOT0_" title='DatabaseWorkerPool::PExecute' data-ref="_ZN18DatabaseWorkerPool8PExecuteEOT_DpOT0_" >PExecute</dfn>(Format&amp;&amp; <dfn class="local col8 decl" id="6608sql" title='sql' data-type='Format &amp;&amp;' data-ref="6608sql" >sql</dfn>, Args&amp;&amp;... <dfn class="local col9 decl" id="6609args" title='args' data-type='Args &amp;&amp;...' data-ref="6609args" >args</dfn>)</td></tr>
+<tr><th id="100">100</th><td>        {</td></tr>
+<tr><th id="101">101</th><td>            <b>if</b> (<span class="namespace">Trinity::</span>IsFormatEmptyOrNull(<a class="local col8 ref" href="#6608sql" title='sql' data-ref="6608sql" >sql</a>))</td></tr>
+<tr><th id="102">102</th><td>                <b>return</b>;</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>            Execute(<span class="namespace">Trinity::</span>StringFormat(<span class="namespace">std::</span>forward&lt;Format&gt;(<a class="local col8 ref" href="#6608sql" title='sql' data-ref="6608sql" >sql</a>), <span class="namespace">std::</span>forward&lt;Args&gt;(<a class="local col9 ref" href="#6609args" title='args' data-ref="6609args" >args</a>)...).c_str());</td></tr>
+<tr><th id="105">105</th><td>        }</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>        <i class="doc">//! Enqueues a one-way SQL operation in prepared statement format that will be executed asynchronously.</i></td></tr>
+<tr><th id="108">108</th><td><i class="doc">        //! Statement must be prepared with CONNECTION_ASYNC flag.</i></td></tr>
+<tr><th id="109">109</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool7ExecuteEP17PreparedStatement" title='DatabaseWorkerPool::Execute' data-ref="_ZN18DatabaseWorkerPool7ExecuteEP17PreparedStatement" >Execute</dfn>(<a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>* <dfn class="local col0 decl" id="6610stmt" title='stmt' data-type='PreparedStatement *' data-ref="6610stmt" >stmt</dfn>)</td></tr>
+<tr><th id="110">110</th><td>        {</td></tr>
+<tr><th id="111">111</th><td>            <a class="type" href="PreparedStatement.h.html#PreparedStatementTask" title='PreparedStatementTask' data-ref="PreparedStatementTask" >PreparedStatementTask</a>* <dfn class="local col1 decl" id="6611task" title='task' data-type='PreparedStatementTask *' data-ref="6611task" >task</dfn> = <b>new</b> <a class="type" href="PreparedStatement.h.html#PreparedStatementTask" title='PreparedStatementTask' data-ref="PreparedStatementTask" >PreparedStatementTask</a><a class="ref" href="PreparedStatement.h.html#_ZN21PreparedStatementTaskC1EP17PreparedStatementb" title='PreparedStatementTask::PreparedStatementTask' data-ref="_ZN21PreparedStatementTaskC1EP17PreparedStatementb" id="_ZN21PreparedStatementTaskC1EP17PreparedStatementb" >(</a><a class="local col0 ref" href="#6610stmt" title='stmt' data-ref="6610stmt" >stmt</a>);</td></tr>
+<tr><th id="112">112</th><td>            <a class="member" href="#_ZN18DatabaseWorkerPool7EnqueueEP12SQLOperation" title='DatabaseWorkerPool::Enqueue' data-ref="_ZN18DatabaseWorkerPool7EnqueueEP12SQLOperation" >Enqueue</a>(<a class="local col1 ref" href="#6611task" title='task' data-ref="6611task" >task</a>);</td></tr>
+<tr><th id="113">113</th><td>        }</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">            Direct synchronous one-way statement methods.</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc"></i></td></tr>
+<tr><th id="119">119</th><td><i class="doc">        //! Directly executes a one-way SQL operation in string format, that will block the calling thread until finished.</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc">        //! This method should only be used for queries that are only executed once, e.g during startup.</i></td></tr>
+<tr><th id="121">121</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool13DirectExecuteEPKc" title='DatabaseWorkerPool::DirectExecute' data-ref="_ZN18DatabaseWorkerPool13DirectExecuteEPKc" >DirectExecute</dfn>(<em>const</em> <em>char</em>* <dfn class="local col2 decl" id="6612sql" title='sql' data-type='const char *' data-ref="6612sql" >sql</dfn>)</td></tr>
+<tr><th id="122">122</th><td>        {</td></tr>
+<tr><th id="123">123</th><td>            <b>if</b> (!<a class="local col2 ref" href="#6612sql" title='sql' data-ref="6612sql" >sql</a>)</td></tr>
+<tr><th id="124">124</th><td>                <b>return</b>;</td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td>            T* <dfn class="local col3 decl" id="6613connection" title='connection' data-type='T *' data-ref="6613connection" >connection</dfn> = <a class="member" href="#_ZN18DatabaseWorkerPool17GetFreeConnectionEv" title='DatabaseWorkerPool::GetFreeConnection' data-ref="_ZN18DatabaseWorkerPool17GetFreeConnectionEv" >GetFreeConnection</a>();</td></tr>
+<tr><th id="127">127</th><td>            <a class="local col3 ref" href="#6613connection" title='connection' data-ref="6613connection" >connection</a>-&gt;Execute(<a class="local col2 ref" href="#6612sql" title='sql' data-ref="6612sql" >sql</a>);</td></tr>
+<tr><th id="128">128</th><td>            <a class="local col3 ref" href="#6613connection" title='connection' data-ref="6613connection" >connection</a>-&gt;Unlock();</td></tr>
+<tr><th id="129">129</th><td>        }</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>        <i class="doc">//! Directly executes a one-way SQL operation in string format -with variable args-, that will block the calling thread until finished.</i></td></tr>
+<tr><th id="132">132</th><td><i class="doc">        //! This method should only be used for queries that are only executed once, e.g during startup.</i></td></tr>
+<tr><th id="133">133</th><td>        <b>template</b>&lt;<b>typename</b> Format, <b>typename</b>... Args&gt;</td></tr>
+<tr><th id="134">134</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool14DirectPExecuteEOT_DpOT0_" title='DatabaseWorkerPool::DirectPExecute' data-ref="_ZN18DatabaseWorkerPool14DirectPExecuteEOT_DpOT0_" >DirectPExecute</dfn>(Format&amp;&amp; <dfn class="local col4 decl" id="6614sql" title='sql' data-type='Format &amp;&amp;' data-ref="6614sql" >sql</dfn>, Args&amp;&amp;... <dfn class="local col5 decl" id="6615args" title='args' data-type='Args &amp;&amp;...' data-ref="6615args" >args</dfn>)</td></tr>
+<tr><th id="135">135</th><td>        {</td></tr>
+<tr><th id="136">136</th><td>            <b>if</b> (<span class="namespace">Trinity::</span>IsFormatEmptyOrNull(<a class="local col4 ref" href="#6614sql" title='sql' data-ref="6614sql" >sql</a>))</td></tr>
+<tr><th id="137">137</th><td>                <b>return</b>;</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td>            DirectExecute(<span class="namespace">Trinity::</span>StringFormat(<span class="namespace">std::</span>forward&lt;Format&gt;(<a class="local col4 ref" href="#6614sql" title='sql' data-ref="6614sql" >sql</a>), <span class="namespace">std::</span>forward&lt;Args&gt;(<a class="local col5 ref" href="#6615args" title='args' data-ref="6615args" >args</a>)...).c_str());</td></tr>
+<tr><th id="140">140</th><td>        }</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td>        <i class="doc">//! Directly executes a one-way SQL operation in prepared statement format, that will block the calling thread until finished.</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">        //! Statement must be prepared with the CONNECTION_SYNCH flag.</i></td></tr>
+<tr><th id="144">144</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool13DirectExecuteEP17PreparedStatement" title='DatabaseWorkerPool::DirectExecute' data-ref="_ZN18DatabaseWorkerPool13DirectExecuteEP17PreparedStatement" >DirectExecute</dfn>(<a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>* <dfn class="local col6 decl" id="6616stmt" title='stmt' data-type='PreparedStatement *' data-ref="6616stmt" >stmt</dfn>)</td></tr>
+<tr><th id="145">145</th><td>        {</td></tr>
+<tr><th id="146">146</th><td>            T* <dfn class="local col7 decl" id="6617connection" title='connection' data-type='T *' data-ref="6617connection" >connection</dfn> = <a class="member" href="#_ZN18DatabaseWorkerPool17GetFreeConnectionEv" title='DatabaseWorkerPool::GetFreeConnection' data-ref="_ZN18DatabaseWorkerPool17GetFreeConnectionEv" >GetFreeConnection</a>();</td></tr>
+<tr><th id="147">147</th><td>            <a class="local col7 ref" href="#6617connection" title='connection' data-ref="6617connection" >connection</a>-&gt;Execute(<a class="local col6 ref" href="#6616stmt" title='stmt' data-ref="6616stmt" >stmt</a>);</td></tr>
+<tr><th id="148">148</th><td>            <a class="local col7 ref" href="#6617connection" title='connection' data-ref="6617connection" >connection</a>-&gt;Unlock();</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>            <i class="doc">//! Delete proxy-class. Not needed anymore</i></td></tr>
+<tr><th id="151">151</th><td>            <b>delete</b> <a class="local col6 ref" href="#6616stmt" title='stmt' data-ref="6616stmt" >stmt</a>;</td></tr>
+<tr><th id="152">152</th><td>        }</td></tr>
+<tr><th id="153">153</th><td></td></tr>
+<tr><th id="154">154</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">            Synchronous query (with resultset) methods.</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="157">157</th><td><i class="doc"></i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">        //! Directly executes an SQL query in string format that will block the calling thread until finished.</i></td></tr>
+<tr><th id="159">159</th><td><i class="doc">        //! Returns reference counted auto pointer, no need for manual memory management in upper level code.</i></td></tr>
+<tr><th id="160">160</th><td>        <a class="typedef" href="QueryResult.h.html#QueryResult" title='QueryResult' data-type='std::shared_ptr&lt;ResultSet&gt;' data-ref="QueryResult" >QueryResult</a> <dfn class="decl" id="_ZN18DatabaseWorkerPool5QueryEPKcPT_" title='DatabaseWorkerPool::Query' data-ref="_ZN18DatabaseWorkerPool5QueryEPKcPT_" >Query</dfn>(<em>const</em> <em>char</em>* <dfn class="local col8 decl" id="6618sql" title='sql' data-type='const char *' data-ref="6618sql" >sql</dfn>, T* <dfn class="local col9 decl" id="6619connection" title='connection' data-type='T *' data-ref="6619connection" >connection</dfn> = <b>nullptr</b>);</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>        <i class="doc">//! Directly executes an SQL query in string format -with variable args- that will block the calling thread until finished.</i></td></tr>
+<tr><th id="163">163</th><td><i class="doc">        //! Returns reference counted auto pointer, no need for manual memory management in upper level code.</i></td></tr>
+<tr><th id="164">164</th><td>        <b>template</b>&lt;<b>typename</b> Format, <b>typename</b>... Args&gt;</td></tr>
+<tr><th id="165">165</th><td>        <a class="typedef" href="QueryResult.h.html#QueryResult" title='QueryResult' data-type='std::shared_ptr&lt;ResultSet&gt;' data-ref="QueryResult" >QueryResult</a> <dfn class="decl def" id="_ZN18DatabaseWorkerPool6PQueryEOT_PT_DpOT0_" title='DatabaseWorkerPool::PQuery' data-ref="_ZN18DatabaseWorkerPool6PQueryEOT_PT_DpOT0_" >PQuery</dfn>(Format&amp;&amp; <dfn class="local col0 decl" id="6620sql" title='sql' data-type='Format &amp;&amp;' data-ref="6620sql" >sql</dfn>, T* <dfn class="local col1 decl" id="6621conn" title='conn' data-type='T *' data-ref="6621conn" >conn</dfn>, Args&amp;&amp;... <dfn class="local col2 decl" id="6622args" title='args' data-type='Args &amp;&amp;...' data-ref="6622args" >args</dfn>)</td></tr>
+<tr><th id="166">166</th><td>        {</td></tr>
+<tr><th id="167">167</th><td>            <b>if</b> (<span class="namespace">Trinity::</span>IsFormatEmptyOrNull(<a class="local col0 ref" href="#6620sql" title='sql' data-ref="6620sql" >sql</a>))</td></tr>
+<tr><th id="168">168</th><td>                <b>return</b> <a class="typedef" href="QueryResult.h.html#QueryResult" title='QueryResult' data-type='std::shared_ptr&lt;ResultSet&gt;' data-ref="QueryResult" ><a class="ref" href="../../../../../include/c++/4.9/bits/shared_ptr.h.html#_ZNSt10shared_ptrC1EDn" title='std::shared_ptr::shared_ptr&lt;_Tp&gt;' data-ref="_ZNSt10shared_ptrC1EDn" id="_ZNSt10shared_ptrC1EDn" >QueryResult</a></a>(<b>nullptr</b>);</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td>            <b>return</b> Query(<span class="namespace">Trinity::</span>StringFormat(<span class="namespace">std::</span>forward&lt;Format&gt;(<a class="local col0 ref" href="#6620sql" title='sql' data-ref="6620sql" >sql</a>), <span class="namespace">std::</span>forward&lt;Args&gt;(<a class="local col2 ref" href="#6622args" title='args' data-ref="6622args" >args</a>)...).c_str(), <a class="local col1 ref" href="#6621conn" title='conn' data-ref="6621conn" >conn</a>);</td></tr>
+<tr><th id="171">171</th><td>        }</td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td>        <i class="doc">//! Directly executes an SQL query in string format -with variable args- that will block the calling thread until finished.</i></td></tr>
+<tr><th id="174">174</th><td><i class="doc">        //! Returns reference counted auto pointer, no need for manual memory management in upper level code.</i></td></tr>
+<tr><th id="175">175</th><td>        <b>template</b>&lt;<b>typename</b> Format, <b>typename</b>... Args&gt;</td></tr>
+<tr><th id="176">176</th><td>        <a class="typedef" href="QueryResult.h.html#QueryResult" title='QueryResult' data-type='std::shared_ptr&lt;ResultSet&gt;' data-ref="QueryResult" >QueryResult</a> <dfn class="decl def" id="_ZN18DatabaseWorkerPool6PQueryEOT_DpOT0_" title='DatabaseWorkerPool::PQuery' data-ref="_ZN18DatabaseWorkerPool6PQueryEOT_DpOT0_" >PQuery</dfn>(Format&amp;&amp; <dfn class="local col3 decl" id="6623sql" title='sql' data-type='Format &amp;&amp;' data-ref="6623sql" >sql</dfn>, Args&amp;&amp;... <dfn class="local col4 decl" id="6624args" title='args' data-type='Args &amp;&amp;...' data-ref="6624args" >args</dfn>)</td></tr>
+<tr><th id="177">177</th><td>        {</td></tr>
+<tr><th id="178">178</th><td>            <b>if</b> (!<a class="local col3 ref" href="#6623sql" title='sql' data-ref="6623sql" >sql</a>)</td></tr>
+<tr><th id="179">179</th><td>                <b>return</b> <a class="typedef" href="QueryResult.h.html#QueryResult" title='QueryResult' data-type='std::shared_ptr&lt;ResultSet&gt;' data-ref="QueryResult" ><a class="ref" href="../../../../../include/c++/4.9/bits/shared_ptr.h.html#_ZNSt10shared_ptrC1EDn" title='std::shared_ptr::shared_ptr&lt;_Tp&gt;' data-ref="_ZNSt10shared_ptrC1EDn" id="_ZNSt10shared_ptrC1EDn" >QueryResult</a></a>(<b>nullptr</b>);</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>            <b>return</b> Query(<span class="namespace">Trinity::</span>StringFormat(<span class="namespace">std::</span>forward&lt;Format&gt;(<a class="local col3 ref" href="#6623sql" title='sql' data-ref="6623sql" >sql</a>), <span class="namespace">std::</span>forward&lt;Args&gt;(<a class="local col4 ref" href="#6624args" title='args' data-ref="6624args" >args</a>)...).c_str());</td></tr>
+<tr><th id="182">182</th><td>        }</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td>        <i class="doc">//! Directly executes an SQL query in prepared format that will block the calling thread until finished.</i></td></tr>
+<tr><th id="185">185</th><td><i class="doc">        //! Returns reference counted auto pointer, no need for manual memory management in upper level code.</i></td></tr>
+<tr><th id="186">186</th><td><i class="doc">        //! Statement must be prepared with CONNECTION_SYNCH flag.</i></td></tr>
+<tr><th id="187">187</th><td>        <a class="typedef" href="QueryResult.h.html#PreparedQueryResult" title='PreparedQueryResult' data-type='std::shared_ptr&lt;PreparedResultSet&gt;' data-ref="PreparedQueryResult" >PreparedQueryResult</a> <dfn class="decl" id="_ZN18DatabaseWorkerPool5QueryEP17PreparedStatement" title='DatabaseWorkerPool::Query' data-ref="_ZN18DatabaseWorkerPool5QueryEP17PreparedStatement" >Query</dfn>(<a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>* <dfn class="local col5 decl" id="6625stmt" title='stmt' data-type='PreparedStatement *' data-ref="6625stmt" >stmt</dfn>);</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="190">190</th><td><i class="doc">            Asynchronous query (with resultset) methods.</i></td></tr>
+<tr><th id="191">191</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="192">192</th><td><i class="doc"></i></td></tr>
+<tr><th id="193">193</th><td><i class="doc">        //! Enqueues a query in string format that will set the value of the QueryResultFuture return object as soon as the query is executed.</i></td></tr>
+<tr><th id="194">194</th><td><i class="doc">        //! The return value is then processed in ProcessQueryCallback methods.</i></td></tr>
+<tr><th id="195">195</th><td>        <a class="typedef" href="../../../common/Threading/Callback.h.html#QueryResultFuture" title='QueryResultFuture' data-type='std::future&lt;QueryResult&gt;' data-ref="QueryResultFuture" >QueryResultFuture</a> <dfn class="decl" id="_ZN18DatabaseWorkerPool10AsyncQueryEPKc" title='DatabaseWorkerPool::AsyncQuery' data-ref="_ZN18DatabaseWorkerPool10AsyncQueryEPKc" >AsyncQuery</dfn>(<em>const</em> <em>char</em>* <dfn class="local col6 decl" id="6626sql" title='sql' data-type='const char *' data-ref="6626sql" >sql</dfn>);</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td>        <i class="doc">//! Enqueues a query in string format -with variable args- that will set the value of the QueryResultFuture return object as soon as the query is executed.</i></td></tr>
+<tr><th id="198">198</th><td><i class="doc">        //! The return value is then processed in ProcessQueryCallback methods.</i></td></tr>
+<tr><th id="199">199</th><td>        <b>template</b>&lt;<b>typename</b> Format, <b>typename</b>... Args&gt;</td></tr>
+<tr><th id="200">200</th><td>        <a class="typedef" href="../../../common/Threading/Callback.h.html#QueryResultFuture" title='QueryResultFuture' data-type='std::future&lt;QueryResult&gt;' data-ref="QueryResultFuture" >QueryResultFuture</a> <dfn class="decl def" id="_ZN18DatabaseWorkerPool11AsyncPQueryEOT_DpOT0_" title='DatabaseWorkerPool::AsyncPQuery' data-ref="_ZN18DatabaseWorkerPool11AsyncPQueryEOT_DpOT0_" >AsyncPQuery</dfn>(Format&amp;&amp; <dfn class="local col7 decl" id="6627sql" title='sql' data-type='Format &amp;&amp;' data-ref="6627sql" >sql</dfn>, Args&amp;&amp;... <dfn class="local col8 decl" id="6628args" title='args' data-type='Args &amp;&amp;...' data-ref="6628args" >args</dfn>)</td></tr>
+<tr><th id="201">201</th><td>        {</td></tr>
+<tr><th id="202">202</th><td>            <b>return</b> AsyncQuery(<span class="namespace">Trinity::</span>StringFormat(<span class="namespace">std::</span>forward&lt;Format&gt;(<a class="local col7 ref" href="#6627sql" title='sql' data-ref="6627sql" >sql</a>), <span class="namespace">std::</span>forward&lt;Args&gt;(<a class="local col8 ref" href="#6628args" title='args' data-ref="6628args" >args</a>)...).c_str());</td></tr>
+<tr><th id="203">203</th><td>        }</td></tr>
+<tr><th id="204">204</th><td></td></tr>
+<tr><th id="205">205</th><td>        <i class="doc">//! Enqueues a query in prepared format that will set the value of the PreparedQueryResultFuture return object as soon as the query is executed.</i></td></tr>
+<tr><th id="206">206</th><td><i class="doc">        //! The return value is then processed in ProcessQueryCallback methods.</i></td></tr>
+<tr><th id="207">207</th><td><i class="doc">        //! Statement must be prepared with CONNECTION_ASYNC flag.</i></td></tr>
+<tr><th id="208">208</th><td>        <a class="typedef" href="../../../common/Threading/Callback.h.html#PreparedQueryResultFuture" title='PreparedQueryResultFuture' data-type='std::future&lt;PreparedQueryResult&gt;' data-ref="PreparedQueryResultFuture" >PreparedQueryResultFuture</a> <dfn class="decl" id="_ZN18DatabaseWorkerPool10AsyncQueryEP17PreparedStatement" title='DatabaseWorkerPool::AsyncQuery' data-ref="_ZN18DatabaseWorkerPool10AsyncQueryEP17PreparedStatement" >AsyncQuery</dfn>(<a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>* <dfn class="local col9 decl" id="6629stmt" title='stmt' data-type='PreparedStatement *' data-ref="6629stmt" >stmt</dfn>);</td></tr>
+<tr><th id="209">209</th><td></td></tr>
+<tr><th id="210">210</th><td>        <i class="doc">//! Enqueues a vector of SQL operations (can be both adhoc and prepared) that will set the value of the QueryResultHolderFuture</i></td></tr>
+<tr><th id="211">211</th><td><i class="doc">        //! return object as soon as the query is executed.</i></td></tr>
+<tr><th id="212">212</th><td><i class="doc">        //! The return value is then processed in ProcessQueryCallback methods.</i></td></tr>
+<tr><th id="213">213</th><td><i class="doc">        //! Any prepared statements added to this holder need to be prepared with the CONNECTION_ASYNC flag.</i></td></tr>
+<tr><th id="214">214</th><td>        <a class="typedef" href="QueryHolder.h.html#QueryResultHolderFuture" title='QueryResultHolderFuture' data-type='std::future&lt;SQLQueryHolder *&gt;' data-ref="QueryResultHolderFuture" >QueryResultHolderFuture</a> <dfn class="decl" id="_ZN18DatabaseWorkerPool16DelayQueryHolderEP14SQLQueryHolder" title='DatabaseWorkerPool::DelayQueryHolder' data-ref="_ZN18DatabaseWorkerPool16DelayQueryHolderEP14SQLQueryHolder" >DelayQueryHolder</dfn>(<a class="type" href="QueryHolder.h.html#SQLQueryHolder" title='SQLQueryHolder' data-ref="SQLQueryHolder" >SQLQueryHolder</a>* <dfn class="local col0 decl" id="6630holder" title='holder' data-type='SQLQueryHolder *' data-ref="6630holder" >holder</dfn>);</td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="217">217</th><td><i class="doc">            Transaction context methods.</i></td></tr>
+<tr><th id="218">218</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="219">219</th><td><i class="doc"></i></td></tr>
+<tr><th id="220">220</th><td><i class="doc">        //! Begins an automanaged transaction pointer that will automatically rollback if not commited. (Autocommit=0)</i></td></tr>
+<tr><th id="221">221</th><td>        <a class="typedef" href="Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a> <dfn class="decl def" id="_ZN18DatabaseWorkerPool16BeginTransactionEv" title='DatabaseWorkerPool::BeginTransaction' data-ref="_ZN18DatabaseWorkerPool16BeginTransactionEv" >BeginTransaction</dfn>()</td></tr>
+<tr><th id="222">222</th><td>        {</td></tr>
+<tr><th id="223">223</th><td>            <b>return</b> <a class="typedef" href="Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" ><a class="ref" href="../../../../../include/c++/4.9/bits/shared_ptr.h.html#_ZNSt10shared_ptrI11TransactionEC1EPT_" title='std::shared_ptr&lt;Transaction&gt;::shared_ptr' data-ref="_ZNSt10shared_ptrI11TransactionEC1EPT_" id="_ZNSt10shared_ptrI11TransactionEC1EPT_" >SQLTransaction</a></a>(<b>new</b> <a class="type" href="Transaction.h.html#Transaction" title='Transaction' data-ref="Transaction" >Transaction</a>);</td></tr>
+<tr><th id="224">224</th><td>        }</td></tr>
+<tr><th id="225">225</th><td></td></tr>
+<tr><th id="226">226</th><td>        <i class="doc">//! Enqueues a collection of one-way SQL operations (can be both adhoc and prepared). The order in which these operations</i></td></tr>
+<tr><th id="227">227</th><td><i class="doc">        //! were appended to the transaction will be respected during execution.</i></td></tr>
+<tr><th id="228">228</th><td>        <em>void</em> <dfn class="decl" id="_ZN18DatabaseWorkerPool17CommitTransactionESt10shared_ptrI11TransactionE" title='DatabaseWorkerPool::CommitTransaction' data-ref="_ZN18DatabaseWorkerPool17CommitTransactionESt10shared_ptrI11TransactionE" >CommitTransaction</dfn>(<a class="typedef" href="Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a> <dfn class="local col1 decl" id="6631transaction" title='transaction' data-type='SQLTransaction' data-ref="6631transaction" >transaction</dfn>);</td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td>        <i class="doc">//! Directly executes a collection of one-way SQL operations (can be both adhoc and prepared). The order in which these operations</i></td></tr>
+<tr><th id="231">231</th><td><i class="doc">        //! were appended to the transaction will be respected during execution.</i></td></tr>
+<tr><th id="232">232</th><td>        <em>void</em> <dfn class="decl" id="_ZN18DatabaseWorkerPool23DirectCommitTransactionERSt10shared_ptrI11TransactionE" title='DatabaseWorkerPool::DirectCommitTransaction' data-ref="_ZN18DatabaseWorkerPool23DirectCommitTransactionERSt10shared_ptrI11TransactionE" >DirectCommitTransaction</dfn>(<a class="typedef" href="Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a>&amp; <dfn class="local col2 decl" id="6632transaction" title='transaction' data-type='SQLTransaction &amp;' data-ref="6632transaction" >transaction</dfn>);</td></tr>
+<tr><th id="233">233</th><td></td></tr>
+<tr><th id="234">234</th><td>        <i class="doc">//! Method used to execute prepared statements in a diverse context.</i></td></tr>
+<tr><th id="235">235</th><td><i class="doc">        //! Will be wrapped in a transaction if valid object is present, otherwise executed standalone.</i></td></tr>
+<tr><th id="236">236</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool15ExecuteOrAppendERSt10shared_ptrI11TransactionEP17PreparedStatement" title='DatabaseWorkerPool::ExecuteOrAppend' data-ref="_ZN18DatabaseWorkerPool15ExecuteOrAppendERSt10shared_ptrI11TransactionEP17PreparedStatement" >ExecuteOrAppend</dfn>(<a class="typedef" href="Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a>&amp; <dfn class="local col3 decl" id="6633trans" title='trans' data-type='SQLTransaction &amp;' data-ref="6633trans" >trans</dfn>, <a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>* <dfn class="local col4 decl" id="6634stmt" title='stmt' data-type='PreparedStatement *' data-ref="6634stmt" >stmt</dfn>)</td></tr>
+<tr><th id="237">237</th><td>        {</td></tr>
+<tr><th id="238">238</th><td>            <b>if</b> (!<a class="local col3 ref" href="#6633trans" title='trans' data-ref="6633trans" >trans</a>)</td></tr>
+<tr><th id="239">239</th><td>                Execute(<a class="local col4 ref" href="#6634stmt" title='stmt' data-ref="6634stmt" >stmt</a>);</td></tr>
+<tr><th id="240">240</th><td>            <b>else</b></td></tr>
+<tr><th id="241">241</th><td>                <a class="local col3 ref" href="#6633trans" title='trans' data-ref="6633trans" >trans</a><a class="ref" href="../../../../../include/c++/4.9/bits/shared_ptr_base.h.html#_ZNKSt12__shared_ptrptEv" title='std::__shared_ptr::operator-&gt;' data-ref="_ZNKSt12__shared_ptrptEv" id="_ZNKSt12__shared_ptrptEv" >-&gt;</a><a class="ref" href="Transaction.h.html#_ZN11Transaction6AppendEP17PreparedStatement" title='Transaction::Append' data-ref="_ZN11Transaction6AppendEP17PreparedStatement" id="_ZN11Transaction6AppendEP17PreparedStatement" >Append</a>(<a class="local col4 ref" href="#6634stmt" title='stmt' data-ref="6634stmt" >stmt</a>);</td></tr>
+<tr><th id="242">242</th><td>        }</td></tr>
+<tr><th id="243">243</th><td></td></tr>
+<tr><th id="244">244</th><td>        <i class="doc">//! Method used to execute ad-hoc statements in a diverse context.</i></td></tr>
+<tr><th id="245">245</th><td><i class="doc">        //! Will be wrapped in a transaction if valid object is present, otherwise executed standalone.</i></td></tr>
+<tr><th id="246">246</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool15ExecuteOrAppendERSt10shared_ptrI11TransactionEPKc" title='DatabaseWorkerPool::ExecuteOrAppend' data-ref="_ZN18DatabaseWorkerPool15ExecuteOrAppendERSt10shared_ptrI11TransactionEPKc" >ExecuteOrAppend</dfn>(<a class="typedef" href="Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a>&amp; <dfn class="local col5 decl" id="6635trans" title='trans' data-type='SQLTransaction &amp;' data-ref="6635trans" >trans</dfn>, <em>const</em> <em>char</em>* <dfn class="local col6 decl" id="6636sql" title='sql' data-type='const char *' data-ref="6636sql" >sql</dfn>)</td></tr>
+<tr><th id="247">247</th><td>        {</td></tr>
+<tr><th id="248">248</th><td>            <b>if</b> (!<a class="local col5 ref" href="#6635trans" title='trans' data-ref="6635trans" >trans</a>)</td></tr>
+<tr><th id="249">249</th><td>                Execute(<a class="local col6 ref" href="#6636sql" title='sql' data-ref="6636sql" >sql</a>);</td></tr>
+<tr><th id="250">250</th><td>            <b>else</b></td></tr>
+<tr><th id="251">251</th><td>                <a class="local col5 ref" href="#6635trans" title='trans' data-ref="6635trans" >trans</a><a class="ref" href="../../../../../include/c++/4.9/bits/shared_ptr_base.h.html#_ZNKSt12__shared_ptrptEv" title='std::__shared_ptr::operator-&gt;' data-ref="_ZNKSt12__shared_ptrptEv" id="_ZNKSt12__shared_ptrptEv" >-&gt;</a><a class="ref" href="Transaction.h.html#_ZN11Transaction6AppendEPKc" title='Transaction::Append' data-ref="_ZN11Transaction6AppendEPKc" id="_ZN11Transaction6AppendEPKc" >Append</a>(<a class="local col6 ref" href="#6636sql" title='sql' data-ref="6636sql" >sql</a>);</td></tr>
+<tr><th id="252">252</th><td>        }</td></tr>
+<tr><th id="253">253</th><td></td></tr>
+<tr><th id="254">254</th><td>        <i class="doc">/**</i></td></tr>
+<tr><th id="255">255</th><td><i class="doc">            Other</i></td></tr>
+<tr><th id="256">256</th><td><i class="doc">        */</i></td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td>        <b>typedef</b> <b>typename</b> T::Statements <dfn class="typedef" id="DatabaseWorkerPool::PreparedStatementIndex" title='DatabaseWorkerPool::PreparedStatementIndex' data-type='typename T::Statements' data-ref="DatabaseWorkerPool::PreparedStatementIndex" >PreparedStatementIndex</dfn>;</td></tr>
+<tr><th id="259">259</th><td></td></tr>
+<tr><th id="260">260</th><td>        <i class="doc">//! Automanaged (internally) pointer to a prepared statement object for usage in upper level code.</i></td></tr>
+<tr><th id="261">261</th><td><i class="doc">        //! Pointer is deleted in this-&gt;DirectExecute(PreparedStatement*), this-&gt;Query(PreparedStatement*) or PreparedStatementTask::~PreparedStatementTask.</i></td></tr>
+<tr><th id="262">262</th><td><i class="doc">        //! This object is not tied to the prepared statement on the MySQL context yet until execution.</i></td></tr>
+<tr><th id="263">263</th><td>        <a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>* <dfn class="decl def" id="_ZN18DatabaseWorkerPool20GetPreparedStatementENT_10StatementsE" title='DatabaseWorkerPool::GetPreparedStatement' data-ref="_ZN18DatabaseWorkerPool20GetPreparedStatementENT_10StatementsE" >GetPreparedStatement</dfn>(<a class="typedef" href="#DatabaseWorkerPool::PreparedStatementIndex" title='DatabaseWorkerPool::PreparedStatementIndex' data-type='typename T::Statements' data-ref="DatabaseWorkerPool::PreparedStatementIndex" >PreparedStatementIndex</a> <dfn class="local col7 decl" id="6637index" title='index' data-type='PreparedStatementIndex' data-ref="6637index" >index</dfn>)</td></tr>
+<tr><th id="264">264</th><td>        {</td></tr>
+<tr><th id="265">265</th><td>            <b>return</b> <b>new</b> <a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>(<a class="local col7 ref" href="#6637index" title='index' data-ref="6637index" >index</a>);</td></tr>
+<tr><th id="266">266</th><td>        }</td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td>        <i class="doc">//! Apply escape string'ing for current collation. (utf8)</i></td></tr>
+<tr><th id="269">269</th><td>        <em>void</em> <dfn class="decl" id="_ZN18DatabaseWorkerPool12EscapeStringERSs" title='DatabaseWorkerPool::EscapeString' data-ref="_ZN18DatabaseWorkerPool12EscapeStringERSs" >EscapeString</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col8 decl" id="6638str" title='str' data-type='std::string &amp;' data-ref="6638str" >str</dfn>);</td></tr>
+<tr><th id="270">270</th><td></td></tr>
+<tr><th id="271">271</th><td>        <i class="doc">//! Keeps all our MySQL connections alive, prevent the server from disconnecting us.</i></td></tr>
+<tr><th id="272">272</th><td>        <em>void</em> <dfn class="decl" id="_ZN18DatabaseWorkerPool9KeepAliveEv" title='DatabaseWorkerPool::KeepAlive' data-ref="_ZN18DatabaseWorkerPool9KeepAliveEv" >KeepAlive</dfn>();</td></tr>
+<tr><th id="273">273</th><td></td></tr>
+<tr><th id="274">274</th><td>    <b>private</b>:</td></tr>
+<tr><th id="275">275</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="_ZN18DatabaseWorkerPool15OpenConnectionsENS_13InternalIndexEh" title='DatabaseWorkerPool::OpenConnections' data-ref="_ZN18DatabaseWorkerPool15OpenConnectionsENS_13InternalIndexEh" >OpenConnections</dfn>(<a class="type" href="#DatabaseWorkerPool::InternalIndex" title='DatabaseWorkerPool::InternalIndex' data-ref="DatabaseWorkerPool::InternalIndex" >InternalIndex</a> <dfn class="local col9 decl" id="6639type" title='type' data-type='DatabaseWorkerPool::InternalIndex' data-ref="6639type" >type</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col0 decl" id="6640numConnections" title='numConnections' data-type='uint8' data-ref="6640numConnections" >numConnections</dfn>);</td></tr>
+<tr><th id="276">276</th><td></td></tr>
+<tr><th id="277">277</th><td>        <em>unsigned</em> <em>long</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool12EscapeStringEPcPKcm" title='DatabaseWorkerPool::EscapeString' data-ref="_ZN18DatabaseWorkerPool12EscapeStringEPcPKcm" >EscapeString</dfn>(<em>char</em> *<dfn class="local col1 decl" id="6641to" title='to' data-type='char *' data-ref="6641to" >to</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="6642from" title='from' data-type='const char *' data-ref="6642from" >from</dfn>, <em>unsigned</em> <em>long</em> <dfn class="local col3 decl" id="6643length" title='length' data-type='unsigned long' data-ref="6643length" >length</dfn>)</td></tr>
+<tr><th id="278">278</th><td>        {</td></tr>
+<tr><th id="279">279</th><td>            <b>if</b> (!<a class="local col1 ref" href="#6641to" title='to' data-ref="6641to" >to</a> || !<a class="local col2 ref" href="#6642from" title='from' data-ref="6642from" >from</a> || !<a class="local col3 ref" href="#6643length" title='length' data-ref="6643length" >length</a>)</td></tr>
+<tr><th id="280">280</th><td>                <b>return</b> <var>0</var>;</td></tr>
+<tr><th id="281">281</th><td></td></tr>
+<tr><th id="282">282</th><td>            <b>return</b> mysql_real_escape_string(</td></tr>
+<tr><th id="283">283</th><td>                <a class="member" href="#DatabaseWorkerPool::_connections" title='DatabaseWorkerPool::_connections' data-ref="DatabaseWorkerPool::_connections" >_connections</a>[<a class="enum" href="#DatabaseWorkerPool::InternalIndex::IDX_SYNCH" title='DatabaseWorkerPool::InternalIndex::IDX_SYNCH' data-ref="DatabaseWorkerPool::InternalIndex::IDX_SYNCH" >IDX_SYNCH</a>].front()-&gt;GetHandle(), <a class="local col1 ref" href="#6641to" title='to' data-ref="6641to" >to</a>, <a class="local col2 ref" href="#6642from" title='from' data-ref="6642from" >from</a>, <a class="local col3 ref" href="#6643length" title='length' data-ref="6643length" >length</a>);</td></tr>
+<tr><th id="284">284</th><td>        }</td></tr>
+<tr><th id="285">285</th><td></td></tr>
+<tr><th id="286">286</th><td>        <em>void</em> <dfn class="decl def" id="_ZN18DatabaseWorkerPool7EnqueueEP12SQLOperation" title='DatabaseWorkerPool::Enqueue' data-ref="_ZN18DatabaseWorkerPool7EnqueueEP12SQLOperation" >Enqueue</dfn>(<a class="type" href="SQLOperation.h.html#SQLOperation" title='SQLOperation' data-ref="SQLOperation" >SQLOperation</a>* <dfn class="local col4 decl" id="6644op" title='op' data-type='SQLOperation *' data-ref="6644op" >op</dfn>)</td></tr>
+<tr><th id="287">287</th><td>        {</td></tr>
+<tr><th id="288">288</th><td>            <a class="member" href="#DatabaseWorkerPool::_queue" title='DatabaseWorkerPool::_queue' data-ref="DatabaseWorkerPool::_queue" >_queue</a><a class="ref" href="../../../../../include/c++/4.9/bits/unique_ptr.h.html#_ZNKSt10unique_ptrptEv" title='std::unique_ptr::operator-&gt;' data-ref="_ZNKSt10unique_ptrptEv" id="_ZNKSt10unique_ptrptEv" >-&gt;</a><a class="ref" href="../../../common/Threading/ProducerConsumerQueue.h.html#_ZN21ProducerConsumerQueue4PushERKT_" title='ProducerConsumerQueue::Push' data-ref="_ZN21ProducerConsumerQueue4PushERKT_" id="_ZN21ProducerConsumerQueue4PushERKT_" >Push</a>(<a class="local col4 ref" href="#6644op" title='op' data-ref="6644op" >op</a>);</td></tr>
+<tr><th id="289">289</th><td>        }</td></tr>
+<tr><th id="290">290</th><td></td></tr>
+<tr><th id="291">291</th><td>        <i class="doc">//! Gets a free connection in the synchronous connection pool.</i></td></tr>
+<tr><th id="292">292</th><td><i class="doc">        //! Caller MUST call t-&gt;Unlock() after touching the MySQL context to prevent deadlocks.</i></td></tr>
+<tr><th id="293">293</th><td>        T* <dfn class="decl" id="_ZN18DatabaseWorkerPool17GetFreeConnectionEv" title='DatabaseWorkerPool::GetFreeConnection' data-ref="_ZN18DatabaseWorkerPool17GetFreeConnectionEv" >GetFreeConnection</dfn>();</td></tr>
+<tr><th id="294">294</th><td></td></tr>
+<tr><th id="295">295</th><td>        <em>char</em> <em>const</em>* <dfn class="decl def" id="_ZNK18DatabaseWorkerPool15GetDatabaseNameEv" title='DatabaseWorkerPool::GetDatabaseName' data-ref="_ZNK18DatabaseWorkerPool15GetDatabaseNameEv" >GetDatabaseName</dfn>() <em>const</em></td></tr>
+<tr><th id="296">296</th><td>        {</td></tr>
+<tr><th id="297">297</th><td>            <b>return</b> <a class="member" href="#DatabaseWorkerPool::_connectionInfo" title='DatabaseWorkerPool::_connectionInfo' data-ref="DatabaseWorkerPool::_connectionInfo" >_connectionInfo</a><a class="ref" href="../../../../../include/c++/4.9/bits/unique_ptr.h.html#_ZNKSt10unique_ptrptEv" title='std::unique_ptr::operator-&gt;' data-ref="_ZNKSt10unique_ptrptEv" id="_ZNKSt10unique_ptrptEv" >-&gt;</a><a class="ref" href="MySQLConnection.h.html#MySQLConnectionInfo::database" title='MySQLConnectionInfo::database' data-ref="MySQLConnectionInfo::database" id="MySQLConnectionInfo::database" >database</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>();</td></tr>
+<tr><th id="298">298</th><td>        }</td></tr>
+<tr><th id="299">299</th><td></td></tr>
+<tr><th id="300">300</th><td>        <i class="doc">//! Queue shared by async worker threads.</i></td></tr>
+<tr><th id="301">301</th><td>        <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/unique_ptr.h.html#std::unique_ptr" title='std::unique_ptr' data-ref="std::unique_ptr" >unique_ptr</a>&lt;<a class="type" href="../../../common/Threading/ProducerConsumerQueue.h.html#ProducerConsumerQueue" title='ProducerConsumerQueue' data-ref="ProducerConsumerQueue" >ProducerConsumerQueue</a>&lt;<a class="type" href="SQLOperation.h.html#SQLOperation" title='SQLOperation' data-ref="SQLOperation" >SQLOperation</a>*&gt;&gt; <dfn class="decl" id="DatabaseWorkerPool::_queue" title='DatabaseWorkerPool::_queue' data-ref="DatabaseWorkerPool::_queue" >_queue</dfn>;</td></tr>
+<tr><th id="302">302</th><td>        <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/array.html#std::array" title='std::array' data-ref="std::array" >array</a>&lt;<span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;<span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/unique_ptr.h.html#std::unique_ptr" title='std::unique_ptr' data-ref="std::unique_ptr" >unique_ptr</a>&lt;T&gt;&gt;, <a class="enum" href="#DatabaseWorkerPool::InternalIndex::IDX_SIZE" title='DatabaseWorkerPool::InternalIndex::IDX_SIZE' data-ref="DatabaseWorkerPool::InternalIndex::IDX_SIZE" >IDX_SIZE</a>&gt; <dfn class="decl" id="DatabaseWorkerPool::_connections" title='DatabaseWorkerPool::_connections' data-ref="DatabaseWorkerPool::_connections" >_connections</dfn>;</td></tr>
+<tr><th id="303">303</th><td>        <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/unique_ptr.h.html#std::unique_ptr" title='std::unique_ptr' data-ref="std::unique_ptr" >unique_ptr</a>&lt;<a class="type" href="MySQLConnection.h.html#MySQLConnectionInfo" title='MySQLConnectionInfo' data-ref="MySQLConnectionInfo" >MySQLConnectionInfo</a>&gt; <dfn class="decl" id="DatabaseWorkerPool::_connectionInfo" title='DatabaseWorkerPool::_connectionInfo' data-ref="DatabaseWorkerPool::_connectionInfo" >_connectionInfo</dfn>;</td></tr>
+<tr><th id="304">304</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" ><a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a></a> <dfn class="decl" id="DatabaseWorkerPool::_async_threads" title='DatabaseWorkerPool::_async_threads' data-ref="DatabaseWorkerPool::_async_threads" >_async_threads</dfn>, <dfn class="decl" id="DatabaseWorkerPool::_synch_threads" title='DatabaseWorkerPool::_synch_threads' data-ref="DatabaseWorkerPool::_synch_threads" >_synch_threads</dfn>;</td></tr>
+<tr><th id="305">305</th><td>};</td></tr>
+<tr><th id="306">306</th><td></td></tr>
+<tr><th id="307">307</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="308">308</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<title>SHA1.cpp [TrinityCore3.3.5/src/common/Cryptography/SHA1.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Cryptography/SHA1.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Cryptography</a>/SHA1.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="SHA1.h.html">"SHA1.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="BigNumber.h.html">"BigNumber.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../../include/c++/4.9/cstring.html">&lt;cstring&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include &lt;stdarg.h&gt;</u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a>::<dfn class="decl def" id="_ZN8SHA1HashC1Ev" title='SHA1Hash::SHA1Hash' data-ref="_ZN8SHA1HashC1Ev" >SHA1Hash</dfn>()</td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA1_Init" title='SHA1_Init' data-ref="SHA1_Init" id="SHA1_Init" >SHA1_Init</a>(&amp;<a class="member" href="SHA1.h.html#SHA1Hash::mC" title='SHA1Hash::mC' data-ref="SHA1Hash::mC" id="SHA1Hash::mC" >mC</a>);</td></tr>
+<tr><th id="27">27</th><td>    <a class="ref" href="../../../../include/string.h.html#memset" title='memset' data-ref="memset" id="memset" >memset</a>(<a class="member" href="SHA1.h.html#SHA1Hash::mDigest" title='SHA1Hash::mDigest' data-ref="SHA1Hash::mDigest" id="SHA1Hash::mDigest" >mDigest</a>, <var>0</var>, <a class="macro" href="../../../../include/openssl/sha.h.html#99" title="20" data-ref="_M/SHA_DIGEST_LENGTH">SHA_DIGEST_LENGTH</a> * <b>sizeof</b>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>));</td></tr>
+<tr><th id="28">28</th><td>}</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a>::<dfn class="decl def" id="_ZN8SHA1HashD1Ev" title='SHA1Hash::~SHA1Hash' data-ref="_ZN8SHA1HashD1Ev" >~SHA1Hash</dfn>()</td></tr>
+<tr><th id="31">31</th><td>{</td></tr>
+<tr><th id="32">32</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA1_Init" title='SHA1_Init' data-ref="SHA1_Init" id="SHA1_Init" >SHA1_Init</a>(&amp;<a class="member" href="SHA1.h.html#SHA1Hash::mC" title='SHA1Hash::mC' data-ref="SHA1Hash::mC" id="SHA1Hash::mC" >mC</a>);</td></tr>
+<tr><th id="33">33</th><td>}</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><em>void</em> <a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a>::<dfn class="decl def" id="_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</dfn>(<em>const</em> <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col5 decl" id="5dta" title='dta' data-type='const uint8 *' data-ref="5dta" >dta</dfn>, <em>int</em> <dfn class="local col6 decl" id="6len" title='len' data-type='int' data-ref="6len" >len</dfn>)</td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA1_Update" title='SHA1_Update' data-ref="SHA1_Update" id="SHA1_Update" >SHA1_Update</a>(&amp;<a class="member" href="SHA1.h.html#SHA1Hash::mC" title='SHA1Hash::mC' data-ref="SHA1Hash::mC" id="SHA1Hash::mC" >mC</a>, <a class="local col5 ref" href="#5dta" title='dta' data-ref="5dta" >dta</a>, <a class="local col6 ref" href="#6len" title='len' data-ref="6len" >len</a>);</td></tr>
+<tr><th id="38">38</th><td>}</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><em>void</em> <a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a>::<dfn class="decl def" id="_ZN8SHA1Hash10UpdateDataERKSs" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataERKSs" >UpdateData</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> &amp;<dfn class="local col7 decl" id="7str" title='str' data-type='const std::string &amp;' data-ref="7str" >str</dfn>)</td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>    <a class="member" href="#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>((<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <em>const</em>*)<a class="local col7 ref" href="#7str" title='str' data-ref="7str" >str</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a>(), <a class="local col7 ref" href="#7str" title='str' data-ref="7str" >str</a>.<a class="ref" href="../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string6lengthEv" title='std::basic_string::length' data-ref="_ZNKSt12basic_string6lengthEv" id="_ZNKSt12basic_string6lengthEv" >length</a>());</td></tr>
+<tr><th id="43">43</th><td>}</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><em>void</em> <a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a>::<dfn class="decl def" id="_ZN8SHA1Hash16UpdateBigNumbersEP9BigNumberz" title='SHA1Hash::UpdateBigNumbers' data-ref="_ZN8SHA1Hash16UpdateBigNumbersEP9BigNumberz" >UpdateBigNumbers</dfn>(<a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col8 decl" id="8bn0" title='bn0' data-type='BigNumber *' data-ref="8bn0" >bn0</dfn>, ...)</td></tr>
+<tr><th id="46">46</th><td>{</td></tr>
+<tr><th id="47">47</th><td>    <span class='typedef' title='va_list' data-type='__gnuc_va_list' data-ref="va_list" >va_list</span> <dfn class="local col9 decl" id="9v" title='v' data-type='va_list' data-ref="9v" >v</dfn>;</td></tr>
+<tr><th id="48">48</th><td>    <a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col0 decl" id="10bn" title='bn' data-type='BigNumber *' data-ref="10bn" >bn</dfn>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <span class="macro" title="__builtin_va_start(v, bn0)" data-ref="_M/va_start">va_start</span>(<a class="local col9 ref" href="#9v" title='v' data-ref="9v" >v</a>, <a class="local col8 ref" href="#8bn0" title='bn0' data-ref="8bn0" >bn0</a>);</td></tr>
+<tr><th id="51">51</th><td>    <a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a> = <a class="local col8 ref" href="#8bn0" title='bn0' data-ref="8bn0" >bn0</a>;</td></tr>
+<tr><th id="52">52</th><td>    <b>while</b> (<a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a>)</td></tr>
+<tr><th id="53">53</th><td>    {</td></tr>
+<tr><th id="54">54</th><td>        <a class="member" href="#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>(<a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a>-&gt;<a class="ref" href="BigNumber.h.html#_ZN9BigNumber11AsByteArrayEib" title='BigNumber::AsByteArray' data-ref="_ZN9BigNumber11AsByteArrayEib" id="_ZN9BigNumber11AsByteArrayEib" >AsByteArray</a>().<a class="ref" href="../../../../include/c++/4.9/bits/unique_ptr.h.html#_ZNKSt10unique_ptrIA_T_T0_E3getEv" title='std::unique_ptr&lt;type-parameter-0-0 [], type-parameter-0-1&gt;::get' data-ref="_ZNKSt10unique_ptrIA_T_T0_E3getEv" id="_ZNKSt10unique_ptrIA_T_T0_E3getEv" >get</a>(), <a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a>-&gt;<a class="ref" href="BigNumber.h.html#_ZN9BigNumber11GetNumBytesEv" title='BigNumber::GetNumBytes' data-ref="_ZN9BigNumber11GetNumBytesEv" id="_ZN9BigNumber11GetNumBytesEv" >GetNumBytes</a>());</td></tr>
+<tr><th id="55">55</th><td>        <a class="local col0 ref" href="#10bn" title='bn' data-ref="10bn" >bn</a> = <span class="macro" title="__builtin_va_arg(v, BigNumber*)" data-ref="_M/va_arg">va_arg</span>(<a class="local col9 ref" href="#9v" title='v' data-ref="9v" >v</a>, <a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>*);</td></tr>
+<tr><th id="56">56</th><td>    }</td></tr>
+<tr><th id="57">57</th><td>    <span class="macro" title="__builtin_va_end(v)" data-ref="_M/va_end">va_end</span>(<a class="local col9 ref" href="#9v" title='v' data-ref="9v" >v</a>);</td></tr>
+<tr><th id="58">58</th><td>}</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><em>void</em> <a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a>::<dfn class="decl def" id="_ZN8SHA1Hash10InitializeEv" title='SHA1Hash::Initialize' data-ref="_ZN8SHA1Hash10InitializeEv" >Initialize</dfn>()</td></tr>
+<tr><th id="61">61</th><td>{</td></tr>
+<tr><th id="62">62</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA1_Init" title='SHA1_Init' data-ref="SHA1_Init" id="SHA1_Init" >SHA1_Init</a>(&amp;<a class="member" href="SHA1.h.html#SHA1Hash::mC" title='SHA1Hash::mC' data-ref="SHA1Hash::mC" id="SHA1Hash::mC" >mC</a>);</td></tr>
+<tr><th id="63">63</th><td>}</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><em>void</em> <a class="type" href="SHA1.h.html#SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</a>::<dfn class="decl def" id="_ZN8SHA1Hash8FinalizeEv" title='SHA1Hash::Finalize' data-ref="_ZN8SHA1Hash8FinalizeEv" >Finalize</dfn>(<em>void</em>)</td></tr>
+<tr><th id="66">66</th><td>{</td></tr>
+<tr><th id="67">67</th><td>    <a class="ref" href="../../../../include/openssl/sha.h.html#SHA1_Final" title='SHA1_Final' data-ref="SHA1_Final" id="SHA1_Final" >SHA1_Final</a>(<a class="member" href="SHA1.h.html#SHA1Hash::mDigest" title='SHA1Hash::mDigest' data-ref="SHA1Hash::mDigest" id="SHA1Hash::mDigest" >mDigest</a>, &amp;<a class="member" href="SHA1.h.html#SHA1Hash::mC" title='SHA1Hash::mC' data-ref="SHA1Hash::mC" id="SHA1Hash::mC" >mC</a>);</td></tr>
+<tr><th id="68">68</th><td>}</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

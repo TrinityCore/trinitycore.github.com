@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<title>AuthCrypt.cpp [TrinityCore3.3.5/src/common/Cryptography/Authentication/AuthCrypt.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Cryptography/Authentication/AuthCrypt.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>common</a>/<a href='..'>Cryptography</a>/<a href='./'>Authentication</a>/AuthCrypt.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="AuthCrypt.h.html">"AuthCrypt.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../HMACSHA1.h.html">"Cryptography/HMACSHA1.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../BigNumber.h.html">"Cryptography/BigNumber.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../../include/c++/4.9/cstring.html">&lt;cstring&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><a class="type" href="AuthCrypt.h.html#AuthCrypt" title='AuthCrypt' data-ref="AuthCrypt" >AuthCrypt</a>::<dfn class="decl def" id="_ZN9AuthCryptC1Ev" title='AuthCrypt::AuthCrypt' data-ref="_ZN9AuthCryptC1Ev" >AuthCrypt</dfn>() :</td></tr>
+<tr><th id="26">26</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_clientDecrypt" title='AuthCrypt::_clientDecrypt' data-ref="AuthCrypt::_clientDecrypt" id="AuthCrypt::_clientDecrypt" >_clientDecrypt</a><a class="ref" href="../ARC4.h.html#_ZN4ARC4C1Eh" title='ARC4::ARC4' data-ref="_ZN4ARC4C1Eh" id="_ZN4ARC4C1Eh" >(</a><a class="macro" href="../../../../../include/openssl/sha.h.html#99" title="20" data-ref="_M/SHA_DIGEST_LENGTH">SHA_DIGEST_LENGTH</a>), <a class="member" href="AuthCrypt.h.html#AuthCrypt::_serverEncrypt" title='AuthCrypt::_serverEncrypt' data-ref="AuthCrypt::_serverEncrypt" id="AuthCrypt::_serverEncrypt" >_serverEncrypt</a><a class="ref" href="../ARC4.h.html#_ZN4ARC4C1Eh" title='ARC4::ARC4' data-ref="_ZN4ARC4C1Eh" id="_ZN4ARC4C1Eh" >(</a><a class="macro" href="../../../../../include/openssl/sha.h.html#99" title="20" data-ref="_M/SHA_DIGEST_LENGTH">SHA_DIGEST_LENGTH</a>),</td></tr>
+<tr><th id="27">27</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_initialized" title='AuthCrypt::_initialized' data-ref="AuthCrypt::_initialized" id="AuthCrypt::_initialized" >_initialized</a>(<b>false</b>)</td></tr>
+<tr><th id="28">28</th><td>{ }</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><em>void</em> <a class="type" href="AuthCrypt.h.html#AuthCrypt" title='AuthCrypt' data-ref="AuthCrypt" >AuthCrypt</a>::<dfn class="decl def" id="_ZN9AuthCrypt4InitEP9BigNumber" title='AuthCrypt::Init' data-ref="_ZN9AuthCrypt4InitEP9BigNumber" >Init</dfn>(<a class="type" href="../BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col3 decl" id="123K" title='K' data-type='BigNumber *' data-ref="123K" >K</dfn>)</td></tr>
+<tr><th id="31">31</th><td>{</td></tr>
+<tr><th id="32">32</th><td>    <a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col4 decl" id="124ServerEncryptionKey" title='ServerEncryptionKey' data-type='uint8 [16]' data-ref="124ServerEncryptionKey" >ServerEncryptionKey</dfn>[<a class="macro" href="../HMACSHA1.h.html#29" title="16" data-ref="_M/SEED_KEY_SIZE">SEED_KEY_SIZE</a>] = { <var>0xCC</var>, <var>0x98</var>, <var>0xAE</var>, <var>0x04</var>, <var>0xE8</var>, <var>0x97</var>, <var>0xEA</var>, <var>0xCA</var>, <var>0x12</var>, <var>0xDD</var>, <var>0xC0</var>, <var>0x93</var>, <var>0x42</var>, <var>0x91</var>, <var>0x53</var>, <var>0x57</var> };</td></tr>
+<tr><th id="33">33</th><td>    <a class="type" href="../HMACSHA1.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a> <dfn class="local col5 decl" id="125serverEncryptHmac" title='serverEncryptHmac' data-type='HmacHash' data-ref="125serverEncryptHmac" >serverEncryptHmac</dfn><a class="ref" href="../HMACSHA1.h.html#_ZN8HmacHashC1EjPh" title='HmacHash::HmacHash' data-ref="_ZN8HmacHashC1EjPh" id="_ZN8HmacHashC1EjPh" >(</a><a class="macro" href="../HMACSHA1.h.html#29" title="16" data-ref="_M/SEED_KEY_SIZE">SEED_KEY_SIZE</a>, (<a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>*)<a class="local col4 ref" href="#124ServerEncryptionKey" title='ServerEncryptionKey' data-ref="124ServerEncryptionKey" >ServerEncryptionKey</a>);</td></tr>
+<tr><th id="34">34</th><td>    <a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col6 decl" id="126encryptHash" title='encryptHash' data-type='uint8 *' data-ref="126encryptHash" >encryptHash</dfn> = <a class="local col5 ref" href="#125serverEncryptHmac" title='serverEncryptHmac' data-ref="125serverEncryptHmac" >serverEncryptHmac</a>.<a class="ref" href="../HMACSHA1.h.html#_ZN8HmacHash11ComputeHashEP9BigNumber" title='HmacHash::ComputeHash' data-ref="_ZN8HmacHash11ComputeHashEP9BigNumber" id="_ZN8HmacHash11ComputeHashEP9BigNumber" >ComputeHash</a>(<a class="local col3 ref" href="#123K" title='K' data-ref="123K" >K</a>);</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>    <a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col7 decl" id="127ServerDecryptionKey" title='ServerDecryptionKey' data-type='uint8 [16]' data-ref="127ServerDecryptionKey" >ServerDecryptionKey</dfn>[<a class="macro" href="../HMACSHA1.h.html#29" title="16" data-ref="_M/SEED_KEY_SIZE">SEED_KEY_SIZE</a>] = { <var>0xC2</var>, <var>0xB3</var>, <var>0x72</var>, <var>0x3C</var>, <var>0xC6</var>, <var>0xAE</var>, <var>0xD9</var>, <var>0xB5</var>, <var>0x34</var>, <var>0x3C</var>, <var>0x53</var>, <var>0xEE</var>, <var>0x2F</var>, <var>0x43</var>, <var>0x67</var>, <var>0xCE</var> };</td></tr>
+<tr><th id="37">37</th><td>    <a class="type" href="../HMACSHA1.h.html#HmacHash" title='HmacHash' data-ref="HmacHash" >HmacHash</a> <dfn class="local col8 decl" id="128clientDecryptHmac" title='clientDecryptHmac' data-type='HmacHash' data-ref="128clientDecryptHmac" >clientDecryptHmac</dfn><a class="ref" href="../HMACSHA1.h.html#_ZN8HmacHashC1EjPh" title='HmacHash::HmacHash' data-ref="_ZN8HmacHashC1EjPh" id="_ZN8HmacHashC1EjPh" >(</a><a class="macro" href="../HMACSHA1.h.html#29" title="16" data-ref="_M/SEED_KEY_SIZE">SEED_KEY_SIZE</a>, (<a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>*)<a class="local col7 ref" href="#127ServerDecryptionKey" title='ServerDecryptionKey' data-ref="127ServerDecryptionKey" >ServerDecryptionKey</a>);</td></tr>
+<tr><th id="38">38</th><td>    <a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col9 decl" id="129decryptHash" title='decryptHash' data-type='uint8 *' data-ref="129decryptHash" >decryptHash</dfn> = <a class="local col8 ref" href="#128clientDecryptHmac" title='clientDecryptHmac' data-ref="128clientDecryptHmac" >clientDecryptHmac</a>.<a class="ref" href="../HMACSHA1.h.html#_ZN8HmacHash11ComputeHashEP9BigNumber" title='HmacHash::ComputeHash' data-ref="_ZN8HmacHash11ComputeHashEP9BigNumber" id="_ZN8HmacHash11ComputeHashEP9BigNumber" >ComputeHash</a>(<a class="local col3 ref" href="#123K" title='K' data-ref="123K" >K</a>);</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <i>//ARC4 _serverDecrypt(encryptHash);</i></td></tr>
+<tr><th id="41">41</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_clientDecrypt" title='AuthCrypt::_clientDecrypt' data-ref="AuthCrypt::_clientDecrypt" id="AuthCrypt::_clientDecrypt" >_clientDecrypt</a>.<a class="ref" href="../ARC4.h.html#_ZN4ARC44InitEPh" title='ARC4::Init' data-ref="_ZN4ARC44InitEPh" id="_ZN4ARC44InitEPh" >Init</a>(<a class="local col9 ref" href="#129decryptHash" title='decryptHash' data-ref="129decryptHash" >decryptHash</a>);</td></tr>
+<tr><th id="42">42</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_serverEncrypt" title='AuthCrypt::_serverEncrypt' data-ref="AuthCrypt::_serverEncrypt" id="AuthCrypt::_serverEncrypt" >_serverEncrypt</a>.<a class="ref" href="../ARC4.h.html#_ZN4ARC44InitEPh" title='ARC4::Init' data-ref="_ZN4ARC44InitEPh" id="_ZN4ARC44InitEPh" >Init</a>(<a class="local col6 ref" href="#126encryptHash" title='encryptHash' data-ref="126encryptHash" >encryptHash</a>);</td></tr>
+<tr><th id="43">43</th><td>    <i>//ARC4 _clientEncrypt(decryptHash);</i></td></tr>
+<tr><th id="44">44</th><td><i></i></td></tr>
+<tr><th id="45">45</th><td><i>    // Drop first 1024 bytes, as WoW uses ARC4-drop1024.</i></td></tr>
+<tr><th id="46">46</th><td>    <a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col0 decl" id="130syncBuf" title='syncBuf' data-type='uint8 [1024]' data-ref="130syncBuf" >syncBuf</dfn>[<var>1024</var>];</td></tr>
+<tr><th id="47">47</th><td>    <a class="ref" href="../../../../../include/string.h.html#memset" title='memset' data-ref="memset" id="memset" >memset</a>(<a class="local col0 ref" href="#130syncBuf" title='syncBuf' data-ref="130syncBuf" >syncBuf</a>, <var>0</var>, <var>1024</var>);</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_serverEncrypt" title='AuthCrypt::_serverEncrypt' data-ref="AuthCrypt::_serverEncrypt" id="AuthCrypt::_serverEncrypt" >_serverEncrypt</a>.<a class="ref" href="../ARC4.h.html#_ZN4ARC410UpdateDataEiPh" title='ARC4::UpdateData' data-ref="_ZN4ARC410UpdateDataEiPh" id="_ZN4ARC410UpdateDataEiPh" >UpdateData</a>(<var>1024</var>, <a class="local col0 ref" href="#130syncBuf" title='syncBuf' data-ref="130syncBuf" >syncBuf</a>);</td></tr>
+<tr><th id="50">50</th><td>    <i>//_clientEncrypt.UpdateData(1024, syncBuf);</i></td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td>    <a class="ref" href="../../../../../include/string.h.html#memset" title='memset' data-ref="memset" id="memset" >memset</a>(<a class="local col0 ref" href="#130syncBuf" title='syncBuf' data-ref="130syncBuf" >syncBuf</a>, <var>0</var>, <var>1024</var>);</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>    <i>//_serverDecrypt.UpdateData(1024, syncBuf);</i></td></tr>
+<tr><th id="55">55</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_clientDecrypt" title='AuthCrypt::_clientDecrypt' data-ref="AuthCrypt::_clientDecrypt" id="AuthCrypt::_clientDecrypt" >_clientDecrypt</a>.<a class="ref" href="../ARC4.h.html#_ZN4ARC410UpdateDataEiPh" title='ARC4::UpdateData' data-ref="_ZN4ARC410UpdateDataEiPh" id="_ZN4ARC410UpdateDataEiPh" >UpdateData</a>(<var>1024</var>, <a class="local col0 ref" href="#130syncBuf" title='syncBuf' data-ref="130syncBuf" >syncBuf</a>);</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_initialized" title='AuthCrypt::_initialized' data-ref="AuthCrypt::_initialized" id="AuthCrypt::_initialized" >_initialized</a> = <b>true</b>;</td></tr>
+<tr><th id="58">58</th><td>}</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><em>void</em> <a class="type" href="AuthCrypt.h.html#AuthCrypt" title='AuthCrypt' data-ref="AuthCrypt" >AuthCrypt</a>::<dfn class="decl def" id="_ZN9AuthCrypt11DecryptRecvEPhm" title='AuthCrypt::DecryptRecv' data-ref="_ZN9AuthCrypt11DecryptRecvEPhm" >DecryptRecv</dfn>(<a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col1 decl" id="131data" title='data' data-type='uint8 *' data-ref="131data" >data</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="132len" title='len' data-type='size_t' data-ref="132len" >len</dfn>)</td></tr>
+<tr><th id="61">61</th><td>{</td></tr>
+<tr><th id="62">62</th><td>    <b>if</b> (!<a class="member" href="AuthCrypt.h.html#AuthCrypt::_initialized" title='AuthCrypt::_initialized' data-ref="AuthCrypt::_initialized" id="AuthCrypt::_initialized" >_initialized</a>)</td></tr>
+<tr><th id="63">63</th><td>        <b>return</b>;</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_clientDecrypt" title='AuthCrypt::_clientDecrypt' data-ref="AuthCrypt::_clientDecrypt" id="AuthCrypt::_clientDecrypt" >_clientDecrypt</a>.<a class="ref" href="../ARC4.h.html#_ZN4ARC410UpdateDataEiPh" title='ARC4::UpdateData' data-ref="_ZN4ARC410UpdateDataEiPh" id="_ZN4ARC410UpdateDataEiPh" >UpdateData</a>(<a class="local col2 ref" href="#132len" title='len' data-ref="132len" >len</a>, <a class="local col1 ref" href="#131data" title='data' data-ref="131data" >data</a>);</td></tr>
+<tr><th id="66">66</th><td>}</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><em>void</em> <a class="type" href="AuthCrypt.h.html#AuthCrypt" title='AuthCrypt' data-ref="AuthCrypt" >AuthCrypt</a>::<dfn class="decl def" id="_ZN9AuthCrypt11EncryptSendEPhm" title='AuthCrypt::EncryptSend' data-ref="_ZN9AuthCrypt11EncryptSendEPhm" >EncryptSend</dfn>(<a class="typedef" href="../../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col3 decl" id="133data" title='data' data-type='uint8 *' data-ref="133data" >data</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="134len" title='len' data-type='size_t' data-ref="134len" >len</dfn>)</td></tr>
+<tr><th id="69">69</th><td>{</td></tr>
+<tr><th id="70">70</th><td>    <b>if</b> (!<a class="member" href="AuthCrypt.h.html#AuthCrypt::_initialized" title='AuthCrypt::_initialized' data-ref="AuthCrypt::_initialized" id="AuthCrypt::_initialized" >_initialized</a>)</td></tr>
+<tr><th id="71">71</th><td>        <b>return</b>;</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>    <a class="member" href="AuthCrypt.h.html#AuthCrypt::_serverEncrypt" title='AuthCrypt::_serverEncrypt' data-ref="AuthCrypt::_serverEncrypt" id="AuthCrypt::_serverEncrypt" >_serverEncrypt</a>.<a class="ref" href="../ARC4.h.html#_ZN4ARC410UpdateDataEiPh" title='ARC4::UpdateData' data-ref="_ZN4ARC410UpdateDataEiPh" id="_ZN4ARC410UpdateDataEiPh" >UpdateData</a>(<a class="local col4 ref" href="#134len" title='len' data-ref="134len" >len</a>, <a class="local col3 ref" href="#133data" title='data' data-ref="133data" >data</a>);</td></tr>
+<tr><th id="74">74</th><td>}</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

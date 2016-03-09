@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<title>zone_silverpine_forest.cpp [TrinityCore6.x/src/server/scripts/EasternKingdoms/zone_silverpine_forest.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/EasternKingdoms/zone_silverpine_forest.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>scripts</a>/<a href='./'>EasternKingdoms</a>/zone_silverpine_forest.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td> <i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2006-2009 ScriptDev2 &lt;<a href="https://scriptdev">https://scriptdev</a>2.svn.sourceforge.net/&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i>/* ScriptData</i></td></tr>
+<tr><th id="20">20</th><td><i>SDName: Silverpine_Forest</i></td></tr>
+<tr><th id="21">21</th><td><i>SD%Complete: 100</i></td></tr>
+<tr><th id="22">22</th><td><i>SDComment: Quest support: 435</i></td></tr>
+<tr><th id="23">23</th><td><i>SDCategory: Silverpine Forest</i></td></tr>
+<tr><th id="24">24</th><td><i>EndScriptData */</i></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>/* ContentData</i></td></tr>
+<tr><th id="27">27</th><td><i>npc_deathstalker_erland</i></td></tr>
+<tr><th id="28">28</th><td><i>EndContentData */</i></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="32">32</th><td><u>#include <a href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html">"ScriptedEscortAI.h"</a></u></td></tr>
+<tr><th id="33">33</th><td><u>#include <a href="../../game/Entities/Player/Player.h.html">"Player.h"</a></u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i>/*######</i></td></tr>
+<tr><th id="36">36</th><td><i>## npc_deathstalker_erland</i></td></tr>
+<tr><th id="37">37</th><td><i>######*/</i></td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><b>enum</b> <dfn class="type def" id="eErland" title='eErland' data-ref="eErland" >eErland</dfn></td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="eErland::SAY_QUESTACCEPT" title='eErland::SAY_QUESTACCEPT' data-ref="eErland::SAY_QUESTACCEPT" >SAY_QUESTACCEPT</dfn>     = <var>0</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="eErland::SAY_START" title='eErland::SAY_START' data-ref="eErland::SAY_START" >SAY_START</dfn>           = <var>1</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="eErland::SAY_AGGRO" title='eErland::SAY_AGGRO' data-ref="eErland::SAY_AGGRO" >SAY_AGGRO</dfn>           = <var>2</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="eErland::SAY_PROGRESS" title='eErland::SAY_PROGRESS' data-ref="eErland::SAY_PROGRESS" >SAY_PROGRESS</dfn>        = <var>3</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="eErland::SAY_LAST" title='eErland::SAY_LAST' data-ref="eErland::SAY_LAST" >SAY_LAST</dfn>            = <var>4</var>,</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="eErland::SAY_RANE" title='eErland::SAY_RANE' data-ref="eErland::SAY_RANE" >SAY_RANE</dfn>            = <var>0</var>,</td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="eErland::SAY_RANE_ANSWER" title='eErland::SAY_RANE_ANSWER' data-ref="eErland::SAY_RANE_ANSWER" >SAY_RANE_ANSWER</dfn>     = <var>5</var>,</td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="eErland::SAY_MOVE_QUINN" title='eErland::SAY_MOVE_QUINN' data-ref="eErland::SAY_MOVE_QUINN" >SAY_MOVE_QUINN</dfn>      = <var>6</var>,</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="eErland::SAY_QUINN" title='eErland::SAY_QUINN' data-ref="eErland::SAY_QUINN" >SAY_QUINN</dfn>           = <var>7</var>,</td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="eErland::SAY_QUINN_ANSWER" title='eErland::SAY_QUINN_ANSWER' data-ref="eErland::SAY_QUINN_ANSWER" >SAY_QUINN_ANSWER</dfn>    = <var>0</var>,</td></tr>
+<tr><th id="53">53</th><td>    <dfn class="enum" id="eErland::SAY_BYE" title='eErland::SAY_BYE' data-ref="eErland::SAY_BYE" >SAY_BYE</dfn>             = <var>8</var>,</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="eErland::QUEST_ESCORTING" title='eErland::QUEST_ESCORTING' data-ref="eErland::QUEST_ESCORTING" >QUEST_ESCORTING</dfn>     = <var>435</var>,</td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="eErland::NPC_RANE" title='eErland::NPC_RANE' data-ref="eErland::NPC_RANE" >NPC_RANE</dfn>            = <var>1950</var>,</td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="eErland::NPC_QUINN" title='eErland::NPC_QUINN' data-ref="eErland::NPC_QUINN" >NPC_QUINN</dfn>           = <var>1951</var></td></tr>
+<tr><th id="58">58</th><td>};</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><b>class</b> <dfn class="type def" id="npc_deathstalker_erland" title='npc_deathstalker_erland' data-ref="npc_deathstalker_erland" >npc_deathstalker_erland</dfn> : <b>public</b> <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="61">61</th><td>{</td></tr>
+<tr><th id="62">62</th><td><b>public</b>:</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="tu decl def" id="_ZN23npc_deathstalker_erlandC1Ev" title='npc_deathstalker_erland::npc_deathstalker_erland' data-type='void npc_deathstalker_erland::npc_deathstalker_erland()' data-ref="_ZN23npc_deathstalker_erlandC1Ev" >npc_deathstalker_erland</dfn>() : <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"npc_deathstalker_erland"</q>) { }</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <b>struct</b> <dfn class="tu type def" id="npc_deathstalker_erland::npc_deathstalker_erlandAI" title='npc_deathstalker_erland::npc_deathstalker_erlandAI' data-ref="npc_deathstalker_erland::npc_deathstalker_erlandAI" >npc_deathstalker_erlandAI</dfn> : <b>public</b> <a class="type" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a></td></tr>
+<tr><th id="66">66</th><td>    {</td></tr>
+<tr><th id="67">67</th><td>        <dfn class="tu decl def" id="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAIC1EP8Creature" title='npc_deathstalker_erland::npc_deathstalker_erlandAI::npc_deathstalker_erlandAI' data-type='void npc_deathstalker_erland::npc_deathstalker_erlandAI::npc_deathstalker_erlandAI(Creature * creature)' data-ref="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAIC1EP8Creature" >npc_deathstalker_erlandAI</dfn>(<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) : <a class="type" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a><a class="ref" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAIC1EP8Creature" title='npc_escortAI::npc_escortAI' data-ref="_ZN12npc_escortAIC1EP8Creature" id="_ZN12npc_escortAIC1EP8Creature" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>) { }</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAI15WaypointReachedEj" title='npc_deathstalker_erland::npc_deathstalker_erlandAI::WaypointReached' data-ref="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAI15WaypointReachedEj" >WaypointReached</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="2waypointId" title='waypointId' data-type='uint32' data-ref="2waypointId" >waypointId</dfn>) override</td></tr>
+<tr><th id="70">70</th><td>        {</td></tr>
+<tr><th id="71">71</th><td>            <a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col3 decl" id="3player" title='player' data-type='Player *' data-ref="3player" >player</dfn> = <a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI18GetPlayerForEscortEv" title='npc_escortAI::GetPlayerForEscort' data-ref="_ZN12npc_escortAI18GetPlayerForEscortEv" id="_ZN12npc_escortAI18GetPlayerForEscortEv" >GetPlayerForEscort</a>();</td></tr>
+<tr><th id="72">72</th><td>            <b>if</b> (!<a class="local col3 ref" href="#3player" title='player' data-ref="3player" >player</a>)</td></tr>
+<tr><th id="73">73</th><td>                <b>return</b>;</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>            <b>switch</b> (<a class="local col2 ref" href="#2waypointId" title='waypointId' data-ref="2waypointId" >waypointId</a>)</td></tr>
+<tr><th id="76">76</th><td>            {</td></tr>
+<tr><th id="77">77</th><td>                <b>case</b> <var>1</var>:</td></tr>
+<tr><th id="78">78</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_START" title='eErland::SAY_START' data-ref="eErland::SAY_START" >SAY_START</a>, <a class="local col3 ref" href="#3player" title='player' data-ref="3player" >player</a>);</td></tr>
+<tr><th id="79">79</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="80">80</th><td>                <b>case</b> <var>10</var>:</td></tr>
+<tr><th id="81">81</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_PROGRESS" title='eErland::SAY_PROGRESS' data-ref="eErland::SAY_PROGRESS" >SAY_PROGRESS</a>);</td></tr>
+<tr><th id="82">82</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="83">83</th><td>                <b>case</b> <var>13</var>:</td></tr>
+<tr><th id="84">84</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_LAST" title='eErland::SAY_LAST' data-ref="eErland::SAY_LAST" >SAY_LAST</a>, <a class="local col3 ref" href="#3player" title='player' data-ref="3player" >player</a>);</td></tr>
+<tr><th id="85">85</th><td>                    <a class="local col3 ref" href="#3player" title='player' data-ref="3player" >player</a>-&gt;<a class="ref" href="../../game/Entities/Player/Player.h.html#_ZN6Player17GroupEventHappensEjPK11WorldObject" title='Player::GroupEventHappens' data-ref="_ZN6Player17GroupEventHappensEjPK11WorldObject" id="_ZN6Player17GroupEventHappensEjPK11WorldObject" >GroupEventHappens</a>(<a class="enum" href="#eErland::QUEST_ESCORTING" title='eErland::QUEST_ESCORTING' data-ref="eErland::QUEST_ESCORTING" >QUEST_ESCORTING</a>, <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>);</td></tr>
+<tr><th id="86">86</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="87">87</th><td>                <b>case</b> <var>15</var>:</td></tr>
+<tr><th id="88">88</th><td>                    <b>if</b> (<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col4 decl" id="4rane" title='rane' data-type='Creature *' data-ref="4rane" ><a class="local col4 ref" href="#4rane" title='rane' data-ref="4rane" >rane</a></dfn> = <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Object/Object.h.html#_ZNK11WorldObject19FindNearestCreatureEjfb" title='WorldObject::FindNearestCreature' data-ref="_ZNK11WorldObject19FindNearestCreatureEjfb" id="_ZNK11WorldObject19FindNearestCreatureEjfb" >FindNearestCreature</a>(<a class="enum" href="#eErland::NPC_RANE" title='eErland::NPC_RANE' data-ref="eErland::NPC_RANE" >NPC_RANE</a>, <var>20.0f</var>))</td></tr>
+<tr><th id="89">89</th><td>                        <a class="local col4 ref" href="#4rane" title='rane' data-ref="4rane" >rane</a>-&gt;<a class="ref" href="../../game/Entities/Creature/Creature.h.html#_ZNK8Creature2AIEv" title='Creature::AI' data-ref="_ZNK8Creature2AIEv" id="_ZNK8Creature2AIEv" >AI</a>()-&gt;<a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_RANE" title='eErland::SAY_RANE' data-ref="eErland::SAY_RANE" >SAY_RANE</a>);</td></tr>
+<tr><th id="90">90</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="91">91</th><td>                <b>case</b> <var>16</var>:</td></tr>
+<tr><th id="92">92</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_RANE_ANSWER" title='eErland::SAY_RANE_ANSWER' data-ref="eErland::SAY_RANE_ANSWER" >SAY_RANE_ANSWER</a>);</td></tr>
+<tr><th id="93">93</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="94">94</th><td>                <b>case</b> <var>17</var>:</td></tr>
+<tr><th id="95">95</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_MOVE_QUINN" title='eErland::SAY_MOVE_QUINN' data-ref="eErland::SAY_MOVE_QUINN" >SAY_MOVE_QUINN</a>);</td></tr>
+<tr><th id="96">96</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="97">97</th><td>                <b>case</b> <var>24</var>:</td></tr>
+<tr><th id="98">98</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_QUINN" title='eErland::SAY_QUINN' data-ref="eErland::SAY_QUINN" >SAY_QUINN</a>);</td></tr>
+<tr><th id="99">99</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="100">100</th><td>                <b>case</b> <var>25</var>:</td></tr>
+<tr><th id="101">101</th><td>                    <b>if</b> (<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col5 decl" id="5quinn" title='quinn' data-type='Creature *' data-ref="5quinn" ><a class="local col5 ref" href="#5quinn" title='quinn' data-ref="5quinn" >quinn</a></dfn> = <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Object/Object.h.html#_ZNK11WorldObject19FindNearestCreatureEjfb" title='WorldObject::FindNearestCreature' data-ref="_ZNK11WorldObject19FindNearestCreatureEjfb" id="_ZNK11WorldObject19FindNearestCreatureEjfb" >FindNearestCreature</a>(<a class="enum" href="#eErland::NPC_QUINN" title='eErland::NPC_QUINN' data-ref="eErland::NPC_QUINN" >NPC_QUINN</a>, <var>20.0f</var>))</td></tr>
+<tr><th id="102">102</th><td>                        <a class="local col5 ref" href="#5quinn" title='quinn' data-ref="5quinn" >quinn</a>-&gt;<a class="ref" href="../../game/Entities/Creature/Creature.h.html#_ZNK8Creature2AIEv" title='Creature::AI' data-ref="_ZNK8Creature2AIEv" id="_ZNK8Creature2AIEv" >AI</a>()-&gt;<a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_QUINN_ANSWER" title='eErland::SAY_QUINN_ANSWER' data-ref="eErland::SAY_QUINN_ANSWER" >SAY_QUINN_ANSWER</a>);</td></tr>
+<tr><th id="103">103</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="104">104</th><td>                <b>case</b> <var>26</var>:</td></tr>
+<tr><th id="105">105</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_BYE" title='eErland::SAY_BYE' data-ref="eErland::SAY_BYE" >SAY_BYE</a>);</td></tr>
+<tr><th id="106">106</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="107">107</th><td>            }</td></tr>
+<tr><th id="108">108</th><td>        }</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAI5ResetEv" title='npc_deathstalker_erland::npc_deathstalker_erlandAI::Reset' data-ref="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAI5ResetEv" >Reset</dfn>() override { }</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAI11EnterCombatEP4Unit" title='npc_deathstalker_erland::npc_deathstalker_erlandAI::EnterCombat' data-ref="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col6 decl" id="6who" title='who' data-type='Unit *' data-ref="6who" >who</dfn>) override</td></tr>
+<tr><th id="113">113</th><td>        {</td></tr>
+<tr><th id="114">114</th><td>            <a class="member" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_AGGRO" title='eErland::SAY_AGGRO' data-ref="eErland::SAY_AGGRO" >SAY_AGGRO</a>, <a class="local col6 ref" href="#6who" title='who' data-ref="6who" >who</a>);</td></tr>
+<tr><th id="115">115</th><td>        }</td></tr>
+<tr><th id="116">116</th><td>    };</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>    <em>bool</em> <dfn class="virtual decl def" id="_ZN23npc_deathstalker_erland13OnQuestAcceptEP6PlayerP8CreaturePK5Quest" title='npc_deathstalker_erland::OnQuestAccept' data-ref="_ZN23npc_deathstalker_erland13OnQuestAcceptEP6PlayerP8CreaturePK5Quest" >OnQuestAccept</dfn>(<a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col7 decl" id="7player" title='player' data-type='Player *' data-ref="7player" >player</dfn>, <a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col8 decl" id="8creature" title='creature' data-type='Creature *' data-ref="8creature" >creature</dfn>, <a class="type" href="../../game/Quests/QuestDef.h.html#Quest" title='Quest' data-ref="Quest" >Quest</a> <em>const</em>* <dfn class="local col9 decl" id="9quest" title='quest' data-type='const Quest *' data-ref="9quest" >quest</dfn>) override</td></tr>
+<tr><th id="119">119</th><td>    {</td></tr>
+<tr><th id="120">120</th><td>        <b>if</b> (<a class="local col9 ref" href="#9quest" title='quest' data-ref="9quest" >quest</a>-&gt;<a class="ref" href="../../game/Quests/QuestDef.h.html#_ZNK5Quest10GetQuestIdEv" title='Quest::GetQuestId' data-ref="_ZNK5Quest10GetQuestIdEv" id="_ZNK5Quest10GetQuestIdEv" >GetQuestId</a>() == <a class="enum" href="#eErland::QUEST_ESCORTING" title='eErland::QUEST_ESCORTING' data-ref="eErland::QUEST_ESCORTING" >QUEST_ESCORTING</a>)</td></tr>
+<tr><th id="121">121</th><td>        {</td></tr>
+<tr><th id="122">122</th><td>            <a class="local col8 ref" href="#8creature" title='creature' data-ref="8creature" >creature</a>-&gt;<a class="ref" href="../../game/Entities/Creature/Creature.h.html#_ZNK8Creature2AIEv" title='Creature::AI' data-ref="_ZNK8Creature2AIEv" id="_ZNK8Creature2AIEv" >AI</a>()-&gt;<a class="ref" href="../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#eErland::SAY_QUESTACCEPT" title='eErland::SAY_QUESTACCEPT' data-ref="eErland::SAY_QUESTACCEPT" >SAY_QUESTACCEPT</a>, <a class="local col7 ref" href="#7player" title='player' data-ref="7player" >player</a>);</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>            <b>if</b> (<a class="type" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a>* <dfn class="local col0 decl" id="10pEscortAI" title='pEscortAI' data-type='npc_escortAI *' data-ref="10pEscortAI" ><a class="local col0 ref" href="#10pEscortAI" title='pEscortAI' data-ref="10pEscortAI" >pEscortAI</a></dfn> = <a class="macro" href="../../game/AI/ScriptedAI/ScriptedCreature.h.html#28" title="(dynamic_cast&lt;npc_deathstalker_erland::npc_deathstalker_erlandAI*&gt;(creature-&gt;AI()))" data-ref="_M/CAST_AI">CAST_AI</a>(<a class="type" href="#npc_deathstalker_erland" title='npc_deathstalker_erland' data-ref="npc_deathstalker_erland" >npc_deathstalker_erland</a>::<a class="tu type" href="#npc_deathstalker_erland::npc_deathstalker_erlandAI" title='npc_deathstalker_erland::npc_deathstalker_erlandAI' data-ref="npc_deathstalker_erland::npc_deathstalker_erlandAI" >npc_deathstalker_erlandAI</a>, <a class="local col8 ref" href="#8creature" title='creature' data-ref="8creature" >creature</a>-&gt;<a class="ref" href="../../game/Entities/Creature/Creature.h.html#_ZNK8Creature2AIEv" title='Creature::AI' data-ref="_ZNK8Creature2AIEv" id="_ZNK8Creature2AIEv" >AI</a>()))</td></tr>
+<tr><th id="125">125</th><td>                <a class="local col0 ref" href="#10pEscortAI" title='pEscortAI' data-ref="10pEscortAI" >pEscortAI</a>-&gt;<a class="ref" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" title='npc_escortAI::Start' data-ref="_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" id="_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" >Start</a>(<b>true</b>, <b>false</b>, <a class="local col7 ref" href="#7player" title='player' data-ref="7player" >player</a>-&gt;<a class="ref" href="../../game/Entities/Object/Object.h.html#_ZNK6Object7GetGUIDEv" title='Object::GetGUID' data-ref="_ZNK6Object7GetGUIDEv" id="_ZNK6Object7GetGUIDEv" >GetGUID</a>());</td></tr>
+<tr><th id="126">126</th><td>        }</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="129">129</th><td>    }</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>    <a class="type" href="../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK23npc_deathstalker_erland5GetAIEP8Creature" title='npc_deathstalker_erland::GetAI' data-ref="_ZNK23npc_deathstalker_erland5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="11creature" title='creature' data-type='Creature *' data-ref="11creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="132">132</th><td>    {</td></tr>
+<tr><th id="133">133</th><td>        <b>return</b> <b>new</b> <a class="tu type" href="#npc_deathstalker_erland::npc_deathstalker_erlandAI" title='npc_deathstalker_erland::npc_deathstalker_erlandAI' data-ref="npc_deathstalker_erland::npc_deathstalker_erlandAI" >npc_deathstalker_erlandAI</a><a class="tu ref" href="#_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAIC1EP8Creature" title='npc_deathstalker_erland::npc_deathstalker_erlandAI::npc_deathstalker_erlandAI' data-use='c' data-ref="_ZN23npc_deathstalker_erland25npc_deathstalker_erlandAIC1EP8Creature" >(</a><a class="local col1 ref" href="#11creature" title='creature' data-ref="11creature" >creature</a>);</td></tr>
+<tr><th id="134">134</th><td>    }</td></tr>
+<tr><th id="135">135</th><td>};</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><i>/*######</i></td></tr>
+<tr><th id="138">138</th><td><i>## AddSC</i></td></tr>
+<tr><th id="139">139</th><td><i>######*/</i></td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td><em>void</em> <dfn class="decl def" id="_Z23AddSC_silverpine_forestv" title='AddSC_silverpine_forest' data-ref="_Z23AddSC_silverpine_forestv" >AddSC_silverpine_forest</dfn>()</td></tr>
+<tr><th id="142">142</th><td>{</td></tr>
+<tr><th id="143">143</th><td>    <b>new</b> <a class="type" href="#npc_deathstalker_erland" title='npc_deathstalker_erland' data-ref="npc_deathstalker_erland" >npc_deathstalker_erland</a><a class="tu ref" href="#_ZN23npc_deathstalker_erlandC1Ev" title='npc_deathstalker_erland::npc_deathstalker_erland' data-use='c' data-ref="_ZN23npc_deathstalker_erlandC1Ev" >(</a>);</td></tr>
+<tr><th id="144">144</th><td>}</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

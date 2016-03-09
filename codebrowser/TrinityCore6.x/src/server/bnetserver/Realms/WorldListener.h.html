@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<title>WorldListener.h [TrinityCore6.x/src/server/bnetserver/Realms/WorldListener.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/bnetserver/Realms/WorldListener.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>bnetserver</a>/<a href='./'>Realms</a>/WorldListener.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/WorldListener_h__">WorldListener_h__</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/WorldListener_h__" data-ref="_M/WorldListener_h__">WorldListener_h__</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../ipc/ZMQTask.h.html">"ZMQTask.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../ipc/Commands.h.html">"Commands.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>class</b> <dfn class="type def" id="WorldListener" title='WorldListener' data-ref="WorldListener" >WorldListener</dfn> : <b>public</b> <a class="type" href="../../ipc/ZMQTask.h.html#ZMQTask" title='ZMQTask' data-ref="ZMQTask" >ZMQTask</a></td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td><b>public</b>:</td></tr>
+<tr><th id="27">27</th><td>    <b>explicit</b> <dfn class="decl" id="_ZN13WorldListenerC1Et" title='WorldListener::WorldListener' data-ref="_ZN13WorldListenerC1Et" >WorldListener</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="local col4 decl" id="154worldListenPort" title='worldListenPort' data-type='uint16' data-ref="154worldListenPort" >worldListenPort</dfn>);</td></tr>
+<tr><th id="28">28</th><td>    <dfn class="virtual decl" id="_ZN13WorldListenerD1Ev" title='WorldListener::~WorldListener' data-ref="_ZN13WorldListenerD1Ev" >~WorldListener</dfn>();</td></tr>
+<tr><th id="29">29</th><td>    <em>void</em> <dfn class="virtual decl" id="_ZN13WorldListener3RunEv" title='WorldListener::Run' data-ref="_ZN13WorldListener3RunEv" >Run</dfn>() override;</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>protected</b>:</td></tr>
+<tr><th id="32">32</th><td>    <em>void</em> <dfn class="virtual decl" id="_ZN13WorldListener10HandleOpenEv" title='WorldListener::HandleOpen' data-ref="_ZN13WorldListener10HandleOpenEv" >HandleOpen</dfn>() override;</td></tr>
+<tr><th id="33">33</th><td>    <em>void</em> <dfn class="virtual decl" id="_ZN13WorldListener11HandleCloseEv" title='WorldListener::HandleClose' data-ref="_ZN13WorldListener11HandleCloseEv" >HandleClose</dfn>() override;</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><b>private</b>:</td></tr>
+<tr><th id="36">36</th><td>    <em>void</em> <dfn class="decl" id="_ZNK13WorldListener8DispatchERN5zmqpp7messageE" title='WorldListener::Dispatch' data-ref="_ZNK13WorldListener8DispatchERN5zmqpp7messageE" >Dispatch</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col5 decl" id="155msg" title='msg' data-type='zmqpp::message &amp;' data-ref="155msg" >msg</dfn>) <em>const</em>;</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>    <b>typedef</b> <em>void</em>(WorldListener::*<dfn class="typedef" id="WorldListener::PacketHandler" title='WorldListener::PacketHandler' data-type='void (WorldListener::*)(const Battlenet::RealmHandle &amp;, zmqpp::message &amp;) const' data-ref="WorldListener::PacketHandler" >PacketHandler</dfn>)(<span class="namespace">Battlenet::</span><a class="type" href="../../shared/Realm/Realm.h.html#Battlenet::RealmHandle" title='Battlenet::RealmHandle' data-ref="Battlenet::RealmHandle" >RealmHandle</a> <em>const</em>&amp; <dfn class="local col6 decl" id="156realm" title='realm' data-type='const Battlenet::RealmHandle &amp;' data-ref="156realm" >realm</dfn>, <span class="namespace">zmqpp::</span><a class="type" href="../../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col7 decl" id="157msg" title='msg' data-type='zmqpp::message &amp;' data-ref="157msg" >msg</dfn>) <em>const</em>;</td></tr>
+<tr><th id="39">39</th><td>    <b>class</b> <dfn class="type def" id="WorldListener::HandlerTable" title='WorldListener::HandlerTable' data-ref="WorldListener::HandlerTable" >HandlerTable</dfn></td></tr>
+<tr><th id="40">40</th><td>    {</td></tr>
+<tr><th id="41">41</th><td>    <b>public</b>:</td></tr>
+<tr><th id="42">42</th><td>        <dfn class="decl" id="_ZN13WorldListener12HandlerTableC1Ev" title='WorldListener::HandlerTable::HandlerTable' data-ref="_ZN13WorldListener12HandlerTableC1Ev" >HandlerTable</dfn>();</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>        <b>struct</b> <dfn class="type def" id="WorldListener::HandlerTable::HandlerInfo" title='WorldListener::HandlerTable::HandlerInfo' data-ref="WorldListener::HandlerTable::HandlerInfo" >HandlerInfo</dfn></td></tr>
+<tr><th id="45">45</th><td>        {</td></tr>
+<tr><th id="46">46</th><td>            <a class="typedef" href="#WorldListener::PacketHandler" title='WorldListener::PacketHandler' data-type='void (WorldListener::*)(const Battlenet::RealmHandle &amp;, zmqpp::message &amp;) const' data-ref="WorldListener::PacketHandler" >PacketHandler</a> <dfn class="decl" id="WorldListener::HandlerTable::HandlerInfo::Handler" title='WorldListener::HandlerTable::HandlerInfo::Handler' data-ref="WorldListener::HandlerTable::HandlerInfo::Handler" >Handler</dfn>;</td></tr>
+<tr><th id="47">47</th><td>            <em>char</em> <em>const</em>* <dfn class="decl" id="WorldListener::HandlerTable::HandlerInfo::Name" title='WorldListener::HandlerTable::HandlerInfo::Name' data-ref="WorldListener::HandlerTable::HandlerInfo::Name" >Name</dfn>;</td></tr>
+<tr><th id="48">48</th><td>        };</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>        <a class="type" href="#WorldListener::HandlerTable::HandlerInfo" title='WorldListener::HandlerTable::HandlerInfo' data-ref="WorldListener::HandlerTable::HandlerInfo" >HandlerInfo</a> <em>const</em>&amp; <dfn class="decl def" id="_ZNK13WorldListener12HandlerTableixEh" title='WorldListener::HandlerTable::operator[]' data-ref="_ZNK13WorldListener12HandlerTableixEh" ><b>operator</b>[]</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col8 decl" id="158opcode" title='opcode' data-type='uint8' data-ref="158opcode" >opcode</dfn>) <em>const</em> { <b>return</b> <a class="member" href="#WorldListener::HandlerTable::_handlers" title='WorldListener::HandlerTable::_handlers' data-ref="WorldListener::HandlerTable::_handlers" >_handlers</a>[<a class="local col8 ref" href="#158opcode" title='opcode' data-ref="158opcode" >opcode</a>]; }</td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td>    <b>private</b>:</td></tr>
+<tr><th id="53">53</th><td>        <a class="type" href="#WorldListener::HandlerTable::HandlerInfo" title='WorldListener::HandlerTable::HandlerInfo' data-ref="WorldListener::HandlerTable::HandlerInfo" >HandlerInfo</a> <dfn class="decl" id="WorldListener::HandlerTable::_handlers" title='WorldListener::HandlerTable::_handlers' data-ref="WorldListener::HandlerTable::_handlers" >_handlers</dfn>[<a class="enum" href="../../ipc/Commands.h.html#BnetCommands::IPC_BNET_MAX_COMMAND" title='BnetCommands::IPC_BNET_MAX_COMMAND' data-ref="BnetCommands::IPC_BNET_MAX_COMMAND" >IPC_BNET_MAX_COMMAND</a>];</td></tr>
+<tr><th id="54">54</th><td>    };</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <em>void</em> <dfn class="decl" id="_ZNK13WorldListener28HandleToonOnlineStatusChangeERKN9Battlenet11RealmHandleERN5zmqpp7messageE" title='WorldListener::HandleToonOnlineStatusChange' data-ref="_ZNK13WorldListener28HandleToonOnlineStatusChangeERKN9Battlenet11RealmHandleERN5zmqpp7messageE" >HandleToonOnlineStatusChange</dfn>(<span class="namespace">Battlenet::</span><a class="type" href="../../shared/Realm/Realm.h.html#Battlenet::RealmHandle" title='Battlenet::RealmHandle' data-ref="Battlenet::RealmHandle" >RealmHandle</a> <em>const</em>&amp; <dfn class="local col9 decl" id="159realm" title='realm' data-type='const Battlenet::RealmHandle &amp;' data-ref="159realm" >realm</dfn>, <span class="namespace">zmqpp::</span><a class="type" href="../../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col0 decl" id="160msg" title='msg' data-type='zmqpp::message &amp;' data-ref="160msg" >msg</dfn>) <em>const</em>;</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <span class="namespace">zmqpp::</span><a class="type" href="../../../../dep/zmqpp/zmqpp/socket.hpp.html#zmqpp::socket" title='zmqpp::socket' data-ref="zmqpp::socket" >socket</a>* <dfn class="decl" id="WorldListener::_worldSocket" title='WorldListener::_worldSocket' data-ref="WorldListener::_worldSocket" >_worldSocket</dfn>;</td></tr>
+<tr><th id="59">59</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="decl" id="WorldListener::_worldListenPort" title='WorldListener::_worldListenPort' data-ref="WorldListener::_worldListenPort" >_worldListenPort</dfn>;</td></tr>
+<tr><th id="60">60</th><td>    <em>static</em> <a class="type" href="#WorldListener::HandlerTable" title='WorldListener::HandlerTable' data-ref="WorldListener::HandlerTable" >HandlerTable</a> <em>const</em> <dfn class="decl" id="_ZN13WorldListener9_handlersE" title='WorldListener::_handlers' data-ref="_ZN13WorldListener9_handlersE" >_handlers</dfn>;</td></tr>
+<tr><th id="61">61</th><td>};</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td><u>#<span data-ppcond="18">endif</span> // WorldListener_h__</u></td></tr>
+<tr><th id="64">64</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Main.cpp.html'>TrinityCore6.x/src/server/bnetserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,594 @@
+<!doctype html>
+<html>
+<head>
+<title>mysql_com.h [include/mysql/mysql_com.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/mysql/mysql_com.h'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>mysql</a>/mysql_com.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.</i></td></tr>
+<tr><th id="2">2</th><td><i></i></td></tr>
+<tr><th id="3">3</th><td><i>   This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="4">4</th><td><i>   it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="5">5</th><td><i>   the Free Software Foundation; version 2 of the License.</i></td></tr>
+<tr><th id="6">6</th><td><i></i></td></tr>
+<tr><th id="7">7</th><td><i>   This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="8">8</th><td><i>   but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="9">9</th><td><i>   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="10">10</th><td><i>   GNU General Public License for more details.</i></td></tr>
+<tr><th id="11">11</th><td><i></i></td></tr>
+<tr><th id="12">12</th><td><i>   You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="13">13</th><td><i>   along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="14">14</th><td><i>   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA */</i></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><i>/*</i></td></tr>
+<tr><th id="17">17</th><td><i>** Common definition between mysql server &amp; client</i></td></tr>
+<tr><th id="18">18</th><td><i>*/</i></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="20">ifndef</span> <span class="macro" data-ref="_M/_mysql_com_h">_mysql_com_h</span></u></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/_mysql_com_h" data-ref="_M/_mysql_com_h">_mysql_com_h</dfn></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#define <dfn class="macro" id="_M/HOSTNAME_LENGTH" data-ref="_M/HOSTNAME_LENGTH">HOSTNAME_LENGTH</dfn> 60</u></td></tr>
+<tr><th id="24">24</th><td><u>#define <dfn class="macro" id="_M/SYSTEM_CHARSET_MBMAXLEN" data-ref="_M/SYSTEM_CHARSET_MBMAXLEN">SYSTEM_CHARSET_MBMAXLEN</dfn> 3</u></td></tr>
+<tr><th id="25">25</th><td><u>#define <dfn class="macro" id="_M/NAME_CHAR_LEN" data-ref="_M/NAME_CHAR_LEN">NAME_CHAR_LEN</dfn>	64              /* Field/table name length */</u></td></tr>
+<tr><th id="26">26</th><td><u>#define <dfn class="macro" id="_M/USERNAME_CHAR_LENGTH" data-ref="_M/USERNAME_CHAR_LENGTH">USERNAME_CHAR_LENGTH</dfn> 16</u></td></tr>
+<tr><th id="27">27</th><td><u>#define <dfn class="macro" id="_M/NAME_LEN" data-ref="_M/NAME_LEN">NAME_LEN</dfn>                (NAME_CHAR_LEN*SYSTEM_CHARSET_MBMAXLEN)</u></td></tr>
+<tr><th id="28">28</th><td><u>#define <dfn class="macro" id="_M/USERNAME_LENGTH" data-ref="_M/USERNAME_LENGTH">USERNAME_LENGTH</dfn>         (USERNAME_CHAR_LENGTH*SYSTEM_CHARSET_MBMAXLEN)</u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><u>#define <dfn class="macro" id="_M/MYSQL_AUTODETECT_CHARSET_NAME" data-ref="_M/MYSQL_AUTODETECT_CHARSET_NAME">MYSQL_AUTODETECT_CHARSET_NAME</dfn> "auto"</u></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/SERVER_VERSION_LENGTH" data-ref="_M/SERVER_VERSION_LENGTH">SERVER_VERSION_LENGTH</dfn> 60</u></td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/SQLSTATE_LENGTH" data-ref="_M/SQLSTATE_LENGTH">SQLSTATE_LENGTH</dfn> 5</u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i>/*</i></td></tr>
+<tr><th id="36">36</th><td><i>  Maximum length of comments</i></td></tr>
+<tr><th id="37">37</th><td><i>*/</i></td></tr>
+<tr><th id="38">38</th><td><u>#define <dfn class="macro" id="_M/TABLE_COMMENT_INLINE_MAXLEN" data-ref="_M/TABLE_COMMENT_INLINE_MAXLEN">TABLE_COMMENT_INLINE_MAXLEN</dfn> 180 /* pre 6.0: 60 characters */</u></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/TABLE_COMMENT_MAXLEN" data-ref="_M/TABLE_COMMENT_MAXLEN">TABLE_COMMENT_MAXLEN</dfn> 2048</u></td></tr>
+<tr><th id="40">40</th><td><u>#define <dfn class="macro" id="_M/COLUMN_COMMENT_MAXLEN" data-ref="_M/COLUMN_COMMENT_MAXLEN">COLUMN_COMMENT_MAXLEN</dfn> 1024</u></td></tr>
+<tr><th id="41">41</th><td><u>#define <dfn class="macro" id="_M/INDEX_COMMENT_MAXLEN" data-ref="_M/INDEX_COMMENT_MAXLEN">INDEX_COMMENT_MAXLEN</dfn> 1024</u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><i>/*</i></td></tr>
+<tr><th id="44">44</th><td><i>  USER_HOST_BUFF_SIZE -- length of string buffer, that is enough to contain</i></td></tr>
+<tr><th id="45">45</th><td><i>  username and hostname parts of the user identifier with trailing zero in</i></td></tr>
+<tr><th id="46">46</th><td><i>  MySQL standard format:</i></td></tr>
+<tr><th id="47">47</th><td><i>  user_name_part@host_name_part\0</i></td></tr>
+<tr><th id="48">48</th><td><i>*/</i></td></tr>
+<tr><th id="49">49</th><td><u>#define <dfn class="macro" id="_M/USER_HOST_BUFF_SIZE" data-ref="_M/USER_HOST_BUFF_SIZE">USER_HOST_BUFF_SIZE</dfn> HOSTNAME_LENGTH + USERNAME_LENGTH + 2</u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><u>#define <dfn class="macro" id="_M/LOCAL_HOST" data-ref="_M/LOCAL_HOST">LOCAL_HOST</dfn>	"localhost"</u></td></tr>
+<tr><th id="52">52</th><td><u>#define <dfn class="macro" id="_M/LOCAL_HOST_NAMEDPIPE" data-ref="_M/LOCAL_HOST_NAMEDPIPE">LOCAL_HOST_NAMEDPIPE</dfn> "."</u></td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="55">if</span> defined(<span class="macro" data-ref="_M/__WIN__">__WIN__</span>) &amp;&amp; !defined( <span class="macro" data-ref="_M/_CUSTOMCONFIG_">_CUSTOMCONFIG_</span>)</u></td></tr>
+<tr><th id="56">56</th><td><u>#define MYSQL_NAMEDPIPE "MySQL"</u></td></tr>
+<tr><th id="57">57</th><td><u>#define MYSQL_SERVICENAME "MySQL"</u></td></tr>
+<tr><th id="58">58</th><td><u>#<span data-ppcond="55">endif</span> /* __WIN__ */</u></td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><i>/*</i></td></tr>
+<tr><th id="61">61</th><td><i>  You should add new commands to the end of this list, otherwise old</i></td></tr>
+<tr><th id="62">62</th><td><i>  servers won't be able to handle them as 'unsupported'.</i></td></tr>
+<tr><th id="63">63</th><td><i>*/</i></td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><b>enum</b> <dfn class="type def" id="enum_server_command" title='enum_server_command' data-ref="enum_server_command" >enum_server_command</dfn></td></tr>
+<tr><th id="66">66</th><td>{</td></tr>
+<tr><th id="67">67</th><td>  <dfn class="enum" id="enum_server_command::COM_SLEEP" title='enum_server_command::COM_SLEEP' data-ref="enum_server_command::COM_SLEEP" >COM_SLEEP</dfn>, <dfn class="enum" id="enum_server_command::COM_QUIT" title='enum_server_command::COM_QUIT' data-ref="enum_server_command::COM_QUIT" >COM_QUIT</dfn>, <dfn class="enum" id="enum_server_command::COM_INIT_DB" title='enum_server_command::COM_INIT_DB' data-ref="enum_server_command::COM_INIT_DB" >COM_INIT_DB</dfn>, <dfn class="enum" id="enum_server_command::COM_QUERY" title='enum_server_command::COM_QUERY' data-ref="enum_server_command::COM_QUERY" >COM_QUERY</dfn>, <dfn class="enum" id="enum_server_command::COM_FIELD_LIST" title='enum_server_command::COM_FIELD_LIST' data-ref="enum_server_command::COM_FIELD_LIST" >COM_FIELD_LIST</dfn>,</td></tr>
+<tr><th id="68">68</th><td>  <dfn class="enum" id="enum_server_command::COM_CREATE_DB" title='enum_server_command::COM_CREATE_DB' data-ref="enum_server_command::COM_CREATE_DB" >COM_CREATE_DB</dfn>, <dfn class="enum" id="enum_server_command::COM_DROP_DB" title='enum_server_command::COM_DROP_DB' data-ref="enum_server_command::COM_DROP_DB" >COM_DROP_DB</dfn>, <dfn class="enum" id="enum_server_command::COM_REFRESH" title='enum_server_command::COM_REFRESH' data-ref="enum_server_command::COM_REFRESH" >COM_REFRESH</dfn>, <dfn class="enum" id="enum_server_command::COM_SHUTDOWN" title='enum_server_command::COM_SHUTDOWN' data-ref="enum_server_command::COM_SHUTDOWN" >COM_SHUTDOWN</dfn>, <dfn class="enum" id="enum_server_command::COM_STATISTICS" title='enum_server_command::COM_STATISTICS' data-ref="enum_server_command::COM_STATISTICS" >COM_STATISTICS</dfn>,</td></tr>
+<tr><th id="69">69</th><td>  <dfn class="enum" id="enum_server_command::COM_PROCESS_INFO" title='enum_server_command::COM_PROCESS_INFO' data-ref="enum_server_command::COM_PROCESS_INFO" >COM_PROCESS_INFO</dfn>, <dfn class="enum" id="enum_server_command::COM_CONNECT" title='enum_server_command::COM_CONNECT' data-ref="enum_server_command::COM_CONNECT" >COM_CONNECT</dfn>, <dfn class="enum" id="enum_server_command::COM_PROCESS_KILL" title='enum_server_command::COM_PROCESS_KILL' data-ref="enum_server_command::COM_PROCESS_KILL" >COM_PROCESS_KILL</dfn>, <dfn class="enum" id="enum_server_command::COM_DEBUG" title='enum_server_command::COM_DEBUG' data-ref="enum_server_command::COM_DEBUG" >COM_DEBUG</dfn>, <dfn class="enum" id="enum_server_command::COM_PING" title='enum_server_command::COM_PING' data-ref="enum_server_command::COM_PING" >COM_PING</dfn>,</td></tr>
+<tr><th id="70">70</th><td>  <dfn class="enum" id="enum_server_command::COM_TIME" title='enum_server_command::COM_TIME' data-ref="enum_server_command::COM_TIME" >COM_TIME</dfn>, <dfn class="enum" id="enum_server_command::COM_DELAYED_INSERT" title='enum_server_command::COM_DELAYED_INSERT' data-ref="enum_server_command::COM_DELAYED_INSERT" >COM_DELAYED_INSERT</dfn>, <dfn class="enum" id="enum_server_command::COM_CHANGE_USER" title='enum_server_command::COM_CHANGE_USER' data-ref="enum_server_command::COM_CHANGE_USER" >COM_CHANGE_USER</dfn>, <dfn class="enum" id="enum_server_command::COM_BINLOG_DUMP" title='enum_server_command::COM_BINLOG_DUMP' data-ref="enum_server_command::COM_BINLOG_DUMP" >COM_BINLOG_DUMP</dfn>,</td></tr>
+<tr><th id="71">71</th><td>  <dfn class="enum" id="enum_server_command::COM_TABLE_DUMP" title='enum_server_command::COM_TABLE_DUMP' data-ref="enum_server_command::COM_TABLE_DUMP" >COM_TABLE_DUMP</dfn>, <dfn class="enum" id="enum_server_command::COM_CONNECT_OUT" title='enum_server_command::COM_CONNECT_OUT' data-ref="enum_server_command::COM_CONNECT_OUT" >COM_CONNECT_OUT</dfn>, <dfn class="enum" id="enum_server_command::COM_REGISTER_SLAVE" title='enum_server_command::COM_REGISTER_SLAVE' data-ref="enum_server_command::COM_REGISTER_SLAVE" >COM_REGISTER_SLAVE</dfn>,</td></tr>
+<tr><th id="72">72</th><td>  <dfn class="enum" id="enum_server_command::COM_STMT_PREPARE" title='enum_server_command::COM_STMT_PREPARE' data-ref="enum_server_command::COM_STMT_PREPARE" >COM_STMT_PREPARE</dfn>, <dfn class="enum" id="enum_server_command::COM_STMT_EXECUTE" title='enum_server_command::COM_STMT_EXECUTE' data-ref="enum_server_command::COM_STMT_EXECUTE" >COM_STMT_EXECUTE</dfn>, <dfn class="enum" id="enum_server_command::COM_STMT_SEND_LONG_DATA" title='enum_server_command::COM_STMT_SEND_LONG_DATA' data-ref="enum_server_command::COM_STMT_SEND_LONG_DATA" >COM_STMT_SEND_LONG_DATA</dfn>, <dfn class="enum" id="enum_server_command::COM_STMT_CLOSE" title='enum_server_command::COM_STMT_CLOSE' data-ref="enum_server_command::COM_STMT_CLOSE" >COM_STMT_CLOSE</dfn>,</td></tr>
+<tr><th id="73">73</th><td>  <dfn class="enum" id="enum_server_command::COM_STMT_RESET" title='enum_server_command::COM_STMT_RESET' data-ref="enum_server_command::COM_STMT_RESET" >COM_STMT_RESET</dfn>, <dfn class="enum" id="enum_server_command::COM_SET_OPTION" title='enum_server_command::COM_SET_OPTION' data-ref="enum_server_command::COM_SET_OPTION" >COM_SET_OPTION</dfn>, <dfn class="enum" id="enum_server_command::COM_STMT_FETCH" title='enum_server_command::COM_STMT_FETCH' data-ref="enum_server_command::COM_STMT_FETCH" >COM_STMT_FETCH</dfn>, <dfn class="enum" id="enum_server_command::COM_DAEMON" title='enum_server_command::COM_DAEMON' data-ref="enum_server_command::COM_DAEMON" >COM_DAEMON</dfn>,</td></tr>
+<tr><th id="74">74</th><td>  <i>/* don't forget to update const char *command_name[] in sql_parse.cc */</i></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>  <i>/* Must be last */</i></td></tr>
+<tr><th id="77">77</th><td>  <dfn class="enum" id="enum_server_command::COM_END" title='enum_server_command::COM_END' data-ref="enum_server_command::COM_END" >COM_END</dfn></td></tr>
+<tr><th id="78">78</th><td>};</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><i>/*</i></td></tr>
+<tr><th id="82">82</th><td><i>  Length of random string sent by server on handshake; this is also length of</i></td></tr>
+<tr><th id="83">83</th><td><i>  obfuscated password, recieved from client</i></td></tr>
+<tr><th id="84">84</th><td><i>*/</i></td></tr>
+<tr><th id="85">85</th><td><u>#define <dfn class="macro" id="_M/SCRAMBLE_LENGTH" data-ref="_M/SCRAMBLE_LENGTH">SCRAMBLE_LENGTH</dfn> 20</u></td></tr>
+<tr><th id="86">86</th><td><u>#define <dfn class="macro" id="_M/SCRAMBLE_LENGTH_323" data-ref="_M/SCRAMBLE_LENGTH_323">SCRAMBLE_LENGTH_323</dfn> 8</u></td></tr>
+<tr><th id="87">87</th><td><i>/* length of password stored in the db: new passwords are preceeded with '*' */</i></td></tr>
+<tr><th id="88">88</th><td><u>#define <dfn class="macro" id="_M/SCRAMBLED_PASSWORD_CHAR_LENGTH" data-ref="_M/SCRAMBLED_PASSWORD_CHAR_LENGTH">SCRAMBLED_PASSWORD_CHAR_LENGTH</dfn> (SCRAMBLE_LENGTH*2+1)</u></td></tr>
+<tr><th id="89">89</th><td><u>#define <dfn class="macro" id="_M/SCRAMBLED_PASSWORD_CHAR_LENGTH_323" data-ref="_M/SCRAMBLED_PASSWORD_CHAR_LENGTH_323">SCRAMBLED_PASSWORD_CHAR_LENGTH_323</dfn> (SCRAMBLE_LENGTH_323*2)</u></td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td><u>#define <dfn class="macro" id="_M/NOT_NULL_FLAG" data-ref="_M/NOT_NULL_FLAG">NOT_NULL_FLAG</dfn>	1		/* Field can't be NULL */</u></td></tr>
+<tr><th id="93">93</th><td><u>#define <dfn class="macro" id="_M/PRI_KEY_FLAG" data-ref="_M/PRI_KEY_FLAG">PRI_KEY_FLAG</dfn>	2		/* Field is part of a primary key */</u></td></tr>
+<tr><th id="94">94</th><td><u>#define <dfn class="macro" id="_M/UNIQUE_KEY_FLAG" data-ref="_M/UNIQUE_KEY_FLAG">UNIQUE_KEY_FLAG</dfn> 4		/* Field is part of a unique key */</u></td></tr>
+<tr><th id="95">95</th><td><u>#define <dfn class="macro" id="_M/MULTIPLE_KEY_FLAG" data-ref="_M/MULTIPLE_KEY_FLAG">MULTIPLE_KEY_FLAG</dfn> 8		/* Field is part of a key */</u></td></tr>
+<tr><th id="96">96</th><td><u>#define <dfn class="macro" id="_M/BLOB_FLAG" data-ref="_M/BLOB_FLAG">BLOB_FLAG</dfn>	16		/* Field is a blob */</u></td></tr>
+<tr><th id="97">97</th><td><u>#define <dfn class="macro" id="_M/UNSIGNED_FLAG" data-ref="_M/UNSIGNED_FLAG">UNSIGNED_FLAG</dfn>	32		/* Field is unsigned */</u></td></tr>
+<tr><th id="98">98</th><td><u>#define <dfn class="macro" id="_M/ZEROFILL_FLAG" data-ref="_M/ZEROFILL_FLAG">ZEROFILL_FLAG</dfn>	64		/* Field is zerofill */</u></td></tr>
+<tr><th id="99">99</th><td><u>#define <dfn class="macro" id="_M/BINARY_FLAG" data-ref="_M/BINARY_FLAG">BINARY_FLAG</dfn>	128		/* Field is binary   */</u></td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><i>/* The following are only sent to new clients */</i></td></tr>
+<tr><th id="102">102</th><td><u>#define <dfn class="macro" id="_M/ENUM_FLAG" data-ref="_M/ENUM_FLAG">ENUM_FLAG</dfn>	256		/* field is an enum */</u></td></tr>
+<tr><th id="103">103</th><td><u>#define <dfn class="macro" id="_M/AUTO_INCREMENT_FLAG" data-ref="_M/AUTO_INCREMENT_FLAG">AUTO_INCREMENT_FLAG</dfn> 512		/* field is a autoincrement field */</u></td></tr>
+<tr><th id="104">104</th><td><u>#define <dfn class="macro" id="_M/TIMESTAMP_FLAG" data-ref="_M/TIMESTAMP_FLAG">TIMESTAMP_FLAG</dfn>	1024		/* Field is a timestamp */</u></td></tr>
+<tr><th id="105">105</th><td><u>#define <dfn class="macro" id="_M/SET_FLAG" data-ref="_M/SET_FLAG">SET_FLAG</dfn>	2048		/* field is a set */</u></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/NO_DEFAULT_VALUE_FLAG" data-ref="_M/NO_DEFAULT_VALUE_FLAG">NO_DEFAULT_VALUE_FLAG</dfn> 4096	/* Field doesn't have default value */</u></td></tr>
+<tr><th id="107">107</th><td><u>#define <dfn class="macro" id="_M/ON_UPDATE_NOW_FLAG" data-ref="_M/ON_UPDATE_NOW_FLAG">ON_UPDATE_NOW_FLAG</dfn> 8192         /* Field is set to NOW on UPDATE */</u></td></tr>
+<tr><th id="108">108</th><td><u>#define <dfn class="macro" id="_M/NUM_FLAG" data-ref="_M/NUM_FLAG">NUM_FLAG</dfn>	32768		/* Field is num (for clients) */</u></td></tr>
+<tr><th id="109">109</th><td><u>#define <dfn class="macro" id="_M/PART_KEY_FLAG" data-ref="_M/PART_KEY_FLAG">PART_KEY_FLAG</dfn>	16384		/* Intern; Part of some key */</u></td></tr>
+<tr><th id="110">110</th><td><u>#define <dfn class="macro" id="_M/GROUP_FLAG" data-ref="_M/GROUP_FLAG">GROUP_FLAG</dfn>	32768		/* Intern: Group field */</u></td></tr>
+<tr><th id="111">111</th><td><u>#define <dfn class="macro" id="_M/UNIQUE_FLAG" data-ref="_M/UNIQUE_FLAG">UNIQUE_FLAG</dfn>	65536		/* Intern: Used by sql_yacc */</u></td></tr>
+<tr><th id="112">112</th><td><u>#define <dfn class="macro" id="_M/BINCMP_FLAG" data-ref="_M/BINCMP_FLAG">BINCMP_FLAG</dfn>	131072		/* Intern: Used by sql_yacc */</u></td></tr>
+<tr><th id="113">113</th><td><u>#define <dfn class="macro" id="_M/GET_FIXED_FIELDS_FLAG" data-ref="_M/GET_FIXED_FIELDS_FLAG">GET_FIXED_FIELDS_FLAG</dfn> (1 &lt;&lt; 18) /* Used to get fields in item tree */</u></td></tr>
+<tr><th id="114">114</th><td><u>#define <dfn class="macro" id="_M/FIELD_IN_PART_FUNC_FLAG" data-ref="_M/FIELD_IN_PART_FUNC_FLAG">FIELD_IN_PART_FUNC_FLAG</dfn> (1 &lt;&lt; 19)/* Field part of partition func */</u></td></tr>
+<tr><th id="115">115</th><td><u>#define <dfn class="macro" id="_M/FIELD_IN_ADD_INDEX" data-ref="_M/FIELD_IN_ADD_INDEX">FIELD_IN_ADD_INDEX</dfn> (1&lt;&lt; 20)	/* Intern: Field used in ADD INDEX */</u></td></tr>
+<tr><th id="116">116</th><td><u>#define <dfn class="macro" id="_M/FIELD_IS_RENAMED" data-ref="_M/FIELD_IS_RENAMED">FIELD_IS_RENAMED</dfn> (1&lt;&lt; 21)       /* Intern: Field is being renamed */</u></td></tr>
+<tr><th id="117">117</th><td><u>#define <dfn class="macro" id="_M/FIELD_FLAGS_STORAGE_MEDIA" data-ref="_M/FIELD_FLAGS_STORAGE_MEDIA">FIELD_FLAGS_STORAGE_MEDIA</dfn> 22    /* Field storage media, bit 22-23,</u></td></tr>
+<tr><th id="118">118</th><td><u>                                           reserved by MySQL Cluster */</u></td></tr>
+<tr><th id="119">119</th><td><u>#define <dfn class="macro" id="_M/FIELD_FLAGS_COLUMN_FORMAT" data-ref="_M/FIELD_FLAGS_COLUMN_FORMAT">FIELD_FLAGS_COLUMN_FORMAT</dfn> 24    /* Field column format, bit 24-25,</u></td></tr>
+<tr><th id="120">120</th><td><u>                                           reserved by MySQL Cluster */</u></td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td><u>#define <dfn class="macro" id="_M/REFRESH_GRANT" data-ref="_M/REFRESH_GRANT">REFRESH_GRANT</dfn>		1	/* Refresh grant tables */</u></td></tr>
+<tr><th id="123">123</th><td><u>#define <dfn class="macro" id="_M/REFRESH_LOG" data-ref="_M/REFRESH_LOG">REFRESH_LOG</dfn>		2	/* Start on new log file */</u></td></tr>
+<tr><th id="124">124</th><td><u>#define <dfn class="macro" id="_M/REFRESH_TABLES" data-ref="_M/REFRESH_TABLES">REFRESH_TABLES</dfn>		4	/* close all tables */</u></td></tr>
+<tr><th id="125">125</th><td><u>#define <dfn class="macro" id="_M/REFRESH_HOSTS" data-ref="_M/REFRESH_HOSTS">REFRESH_HOSTS</dfn>		8	/* Flush host cache */</u></td></tr>
+<tr><th id="126">126</th><td><u>#define <dfn class="macro" id="_M/REFRESH_STATUS" data-ref="_M/REFRESH_STATUS">REFRESH_STATUS</dfn>		16	/* Flush status variables */</u></td></tr>
+<tr><th id="127">127</th><td><u>#define <dfn class="macro" id="_M/REFRESH_THREADS" data-ref="_M/REFRESH_THREADS">REFRESH_THREADS</dfn>		32	/* Flush thread cache */</u></td></tr>
+<tr><th id="128">128</th><td><u>#define <dfn class="macro" id="_M/REFRESH_SLAVE" data-ref="_M/REFRESH_SLAVE">REFRESH_SLAVE</dfn>           64      /* Reset master info and restart slave</u></td></tr>
+<tr><th id="129">129</th><td><u>					   thread */</u></td></tr>
+<tr><th id="130">130</th><td><u>#define <dfn class="macro" id="_M/REFRESH_MASTER" data-ref="_M/REFRESH_MASTER">REFRESH_MASTER</dfn>          128     /* Remove all bin logs in the index</u></td></tr>
+<tr><th id="131">131</th><td><u>					   and truncate the index */</u></td></tr>
+<tr><th id="132">132</th><td><u>#define <dfn class="macro" id="_M/REFRESH_ERROR_LOG" data-ref="_M/REFRESH_ERROR_LOG">REFRESH_ERROR_LOG</dfn>       256 /* Rotate only the erorr log */</u></td></tr>
+<tr><th id="133">133</th><td><u>#define <dfn class="macro" id="_M/REFRESH_ENGINE_LOG" data-ref="_M/REFRESH_ENGINE_LOG">REFRESH_ENGINE_LOG</dfn>      512 /* Flush all storage engine logs */</u></td></tr>
+<tr><th id="134">134</th><td><u>#define <dfn class="macro" id="_M/REFRESH_BINARY_LOG" data-ref="_M/REFRESH_BINARY_LOG">REFRESH_BINARY_LOG</dfn>     1024 /* Flush the binary log */</u></td></tr>
+<tr><th id="135">135</th><td><u>#define <dfn class="macro" id="_M/REFRESH_RELAY_LOG" data-ref="_M/REFRESH_RELAY_LOG">REFRESH_RELAY_LOG</dfn>      2048 /* Flush the relay log */</u></td></tr>
+<tr><th id="136">136</th><td><u>#define <dfn class="macro" id="_M/REFRESH_GENERAL_LOG" data-ref="_M/REFRESH_GENERAL_LOG">REFRESH_GENERAL_LOG</dfn>    4096 /* Flush the general log */</u></td></tr>
+<tr><th id="137">137</th><td><u>#define <dfn class="macro" id="_M/REFRESH_SLOW_LOG" data-ref="_M/REFRESH_SLOW_LOG">REFRESH_SLOW_LOG</dfn>       8192 /* Flush the slow query log */</u></td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><i>/* The following can't be set with mysql_refresh() */</i></td></tr>
+<tr><th id="140">140</th><td><u>#define <dfn class="macro" id="_M/REFRESH_READ_LOCK" data-ref="_M/REFRESH_READ_LOCK">REFRESH_READ_LOCK</dfn>	16384	/* Lock tables for read */</u></td></tr>
+<tr><th id="141">141</th><td><u>#define <dfn class="macro" id="_M/REFRESH_FAST" data-ref="_M/REFRESH_FAST">REFRESH_FAST</dfn>		32768	/* Intern flag */</u></td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><i>/* RESET (remove all queries) from query cache */</i></td></tr>
+<tr><th id="144">144</th><td><u>#define <dfn class="macro" id="_M/REFRESH_QUERY_CACHE" data-ref="_M/REFRESH_QUERY_CACHE">REFRESH_QUERY_CACHE</dfn>	65536</u></td></tr>
+<tr><th id="145">145</th><td><u>#define <dfn class="macro" id="_M/REFRESH_QUERY_CACHE_FREE" data-ref="_M/REFRESH_QUERY_CACHE_FREE">REFRESH_QUERY_CACHE_FREE</dfn> 0x20000L /* pack query cache */</u></td></tr>
+<tr><th id="146">146</th><td><u>#define <dfn class="macro" id="_M/REFRESH_DES_KEY_FILE" data-ref="_M/REFRESH_DES_KEY_FILE">REFRESH_DES_KEY_FILE</dfn>	0x40000L</u></td></tr>
+<tr><th id="147">147</th><td><u>#define <dfn class="macro" id="_M/REFRESH_USER_RESOURCES" data-ref="_M/REFRESH_USER_RESOURCES">REFRESH_USER_RESOURCES</dfn>	0x80000L</u></td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td><u>#define <dfn class="macro" id="_M/CLIENT_LONG_PASSWORD" data-ref="_M/CLIENT_LONG_PASSWORD">CLIENT_LONG_PASSWORD</dfn>	1	/* new more secure passwords */</u></td></tr>
+<tr><th id="150">150</th><td><u>#define <dfn class="macro" id="_M/CLIENT_FOUND_ROWS" data-ref="_M/CLIENT_FOUND_ROWS">CLIENT_FOUND_ROWS</dfn>	2	/* Found instead of affected rows */</u></td></tr>
+<tr><th id="151">151</th><td><u>#define <dfn class="macro" id="_M/CLIENT_LONG_FLAG" data-ref="_M/CLIENT_LONG_FLAG">CLIENT_LONG_FLAG</dfn>	4	/* Get all column flags */</u></td></tr>
+<tr><th id="152">152</th><td><u>#define <dfn class="macro" id="_M/CLIENT_CONNECT_WITH_DB" data-ref="_M/CLIENT_CONNECT_WITH_DB">CLIENT_CONNECT_WITH_DB</dfn>	8	/* One can specify db on connect */</u></td></tr>
+<tr><th id="153">153</th><td><u>#define <dfn class="macro" id="_M/CLIENT_NO_SCHEMA" data-ref="_M/CLIENT_NO_SCHEMA">CLIENT_NO_SCHEMA</dfn>	16	/* Don't allow database.table.column */</u></td></tr>
+<tr><th id="154">154</th><td><u>#define <dfn class="macro" id="_M/CLIENT_COMPRESS" data-ref="_M/CLIENT_COMPRESS">CLIENT_COMPRESS</dfn>		32	/* Can use compression protocol */</u></td></tr>
+<tr><th id="155">155</th><td><u>#define <dfn class="macro" id="_M/CLIENT_ODBC" data-ref="_M/CLIENT_ODBC">CLIENT_ODBC</dfn>		64	/* Odbc client */</u></td></tr>
+<tr><th id="156">156</th><td><u>#define <dfn class="macro" id="_M/CLIENT_LOCAL_FILES" data-ref="_M/CLIENT_LOCAL_FILES">CLIENT_LOCAL_FILES</dfn>	128	/* Can use LOAD DATA LOCAL */</u></td></tr>
+<tr><th id="157">157</th><td><u>#define <dfn class="macro" id="_M/CLIENT_IGNORE_SPACE" data-ref="_M/CLIENT_IGNORE_SPACE">CLIENT_IGNORE_SPACE</dfn>	256	/* Ignore spaces before '(' */</u></td></tr>
+<tr><th id="158">158</th><td><u>#define <dfn class="macro" id="_M/CLIENT_PROTOCOL_41" data-ref="_M/CLIENT_PROTOCOL_41">CLIENT_PROTOCOL_41</dfn>	512	/* New 4.1 protocol */</u></td></tr>
+<tr><th id="159">159</th><td><u>#define <dfn class="macro" id="_M/CLIENT_INTERACTIVE" data-ref="_M/CLIENT_INTERACTIVE">CLIENT_INTERACTIVE</dfn>	1024	/* This is an interactive client */</u></td></tr>
+<tr><th id="160">160</th><td><u>#define <dfn class="macro" id="_M/CLIENT_SSL" data-ref="_M/CLIENT_SSL">CLIENT_SSL</dfn>              2048	/* Switch to SSL after handshake */</u></td></tr>
+<tr><th id="161">161</th><td><u>#define <dfn class="macro" id="_M/CLIENT_IGNORE_SIGPIPE" data-ref="_M/CLIENT_IGNORE_SIGPIPE">CLIENT_IGNORE_SIGPIPE</dfn>   4096    /* IGNORE sigpipes */</u></td></tr>
+<tr><th id="162">162</th><td><u>#define <dfn class="macro" id="_M/CLIENT_TRANSACTIONS" data-ref="_M/CLIENT_TRANSACTIONS">CLIENT_TRANSACTIONS</dfn>	8192	/* Client knows about transactions */</u></td></tr>
+<tr><th id="163">163</th><td><u>#define <dfn class="macro" id="_M/CLIENT_RESERVED" data-ref="_M/CLIENT_RESERVED">CLIENT_RESERVED</dfn>         16384   /* Old flag for 4.1 protocol  */</u></td></tr>
+<tr><th id="164">164</th><td><u>#define <dfn class="macro" id="_M/CLIENT_SECURE_CONNECTION" data-ref="_M/CLIENT_SECURE_CONNECTION">CLIENT_SECURE_CONNECTION</dfn> 32768  /* New 4.1 authentication */</u></td></tr>
+<tr><th id="165">165</th><td><u>#define <dfn class="macro" id="_M/CLIENT_MULTI_STATEMENTS" data-ref="_M/CLIENT_MULTI_STATEMENTS">CLIENT_MULTI_STATEMENTS</dfn> (1UL &lt;&lt; 16) /* Enable/disable multi-stmt support */</u></td></tr>
+<tr><th id="166">166</th><td><u>#define <dfn class="macro" id="_M/CLIENT_MULTI_RESULTS" data-ref="_M/CLIENT_MULTI_RESULTS">CLIENT_MULTI_RESULTS</dfn>    (1UL &lt;&lt; 17) /* Enable/disable multi-results */</u></td></tr>
+<tr><th id="167">167</th><td><u>#define <dfn class="macro" id="_M/CLIENT_PS_MULTI_RESULTS" data-ref="_M/CLIENT_PS_MULTI_RESULTS">CLIENT_PS_MULTI_RESULTS</dfn> (1UL &lt;&lt; 18) /* Multi-results in PS-protocol */</u></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td><u>#define <dfn class="macro" id="_M/CLIENT_PLUGIN_AUTH" data-ref="_M/CLIENT_PLUGIN_AUTH">CLIENT_PLUGIN_AUTH</dfn>  (1UL &lt;&lt; 19) /* Client supports plugin authentication */</u></td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td><u>#define <dfn class="macro" id="_M/CLIENT_SSL_VERIFY_SERVER_CERT" data-ref="_M/CLIENT_SSL_VERIFY_SERVER_CERT">CLIENT_SSL_VERIFY_SERVER_CERT</dfn> (1UL &lt;&lt; 30)</u></td></tr>
+<tr><th id="172">172</th><td><u>#define <dfn class="macro" id="_M/CLIENT_REMEMBER_OPTIONS" data-ref="_M/CLIENT_REMEMBER_OPTIONS">CLIENT_REMEMBER_OPTIONS</dfn> (1UL &lt;&lt; 31)</u></td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td><u>#<span data-ppcond="174">ifdef</span> <span class="macro" data-ref="_M/HAVE_COMPRESS">HAVE_COMPRESS</span></u></td></tr>
+<tr><th id="175">175</th><td><u>#define CAN_CLIENT_COMPRESS CLIENT_COMPRESS</u></td></tr>
+<tr><th id="176">176</th><td><u>#<span data-ppcond="174">else</span></u></td></tr>
+<tr><th id="177">177</th><td><u>#define <dfn class="macro" id="_M/CAN_CLIENT_COMPRESS" data-ref="_M/CAN_CLIENT_COMPRESS">CAN_CLIENT_COMPRESS</dfn> 0</u></td></tr>
+<tr><th id="178">178</th><td><u>#<span data-ppcond="174">endif</span></u></td></tr>
+<tr><th id="179">179</th><td></td></tr>
+<tr><th id="180">180</th><td><i>/* Gather all possible capabilites (flags) supported by the server */</i></td></tr>
+<tr><th id="181">181</th><td><u>#define <dfn class="macro" id="_M/CLIENT_ALL_FLAGS" data-ref="_M/CLIENT_ALL_FLAGS">CLIENT_ALL_FLAGS</dfn>  (CLIENT_LONG_PASSWORD | \</u></td></tr>
+<tr><th id="182">182</th><td><u>                           CLIENT_FOUND_ROWS | \</u></td></tr>
+<tr><th id="183">183</th><td><u>                           CLIENT_LONG_FLAG | \</u></td></tr>
+<tr><th id="184">184</th><td><u>                           CLIENT_CONNECT_WITH_DB | \</u></td></tr>
+<tr><th id="185">185</th><td><u>                           CLIENT_NO_SCHEMA | \</u></td></tr>
+<tr><th id="186">186</th><td><u>                           CLIENT_COMPRESS | \</u></td></tr>
+<tr><th id="187">187</th><td><u>                           CLIENT_ODBC | \</u></td></tr>
+<tr><th id="188">188</th><td><u>                           CLIENT_LOCAL_FILES | \</u></td></tr>
+<tr><th id="189">189</th><td><u>                           CLIENT_IGNORE_SPACE | \</u></td></tr>
+<tr><th id="190">190</th><td><u>                           CLIENT_PROTOCOL_41 | \</u></td></tr>
+<tr><th id="191">191</th><td><u>                           CLIENT_INTERACTIVE | \</u></td></tr>
+<tr><th id="192">192</th><td><u>                           CLIENT_SSL | \</u></td></tr>
+<tr><th id="193">193</th><td><u>                           CLIENT_IGNORE_SIGPIPE | \</u></td></tr>
+<tr><th id="194">194</th><td><u>                           CLIENT_TRANSACTIONS | \</u></td></tr>
+<tr><th id="195">195</th><td><u>                           CLIENT_RESERVED | \</u></td></tr>
+<tr><th id="196">196</th><td><u>                           CLIENT_SECURE_CONNECTION | \</u></td></tr>
+<tr><th id="197">197</th><td><u>                           CLIENT_MULTI_STATEMENTS | \</u></td></tr>
+<tr><th id="198">198</th><td><u>                           CLIENT_MULTI_RESULTS | \</u></td></tr>
+<tr><th id="199">199</th><td><u>                           CLIENT_PS_MULTI_RESULTS | \</u></td></tr>
+<tr><th id="200">200</th><td><u>                           CLIENT_SSL_VERIFY_SERVER_CERT | \</u></td></tr>
+<tr><th id="201">201</th><td><u>                           CLIENT_REMEMBER_OPTIONS | \</u></td></tr>
+<tr><th id="202">202</th><td><u>                           CLIENT_PLUGIN_AUTH)</u></td></tr>
+<tr><th id="203">203</th><td></td></tr>
+<tr><th id="204">204</th><td><i>/*</i></td></tr>
+<tr><th id="205">205</th><td><i>  Switch off the flags that are optional and depending on build flags</i></td></tr>
+<tr><th id="206">206</th><td><i>  If any of the optional flags is supported by the build it will be switched</i></td></tr>
+<tr><th id="207">207</th><td><i>  on before sending to the client during the connection handshake.</i></td></tr>
+<tr><th id="208">208</th><td><i>*/</i></td></tr>
+<tr><th id="209">209</th><td><u>#define <dfn class="macro" id="_M/CLIENT_BASIC_FLAGS" data-ref="_M/CLIENT_BASIC_FLAGS">CLIENT_BASIC_FLAGS</dfn> (((CLIENT_ALL_FLAGS &amp; ~CLIENT_SSL) \</u></td></tr>
+<tr><th id="210">210</th><td><u>                                               &amp; ~CLIENT_COMPRESS) \</u></td></tr>
+<tr><th id="211">211</th><td><u>                                               &amp; ~CLIENT_SSL_VERIFY_SERVER_CERT)</u></td></tr>
+<tr><th id="212">212</th><td></td></tr>
+<tr><th id="213">213</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="214">214</th><td><i class="doc">  Is raised when a multi-statement transaction</i></td></tr>
+<tr><th id="215">215</th><td><i class="doc">  has been started, either explicitly, by means</i></td></tr>
+<tr><th id="216">216</th><td><i class="doc">  of BEGIN or COMMIT AND CHAIN, or</i></td></tr>
+<tr><th id="217">217</th><td><i class="doc">  implicitly, by the first transactional</i></td></tr>
+<tr><th id="218">218</th><td><i class="doc">  statement, when autocommit=off.</i></td></tr>
+<tr><th id="219">219</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="220">220</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_IN_TRANS" data-ref="_M/SERVER_STATUS_IN_TRANS">SERVER_STATUS_IN_TRANS</dfn>     1</u></td></tr>
+<tr><th id="221">221</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_AUTOCOMMIT" data-ref="_M/SERVER_STATUS_AUTOCOMMIT">SERVER_STATUS_AUTOCOMMIT</dfn>   2	/* Server in auto_commit mode */</u></td></tr>
+<tr><th id="222">222</th><td><u>#define <dfn class="macro" id="_M/SERVER_MORE_RESULTS_EXISTS" data-ref="_M/SERVER_MORE_RESULTS_EXISTS">SERVER_MORE_RESULTS_EXISTS</dfn> 8    /* Multi query - next query exists */</u></td></tr>
+<tr><th id="223">223</th><td><u>#define <dfn class="macro" id="_M/SERVER_QUERY_NO_GOOD_INDEX_USED" data-ref="_M/SERVER_QUERY_NO_GOOD_INDEX_USED">SERVER_QUERY_NO_GOOD_INDEX_USED</dfn> 16</u></td></tr>
+<tr><th id="224">224</th><td><u>#define <dfn class="macro" id="_M/SERVER_QUERY_NO_INDEX_USED" data-ref="_M/SERVER_QUERY_NO_INDEX_USED">SERVER_QUERY_NO_INDEX_USED</dfn>      32</u></td></tr>
+<tr><th id="225">225</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="226">226</th><td><i class="doc">  The server was able to fulfill the clients request and opened a</i></td></tr>
+<tr><th id="227">227</th><td><i class="doc">  read-only non-scrollable cursor for a query. This flag comes</i></td></tr>
+<tr><th id="228">228</th><td><i class="doc">  in reply to COM_STMT_EXECUTE and COM_STMT_FETCH commands.</i></td></tr>
+<tr><th id="229">229</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="230">230</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_CURSOR_EXISTS" data-ref="_M/SERVER_STATUS_CURSOR_EXISTS">SERVER_STATUS_CURSOR_EXISTS</dfn> 64</u></td></tr>
+<tr><th id="231">231</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="232">232</th><td><i class="doc">  This flag is sent when a read-only cursor is exhausted, in reply to</i></td></tr>
+<tr><th id="233">233</th><td><i class="doc">  COM_STMT_FETCH command.</i></td></tr>
+<tr><th id="234">234</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="235">235</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_LAST_ROW_SENT" data-ref="_M/SERVER_STATUS_LAST_ROW_SENT">SERVER_STATUS_LAST_ROW_SENT</dfn> 128</u></td></tr>
+<tr><th id="236">236</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_DB_DROPPED" data-ref="_M/SERVER_STATUS_DB_DROPPED">SERVER_STATUS_DB_DROPPED</dfn>        256 /* A database was dropped */</u></td></tr>
+<tr><th id="237">237</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_NO_BACKSLASH_ESCAPES" data-ref="_M/SERVER_STATUS_NO_BACKSLASH_ESCAPES">SERVER_STATUS_NO_BACKSLASH_ESCAPES</dfn> 512</u></td></tr>
+<tr><th id="238">238</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="239">239</th><td><i class="doc">  Sent to the client if after a prepared statement reprepare</i></td></tr>
+<tr><th id="240">240</th><td><i class="doc">  we discovered that the new statement returns a different </i></td></tr>
+<tr><th id="241">241</th><td><i class="doc">  number of result set columns.</i></td></tr>
+<tr><th id="242">242</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="243">243</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_METADATA_CHANGED" data-ref="_M/SERVER_STATUS_METADATA_CHANGED">SERVER_STATUS_METADATA_CHANGED</dfn> 1024</u></td></tr>
+<tr><th id="244">244</th><td><u>#define <dfn class="macro" id="_M/SERVER_QUERY_WAS_SLOW" data-ref="_M/SERVER_QUERY_WAS_SLOW">SERVER_QUERY_WAS_SLOW</dfn>          2048</u></td></tr>
+<tr><th id="245">245</th><td></td></tr>
+<tr><th id="246">246</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="247">247</th><td><i class="doc">  To mark ResultSet containing output parameter values.</i></td></tr>
+<tr><th id="248">248</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="249">249</th><td><u>#define <dfn class="macro" id="_M/SERVER_PS_OUT_PARAMS" data-ref="_M/SERVER_PS_OUT_PARAMS">SERVER_PS_OUT_PARAMS</dfn>            4096</u></td></tr>
+<tr><th id="250">250</th><td></td></tr>
+<tr><th id="251">251</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="252">252</th><td><i class="doc">  Server status flags that must be cleared when starting</i></td></tr>
+<tr><th id="253">253</th><td><i class="doc">  execution of a new SQL statement.</i></td></tr>
+<tr><th id="254">254</th><td><i class="doc">  Flags from this set are only added to the</i></td></tr>
+<tr><th id="255">255</th><td><i class="doc">  current server status by the execution engine, but </i></td></tr>
+<tr><th id="256">256</th><td><i class="doc">  never removed -- the execution engine expects them </i></td></tr>
+<tr><th id="257">257</th><td><i class="doc">  to disappear automagically by the next command.</i></td></tr>
+<tr><th id="258">258</th><td><i class="doc">*/</i></td></tr>
+<tr><th id="259">259</th><td><u>#define <dfn class="macro" id="_M/SERVER_STATUS_CLEAR_SET" data-ref="_M/SERVER_STATUS_CLEAR_SET">SERVER_STATUS_CLEAR_SET</dfn> (SERVER_QUERY_NO_GOOD_INDEX_USED| \</u></td></tr>
+<tr><th id="260">260</th><td><u>                                 SERVER_QUERY_NO_INDEX_USED|\</u></td></tr>
+<tr><th id="261">261</th><td><u>                                 SERVER_MORE_RESULTS_EXISTS|\</u></td></tr>
+<tr><th id="262">262</th><td><u>                                 SERVER_STATUS_METADATA_CHANGED |\</u></td></tr>
+<tr><th id="263">263</th><td><u>                                 SERVER_QUERY_WAS_SLOW |\</u></td></tr>
+<tr><th id="264">264</th><td><u>                                 SERVER_STATUS_DB_DROPPED |\</u></td></tr>
+<tr><th id="265">265</th><td><u>                                 SERVER_STATUS_CURSOR_EXISTS|\</u></td></tr>
+<tr><th id="266">266</th><td><u>                                 SERVER_STATUS_LAST_ROW_SENT)</u></td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td><u>#define <dfn class="macro" id="_M/MYSQL_ERRMSG_SIZE" data-ref="_M/MYSQL_ERRMSG_SIZE">MYSQL_ERRMSG_SIZE</dfn>	512</u></td></tr>
+<tr><th id="269">269</th><td><u>#define <dfn class="macro" id="_M/NET_READ_TIMEOUT" data-ref="_M/NET_READ_TIMEOUT">NET_READ_TIMEOUT</dfn>	30		/* Timeout on read */</u></td></tr>
+<tr><th id="270">270</th><td><u>#define <dfn class="macro" id="_M/NET_WRITE_TIMEOUT" data-ref="_M/NET_WRITE_TIMEOUT">NET_WRITE_TIMEOUT</dfn>	60		/* Timeout on write */</u></td></tr>
+<tr><th id="271">271</th><td><u>#define <dfn class="macro" id="_M/NET_WAIT_TIMEOUT" data-ref="_M/NET_WAIT_TIMEOUT">NET_WAIT_TIMEOUT</dfn>	8*60*60		/* Wait for new query */</u></td></tr>
+<tr><th id="272">272</th><td></td></tr>
+<tr><th id="273">273</th><td><u>#define <dfn class="macro" id="_M/ONLY_KILL_QUERY" data-ref="_M/ONLY_KILL_QUERY">ONLY_KILL_QUERY</dfn>         1</u></td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td></td></tr>
+<tr><th id="276">276</th><td><b>struct</b> <dfn class="type" id="st_vio" title='st_vio' data-ref="st_vio" >st_vio</dfn>;					<i>/* Only C */</i></td></tr>
+<tr><th id="277">277</th><td><b>typedef</b> <b>struct</b> <a class="type" href="#st_vio" title='st_vio' data-ref="st_vio" >st_vio</a> <dfn class="typedef" id="Vio" title='Vio' data-type='struct st_vio' data-ref="Vio" >Vio</dfn>;</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td><u>#define <dfn class="macro" id="_M/MAX_TINYINT_WIDTH" data-ref="_M/MAX_TINYINT_WIDTH">MAX_TINYINT_WIDTH</dfn>       3       /* Max width for a TINY w.o. sign */</u></td></tr>
+<tr><th id="280">280</th><td><u>#define <dfn class="macro" id="_M/MAX_SMALLINT_WIDTH" data-ref="_M/MAX_SMALLINT_WIDTH">MAX_SMALLINT_WIDTH</dfn>      5       /* Max width for a SHORT w.o. sign */</u></td></tr>
+<tr><th id="281">281</th><td><u>#define <dfn class="macro" id="_M/MAX_MEDIUMINT_WIDTH" data-ref="_M/MAX_MEDIUMINT_WIDTH">MAX_MEDIUMINT_WIDTH</dfn>     8       /* Max width for a INT24 w.o. sign */</u></td></tr>
+<tr><th id="282">282</th><td><u>#define <dfn class="macro" id="_M/MAX_INT_WIDTH" data-ref="_M/MAX_INT_WIDTH">MAX_INT_WIDTH</dfn>           10      /* Max width for a LONG w.o. sign */</u></td></tr>
+<tr><th id="283">283</th><td><u>#define <dfn class="macro" id="_M/MAX_BIGINT_WIDTH" data-ref="_M/MAX_BIGINT_WIDTH">MAX_BIGINT_WIDTH</dfn>        20      /* Max width for a LONGLONG */</u></td></tr>
+<tr><th id="284">284</th><td><u>#define <dfn class="macro" id="_M/MAX_CHAR_WIDTH" data-ref="_M/MAX_CHAR_WIDTH">MAX_CHAR_WIDTH</dfn>		255	/* Max length for a CHAR colum */</u></td></tr>
+<tr><th id="285">285</th><td><u>#define <dfn class="macro" id="_M/MAX_BLOB_WIDTH" data-ref="_M/MAX_BLOB_WIDTH">MAX_BLOB_WIDTH</dfn>		16777216	/* Default width for blob */</u></td></tr>
+<tr><th id="286">286</th><td></td></tr>
+<tr><th id="287">287</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="st_net" title='st_net' data-ref="st_net" ><a class="type" href="#st_net" title='st_net' data-ref="st_net" >st_net</a></dfn> {</td></tr>
+<tr><th id="288">288</th><td><u>#<span data-ppcond="288">if</span> !defined(<span class="macro" data-ref="_M/CHECK_EMBEDDED_DIFFERENCES">CHECK_EMBEDDED_DIFFERENCES</span>) || !defined(<span class="macro" data-ref="_M/EMBEDDED_LIBRARY">EMBEDDED_LIBRARY</span>)</u></td></tr>
+<tr><th id="289">289</th><td>  <a class="typedef" href="#Vio" title='Vio' data-type='struct st_vio' data-ref="Vio" >Vio</a> *<dfn class="decl" id="st_net::vio" title='st_net::vio' data-ref="st_net::vio" >vio</dfn>;</td></tr>
+<tr><th id="290">290</th><td>  <em>unsigned</em> <em>char</em> *<dfn class="decl" id="st_net::buff" title='st_net::buff' data-ref="st_net::buff" >buff</dfn>,*<dfn class="decl" id="st_net::buff_end" title='st_net::buff_end' data-ref="st_net::buff_end" >buff_end</dfn>,*<dfn class="decl" id="st_net::write_pos" title='st_net::write_pos' data-ref="st_net::write_pos" >write_pos</dfn>,*<dfn class="decl" id="st_net::read_pos" title='st_net::read_pos' data-ref="st_net::read_pos" >read_pos</dfn>;</td></tr>
+<tr><th id="291">291</th><td>  <a class="typedef" href="mysql.h.html#my_socket" title='my_socket' data-type='int' data-ref="my_socket" >my_socket</a> <dfn class="decl" id="st_net::fd" title='st_net::fd' data-ref="st_net::fd" >fd</dfn>;					<i>/* For Perl DBI/dbd */</i></td></tr>
+<tr><th id="292">292</th><td>  <i>/*</i></td></tr>
+<tr><th id="293">293</th><td><i>    The following variable is set if we are doing several queries in one</i></td></tr>
+<tr><th id="294">294</th><td><i>    command ( as in LOAD TABLE ... FROM MASTER ),</i></td></tr>
+<tr><th id="295">295</th><td><i>    and do not want to confuse the client with OK at the wrong time</i></td></tr>
+<tr><th id="296">296</th><td><i>  */</i></td></tr>
+<tr><th id="297">297</th><td>  <em>unsigned</em> <em>long</em> <dfn class="decl" id="st_net::remain_in_buf" title='st_net::remain_in_buf' data-ref="st_net::remain_in_buf" >remain_in_buf</dfn>,<dfn class="decl" id="st_net::length" title='st_net::length' data-ref="st_net::length" >length</dfn>, <dfn class="decl" id="st_net::buf_length" title='st_net::buf_length' data-ref="st_net::buf_length" >buf_length</dfn>, <dfn class="decl" id="st_net::where_b" title='st_net::where_b' data-ref="st_net::where_b" >where_b</dfn>;</td></tr>
+<tr><th id="298">298</th><td>  <em>unsigned</em> <em>long</em> <dfn class="decl" id="st_net::max_packet" title='st_net::max_packet' data-ref="st_net::max_packet" >max_packet</dfn>,<dfn class="decl" id="st_net::max_packet_size" title='st_net::max_packet_size' data-ref="st_net::max_packet_size" >max_packet_size</dfn>;</td></tr>
+<tr><th id="299">299</th><td>  <em>unsigned</em> <em>int</em> <dfn class="decl" id="st_net::pkt_nr" title='st_net::pkt_nr' data-ref="st_net::pkt_nr" >pkt_nr</dfn>,<dfn class="decl" id="st_net::compress_pkt_nr" title='st_net::compress_pkt_nr' data-ref="st_net::compress_pkt_nr" >compress_pkt_nr</dfn>;</td></tr>
+<tr><th id="300">300</th><td>  <em>unsigned</em> <em>int</em> <dfn class="decl" id="st_net::write_timeout" title='st_net::write_timeout' data-ref="st_net::write_timeout" >write_timeout</dfn>, <dfn class="decl" id="st_net::read_timeout" title='st_net::read_timeout' data-ref="st_net::read_timeout" >read_timeout</dfn>, <dfn class="decl" id="st_net::retry_count" title='st_net::retry_count' data-ref="st_net::retry_count" >retry_count</dfn>;</td></tr>
+<tr><th id="301">301</th><td>  <em>int</em> <dfn class="decl" id="st_net::fcntl" title='st_net::fcntl' data-ref="st_net::fcntl" >fcntl</dfn>;</td></tr>
+<tr><th id="302">302</th><td>  <em>unsigned</em> <em>int</em> *<dfn class="decl" id="st_net::return_status" title='st_net::return_status' data-ref="st_net::return_status" >return_status</dfn>;</td></tr>
+<tr><th id="303">303</th><td>  <em>unsigned</em> <em>char</em> <dfn class="decl" id="st_net::reading_or_writing" title='st_net::reading_or_writing' data-ref="st_net::reading_or_writing" >reading_or_writing</dfn>;</td></tr>
+<tr><th id="304">304</th><td>  <em>char</em> <dfn class="decl" id="st_net::save_char" title='st_net::save_char' data-ref="st_net::save_char" >save_char</dfn>;</td></tr>
+<tr><th id="305">305</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_net::unused1" title='st_net::unused1' data-ref="st_net::unused1" >unused1</dfn>; <i>/* Please remove with the next incompatible ABI change. */</i></td></tr>
+<tr><th id="306">306</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_net::unused2" title='st_net::unused2' data-ref="st_net::unused2" >unused2</dfn>; <i>/* Please remove with the next incompatible ABI change */</i></td></tr>
+<tr><th id="307">307</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_net::compress" title='st_net::compress' data-ref="st_net::compress" >compress</dfn>;</td></tr>
+<tr><th id="308">308</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_net::unused3" title='st_net::unused3' data-ref="st_net::unused3" >unused3</dfn>; <i>/* Please remove with the next incompatible ABI change. */</i></td></tr>
+<tr><th id="309">309</th><td>  <i>/*</i></td></tr>
+<tr><th id="310">310</th><td><i>    Pointer to query object in query cache, do not equal NULL (0) for</i></td></tr>
+<tr><th id="311">311</th><td><i>    queries in cache that have not stored its results yet</i></td></tr>
+<tr><th id="312">312</th><td><i>  */</i></td></tr>
+<tr><th id="313">313</th><td><u>#<span data-ppcond="288">endif</span></u></td></tr>
+<tr><th id="314">314</th><td>  <i>/*</i></td></tr>
+<tr><th id="315">315</th><td><i>    Unused, please remove with the next incompatible ABI change.</i></td></tr>
+<tr><th id="316">316</th><td><i>  */</i></td></tr>
+<tr><th id="317">317</th><td>  <em>unsigned</em> <em>char</em> *<dfn class="decl" id="st_net::unused" title='st_net::unused' data-ref="st_net::unused" >unused</dfn>;</td></tr>
+<tr><th id="318">318</th><td>  <em>unsigned</em> <em>int</em> <dfn class="decl" id="st_net::last_errno" title='st_net::last_errno' data-ref="st_net::last_errno" >last_errno</dfn>;</td></tr>
+<tr><th id="319">319</th><td>  <em>unsigned</em> <em>char</em> <dfn class="decl" id="st_net::error" title='st_net::error' data-ref="st_net::error" >error</dfn>; </td></tr>
+<tr><th id="320">320</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_net::unused4" title='st_net::unused4' data-ref="st_net::unused4" >unused4</dfn>; <i>/* Please remove with the next incompatible ABI change. */</i></td></tr>
+<tr><th id="321">321</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_net::unused5" title='st_net::unused5' data-ref="st_net::unused5" >unused5</dfn>; <i>/* Please remove with the next incompatible ABI change. */</i></td></tr>
+<tr><th id="322">322</th><td>  <i class="doc">/** Client library error message buffer. Actually belongs to struct MYSQL. */</i></td></tr>
+<tr><th id="323">323</th><td>  <em>char</em> <dfn class="decl" id="st_net::last_error" title='st_net::last_error' data-ref="st_net::last_error" >last_error</dfn>[<a class="macro" href="#268" title="512" data-ref="_M/MYSQL_ERRMSG_SIZE">MYSQL_ERRMSG_SIZE</a>];</td></tr>
+<tr><th id="324">324</th><td>  <i class="doc">/** Client library sqlstate buffer. Set along with the error message. */</i></td></tr>
+<tr><th id="325">325</th><td>  <em>char</em> <dfn class="decl" id="st_net::sqlstate" title='st_net::sqlstate' data-ref="st_net::sqlstate" >sqlstate</dfn>[<a class="macro" href="#33" title="5" data-ref="_M/SQLSTATE_LENGTH">SQLSTATE_LENGTH</a>+<var>1</var>];</td></tr>
+<tr><th id="326">326</th><td>  <em>void</em> *<dfn class="decl" id="st_net::extension" title='st_net::extension' data-ref="st_net::extension" >extension</dfn>;</td></tr>
+<tr><th id="327">327</th><td><u>#<span data-ppcond="327">if</span> defined(<span class="macro" data-ref="_M/MYSQL_SERVER">MYSQL_SERVER</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/EMBEDDED_LIBRARY">EMBEDDED_LIBRARY</span>)</u></td></tr>
+<tr><th id="328">328</th><td>  <i>/*</i></td></tr>
+<tr><th id="329">329</th><td><i>    Controls whether a big packet should be skipped.</i></td></tr>
+<tr><th id="330">330</th><td><i></i></td></tr>
+<tr><th id="331">331</th><td><i>    Initially set to FALSE by default. Unauthenticated sessions must have</i></td></tr>
+<tr><th id="332">332</th><td><i>    this set to FALSE so that the server can't be tricked to read packets</i></td></tr>
+<tr><th id="333">333</th><td><i>    indefinitely.</i></td></tr>
+<tr><th id="334">334</th><td><i>  */</i></td></tr>
+<tr><th id="335">335</th><td>  my_bool skip_big_packet;</td></tr>
+<tr><th id="336">336</th><td><u>#<span data-ppcond="327">endif</span></u></td></tr>
+<tr><th id="337">337</th><td>} <dfn class="typedef" id="NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</dfn>;</td></tr>
+<tr><th id="338">338</th><td></td></tr>
+<tr><th id="339">339</th><td></td></tr>
+<tr><th id="340">340</th><td><u>#define <dfn class="macro" id="_M/packet_error" data-ref="_M/packet_error">packet_error</dfn> (~(unsigned long) 0)</u></td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td><b>enum</b> <dfn class="type def" id="enum_field_types" title='enum_field_types' data-ref="enum_field_types" >enum_field_types</dfn> { <dfn class="enum" id="enum_field_types::MYSQL_TYPE_DECIMAL" title='enum_field_types::MYSQL_TYPE_DECIMAL' data-ref="enum_field_types::MYSQL_TYPE_DECIMAL" >MYSQL_TYPE_DECIMAL</dfn>, <dfn class="enum" id="enum_field_types::MYSQL_TYPE_TINY" title='enum_field_types::MYSQL_TYPE_TINY' data-ref="enum_field_types::MYSQL_TYPE_TINY" >MYSQL_TYPE_TINY</dfn>,</td></tr>
+<tr><th id="343">343</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_SHORT" title='enum_field_types::MYSQL_TYPE_SHORT' data-ref="enum_field_types::MYSQL_TYPE_SHORT" >MYSQL_TYPE_SHORT</dfn>,  <dfn class="enum" id="enum_field_types::MYSQL_TYPE_LONG" title='enum_field_types::MYSQL_TYPE_LONG' data-ref="enum_field_types::MYSQL_TYPE_LONG" >MYSQL_TYPE_LONG</dfn>,</td></tr>
+<tr><th id="344">344</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_FLOAT" title='enum_field_types::MYSQL_TYPE_FLOAT' data-ref="enum_field_types::MYSQL_TYPE_FLOAT" >MYSQL_TYPE_FLOAT</dfn>,  <dfn class="enum" id="enum_field_types::MYSQL_TYPE_DOUBLE" title='enum_field_types::MYSQL_TYPE_DOUBLE' data-ref="enum_field_types::MYSQL_TYPE_DOUBLE" >MYSQL_TYPE_DOUBLE</dfn>,</td></tr>
+<tr><th id="345">345</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_NULL" title='enum_field_types::MYSQL_TYPE_NULL' data-ref="enum_field_types::MYSQL_TYPE_NULL" >MYSQL_TYPE_NULL</dfn>,   <dfn class="enum" id="enum_field_types::MYSQL_TYPE_TIMESTAMP" title='enum_field_types::MYSQL_TYPE_TIMESTAMP' data-ref="enum_field_types::MYSQL_TYPE_TIMESTAMP" >MYSQL_TYPE_TIMESTAMP</dfn>,</td></tr>
+<tr><th id="346">346</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_LONGLONG" title='enum_field_types::MYSQL_TYPE_LONGLONG' data-ref="enum_field_types::MYSQL_TYPE_LONGLONG" >MYSQL_TYPE_LONGLONG</dfn>,<dfn class="enum" id="enum_field_types::MYSQL_TYPE_INT24" title='enum_field_types::MYSQL_TYPE_INT24' data-ref="enum_field_types::MYSQL_TYPE_INT24" >MYSQL_TYPE_INT24</dfn>,</td></tr>
+<tr><th id="347">347</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_DATE" title='enum_field_types::MYSQL_TYPE_DATE' data-ref="enum_field_types::MYSQL_TYPE_DATE" >MYSQL_TYPE_DATE</dfn>,   <dfn class="enum" id="enum_field_types::MYSQL_TYPE_TIME" title='enum_field_types::MYSQL_TYPE_TIME' data-ref="enum_field_types::MYSQL_TYPE_TIME" >MYSQL_TYPE_TIME</dfn>,</td></tr>
+<tr><th id="348">348</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_DATETIME" title='enum_field_types::MYSQL_TYPE_DATETIME' data-ref="enum_field_types::MYSQL_TYPE_DATETIME" >MYSQL_TYPE_DATETIME</dfn>, <dfn class="enum" id="enum_field_types::MYSQL_TYPE_YEAR" title='enum_field_types::MYSQL_TYPE_YEAR' data-ref="enum_field_types::MYSQL_TYPE_YEAR" >MYSQL_TYPE_YEAR</dfn>,</td></tr>
+<tr><th id="349">349</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_NEWDATE" title='enum_field_types::MYSQL_TYPE_NEWDATE' data-ref="enum_field_types::MYSQL_TYPE_NEWDATE" >MYSQL_TYPE_NEWDATE</dfn>, <dfn class="enum" id="enum_field_types::MYSQL_TYPE_VARCHAR" title='enum_field_types::MYSQL_TYPE_VARCHAR' data-ref="enum_field_types::MYSQL_TYPE_VARCHAR" >MYSQL_TYPE_VARCHAR</dfn>,</td></tr>
+<tr><th id="350">350</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_BIT" title='enum_field_types::MYSQL_TYPE_BIT' data-ref="enum_field_types::MYSQL_TYPE_BIT" >MYSQL_TYPE_BIT</dfn>,</td></tr>
+<tr><th id="351">351</th><td>                        <dfn class="enum" id="enum_field_types::MYSQL_TYPE_NEWDECIMAL" title='enum_field_types::MYSQL_TYPE_NEWDECIMAL' data-ref="enum_field_types::MYSQL_TYPE_NEWDECIMAL" >MYSQL_TYPE_NEWDECIMAL</dfn>=<var>246</var>,</td></tr>
+<tr><th id="352">352</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_ENUM" title='enum_field_types::MYSQL_TYPE_ENUM' data-ref="enum_field_types::MYSQL_TYPE_ENUM" >MYSQL_TYPE_ENUM</dfn>=<var>247</var>,</td></tr>
+<tr><th id="353">353</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_SET" title='enum_field_types::MYSQL_TYPE_SET' data-ref="enum_field_types::MYSQL_TYPE_SET" >MYSQL_TYPE_SET</dfn>=<var>248</var>,</td></tr>
+<tr><th id="354">354</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_TINY_BLOB" title='enum_field_types::MYSQL_TYPE_TINY_BLOB' data-ref="enum_field_types::MYSQL_TYPE_TINY_BLOB" >MYSQL_TYPE_TINY_BLOB</dfn>=<var>249</var>,</td></tr>
+<tr><th id="355">355</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_MEDIUM_BLOB" title='enum_field_types::MYSQL_TYPE_MEDIUM_BLOB' data-ref="enum_field_types::MYSQL_TYPE_MEDIUM_BLOB" >MYSQL_TYPE_MEDIUM_BLOB</dfn>=<var>250</var>,</td></tr>
+<tr><th id="356">356</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_LONG_BLOB" title='enum_field_types::MYSQL_TYPE_LONG_BLOB' data-ref="enum_field_types::MYSQL_TYPE_LONG_BLOB" >MYSQL_TYPE_LONG_BLOB</dfn>=<var>251</var>,</td></tr>
+<tr><th id="357">357</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_BLOB" title='enum_field_types::MYSQL_TYPE_BLOB' data-ref="enum_field_types::MYSQL_TYPE_BLOB" >MYSQL_TYPE_BLOB</dfn>=<var>252</var>,</td></tr>
+<tr><th id="358">358</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_VAR_STRING" title='enum_field_types::MYSQL_TYPE_VAR_STRING' data-ref="enum_field_types::MYSQL_TYPE_VAR_STRING" >MYSQL_TYPE_VAR_STRING</dfn>=<var>253</var>,</td></tr>
+<tr><th id="359">359</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_STRING" title='enum_field_types::MYSQL_TYPE_STRING' data-ref="enum_field_types::MYSQL_TYPE_STRING" >MYSQL_TYPE_STRING</dfn>=<var>254</var>,</td></tr>
+<tr><th id="360">360</th><td>			<dfn class="enum" id="enum_field_types::MYSQL_TYPE_GEOMETRY" title='enum_field_types::MYSQL_TYPE_GEOMETRY' data-ref="enum_field_types::MYSQL_TYPE_GEOMETRY" >MYSQL_TYPE_GEOMETRY</dfn>=<var>255</var></td></tr>
+<tr><th id="361">361</th><td></td></tr>
+<tr><th id="362">362</th><td>};</td></tr>
+<tr><th id="363">363</th><td></td></tr>
+<tr><th id="364">364</th><td><i>/* For backward compatibility */</i></td></tr>
+<tr><th id="365">365</th><td><u>#define <dfn class="macro" id="_M/CLIENT_MULTI_QUERIES" data-ref="_M/CLIENT_MULTI_QUERIES">CLIENT_MULTI_QUERIES</dfn>    CLIENT_MULTI_STATEMENTS</u>    </td></tr>
+<tr><th id="366">366</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_DECIMAL" data-ref="_M/FIELD_TYPE_DECIMAL">FIELD_TYPE_DECIMAL</dfn>     MYSQL_TYPE_DECIMAL</u></td></tr>
+<tr><th id="367">367</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_NEWDECIMAL" data-ref="_M/FIELD_TYPE_NEWDECIMAL">FIELD_TYPE_NEWDECIMAL</dfn>  MYSQL_TYPE_NEWDECIMAL</u></td></tr>
+<tr><th id="368">368</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_TINY" data-ref="_M/FIELD_TYPE_TINY">FIELD_TYPE_TINY</dfn>        MYSQL_TYPE_TINY</u></td></tr>
+<tr><th id="369">369</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_SHORT" data-ref="_M/FIELD_TYPE_SHORT">FIELD_TYPE_SHORT</dfn>       MYSQL_TYPE_SHORT</u></td></tr>
+<tr><th id="370">370</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_LONG" data-ref="_M/FIELD_TYPE_LONG">FIELD_TYPE_LONG</dfn>        MYSQL_TYPE_LONG</u></td></tr>
+<tr><th id="371">371</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_FLOAT" data-ref="_M/FIELD_TYPE_FLOAT">FIELD_TYPE_FLOAT</dfn>       MYSQL_TYPE_FLOAT</u></td></tr>
+<tr><th id="372">372</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_DOUBLE" data-ref="_M/FIELD_TYPE_DOUBLE">FIELD_TYPE_DOUBLE</dfn>      MYSQL_TYPE_DOUBLE</u></td></tr>
+<tr><th id="373">373</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_NULL" data-ref="_M/FIELD_TYPE_NULL">FIELD_TYPE_NULL</dfn>        MYSQL_TYPE_NULL</u></td></tr>
+<tr><th id="374">374</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_TIMESTAMP" data-ref="_M/FIELD_TYPE_TIMESTAMP">FIELD_TYPE_TIMESTAMP</dfn>   MYSQL_TYPE_TIMESTAMP</u></td></tr>
+<tr><th id="375">375</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_LONGLONG" data-ref="_M/FIELD_TYPE_LONGLONG">FIELD_TYPE_LONGLONG</dfn>    MYSQL_TYPE_LONGLONG</u></td></tr>
+<tr><th id="376">376</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_INT24" data-ref="_M/FIELD_TYPE_INT24">FIELD_TYPE_INT24</dfn>       MYSQL_TYPE_INT24</u></td></tr>
+<tr><th id="377">377</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_DATE" data-ref="_M/FIELD_TYPE_DATE">FIELD_TYPE_DATE</dfn>        MYSQL_TYPE_DATE</u></td></tr>
+<tr><th id="378">378</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_TIME" data-ref="_M/FIELD_TYPE_TIME">FIELD_TYPE_TIME</dfn>        MYSQL_TYPE_TIME</u></td></tr>
+<tr><th id="379">379</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_DATETIME" data-ref="_M/FIELD_TYPE_DATETIME">FIELD_TYPE_DATETIME</dfn>    MYSQL_TYPE_DATETIME</u></td></tr>
+<tr><th id="380">380</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_YEAR" data-ref="_M/FIELD_TYPE_YEAR">FIELD_TYPE_YEAR</dfn>        MYSQL_TYPE_YEAR</u></td></tr>
+<tr><th id="381">381</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_NEWDATE" data-ref="_M/FIELD_TYPE_NEWDATE">FIELD_TYPE_NEWDATE</dfn>     MYSQL_TYPE_NEWDATE</u></td></tr>
+<tr><th id="382">382</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_ENUM" data-ref="_M/FIELD_TYPE_ENUM">FIELD_TYPE_ENUM</dfn>        MYSQL_TYPE_ENUM</u></td></tr>
+<tr><th id="383">383</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_SET" data-ref="_M/FIELD_TYPE_SET">FIELD_TYPE_SET</dfn>         MYSQL_TYPE_SET</u></td></tr>
+<tr><th id="384">384</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_TINY_BLOB" data-ref="_M/FIELD_TYPE_TINY_BLOB">FIELD_TYPE_TINY_BLOB</dfn>   MYSQL_TYPE_TINY_BLOB</u></td></tr>
+<tr><th id="385">385</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_MEDIUM_BLOB" data-ref="_M/FIELD_TYPE_MEDIUM_BLOB">FIELD_TYPE_MEDIUM_BLOB</dfn> MYSQL_TYPE_MEDIUM_BLOB</u></td></tr>
+<tr><th id="386">386</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_LONG_BLOB" data-ref="_M/FIELD_TYPE_LONG_BLOB">FIELD_TYPE_LONG_BLOB</dfn>   MYSQL_TYPE_LONG_BLOB</u></td></tr>
+<tr><th id="387">387</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_BLOB" data-ref="_M/FIELD_TYPE_BLOB">FIELD_TYPE_BLOB</dfn>        MYSQL_TYPE_BLOB</u></td></tr>
+<tr><th id="388">388</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_VAR_STRING" data-ref="_M/FIELD_TYPE_VAR_STRING">FIELD_TYPE_VAR_STRING</dfn>  MYSQL_TYPE_VAR_STRING</u></td></tr>
+<tr><th id="389">389</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_STRING" data-ref="_M/FIELD_TYPE_STRING">FIELD_TYPE_STRING</dfn>      MYSQL_TYPE_STRING</u></td></tr>
+<tr><th id="390">390</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_CHAR" data-ref="_M/FIELD_TYPE_CHAR">FIELD_TYPE_CHAR</dfn>        MYSQL_TYPE_TINY</u></td></tr>
+<tr><th id="391">391</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_INTERVAL" data-ref="_M/FIELD_TYPE_INTERVAL">FIELD_TYPE_INTERVAL</dfn>    MYSQL_TYPE_ENUM</u></td></tr>
+<tr><th id="392">392</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_GEOMETRY" data-ref="_M/FIELD_TYPE_GEOMETRY">FIELD_TYPE_GEOMETRY</dfn>    MYSQL_TYPE_GEOMETRY</u></td></tr>
+<tr><th id="393">393</th><td><u>#define <dfn class="macro" id="_M/FIELD_TYPE_BIT" data-ref="_M/FIELD_TYPE_BIT">FIELD_TYPE_BIT</dfn>         MYSQL_TYPE_BIT</u></td></tr>
+<tr><th id="394">394</th><td></td></tr>
+<tr><th id="395">395</th><td></td></tr>
+<tr><th id="396">396</th><td><i>/* Shutdown/kill enums and constants */</i> </td></tr>
+<tr><th id="397">397</th><td></td></tr>
+<tr><th id="398">398</th><td><i>/* Bits for THD::killable. */</i></td></tr>
+<tr><th id="399">399</th><td><u>#define <dfn class="macro" id="_M/MYSQL_SHUTDOWN_KILLABLE_CONNECT" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_CONNECT">MYSQL_SHUTDOWN_KILLABLE_CONNECT</dfn>    (unsigned char)(1 &lt;&lt; 0)</u></td></tr>
+<tr><th id="400">400</th><td><u>#define <dfn class="macro" id="_M/MYSQL_SHUTDOWN_KILLABLE_TRANS" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_TRANS">MYSQL_SHUTDOWN_KILLABLE_TRANS</dfn>      (unsigned char)(1 &lt;&lt; 1)</u></td></tr>
+<tr><th id="401">401</th><td><u>#define <dfn class="macro" id="_M/MYSQL_SHUTDOWN_KILLABLE_LOCK_TABLE" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_LOCK_TABLE">MYSQL_SHUTDOWN_KILLABLE_LOCK_TABLE</dfn> (unsigned char)(1 &lt;&lt; 2)</u></td></tr>
+<tr><th id="402">402</th><td><u>#define <dfn class="macro" id="_M/MYSQL_SHUTDOWN_KILLABLE_UPDATE" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_UPDATE">MYSQL_SHUTDOWN_KILLABLE_UPDATE</dfn>     (unsigned char)(1 &lt;&lt; 3)</u></td></tr>
+<tr><th id="403">403</th><td></td></tr>
+<tr><th id="404">404</th><td><b>enum</b> <dfn class="type def" id="mysql_enum_shutdown_level" title='mysql_enum_shutdown_level' data-ref="mysql_enum_shutdown_level" >mysql_enum_shutdown_level</dfn> {</td></tr>
+<tr><th id="405">405</th><td>  <i>/*</i></td></tr>
+<tr><th id="406">406</th><td><i>    We want levels to be in growing order of hardness (because we use number</i></td></tr>
+<tr><th id="407">407</th><td><i>    comparisons). Note that DEFAULT does not respect the growing property, but</i></td></tr>
+<tr><th id="408">408</th><td><i>    it's ok.</i></td></tr>
+<tr><th id="409">409</th><td><i>  */</i></td></tr>
+<tr><th id="410">410</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::SHUTDOWN_DEFAULT" title='mysql_enum_shutdown_level::SHUTDOWN_DEFAULT' data-ref="mysql_enum_shutdown_level::SHUTDOWN_DEFAULT" >SHUTDOWN_DEFAULT</dfn> = <var>0</var>,</td></tr>
+<tr><th id="411">411</th><td>  <i>/* wait for existing connections to finish */</i></td></tr>
+<tr><th id="412">412</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::SHUTDOWN_WAIT_CONNECTIONS" title='mysql_enum_shutdown_level::SHUTDOWN_WAIT_CONNECTIONS' data-ref="mysql_enum_shutdown_level::SHUTDOWN_WAIT_CONNECTIONS" >SHUTDOWN_WAIT_CONNECTIONS</dfn>= <a class="macro" href="#399" title="(unsigned char)(1 &lt;&lt; 0)" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_CONNECT">MYSQL_SHUTDOWN_KILLABLE_CONNECT</a>,</td></tr>
+<tr><th id="413">413</th><td>  <i>/* wait for existing trans to finish */</i></td></tr>
+<tr><th id="414">414</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::SHUTDOWN_WAIT_TRANSACTIONS" title='mysql_enum_shutdown_level::SHUTDOWN_WAIT_TRANSACTIONS' data-ref="mysql_enum_shutdown_level::SHUTDOWN_WAIT_TRANSACTIONS" >SHUTDOWN_WAIT_TRANSACTIONS</dfn>= <a class="macro" href="#400" title="(unsigned char)(1 &lt;&lt; 1)" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_TRANS">MYSQL_SHUTDOWN_KILLABLE_TRANS</a>,</td></tr>
+<tr><th id="415">415</th><td>  <i>/* wait for existing updates to finish (=&gt; no partial MyISAM update) */</i></td></tr>
+<tr><th id="416">416</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::SHUTDOWN_WAIT_UPDATES" title='mysql_enum_shutdown_level::SHUTDOWN_WAIT_UPDATES' data-ref="mysql_enum_shutdown_level::SHUTDOWN_WAIT_UPDATES" >SHUTDOWN_WAIT_UPDATES</dfn>= <a class="macro" href="#402" title="(unsigned char)(1 &lt;&lt; 3)" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_UPDATE">MYSQL_SHUTDOWN_KILLABLE_UPDATE</a>,</td></tr>
+<tr><th id="417">417</th><td>  <i>/* flush InnoDB buffers and other storage engines' buffers*/</i></td></tr>
+<tr><th id="418">418</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::SHUTDOWN_WAIT_ALL_BUFFERS" title='mysql_enum_shutdown_level::SHUTDOWN_WAIT_ALL_BUFFERS' data-ref="mysql_enum_shutdown_level::SHUTDOWN_WAIT_ALL_BUFFERS" >SHUTDOWN_WAIT_ALL_BUFFERS</dfn>= (<a class="macro" href="#402" title="(unsigned char)(1 &lt;&lt; 3)" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_UPDATE">MYSQL_SHUTDOWN_KILLABLE_UPDATE</a> &lt;&lt; <var>1</var>),</td></tr>
+<tr><th id="419">419</th><td>  <i>/* don't flush InnoDB buffers, flush other storage engines' buffers*/</i></td></tr>
+<tr><th id="420">420</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::SHUTDOWN_WAIT_CRITICAL_BUFFERS" title='mysql_enum_shutdown_level::SHUTDOWN_WAIT_CRITICAL_BUFFERS' data-ref="mysql_enum_shutdown_level::SHUTDOWN_WAIT_CRITICAL_BUFFERS" >SHUTDOWN_WAIT_CRITICAL_BUFFERS</dfn>= (<a class="macro" href="#402" title="(unsigned char)(1 &lt;&lt; 3)" data-ref="_M/MYSQL_SHUTDOWN_KILLABLE_UPDATE">MYSQL_SHUTDOWN_KILLABLE_UPDATE</a> &lt;&lt; <var>1</var>) + <var>1</var>,</td></tr>
+<tr><th id="421">421</th><td>  <i>/* Now the 2 levels of the KILL command */</i></td></tr>
+<tr><th id="422">422</th><td><u>#<span data-ppcond="422">if</span> <a class="macro" href="mysql_version.h.html#18" title="50547" data-ref="_M/MYSQL_VERSION_ID">MYSQL_VERSION_ID</a> &gt;= 50000</u></td></tr>
+<tr><th id="423">423</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::KILL_QUERY" title='mysql_enum_shutdown_level::KILL_QUERY' data-ref="mysql_enum_shutdown_level::KILL_QUERY" >KILL_QUERY</dfn>= <var>254</var>,</td></tr>
+<tr><th id="424">424</th><td><u>#<span data-ppcond="422">endif</span></u></td></tr>
+<tr><th id="425">425</th><td>  <dfn class="enum" id="mysql_enum_shutdown_level::KILL_CONNECTION" title='mysql_enum_shutdown_level::KILL_CONNECTION' data-ref="mysql_enum_shutdown_level::KILL_CONNECTION" >KILL_CONNECTION</dfn>= <var>255</var></td></tr>
+<tr><th id="426">426</th><td>};</td></tr>
+<tr><th id="427">427</th><td></td></tr>
+<tr><th id="428">428</th><td></td></tr>
+<tr><th id="429">429</th><td><b>enum</b> <dfn class="type def" id="enum_cursor_type" title='enum_cursor_type' data-ref="enum_cursor_type" >enum_cursor_type</dfn></td></tr>
+<tr><th id="430">430</th><td>{</td></tr>
+<tr><th id="431">431</th><td>  <dfn class="enum" id="enum_cursor_type::CURSOR_TYPE_NO_CURSOR" title='enum_cursor_type::CURSOR_TYPE_NO_CURSOR' data-ref="enum_cursor_type::CURSOR_TYPE_NO_CURSOR" >CURSOR_TYPE_NO_CURSOR</dfn>= <var>0</var>,</td></tr>
+<tr><th id="432">432</th><td>  <dfn class="enum" id="enum_cursor_type::CURSOR_TYPE_READ_ONLY" title='enum_cursor_type::CURSOR_TYPE_READ_ONLY' data-ref="enum_cursor_type::CURSOR_TYPE_READ_ONLY" >CURSOR_TYPE_READ_ONLY</dfn>= <var>1</var>,</td></tr>
+<tr><th id="433">433</th><td>  <dfn class="enum" id="enum_cursor_type::CURSOR_TYPE_FOR_UPDATE" title='enum_cursor_type::CURSOR_TYPE_FOR_UPDATE' data-ref="enum_cursor_type::CURSOR_TYPE_FOR_UPDATE" >CURSOR_TYPE_FOR_UPDATE</dfn>= <var>2</var>,</td></tr>
+<tr><th id="434">434</th><td>  <dfn class="enum" id="enum_cursor_type::CURSOR_TYPE_SCROLLABLE" title='enum_cursor_type::CURSOR_TYPE_SCROLLABLE' data-ref="enum_cursor_type::CURSOR_TYPE_SCROLLABLE" >CURSOR_TYPE_SCROLLABLE</dfn>= <var>4</var></td></tr>
+<tr><th id="435">435</th><td>};</td></tr>
+<tr><th id="436">436</th><td></td></tr>
+<tr><th id="437">437</th><td></td></tr>
+<tr><th id="438">438</th><td><i>/* options for mysql_set_option */</i></td></tr>
+<tr><th id="439">439</th><td><b>enum</b> <dfn class="type def" id="enum_mysql_set_option" title='enum_mysql_set_option' data-ref="enum_mysql_set_option" >enum_mysql_set_option</dfn></td></tr>
+<tr><th id="440">440</th><td>{</td></tr>
+<tr><th id="441">441</th><td>  <dfn class="enum" id="enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_ON" title='enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_ON' data-ref="enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_ON" >MYSQL_OPTION_MULTI_STATEMENTS_ON</dfn>,</td></tr>
+<tr><th id="442">442</th><td>  <dfn class="enum" id="enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_OFF" title='enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_OFF' data-ref="enum_mysql_set_option::MYSQL_OPTION_MULTI_STATEMENTS_OFF" >MYSQL_OPTION_MULTI_STATEMENTS_OFF</dfn></td></tr>
+<tr><th id="443">443</th><td>};</td></tr>
+<tr><th id="444">444</th><td></td></tr>
+<tr><th id="445">445</th><td><u>#define <dfn class="macro" id="_M/net_new_transaction" data-ref="_M/net_new_transaction">net_new_transaction</dfn>(net) ((net)-&gt;pkt_nr=0)</u></td></tr>
+<tr><th id="446">446</th><td></td></tr>
+<tr><th id="447">447</th><td><u>#<span data-ppcond="447">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="448">448</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="449">449</th><td><u>#<span data-ppcond="447">endif</span></u></td></tr>
+<tr><th id="450">450</th><td></td></tr>
+<tr><th id="451">451</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a>	<dfn class="decl" id="my_net_init" title='my_net_init' data-ref="my_net_init" >my_net_init</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col3 decl" id="6153net" title='net' data-type='NET *' data-ref="6153net" >net</dfn>, <a class="typedef" href="#Vio" title='Vio' data-type='struct st_vio' data-ref="Vio" >Vio</a>* <dfn class="local col4 decl" id="6154vio" title='vio' data-type='Vio *' data-ref="6154vio" >vio</dfn>);</td></tr>
+<tr><th id="452">452</th><td><em>void</em>	<dfn class="decl" id="my_net_local_init" title='my_net_local_init' data-ref="my_net_local_init" >my_net_local_init</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col5 decl" id="6155net" title='net' data-type='NET *' data-ref="6155net" >net</dfn>);</td></tr>
+<tr><th id="453">453</th><td><em>void</em>	<dfn class="decl" id="net_end" title='net_end' data-ref="net_end" >net_end</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col6 decl" id="6156net" title='net' data-type='NET *' data-ref="6156net" >net</dfn>);</td></tr>
+<tr><th id="454">454</th><td>  <em>void</em>	<dfn class="decl" id="net_clear" title='net_clear' data-ref="net_clear" >net_clear</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col7 decl" id="6157net" title='net' data-type='NET *' data-ref="6157net" >net</dfn>, <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="local col8 decl" id="6158clear_buffer" title='clear_buffer' data-type='my_bool' data-ref="6158clear_buffer" >clear_buffer</dfn>);</td></tr>
+<tr><th id="455">455</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="net_realloc" title='net_realloc' data-ref="net_realloc" >net_realloc</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col9 decl" id="6159net" title='net' data-type='NET *' data-ref="6159net" >net</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="6160length" title='length' data-type='size_t' data-ref="6160length" >length</dfn>);</td></tr>
+<tr><th id="456">456</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a>	<dfn class="decl" id="net_flush" title='net_flush' data-ref="net_flush" >net_flush</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col1 decl" id="6161net" title='net' data-type='NET *' data-ref="6161net" >net</dfn>);</td></tr>
+<tr><th id="457">457</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a>	<dfn class="decl" id="my_net_write" title='my_net_write' data-ref="my_net_write" >my_net_write</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col2 decl" id="6162net" title='net' data-type='NET *' data-ref="6162net" >net</dfn>,<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col3 decl" id="6163packet" title='packet' data-type='const unsigned char *' data-ref="6163packet" >packet</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="6164len" title='len' data-type='size_t' data-ref="6164len" >len</dfn>);</td></tr>
+<tr><th id="458">458</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a>	<dfn class="decl" id="net_write_command" title='net_write_command' data-ref="net_write_command" >net_write_command</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col5 decl" id="6165net" title='net' data-type='NET *' data-ref="6165net" >net</dfn>,<em>unsigned</em> <em>char</em> <dfn class="local col6 decl" id="6166command" title='command' data-type='unsigned char' data-ref="6166command" >command</dfn>,</td></tr>
+<tr><th id="459">459</th><td>			  <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="6167header" title='header' data-type='const unsigned char *' data-ref="6167header" >header</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="6168head_len" title='head_len' data-type='size_t' data-ref="6168head_len" >head_len</dfn>,</td></tr>
+<tr><th id="460">460</th><td>			  <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col9 decl" id="6169packet" title='packet' data-type='const unsigned char *' data-ref="6169packet" >packet</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="6170len" title='len' data-type='size_t' data-ref="6170len" >len</dfn>);</td></tr>
+<tr><th id="461">461</th><td><em>int</em>	<dfn class="decl" id="net_real_write" title='net_real_write' data-ref="net_real_write" >net_real_write</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col1 decl" id="6171net" title='net' data-type='NET *' data-ref="6171net" >net</dfn>,<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="6172packet" title='packet' data-type='const unsigned char *' data-ref="6172packet" >packet</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="6173len" title='len' data-type='size_t' data-ref="6173len" >len</dfn>);</td></tr>
+<tr><th id="462">462</th><td><em>unsigned</em> <em>long</em> <dfn class="decl" id="my_net_read" title='my_net_read' data-ref="my_net_read" >my_net_read</dfn>(<a class="typedef" href="#NET" title='NET' data-type='struct st_net' data-ref="NET" >NET</a> *<dfn class="local col4 decl" id="6174net" title='net' data-type='NET *' data-ref="6174net" >net</dfn>);</td></tr>
+<tr><th id="463">463</th><td></td></tr>
+<tr><th id="464">464</th><td><u>#<span data-ppcond="464">ifdef</span> <span class="macro" data-ref="_M/_global_h">_global_h</span></u></td></tr>
+<tr><th id="465">465</th><td><em>void</em> my_net_set_write_timeout(NET *net, uint timeout);</td></tr>
+<tr><th id="466">466</th><td><em>void</em> my_net_set_read_timeout(NET *net, uint timeout);</td></tr>
+<tr><th id="467">467</th><td><u>#<span data-ppcond="464">endif</span></u></td></tr>
+<tr><th id="468">468</th><td></td></tr>
+<tr><th id="469">469</th><td><b>struct</b> <a class="type" href="../x86_64-linux-gnu/bits/socket.h.html#sockaddr" title='sockaddr' data-ref="sockaddr" id="sockaddr" >sockaddr</a>;</td></tr>
+<tr><th id="470">470</th><td><em>int</em> <dfn class="decl" id="my_connect" title='my_connect' data-ref="my_connect" >my_connect</dfn>(<a class="typedef" href="mysql.h.html#my_socket" title='my_socket' data-type='int' data-ref="my_socket" >my_socket</a> <dfn class="local col5 decl" id="6175s" title='s' data-type='my_socket' data-ref="6175s" >s</dfn>, <em>const</em> <b>struct</b> <a class="type" href="../x86_64-linux-gnu/bits/socket.h.html#sockaddr" title='sockaddr' data-ref="sockaddr" >sockaddr</a> *<dfn class="local col6 decl" id="6176name" title='name' data-type='const struct sockaddr *' data-ref="6176name" >name</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col7 decl" id="6177namelen" title='namelen' data-type='unsigned int' data-ref="6177namelen" >namelen</dfn>,</td></tr>
+<tr><th id="471">471</th><td>	       <em>unsigned</em> <em>int</em> <dfn class="local col8 decl" id="6178timeout" title='timeout' data-type='unsigned int' data-ref="6178timeout" >timeout</dfn>);</td></tr>
+<tr><th id="472">472</th><td></td></tr>
+<tr><th id="473">473</th><td><b>struct</b> <dfn class="type def" id="rand_struct" title='rand_struct' data-ref="rand_struct" >rand_struct</dfn> {</td></tr>
+<tr><th id="474">474</th><td>  <em>unsigned</em> <em>long</em> <dfn class="decl" id="rand_struct::seed1" title='rand_struct::seed1' data-ref="rand_struct::seed1" >seed1</dfn>,<dfn class="decl" id="rand_struct::seed2" title='rand_struct::seed2' data-ref="rand_struct::seed2" >seed2</dfn>,<dfn class="decl" id="rand_struct::max_value" title='rand_struct::max_value' data-ref="rand_struct::max_value" >max_value</dfn>;</td></tr>
+<tr><th id="475">475</th><td>  <em>double</em> <dfn class="decl" id="rand_struct::max_value_dbl" title='rand_struct::max_value_dbl' data-ref="rand_struct::max_value_dbl" >max_value_dbl</dfn>;</td></tr>
+<tr><th id="476">476</th><td>};</td></tr>
+<tr><th id="477">477</th><td></td></tr>
+<tr><th id="478">478</th><td><u>#<span data-ppcond="478">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="479">479</th><td>}</td></tr>
+<tr><th id="480">480</th><td><u>#<span data-ppcond="478">endif</span></u></td></tr>
+<tr><th id="481">481</th><td></td></tr>
+<tr><th id="482">482</th><td>  <i>/* The following is for user defined functions */</i></td></tr>
+<tr><th id="483">483</th><td></td></tr>
+<tr><th id="484">484</th><td><b>enum</b> <dfn class="type def" id="Item_result" title='Item_result' data-ref="Item_result" >Item_result</dfn> {<dfn class="enum" id="Item_result::STRING_RESULT" title='Item_result::STRING_RESULT' data-ref="Item_result::STRING_RESULT" >STRING_RESULT</dfn>=<var>0</var>, <dfn class="enum" id="Item_result::REAL_RESULT" title='Item_result::REAL_RESULT' data-ref="Item_result::REAL_RESULT" >REAL_RESULT</dfn>, <dfn class="enum" id="Item_result::INT_RESULT" title='Item_result::INT_RESULT' data-ref="Item_result::INT_RESULT" >INT_RESULT</dfn>, <dfn class="enum" id="Item_result::ROW_RESULT" title='Item_result::ROW_RESULT' data-ref="Item_result::ROW_RESULT" >ROW_RESULT</dfn>,</td></tr>
+<tr><th id="485">485</th><td>                  <dfn class="enum" id="Item_result::DECIMAL_RESULT" title='Item_result::DECIMAL_RESULT' data-ref="Item_result::DECIMAL_RESULT" >DECIMAL_RESULT</dfn>};</td></tr>
+<tr><th id="486">486</th><td></td></tr>
+<tr><th id="487">487</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="st_udf_args" title='st_udf_args' data-ref="st_udf_args" ><a class="type" href="#st_udf_args" title='st_udf_args' data-ref="st_udf_args" >st_udf_args</a></dfn></td></tr>
+<tr><th id="488">488</th><td>{</td></tr>
+<tr><th id="489">489</th><td>  <em>unsigned</em> <em>int</em> <dfn class="decl" id="st_udf_args::arg_count" title='st_udf_args::arg_count' data-ref="st_udf_args::arg_count" >arg_count</dfn>;		<i>/* Number of arguments */</i></td></tr>
+<tr><th id="490">490</th><td>  <b>enum</b> <a class="type" href="#Item_result" title='Item_result' data-ref="Item_result" >Item_result</a> *<dfn class="decl" id="st_udf_args::arg_type" title='st_udf_args::arg_type' data-ref="st_udf_args::arg_type" >arg_type</dfn>;		<i>/* Pointer to item_results */</i></td></tr>
+<tr><th id="491">491</th><td>  <em>char</em> **<dfn class="decl" id="st_udf_args::args" title='st_udf_args::args' data-ref="st_udf_args::args" >args</dfn>;				<i>/* Pointer to argument */</i></td></tr>
+<tr><th id="492">492</th><td>  <em>unsigned</em> <em>long</em> *<dfn class="decl" id="st_udf_args::lengths" title='st_udf_args::lengths' data-ref="st_udf_args::lengths" >lengths</dfn>;		<i>/* Length of string arguments */</i></td></tr>
+<tr><th id="493">493</th><td>  <em>char</em> *<dfn class="decl" id="st_udf_args::maybe_null" title='st_udf_args::maybe_null' data-ref="st_udf_args::maybe_null" >maybe_null</dfn>;			<i>/* Set to 1 for all maybe_null args */</i></td></tr>
+<tr><th id="494">494</th><td>  <em>char</em> **<dfn class="decl" id="st_udf_args::attributes" title='st_udf_args::attributes' data-ref="st_udf_args::attributes" >attributes</dfn>;                    <i>/* Pointer to attribute name */</i></td></tr>
+<tr><th id="495">495</th><td>  <em>unsigned</em> <em>long</em> *<dfn class="decl" id="st_udf_args::attribute_lengths" title='st_udf_args::attribute_lengths' data-ref="st_udf_args::attribute_lengths" >attribute_lengths</dfn>;     <i>/* Length of attribute arguments */</i></td></tr>
+<tr><th id="496">496</th><td>  <em>void</em> *<dfn class="decl" id="st_udf_args::extension" title='st_udf_args::extension' data-ref="st_udf_args::extension" >extension</dfn>;</td></tr>
+<tr><th id="497">497</th><td>} <dfn class="typedef" id="UDF_ARGS" title='UDF_ARGS' data-type='struct st_udf_args' data-ref="UDF_ARGS" >UDF_ARGS</dfn>;</td></tr>
+<tr><th id="498">498</th><td></td></tr>
+<tr><th id="499">499</th><td>  <i>/* This holds information about the result */</i></td></tr>
+<tr><th id="500">500</th><td></td></tr>
+<tr><th id="501">501</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="st_udf_init" title='st_udf_init' data-ref="st_udf_init" ><a class="type" href="#st_udf_init" title='st_udf_init' data-ref="st_udf_init" >st_udf_init</a></dfn></td></tr>
+<tr><th id="502">502</th><td>{</td></tr>
+<tr><th id="503">503</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_udf_init::maybe_null" title='st_udf_init::maybe_null' data-ref="st_udf_init::maybe_null" >maybe_null</dfn>;          <i>/* 1 if function can return NULL */</i></td></tr>
+<tr><th id="504">504</th><td>  <em>unsigned</em> <em>int</em> <dfn class="decl" id="st_udf_init::decimals" title='st_udf_init::decimals' data-ref="st_udf_init::decimals" >decimals</dfn>;       <i>/* for real functions */</i></td></tr>
+<tr><th id="505">505</th><td>  <em>unsigned</em> <em>long</em> <dfn class="decl" id="st_udf_init::max_length" title='st_udf_init::max_length' data-ref="st_udf_init::max_length" >max_length</dfn>;    <i>/* For string functions */</i></td></tr>
+<tr><th id="506">506</th><td>  <em>char</em> *<dfn class="decl" id="st_udf_init::ptr" title='st_udf_init::ptr' data-ref="st_udf_init::ptr" >ptr</dfn>;                   <i>/* free pointer for function data */</i></td></tr>
+<tr><th id="507">507</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="st_udf_init::const_item" title='st_udf_init::const_item' data-ref="st_udf_init::const_item" >const_item</dfn>;          <i>/* 1 if function always returns the same value */</i></td></tr>
+<tr><th id="508">508</th><td>  <em>void</em> *<dfn class="decl" id="st_udf_init::extension" title='st_udf_init::extension' data-ref="st_udf_init::extension" >extension</dfn>;</td></tr>
+<tr><th id="509">509</th><td>} <dfn class="typedef" id="UDF_INIT" title='UDF_INIT' data-type='struct st_udf_init' data-ref="UDF_INIT" >UDF_INIT</dfn>;</td></tr>
+<tr><th id="510">510</th><td><i>/* </i></td></tr>
+<tr><th id="511">511</th><td><i>  TODO: add a notion for determinism of the UDF. </i></td></tr>
+<tr><th id="512">512</th><td><i>  See Item_udf_func::update_used_tables ()</i></td></tr>
+<tr><th id="513">513</th><td><i>*/</i></td></tr>
+<tr><th id="514">514</th><td></td></tr>
+<tr><th id="515">515</th><td>  <i>/* Constants when using compression */</i></td></tr>
+<tr><th id="516">516</th><td><u>#define <dfn class="macro" id="_M/NET_HEADER_SIZE" data-ref="_M/NET_HEADER_SIZE">NET_HEADER_SIZE</dfn> 4		/* standard header size */</u></td></tr>
+<tr><th id="517">517</th><td><u>#define <dfn class="macro" id="_M/COMP_HEADER_SIZE" data-ref="_M/COMP_HEADER_SIZE">COMP_HEADER_SIZE</dfn> 3		/* compression header extra size */</u></td></tr>
+<tr><th id="518">518</th><td></td></tr>
+<tr><th id="519">519</th><td>  <i>/* Prototypes to password functions */</i></td></tr>
+<tr><th id="520">520</th><td></td></tr>
+<tr><th id="521">521</th><td><u>#<span data-ppcond="521">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="522">522</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="523">523</th><td><u>#<span data-ppcond="521">endif</span></u></td></tr>
+<tr><th id="524">524</th><td></td></tr>
+<tr><th id="525">525</th><td><i>/*</i></td></tr>
+<tr><th id="526">526</th><td><i>  These functions are used for authentication by client and server and</i></td></tr>
+<tr><th id="527">527</th><td><i>  implemented in sql/password.c</i></td></tr>
+<tr><th id="528">528</th><td><i>*/</i></td></tr>
+<tr><th id="529">529</th><td></td></tr>
+<tr><th id="530">530</th><td><em>void</em> <dfn class="decl" id="randominit" title='randominit' data-ref="randominit" >randominit</dfn>(<b>struct</b> <a class="type" href="#rand_struct" title='rand_struct' data-ref="rand_struct" >rand_struct</a> *, <em>unsigned</em> <em>long</em> <dfn class="local col9 decl" id="6179seed1" title='seed1' data-type='unsigned long' data-ref="6179seed1" >seed1</dfn>,</td></tr>
+<tr><th id="531">531</th><td>                <em>unsigned</em> <em>long</em> <dfn class="local col0 decl" id="6180seed2" title='seed2' data-type='unsigned long' data-ref="6180seed2" >seed2</dfn>);</td></tr>
+<tr><th id="532">532</th><td><em>double</em> <dfn class="decl" id="my_rnd" title='my_rnd' data-ref="my_rnd" >my_rnd</dfn>(<b>struct</b> <a class="type" href="#rand_struct" title='rand_struct' data-ref="rand_struct" >rand_struct</a> *);</td></tr>
+<tr><th id="533">533</th><td><em>void</em> <dfn class="decl" id="create_random_string" title='create_random_string' data-ref="create_random_string" >create_random_string</dfn>(<em>char</em> *<dfn class="local col1 decl" id="6181to" title='to' data-type='char *' data-ref="6181to" >to</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col2 decl" id="6182length" title='length' data-type='unsigned int' data-ref="6182length" >length</dfn>, <b>struct</b> <a class="type" href="#rand_struct" title='rand_struct' data-ref="rand_struct" >rand_struct</a> *<dfn class="local col3 decl" id="6183rand_st" title='rand_st' data-type='struct rand_struct *' data-ref="6183rand_st" >rand_st</dfn>);</td></tr>
+<tr><th id="534">534</th><td></td></tr>
+<tr><th id="535">535</th><td><em>void</em> <dfn class="decl" id="hash_password" title='hash_password' data-ref="hash_password" >hash_password</dfn>(<em>unsigned</em> <em>long</em> *<dfn class="local col4 decl" id="6184to" title='to' data-type='unsigned long *' data-ref="6184to" >to</dfn>, <em>const</em> <em>char</em> *<dfn class="local col5 decl" id="6185password" title='password' data-type='const char *' data-ref="6185password" >password</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col6 decl" id="6186password_len" title='password_len' data-type='unsigned int' data-ref="6186password_len" >password_len</dfn>);</td></tr>
+<tr><th id="536">536</th><td><em>void</em> <dfn class="decl" id="make_scrambled_password_323" title='make_scrambled_password_323' data-ref="make_scrambled_password_323" >make_scrambled_password_323</dfn>(<em>char</em> *<dfn class="local col7 decl" id="6187to" title='to' data-type='char *' data-ref="6187to" >to</dfn>, <em>const</em> <em>char</em> *<dfn class="local col8 decl" id="6188password" title='password' data-type='const char *' data-ref="6188password" >password</dfn>);</td></tr>
+<tr><th id="537">537</th><td><em>void</em> <dfn class="decl" id="scramble_323" title='scramble_323' data-ref="scramble_323" >scramble_323</dfn>(<em>char</em> *<dfn class="local col9 decl" id="6189to" title='to' data-type='char *' data-ref="6189to" >to</dfn>, <em>const</em> <em>char</em> *<dfn class="local col0 decl" id="6190message" title='message' data-type='const char *' data-ref="6190message" >message</dfn>, <em>const</em> <em>char</em> *<dfn class="local col1 decl" id="6191password" title='password' data-type='const char *' data-ref="6191password" >password</dfn>);</td></tr>
+<tr><th id="538">538</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="check_scramble_323" title='check_scramble_323' data-ref="check_scramble_323" >check_scramble_323</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col2 decl" id="6192reply" title='reply' data-type='const unsigned char *' data-ref="6192reply" >reply</dfn>, <em>const</em> <em>char</em> *<dfn class="local col3 decl" id="6193message" title='message' data-type='const char *' data-ref="6193message" >message</dfn>,</td></tr>
+<tr><th id="539">539</th><td>                           <em>unsigned</em> <em>long</em> *<dfn class="local col4 decl" id="6194salt" title='salt' data-type='unsigned long *' data-ref="6194salt" >salt</dfn>);</td></tr>
+<tr><th id="540">540</th><td><em>void</em> <dfn class="decl" id="get_salt_from_password_323" title='get_salt_from_password_323' data-ref="get_salt_from_password_323" >get_salt_from_password_323</dfn>(<em>unsigned</em> <em>long</em> *<dfn class="local col5 decl" id="6195res" title='res' data-type='unsigned long *' data-ref="6195res" >res</dfn>, <em>const</em> <em>char</em> *<dfn class="local col6 decl" id="6196password" title='password' data-type='const char *' data-ref="6196password" >password</dfn>);</td></tr>
+<tr><th id="541">541</th><td><em>void</em> <dfn class="decl" id="make_password_from_salt_323" title='make_password_from_salt_323' data-ref="make_password_from_salt_323" >make_password_from_salt_323</dfn>(<em>char</em> *<dfn class="local col7 decl" id="6197to" title='to' data-type='char *' data-ref="6197to" >to</dfn>, <em>const</em> <em>unsigned</em> <em>long</em> *<dfn class="local col8 decl" id="6198salt" title='salt' data-type='const unsigned long *' data-ref="6198salt" >salt</dfn>);</td></tr>
+<tr><th id="542">542</th><td></td></tr>
+<tr><th id="543">543</th><td><em>void</em> <dfn class="decl" id="make_scrambled_password" title='make_scrambled_password' data-ref="make_scrambled_password" >make_scrambled_password</dfn>(<em>char</em> *<dfn class="local col9 decl" id="6199to" title='to' data-type='char *' data-ref="6199to" >to</dfn>, <em>const</em> <em>char</em> *<dfn class="local col0 decl" id="6200password" title='password' data-type='const char *' data-ref="6200password" >password</dfn>);</td></tr>
+<tr><th id="544">544</th><td><em>void</em> <dfn class="decl" id="scramble" title='scramble' data-ref="scramble" >scramble</dfn>(<em>char</em> *<dfn class="local col1 decl" id="6201to" title='to' data-type='char *' data-ref="6201to" >to</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="6202message" title='message' data-type='const char *' data-ref="6202message" >message</dfn>, <em>const</em> <em>char</em> *<dfn class="local col3 decl" id="6203password" title='password' data-type='const char *' data-ref="6203password" >password</dfn>);</td></tr>
+<tr><th id="545">545</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="check_scramble" title='check_scramble' data-ref="check_scramble" >check_scramble</dfn>(<em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col4 decl" id="6204reply" title='reply' data-type='const unsigned char *' data-ref="6204reply" >reply</dfn>, <em>const</em> <em>char</em> *<dfn class="local col5 decl" id="6205message" title='message' data-type='const char *' data-ref="6205message" >message</dfn>,</td></tr>
+<tr><th id="546">546</th><td>                       <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col6 decl" id="6206hash_stage2" title='hash_stage2' data-type='const unsigned char *' data-ref="6206hash_stage2" >hash_stage2</dfn>);</td></tr>
+<tr><th id="547">547</th><td><em>void</em> <dfn class="decl" id="get_salt_from_password" title='get_salt_from_password' data-ref="get_salt_from_password" >get_salt_from_password</dfn>(<em>unsigned</em> <em>char</em> *<dfn class="local col7 decl" id="6207res" title='res' data-type='unsigned char *' data-ref="6207res" >res</dfn>, <em>const</em> <em>char</em> *<dfn class="local col8 decl" id="6208password" title='password' data-type='const char *' data-ref="6208password" >password</dfn>);</td></tr>
+<tr><th id="548">548</th><td><em>void</em> <dfn class="decl" id="make_password_from_salt" title='make_password_from_salt' data-ref="make_password_from_salt" >make_password_from_salt</dfn>(<em>char</em> *<dfn class="local col9 decl" id="6209to" title='to' data-type='char *' data-ref="6209to" >to</dfn>, <em>const</em> <em>unsigned</em> <em>char</em> *<dfn class="local col0 decl" id="6210hash_stage2" title='hash_stage2' data-type='const unsigned char *' data-ref="6210hash_stage2" >hash_stage2</dfn>);</td></tr>
+<tr><th id="549">549</th><td><em>char</em> *<dfn class="decl" id="octet2hex" title='octet2hex' data-ref="octet2hex" >octet2hex</dfn>(<em>char</em> *<dfn class="local col1 decl" id="6211to" title='to' data-type='char *' data-ref="6211to" >to</dfn>, <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="6212str" title='str' data-type='const char *' data-ref="6212str" >str</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col3 decl" id="6213len" title='len' data-type='unsigned int' data-ref="6213len" >len</dfn>);</td></tr>
+<tr><th id="550">550</th><td></td></tr>
+<tr><th id="551">551</th><td><i>/* end of password.c */</i></td></tr>
+<tr><th id="552">552</th><td></td></tr>
+<tr><th id="553">553</th><td><em>char</em> *<dfn class="decl" id="get_tty_password" title='get_tty_password' data-ref="get_tty_password" >get_tty_password</dfn>(<em>const</em> <em>char</em> *<dfn class="local col4 decl" id="6214opt_message" title='opt_message' data-type='const char *' data-ref="6214opt_message" >opt_message</dfn>);</td></tr>
+<tr><th id="554">554</th><td><em>const</em> <em>char</em> *<dfn class="decl" id="mysql_errno_to_sqlstate" title='mysql_errno_to_sqlstate' data-ref="mysql_errno_to_sqlstate" >mysql_errno_to_sqlstate</dfn>(<em>unsigned</em> <em>int</em> <dfn class="local col5 decl" id="6215mysql_errno" title='mysql_errno' data-type='unsigned int' data-ref="6215mysql_errno" >mysql_errno</dfn>);</td></tr>
+<tr><th id="555">555</th><td></td></tr>
+<tr><th id="556">556</th><td><i>/* Some other useful functions */</i></td></tr>
+<tr><th id="557">557</th><td></td></tr>
+<tr><th id="558">558</th><td><a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a> <dfn class="decl" id="my_thread_init" title='my_thread_init' data-ref="my_thread_init" >my_thread_init</dfn>(<em>void</em>);</td></tr>
+<tr><th id="559">559</th><td><em>void</em> <dfn class="decl" id="my_thread_end" title='my_thread_end' data-ref="my_thread_end" >my_thread_end</dfn>(<em>void</em>);</td></tr>
+<tr><th id="560">560</th><td></td></tr>
+<tr><th id="561">561</th><td><u>#<span data-ppcond="561">ifdef</span> <span class="macro" data-ref="_M/_global_h">_global_h</span></u></td></tr>
+<tr><th id="562">562</th><td>ulong STDCALL net_field_length(uchar **packet);</td></tr>
+<tr><th id="563">563</th><td>my_ulonglong net_field_length_ll(uchar **packet);</td></tr>
+<tr><th id="564">564</th><td>uchar *net_store_length(uchar *pkg, ulonglong length);</td></tr>
+<tr><th id="565">565</th><td><u>#<span data-ppcond="561">endif</span></u></td></tr>
+<tr><th id="566">566</th><td></td></tr>
+<tr><th id="567">567</th><td><u>#<span data-ppcond="567">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="568">568</th><td>}</td></tr>
+<tr><th id="569">569</th><td><u>#<span data-ppcond="567">endif</span></u></td></tr>
+<tr><th id="570">570</th><td></td></tr>
+<tr><th id="571">571</th><td><u>#define <dfn class="macro" id="_M/NULL_LENGTH" data-ref="_M/NULL_LENGTH">NULL_LENGTH</dfn> ((unsigned long) ~0) /* For net_store_length */</u></td></tr>
+<tr><th id="572">572</th><td><u>#define <dfn class="macro" id="_M/MYSQL_STMT_HEADER" data-ref="_M/MYSQL_STMT_HEADER">MYSQL_STMT_HEADER</dfn>       4</u></td></tr>
+<tr><th id="573">573</th><td><u>#define <dfn class="macro" id="_M/MYSQL_LONG_DATA_HEADER" data-ref="_M/MYSQL_LONG_DATA_HEADER">MYSQL_LONG_DATA_HEADER</dfn>  6</u></td></tr>
+<tr><th id="574">574</th><td></td></tr>
+<tr><th id="575">575</th><td><u>#define <dfn class="macro" id="_M/NOT_FIXED_DEC" data-ref="_M/NOT_FIXED_DEC">NOT_FIXED_DEC</dfn>           31</u></td></tr>
+<tr><th id="576">576</th><td><u>#<span data-ppcond="20">endif</span></u></td></tr>
+<tr><th id="577">577</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore3.3.5/src/server/authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

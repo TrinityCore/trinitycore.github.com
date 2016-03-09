@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<title>typelib.h [include/mysql/typelib.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/mysql/typelib.h'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>mysql</a>/typelib.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.</i></td></tr>
+<tr><th id="2">2</th><td><i></i></td></tr>
+<tr><th id="3">3</th><td><i>   This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="4">4</th><td><i>   it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="5">5</th><td><i>   the Free Software Foundation; version 2 of the License.</i></td></tr>
+<tr><th id="6">6</th><td><i></i></td></tr>
+<tr><th id="7">7</th><td><i>   This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="8">8</th><td><i>   but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="9">9</th><td><i>   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="10">10</th><td><i>   GNU General Public License for more details.</i></td></tr>
+<tr><th id="11">11</th><td><i></i></td></tr>
+<tr><th id="12">12</th><td><i>   You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="13">13</th><td><i>   along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="14">14</th><td><i>   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA */</i></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u>#<span data-ppcond="17">ifndef</span> <span class="macro" data-ref="_M/_typelib_h">_typelib_h</span></u></td></tr>
+<tr><th id="18">18</th><td><u>#define <dfn class="macro" id="_M/_typelib_h" data-ref="_M/_typelib_h">_typelib_h</dfn></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="my_alloc.h.html">"my_alloc.h"</a></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="st_typelib" title='st_typelib' data-ref="st_typelib" ><a class="type" href="#st_typelib" title='st_typelib' data-ref="st_typelib" >st_typelib</a></dfn> {	<i>/* Different types saved here */</i></td></tr>
+<tr><th id="23">23</th><td>  <em>unsigned</em> <em>int</em> <dfn class="decl" id="st_typelib::count" title='st_typelib::count' data-ref="st_typelib::count" >count</dfn>;		<i>/* How many types */</i></td></tr>
+<tr><th id="24">24</th><td>  <em>const</em> <em>char</em> *<dfn class="decl" id="st_typelib::name" title='st_typelib::name' data-ref="st_typelib::name" >name</dfn>;		<i>/* Name of typelib */</i></td></tr>
+<tr><th id="25">25</th><td>  <em>const</em> <em>char</em> **<dfn class="decl" id="st_typelib::type_names" title='st_typelib::type_names' data-ref="st_typelib::type_names" >type_names</dfn>;</td></tr>
+<tr><th id="26">26</th><td>  <em>unsigned</em> <em>int</em> *<dfn class="decl" id="st_typelib::type_lengths" title='st_typelib::type_lengths' data-ref="st_typelib::type_lengths" >type_lengths</dfn>;</td></tr>
+<tr><th id="27">27</th><td>} <dfn class="typedef" id="TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</dfn>;</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>extern</b> <a class="typedef" href="mysql.h.html#my_ulonglong" title='my_ulonglong' data-type='unsigned long long' data-ref="my_ulonglong" >my_ulonglong</a> <dfn class="decl" id="find_typeset" title='find_typeset' data-ref="find_typeset" >find_typeset</dfn>(<em>char</em> *<dfn class="local col7 decl" id="6227x" title='x' data-type='char *' data-ref="6227x" >x</dfn>, <a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="local col8 decl" id="6228typelib" title='typelib' data-type='TYPELIB *' data-ref="6228typelib" >typelib</dfn>,<em>int</em> *<dfn class="local col9 decl" id="6229error_position" title='error_position' data-type='int *' data-ref="6229error_position" >error_position</dfn>);</td></tr>
+<tr><th id="30">30</th><td><b>extern</b> <em>int</em> <dfn class="decl" id="find_type_or_exit" title='find_type_or_exit' data-ref="find_type_or_exit" >find_type_or_exit</dfn>(<em>const</em> <em>char</em> *<dfn class="local col0 decl" id="6230x" title='x' data-type='const char *' data-ref="6230x" >x</dfn>, <a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="local col1 decl" id="6231typelib" title='typelib' data-type='TYPELIB *' data-ref="6231typelib" >typelib</dfn>,</td></tr>
+<tr><th id="31">31</th><td>                             <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="6232option" title='option' data-type='const char *' data-ref="6232option" >option</dfn>);</td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/FIND_TYPE_BASIC" data-ref="_M/FIND_TYPE_BASIC">FIND_TYPE_BASIC</dfn>           0</u></td></tr>
+<tr><th id="33">33</th><td><i class="doc">/** makes<span class="command"> @c</span> <span class="arg">find_type()</span> require the whole name, no prefix */</i></td></tr>
+<tr><th id="34">34</th><td><u>#define <dfn class="macro" id="_M/FIND_TYPE_NO_PREFIX" data-ref="_M/FIND_TYPE_NO_PREFIX">FIND_TYPE_NO_PREFIX</dfn>      (1 &lt;&lt; 0)</u></td></tr>
+<tr><th id="35">35</th><td><i class="doc">/** always implicitely on, so unused, but old code may pass it */</i></td></tr>
+<tr><th id="36">36</th><td><u>#define <dfn class="macro" id="_M/FIND_TYPE_NO_OVERWRITE" data-ref="_M/FIND_TYPE_NO_OVERWRITE">FIND_TYPE_NO_OVERWRITE</dfn>   (1 &lt;&lt; 1)</u></td></tr>
+<tr><th id="37">37</th><td><i class="doc">/** makes<span class="command"> @c</span> <span class="arg">find_type()</span> accept a number */</i></td></tr>
+<tr><th id="38">38</th><td><u>#define <dfn class="macro" id="_M/FIND_TYPE_ALLOW_NUMBER" data-ref="_M/FIND_TYPE_ALLOW_NUMBER">FIND_TYPE_ALLOW_NUMBER</dfn>   (1 &lt;&lt; 2)</u></td></tr>
+<tr><th id="39">39</th><td><i class="doc">/** makes<span class="command"> @c</span> <span class="arg">find_type()</span> treat ',' as terminator */</i></td></tr>
+<tr><th id="40">40</th><td><u>#define <dfn class="macro" id="_M/FIND_TYPE_COMMA_TERM" data-ref="_M/FIND_TYPE_COMMA_TERM">FIND_TYPE_COMMA_TERM</dfn>     (1 &lt;&lt; 3)</u></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>extern</b> <em>int</em> <dfn class="decl" id="find_type" title='find_type' data-ref="find_type" >find_type</dfn>(<em>const</em> <em>char</em> *<dfn class="local col3 decl" id="6233x" title='x' data-type='const char *' data-ref="6233x" >x</dfn>, <em>const</em> <a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="local col4 decl" id="6234typelib" title='typelib' data-type='const TYPELIB *' data-ref="6234typelib" >typelib</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col5 decl" id="6235flags" title='flags' data-type='unsigned int' data-ref="6235flags" >flags</dfn>);</td></tr>
+<tr><th id="43">43</th><td><b>extern</b> <em>void</em> <dfn class="decl" id="make_type" title='make_type' data-ref="make_type" >make_type</dfn>(<em>char</em> *<dfn class="local col6 decl" id="6236to" title='to' data-type='char *' data-ref="6236to" >to</dfn>,<em>unsigned</em> <em>int</em> <dfn class="local col7 decl" id="6237nr" title='nr' data-type='unsigned int' data-ref="6237nr" >nr</dfn>,<a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="local col8 decl" id="6238typelib" title='typelib' data-type='TYPELIB *' data-ref="6238typelib" >typelib</dfn>);</td></tr>
+<tr><th id="44">44</th><td><b>extern</b> <em>const</em> <em>char</em> *<dfn class="decl" id="get_type" title='get_type' data-ref="get_type" >get_type</dfn>(<a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="local col9 decl" id="6239typelib" title='typelib' data-type='TYPELIB *' data-ref="6239typelib" >typelib</dfn>,<em>unsigned</em> <em>int</em> <dfn class="local col0 decl" id="6240nr" title='nr' data-type='unsigned int' data-ref="6240nr" >nr</dfn>);</td></tr>
+<tr><th id="45">45</th><td><b>extern</b> <a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="decl" id="copy_typelib" title='copy_typelib' data-ref="copy_typelib" >copy_typelib</dfn>(<a class="typedef" href="my_alloc.h.html#MEM_ROOT" title='MEM_ROOT' data-type='struct st_mem_root' data-ref="MEM_ROOT" >MEM_ROOT</a> *<dfn class="local col1 decl" id="6241root" title='root' data-type='MEM_ROOT *' data-ref="6241root" >root</dfn>, <a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="local col2 decl" id="6242from" title='from' data-type='TYPELIB *' data-ref="6242from" >from</dfn>);</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><b>extern</b> <a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> <dfn class="decl" id="sql_protocol_typelib" title='sql_protocol_typelib' data-ref="sql_protocol_typelib" >sql_protocol_typelib</dfn>;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><a class="typedef" href="mysql.h.html#my_ulonglong" title='my_ulonglong' data-type='unsigned long long' data-ref="my_ulonglong" >my_ulonglong</a> <dfn class="decl" id="find_set_from_flags" title='find_set_from_flags' data-ref="find_set_from_flags" >find_set_from_flags</dfn>(<em>const</em> <a class="typedef" href="#TYPELIB" title='TYPELIB' data-type='struct st_typelib' data-ref="TYPELIB" >TYPELIB</a> *<dfn class="local col3 decl" id="6243lib" title='lib' data-type='const TYPELIB *' data-ref="6243lib" >lib</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col4 decl" id="6244default_name" title='default_name' data-type='unsigned int' data-ref="6244default_name" >default_name</dfn>,</td></tr>
+<tr><th id="50">50</th><td>                              <a class="typedef" href="mysql.h.html#my_ulonglong" title='my_ulonglong' data-type='unsigned long long' data-ref="my_ulonglong" >my_ulonglong</a> <dfn class="local col5 decl" id="6245cur_set" title='cur_set' data-type='my_ulonglong' data-ref="6245cur_set" >cur_set</dfn>, <a class="typedef" href="mysql.h.html#my_ulonglong" title='my_ulonglong' data-type='unsigned long long' data-ref="my_ulonglong" >my_ulonglong</a> <dfn class="local col6 decl" id="6246default_set" title='default_set' data-type='my_ulonglong' data-ref="6246default_set" >default_set</dfn>,</td></tr>
+<tr><th id="51">51</th><td>                              <em>const</em> <em>char</em> *<dfn class="local col7 decl" id="6247str" title='str' data-type='const char *' data-ref="6247str" >str</dfn>, <em>unsigned</em> <em>int</em> <dfn class="local col8 decl" id="6248length" title='length' data-type='unsigned int' data-ref="6248length" >length</dfn>,</td></tr>
+<tr><th id="52">52</th><td>                              <em>char</em> **<dfn class="local col9 decl" id="6249err_pos" title='err_pos' data-type='char **' data-ref="6249err_pos" >err_pos</dfn>, <em>unsigned</em> <em>int</em> *<dfn class="local col0 decl" id="6250err_len" title='err_len' data-type='unsigned int *' data-ref="6250err_len" >err_len</dfn>);</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><u>#<span data-ppcond="17">endif</span> /* _typelib_h */</u></td></tr>
+<tr><th id="55">55</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore3.3.5/src/server/authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

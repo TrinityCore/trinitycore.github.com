@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+<head>
+<title>mutex.hpp [include/boost/thread/pthread/mutex.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/thread/pthread/mutex.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>thread</a>/<a href='./'>pthread</a>/mutex.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/BOOST_THREAD_PTHREAD_MUTEX_HPP">BOOST_THREAD_PTHREAD_MUTEX_HPP</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/BOOST_THREAD_PTHREAD_MUTEX_HPP" data-ref="_M/BOOST_THREAD_PTHREAD_MUTEX_HPP">BOOST_THREAD_PTHREAD_MUTEX_HPP</dfn></u></td></tr>
+<tr><th id="3">3</th><td><i>// (C) Copyright 2007-8 Anthony Williams</i></td></tr>
+<tr><th id="4">4</th><td><i>// (C) Copyright 2011-2012 Vicente J. Botet Escriba</i></td></tr>
+<tr><th id="5">5</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See</i></td></tr>
+<tr><th id="6">6</th><td><i>// accompanying file LICENSE_1_0.txt or copy at</i></td></tr>
+<tr><th id="7">7</th><td><i>// <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#include <a href="../detail/config.hpp.html">&lt;boost/thread/detail/config.hpp&gt;</a></u></td></tr>
+<tr><th id="10">10</th><td><u>#include <a href="../../../pthread.h.html">&lt;pthread.h&gt;</a></u></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../../throw_exception.hpp.html">&lt;boost/throw_exception.hpp&gt;</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../exceptions.hpp.html">&lt;boost/thread/exceptions.hpp&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">if</span> defined <a class="macro" href="../detail/config.hpp.html#211" data-ref="_M/BOOST_THREAD_PROVIDES_NESTED_LOCKS">BOOST_THREAD_PROVIDES_NESTED_LOCKS</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="../lock_types.hpp.html">&lt;boost/thread/lock_types.hpp&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="../thread_time.hpp.html">&lt;boost/thread/thread_time.hpp&gt;</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../xtime.hpp.html">&lt;boost/thread/xtime.hpp&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../assert.hpp.html">&lt;boost/assert.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../errno.h.html">&lt;errno.h&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="timespec.hpp.html">&lt;boost/thread/pthread/timespec.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="pthread_mutex_scoped_lock.hpp.html">&lt;boost/thread/pthread/pthread_mutex_scoped_lock.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="22">ifdef</span> <a class="macro" href="../detail/config.hpp.html#113" data-ref="_M/BOOST_THREAD_USES_CHRONO">BOOST_THREAD_USES_CHRONO</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../chrono/system_clocks.hpp.html">&lt;boost/chrono/system_clocks.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../chrono/ceil.hpp.html">&lt;boost/chrono/ceil.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#<span data-ppcond="22">endif</span></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../detail/delete.hpp.html">&lt;boost/thread/detail/delete.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#<span data-ppcond="28">ifdef</span> <a class="macro" href="../../../x86_64-linux-gnu/bits/posix_opt.h.html#140" data-ref="_M/_POSIX_TIMEOUTS">_POSIX_TIMEOUTS</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="29">if</span> <a class="macro" href="../../../x86_64-linux-gnu/bits/posix_opt.h.html#140" title="200809L" data-ref="_M/_POSIX_TIMEOUTS">_POSIX_TIMEOUTS</a> &gt;= 0 &amp;&amp; <a class="macro" href="../../../x86_64-linux-gnu/bits/posix_opt.h.html#140" title="200809L" data-ref="_M/_POSIX_TIMEOUTS">_POSIX_TIMEOUTS</a>&gt;=200112L</u></td></tr>
+<tr><th id="30">30</th><td><u>#<span data-ppcond="30">ifndef</span> <span class="macro" data-ref="_M/BOOST_PTHREAD_HAS_TIMEDLOCK">BOOST_PTHREAD_HAS_TIMEDLOCK</span></u></td></tr>
+<tr><th id="31">31</th><td><u>#define <dfn class="macro" id="_M/BOOST_PTHREAD_HAS_TIMEDLOCK" data-ref="_M/BOOST_PTHREAD_HAS_TIMEDLOCK">BOOST_PTHREAD_HAS_TIMEDLOCK</dfn></u></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="30">endif</span></u></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="29">endif</span></u></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="28">endif</span></u></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><u>#include <a href="../../config/abi_prefix.hpp.html">&lt;boost/config/abi_prefix.hpp&gt;</a></u></td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><u>#<span data-ppcond="39">ifndef</span> <span class="macro" data-ref="_M/BOOST_THREAD_HAS_NO_EINTR_BUG">BOOST_THREAD_HAS_NO_EINTR_BUG</span></u></td></tr>
+<tr><th id="40">40</th><td><u>#define <dfn class="macro" id="_M/BOOST_THREAD_HAS_EINTR_BUG" data-ref="_M/BOOST_THREAD_HAS_EINTR_BUG">BOOST_THREAD_HAS_EINTR_BUG</dfn></u></td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="39">endif</span></u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><b>namespace</b> <span class="namespace">boost</span></td></tr>
+<tr><th id="44">44</th><td>{</td></tr>
+<tr><th id="45">45</th><td>  <b>namespace</b> <span class="namespace">posix</span> {</td></tr>
+<tr><th id="46">46</th><td><u>#<span data-ppcond="46">ifdef</span> <a class="macro" href="#40" data-ref="_M/BOOST_THREAD_HAS_EINTR_BUG">BOOST_THREAD_HAS_EINTR_BUG</a></u></td></tr>
+<tr><th id="47">47</th><td>    <a class="macro" href="../../config/suffix.hpp.html#645" title="inline __attribute__ ((__always_inline__))" data-ref="_M/BOOST_FORCEINLINE">BOOST_FORCEINLINE</a> <em>int</em> <dfn class="decl def" id="_ZN5boost5posix21pthread_mutex_destroyEP15pthread_mutex_t" title='boost::posix::pthread_mutex_destroy' data-ref="_ZN5boost5posix21pthread_mutex_destroyEP15pthread_mutex_t" >pthread_mutex_destroy</dfn>(<a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a>* <dfn class="local col4 decl" id="3764m" title='m' data-type='pthread_mutex_t *' data-ref="3764m" >m</dfn>)</td></tr>
+<tr><th id="48">48</th><td>    {</td></tr>
+<tr><th id="49">49</th><td>      <em>int</em> <dfn class="local col5 decl" id="3765ret" title='ret' data-type='int' data-ref="3765ret" >ret</dfn>;</td></tr>
+<tr><th id="50">50</th><td>      <b>do</b></td></tr>
+<tr><th id="51">51</th><td>      {</td></tr>
+<tr><th id="52">52</th><td>          <a class="local col5 ref" href="#3765ret" title='ret' data-ref="3765ret" >ret</a> = ::<a class="ref" href="../../../pthread.h.html#pthread_mutex_destroy" title='pthread_mutex_destroy' data-ref="pthread_mutex_destroy" id="pthread_mutex_destroy" >pthread_mutex_destroy</a>(<a class="local col4 ref" href="#3764m" title='m' data-ref="3764m" >m</a>);</td></tr>
+<tr><th id="53">53</th><td>      } <b>while</b> (<a class="local col5 ref" href="#3765ret" title='ret' data-ref="3765ret" >ret</a> == <a class="macro" href="../../../asm-generic/errno-base.h.html#7" title="4" data-ref="_M/EINTR">EINTR</a>);</td></tr>
+<tr><th id="54">54</th><td>      <b>return</b> <a class="local col5 ref" href="#3765ret" title='ret' data-ref="3765ret" >ret</a>;</td></tr>
+<tr><th id="55">55</th><td>    }</td></tr>
+<tr><th id="56">56</th><td>    <a class="macro" href="../../config/suffix.hpp.html#645" title="inline __attribute__ ((__always_inline__))" data-ref="_M/BOOST_FORCEINLINE">BOOST_FORCEINLINE</a> <em>int</em> <dfn class="decl def" id="_ZN5boost5posix18pthread_mutex_lockEP15pthread_mutex_t" title='boost::posix::pthread_mutex_lock' data-ref="_ZN5boost5posix18pthread_mutex_lockEP15pthread_mutex_t" >pthread_mutex_lock</dfn>(<a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a>* <dfn class="local col6 decl" id="3766m" title='m' data-type='pthread_mutex_t *' data-ref="3766m" >m</dfn>)</td></tr>
+<tr><th id="57">57</th><td>    {</td></tr>
+<tr><th id="58">58</th><td>      <em>int</em> <dfn class="local col7 decl" id="3767ret" title='ret' data-type='int' data-ref="3767ret" >ret</dfn>;</td></tr>
+<tr><th id="59">59</th><td>      <b>do</b></td></tr>
+<tr><th id="60">60</th><td>      {</td></tr>
+<tr><th id="61">61</th><td>          <a class="local col7 ref" href="#3767ret" title='ret' data-ref="3767ret" >ret</a> = ::<a class="ref" href="../../../pthread.h.html#pthread_mutex_lock" title='pthread_mutex_lock' data-ref="pthread_mutex_lock" id="pthread_mutex_lock" >pthread_mutex_lock</a>(<a class="local col6 ref" href="#3766m" title='m' data-ref="3766m" >m</a>);</td></tr>
+<tr><th id="62">62</th><td>      } <b>while</b> (<a class="local col7 ref" href="#3767ret" title='ret' data-ref="3767ret" >ret</a> == <a class="macro" href="../../../asm-generic/errno-base.h.html#7" title="4" data-ref="_M/EINTR">EINTR</a>);</td></tr>
+<tr><th id="63">63</th><td>      <b>return</b> <a class="local col7 ref" href="#3767ret" title='ret' data-ref="3767ret" >ret</a>;</td></tr>
+<tr><th id="64">64</th><td>    }</td></tr>
+<tr><th id="65">65</th><td>    <a class="macro" href="../../config/suffix.hpp.html#645" title="inline __attribute__ ((__always_inline__))" data-ref="_M/BOOST_FORCEINLINE">BOOST_FORCEINLINE</a> <em>int</em> <dfn class="decl def" id="_ZN5boost5posix20pthread_mutex_unlockEP15pthread_mutex_t" title='boost::posix::pthread_mutex_unlock' data-ref="_ZN5boost5posix20pthread_mutex_unlockEP15pthread_mutex_t" >pthread_mutex_unlock</dfn>(<a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a>* <dfn class="local col8 decl" id="3768m" title='m' data-type='pthread_mutex_t *' data-ref="3768m" >m</dfn>)</td></tr>
+<tr><th id="66">66</th><td>    {</td></tr>
+<tr><th id="67">67</th><td>      <em>int</em> <dfn class="local col9 decl" id="3769ret" title='ret' data-type='int' data-ref="3769ret" >ret</dfn>;</td></tr>
+<tr><th id="68">68</th><td>      <b>do</b></td></tr>
+<tr><th id="69">69</th><td>      {</td></tr>
+<tr><th id="70">70</th><td>          <a class="local col9 ref" href="#3769ret" title='ret' data-ref="3769ret" >ret</a> = ::<a class="ref" href="../../../pthread.h.html#pthread_mutex_unlock" title='pthread_mutex_unlock' data-ref="pthread_mutex_unlock" id="pthread_mutex_unlock" >pthread_mutex_unlock</a>(<a class="local col8 ref" href="#3768m" title='m' data-ref="3768m" >m</a>);</td></tr>
+<tr><th id="71">71</th><td>      } <b>while</b> (<a class="local col9 ref" href="#3769ret" title='ret' data-ref="3769ret" >ret</a> == <a class="macro" href="../../../asm-generic/errno-base.h.html#7" title="4" data-ref="_M/EINTR">EINTR</a>);</td></tr>
+<tr><th id="72">72</th><td>      <b>return</b> <a class="local col9 ref" href="#3769ret" title='ret' data-ref="3769ret" >ret</a>;</td></tr>
+<tr><th id="73">73</th><td>    }</td></tr>
+<tr><th id="74">74</th><td><u>#<span data-ppcond="46">else</span></u></td></tr>
+<tr><th id="75">75</th><td>    BOOST_FORCEINLINE <em>int</em> pthread_mutex_destroy(pthread_mutex_t* m)</td></tr>
+<tr><th id="76">76</th><td>    {</td></tr>
+<tr><th id="77">77</th><td>      <b>return</b> ::pthread_mutex_destroy(m);</td></tr>
+<tr><th id="78">78</th><td>    }</td></tr>
+<tr><th id="79">79</th><td>    BOOST_FORCEINLINE <em>int</em> pthread_mutex_lock(pthread_mutex_t* m)</td></tr>
+<tr><th id="80">80</th><td>    {</td></tr>
+<tr><th id="81">81</th><td>      <b>return</b> ::pthread_mutex_lock(m);</td></tr>
+<tr><th id="82">82</th><td>    }</td></tr>
+<tr><th id="83">83</th><td>    BOOST_FORCEINLINE <em>int</em> pthread_mutex_unlock(pthread_mutex_t* m)</td></tr>
+<tr><th id="84">84</th><td>    {</td></tr>
+<tr><th id="85">85</th><td>      <b>return</b> ::pthread_mutex_unlock(m);</td></tr>
+<tr><th id="86">86</th><td>    }</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><u>#<span data-ppcond="46">endif</span></u></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>  }</td></tr>
+<tr><th id="91">91</th><td>    <b>class</b> <dfn class="type def" id="boost::mutex" title='boost::mutex' data-ref="boost::mutex" >mutex</dfn></td></tr>
+<tr><th id="92">92</th><td>    {</td></tr>
+<tr><th id="93">93</th><td>    <b>private</b>:</td></tr>
+<tr><th id="94">94</th><td>        <a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a> <dfn class="decl" id="boost::mutex::m" title='boost::mutex::m' data-ref="boost::mutex::m" >m</dfn>;</td></tr>
+<tr><th id="95">95</th><td>    <b>public</b>:</td></tr>
+<tr><th id="96">96</th><td>        <a class="macro" href="../detail/delete.hpp.html#53" title="mutex(mutex const&amp;) = delete; mutex&amp; operator=(mutex const&amp;) = delete;" data-ref="_M/BOOST_THREAD_NO_COPYABLE">BOOST_THREAD_NO_COPYABLE</a>(<dfn class="decl def" id="_ZN5boost5mutexC1ERKS0_" title='boost::mutex::mutex' data-ref="_ZN5boost5mutexC1ERKS0_" ><a class="type" href="#boost::mutex" title='boost::mutex' data-ref="boost::mutex" ><a class="type" href="#boost::mutex" title='boost::mutex' data-ref="boost::mutex" ><a class="type" href="#boost::mutex" title='boost::mutex' data-ref="boost::mutex" >mutex</a></a></a></dfn>)</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>        <dfn class="decl def" id="_ZN5boost5mutexC1Ev" title='boost::mutex::mutex' data-ref="_ZN5boost5mutexC1Ev" >mutex</dfn>()</td></tr>
+<tr><th id="99">99</th><td>        {</td></tr>
+<tr><th id="100">100</th><td>            <em>int</em> <em>const</em> <dfn class="local col0 decl" id="3770res" title='res' data-type='const int' data-ref="3770res" >res</dfn>=<a class="ref" href="../../../pthread.h.html#pthread_mutex_init" title='pthread_mutex_init' data-ref="pthread_mutex_init" id="pthread_mutex_init" >pthread_mutex_init</a>(&amp;<a class="member" href="#boost::mutex::m" title='boost::mutex::m' data-ref="boost::mutex::m" >m</a>,<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="101">101</th><td>            <b>if</b>(<a class="local col0 ref" href="#3770res" title='res' data-ref="3770res" >res</a>)</td></tr>
+<tr><th id="102">102</th><td>            {</td></tr>
+<tr><th id="103">103</th><td>                <span class="namespace">boost::</span><a class="ref" href="../../throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="type" href="../exceptions.hpp.html#boost::thread_resource_error" title='boost::thread_resource_error' data-ref="boost::thread_resource_error" >thread_resource_error</a><a class="ref" href="../exceptions.hpp.html#_ZN5boost21thread_resource_errorC1EiPKc" title='boost::thread_resource_error::thread_resource_error' data-ref="_ZN5boost21thread_resource_errorC1EiPKc" id="_ZN5boost21thread_resource_errorC1EiPKc" >(</a><a class="local col0 ref" href="#3770res" title='res' data-ref="3770res" >res</a>, <q>"boost:: mutex constructor failed in pthread_mutex_init"</q>));</td></tr>
+<tr><th id="104">104</th><td>            }</td></tr>
+<tr><th id="105">105</th><td>        }</td></tr>
+<tr><th id="106">106</th><td>        <dfn class="decl def" id="_ZN5boost5mutexD1Ev" title='boost::mutex::~mutex' data-ref="_ZN5boost5mutexD1Ev" >~mutex</dfn>()</td></tr>
+<tr><th id="107">107</th><td>        {</td></tr>
+<tr><th id="108">108</th><td>          <a class="macro" href="../../assert.hpp.html#130" title="((void)(!posix::pthread_mutex_destroy(&amp;m)))" data-ref="_M/BOOST_VERIFY">BOOST_VERIFY</a>(!posix::<a class="ref" href="#_ZN5boost5posix21pthread_mutex_destroyEP15pthread_mutex_t" title='boost::posix::pthread_mutex_destroy' data-ref="_ZN5boost5posix21pthread_mutex_destroyEP15pthread_mutex_t" >pthread_mutex_destroy</a>(&amp;<a class="member" href="#boost::mutex::m" title='boost::mutex::m' data-ref="boost::mutex::m" >m</a>));</td></tr>
+<tr><th id="109">109</th><td>        }</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>        <em>void</em> <dfn class="decl def" id="_ZN5boost5mutex4lockEv" title='boost::mutex::lock' data-ref="_ZN5boost5mutex4lockEv" >lock</dfn>()</td></tr>
+<tr><th id="112">112</th><td>        {</td></tr>
+<tr><th id="113">113</th><td>            <em>int</em> <dfn class="local col1 decl" id="3771res" title='res' data-type='int' data-ref="3771res" >res</dfn> = <span class="namespace">posix::</span><a class="ref" href="#_ZN5boost5posix18pthread_mutex_lockEP15pthread_mutex_t" title='boost::posix::pthread_mutex_lock' data-ref="_ZN5boost5posix18pthread_mutex_lockEP15pthread_mutex_t" >pthread_mutex_lock</a>(&amp;<a class="member" href="#boost::mutex::m" title='boost::mutex::m' data-ref="boost::mutex::m" >m</a>);</td></tr>
+<tr><th id="114">114</th><td>            <b>if</b> (<a class="local col1 ref" href="#3771res" title='res' data-ref="3771res" >res</a>)</td></tr>
+<tr><th id="115">115</th><td>            {</td></tr>
+<tr><th id="116">116</th><td>                <span class="namespace">boost::</span><a class="ref" href="../../throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="type" href="../exceptions.hpp.html#boost::lock_error" title='boost::lock_error' data-ref="boost::lock_error" >lock_error</a><a class="ref" href="../exceptions.hpp.html#_ZN5boost10lock_errorC1EiPKc" title='boost::lock_error::lock_error' data-ref="_ZN5boost10lock_errorC1EiPKc" id="_ZN5boost10lock_errorC1EiPKc" >(</a><a class="local col1 ref" href="#3771res" title='res' data-ref="3771res" >res</a>,<q>"boost: mutex lock failed in pthread_mutex_lock"</q>));</td></tr>
+<tr><th id="117">117</th><td>            }</td></tr>
+<tr><th id="118">118</th><td>        }</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>        <em>void</em> <dfn class="decl def" id="_ZN5boost5mutex6unlockEv" title='boost::mutex::unlock' data-ref="_ZN5boost5mutex6unlockEv" >unlock</dfn>()</td></tr>
+<tr><th id="121">121</th><td>        {</td></tr>
+<tr><th id="122">122</th><td>            <em>int</em> <dfn class="local col2 decl" id="3772res" title='res' data-type='int' data-ref="3772res" >res</dfn> = <span class="namespace">posix::</span><a class="ref" href="#_ZN5boost5posix20pthread_mutex_unlockEP15pthread_mutex_t" title='boost::posix::pthread_mutex_unlock' data-ref="_ZN5boost5posix20pthread_mutex_unlockEP15pthread_mutex_t" >pthread_mutex_unlock</a>(&amp;<a class="member" href="#boost::mutex::m" title='boost::mutex::m' data-ref="boost::mutex::m" >m</a>);</td></tr>
+<tr><th id="123">123</th><td>            <b>if</b> (<a class="local col2 ref" href="#3772res" title='res' data-ref="3772res" >res</a>)</td></tr>
+<tr><th id="124">124</th><td>            {</td></tr>
+<tr><th id="125">125</th><td>                <span class="namespace">boost::</span><a class="ref" href="../../throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="type" href="../exceptions.hpp.html#boost::lock_error" title='boost::lock_error' data-ref="boost::lock_error" >lock_error</a><a class="ref" href="../exceptions.hpp.html#_ZN5boost10lock_errorC1EiPKc" title='boost::lock_error::lock_error' data-ref="_ZN5boost10lock_errorC1EiPKc" id="_ZN5boost10lock_errorC1EiPKc" >(</a><a class="local col2 ref" href="#3772res" title='res' data-ref="3772res" >res</a>,<q>"boost: mutex unlock failed in pthread_mutex_unlock"</q>));</td></tr>
+<tr><th id="126">126</th><td>            }</td></tr>
+<tr><th id="127">127</th><td>        }</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost5mutex8try_lockEv" title='boost::mutex::try_lock' data-ref="_ZN5boost5mutex8try_lockEv" >try_lock</dfn>()</td></tr>
+<tr><th id="130">130</th><td>        {</td></tr>
+<tr><th id="131">131</th><td>            <em>int</em> <dfn class="local col3 decl" id="3773res" title='res' data-type='int' data-ref="3773res" >res</dfn>;</td></tr>
+<tr><th id="132">132</th><td>            <b>do</b></td></tr>
+<tr><th id="133">133</th><td>            {</td></tr>
+<tr><th id="134">134</th><td>                <a class="local col3 ref" href="#3773res" title='res' data-ref="3773res" >res</a> = <a class="ref" href="../../../pthread.h.html#pthread_mutex_trylock" title='pthread_mutex_trylock' data-ref="pthread_mutex_trylock" id="pthread_mutex_trylock" >pthread_mutex_trylock</a>(&amp;<a class="member" href="#boost::mutex::m" title='boost::mutex::m' data-ref="boost::mutex::m" >m</a>);</td></tr>
+<tr><th id="135">135</th><td>            } <b>while</b> (<a class="local col3 ref" href="#3773res" title='res' data-ref="3773res" >res</a> == <a class="macro" href="../../../asm-generic/errno-base.h.html#7" title="4" data-ref="_M/EINTR">EINTR</a>);</td></tr>
+<tr><th id="136">136</th><td>            <b>if</b> (<a class="local col3 ref" href="#3773res" title='res' data-ref="3773res" >res</a>==<a class="macro" href="../../../asm-generic/errno-base.h.html#19" title="16" data-ref="_M/EBUSY">EBUSY</a>)</td></tr>
+<tr><th id="137">137</th><td>            {</td></tr>
+<tr><th id="138">138</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="139">139</th><td>            }</td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td>            <b>return</b> !<a class="local col3 ref" href="#3773res" title='res' data-ref="3773res" >res</a>;</td></tr>
+<tr><th id="142">142</th><td>        }</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td><u>#define <dfn class="macro" id="_M/BOOST_THREAD_DEFINES_MUTEX_NATIVE_HANDLE" data-ref="_M/BOOST_THREAD_DEFINES_MUTEX_NATIVE_HANDLE">BOOST_THREAD_DEFINES_MUTEX_NATIVE_HANDLE</dfn></u></td></tr>
+<tr><th id="145">145</th><td>        <b>typedef</b> <a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a>* <dfn class="typedef" id="boost::mutex::native_handle_type" title='boost::mutex::native_handle_type' data-type='pthread_mutex_t *' data-ref="boost::mutex::native_handle_type" >native_handle_type</dfn>;</td></tr>
+<tr><th id="146">146</th><td>        <a class="typedef" href="#boost::mutex::native_handle_type" title='boost::mutex::native_handle_type' data-type='pthread_mutex_t *' data-ref="boost::mutex::native_handle_type" >native_handle_type</a> <dfn class="decl def" id="_ZN5boost5mutex13native_handleEv" title='boost::mutex::native_handle' data-ref="_ZN5boost5mutex13native_handleEv" >native_handle</dfn>()</td></tr>
+<tr><th id="147">147</th><td>        {</td></tr>
+<tr><th id="148">148</th><td>            <b>return</b> &amp;<a class="member" href="#boost::mutex::m" title='boost::mutex::m' data-ref="boost::mutex::m" >m</a>;</td></tr>
+<tr><th id="149">149</th><td>        }</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><u>#<span data-ppcond="151">if</span> defined <a class="macro" href="../detail/config.hpp.html#211" data-ref="_M/BOOST_THREAD_PROVIDES_NESTED_LOCKS">BOOST_THREAD_PROVIDES_NESTED_LOCKS</a></u></td></tr>
+<tr><th id="152">152</th><td>        <b>typedef</b> <a class="type" href="../lock_types.hpp.html#boost::unique_lock" title='boost::unique_lock' data-ref="boost::unique_lock" >unique_lock</a>&lt;<a class="type" href="#boost::mutex" title='boost::mutex' data-ref="boost::mutex" >mutex</a>&gt; <dfn class="typedef" id="boost::mutex::scoped_lock" title='boost::mutex::scoped_lock' data-type='unique_lock&lt;boost::mutex&gt;' data-ref="boost::mutex::scoped_lock" >scoped_lock</dfn>;</td></tr>
+<tr><th id="153">153</th><td>        <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../lock_types.hpp.html#boost::detail::try_lock_wrapper" title='boost::detail::try_lock_wrapper' data-ref="boost::detail::try_lock_wrapper" >try_lock_wrapper</a>&lt;<a class="type" href="#boost::mutex" title='boost::mutex' data-ref="boost::mutex" >mutex</a>&gt; <dfn class="typedef" id="boost::mutex::scoped_try_lock" title='boost::mutex::scoped_try_lock' data-type='detail::try_lock_wrapper&lt;mutex&gt;' data-ref="boost::mutex::scoped_try_lock" >scoped_try_lock</dfn>;</td></tr>
+<tr><th id="154">154</th><td><u>#<span data-ppcond="151">endif</span></u></td></tr>
+<tr><th id="155">155</th><td>    };</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>    <b>typedef</b> <a class="type" href="#boost::mutex" title='boost::mutex' data-ref="boost::mutex" >mutex</a> <dfn class="typedef" id="boost::try_mutex" title='boost::try_mutex' data-type='boost::mutex' data-ref="boost::try_mutex" >try_mutex</dfn>;</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>    <b>class</b> <dfn class="type def" id="boost::timed_mutex" title='boost::timed_mutex' data-ref="boost::timed_mutex" >timed_mutex</dfn></td></tr>
+<tr><th id="160">160</th><td>    {</td></tr>
+<tr><th id="161">161</th><td>    <b>private</b>:</td></tr>
+<tr><th id="162">162</th><td>        <a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a> <dfn class="decl" id="boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</dfn>;</td></tr>
+<tr><th id="163">163</th><td><u>#<span data-ppcond="163">ifndef</span> <a class="macro" href="#31" data-ref="_M/BOOST_PTHREAD_HAS_TIMEDLOCK">BOOST_PTHREAD_HAS_TIMEDLOCK</a></u></td></tr>
+<tr><th id="164">164</th><td>        pthread_cond_t cond;</td></tr>
+<tr><th id="165">165</th><td>        <em>bool</em> is_locked;</td></tr>
+<tr><th id="166">166</th><td><u>#<span data-ppcond="163">endif</span></u></td></tr>
+<tr><th id="167">167</th><td>    <b>public</b>:</td></tr>
+<tr><th id="168">168</th><td>        <a class="macro" href="../detail/delete.hpp.html#53" title="timed_mutex(timed_mutex const&amp;) = delete; timed_mutex&amp; operator=(timed_mutex const&amp;) = delete;" data-ref="_M/BOOST_THREAD_NO_COPYABLE">BOOST_THREAD_NO_COPYABLE</a>(<dfn class="decl def" id="_ZN5boost11timed_mutexC1ERKS0_" title='boost::timed_mutex::timed_mutex' data-ref="_ZN5boost11timed_mutexC1ERKS0_" ><a class="type" href="#boost::timed_mutex" title='boost::timed_mutex' data-ref="boost::timed_mutex" ><a class="type" href="#boost::timed_mutex" title='boost::timed_mutex' data-ref="boost::timed_mutex" ><a class="type" href="#boost::timed_mutex" title='boost::timed_mutex' data-ref="boost::timed_mutex" >timed_mutex</a></a></a></dfn>)</td></tr>
+<tr><th id="169">169</th><td>        <dfn class="decl def" id="_ZN5boost11timed_mutexC1Ev" title='boost::timed_mutex::timed_mutex' data-ref="_ZN5boost11timed_mutexC1Ev" >timed_mutex</dfn>()</td></tr>
+<tr><th id="170">170</th><td>        {</td></tr>
+<tr><th id="171">171</th><td>            <em>int</em> <em>const</em> <dfn class="local col4 decl" id="3774res" title='res' data-type='const int' data-ref="3774res" >res</dfn>=<a class="ref" href="../../../pthread.h.html#pthread_mutex_init" title='pthread_mutex_init' data-ref="pthread_mutex_init" id="pthread_mutex_init" >pthread_mutex_init</a>(&amp;<a class="member" href="#boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</a>,<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="172">172</th><td>            <b>if</b>(<a class="local col4 ref" href="#3774res" title='res' data-ref="3774res" >res</a>)</td></tr>
+<tr><th id="173">173</th><td>            {</td></tr>
+<tr><th id="174">174</th><td>                <span class="namespace">boost::</span><a class="ref" href="../../throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="type" href="../exceptions.hpp.html#boost::thread_resource_error" title='boost::thread_resource_error' data-ref="boost::thread_resource_error" >thread_resource_error</a><a class="ref" href="../exceptions.hpp.html#_ZN5boost21thread_resource_errorC1EiPKc" title='boost::thread_resource_error::thread_resource_error' data-ref="_ZN5boost21thread_resource_errorC1EiPKc" id="_ZN5boost21thread_resource_errorC1EiPKc" >(</a><a class="local col4 ref" href="#3774res" title='res' data-ref="3774res" >res</a>, <q>"boost:: timed_mutex constructor failed in pthread_mutex_init"</q>));</td></tr>
+<tr><th id="175">175</th><td>            }</td></tr>
+<tr><th id="176">176</th><td><u>#<span data-ppcond="176">ifndef</span> <a class="macro" href="#31" data-ref="_M/BOOST_PTHREAD_HAS_TIMEDLOCK">BOOST_PTHREAD_HAS_TIMEDLOCK</a></u></td></tr>
+<tr><th id="177">177</th><td>            <em>int</em> <em>const</em> res2=pthread_cond_init(&amp;cond,NULL);</td></tr>
+<tr><th id="178">178</th><td>            <b>if</b>(res2)</td></tr>
+<tr><th id="179">179</th><td>            {</td></tr>
+<tr><th id="180">180</th><td>                BOOST_VERIFY(!posix::pthread_mutex_destroy(&amp;m));</td></tr>
+<tr><th id="181">181</th><td>                <i>//BOOST_VERIFY(!pthread_mutex_destroy(&amp;m));</i></td></tr>
+<tr><th id="182">182</th><td>                boost::throw_exception(thread_resource_error(res2, <q>"boost:: timed_mutex constructor failed in pthread_cond_init"</q>));</td></tr>
+<tr><th id="183">183</th><td>            }</td></tr>
+<tr><th id="184">184</th><td>            is_locked=<b>false</b>;</td></tr>
+<tr><th id="185">185</th><td><u>#<span data-ppcond="176">endif</span></u></td></tr>
+<tr><th id="186">186</th><td>        }</td></tr>
+<tr><th id="187">187</th><td>        <dfn class="decl def" id="_ZN5boost11timed_mutexD1Ev" title='boost::timed_mutex::~timed_mutex' data-ref="_ZN5boost11timed_mutexD1Ev" >~timed_mutex</dfn>()</td></tr>
+<tr><th id="188">188</th><td>        {</td></tr>
+<tr><th id="189">189</th><td>            <a class="macro" href="../../assert.hpp.html#130" title="((void)(!posix::pthread_mutex_destroy(&amp;m)))" data-ref="_M/BOOST_VERIFY">BOOST_VERIFY</a>(!posix::<a class="ref" href="#_ZN5boost5posix21pthread_mutex_destroyEP15pthread_mutex_t" title='boost::posix::pthread_mutex_destroy' data-ref="_ZN5boost5posix21pthread_mutex_destroyEP15pthread_mutex_t" >pthread_mutex_destroy</a>(&amp;<a class="member" href="#boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</a>));</td></tr>
+<tr><th id="190">190</th><td><u>#<span data-ppcond="190">ifndef</span> <a class="macro" href="#31" data-ref="_M/BOOST_PTHREAD_HAS_TIMEDLOCK">BOOST_PTHREAD_HAS_TIMEDLOCK</a></u></td></tr>
+<tr><th id="191">191</th><td>            BOOST_VERIFY(!pthread_cond_destroy(&amp;cond));</td></tr>
+<tr><th id="192">192</th><td><u>#<span data-ppcond="190">endif</span></u></td></tr>
+<tr><th id="193">193</th><td>        }</td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td><u>#<span data-ppcond="195">if</span> defined <a class="macro" href="../detail/config.hpp.html#223" data-ref="_M/BOOST_THREAD_USES_DATETIME">BOOST_THREAD_USES_DATETIME</a></u></td></tr>
+<tr><th id="196">196</th><td>        <b>template</b>&lt;<b>typename</b> TimeDuration&gt;</td></tr>
+<tr><th id="197">197</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex10timed_lockERKT_" title='boost::timed_mutex::timed_lock' data-ref="_ZN5boost11timed_mutex10timed_lockERKT_" >timed_lock</dfn>(TimeDuration <em>const</em> &amp; <dfn class="local col5 decl" id="3775relative_time" title='relative_time' data-type='const TimeDuration &amp;' data-ref="3775relative_time" >relative_time</dfn>)</td></tr>
+<tr><th id="198">198</th><td>        {</td></tr>
+<tr><th id="199">199</th><td>            <b>return</b> timed_lock(<a class="ref" href="../thread_time.hpp.html#_ZN5boost15get_system_timeEv" title='boost::get_system_time' data-ref="_ZN5boost15get_system_timeEv" id="_ZN5boost15get_system_timeEv" >get_system_time</a>()+<a class="local col5 ref" href="#3775relative_time" title='relative_time' data-ref="3775relative_time" >relative_time</a>);</td></tr>
+<tr><th id="200">200</th><td>        }</td></tr>
+<tr><th id="201">201</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex10timed_lockERKNS_5xtimeE" title='boost::timed_mutex::timed_lock' data-ref="_ZN5boost11timed_mutex10timed_lockERKNS_5xtimeE" >timed_lock</dfn>(<span class="namespace">boost::</span><a class="type" href="../xtime.hpp.html#boost::xtime" title='boost::xtime' data-ref="boost::xtime" >xtime</a> <em>const</em> &amp; <dfn class="local col6 decl" id="3776absolute_time" title='absolute_time' data-type='const boost::xtime &amp;' data-ref="3776absolute_time" >absolute_time</dfn>)</td></tr>
+<tr><th id="202">202</th><td>        {</td></tr>
+<tr><th id="203">203</th><td>            <b>return</b> <a class="member" href="#_ZN5boost11timed_mutex10timed_lockERKNS_10posix_time5ptimeE" title='boost::timed_mutex::timed_lock' data-ref="_ZN5boost11timed_mutex10timed_lockERKNS_10posix_time5ptimeE" >timed_lock</a>(<a class="typedef" href="../thread_time.hpp.html#boost::system_time" title='boost::system_time' data-type='boost::posix_time::ptime' data-ref="boost::system_time" >system_time</a><a class="ref" href="../../date_time/posix_time/ptime.hpp.html#_ZN5boost10posix_time5ptimeC1EOS1_" title='boost::posix_time::ptime::ptime' data-ref="_ZN5boost10posix_time5ptimeC1EOS1_" id="_ZN5boost10posix_time5ptimeC1EOS1_" >(</a><a class="local col6 ref" href="#3776absolute_time" title='absolute_time' data-ref="3776absolute_time" >absolute_time</a>));</td></tr>
+<tr><th id="204">204</th><td>        }</td></tr>
+<tr><th id="205">205</th><td><u>#<span data-ppcond="195">endif</span></u></td></tr>
+<tr><th id="206">206</th><td><u>#<span data-ppcond="206">ifdef</span> <a class="macro" href="#31" data-ref="_M/BOOST_PTHREAD_HAS_TIMEDLOCK">BOOST_PTHREAD_HAS_TIMEDLOCK</a></u></td></tr>
+<tr><th id="207">207</th><td>        <em>void</em> <dfn class="decl def" id="_ZN5boost11timed_mutex4lockEv" title='boost::timed_mutex::lock' data-ref="_ZN5boost11timed_mutex4lockEv" >lock</dfn>()</td></tr>
+<tr><th id="208">208</th><td>        {</td></tr>
+<tr><th id="209">209</th><td>            <em>int</em> <dfn class="local col7 decl" id="3777res" title='res' data-type='int' data-ref="3777res" >res</dfn> = <span class="namespace">posix::</span><a class="ref" href="#_ZN5boost5posix18pthread_mutex_lockEP15pthread_mutex_t" title='boost::posix::pthread_mutex_lock' data-ref="_ZN5boost5posix18pthread_mutex_lockEP15pthread_mutex_t" >pthread_mutex_lock</a>(&amp;<a class="member" href="#boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</a>);</td></tr>
+<tr><th id="210">210</th><td>            <b>if</b> (<a class="local col7 ref" href="#3777res" title='res' data-ref="3777res" >res</a>)</td></tr>
+<tr><th id="211">211</th><td>            {</td></tr>
+<tr><th id="212">212</th><td>                <span class="namespace">boost::</span><a class="ref" href="../../throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="type" href="../exceptions.hpp.html#boost::lock_error" title='boost::lock_error' data-ref="boost::lock_error" >lock_error</a><a class="ref" href="../exceptions.hpp.html#_ZN5boost10lock_errorC1EiPKc" title='boost::lock_error::lock_error' data-ref="_ZN5boost10lock_errorC1EiPKc" id="_ZN5boost10lock_errorC1EiPKc" >(</a><a class="local col7 ref" href="#3777res" title='res' data-ref="3777res" >res</a>,<q>"boost: mutex lock failed in pthread_mutex_lock"</q>));</td></tr>
+<tr><th id="213">213</th><td>            }</td></tr>
+<tr><th id="214">214</th><td>        }</td></tr>
+<tr><th id="215">215</th><td></td></tr>
+<tr><th id="216">216</th><td>        <em>void</em> <dfn class="decl def" id="_ZN5boost11timed_mutex6unlockEv" title='boost::timed_mutex::unlock' data-ref="_ZN5boost11timed_mutex6unlockEv" >unlock</dfn>()</td></tr>
+<tr><th id="217">217</th><td>        {</td></tr>
+<tr><th id="218">218</th><td>            <em>int</em> <dfn class="local col8 decl" id="3778res" title='res' data-type='int' data-ref="3778res" >res</dfn> = <span class="namespace">posix::</span><a class="ref" href="#_ZN5boost5posix20pthread_mutex_unlockEP15pthread_mutex_t" title='boost::posix::pthread_mutex_unlock' data-ref="_ZN5boost5posix20pthread_mutex_unlockEP15pthread_mutex_t" >pthread_mutex_unlock</a>(&amp;<a class="member" href="#boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</a>);</td></tr>
+<tr><th id="219">219</th><td>            <b>if</b> (<a class="local col8 ref" href="#3778res" title='res' data-ref="3778res" >res</a>)</td></tr>
+<tr><th id="220">220</th><td>            {</td></tr>
+<tr><th id="221">221</th><td>                <span class="namespace">boost::</span><a class="ref" href="../../throw_exception.hpp.html#_ZN5boost15throw_exceptionERKT_" title='boost::throw_exception' data-ref="_ZN5boost15throw_exceptionERKT_" id="_ZN5boost15throw_exceptionERKT_" >throw_exception</a>(<a class="type" href="../exceptions.hpp.html#boost::lock_error" title='boost::lock_error' data-ref="boost::lock_error" >lock_error</a><a class="ref" href="../exceptions.hpp.html#_ZN5boost10lock_errorC1EiPKc" title='boost::lock_error::lock_error' data-ref="_ZN5boost10lock_errorC1EiPKc" id="_ZN5boost10lock_errorC1EiPKc" >(</a><a class="local col8 ref" href="#3778res" title='res' data-ref="3778res" >res</a>,<q>"boost: mutex unlock failed in pthread_mutex_unlock"</q>));</td></tr>
+<tr><th id="222">222</th><td>            }</td></tr>
+<tr><th id="223">223</th><td>        }</td></tr>
+<tr><th id="224">224</th><td></td></tr>
+<tr><th id="225">225</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex8try_lockEv" title='boost::timed_mutex::try_lock' data-ref="_ZN5boost11timed_mutex8try_lockEv" >try_lock</dfn>()</td></tr>
+<tr><th id="226">226</th><td>        {</td></tr>
+<tr><th id="227">227</th><td>          <em>int</em> <dfn class="local col9 decl" id="3779res" title='res' data-type='int' data-ref="3779res" >res</dfn>;</td></tr>
+<tr><th id="228">228</th><td>          <b>do</b></td></tr>
+<tr><th id="229">229</th><td>          {</td></tr>
+<tr><th id="230">230</th><td>              <a class="local col9 ref" href="#3779res" title='res' data-ref="3779res" >res</a> = <a class="ref" href="../../../pthread.h.html#pthread_mutex_trylock" title='pthread_mutex_trylock' data-ref="pthread_mutex_trylock" id="pthread_mutex_trylock" >pthread_mutex_trylock</a>(&amp;<a class="member" href="#boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</a>);</td></tr>
+<tr><th id="231">231</th><td>          } <b>while</b> (<a class="local col9 ref" href="#3779res" title='res' data-ref="3779res" >res</a> == <a class="macro" href="../../../asm-generic/errno-base.h.html#7" title="4" data-ref="_M/EINTR">EINTR</a>);</td></tr>
+<tr><th id="232">232</th><td>          <b>if</b> (<a class="local col9 ref" href="#3779res" title='res' data-ref="3779res" >res</a>==<a class="macro" href="../../../asm-generic/errno-base.h.html#19" title="16" data-ref="_M/EBUSY">EBUSY</a>)</td></tr>
+<tr><th id="233">233</th><td>          {</td></tr>
+<tr><th id="234">234</th><td>              <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="235">235</th><td>          }</td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td>          <b>return</b> !<a class="local col9 ref" href="#3779res" title='res' data-ref="3779res" >res</a>;</td></tr>
+<tr><th id="238">238</th><td>        }</td></tr>
+<tr><th id="239">239</th><td></td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>    <b>private</b>:</td></tr>
+<tr><th id="242">242</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex17do_try_lock_untilERK8timespec" title='boost::timed_mutex::do_try_lock_until' data-ref="_ZN5boost11timed_mutex17do_try_lock_untilERK8timespec" >do_try_lock_until</dfn>(<b>struct</b> <a class="type" href="../../../time.h.html#timespec" title='timespec' data-ref="timespec" >timespec</a> <em>const</em> &amp;<dfn class="local col0 decl" id="3780timeout" title='timeout' data-type='const struct timespec &amp;' data-ref="3780timeout" >timeout</dfn>)</td></tr>
+<tr><th id="243">243</th><td>        {</td></tr>
+<tr><th id="244">244</th><td>          <em>int</em> <em>const</em> <dfn class="local col1 decl" id="3781res" title='res' data-type='const int' data-ref="3781res" >res</dfn>=<a class="ref" href="../../../pthread.h.html#pthread_mutex_timedlock" title='pthread_mutex_timedlock' data-ref="pthread_mutex_timedlock" id="pthread_mutex_timedlock" >pthread_mutex_timedlock</a>(&amp;<a class="member" href="#boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</a>,&amp;<a class="local col0 ref" href="#3780timeout" title='timeout' data-ref="3780timeout" >timeout</a>);</td></tr>
+<tr><th id="245">245</th><td>          <a class="macro" href="../../assert.hpp.html#51" title="(static_cast&lt;void&gt; (0))" data-ref="_M/BOOST_ASSERT">BOOST_ASSERT</a>(!res || res==<a class="macro" href="../../../asm-generic/errno.h.html#83" title="110" data-ref="_M/ETIMEDOUT">ETIMEDOUT</a>);</td></tr>
+<tr><th id="246">246</th><td>          <b>return</b> !<a class="local col1 ref" href="#3781res" title='res' data-ref="3781res" >res</a>;</td></tr>
+<tr><th id="247">247</th><td>        }</td></tr>
+<tr><th id="248">248</th><td>    <b>public</b>:</td></tr>
+<tr><th id="249">249</th><td></td></tr>
+<tr><th id="250">250</th><td><u>#<span data-ppcond="206">else</span></u></td></tr>
+<tr><th id="251">251</th><td>        <em>void</em> lock()</td></tr>
+<tr><th id="252">252</th><td>        {</td></tr>
+<tr><th id="253">253</th><td>            boost::pthread::pthread_mutex_scoped_lock <em>const</em> local_lock(&amp;m);</td></tr>
+<tr><th id="254">254</th><td>            <b>while</b>(is_locked)</td></tr>
+<tr><th id="255">255</th><td>            {</td></tr>
+<tr><th id="256">256</th><td>                BOOST_VERIFY(!pthread_cond_wait(&amp;cond,&amp;m));</td></tr>
+<tr><th id="257">257</th><td>            }</td></tr>
+<tr><th id="258">258</th><td>            is_locked=<b>true</b>;</td></tr>
+<tr><th id="259">259</th><td>        }</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>        <em>void</em> unlock()</td></tr>
+<tr><th id="262">262</th><td>        {</td></tr>
+<tr><th id="263">263</th><td>            boost::pthread::pthread_mutex_scoped_lock <em>const</em> local_lock(&amp;m);</td></tr>
+<tr><th id="264">264</th><td>            is_locked=<b>false</b>;</td></tr>
+<tr><th id="265">265</th><td>            BOOST_VERIFY(!pthread_cond_signal(&amp;cond));</td></tr>
+<tr><th id="266">266</th><td>        }</td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td>        <em>bool</em> try_lock()</td></tr>
+<tr><th id="269">269</th><td>        {</td></tr>
+<tr><th id="270">270</th><td>            boost::pthread::pthread_mutex_scoped_lock <em>const</em> local_lock(&amp;m);</td></tr>
+<tr><th id="271">271</th><td>            <b>if</b>(is_locked)</td></tr>
+<tr><th id="272">272</th><td>            {</td></tr>
+<tr><th id="273">273</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="274">274</th><td>            }</td></tr>
+<tr><th id="275">275</th><td>            is_locked=<b>true</b>;</td></tr>
+<tr><th id="276">276</th><td>            <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="277">277</th><td>        }</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td>    <b>private</b>:</td></tr>
+<tr><th id="280">280</th><td>        <em>bool</em> do_try_lock_until(<b>struct</b> timespec <em>const</em> &amp;timeout)</td></tr>
+<tr><th id="281">281</th><td>        {</td></tr>
+<tr><th id="282">282</th><td>            boost::pthread::pthread_mutex_scoped_lock <em>const</em> local_lock(&amp;m);</td></tr>
+<tr><th id="283">283</th><td>            <b>while</b>(is_locked)</td></tr>
+<tr><th id="284">284</th><td>            {</td></tr>
+<tr><th id="285">285</th><td>                <em>int</em> <em>const</em> cond_res=pthread_cond_timedwait(&amp;cond,&amp;m,&amp;timeout);</td></tr>
+<tr><th id="286">286</th><td>                <b>if</b>(cond_res==ETIMEDOUT)</td></tr>
+<tr><th id="287">287</th><td>                {</td></tr>
+<tr><th id="288">288</th><td>                    <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="289">289</th><td>                }</td></tr>
+<tr><th id="290">290</th><td>                BOOST_ASSERT(!cond_res);</td></tr>
+<tr><th id="291">291</th><td>            }</td></tr>
+<tr><th id="292">292</th><td>            is_locked=<b>true</b>;</td></tr>
+<tr><th id="293">293</th><td>            <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="294">294</th><td>        }</td></tr>
+<tr><th id="295">295</th><td>    <b>public</b>:</td></tr>
+<tr><th id="296">296</th><td><u>#<span data-ppcond="206">endif</span></u></td></tr>
+<tr><th id="297">297</th><td></td></tr>
+<tr><th id="298">298</th><td><u>#<span data-ppcond="298">if</span> defined <a class="macro" href="../detail/config.hpp.html#223" data-ref="_M/BOOST_THREAD_USES_DATETIME">BOOST_THREAD_USES_DATETIME</a></u></td></tr>
+<tr><th id="299">299</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex10timed_lockERKNS_10posix_time5ptimeE" title='boost::timed_mutex::timed_lock' data-ref="_ZN5boost11timed_mutex10timed_lockERKNS_10posix_time5ptimeE" >timed_lock</dfn>(<a class="typedef" href="../thread_time.hpp.html#boost::system_time" title='boost::system_time' data-type='boost::posix_time::ptime' data-ref="boost::system_time" >system_time</a> <em>const</em> &amp; <dfn class="local col2 decl" id="3782abs_time" title='abs_time' data-type='const system_time &amp;' data-ref="3782abs_time" >abs_time</dfn>)</td></tr>
+<tr><th id="300">300</th><td>        {</td></tr>
+<tr><th id="301">301</th><td>            <b>struct</b> <a class="type" href="../../../time.h.html#timespec" title='timespec' data-ref="timespec" >timespec</a> <em>const</em> <dfn class="local col3 decl" id="3783ts" title='ts' data-type='const struct timespec' data-ref="3783ts" >ts</dfn>=<span class="namespace">boost::detail::</span><a class="ref" href="timespec.hpp.html#_ZN5boost6detail11to_timespecERKNS_10posix_time5ptimeE" title='boost::detail::to_timespec' data-ref="_ZN5boost6detail11to_timespecERKNS_10posix_time5ptimeE" id="_ZN5boost6detail11to_timespecERKNS_10posix_time5ptimeE" >to_timespec</a>(<a class="local col2 ref" href="#3782abs_time" title='abs_time' data-ref="3782abs_time" >abs_time</a>);</td></tr>
+<tr><th id="302">302</th><td>            <b>return</b> <a class="member" href="#_ZN5boost11timed_mutex17do_try_lock_untilERK8timespec" title='boost::timed_mutex::do_try_lock_until' data-ref="_ZN5boost11timed_mutex17do_try_lock_untilERK8timespec" >do_try_lock_until</a>(<a class="local col3 ref" href="#3783ts" title='ts' data-ref="3783ts" >ts</a>);</td></tr>
+<tr><th id="303">303</th><td>        }</td></tr>
+<tr><th id="304">304</th><td><u>#<span data-ppcond="298">endif</span></u></td></tr>
+<tr><th id="305">305</th><td><u>#<span data-ppcond="305">ifdef</span> <a class="macro" href="../detail/config.hpp.html#113" data-ref="_M/BOOST_THREAD_USES_CHRONO">BOOST_THREAD_USES_CHRONO</a></u></td></tr>
+<tr><th id="306">306</th><td>        <b>template</b> &lt;<b>class</b> Rep, <b>class</b> Period&gt;</td></tr>
+<tr><th id="307">307</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex12try_lock_forERKNS_6chrono8durationIT_T0_EE" title='boost::timed_mutex::try_lock_for' data-ref="_ZN5boost11timed_mutex12try_lock_forERKNS_6chrono8durationIT_T0_EE" >try_lock_for</dfn>(<em>const</em> <span class="namespace">chrono::</span><a class="type" href="../../chrono/duration.hpp.html#boost::chrono::duration" title='boost::chrono::duration' data-ref="boost::chrono::duration" >duration</a>&lt;Rep, Period&gt;&amp; <dfn class="local col4 decl" id="3784rel_time" title='rel_time' data-type='const chrono::duration&lt;Rep, Period&gt; &amp;' data-ref="3784rel_time" >rel_time</dfn>)</td></tr>
+<tr><th id="308">308</th><td>        {</td></tr>
+<tr><th id="309">309</th><td>          <b>return</b> try_lock_until(<span class="namespace">chrono::</span><a class="type" href="../../chrono/system_clocks.hpp.html#boost::chrono::steady_clock" title='boost::chrono::steady_clock' data-ref="boost::chrono::steady_clock" >steady_clock</a>::<a class="ref" href="../../chrono/system_clocks.hpp.html#_ZN5boost6chrono12steady_clock3nowEv" title='boost::chrono::steady_clock::now' data-ref="_ZN5boost6chrono12steady_clock3nowEv" id="_ZN5boost6chrono12steady_clock3nowEv" >now</a>() + <a class="local col4 ref" href="#3784rel_time" title='rel_time' data-ref="3784rel_time" >rel_time</a>);</td></tr>
+<tr><th id="310">310</th><td>        }</td></tr>
+<tr><th id="311">311</th><td>        <b>template</b> &lt;<b>class</b> Clock, <b>class</b> Duration&gt;</td></tr>
+<tr><th id="312">312</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointIT_T0_EE" title='boost::timed_mutex::try_lock_until' data-ref="_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointIT_T0_EE" >try_lock_until</dfn>(<em>const</em> <span class="namespace">chrono::</span><a class="type" href="../../chrono/time_point.hpp.html#boost::chrono::time_point" title='boost::chrono::time_point' data-ref="boost::chrono::time_point" >time_point</a>&lt;Clock, Duration&gt;&amp; <dfn class="local col5 decl" id="3785t" title='t' data-type='const chrono::time_point&lt;Clock, Duration&gt; &amp;' data-ref="3785t" >t</dfn>)</td></tr>
+<tr><th id="313">313</th><td>        {</td></tr>
+<tr><th id="314">314</th><td>          <b>using</b> <b>namespace</b> chrono;</td></tr>
+<tr><th id="315">315</th><td>          <a class="type" href="../../chrono/system_clocks.hpp.html#boost::chrono::system_clock" title='boost::chrono::system_clock' data-ref="boost::chrono::system_clock" >system_clock</a>::<a class="typedef" href="../../chrono/system_clocks.hpp.html#boost::chrono::system_clock::time_point" title='boost::chrono::system_clock::time_point' data-type='chrono::time_point&lt;system_clock&gt;' data-ref="boost::chrono::system_clock::time_point" >time_point</a>     <dfn class="local col6 decl" id="3786s_now" title='s_now' data-type='system_clock::time_point' data-ref="3786s_now" >s_now</dfn> = <a class="type" href="../../chrono/system_clocks.hpp.html#boost::chrono::system_clock" title='boost::chrono::system_clock' data-ref="boost::chrono::system_clock" >system_clock</a>::<a class="ref" href="../../chrono/system_clocks.hpp.html#_ZN5boost6chrono12system_clock3nowEv" title='boost::chrono::system_clock::now' data-ref="_ZN5boost6chrono12system_clock3nowEv" id="_ZN5boost6chrono12system_clock3nowEv" >now</a>();</td></tr>
+<tr><th id="316">316</th><td>          <b>typename</b> Clock::time_point  <dfn class="local col7 decl" id="3787c_now" title='c_now' data-type='typename Clock::time_point' data-ref="3787c_now" >c_now</dfn> = Clock::now();</td></tr>
+<tr><th id="317">317</th><td>          <b>return</b> try_lock_until(<a class="local col6 ref" href="#3786s_now" title='s_now' data-ref="3786s_now" >s_now</a> + ceil&lt;<a class="typedef" href="../../chrono/duration.hpp.html#boost::chrono::nanoseconds" title='boost::chrono::nanoseconds' data-type='duration&lt;boost::int_least64_t, nano&gt;' data-ref="boost::chrono::nanoseconds" >nanoseconds</a>&gt;(<a class="local col5 ref" href="#3785t" title='t' data-ref="3785t" >t</a> - <a class="local col7 ref" href="#3787c_now" title='c_now' data-ref="3787c_now" >c_now</a>));</td></tr>
+<tr><th id="318">318</th><td>        }</td></tr>
+<tr><th id="319">319</th><td>        <b>template</b> &lt;<b>class</b> Duration&gt;</td></tr>
+<tr><th id="320">320</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointINS1_12system_clockET_EE" title='boost::timed_mutex::try_lock_until' data-ref="_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointINS1_12system_clockET_EE" >try_lock_until</dfn>(<em>const</em> <span class="namespace">chrono::</span><a class="type" href="../../chrono/time_point.hpp.html#boost::chrono::time_point" title='boost::chrono::time_point' data-ref="boost::chrono::time_point" >time_point</a>&lt;<span class="namespace">chrono::</span><a class="type" href="../../chrono/system_clocks.hpp.html#boost::chrono::system_clock" title='boost::chrono::system_clock' data-ref="boost::chrono::system_clock" >system_clock</a>, Duration&gt;&amp; <dfn class="local col8 decl" id="3788t" title='t' data-type='const chrono::time_point&lt;chrono::system_clock, Duration&gt; &amp;' data-ref="3788t" >t</dfn>)</td></tr>
+<tr><th id="321">321</th><td>        {</td></tr>
+<tr><th id="322">322</th><td>          <b>using</b> <b>namespace</b> chrono;</td></tr>
+<tr><th id="323">323</th><td>          <b>typedef</b> <a class="type" href="../../chrono/time_point.hpp.html#boost::chrono::time_point" title='boost::chrono::time_point' data-ref="boost::chrono::time_point" >time_point</a>&lt;<a class="type" href="../../chrono/system_clocks.hpp.html#boost::chrono::system_clock" title='boost::chrono::system_clock' data-ref="boost::chrono::system_clock" >system_clock</a>, <a class="typedef" href="../../chrono/duration.hpp.html#boost::chrono::nanoseconds" title='boost::chrono::nanoseconds' data-type='duration&lt;boost::int_least64_t, nano&gt;' data-ref="boost::chrono::nanoseconds" >nanoseconds</a>&gt; <dfn class="local col9 typedef" id="3789nano_sys_tmpt" title='nano_sys_tmpt' data-type='time_point&lt;boost::chrono::system_clock, nanoseconds&gt;' data-ref="3789nano_sys_tmpt" >nano_sys_tmpt</dfn>;</td></tr>
+<tr><th id="324">324</th><td>          <b>return</b> <a class="member" href="#_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointINS1_12system_clockENS1_8durationIlNS_5ratioILl1ELl1000000000EEEEEEE" title='boost::timed_mutex::try_lock_until' data-ref="_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointINS1_12system_clockENS1_8durationIlNS_5ratioILl1ELl1000000000EEEEEEE" >try_lock_until</a>(<a class="local col9 typedef" href="#3789nano_sys_tmpt" title='nano_sys_tmpt' data-type='time_point&lt;boost::chrono::system_clock, nanoseconds&gt;' data-ref="3789nano_sys_tmpt" >nano_sys_tmpt</a>(ceil&lt;<a class="typedef" href="../../chrono/duration.hpp.html#boost::chrono::nanoseconds" title='boost::chrono::nanoseconds' data-type='duration&lt;boost::int_least64_t, nano&gt;' data-ref="boost::chrono::nanoseconds" >nanoseconds</a>&gt;(<a class="local col8 ref" href="#3788t" title='t' data-ref="3788t" >t</a>.time_since_epoch())));</td></tr>
+<tr><th id="325">325</th><td>        }</td></tr>
+<tr><th id="326">326</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointINS1_12system_clockENS1_8durationIlNS_5ratioILl1ELl1000000000EEEEEEE" title='boost::timed_mutex::try_lock_until' data-ref="_ZN5boost11timed_mutex14try_lock_untilERKNS_6chrono10time_pointINS1_12system_clockENS1_8durationIlNS_5ratioILl1ELl1000000000EEEEEEE" >try_lock_until</dfn>(<em>const</em> <span class="namespace">chrono::</span><a class="type" href="../../chrono/time_point.hpp.html#boost::chrono::time_point" title='boost::chrono::time_point' data-ref="boost::chrono::time_point" >time_point</a>&lt;<span class="namespace">chrono::</span><a class="type" href="../../chrono/system_clocks.hpp.html#boost::chrono::system_clock" title='boost::chrono::system_clock' data-ref="boost::chrono::system_clock" >system_clock</a>, <span class="namespace">chrono::</span><a class="typedef" href="../../chrono/duration.hpp.html#boost::chrono::nanoseconds" title='boost::chrono::nanoseconds' data-type='duration&lt;boost::int_least64_t, nano&gt;' data-ref="boost::chrono::nanoseconds" >nanoseconds</a>&gt;&amp; <dfn class="local col0 decl" id="3790tp" title='tp' data-type='const chrono::time_point&lt;chrono::system_clock, chrono::nanoseconds&gt; &amp;' data-ref="3790tp" >tp</dfn>)</td></tr>
+<tr><th id="327">327</th><td>        {</td></tr>
+<tr><th id="328">328</th><td>          <i>//using namespace chrono;</i></td></tr>
+<tr><th id="329">329</th><td>          <span class="namespace">chrono::</span><a class="typedef" href="../../chrono/duration.hpp.html#boost::chrono::nanoseconds" title='boost::chrono::nanoseconds' data-type='duration&lt;boost::int_least64_t, nano&gt;' data-ref="boost::chrono::nanoseconds" >nanoseconds</a> <dfn class="local col1 decl" id="3791d" title='d' data-type='chrono::nanoseconds' data-ref="3791d" >d</dfn> = <a class="local col0 ref" href="#3790tp" title='tp' data-ref="3790tp" >tp</a>.<a class="ref" href="../../chrono/time_point.hpp.html#_ZNK5boost6chrono10time_point16time_since_epochEv" title='boost::chrono::time_point::time_since_epoch' data-ref="_ZNK5boost6chrono10time_point16time_since_epochEv" id="_ZNK5boost6chrono10time_point16time_since_epochEv" >time_since_epoch</a>();</td></tr>
+<tr><th id="330">330</th><td>          <a class="type" href="../../../time.h.html#timespec" title='timespec' data-ref="timespec" >timespec</a> <dfn class="local col2 decl" id="3792ts" title='ts' data-type='timespec' data-ref="3792ts" >ts</dfn> = <span class="namespace">boost::detail::</span><a class="ref" href="timespec.hpp.html#_ZN5boost6detail11to_timespecERKNS_6chrono8durationIlNS_5ratioILl1ELl1000000000EEEEE" title='boost::detail::to_timespec' data-ref="_ZN5boost6detail11to_timespecERKNS_6chrono8durationIlNS_5ratioILl1ELl1000000000EEEEE" id="_ZN5boost6detail11to_timespecERKNS_6chrono8durationIlNS_5ratioILl1ELl1000000000EEEEE" >to_timespec</a>(<a class="local col1 ref" href="#3791d" title='d' data-ref="3791d" >d</a>);</td></tr>
+<tr><th id="331">331</th><td>          <b>return</b> <a class="member" href="#_ZN5boost11timed_mutex17do_try_lock_untilERK8timespec" title='boost::timed_mutex::do_try_lock_until' data-ref="_ZN5boost11timed_mutex17do_try_lock_untilERK8timespec" >do_try_lock_until</a>(<a class="local col2 ref" href="#3792ts" title='ts' data-ref="3792ts" >ts</a>);</td></tr>
+<tr><th id="332">332</th><td>        }</td></tr>
+<tr><th id="333">333</th><td><u>#<span data-ppcond="305">endif</span></u></td></tr>
+<tr><th id="334">334</th><td></td></tr>
+<tr><th id="335">335</th><td><u>#define <dfn class="macro" id="_M/BOOST_THREAD_DEFINES_TIMED_MUTEX_NATIVE_HANDLE" data-ref="_M/BOOST_THREAD_DEFINES_TIMED_MUTEX_NATIVE_HANDLE">BOOST_THREAD_DEFINES_TIMED_MUTEX_NATIVE_HANDLE</dfn></u></td></tr>
+<tr><th id="336">336</th><td>        <b>typedef</b> <a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a>* <dfn class="typedef" id="boost::timed_mutex::native_handle_type" title='boost::timed_mutex::native_handle_type' data-type='pthread_mutex_t *' data-ref="boost::timed_mutex::native_handle_type" >native_handle_type</dfn>;</td></tr>
+<tr><th id="337">337</th><td>        <a class="typedef" href="#boost::timed_mutex::native_handle_type" title='boost::timed_mutex::native_handle_type' data-type='pthread_mutex_t *' data-ref="boost::timed_mutex::native_handle_type" >native_handle_type</a> <dfn class="decl def" id="_ZN5boost11timed_mutex13native_handleEv" title='boost::timed_mutex::native_handle' data-ref="_ZN5boost11timed_mutex13native_handleEv" >native_handle</dfn>()</td></tr>
+<tr><th id="338">338</th><td>        {</td></tr>
+<tr><th id="339">339</th><td>            <b>return</b> &amp;<a class="member" href="#boost::timed_mutex::m" title='boost::timed_mutex::m' data-ref="boost::timed_mutex::m" >m</a>;</td></tr>
+<tr><th id="340">340</th><td>        }</td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td><u>#<span data-ppcond="342">if</span> defined <a class="macro" href="../detail/config.hpp.html#211" data-ref="_M/BOOST_THREAD_PROVIDES_NESTED_LOCKS">BOOST_THREAD_PROVIDES_NESTED_LOCKS</a></u></td></tr>
+<tr><th id="343">343</th><td>        <b>typedef</b> <a class="type" href="../lock_types.hpp.html#boost::unique_lock" title='boost::unique_lock' data-ref="boost::unique_lock" >unique_lock</a>&lt;<a class="type" href="#boost::timed_mutex" title='boost::timed_mutex' data-ref="boost::timed_mutex" >timed_mutex</a>&gt; <dfn class="typedef" id="boost::timed_mutex::scoped_timed_lock" title='boost::timed_mutex::scoped_timed_lock' data-type='unique_lock&lt;boost::timed_mutex&gt;' data-ref="boost::timed_mutex::scoped_timed_lock" >scoped_timed_lock</dfn>;</td></tr>
+<tr><th id="344">344</th><td>        <b>typedef</b> <span class="namespace">detail::</span><a class="type" href="../lock_types.hpp.html#boost::detail::try_lock_wrapper" title='boost::detail::try_lock_wrapper' data-ref="boost::detail::try_lock_wrapper" >try_lock_wrapper</a>&lt;<a class="type" href="#boost::timed_mutex" title='boost::timed_mutex' data-ref="boost::timed_mutex" >timed_mutex</a>&gt; <dfn class="typedef" id="boost::timed_mutex::scoped_try_lock" title='boost::timed_mutex::scoped_try_lock' data-type='detail::try_lock_wrapper&lt;timed_mutex&gt;' data-ref="boost::timed_mutex::scoped_try_lock" >scoped_try_lock</dfn>;</td></tr>
+<tr><th id="345">345</th><td>        <b>typedef</b> <a class="typedef" href="#boost::timed_mutex::scoped_timed_lock" title='boost::timed_mutex::scoped_timed_lock' data-type='unique_lock&lt;boost::timed_mutex&gt;' data-ref="boost::timed_mutex::scoped_timed_lock" >scoped_timed_lock</a> <dfn class="typedef" id="boost::timed_mutex::scoped_lock" title='boost::timed_mutex::scoped_lock' data-type='scoped_timed_lock' data-ref="boost::timed_mutex::scoped_lock" >scoped_lock</dfn>;</td></tr>
+<tr><th id="346">346</th><td><u>#<span data-ppcond="342">endif</span></u></td></tr>
+<tr><th id="347">347</th><td>    };</td></tr>
+<tr><th id="348">348</th><td></td></tr>
+<tr><th id="349">349</th><td>}</td></tr>
+<tr><th id="350">350</th><td></td></tr>
+<tr><th id="351">351</th><td><u>#include <a href="../../config/abi_suffix.hpp.html">&lt;boost/config/abi_suffix.hpp&gt;</a></u></td></tr>
+<tr><th id="352">352</th><td></td></tr>
+<tr><th id="353">353</th><td></td></tr>
+<tr><th id="354">354</th><td><u>#<span data-ppcond="1">endif</span></u></td></tr>
+<tr><th id="355">355</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

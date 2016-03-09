@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<title>my_list.h [include/mysql/my_list.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/mysql/my_list.h'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>mysql</a>/my_list.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* Copyright (c) 2000, 2010, Oracle and/or its affiliates. All rights reserved.</i></td></tr>
+<tr><th id="2">2</th><td><i></i></td></tr>
+<tr><th id="3">3</th><td><i>   This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="4">4</th><td><i>   it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="5">5</th><td><i>   the Free Software Foundation; version 2 of the License.</i></td></tr>
+<tr><th id="6">6</th><td><i></i></td></tr>
+<tr><th id="7">7</th><td><i>   This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="8">8</th><td><i>   but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="9">9</th><td><i>   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="10">10</th><td><i>   GNU General Public License for more details.</i></td></tr>
+<tr><th id="11">11</th><td><i></i></td></tr>
+<tr><th id="12">12</th><td><i>   You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="13">13</th><td><i>   along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="14">14</th><td><i>   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA */</i></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="16">ifndef</span> <span class="macro" data-ref="_M/_list_h_">_list_h_</span></u></td></tr>
+<tr><th id="17">17</th><td><u>#define <dfn class="macro" id="_M/_list_h_" data-ref="_M/_list_h_">_list_h_</dfn></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifdef</span>	<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="20">20</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="21">21</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="st_list" title='st_list' data-ref="st_list" ><a class="type" href="#st_list" title='st_list' data-ref="st_list" >st_list</a></dfn> {</td></tr>
+<tr><th id="24">24</th><td>  <b>struct</b> <a class="type" href="#st_list" title='st_list' data-ref="st_list" ><a class="type" href="#st_list" title='st_list' data-ref="st_list" >st_list</a></a> *<dfn class="decl" id="st_list::prev" title='st_list::prev' data-ref="st_list::prev" >prev</dfn>,*<dfn class="decl" id="st_list::next" title='st_list::next' data-ref="st_list::next" >next</dfn>;</td></tr>
+<tr><th id="25">25</th><td>  <em>void</em> *<dfn class="decl" id="st_list::data" title='st_list::data' data-ref="st_list::data" >data</dfn>;</td></tr>
+<tr><th id="26">26</th><td>} <dfn class="typedef" id="LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</dfn>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>typedef</b> <em>int</em> (*<dfn class="typedef" id="list_walk_action" title='list_walk_action' data-type='int (*)(void *, void *)' data-ref="list_walk_action" >list_walk_action</dfn>)(<em>void</em> *,<em>void</em> *);</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>extern</b> <a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="decl" id="list_add" title='list_add' data-ref="list_add" >list_add</dfn>(<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="local col6 decl" id="6216root" title='root' data-type='LIST *' data-ref="6216root" >root</dfn>,<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="local col7 decl" id="6217element" title='element' data-type='LIST *' data-ref="6217element" >element</dfn>);</td></tr>
+<tr><th id="31">31</th><td><b>extern</b> <a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="decl" id="list_delete" title='list_delete' data-ref="list_delete" >list_delete</dfn>(<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="local col8 decl" id="6218root" title='root' data-type='LIST *' data-ref="6218root" >root</dfn>,<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="local col9 decl" id="6219element" title='element' data-type='LIST *' data-ref="6219element" >element</dfn>);</td></tr>
+<tr><th id="32">32</th><td><b>extern</b> <a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="decl" id="list_cons" title='list_cons' data-ref="list_cons" >list_cons</dfn>(<em>void</em> *<dfn class="local col0 decl" id="6220data" title='data' data-type='void *' data-ref="6220data" >data</dfn>,<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="local col1 decl" id="6221root" title='root' data-type='LIST *' data-ref="6221root" >root</dfn>);</td></tr>
+<tr><th id="33">33</th><td><b>extern</b> <a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="decl" id="list_reverse" title='list_reverse' data-ref="list_reverse" >list_reverse</dfn>(<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="local col2 decl" id="6222root" title='root' data-type='LIST *' data-ref="6222root" >root</dfn>);</td></tr>
+<tr><th id="34">34</th><td><b>extern</b> <em>void</em> <dfn class="decl" id="list_free" title='list_free' data-ref="list_free" >list_free</dfn>(<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *<dfn class="local col3 decl" id="6223root" title='root' data-type='LIST *' data-ref="6223root" >root</dfn>,<em>unsigned</em> <em>int</em> <dfn class="local col4 decl" id="6224free_data" title='free_data' data-type='unsigned int' data-ref="6224free_data" >free_data</dfn>);</td></tr>
+<tr><th id="35">35</th><td><b>extern</b> <em>unsigned</em> <em>int</em> <dfn class="decl" id="list_length" title='list_length' data-ref="list_length" >list_length</dfn>(<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *);</td></tr>
+<tr><th id="36">36</th><td><b>extern</b> <em>int</em> <dfn class="decl" id="list_walk" title='list_walk' data-ref="list_walk" >list_walk</dfn>(<a class="typedef" href="#LIST" title='LIST' data-type='struct st_list' data-ref="LIST" >LIST</a> *,<a class="typedef" href="#list_walk_action" title='list_walk_action' data-type='int (*)(void *, void *)' data-ref="list_walk_action" >list_walk_action</a> <dfn class="local col5 decl" id="6225action" title='action' data-type='list_walk_action' data-ref="6225action" >action</dfn>,<em>unsigned</em> <em>char</em> * <dfn class="local col6 decl" id="6226argument" title='argument' data-type='unsigned char *' data-ref="6226argument" >argument</dfn>);</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><u>#define <dfn class="macro" id="_M/list_rest" data-ref="_M/list_rest">list_rest</dfn>(a) ((a)-&gt;next)</u></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/list_push" data-ref="_M/list_push">list_push</dfn>(a,b) (a)=list_cons((b),(a))</u></td></tr>
+<tr><th id="40">40</th><td><u>#define <dfn class="macro" id="_M/list_pop" data-ref="_M/list_pop">list_pop</dfn>(A) {LIST *old=(A); (A)=list_delete(old,old); my_free(old); }</u></td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><u>#<span data-ppcond="42">ifdef</span>	<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="43">43</th><td>}</td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="42">endif</span></u></td></tr>
+<tr><th id="45">45</th><td><u>#<span data-ppcond="16">endif</span></u></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore3.3.5/src/server/authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

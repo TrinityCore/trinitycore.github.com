@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<title>CombatHandler.cpp [TrinityCore3.3.5/src/server/game/Handlers/CombatHandler.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Handlers/CombatHandler.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Handlers</a>/CombatHandler.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../common/Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../../common/Logging/Log.h.html">"Log.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../shared/Packets/WorldPacket.h.html">"WorldPacket.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Server/WorldSession.h.html">"WorldSession.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../Globals/ObjectAccessor.h.html">"ObjectAccessor.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../AI/CreatureAI.h.html">"CreatureAI.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../Entities/Vehicle/Vehicle.h.html">"Vehicle.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../Entities/Player/Player.h.html">"Player.h"</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession23HandleAttackSwingOpcodeER11WorldPacket" title='WorldSession::HandleAttackSwingOpcode' data-ref="_ZN12WorldSession23HandleAttackSwingOpcodeER11WorldPacket" >HandleAttackSwingOpcode</dfn>(<a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a>&amp; <dfn class="local col1 decl" id="1recvData" title='recvData' data-type='WorldPacket &amp;' data-ref="1recvData" >recvData</dfn>)</td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="local col2 decl" id="2guid" title='guid' data-type='ObjectGuid' data-ref="2guid" >guid</dfn>;</td></tr>
+<tr><th id="31">31</th><td>    <a class="local col1 ref" href="#1recvData" title='recvData' data-ref="1recvData" >recvData</a> <a class="ref" href="../Entities/Object/ObjectGuid.h.html#_ZrsR10ByteBufferR10ObjectGuid" title='operator&gt;&gt;' data-ref="_ZrsR10ByteBufferR10ObjectGuid" id="_ZrsR10ByteBufferR10ObjectGuid" >&gt;&gt;</a> <a class="local col2 ref" href="#2guid" title='guid' data-ref="2guid" >guid</a>;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>    <a class="macro" href="../../../common/Logging/Log.h.html#201" title="do { if (Log::instance()-&gt;ShouldLog(&quot;network&quot;, LOG_LEVEL_DEBUG)) { if (false) check_args(&quot;WORLD: Recvd CMSG_ATTACKSWING Message %s&quot;, guid.ToString().c_str()); { try { Log::instance()-&gt;outMessage(&quot;network&quot;, LOG_LEVEL_DEBUG, &quot;WORLD: Recvd CMSG_ATTACKSWING Message %s&quot;, guid.ToString().c_str()); } catch (std::exception&amp; e) { Log::instance()-&gt;outMessage(&quot;server&quot;, LOG_LEVEL_ERROR, &quot;Wrong format occurred (%s) at %s:%u.&quot;, e.what(), &quot;/home/nayd/TrinityCore/src/server/game/Handlers/CombatHandler.cpp&quot;, 33); } }; } } while (0)" data-ref="_M/TC_LOG_DEBUG">TC_LOG_DEBUG</a>(<q>"network"</q>, <q>"WORLD: Recvd CMSG_ATTACKSWING Message %s"</q>, <a class="local col2 ref" href="#2guid" title='guid' data-ref="2guid" ><a class="local col2 ref" href="#2guid" title='guid' data-ref="2guid" >guid</a></a>.<a class="ref" href="../Entities/Object/ObjectGuid.h.html#_ZNK10ObjectGuid8ToStringEv" title='ObjectGuid::ToString' data-ref="_ZNK10ObjectGuid8ToStringEv" id="_ZNK10ObjectGuid8ToStringEv" ><a class="ref" href="../Entities/Object/ObjectGuid.h.html#_ZNK10ObjectGuid8ToStringEv" title='ObjectGuid::ToString' data-ref="_ZNK10ObjectGuid8ToStringEv" id="_ZNK10ObjectGuid8ToStringEv" >ToString</a></a>().<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" ><a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a></a>());</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>    <a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col3 decl" id="3pEnemy" title='pEnemy' data-type='Unit *' data-ref="3pEnemy" >pEnemy</dfn> = <span class="namespace">ObjectAccessor::</span><a class="ref" href="../Globals/ObjectAccessor.h.html#_ZN14ObjectAccessor7GetUnitERK11WorldObjectRK10ObjectGuid" title='ObjectAccessor::GetUnit' data-ref="_ZN14ObjectAccessor7GetUnitERK11WorldObjectRK10ObjectGuid" id="_ZN14ObjectAccessor7GetUnitERK11WorldObjectRK10ObjectGuid" >GetUnit</a>(*<a class="member" href="../Server/WorldSession.h.html#WorldSession::_player" title='WorldSession::_player' data-ref="WorldSession::_player" id="WorldSession::_player" >_player</a>, <a class="local col2 ref" href="#2guid" title='guid' data-ref="2guid" >guid</a>);</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <b>if</b> (!<a class="local col3 ref" href="#3pEnemy" title='pEnemy' data-ref="3pEnemy" >pEnemy</a>)</td></tr>
+<tr><th id="38">38</th><td>    {</td></tr>
+<tr><th id="39">39</th><td>        <i>// stop attack state at client</i></td></tr>
+<tr><th id="40">40</th><td>        <a class="member" href="#_ZN12WorldSession14SendAttackStopEPK4Unit" title='WorldSession::SendAttackStop' data-ref="_ZN12WorldSession14SendAttackStopEPK4Unit" >SendAttackStop</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="41">41</th><td>        <b>return</b>;</td></tr>
+<tr><th id="42">42</th><td>    }</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>    <b>if</b> (!<a class="member" href="../Server/WorldSession.h.html#WorldSession::_player" title='WorldSession::_player' data-ref="WorldSession::_player" id="WorldSession::_player" >_player</a>-&gt;<a class="ref" href="../Entities/Unit/Unit.h.html#_ZNK4Unit19IsValidAttackTargetEPKS_" title='Unit::IsValidAttackTarget' data-ref="_ZNK4Unit19IsValidAttackTargetEPKS_" id="_ZNK4Unit19IsValidAttackTargetEPKS_" >IsValidAttackTarget</a>(<a class="local col3 ref" href="#3pEnemy" title='pEnemy' data-ref="3pEnemy" >pEnemy</a>))</td></tr>
+<tr><th id="45">45</th><td>    {</td></tr>
+<tr><th id="46">46</th><td>        <i>// stop attack state at client</i></td></tr>
+<tr><th id="47">47</th><td>        <a class="member" href="#_ZN12WorldSession14SendAttackStopEPK4Unit" title='WorldSession::SendAttackStop' data-ref="_ZN12WorldSession14SendAttackStopEPK4Unit" >SendAttackStop</a>(<a class="local col3 ref" href="#3pEnemy" title='pEnemy' data-ref="3pEnemy" >pEnemy</a>);</td></tr>
+<tr><th id="48">48</th><td>        <b>return</b>;</td></tr>
+<tr><th id="49">49</th><td>    }</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <i class="doc">//! Client explicitly checks the following before sending CMSG_ATTACKSWING packet,</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">    //! so we'll place the same check here. Note that it might be possible to reuse this snippet</i></td></tr>
+<tr><th id="53">53</th><td><i class="doc">    //! in other places as well.</i></td></tr>
+<tr><th id="54">54</th><td>    <b>if</b> (<a class="type" href="../Entities/Vehicle/Vehicle.h.html#Vehicle" title='Vehicle' data-ref="Vehicle" >Vehicle</a>* <dfn class="local col4 decl" id="4vehicle" title='vehicle' data-type='Vehicle *' data-ref="4vehicle" ><a class="local col4 ref" href="#4vehicle" title='vehicle' data-ref="4vehicle" >vehicle</a></dfn> = <a class="member" href="../Server/WorldSession.h.html#WorldSession::_player" title='WorldSession::_player' data-ref="WorldSession::_player" id="WorldSession::_player" >_player</a>-&gt;<a class="ref" href="../Entities/Unit/Unit.h.html#_ZNK4Unit10GetVehicleEv" title='Unit::GetVehicle' data-ref="_ZNK4Unit10GetVehicleEv" id="_ZNK4Unit10GetVehicleEv" >GetVehicle</a>())</td></tr>
+<tr><th id="55">55</th><td>    {</td></tr>
+<tr><th id="56">56</th><td>        <a class="type" href="../DataStores/DBCStructure.h.html#VehicleSeatEntry" title='VehicleSeatEntry' data-ref="VehicleSeatEntry" >VehicleSeatEntry</a> <em>const</em>* <dfn class="local col5 decl" id="5seat" title='seat' data-type='const VehicleSeatEntry *' data-ref="5seat" >seat</dfn> = <a class="local col4 ref" href="#4vehicle" title='vehicle' data-ref="4vehicle" >vehicle</a>-&gt;<a class="ref" href="../Entities/Vehicle/Vehicle.h.html#_ZNK7Vehicle19GetSeatForPassengerEPK4Unit" title='Vehicle::GetSeatForPassenger' data-ref="_ZNK7Vehicle19GetSeatForPassengerEPK4Unit" id="_ZNK7Vehicle19GetSeatForPassengerEPK4Unit" >GetSeatForPassenger</a>(<a class="member" href="../Server/WorldSession.h.html#WorldSession::_player" title='WorldSession::_player' data-ref="WorldSession::_player" id="WorldSession::_player" >_player</a>);</td></tr>
+<tr><th id="57">57</th><td>        <a class="macro" href="../../../common/Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col5 ref" href="#5seat" title='seat' data-ref="5seat" >seat</a>);</td></tr>
+<tr><th id="58">58</th><td>        <b>if</b> (!(<a class="local col5 ref" href="#5seat" title='seat' data-ref="5seat" >seat</a>-&gt;<a class="ref" href="../DataStores/DBCStructure.h.html#VehicleSeatEntry::m_flags" title='VehicleSeatEntry::m_flags' data-ref="VehicleSeatEntry::m_flags" id="VehicleSeatEntry::m_flags" >m_flags</a> &amp; <a class="enum" href="../DataStores/DBCEnums.h.html#VehicleSeatFlags::VEHICLE_SEAT_FLAG_CAN_ATTACK" title='VehicleSeatFlags::VEHICLE_SEAT_FLAG_CAN_ATTACK' data-ref="VehicleSeatFlags::VEHICLE_SEAT_FLAG_CAN_ATTACK" id="VehicleSeatFlags::VEHICLE_SEAT_FLAG_CAN_ATTACK" >VEHICLE_SEAT_FLAG_CAN_ATTACK</a>))</td></tr>
+<tr><th id="59">59</th><td>        {</td></tr>
+<tr><th id="60">60</th><td>            <a class="member" href="#_ZN12WorldSession14SendAttackStopEPK4Unit" title='WorldSession::SendAttackStop' data-ref="_ZN12WorldSession14SendAttackStopEPK4Unit" >SendAttackStop</a>(<a class="local col3 ref" href="#3pEnemy" title='pEnemy' data-ref="3pEnemy" >pEnemy</a>);</td></tr>
+<tr><th id="61">61</th><td>            <b>return</b>;</td></tr>
+<tr><th id="62">62</th><td>        }</td></tr>
+<tr><th id="63">63</th><td>    }</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <a class="member" href="../Server/WorldSession.h.html#WorldSession::_player" title='WorldSession::_player' data-ref="WorldSession::_player" id="WorldSession::_player" >_player</a>-&gt;<a class="ref" href="../Entities/Unit/Unit.h.html#_ZN4Unit6AttackEPS_b" title='Unit::Attack' data-ref="_ZN4Unit6AttackEPS_b" id="_ZN4Unit6AttackEPS_b" >Attack</a>(<a class="local col3 ref" href="#3pEnemy" title='pEnemy' data-ref="3pEnemy" >pEnemy</a>, <b>true</b>);</td></tr>
+<tr><th id="66">66</th><td>}</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession22HandleAttackStopOpcodeER11WorldPacket" title='WorldSession::HandleAttackStopOpcode' data-ref="_ZN12WorldSession22HandleAttackStopOpcodeER11WorldPacket" >HandleAttackStopOpcode</dfn>(<a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a> &amp; <i>/*recvData*/</i>)</td></tr>
+<tr><th id="69">69</th><td>{</td></tr>
+<tr><th id="70">70</th><td>    <a class="member" href="../Server/WorldSession.h.html#_ZNK12WorldSession9GetPlayerEv" title='WorldSession::GetPlayer' data-ref="_ZNK12WorldSession9GetPlayerEv" id="_ZNK12WorldSession9GetPlayerEv" >GetPlayer</a>()-&gt;<a class="ref" href="../Entities/Unit/Unit.h.html#_ZN4Unit10AttackStopEv" title='Unit::AttackStop' data-ref="_ZN4Unit10AttackStopEv" id="_ZN4Unit10AttackStopEv" >AttackStop</a>();</td></tr>
+<tr><th id="71">71</th><td>}</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession23HandleSetSheathedOpcodeER11WorldPacket" title='WorldSession::HandleSetSheathedOpcode' data-ref="_ZN12WorldSession23HandleSetSheathedOpcodeER11WorldPacket" >HandleSetSheathedOpcode</dfn>(<a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a>&amp; <dfn class="local col6 decl" id="6recvData" title='recvData' data-type='WorldPacket &amp;' data-ref="6recvData" >recvData</dfn>)</td></tr>
+<tr><th id="74">74</th><td>{</td></tr>
+<tr><th id="75">75</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="7sheathed" title='sheathed' data-type='uint32' data-ref="7sheathed" >sheathed</dfn>;</td></tr>
+<tr><th id="76">76</th><td>    <a class="local col6 ref" href="#6recvData" title='recvData' data-ref="6recvData" >recvData</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferrsERj" title='ByteBuffer::operator&gt;&gt;' data-ref="_ZN10ByteBufferrsERj" id="_ZN10ByteBufferrsERj" >&gt;&gt;</a> <a class="local col7 ref" href="#7sheathed" title='sheathed' data-ref="7sheathed" >sheathed</a>;</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>    <i>//TC_LOG_DEBUG("network", "WORLD: Recvd CMSG_SETSHEATHED Message guidlow:%u value1:%u", GetPlayer()-&gt;GetGUID().GetCounter(), sheathed);</i></td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>    <b>if</b> (<a class="local col7 ref" href="#7sheathed" title='sheathed' data-ref="7sheathed" >sheathed</a> &gt;= <a class="macro" href="../Entities/Unit/Unit.h.html#246" title="3" data-ref="_M/MAX_SHEATH_STATE">MAX_SHEATH_STATE</a>)</td></tr>
+<tr><th id="81">81</th><td>    {</td></tr>
+<tr><th id="82">82</th><td>        <a class="macro" href="../../../common/Logging/Log.h.html#210" title="do { if (Log::instance()-&gt;ShouldLog(&quot;network&quot;, LOG_LEVEL_ERROR)) { if (false) check_args(&quot;Unknown sheath state %u ??&quot;, sheathed); { try { Log::instance()-&gt;outMessage(&quot;network&quot;, LOG_LEVEL_ERROR, &quot;Unknown sheath state %u ??&quot;, sheathed); } catch (std::exception&amp; e) { Log::instance()-&gt;outMessage(&quot;server&quot;, LOG_LEVEL_ERROR, &quot;Wrong format occurred (%s) at %s:%u.&quot;, e.what(), &quot;/home/nayd/TrinityCore/src/server/game/Handlers/CombatHandler.cpp&quot;, 82); } }; } } while (0)" data-ref="_M/TC_LOG_ERROR">TC_LOG_ERROR</a>(<q>"network"</q>, <q>"Unknown sheath state %u ??"</q>, <a class="local col7 ref" href="#7sheathed" title='sheathed' data-ref="7sheathed" ><a class="local col7 ref" href="#7sheathed" title='sheathed' data-ref="7sheathed" >sheathed</a></a>);</td></tr>
+<tr><th id="83">83</th><td>        <b>return</b>;</td></tr>
+<tr><th id="84">84</th><td>    }</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>    <a class="member" href="../Server/WorldSession.h.html#_ZNK12WorldSession9GetPlayerEv" title='WorldSession::GetPlayer' data-ref="_ZNK12WorldSession9GetPlayerEv" id="_ZNK12WorldSession9GetPlayerEv" >GetPlayer</a>()-&gt;<a class="virtual ref" href="../Entities/Player/Player.h.html#_ZN6Player9SetSheathE11SheathState" title='Player::SetSheath' data-ref="_ZN6Player9SetSheathE11SheathState" id="_ZN6Player9SetSheathE11SheathState" >SetSheath</a>(<a class="type" href="../Entities/Unit/Unit.h.html#SheathState" title='SheathState' data-ref="SheathState" >SheathState</a>(<a class="local col7 ref" href="#7sheathed" title='sheathed' data-ref="7sheathed" >sheathed</a>));</td></tr>
+<tr><th id="87">87</th><td>}</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession14SendAttackStopEPK4Unit" title='WorldSession::SendAttackStop' data-ref="_ZN12WorldSession14SendAttackStopEPK4Unit" >SendAttackStop</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a> <em>const</em>* <dfn class="local col8 decl" id="8enemy" title='enemy' data-type='const Unit *' data-ref="8enemy" >enemy</dfn>)</td></tr>
+<tr><th id="90">90</th><td>{</td></tr>
+<tr><th id="91">91</th><td>    <a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a> <dfn class="local col9 decl" id="9data" title='data' data-type='WorldPacket' data-ref="9data" >data</dfn><a class="ref" href="../../shared/Packets/WorldPacket.h.html#_ZN11WorldPacketC1Etm" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1Etm" id="_ZN11WorldPacketC1Etm" >(</a><a class="enum" href="../Server/Protocol/Opcodes.h.html#Opcodes::SMSG_ATTACKSTOP" title='Opcodes::SMSG_ATTACKSTOP' data-ref="Opcodes::SMSG_ATTACKSTOP" id="Opcodes::SMSG_ATTACKSTOP" >SMSG_ATTACKSTOP</a>, (<var>8</var>+<var>8</var>+<var>4</var>));             <i>// we guess size</i></td></tr>
+<tr><th id="92">92</th><td>    <a class="local col9 ref" href="#9data" title='data' data-ref="9data" >data</a> <a class="ref" href="../Entities/Object/ObjectGuid.h.html#_ZlsR10ByteBufferRK10PackedGuid" title='operator&lt;&lt;' data-ref="_ZlsR10ByteBufferRK10PackedGuid" id="_ZlsR10ByteBufferRK10PackedGuid" >&lt;&lt;</a> <a class="member" href="../Server/WorldSession.h.html#_ZNK12WorldSession9GetPlayerEv" title='WorldSession::GetPlayer' data-ref="_ZNK12WorldSession9GetPlayerEv" id="_ZNK12WorldSession9GetPlayerEv" >GetPlayer</a>()-&gt;<a class="ref" href="../Entities/Object/Object.h.html#_ZNK6Object11GetPackGUIDEv" title='Object::GetPackGUID' data-ref="_ZNK6Object11GetPackGUIDEv" id="_ZNK6Object11GetPackGUIDEv" >GetPackGUID</a>();</td></tr>
+<tr><th id="93">93</th><td>    <b>if</b> (<a class="local col8 ref" href="#8enemy" title='enemy' data-ref="8enemy" >enemy</a>)</td></tr>
+<tr><th id="94">94</th><td>        <a class="local col9 ref" href="#9data" title='data' data-ref="9data" >data</a> <a class="ref" href="../Entities/Object/ObjectGuid.h.html#_ZlsR10ByteBufferRK10PackedGuid" title='operator&lt;&lt;' data-ref="_ZlsR10ByteBufferRK10PackedGuid" id="_ZlsR10ByteBufferRK10PackedGuid" >&lt;&lt;</a> <a class="local col8 ref" href="#8enemy" title='enemy' data-ref="8enemy" >enemy</a>-&gt;<a class="ref" href="../Entities/Object/Object.h.html#_ZNK6Object11GetPackGUIDEv" title='Object::GetPackGUID' data-ref="_ZNK6Object11GetPackGUIDEv" id="_ZNK6Object11GetPackGUIDEv" >GetPackGUID</a>();</td></tr>
+<tr><th id="95">95</th><td>    <b>else</b></td></tr>
+<tr><th id="96">96</th><td>        <a class="local col9 ref" href="#9data" title='data' data-ref="9data" >data</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEh" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEh" id="_ZN10ByteBufferlsEh" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>(<var>0</var>);</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>    <a class="local col9 ref" href="#9data" title='data' data-ref="9data" >data</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEj" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEj" id="_ZN10ByteBufferlsEj" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<var>0</var>);                                      <i>// unk, can be 1 also</i></td></tr>
+<tr><th id="99">99</th><td>    <a class="member" href="../Server/WorldSession.h.html#_ZN12WorldSession10SendPacketEP11WorldPacket" title='WorldSession::SendPacket' data-ref="_ZN12WorldSession10SendPacketEP11WorldPacket" id="_ZN12WorldSession10SendPacketEP11WorldPacket" >SendPacket</a>(&amp;<a class="local col9 ref" href="#9data" title='data' data-ref="9data" >data</a>);</td></tr>
+<tr><th id="100">100</th><td>}</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

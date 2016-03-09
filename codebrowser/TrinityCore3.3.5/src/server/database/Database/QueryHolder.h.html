@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<title>QueryHolder.h [TrinityCore3.3.5/src/server/database/Database/QueryHolder.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/database/Database/QueryHolder.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>database</a>/<a href='./'>Database</a>/QueryHolder.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/_QUERYHOLDER_H">_QUERYHOLDER_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/_QUERYHOLDER_H" data-ref="_M/_QUERYHOLDER_H">_QUERYHOLDER_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../../../include/c++/4.9/future.html">&lt;future&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><b>class</b> <dfn class="type def" id="SQLQueryHolder" title='SQLQueryHolder' data-ref="SQLQueryHolder" >SQLQueryHolder</dfn></td></tr>
+<tr><th id="24">24</th><td>{</td></tr>
+<tr><th id="25">25</th><td>    <b>friend</b> <b>class</b> <a class="type" href="#SQLQueryHolderTask" title='SQLQueryHolderTask' data-ref="SQLQueryHolderTask" >SQLQueryHolderTask</a>;</td></tr>
+<tr><th id="26">26</th><td>    <b>private</b>:</td></tr>
+<tr><th id="27">27</th><td>        <b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_pair.h.html#std::pair" title='std::pair' data-ref="std::pair" >pair</a>&lt;<a class="type" href="SQLOperation.h.html#SQLElementData" title='SQLElementData' data-ref="SQLElementData" >SQLElementData</a>, <a class="type" href="SQLOperation.h.html#SQLResultSetUnion" title='SQLResultSetUnion' data-ref="SQLResultSetUnion" >SQLResultSetUnion</a>&gt; <dfn class="typedef" id="SQLQueryHolder::SQLResultPair" title='SQLQueryHolder::SQLResultPair' data-type='std::pair&lt;SQLElementData, SQLResultSetUnion&gt;' data-ref="SQLQueryHolder::SQLResultPair" >SQLResultPair</dfn>;</td></tr>
+<tr><th id="28">28</th><td>        <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;<a class="typedef" href="#SQLQueryHolder::SQLResultPair" title='SQLQueryHolder::SQLResultPair' data-type='std::pair&lt;SQLElementData, SQLResultSetUnion&gt;' data-ref="SQLQueryHolder::SQLResultPair" >SQLResultPair</a>&gt; <dfn class="decl" id="SQLQueryHolder::m_queries" title='SQLQueryHolder::m_queries' data-ref="SQLQueryHolder::m_queries" >m_queries</dfn>;</td></tr>
+<tr><th id="29">29</th><td>    <b>public</b>:</td></tr>
+<tr><th id="30">30</th><td>        <dfn class="decl def" id="_ZN14SQLQueryHolderC1Ev" title='SQLQueryHolder::SQLQueryHolder' data-ref="_ZN14SQLQueryHolderC1Ev" >SQLQueryHolder</dfn>() { }</td></tr>
+<tr><th id="31">31</th><td>        <dfn class="decl" id="_ZN14SQLQueryHolderD1Ev" title='SQLQueryHolder::~SQLQueryHolder' data-ref="_ZN14SQLQueryHolderD1Ev" >~SQLQueryHolder</dfn>();</td></tr>
+<tr><th id="32">32</th><td>        <em>bool</em> <dfn class="decl" id="_ZN14SQLQueryHolder8SetQueryEmPKc" title='SQLQueryHolder::SetQuery' data-ref="_ZN14SQLQueryHolder8SetQueryEmPKc" >SetQuery</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="6586index" title='index' data-type='size_t' data-ref="6586index" >index</dfn>, <em>const</em> <em>char</em>* <dfn class="local col7 decl" id="6587sql" title='sql' data-type='const char *' data-ref="6587sql" >sql</dfn>);</td></tr>
+<tr><th id="33">33</th><td>        <b>template</b>&lt;<b>typename</b> Format, <b>typename</b>... Args&gt;</td></tr>
+<tr><th id="34">34</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN14SQLQueryHolder9SetPQueryEmOT_DpOT0_" title='SQLQueryHolder::SetPQuery' data-ref="_ZN14SQLQueryHolder9SetPQueryEmOT_DpOT0_" >SetPQuery</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="6588index" title='index' data-type='size_t' data-ref="6588index" >index</dfn>, Format&amp;&amp; <dfn class="local col9 decl" id="6589sql" title='sql' data-type='Format &amp;&amp;' data-ref="6589sql" >sql</dfn>, Args&amp;&amp;... <dfn class="local col0 decl" id="6590args" title='args' data-type='Args &amp;&amp;...' data-ref="6590args" >args</dfn>)</td></tr>
+<tr><th id="35">35</th><td>        {</td></tr>
+<tr><th id="36">36</th><td>            <b>return</b> <a class="member" href="#_ZN14SQLQueryHolder8SetQueryEmPKc" title='SQLQueryHolder::SetQuery' data-ref="_ZN14SQLQueryHolder8SetQueryEmPKc" >SetQuery</a>(<a class="local col8 ref" href="#6588index" title='index' data-ref="6588index" >index</a>, <span class="namespace">Trinity::</span>StringFormat(<span class="namespace">std::</span>forward&lt;Format&gt;(<a class="local col9 ref" href="#6589sql" title='sql' data-ref="6589sql" >sql</a>), <span class="namespace">std::</span>forward&lt;Args&gt;(<a class="local col0 ref" href="#6590args" title='args' data-ref="6590args" >args</a>)...).c_str());</td></tr>
+<tr><th id="37">37</th><td>        }</td></tr>
+<tr><th id="38">38</th><td>        <em>bool</em> <dfn class="decl" id="_ZN14SQLQueryHolder16SetPreparedQueryEmP17PreparedStatement" title='SQLQueryHolder::SetPreparedQuery' data-ref="_ZN14SQLQueryHolder16SetPreparedQueryEmP17PreparedStatement" >SetPreparedQuery</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="6591index" title='index' data-type='size_t' data-ref="6591index" >index</dfn>, <a class="type" href="PreparedStatement.h.html#PreparedStatement" title='PreparedStatement' data-ref="PreparedStatement" >PreparedStatement</a>* <dfn class="local col2 decl" id="6592stmt" title='stmt' data-type='PreparedStatement *' data-ref="6592stmt" >stmt</dfn>);</td></tr>
+<tr><th id="39">39</th><td>        <em>void</em> <dfn class="decl" id="_ZN14SQLQueryHolder7SetSizeEm" title='SQLQueryHolder::SetSize' data-ref="_ZN14SQLQueryHolder7SetSizeEm" >SetSize</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="6593size" title='size' data-type='size_t' data-ref="6593size" >size</dfn>);</td></tr>
+<tr><th id="40">40</th><td>        <a class="typedef" href="QueryResult.h.html#QueryResult" title='QueryResult' data-type='std::shared_ptr&lt;ResultSet&gt;' data-ref="QueryResult" >QueryResult</a> <dfn class="decl" id="_ZN14SQLQueryHolder9GetResultEm" title='SQLQueryHolder::GetResult' data-ref="_ZN14SQLQueryHolder9GetResultEm" >GetResult</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="6594index" title='index' data-type='size_t' data-ref="6594index" >index</dfn>);</td></tr>
+<tr><th id="41">41</th><td>        <a class="typedef" href="QueryResult.h.html#PreparedQueryResult" title='PreparedQueryResult' data-type='std::shared_ptr&lt;PreparedResultSet&gt;' data-ref="PreparedQueryResult" >PreparedQueryResult</a> <dfn class="decl" id="_ZN14SQLQueryHolder17GetPreparedResultEm" title='SQLQueryHolder::GetPreparedResult' data-ref="_ZN14SQLQueryHolder17GetPreparedResultEm" >GetPreparedResult</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="6595index" title='index' data-type='size_t' data-ref="6595index" >index</dfn>);</td></tr>
+<tr><th id="42">42</th><td>        <em>void</em> <dfn class="decl" id="_ZN14SQLQueryHolder9SetResultEmP9ResultSet" title='SQLQueryHolder::SetResult' data-ref="_ZN14SQLQueryHolder9SetResultEmP9ResultSet" >SetResult</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="6596index" title='index' data-type='size_t' data-ref="6596index" >index</dfn>, <a class="type" href="QueryResult.h.html#ResultSet" title='ResultSet' data-ref="ResultSet" >ResultSet</a>* <dfn class="local col7 decl" id="6597result" title='result' data-type='ResultSet *' data-ref="6597result" >result</dfn>);</td></tr>
+<tr><th id="43">43</th><td>        <em>void</em> <dfn class="decl" id="_ZN14SQLQueryHolder17SetPreparedResultEmP17PreparedResultSet" title='SQLQueryHolder::SetPreparedResult' data-ref="_ZN14SQLQueryHolder17SetPreparedResultEmP17PreparedResultSet" >SetPreparedResult</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="6598index" title='index' data-type='size_t' data-ref="6598index" >index</dfn>, <a class="type" href="QueryResult.h.html#PreparedResultSet" title='PreparedResultSet' data-ref="PreparedResultSet" >PreparedResultSet</a>* <dfn class="local col9 decl" id="6599result" title='result' data-type='PreparedResultSet *' data-ref="6599result" >result</dfn>);</td></tr>
+<tr><th id="44">44</th><td>};</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/future.html#std::future" title='std::future' data-ref="std::future" >future</a>&lt;<a class="type" href="#SQLQueryHolder" title='SQLQueryHolder' data-ref="SQLQueryHolder" >SQLQueryHolder</a>*&gt; <dfn class="typedef" id="QueryResultHolderFuture" title='QueryResultHolderFuture' data-type='std::future&lt;SQLQueryHolder *&gt;' data-ref="QueryResultHolderFuture" >QueryResultHolderFuture</dfn>;</td></tr>
+<tr><th id="47">47</th><td><b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/future.html#std::promise" title='std::promise' data-ref="std::promise" >promise</a>&lt;<a class="type" href="#SQLQueryHolder" title='SQLQueryHolder' data-ref="SQLQueryHolder" >SQLQueryHolder</a>*&gt; <dfn class="typedef" id="QueryResultHolderPromise" title='QueryResultHolderPromise' data-type='std::promise&lt;SQLQueryHolder *&gt;' data-ref="QueryResultHolderPromise" >QueryResultHolderPromise</dfn>;</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><b>class</b> <dfn class="type def" id="SQLQueryHolderTask" title='SQLQueryHolderTask' data-ref="SQLQueryHolderTask" >SQLQueryHolderTask</dfn> : <b>public</b> <a class="type" href="SQLOperation.h.html#SQLOperation" title='SQLOperation' data-ref="SQLOperation" >SQLOperation</a></td></tr>
+<tr><th id="50">50</th><td>{</td></tr>
+<tr><th id="51">51</th><td>    <b>private</b>:</td></tr>
+<tr><th id="52">52</th><td>        <a class="type" href="#SQLQueryHolder" title='SQLQueryHolder' data-ref="SQLQueryHolder" >SQLQueryHolder</a>* <dfn class="decl" id="SQLQueryHolderTask::m_holder" title='SQLQueryHolderTask::m_holder' data-ref="SQLQueryHolderTask::m_holder" >m_holder</dfn>;</td></tr>
+<tr><th id="53">53</th><td>        <a class="typedef" href="#QueryResultHolderPromise" title='QueryResultHolderPromise' data-type='std::promise&lt;SQLQueryHolder *&gt;' data-ref="QueryResultHolderPromise" >QueryResultHolderPromise</a> <dfn class="decl" id="SQLQueryHolderTask::m_result" title='SQLQueryHolderTask::m_result' data-ref="SQLQueryHolderTask::m_result" >m_result</dfn>;</td></tr>
+<tr><th id="54">54</th><td>        <em>bool</em> <dfn class="decl" id="SQLQueryHolderTask::m_executed" title='SQLQueryHolderTask::m_executed' data-ref="SQLQueryHolderTask::m_executed" >m_executed</dfn>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <b>public</b>:</td></tr>
+<tr><th id="57">57</th><td>        <dfn class="decl def" id="_ZN18SQLQueryHolderTaskC1EP14SQLQueryHolder" title='SQLQueryHolderTask::SQLQueryHolderTask' data-ref="_ZN18SQLQueryHolderTaskC1EP14SQLQueryHolder" >SQLQueryHolderTask</dfn>(<a class="type" href="#SQLQueryHolder" title='SQLQueryHolder' data-ref="SQLQueryHolder" >SQLQueryHolder</a>* <dfn class="local col0 decl" id="6600holder" title='holder' data-type='SQLQueryHolder *' data-ref="6600holder" >holder</dfn>)</td></tr>
+<tr><th id="58">58</th><td>            : <a class="member" href="#SQLQueryHolderTask::m_holder" title='SQLQueryHolderTask::m_holder' data-ref="SQLQueryHolderTask::m_holder" >m_holder</a>(<a class="local col0 ref" href="#6600holder" title='holder' data-ref="6600holder" >holder</a>), <a class="member" href="#SQLQueryHolderTask::m_executed" title='SQLQueryHolderTask::m_executed' data-ref="SQLQueryHolderTask::m_executed" >m_executed</a>(<b>false</b>) { }</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>        <dfn class="virtual decl" id="_ZN18SQLQueryHolderTaskD1Ev" title='SQLQueryHolderTask::~SQLQueryHolderTask' data-ref="_ZN18SQLQueryHolderTaskD1Ev" >~SQLQueryHolderTask</dfn>();</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td>        <em>bool</em> <dfn class="virtual decl" id="_ZN18SQLQueryHolderTask7ExecuteEv" title='SQLQueryHolderTask::Execute' data-ref="_ZN18SQLQueryHolderTask7ExecuteEv" >Execute</dfn>() override;</td></tr>
+<tr><th id="63">63</th><td>        <a class="typedef" href="#QueryResultHolderFuture" title='QueryResultHolderFuture' data-type='std::future&lt;SQLQueryHolder *&gt;' data-ref="QueryResultHolderFuture" >QueryResultHolderFuture</a> <dfn class="decl def" id="_ZN18SQLQueryHolderTask9GetFutureEv" title='SQLQueryHolderTask::GetFuture' data-ref="_ZN18SQLQueryHolderTask9GetFutureEv" >GetFuture</dfn>() { <b>return</b> <a class="member" href="#SQLQueryHolderTask::m_result" title='SQLQueryHolderTask::m_result' data-ref="SQLQueryHolderTask::m_result" >m_result</a>.<a class="ref" href="../../../../../include/c++/4.9/future.html#_ZNSt7promise10get_futureEv" title='std::promise::get_future' data-ref="_ZNSt7promise10get_futureEv" id="_ZNSt7promise10get_futureEv" >get_future</a>(); }</td></tr>
+<tr><th id="64">64</th><td>};</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

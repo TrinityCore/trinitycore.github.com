@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+<title>context.hpp [TrinityCore6.x/dep/zmqpp/zmqpp/context.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/zmqpp/zmqpp/context.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>zmqpp</a>/<a href='./'>zmqpp</a>/context.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> *<span class="command"> \file</span></i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> * <span class="command">\date</span>   9 Aug 2011</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> * <span class="command">\author</span> Ben Gray (\@benjamg)</i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><u>#<span data-ppcond="8">ifndef</span> <span class="macro" data-ref="_M/ZMQPP_CONTEXT_HPP_">ZMQPP_CONTEXT_HPP_</span></u></td></tr>
+<tr><th id="9">9</th><td><u>#define <dfn class="macro" id="_M/ZMQPP_CONTEXT_HPP_" data-ref="_M/ZMQPP_CONTEXT_HPP_">ZMQPP_CONTEXT_HPP_</dfn></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../../../../include/c++/4.9/cassert.html">&lt;cassert&gt;</a></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="../../../../include/zmq.h.html">&lt;zmq.h&gt;</a></u></td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="compatibility.hpp.html">"compatibility.hpp"</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="exception.hpp.html">"exception.hpp"</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#<span data-ppcond="17">if</span> (<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> &gt; 3) || ((<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> == 3) &amp;&amp; (<a class="macro" href="../../../../include/zmq.h.html#57" title="2" data-ref="_M/ZMQ_VERSION_MINOR">ZMQ_VERSION_MINOR</a> &gt;= 2))</u></td></tr>
+<tr><th id="18">18</th><td><u>#include "context_options.hpp"</u></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="17">endif</span></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><b>namespace</b> <span class="namespace">zmqpp</span></td></tr>
+<tr><th id="22">22</th><td>{</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="25">25</th><td><i class="doc"> * The context class represents internal zmq context and io threads.</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="27">27</th><td><i class="doc"> * By default the context class will create one thread, however this can be</i></td></tr>
+<tr><th id="28">28</th><td><i class="doc"> * overridden in the constructor.</i></td></tr>
+<tr><th id="29">29</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="30">30</th><td><i class="doc"> * The context class is the only object that can be considered thread safe.</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc"> * All sockets using endpoints other than inproc require the context to have</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc"> * at least one thread.</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc"> * This class is c++0x move supporting and cannot be copied.</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="37">37</th><td><b>class</b> <dfn class="type def" id="zmqpp::context" title='zmqpp::context' data-ref="zmqpp::context" >context</dfn></td></tr>
+<tr><th id="38">38</th><td>{</td></tr>
+<tr><th id="39">39</th><td><b>public</b>:</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="41">if</span> (<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> &lt; 3) || ((<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> == 3) &amp;&amp; (<a class="macro" href="../../../../include/zmq.h.html#57" title="2" data-ref="_M/ZMQ_VERSION_MINOR">ZMQ_VERSION_MINOR</a> &lt; 2))</u></td></tr>
+<tr><th id="42">42</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc">	 * Initialise the 0mq context.</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">	 * If only inproc is used then the context may be created with zero threads.</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">	 * Any inproc endpoint using sockets must be created using the same context.</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc">	 * The context is thread safe an may be used anywhere in your application,</i></td></tr>
+<tr><th id="49">49</th><td><i class="doc">	 * however there is no requirement (other than inproc restrictions) for you</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc">	 * to do this.</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">threads</span> an integer argument for the number of required threads. Defaults to 1.</i></td></tr>
+<tr><th id="53">53</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="54">54</th><td>	<dfn class="decl def" id="_ZN5zmqpp7contextC1ERKi" title='zmqpp::context::context' data-ref="_ZN5zmqpp7contextC1ERKi" >context</dfn>(<em>int</em> <em>const</em>&amp; <dfn class="local col3 decl" id="53threads" title='threads' data-type='const int &amp;' data-ref="53threads" >threads</dfn> = <var>1</var>)</td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="41">else</span></u></td></tr>
+<tr><th id="56">56</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="57">57</th><td><i class="doc">	 * Initialise the 0mq context.</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc">	 * The context is thread safe an may be used anywhere in your application,</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">	 * however there is no requirement (other than inproc restrictions) for you</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">	 * to do this.</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="63">63</th><td>	context()</td></tr>
+<tr><th id="64">64</th><td><u>#<span data-ppcond="41">endif</span></u></td></tr>
+<tr><th id="65">65</th><td>		: <a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>(<b>nullptr</b>)</td></tr>
+<tr><th id="66">66</th><td>	{</td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="67">if</span> (<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> &lt; 3) || ((<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> == 3) &amp;&amp; (<a class="macro" href="../../../../include/zmq.h.html#57" title="2" data-ref="_M/ZMQ_VERSION_MINOR">ZMQ_VERSION_MINOR</a> &lt; 2))</u></td></tr>
+<tr><th id="68">68</th><td>		<a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a> = <a class="ref" href="../../../../include/zmq.h.html#zmq_init" title='zmq_init' data-ref="zmq_init" id="zmq_init" >zmq_init</a>(<a class="local col3 ref" href="#53threads" title='threads' data-ref="53threads" >threads</a>);</td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="67">else</span></u></td></tr>
+<tr><th id="70">70</th><td>		_context = zmq_ctx_new();</td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="67">endif</span></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>		<b>if</b> (<b>nullptr</b> == <a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>)</td></tr>
+<tr><th id="74">74</th><td>		{</td></tr>
+<tr><th id="75">75</th><td>			<b>throw</b> <a class="type" href="exception.hpp.html#zmqpp::zmq_internal_exception" title='zmqpp::zmq_internal_exception' data-ref="zmqpp::zmq_internal_exception" >zmq_internal_exception</a><a class="ref" href="exception.hpp.html#_ZN5zmqpp22zmq_internal_exceptionC1Ev" title='zmqpp::zmq_internal_exception::zmq_internal_exception' data-ref="_ZN5zmqpp22zmq_internal_exceptionC1Ev" id="_ZN5zmqpp22zmq_internal_exceptionC1Ev" >(</a>);</td></tr>
+<tr><th id="76">76</th><td>		}</td></tr>
+<tr><th id="77">77</th><td>	}</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="80">80</th><td><i class="doc">	 * Closes the 0mq context.</i></td></tr>
+<tr><th id="81">81</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">	 * Any blocking calls other than a socket close will return with an error.</i></td></tr>
+<tr><th id="83">83</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc">	 * If there are open sockets will block while zmq internal buffers are</i></td></tr>
+<tr><th id="85">85</th><td><i class="doc">	 * processed up to a limit specified by that sockets linger option.</i></td></tr>
+<tr><th id="86">86</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="87">87</th><td>	<dfn class="decl def" id="_ZN5zmqpp7contextD1Ev" title='zmqpp::context::~context' data-ref="_ZN5zmqpp7contextD1Ev" >~context</dfn>() <a class="macro" href="compatibility.hpp.html#93" title="noexcept" data-ref="_M/NOEXCEPT">NOEXCEPT</a></td></tr>
+<tr><th id="88">88</th><td>	{</td></tr>
+<tr><th id="89">89</th><td>		<b>if</b> (<b>nullptr</b> != <a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>)</td></tr>
+<tr><th id="90">90</th><td>		{</td></tr>
+<tr><th id="91">91</th><td>			<a class="member" href="context.cpp.html#_ZN5zmqpp7context9terminateEv" title='zmqpp::context::terminate' data-ref="_ZN5zmqpp7context9terminateEv" id="_ZN5zmqpp7context9terminateEv" >terminate</a>();</td></tr>
+<tr><th id="92">92</th><td>		}</td></tr>
+<tr><th id="93">93</th><td>	}</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">	 * Move supporting constructor.</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">	 * Allows zero-copy move semantics to be used with this class.</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">source</span> a rvalue instance of the object who's internals we wish to steal.</i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="102">102</th><td>	<dfn class="decl def" id="_ZN5zmqpp7contextC1EOS0_" title='zmqpp::context::context' data-ref="_ZN5zmqpp7contextC1EOS0_" >context</dfn>(<a class="type" href="#zmqpp::context" title='zmqpp::context' data-ref="zmqpp::context" >context</a>&amp;&amp; <dfn class="local col4 decl" id="54source" title='source' data-type='zmqpp::context &amp;&amp;' data-ref="54source" >source</dfn>) <a class="macro" href="compatibility.hpp.html#93" title="noexcept" data-ref="_M/NOEXCEPT">NOEXCEPT</a></td></tr>
+<tr><th id="103">103</th><td>		: <a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>(<a class="local col4 ref" href="#54source" title='source' data-ref="54source" >source</a>.<a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>)</td></tr>
+<tr><th id="104">104</th><td>	{</td></tr>
+<tr><th id="105">105</th><td>		<a class="local col4 ref" href="#54source" title='source' data-ref="54source" >source</a>.<a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a> = <b>nullptr</b>;</td></tr>
+<tr><th id="106">106</th><td>	}</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="109">109</th><td><i class="doc">	 * Move supporting operator.</i></td></tr>
+<tr><th id="110">110</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc">	 * Allows zero-copy move semantics to be used with this class.</i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="113">113</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">source</span> an rvalue instance of the context who's internals we wish to steal.</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="115">115</th><td>	<a class="type" href="#zmqpp::context" title='zmqpp::context' data-ref="zmqpp::context" >context</a>&amp; <dfn class="decl def" id="_ZN5zmqpp7contextaSEOS0_" title='zmqpp::context::operator=' data-ref="_ZN5zmqpp7contextaSEOS0_" ><b>operator</b>=</dfn>(<a class="type" href="#zmqpp::context" title='zmqpp::context' data-ref="zmqpp::context" >context</a>&amp;&amp; <dfn class="local col5 decl" id="55source" title='source' data-type='zmqpp::context &amp;&amp;' data-ref="55source" >source</dfn>) <a class="macro" href="compatibility.hpp.html#93" title="noexcept" data-ref="_M/NOEXCEPT">NOEXCEPT</a></td></tr>
+<tr><th id="116">116</th><td>	{</td></tr>
+<tr><th id="117">117</th><td>		<span class="namespace">std::</span><a class="ref" href="../../../../include/c++/4.9/bits/move.h.html#_ZSt4swapRT_S0_" title='std::swap' data-ref="_ZSt4swapRT_S0_" id="_ZSt4swapRT_S0_" >swap</a>( <a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>, <a class="local col5 ref" href="#55source" title='source' data-ref="55source" >source</a>.<a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a> );</td></tr>
+<tr><th id="118">118</th><td>		<b>return</b> *<b>this</b>;</td></tr>
+<tr><th id="119">119</th><td>	}</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="122">122</th><td><i class="doc">	 * Terminate the current context.</i></td></tr>
+<tr><th id="123">123</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="124">124</th><td><i class="doc">	 * Any blocking calls other than a socket close will return with an error.</i></td></tr>
+<tr><th id="125">125</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="126">126</th><td><i class="doc">	 * If there are open sockets will block while zmq internal buffers are</i></td></tr>
+<tr><th id="127">127</th><td><i class="doc">	 * processed up to a limit specified by that sockets linger option.</i></td></tr>
+<tr><th id="128">128</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="129">129</th><td>	<em>void</em> <a class="decl" href="context.cpp.html#_ZN5zmqpp7context9terminateEv" title='zmqpp::context::terminate' data-ref="_ZN5zmqpp7context9terminateEv" id="_ZN5zmqpp7context9terminateEv" >terminate</a>();</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><u>#<span data-ppcond="131">if</span> (<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> &gt; 3) || ((<a class="macro" href="../../../../include/zmq.h.html#56" title="2" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</a> == 3) &amp;&amp; (<a class="macro" href="../../../../include/zmq.h.html#57" title="2" data-ref="_M/ZMQ_VERSION_MINOR">ZMQ_VERSION_MINOR</a> &gt;= 2))</u></td></tr>
+<tr><th id="132">132</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="133">133</th><td><i class="doc">	 * Set the value of an option in the underlaying zmq context.</i></td></tr>
+<tr><th id="134">134</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">option</span> a valid ::context_option</i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">value</span> to set the option to</i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="138">138</th><td>	<em>void</em> set(context_option <em>const</em> option, <em>int</em> <em>const</em> value);</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">	 * Get a context option from the underlaying zmq context.</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">option</span> a valid ::context_option</i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">	 * <span class="command">\return</span> context option value</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="146">146</th><td>	<em>int</em> get(context_option <em>const</em> option);</td></tr>
+<tr><th id="147">147</th><td><u>#<span data-ppcond="131">endif</span></u></td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="150">150</th><td><i class="doc">	 * Validity checking of the context</i></td></tr>
+<tr><th id="151">151</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">	 * Checks if the underlying 0mq context for this instance is valid.</i></td></tr>
+<tr><th id="153">153</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="154">154</th><td><i class="doc">	 * Contexts should always be valid unless people are doing 'fun' things with</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">	 * std::move.</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="157">157</th><td><i class="doc">	 * <span class="command">\return</span> boolean true if the object is valid.</i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="159">159</th><td>	<dfn class="decl def" id="_ZNK5zmqpp7contextcvbEv" title='zmqpp::context::operator bool' data-ref="_ZNK5zmqpp7contextcvbEv" ><b>operator</b> <em>bool</em></dfn>() <em>const</em> <a class="macro" href="compatibility.hpp.html#93" title="noexcept" data-ref="_M/NOEXCEPT">NOEXCEPT</a></td></tr>
+<tr><th id="160">160</th><td>	{</td></tr>
+<tr><th id="161">161</th><td>		<b>return</b> <b>nullptr</b> != <a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>;</td></tr>
+<tr><th id="162">162</th><td>	}</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="165">165</th><td><i class="doc">	 * Access to the raw 0mq context</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="167">167</th><td><i class="doc">	 * <span class="command">\return</span> void pointer to the underlying 0mq context.</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="169">169</th><td>	<dfn class="decl def" id="_ZNK5zmqpp7contextcvPvEv" title='zmqpp::context::operator void *' data-ref="_ZNK5zmqpp7contextcvPvEv" ><b>operator</b> <em>void</em>*</dfn>() <em>const</em> <a class="macro" href="compatibility.hpp.html#93" title="noexcept" data-ref="_M/NOEXCEPT">NOEXCEPT</a></td></tr>
+<tr><th id="170">170</th><td>	{</td></tr>
+<tr><th id="171">171</th><td>		<b>return</b> <a class="member" href="#zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</a>;</td></tr>
+<tr><th id="172">172</th><td>	}</td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td><b>private</b>:</td></tr>
+<tr><th id="175">175</th><td>	<em>void</em>* <dfn class="decl" id="zmqpp::context::_context" title='zmqpp::context::_context' data-ref="zmqpp::context::_context" >_context</dfn>;</td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td>	<i>// No copy - private and not implemented</i></td></tr>
+<tr><th id="178">178</th><td>	<dfn class="decl def" id="_ZN5zmqpp7contextC1ERKS0_" title='zmqpp::context::context' data-ref="_ZN5zmqpp7contextC1ERKS0_" >context</dfn>(<a class="type" href="#zmqpp::context" title='zmqpp::context' data-ref="zmqpp::context" >context</a> <em>const</em>&amp;) <a class="macro" href="compatibility.hpp.html#89" title="= delete" data-ref="_M/ZMQPP_EXPLICITLY_DELETED">ZMQPP_EXPLICITLY_DELETED</a>;</td></tr>
+<tr><th id="179">179</th><td>	<a class="type" href="#zmqpp::context" title='zmqpp::context' data-ref="zmqpp::context" >context</a>&amp; <dfn class="decl def" id="_ZN5zmqpp7contextaSERKS0_" title='zmqpp::context::operator=' data-ref="_ZN5zmqpp7contextaSERKS0_" ><b>operator</b>=</dfn>(<a class="type" href="#zmqpp::context" title='zmqpp::context' data-ref="zmqpp::context" >context</a> <em>const</em>&amp;) <a class="macro" href="compatibility.hpp.html#93" title="noexcept" data-ref="_M/NOEXCEPT">NOEXCEPT</a> <a class="macro" href="compatibility.hpp.html#89" title="= delete" data-ref="_M/ZMQPP_EXPLICITLY_DELETED">ZMQPP_EXPLICITLY_DELETED</a>;</td></tr>
+<tr><th id="180">180</th><td>};</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>}</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td><u>#<span data-ppcond="8">endif</span> /* ZMQPP_CONTEXT_HPP_ */</u></td></tr>
+<tr><th id="185">185</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='context.cpp.html'>TrinityCore6.x/dep/zmqpp/zmqpp/context.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

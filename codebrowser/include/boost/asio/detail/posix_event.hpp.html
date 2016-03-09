@@ -57,40 +57,40 @@
 <tr><th id="44">44</th><td></td></tr>
 <tr><th id="45">45</th><td>  <i>// Signal the event.</i></td></tr>
 <tr><th id="46">46</th><td>  <b>template</b> &lt;<b>typename</b> Lock&gt;</td></tr>
-<tr><th id="47">47</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event6signalERT_" title='boost::asio::detail::posix_event::signal' data-ref="_ZN5boost4asio6detail11posix_event6signalERT_" >signal</dfn>(Lock&amp; <dfn class="local col8 decl" id="2528lock" title='lock' data-type='Lock &amp;' data-ref="2528lock" >lock</dfn>)</td></tr>
+<tr><th id="47">47</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event6signalERT_" title='boost::asio::detail::posix_event::signal' data-ref="_ZN5boost4asio6detail11posix_event6signalERT_" >signal</dfn>(Lock&amp; <dfn class="local col2 decl" id="2122lock" title='lock' data-type='Lock &amp;' data-ref="2122lock" >lock</dfn>)</td></tr>
 <tr><th id="48">48</th><td>  {</td></tr>
 <tr><th id="49">49</th><td>    <a class="macro" href="assert.hpp.html#27" title="(static_cast&lt;void&gt; (0))" data-ref="_M/BOOST_ASIO_ASSERT">BOOST_ASIO_ASSERT</a>(lock.locked());</td></tr>
-<tr><th id="50">50</th><td>    (<em>void</em>)<a class="local col8 ref" href="#2528lock" title='lock' data-ref="2528lock" >lock</a>;</td></tr>
+<tr><th id="50">50</th><td>    (<em>void</em>)<a class="local col2 ref" href="#2122lock" title='lock' data-ref="2122lock" >lock</a>;</td></tr>
 <tr><th id="51">51</th><td>    <a class="member" href="#boost::asio::detail::posix_event::signalled_" title='boost::asio::detail::posix_event::signalled_' data-ref="boost::asio::detail::posix_event::signalled_" >signalled_</a> = <b>true</b>;</td></tr>
 <tr><th id="52">52</th><td>    ::<a class="ref" href="../../../pthread.h.html#pthread_cond_signal" title='pthread_cond_signal' data-ref="pthread_cond_signal" id="pthread_cond_signal" >pthread_cond_signal</a>(&amp;<a class="member" href="#boost::asio::detail::posix_event::cond_" title='boost::asio::detail::posix_event::cond_' data-ref="boost::asio::detail::posix_event::cond_" >cond_</a>); <i>// Ignore EINVAL.</i></td></tr>
 <tr><th id="53">53</th><td>  }</td></tr>
 <tr><th id="54">54</th><td></td></tr>
 <tr><th id="55">55</th><td>  <i>// Signal the event and unlock the mutex.</i></td></tr>
 <tr><th id="56">56</th><td>  <b>template</b> &lt;<b>typename</b> Lock&gt;</td></tr>
-<tr><th id="57">57</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event17signal_and_unlockERT_" title='boost::asio::detail::posix_event::signal_and_unlock' data-ref="_ZN5boost4asio6detail11posix_event17signal_and_unlockERT_" >signal_and_unlock</dfn>(Lock&amp; <dfn class="local col9 decl" id="2529lock" title='lock' data-type='Lock &amp;' data-ref="2529lock" >lock</dfn>)</td></tr>
+<tr><th id="57">57</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event17signal_and_unlockERT_" title='boost::asio::detail::posix_event::signal_and_unlock' data-ref="_ZN5boost4asio6detail11posix_event17signal_and_unlockERT_" >signal_and_unlock</dfn>(Lock&amp; <dfn class="local col3 decl" id="2123lock" title='lock' data-type='Lock &amp;' data-ref="2123lock" >lock</dfn>)</td></tr>
 <tr><th id="58">58</th><td>  {</td></tr>
 <tr><th id="59">59</th><td>    <a class="macro" href="assert.hpp.html#27" title="(static_cast&lt;void&gt; (0))" data-ref="_M/BOOST_ASIO_ASSERT">BOOST_ASIO_ASSERT</a>(lock.locked());</td></tr>
 <tr><th id="60">60</th><td>    <a class="member" href="#boost::asio::detail::posix_event::signalled_" title='boost::asio::detail::posix_event::signalled_' data-ref="boost::asio::detail::posix_event::signalled_" >signalled_</a> = <b>true</b>;</td></tr>
-<tr><th id="61">61</th><td>    <a class="local col9 ref" href="#2529lock" title='lock' data-ref="2529lock" >lock</a>.unlock();</td></tr>
+<tr><th id="61">61</th><td>    <a class="local col3 ref" href="#2123lock" title='lock' data-ref="2123lock" >lock</a>.unlock();</td></tr>
 <tr><th id="62">62</th><td>    ::<a class="ref" href="../../../pthread.h.html#pthread_cond_signal" title='pthread_cond_signal' data-ref="pthread_cond_signal" id="pthread_cond_signal" >pthread_cond_signal</a>(&amp;<a class="member" href="#boost::asio::detail::posix_event::cond_" title='boost::asio::detail::posix_event::cond_' data-ref="boost::asio::detail::posix_event::cond_" >cond_</a>); <i>// Ignore EINVAL.</i></td></tr>
 <tr><th id="63">63</th><td>  }</td></tr>
 <tr><th id="64">64</th><td></td></tr>
 <tr><th id="65">65</th><td>  <i>// Reset the event.</i></td></tr>
 <tr><th id="66">66</th><td>  <b>template</b> &lt;<b>typename</b> Lock&gt;</td></tr>
-<tr><th id="67">67</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event5clearERT_" title='boost::asio::detail::posix_event::clear' data-ref="_ZN5boost4asio6detail11posix_event5clearERT_" >clear</dfn>(Lock&amp; <dfn class="local col0 decl" id="2530lock" title='lock' data-type='Lock &amp;' data-ref="2530lock" >lock</dfn>)</td></tr>
+<tr><th id="67">67</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event5clearERT_" title='boost::asio::detail::posix_event::clear' data-ref="_ZN5boost4asio6detail11posix_event5clearERT_" >clear</dfn>(Lock&amp; <dfn class="local col4 decl" id="2124lock" title='lock' data-type='Lock &amp;' data-ref="2124lock" >lock</dfn>)</td></tr>
 <tr><th id="68">68</th><td>  {</td></tr>
 <tr><th id="69">69</th><td>    <a class="macro" href="assert.hpp.html#27" title="(static_cast&lt;void&gt; (0))" data-ref="_M/BOOST_ASIO_ASSERT">BOOST_ASIO_ASSERT</a>(lock.locked());</td></tr>
-<tr><th id="70">70</th><td>    (<em>void</em>)<a class="local col0 ref" href="#2530lock" title='lock' data-ref="2530lock" >lock</a>;</td></tr>
+<tr><th id="70">70</th><td>    (<em>void</em>)<a class="local col4 ref" href="#2124lock" title='lock' data-ref="2124lock" >lock</a>;</td></tr>
 <tr><th id="71">71</th><td>    <a class="member" href="#boost::asio::detail::posix_event::signalled_" title='boost::asio::detail::posix_event::signalled_' data-ref="boost::asio::detail::posix_event::signalled_" >signalled_</a> = <b>false</b>;</td></tr>
 <tr><th id="72">72</th><td>  }</td></tr>
 <tr><th id="73">73</th><td></td></tr>
 <tr><th id="74">74</th><td>  <i>// Wait for the event to become signalled.</i></td></tr>
 <tr><th id="75">75</th><td>  <b>template</b> &lt;<b>typename</b> Lock&gt;</td></tr>
-<tr><th id="76">76</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event4waitERT_" title='boost::asio::detail::posix_event::wait' data-ref="_ZN5boost4asio6detail11posix_event4waitERT_" >wait</dfn>(Lock&amp; <dfn class="local col1 decl" id="2531lock" title='lock' data-type='Lock &amp;' data-ref="2531lock" >lock</dfn>)</td></tr>
+<tr><th id="76">76</th><td>  <em>void</em> <dfn class="decl def" id="_ZN5boost4asio6detail11posix_event4waitERT_" title='boost::asio::detail::posix_event::wait' data-ref="_ZN5boost4asio6detail11posix_event4waitERT_" >wait</dfn>(Lock&amp; <dfn class="local col5 decl" id="2125lock" title='lock' data-type='Lock &amp;' data-ref="2125lock" >lock</dfn>)</td></tr>
 <tr><th id="77">77</th><td>  {</td></tr>
 <tr><th id="78">78</th><td>    <a class="macro" href="assert.hpp.html#27" title="(static_cast&lt;void&gt; (0))" data-ref="_M/BOOST_ASIO_ASSERT">BOOST_ASIO_ASSERT</a>(lock.locked());</td></tr>
 <tr><th id="79">79</th><td>    <b>while</b> (!<a class="member" href="#boost::asio::detail::posix_event::signalled_" title='boost::asio::detail::posix_event::signalled_' data-ref="boost::asio::detail::posix_event::signalled_" >signalled_</a>)</td></tr>
-<tr><th id="80">80</th><td>      ::<a class="ref" href="../../../pthread.h.html#pthread_cond_wait" title='pthread_cond_wait' data-ref="pthread_cond_wait" id="pthread_cond_wait" >pthread_cond_wait</a>(&amp;<a class="member" href="#boost::asio::detail::posix_event::cond_" title='boost::asio::detail::posix_event::cond_' data-ref="boost::asio::detail::posix_event::cond_" >cond_</a>, &amp;<a class="local col1 ref" href="#2531lock" title='lock' data-ref="2531lock" >lock</a>.mutex().mutex_); <i>// Ignore EINVAL.</i></td></tr>
+<tr><th id="80">80</th><td>      ::<a class="ref" href="../../../pthread.h.html#pthread_cond_wait" title='pthread_cond_wait' data-ref="pthread_cond_wait" id="pthread_cond_wait" >pthread_cond_wait</a>(&amp;<a class="member" href="#boost::asio::detail::posix_event::cond_" title='boost::asio::detail::posix_event::cond_' data-ref="boost::asio::detail::posix_event::cond_" >cond_</a>, &amp;<a class="local col5 ref" href="#2125lock" title='lock' data-ref="2125lock" >lock</a>.mutex().mutex_); <i>// Ignore EINVAL.</i></td></tr>
 <tr><th id="81">81</th><td>  }</td></tr>
 <tr><th id="82">82</th><td></td></tr>
 <tr><th id="83">83</th><td><b>private</b>:</td></tr>
@@ -113,6 +113,6 @@
 <tr><th id="100">100</th><td><u>#<span data-ppcond="11">endif</span> // BOOST_ASIO_DETAIL_POSIX_EVENT_HPP</u></td></tr>
 <tr><th id="101">101</th><td></td></tr>
 </table><hr/><p id='footer'>
-Generated while processing <a href='../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-08</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp.html'>TrinityCore3.3.5/src/common/Collision/DynamicTree.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
 </p>
 </div></body></html>

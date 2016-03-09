@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<title>SHA1.h [TrinityCore3.3.5/src/common/Cryptography/SHA1.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Cryptography/SHA1.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Cryptography</a>/SHA1.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/_AUTH_SHA1_H">_AUTH_SHA1_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/_AUTH_SHA1_H" data-ref="_M/_AUTH_SHA1_H">_AUTH_SHA1_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../include/openssl/sha.h.html">&lt;openssl/sha.h&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>class</b> <a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" id="BigNumber" >BigNumber</a>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>class</b> <dfn class="type def" id="SHA1Hash" title='SHA1Hash' data-ref="SHA1Hash" >SHA1Hash</dfn></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <b>public</b>:</td></tr>
+<tr><th id="31">31</th><td>        <a class="decl" href="SHA1.cpp.html#_ZN8SHA1HashC1Ev" title='SHA1Hash::SHA1Hash' data-ref="_ZN8SHA1HashC1Ev" id="_ZN8SHA1HashC1Ev" >SHA1Hash</a>();</td></tr>
+<tr><th id="32">32</th><td>        <a class="decl" href="SHA1.cpp.html#_ZN8SHA1HashD1Ev" title='SHA1Hash::~SHA1Hash' data-ref="_ZN8SHA1HashD1Ev" id="_ZN8SHA1HashD1Ev" >~SHA1Hash</a>();</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>        <em>void</em> <a class="decl" href="SHA1.cpp.html#_ZN8SHA1Hash16UpdateBigNumbersEP9BigNumberz" title='SHA1Hash::UpdateBigNumbers' data-ref="_ZN8SHA1Hash16UpdateBigNumbersEP9BigNumberz" id="_ZN8SHA1Hash16UpdateBigNumbersEP9BigNumberz" >UpdateBigNumbers</a>(<a class="type" href="BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col1 decl" id="1bn0" title='bn0' data-type='BigNumber *' data-ref="1bn0" >bn0</dfn>, ...);</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>        <em>void</em> <a class="decl" href="SHA1.cpp.html#_ZN8SHA1Hash10UpdateDataEPKhi" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataEPKhi" id="_ZN8SHA1Hash10UpdateDataEPKhi" >UpdateData</a>(<em>const</em> <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col2 decl" id="2dta" title='dta' data-type='const uint8 *' data-ref="2dta" >dta</dfn>, <em>int</em> <dfn class="local col3 decl" id="3len" title='len' data-type='int' data-ref="3len" >len</dfn>);</td></tr>
+<tr><th id="37">37</th><td>        <em>void</em> <a class="decl" href="SHA1.cpp.html#_ZN8SHA1Hash10UpdateDataERKSs" title='SHA1Hash::UpdateData' data-ref="_ZN8SHA1Hash10UpdateDataERKSs" id="_ZN8SHA1Hash10UpdateDataERKSs" >UpdateData</a>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> &amp;<dfn class="local col4 decl" id="4str" title='str' data-type='const std::string &amp;' data-ref="4str" >str</dfn>);</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>        <em>void</em> <a class="decl" href="SHA1.cpp.html#_ZN8SHA1Hash10InitializeEv" title='SHA1Hash::Initialize' data-ref="_ZN8SHA1Hash10InitializeEv" id="_ZN8SHA1Hash10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="40">40</th><td>        <em>void</em> <a class="decl" href="SHA1.cpp.html#_ZN8SHA1Hash8FinalizeEv" title='SHA1Hash::Finalize' data-ref="_ZN8SHA1Hash8FinalizeEv" id="_ZN8SHA1Hash8FinalizeEv" >Finalize</a>();</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>        <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="decl def" id="_ZN8SHA1Hash9GetDigestEv" title='SHA1Hash::GetDigest' data-ref="_ZN8SHA1Hash9GetDigestEv" >GetDigest</dfn>(<em>void</em>) { <b>return</b> <a class="member" href="#SHA1Hash::mDigest" title='SHA1Hash::mDigest' data-ref="SHA1Hash::mDigest" >mDigest</a>; }</td></tr>
+<tr><th id="43">43</th><td>        <em>int</em> <dfn class="decl def" id="_ZNK8SHA1Hash9GetLengthEv" title='SHA1Hash::GetLength' data-ref="_ZNK8SHA1Hash9GetLengthEv" >GetLength</dfn>(<em>void</em>) <em>const</em> { <b>return</b> <a class="macro" href="../../../../include/openssl/sha.h.html#99" title="20" data-ref="_M/SHA_DIGEST_LENGTH">SHA_DIGEST_LENGTH</a>; }</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>    <b>private</b>:</td></tr>
+<tr><th id="46">46</th><td>        <a class="typedef" href="../../../../include/openssl/sha.h.html#SHA_CTX" title='SHA_CTX' data-type='struct SHAstate_st' data-ref="SHA_CTX" >SHA_CTX</a> <dfn class="decl" id="SHA1Hash::mC" title='SHA1Hash::mC' data-ref="SHA1Hash::mC" >mC</dfn>;</td></tr>
+<tr><th id="47">47</th><td>        <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="SHA1Hash::mDigest" title='SHA1Hash::mDigest' data-ref="SHA1Hash::mDigest" >mDigest</dfn>[<a class="macro" href="../../../../include/openssl/sha.h.html#99" title="20" data-ref="_M/SHA_DIGEST_LENGTH">SHA_DIGEST_LENGTH</a>];</td></tr>
+<tr><th id="48">48</th><td>};</td></tr>
+<tr><th id="49">49</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='SHA1.cpp.html'>TrinityCore3.3.5/src/common/Cryptography/SHA1.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

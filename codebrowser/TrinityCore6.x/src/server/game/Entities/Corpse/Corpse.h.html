@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<title>Corpse.h [TrinityCore6.x/src/server/game/Entities/Corpse/Corpse.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/Entities/Corpse/Corpse.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>Entities</a>/<a href='./'>Corpse</a>/Corpse.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITYCORE_CORPSE_H">TRINITYCORE_CORPSE_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITYCORE_CORPSE_H" data-ref="_M/TRINITYCORE_CORPSE_H">TRINITYCORE_CORPSE_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Object/Object.h.html">"Object.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../database/Database/DatabaseEnv.h.html">"DatabaseEnv.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../Grids/GridDefines.h.html">"GridDefines.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../Loot/LootMgr.h.html">"LootMgr.h"</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>enum</b> <dfn class="type def" id="CorpseType" title='CorpseType' data-ref="CorpseType" >CorpseType</dfn></td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="CorpseType::CORPSE_BONES" title='CorpseType::CORPSE_BONES' data-ref="CorpseType::CORPSE_BONES" >CORPSE_BONES</dfn>             = <var>0</var>,</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="CorpseType::CORPSE_RESURRECTABLE_PVE" title='CorpseType::CORPSE_RESURRECTABLE_PVE' data-ref="CorpseType::CORPSE_RESURRECTABLE_PVE" >CORPSE_RESURRECTABLE_PVE</dfn> = <var>1</var>,</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="CorpseType::CORPSE_RESURRECTABLE_PVP" title='CorpseType::CORPSE_RESURRECTABLE_PVP' data-ref="CorpseType::CORPSE_RESURRECTABLE_PVP" >CORPSE_RESURRECTABLE_PVP</dfn> = <var>2</var></td></tr>
+<tr><th id="32">32</th><td>};</td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/MAX_CORPSE_TYPE" data-ref="_M/MAX_CORPSE_TYPE">MAX_CORPSE_TYPE</dfn>        3</u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i>// Value equal client resurrection dialog show radius.</i></td></tr>
+<tr><th id="36">36</th><td><u>#define <dfn class="macro" id="_M/CORPSE_RECLAIM_RADIUS" data-ref="_M/CORPSE_RECLAIM_RADIUS">CORPSE_RECLAIM_RADIUS</dfn> 39</u></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><b>enum</b> <dfn class="type def" id="CorpseFlags" title='CorpseFlags' data-ref="CorpseFlags" >CorpseFlags</dfn></td></tr>
+<tr><th id="39">39</th><td>{</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="CorpseFlags::CORPSE_FLAG_NONE" title='CorpseFlags::CORPSE_FLAG_NONE' data-ref="CorpseFlags::CORPSE_FLAG_NONE" >CORPSE_FLAG_NONE</dfn>        = <var>0x00</var>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="CorpseFlags::CORPSE_FLAG_BONES" title='CorpseFlags::CORPSE_FLAG_BONES' data-ref="CorpseFlags::CORPSE_FLAG_BONES" >CORPSE_FLAG_BONES</dfn>       = <var>0x01</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="CorpseFlags::CORPSE_FLAG_UNK1" title='CorpseFlags::CORPSE_FLAG_UNK1' data-ref="CorpseFlags::CORPSE_FLAG_UNK1" >CORPSE_FLAG_UNK1</dfn>        = <var>0x02</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="CorpseFlags::CORPSE_FLAG_UNK2" title='CorpseFlags::CORPSE_FLAG_UNK2' data-ref="CorpseFlags::CORPSE_FLAG_UNK2" >CORPSE_FLAG_UNK2</dfn>        = <var>0x04</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="CorpseFlags::CORPSE_FLAG_HIDE_HELM" title='CorpseFlags::CORPSE_FLAG_HIDE_HELM' data-ref="CorpseFlags::CORPSE_FLAG_HIDE_HELM" >CORPSE_FLAG_HIDE_HELM</dfn>   = <var>0x08</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="CorpseFlags::CORPSE_FLAG_HIDE_CLOAK" title='CorpseFlags::CORPSE_FLAG_HIDE_CLOAK' data-ref="CorpseFlags::CORPSE_FLAG_HIDE_CLOAK" >CORPSE_FLAG_HIDE_CLOAK</dfn>  = <var>0x10</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="CorpseFlags::CORPSE_FLAG_LOOTABLE" title='CorpseFlags::CORPSE_FLAG_LOOTABLE' data-ref="CorpseFlags::CORPSE_FLAG_LOOTABLE" >CORPSE_FLAG_LOOTABLE</dfn>    = <var>0x20</var></td></tr>
+<tr><th id="47">47</th><td>};</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><b>class</b> <dfn class="type def" id="Corpse" title='Corpse' data-ref="Corpse" >Corpse</dfn> : <b>public</b> <a class="type" href="../Object/Object.h.html#WorldObject" title='WorldObject' data-ref="WorldObject" >WorldObject</a>, <b>public</b> <a class="type" href="../Object/Object.h.html#GridObject" title='GridObject' data-ref="GridObject" >GridObject</a>&lt;<a class="type" href="#Corpse" title='Corpse' data-ref="Corpse" >Corpse</a>&gt;</td></tr>
+<tr><th id="50">50</th><td>{</td></tr>
+<tr><th id="51">51</th><td>    <b>public</b>:</td></tr>
+<tr><th id="52">52</th><td>        <b>explicit</b> <dfn class="decl" id="_ZN6CorpseC1E10CorpseType" title='Corpse::Corpse' data-ref="_ZN6CorpseC1E10CorpseType" >Corpse</dfn>(<a class="type" href="#CorpseType" title='CorpseType' data-ref="CorpseType" >CorpseType</a> <dfn class="local col7 decl" id="37type" title='type' data-type='CorpseType' data-ref="37type" >type</dfn> = <a class="enum" href="#CorpseType::CORPSE_BONES" title='CorpseType::CORPSE_BONES' data-ref="CorpseType::CORPSE_BONES" >CORPSE_BONES</a>);</td></tr>
+<tr><th id="53">53</th><td>        <dfn class="virtual decl" id="_ZN6CorpseD1Ev" title='Corpse::~Corpse' data-ref="_ZN6CorpseD1Ev" >~Corpse</dfn>();</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN6Corpse10AddToWorldEv" title='Corpse::AddToWorld' data-ref="_ZN6Corpse10AddToWorldEv" >AddToWorld</dfn>() override;</td></tr>
+<tr><th id="56">56</th><td>        <em>void</em> <dfn class="virtual decl" id="_ZN6Corpse15RemoveFromWorldEv" title='Corpse::RemoveFromWorld' data-ref="_ZN6Corpse15RemoveFromWorldEv" >RemoveFromWorld</dfn>() override;</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>        <em>bool</em> <dfn class="decl" id="_ZN6Corpse6CreateEmP3Map" title='Corpse::Create' data-ref="_ZN6Corpse6CreateEmP3Map" >Create</dfn>(<a class="type" href="../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint64' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col8 decl" id="38guidlow" title='guidlow' data-type='ObjectGuid::LowType' data-ref="38guidlow" >guidlow</dfn>, <a class="type" href="../../Maps/Map.h.html#Map" title='Map' data-ref="Map" >Map</a>* <dfn class="local col9 decl" id="39map" title='map' data-type='Map *' data-ref="39map" >map</dfn>);</td></tr>
+<tr><th id="59">59</th><td>        <em>bool</em> <dfn class="decl" id="_ZN6Corpse6CreateEmP6Player" title='Corpse::Create' data-ref="_ZN6Corpse6CreateEmP6Player" >Create</dfn>(<a class="type" href="../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint64' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col0 decl" id="40guidlow" title='guidlow' data-type='ObjectGuid::LowType' data-ref="40guidlow" >guidlow</dfn>, <a class="type" href="../Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col1 decl" id="41owner" title='owner' data-type='Player *' data-ref="41owner" >owner</dfn>);</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>        <em>void</em> <dfn class="decl" id="_ZN6Corpse8SaveToDBEv" title='Corpse::SaveToDB' data-ref="_ZN6Corpse8SaveToDBEv" >SaveToDB</dfn>();</td></tr>
+<tr><th id="62">62</th><td>        <em>bool</em> <dfn class="decl" id="_ZN6Corpse16LoadCorpseFromDBEmP5Field" title='Corpse::LoadCorpseFromDB' data-ref="_ZN6Corpse16LoadCorpseFromDBEmP5Field" >LoadCorpseFromDB</dfn>(<a class="type" href="../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint64' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col2 decl" id="42guid" title='guid' data-type='ObjectGuid::LowType' data-ref="42guid" >guid</dfn>, <a class="type" href="../../../database/Database/Field.h.html#Field" title='Field' data-ref="Field" >Field</a>* <dfn class="local col3 decl" id="43fields" title='fields' data-type='Field *' data-ref="43fields" >fields</dfn>);</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>        <em>void</em> <dfn class="decl" id="_ZN6Corpse12DeleteFromDBERSt10shared_ptrI11TransactionE" title='Corpse::DeleteFromDB' data-ref="_ZN6Corpse12DeleteFromDBERSt10shared_ptrI11TransactionE" >DeleteFromDB</dfn>(<a class="typedef" href="../../../database/Database/Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a>&amp; <dfn class="local col4 decl" id="44trans" title='trans' data-type='SQLTransaction &amp;' data-ref="44trans" >trans</dfn>);</td></tr>
+<tr><th id="65">65</th><td>        <em>static</em> <em>void</em> <dfn class="decl" id="_ZN6Corpse12DeleteFromDBERK10ObjectGuidRSt10shared_ptrI11TransactionE" title='Corpse::DeleteFromDB' data-ref="_ZN6Corpse12DeleteFromDBERK10ObjectGuidRSt10shared_ptrI11TransactionE" >DeleteFromDB</dfn>(<a class="type" href="../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <em>const</em>&amp; <dfn class="local col5 decl" id="45ownerGuid" title='ownerGuid' data-type='const ObjectGuid &amp;' data-ref="45ownerGuid" >ownerGuid</dfn>, <a class="typedef" href="../../../database/Database/Transaction.h.html#SQLTransaction" title='SQLTransaction' data-type='std::shared_ptr&lt;Transaction&gt;' data-ref="SQLTransaction" >SQLTransaction</a>&amp; <dfn class="local col6 decl" id="46trans" title='trans' data-type='SQLTransaction &amp;' data-ref="46trans" >trans</dfn>);</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>        <a class="type" href="../Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="decl def" id="_ZNK6Corpse12GetOwnerGUIDEv" title='Corpse::GetOwnerGUID' data-ref="_ZNK6Corpse12GetOwnerGUIDEv" >GetOwnerGUID</dfn>() <em>const</em> { <b>return</b> <a class="member" href="../Object/Object.h.html#_ZNK6Object12GetGuidValueEt" title='Object::GetGuidValue' data-ref="_ZNK6Object12GetGuidValueEt" id="_ZNK6Object12GetGuidValueEt" >GetGuidValue</a>(<a class="enum" href="../Object/Updates/UpdateFields.h.html#CorpseFields::CORPSE_FIELD_OWNER" title='CorpseFields::CORPSE_FIELD_OWNER' data-ref="CorpseFields::CORPSE_FIELD_OWNER" id="CorpseFields::CORPSE_FIELD_OWNER" >CORPSE_FIELD_OWNER</a>); }</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>        <a class="typedef" href="../../../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <em>const</em>&amp; <dfn class="decl def" id="_ZNK6Corpse12GetGhostTimeEv" title='Corpse::GetGhostTime' data-ref="_ZNK6Corpse12GetGhostTimeEv" >GetGhostTime</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#Corpse::m_time" title='Corpse::m_time' data-ref="Corpse::m_time" >m_time</a>; }</td></tr>
+<tr><th id="70">70</th><td>        <em>void</em> <dfn class="decl def" id="_ZN6Corpse14ResetGhostTimeEv" title='Corpse::ResetGhostTime' data-ref="_ZN6Corpse14ResetGhostTimeEv" >ResetGhostTime</dfn>() { <a class="member" href="#Corpse::m_time" title='Corpse::m_time' data-ref="Corpse::m_time" >m_time</a> = <a class="ref" href="../../../../../../include/time.h.html#time" title='time' data-ref="time" id="time" >time</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>); }</td></tr>
+<tr><th id="71">71</th><td>        <a class="type" href="#CorpseType" title='CorpseType' data-ref="CorpseType" >CorpseType</a> <dfn class="decl def" id="_ZNK6Corpse7GetTypeEv" title='Corpse::GetType' data-ref="_ZNK6Corpse7GetTypeEv" >GetType</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#Corpse::m_type" title='Corpse::m_type' data-ref="Corpse::m_type" >m_type</a>; }</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>        <a class="typedef" href="../../Grids/GridDefines.h.html#CellCoord" title='CellCoord' data-type='CoordPair&lt;(64 * 8)&gt;' data-ref="CellCoord" >CellCoord</a> <em>const</em>&amp; <dfn class="decl def" id="_ZNK6Corpse12GetCellCoordEv" title='Corpse::GetCellCoord' data-ref="_ZNK6Corpse12GetCellCoordEv" >GetCellCoord</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#Corpse::_cellCoord" title='Corpse::_cellCoord' data-ref="Corpse::_cellCoord" >_cellCoord</a>; }</td></tr>
+<tr><th id="74">74</th><td>        <em>void</em> <dfn class="decl def" id="_ZN6Corpse12SetCellCoordERK9CoordPairILj512EE" title='Corpse::SetCellCoord' data-ref="_ZN6Corpse12SetCellCoordERK9CoordPairILj512EE" >SetCellCoord</dfn>(<a class="typedef" href="../../Grids/GridDefines.h.html#CellCoord" title='CellCoord' data-type='CoordPair&lt;(64 * 8)&gt;' data-ref="CellCoord" >CellCoord</a> <em>const</em>&amp; <dfn class="local col7 decl" id="47cellCoord" title='cellCoord' data-type='const CellCoord &amp;' data-ref="47cellCoord" >cellCoord</dfn>) { <a class="member" href="#Corpse::_cellCoord" title='Corpse::_cellCoord' data-ref="Corpse::_cellCoord" >_cellCoord</a> <a class="ref" href="../../Grids/GridDefines.h.html#_ZN9CoordPairaSERK9CoordPairIXT_EE" title='CoordPair::operator=' data-ref="_ZN9CoordPairaSERK9CoordPairIXT_EE" id="_ZN9CoordPairaSERK9CoordPairIXT_EE" >=</a> <a class="local col7 ref" href="#47cellCoord" title='cellCoord' data-ref="47cellCoord" >cellCoord</a>; }</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>        <a class="type" href="../../Loot/LootMgr.h.html#Loot" title='Loot' data-ref="Loot" >Loot</a> <dfn class="decl" id="Corpse::loot" title='Corpse::loot' data-ref="Corpse::loot" >loot</dfn>;                                          <i>// remove insignia ONLY at BG</i></td></tr>
+<tr><th id="77">77</th><td>        <a class="type" href="../Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="decl" id="Corpse::lootRecipient" title='Corpse::lootRecipient' data-ref="Corpse::lootRecipient" >lootRecipient</dfn>;</td></tr>
+<tr><th id="78">78</th><td>        <em>bool</em> <dfn class="decl" id="Corpse::lootForBody" title='Corpse::lootForBody' data-ref="Corpse::lootForBody" >lootForBody</dfn>;</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>        <em>bool</em> <dfn class="decl" id="_ZNK6Corpse9IsExpiredEl" title='Corpse::IsExpired' data-ref="_ZNK6Corpse9IsExpiredEl" >IsExpired</dfn>(<a class="typedef" href="../../../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="local col8 decl" id="48t" title='t' data-type='time_t' data-ref="48t" >t</dfn>) <em>const</em>;</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>    <b>private</b>:</td></tr>
+<tr><th id="83">83</th><td>        <a class="type" href="#CorpseType" title='CorpseType' data-ref="CorpseType" >CorpseType</a> <dfn class="decl" id="Corpse::m_type" title='Corpse::m_type' data-ref="Corpse::m_type" >m_type</dfn>;</td></tr>
+<tr><th id="84">84</th><td>        <a class="typedef" href="../../../../../../include/time.h.html#time_t" title='time_t' data-type='__time_t' data-ref="time_t" >time_t</a> <dfn class="decl" id="Corpse::m_time" title='Corpse::m_time' data-ref="Corpse::m_time" >m_time</dfn>;</td></tr>
+<tr><th id="85">85</th><td>        <a class="typedef" href="../../Grids/GridDefines.h.html#CellCoord" title='CellCoord' data-type='CoordPair&lt;(64 * 8)&gt;' data-ref="CellCoord" >CellCoord</a> <dfn class="decl" id="Corpse::_cellCoord" title='Corpse::_cellCoord' data-ref="Corpse::_cellCoord" >_cellCoord</dfn>;</td></tr>
+<tr><th id="86">86</th><td>};</td></tr>
+<tr><th id="87">87</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="88">88</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../AI/CoreAI/GuardAI.cpp.html'>TrinityCore6.x/src/server/game/AI/CoreAI/GuardAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

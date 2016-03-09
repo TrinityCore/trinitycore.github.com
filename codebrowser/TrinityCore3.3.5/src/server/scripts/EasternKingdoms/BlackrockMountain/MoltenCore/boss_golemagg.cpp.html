@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+<title>boss_golemagg.cpp [TrinityCore3.3.5/src/server/scripts/EasternKingdoms/BlackrockMountain/MoltenCore/boss_golemagg.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/scripts/EasternKingdoms/BlackrockMountain/MoltenCore/boss_golemagg.cpp'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore3.3.5</a>/<a href='../../../../..'>src</a>/<a href='../../../..'>server</a>/<a href='../../..'>scripts</a>/<a href='../..'>EasternKingdoms</a>/<a href='..'>BlackrockMountain</a>/<a href='./'>MoltenCore</a>/boss_golemagg.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2006-2009 ScriptDev2 &lt;<a href="https://scriptdev">https://scriptdev</a>2.svn.sourceforge.net/&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i>/* ScriptData</i></td></tr>
+<tr><th id="20">20</th><td><i>SDName: Boss_Golemagg</i></td></tr>
+<tr><th id="21">21</th><td><i>SD%Complete: 90</i></td></tr>
+<tr><th id="22">22</th><td><i>SDComment: Timers need to be confirmed, Golemagg's Trust need to be checked</i></td></tr>
+<tr><th id="23">23</th><td><i>SDCategory: Molten Core</i></td></tr>
+<tr><th id="24">24</th><td><i>EndScriptData */</i></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../../../game/Globals/ObjectMgr.h.html">"ObjectMgr.h"</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="../../../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="molten_core.h.html">"molten_core.h"</a></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>enum</b> <dfn class="type def" id="Texts" title='Texts' data-ref="Texts" >Texts</dfn></td></tr>
+<tr><th id="32">32</th><td>{</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="Texts::EMOTE_LOWHP" title='Texts::EMOTE_LOWHP' data-ref="Texts::EMOTE_LOWHP" >EMOTE_LOWHP</dfn>             = <var>0</var>,</td></tr>
+<tr><th id="34">34</th><td>};</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><b>enum</b> <dfn class="type def" id="Spells" title='Spells' data-ref="Spells" >Spells</dfn></td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td>    <i>// Golemagg</i></td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="Spells::SPELL_MAGMASPLASH" title='Spells::SPELL_MAGMASPLASH' data-ref="Spells::SPELL_MAGMASPLASH" >SPELL_MAGMASPLASH</dfn>       = <var>13879</var>,</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="Spells::SPELL_PYROBLAST" title='Spells::SPELL_PYROBLAST' data-ref="Spells::SPELL_PYROBLAST" >SPELL_PYROBLAST</dfn>         = <var>20228</var>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="Spells::SPELL_EARTHQUAKE" title='Spells::SPELL_EARTHQUAKE' data-ref="Spells::SPELL_EARTHQUAKE" >SPELL_EARTHQUAKE</dfn>        = <var>19798</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="Spells::SPELL_ENRAGE" title='Spells::SPELL_ENRAGE' data-ref="Spells::SPELL_ENRAGE" >SPELL_ENRAGE</dfn>            = <var>19953</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="Spells::SPELL_GOLEMAGG_TRUST" title='Spells::SPELL_GOLEMAGG_TRUST' data-ref="Spells::SPELL_GOLEMAGG_TRUST" >SPELL_GOLEMAGG_TRUST</dfn>    = <var>20553</var>,</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>    <i>// Core Rager</i></td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="Spells::SPELL_MANGLE" title='Spells::SPELL_MANGLE' data-ref="Spells::SPELL_MANGLE" >SPELL_MANGLE</dfn>            = <var>19820</var></td></tr>
+<tr><th id="47">47</th><td>};</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><b>enum</b> <dfn class="type def" id="Events" title='Events' data-ref="Events" >Events</dfn></td></tr>
+<tr><th id="50">50</th><td>{</td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="Events::EVENT_PYROBLAST" title='Events::EVENT_PYROBLAST' data-ref="Events::EVENT_PYROBLAST" >EVENT_PYROBLAST</dfn>     = <var>1</var>,</td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="Events::EVENT_EARTHQUAKE" title='Events::EVENT_EARTHQUAKE' data-ref="Events::EVENT_EARTHQUAKE" >EVENT_EARTHQUAKE</dfn>    = <var>2</var>,</td></tr>
+<tr><th id="53">53</th><td>};</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><b>class</b> <dfn class="type def" id="boss_golemagg" title='boss_golemagg' data-ref="boss_golemagg" >boss_golemagg</dfn> : <b>public</b> <a class="type" href="../../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="56">56</th><td>{</td></tr>
+<tr><th id="57">57</th><td>    <b>public</b>:</td></tr>
+<tr><th id="58">58</th><td>        <dfn class="tu decl def" id="_ZN13boss_golemaggC1Ev" title='boss_golemagg::boss_golemagg' data-type='void boss_golemagg::boss_golemagg()' data-ref="_ZN13boss_golemaggC1Ev" >boss_golemagg</dfn>() : <a class="type" href="../../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"boss_golemagg"</q>) { }</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>        <b>struct</b> <dfn class="tu type def" id="boss_golemagg::boss_golemaggAI" title='boss_golemagg::boss_golemaggAI' data-ref="boss_golemagg::boss_golemaggAI" >boss_golemaggAI</dfn> : <b>public</b> <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a></td></tr>
+<tr><th id="61">61</th><td>        {</td></tr>
+<tr><th id="62">62</th><td>            <dfn class="tu decl def" id="_ZN13boss_golemagg15boss_golemaggAIC1EP8Creature" title='boss_golemagg::boss_golemaggAI::boss_golemaggAI' data-type='void boss_golemagg::boss_golemaggAI::boss_golemaggAI(Creature * creature)' data-ref="_ZN13boss_golemagg15boss_golemaggAIC1EP8Creature" >boss_golemaggAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) : <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a><a class="ref" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAIC1EP8Creaturej" title='BossAI::BossAI' data-ref="_ZN6BossAIC1EP8Creaturej" id="_ZN6BossAIC1EP8Creaturej" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="enum" href="molten_core.h.html#Encounters::BOSS_GOLEMAGG_THE_INCINERATOR" title='Encounters::BOSS_GOLEMAGG_THE_INCINERATOR' data-ref="Encounters::BOSS_GOLEMAGG_THE_INCINERATOR" id="Encounters::BOSS_GOLEMAGG_THE_INCINERATOR" >BOSS_GOLEMAGG_THE_INCINERATOR</a>)</td></tr>
+<tr><th id="63">63</th><td>            {</td></tr>
+<tr><th id="64">64</th><td>            }</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_golemagg15boss_golemaggAI5ResetEv" title='boss_golemagg::boss_golemaggAI::Reset' data-ref="_ZN13boss_golemagg15boss_golemaggAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="67">67</th><td>            {</td></tr>
+<tr><th id="68">68</th><td>                <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a>::<a class="virtual member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI5ResetEv" title='BossAI::Reset' data-ref="_ZN6BossAI5ResetEv" id="_ZN6BossAI5ResetEv" >Reset</a>();</td></tr>
+<tr><th id="69">69</th><td>                <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Spells::SPELL_MAGMASPLASH" title='Spells::SPELL_MAGMASPLASH' data-ref="Spells::SPELL_MAGMASPLASH" >SPELL_MAGMASPLASH</a>, <b>true</b>);</td></tr>
+<tr><th id="70">70</th><td>            }</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_golemagg15boss_golemaggAI11EnterCombatEP4Unit" title='boss_golemagg::boss_golemaggAI::EnterCombat' data-ref="_ZN13boss_golemagg15boss_golemaggAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col2 decl" id="2victim" title='victim' data-type='Unit *' data-ref="2victim" >victim</dfn>) override</td></tr>
+<tr><th id="73">73</th><td>            {</td></tr>
+<tr><th id="74">74</th><td>                <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a>::<a class="virtual member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI11EnterCombatEP4Unit" title='BossAI::EnterCombat' data-ref="_ZN6BossAI11EnterCombatEP4Unit" id="_ZN6BossAI11EnterCombatEP4Unit" >EnterCombat</a>(<a class="local col2 ref" href="#2victim" title='victim' data-ref="2victim" >victim</a>);</td></tr>
+<tr><th id="75">75</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_PYROBLAST" title='Events::EVENT_PYROBLAST' data-ref="Events::EVENT_PYROBLAST" >EVENT_PYROBLAST</a>, <var>7000</var>);</td></tr>
+<tr><th id="76">76</th><td>            }</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_golemagg15boss_golemaggAI11DamageTakenEP4UnitRj" title='boss_golemagg::boss_golemaggAI::DamageTaken' data-ref="_ZN13boss_golemagg15boss_golemaggAI11DamageTakenEP4UnitRj" >DamageTaken</dfn>(<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*attacker*/</i>, <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&amp; <i>/*damage*/</i>) override</td></tr>
+<tr><th id="79">79</th><td>            {</td></tr>
+<tr><th id="80">80</th><td>                <b>if</b> (!<a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZNK10ScriptedAI14HealthBelowPctEj" title='ScriptedAI::HealthBelowPct' data-ref="_ZNK10ScriptedAI14HealthBelowPctEj" id="_ZNK10ScriptedAI14HealthBelowPctEj" >HealthBelowPct</a>(<var>10</var>) || <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit7HasAuraEj10ObjectGuidS0_h" title='Unit::HasAura' data-ref="_ZNK4Unit7HasAuraEj10ObjectGuidS0_h" id="_ZNK4Unit7HasAuraEj10ObjectGuidS0_h" >HasAura</a>(<a class="enum" href="#Spells::SPELL_ENRAGE" title='Spells::SPELL_ENRAGE' data-ref="Spells::SPELL_ENRAGE" >SPELL_ENRAGE</a>))</td></tr>
+<tr><th id="81">81</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>                <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Spells::SPELL_ENRAGE" title='Spells::SPELL_ENRAGE' data-ref="Spells::SPELL_ENRAGE" >SPELL_ENRAGE</a>, <b>true</b>);</td></tr>
+<tr><th id="84">84</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_EARTHQUAKE" title='Events::EVENT_EARTHQUAKE' data-ref="Events::EVENT_EARTHQUAKE" >EVENT_EARTHQUAKE</a>, <var>3000</var>);</td></tr>
+<tr><th id="85">85</th><td>            }</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_golemagg15boss_golemaggAI8UpdateAIEj" title='boss_golemagg::boss_golemaggAI::UpdateAI' data-ref="_ZN13boss_golemagg15boss_golemaggAI8UpdateAIEj" >UpdateAI</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3diff" title='diff' data-type='uint32' data-ref="3diff" >diff</dfn>) override</td></tr>
+<tr><th id="88">88</th><td>            {</td></tr>
+<tr><th id="89">89</th><td>                <b>if</b> (!<a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI12UpdateVictimEv" title='CreatureAI::UpdateVictim' data-ref="_ZN10CreatureAI12UpdateVictimEv" id="_ZN10CreatureAI12UpdateVictimEv" >UpdateVictim</a>())</td></tr>
+<tr><th id="90">90</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td>                <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap6UpdateEj" title='EventMap::Update' data-ref="_ZN8EventMap6UpdateEj" id="_ZN8EventMap6UpdateEj" >Update</a>(<a class="local col3 ref" href="#3diff" title='diff' data-ref="3diff" >diff</a>);</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td>                <b>if</b> (<a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit12HasUnitStateEj" title='Unit::HasUnitState' data-ref="_ZNK4Unit12HasUnitStateEj" id="_ZNK4Unit12HasUnitStateEj" >HasUnitState</a>(<a class="enum" href="../../../../game/Entities/Unit/Unit.h.html#UnitState::UNIT_STATE_CASTING" title='UnitState::UNIT_STATE_CASTING' data-ref="UnitState::UNIT_STATE_CASTING" id="UnitState::UNIT_STATE_CASTING" >UNIT_STATE_CASTING</a>))</td></tr>
+<tr><th id="95">95</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td>                <b>while</b> (<a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="4eventId" title='eventId' data-type='uint32' data-ref="4eventId" ><a class="local col4 ref" href="#4eventId" title='eventId' data-ref="4eventId" >eventId</a></dfn> = <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap12ExecuteEventEv" title='EventMap::ExecuteEvent' data-ref="_ZN8EventMap12ExecuteEventEv" id="_ZN8EventMap12ExecuteEventEv" >ExecuteEvent</a>())</td></tr>
+<tr><th id="98">98</th><td>                {</td></tr>
+<tr><th id="99">99</th><td>                    <b>switch</b> (<a class="local col4 ref" href="#4eventId" title='eventId' data-ref="4eventId" >eventId</a>)</td></tr>
+<tr><th id="100">100</th><td>                    {</td></tr>
+<tr><th id="101">101</th><td>                        <b>case</b> <a class="enum" href="#Events::EVENT_PYROBLAST" title='Events::EVENT_PYROBLAST' data-ref="Events::EVENT_PYROBLAST" >EVENT_PYROBLAST</a>:</td></tr>
+<tr><th id="102">102</th><td>                            <b>if</b> (<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col5 decl" id="5target" title='target' data-type='Unit *' data-ref="5target" ><a class="local col5 ref" href="#5target" title='target' data-ref="5target" >target</a></dfn> = <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" title='UnitAI::SelectTarget' data-ref="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" id="_ZN6UnitAI12SelectTargetE17SelectAggroTargetjfbi" >SelectTarget</a>(<a class="enum" href="../../../../game/AI/CoreAI/UnitAI.h.html#SelectAggroTarget::SELECT_TARGET_RANDOM" title='SelectAggroTarget::SELECT_TARGET_RANDOM' data-ref="SelectAggroTarget::SELECT_TARGET_RANDOM" id="SelectAggroTarget::SELECT_TARGET_RANDOM" >SELECT_TARGET_RANDOM</a>, <var>0</var>))</td></tr>
+<tr><th id="103">103</th><td>                                <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="local col5 ref" href="#5target" title='target' data-ref="5target" >target</a>, <a class="enum" href="#Spells::SPELL_PYROBLAST" title='Spells::SPELL_PYROBLAST' data-ref="Spells::SPELL_PYROBLAST" >SPELL_PYROBLAST</a>);</td></tr>
+<tr><th id="104">104</th><td>                            <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_PYROBLAST" title='Events::EVENT_PYROBLAST' data-ref="Events::EVENT_PYROBLAST" >EVENT_PYROBLAST</a>, <var>7000</var>);</td></tr>
+<tr><th id="105">105</th><td>                            <b>break</b>;</td></tr>
+<tr><th id="106">106</th><td>                        <b>case</b> <a class="enum" href="#Events::EVENT_EARTHQUAKE" title='Events::EVENT_EARTHQUAKE' data-ref="Events::EVENT_EARTHQUAKE" >EVENT_EARTHQUAKE</a>:</td></tr>
+<tr><th id="107">107</th><td>                            <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12DoCastVictimEjb" title='UnitAI::DoCastVictim' data-ref="_ZN6UnitAI12DoCastVictimEjb" id="_ZN6UnitAI12DoCastVictimEjb" >DoCastVictim</a>(<a class="enum" href="#Spells::SPELL_EARTHQUAKE" title='Spells::SPELL_EARTHQUAKE' data-ref="Spells::SPELL_EARTHQUAKE" >SPELL_EARTHQUAKE</a>);</td></tr>
+<tr><th id="108">108</th><td>                            <a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_EARTHQUAKE" title='Events::EVENT_EARTHQUAKE' data-ref="Events::EVENT_EARTHQUAKE" >EVENT_EARTHQUAKE</a>, <var>3000</var>);</td></tr>
+<tr><th id="109">109</th><td>                            <b>break</b>;</td></tr>
+<tr><th id="110">110</th><td>                        <b>default</b>:</td></tr>
+<tr><th id="111">111</th><td>                            <b>break</b>;</td></tr>
+<tr><th id="112">112</th><td>                    }</td></tr>
+<tr><th id="113">113</th><td>                }</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>                <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI20DoMeleeAttackIfReadyEv" title='UnitAI::DoMeleeAttackIfReady' data-ref="_ZN6UnitAI20DoMeleeAttackIfReadyEv" id="_ZN6UnitAI20DoMeleeAttackIfReadyEv" >DoMeleeAttackIfReady</a>();</td></tr>
+<tr><th id="116">116</th><td>            }</td></tr>
+<tr><th id="117">117</th><td>        };</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>        <a class="type" href="../../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK13boss_golemagg5GetAIEP8Creature" title='boss_golemagg::GetAI' data-ref="_ZNK13boss_golemagg5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col6 decl" id="6creature" title='creature' data-type='Creature *' data-ref="6creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="120">120</th><td>        {</td></tr>
+<tr><th id="121">121</th><td>            <b>return</b> <b>new</b> <a class="tu type" href="#boss_golemagg::boss_golemaggAI" title='boss_golemagg::boss_golemaggAI' data-ref="boss_golemagg::boss_golemaggAI" >boss_golemaggAI</a><a class="tu ref" href="#_ZN13boss_golemagg15boss_golemaggAIC1EP8Creature" title='boss_golemagg::boss_golemaggAI::boss_golemaggAI' data-use='c' data-ref="_ZN13boss_golemagg15boss_golemaggAIC1EP8Creature" >(</a><a class="local col6 ref" href="#6creature" title='creature' data-ref="6creature" >creature</a>);</td></tr>
+<tr><th id="122">122</th><td>        }</td></tr>
+<tr><th id="123">123</th><td>};</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><b>class</b> <dfn class="type def" id="npc_core_rager" title='npc_core_rager' data-ref="npc_core_rager" >npc_core_rager</dfn> : <b>public</b> <a class="type" href="../../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="126">126</th><td>{</td></tr>
+<tr><th id="127">127</th><td>    <b>public</b>:</td></tr>
+<tr><th id="128">128</th><td>        <dfn class="tu decl def" id="_ZN14npc_core_ragerC1Ev" title='npc_core_rager::npc_core_rager' data-type='void npc_core_rager::npc_core_rager()' data-ref="_ZN14npc_core_ragerC1Ev" >npc_core_rager</dfn>() : <a class="type" href="../../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"npc_core_rager"</q>) { }</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>        <b>struct</b> <dfn class="tu type def" id="npc_core_rager::npc_core_ragerAI" title='npc_core_rager::npc_core_ragerAI' data-ref="npc_core_rager::npc_core_ragerAI" >npc_core_ragerAI</dfn> : <b>public</b> <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#ScriptedAI" title='ScriptedAI' data-ref="ScriptedAI" >ScriptedAI</a></td></tr>
+<tr><th id="131">131</th><td>        {</td></tr>
+<tr><th id="132">132</th><td>            <dfn class="tu decl def" id="_ZN14npc_core_rager16npc_core_ragerAIC1EP8Creature" title='npc_core_rager::npc_core_ragerAI::npc_core_ragerAI' data-type='void npc_core_rager::npc_core_ragerAI::npc_core_ragerAI(Creature * creature)' data-ref="_ZN14npc_core_rager16npc_core_ragerAIC1EP8Creature" >npc_core_ragerAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col7 decl" id="7creature" title='creature' data-type='Creature *' data-ref="7creature" >creature</dfn>) : <a class="type" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#ScriptedAI" title='ScriptedAI' data-ref="ScriptedAI" >ScriptedAI</a><a class="ref" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN10ScriptedAIC1EP8Creature" title='ScriptedAI::ScriptedAI' data-ref="_ZN10ScriptedAIC1EP8Creature" id="_ZN10ScriptedAIC1EP8Creature" >(</a><a class="local col7 ref" href="#7creature" title='creature' data-ref="7creature" >creature</a>)</td></tr>
+<tr><th id="133">133</th><td>            {</td></tr>
+<tr><th id="134">134</th><td>                <a class="tu member" href="#_ZN14npc_core_rager16npc_core_ragerAI10InitializeEv" title='npc_core_rager::npc_core_ragerAI::Initialize' data-use='c' data-ref="_ZN14npc_core_rager16npc_core_ragerAI10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="135">135</th><td>                <a class="tu member" href="#npc_core_rager::npc_core_ragerAI::instance" title='npc_core_rager::npc_core_ragerAI::instance' data-use='w' data-ref="npc_core_rager::npc_core_ragerAI::instance" >instance</a> = <a class="local col7 ref" href="#7creature" title='creature' data-ref="7creature" >creature</a>-&gt;<a class="ref" href="../../../../game/Entities/Object/Object.h.html#_ZN11WorldObject17GetInstanceScriptEv" title='WorldObject::GetInstanceScript' data-ref="_ZN11WorldObject17GetInstanceScriptEv" id="_ZN11WorldObject17GetInstanceScriptEv" >GetInstanceScript</a>();</td></tr>
+<tr><th id="136">136</th><td>            }</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>            <em>void</em> <dfn class="tu decl def" id="_ZN14npc_core_rager16npc_core_ragerAI10InitializeEv" title='npc_core_rager::npc_core_ragerAI::Initialize' data-type='void npc_core_rager::npc_core_ragerAI::Initialize()' data-ref="_ZN14npc_core_rager16npc_core_ragerAI10InitializeEv" >Initialize</dfn>()</td></tr>
+<tr><th id="139">139</th><td>            {</td></tr>
+<tr><th id="140">140</th><td>                <a class="tu member" href="#npc_core_rager::npc_core_ragerAI::mangleTimer" title='npc_core_rager::npc_core_ragerAI::mangleTimer' data-use='w' data-ref="npc_core_rager::npc_core_ragerAI::mangleTimer" >mangleTimer</a> = <var>7</var> * <a class="enum" href="../../../../../common/Common.h.html#TimeConstants::IN_MILLISECONDS" title='TimeConstants::IN_MILLISECONDS' data-ref="TimeConstants::IN_MILLISECONDS" id="TimeConstants::IN_MILLISECONDS" >IN_MILLISECONDS</a>;                 <i>// These times are probably wrong</i></td></tr>
+<tr><th id="141">141</th><td>            }</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN14npc_core_rager16npc_core_ragerAI5ResetEv" title='npc_core_rager::npc_core_ragerAI::Reset' data-ref="_ZN14npc_core_rager16npc_core_ragerAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="144">144</th><td>            {</td></tr>
+<tr><th id="145">145</th><td>                <a class="tu member" href="#_ZN14npc_core_rager16npc_core_ragerAI10InitializeEv" title='npc_core_rager::npc_core_ragerAI::Initialize' data-use='c' data-ref="_ZN14npc_core_rager16npc_core_ragerAI10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="146">146</th><td>            }</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN14npc_core_rager16npc_core_ragerAI11DamageTakenEP4UnitRj" title='npc_core_rager::npc_core_ragerAI::DamageTaken' data-ref="_ZN14npc_core_rager16npc_core_ragerAI11DamageTakenEP4UnitRj" >DamageTaken</dfn>(<a class="type" href="../../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*attacker*/</i>, <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&amp; <i>/*damage*/</i>) override</td></tr>
+<tr><th id="149">149</th><td>            {</td></tr>
+<tr><th id="150">150</th><td>                <b>if</b> (<a class="member" href="../../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZNK10ScriptedAI14HealthAbovePctEj" title='ScriptedAI::HealthAbovePct' data-ref="_ZNK10ScriptedAI14HealthAbovePctEj" id="_ZNK10ScriptedAI14HealthAbovePctEj" >HealthAbovePct</a>(<var>50</var>) || !<a class="tu member" href="#npc_core_rager::npc_core_ragerAI::instance" title='npc_core_rager::npc_core_ragerAI::instance' data-use='r' data-ref="npc_core_rager::npc_core_ragerAI::instance" >instance</a>)</td></tr>
+<tr><th id="151">151</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>                <b>if</b> (<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col8 decl" id="8pGolemagg" title='pGolemagg' data-type='Creature *' data-ref="8pGolemagg" ><a class="local col8 ref" href="#8pGolemagg" title='pGolemagg' data-ref="8pGolemagg" >pGolemagg</a></dfn> = <span class="namespace">ObjectAccessor::</span><a class="ref" href="../../../../game/Globals/ObjectAccessor.h.html#_ZN14ObjectAccessor11GetCreatureERK11WorldObjectRK10ObjectGuid" title='ObjectAccessor::GetCreature' data-ref="_ZN14ObjectAccessor11GetCreatureERK11WorldObjectRK10ObjectGuid" id="_ZN14ObjectAccessor11GetCreatureERK11WorldObjectRK10ObjectGuid" >GetCreature</a>(*<a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="tu member" href="#npc_core_rager::npc_core_ragerAI::instance" title='npc_core_rager::npc_core_ragerAI::instance' data-use='m' data-ref="npc_core_rager::npc_core_ragerAI::instance" >instance</a>-&gt;<a class="virtual ref" href="../../../../game/Instances/InstanceScript.h.html#_ZNK14InstanceScript11GetGuidDataEj" title='InstanceScript::GetGuidData' data-ref="_ZNK14InstanceScript11GetGuidDataEj" id="_ZNK14InstanceScript11GetGuidDataEj" >GetGuidData</a>(<a class="enum" href="molten_core.h.html#Encounters::BOSS_GOLEMAGG_THE_INCINERATOR" title='Encounters::BOSS_GOLEMAGG_THE_INCINERATOR' data-ref="Encounters::BOSS_GOLEMAGG_THE_INCINERATOR" id="Encounters::BOSS_GOLEMAGG_THE_INCINERATOR" >BOSS_GOLEMAGG_THE_INCINERATOR</a>)))</td></tr>
+<tr><th id="154">154</th><td>                {</td></tr>
+<tr><th id="155">155</th><td>                    <b>if</b> (<a class="local col8 ref" href="#8pGolemagg" title='pGolemagg' data-ref="8pGolemagg" >pGolemagg</a>-&gt;<a class="ref" href="../../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit7IsAliveEv" title='Unit::IsAlive' data-ref="_ZNK4Unit7IsAliveEv" id="_ZNK4Unit7IsAliveEv" >IsAlive</a>())</td></tr>
+<tr><th id="156">156</th><td>                    {</td></tr>
+<tr><th id="157">157</th><td>                        <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Unit/Unit.h.html#_ZN4Unit7AddAuraEjPS_" title='Unit::AddAura' data-ref="_ZN4Unit7AddAuraEjPS_" id="_ZN4Unit7AddAuraEjPS_" >AddAura</a>(<a class="enum" href="#Spells::SPELL_GOLEMAGG_TRUST" title='Spells::SPELL_GOLEMAGG_TRUST' data-ref="Spells::SPELL_GOLEMAGG_TRUST" >SPELL_GOLEMAGG_TRUST</a>, <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>);</td></tr>
+<tr><th id="158">158</th><td>                        <a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Texts::EMOTE_LOWHP" title='Texts::EMOTE_LOWHP' data-ref="Texts::EMOTE_LOWHP" >EMOTE_LOWHP</a>);</td></tr>
+<tr><th id="159">159</th><td>                        <a class="member" href="../../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../../game/Entities/Unit/Unit.h.html#_ZN4Unit13SetFullHealthEv" title='Unit::SetFullHealth' data-ref="_ZN4Unit13SetFullHealthEv" id="_ZN4Unit13SetFullHealthEv" >SetFullHealth</a>();</td></tr>
+<tr><th id="160">160</th><td>                    }</td></tr>
+<tr><th id="161">161</th><td>                }</td></tr>
+<tr><th id="162">162</th><td>            }</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN14npc_core_rager16npc_core_ragerAI8UpdateAIEj" title='npc_core_rager::npc_core_ragerAI::UpdateAI' data-ref="_ZN14npc_core_rager16npc_core_ragerAI8UpdateAIEj" >UpdateAI</dfn>(<a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="9diff" title='diff' data-type='uint32' data-ref="9diff" >diff</dfn>) override</td></tr>
+<tr><th id="165">165</th><td>            {</td></tr>
+<tr><th id="166">166</th><td>                <b>if</b> (!<a class="member" href="../../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI12UpdateVictimEv" title='CreatureAI::UpdateVictim' data-ref="_ZN10CreatureAI12UpdateVictimEv" id="_ZN10CreatureAI12UpdateVictimEv" >UpdateVictim</a>())</td></tr>
+<tr><th id="167">167</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td>                <i>// Mangle</i></td></tr>
+<tr><th id="170">170</th><td>                <b>if</b> (<a class="tu member" href="#npc_core_rager::npc_core_ragerAI::mangleTimer" title='npc_core_rager::npc_core_ragerAI::mangleTimer' data-use='r' data-ref="npc_core_rager::npc_core_ragerAI::mangleTimer" >mangleTimer</a> &lt;= <a class="local col9 ref" href="#9diff" title='diff' data-ref="9diff" >diff</a>)</td></tr>
+<tr><th id="171">171</th><td>                {</td></tr>
+<tr><th id="172">172</th><td>                    <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12DoCastVictimEjb" title='UnitAI::DoCastVictim' data-ref="_ZN6UnitAI12DoCastVictimEjb" id="_ZN6UnitAI12DoCastVictimEjb" >DoCastVictim</a>(<a class="enum" href="#Spells::SPELL_MANGLE" title='Spells::SPELL_MANGLE' data-ref="Spells::SPELL_MANGLE" >SPELL_MANGLE</a>);</td></tr>
+<tr><th id="173">173</th><td>                    <a class="tu member" href="#npc_core_rager::npc_core_ragerAI::mangleTimer" title='npc_core_rager::npc_core_ragerAI::mangleTimer' data-use='w' data-ref="npc_core_rager::npc_core_ragerAI::mangleTimer" >mangleTimer</a> = <var>10</var>*<a class="enum" href="../../../../../common/Common.h.html#TimeConstants::IN_MILLISECONDS" title='TimeConstants::IN_MILLISECONDS' data-ref="TimeConstants::IN_MILLISECONDS" id="TimeConstants::IN_MILLISECONDS" >IN_MILLISECONDS</a>;</td></tr>
+<tr><th id="174">174</th><td>                }</td></tr>
+<tr><th id="175">175</th><td>                <b>else</b></td></tr>
+<tr><th id="176">176</th><td>                    <a class="tu member" href="#npc_core_rager::npc_core_ragerAI::mangleTimer" title='npc_core_rager::npc_core_ragerAI::mangleTimer' data-use='w' data-ref="npc_core_rager::npc_core_ragerAI::mangleTimer" >mangleTimer</a> -= <a class="local col9 ref" href="#9diff" title='diff' data-ref="9diff" >diff</a>;</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td>                <a class="member" href="../../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI20DoMeleeAttackIfReadyEv" title='UnitAI::DoMeleeAttackIfReady' data-ref="_ZN6UnitAI20DoMeleeAttackIfReadyEv" id="_ZN6UnitAI20DoMeleeAttackIfReadyEv" >DoMeleeAttackIfReady</a>();</td></tr>
+<tr><th id="179">179</th><td>            }</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>        <b>private</b>:</td></tr>
+<tr><th id="182">182</th><td>            <a class="type" href="../../../../game/Instances/InstanceScript.h.html#InstanceScript" title='InstanceScript' data-ref="InstanceScript" >InstanceScript</a>* <dfn class="tu decl" id="npc_core_rager::npc_core_ragerAI::instance" title='npc_core_rager::npc_core_ragerAI::instance' data-type='InstanceScript *' data-ref="npc_core_rager::npc_core_ragerAI::instance" >instance</dfn>;</td></tr>
+<tr><th id="183">183</th><td>            <a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="tu decl" id="npc_core_rager::npc_core_ragerAI::mangleTimer" title='npc_core_rager::npc_core_ragerAI::mangleTimer' data-type='uint32' data-ref="npc_core_rager::npc_core_ragerAI::mangleTimer" >mangleTimer</dfn>;</td></tr>
+<tr><th id="184">184</th><td>        };</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>        <a class="type" href="../../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK14npc_core_rager5GetAIEP8Creature" title='npc_core_rager::GetAI' data-ref="_ZNK14npc_core_rager5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col0 decl" id="10creature" title='creature' data-type='Creature *' data-ref="10creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="187">187</th><td>        {</td></tr>
+<tr><th id="188">188</th><td>            <b>return</b> <a class="ref" href="../../../../game/Instances/InstanceScript.h.html#_Z13GetInstanceAIPT0_" title='GetInstanceAI' data-ref="_Z13GetInstanceAIPT0_" id="_Z13GetInstanceAIPT0_" >GetInstanceAI</a>&lt;<a class="tu type" href="#npc_core_rager::npc_core_ragerAI" title='npc_core_rager::npc_core_ragerAI' data-ref="npc_core_rager::npc_core_ragerAI" >npc_core_ragerAI</a>&gt;(<a class="local col0 ref" href="#10creature" title='creature' data-ref="10creature" >creature</a>);</td></tr>
+<tr><th id="189">189</th><td>        }</td></tr>
+<tr><th id="190">190</th><td>};</td></tr>
+<tr><th id="191">191</th><td></td></tr>
+<tr><th id="192">192</th><td><em>void</em> <dfn class="decl def" id="_Z19AddSC_boss_golemaggv" title='AddSC_boss_golemagg' data-ref="_Z19AddSC_boss_golemaggv" >AddSC_boss_golemagg</dfn>()</td></tr>
+<tr><th id="193">193</th><td>{</td></tr>
+<tr><th id="194">194</th><td>    <b>new</b> <a class="type" href="#boss_golemagg" title='boss_golemagg' data-ref="boss_golemagg" >boss_golemagg</a><a class="tu ref" href="#_ZN13boss_golemaggC1Ev" title='boss_golemagg::boss_golemagg' data-use='c' data-ref="_ZN13boss_golemaggC1Ev" >(</a>);</td></tr>
+<tr><th id="195">195</th><td>    <b>new</b> <a class="type" href="#npc_core_rager" title='npc_core_rager' data-ref="npc_core_rager" >npc_core_rager</a><a class="tu ref" href="#_ZN14npc_core_ragerC1Ev" title='npc_core_rager::npc_core_rager' data-use='c' data-ref="_ZN14npc_core_ragerC1Ev" >(</a>);</td></tr>
+<tr><th id="196">196</th><td>}</td></tr>
+<tr><th id="197">197</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

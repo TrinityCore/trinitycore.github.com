@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<title>MapUpdater.cpp [TrinityCore3.3.5/src/server/game/Maps/MapUpdater.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Maps/MapUpdater.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Maps</a>/MapUpdater.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i>* Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i>* Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i>*</i></td></tr>
+<tr><th id="5">5</th><td><i>* This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i>* under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i>* Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i>* option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i>*</i></td></tr>
+<tr><th id="10">10</th><td><i>* This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i>* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i>* FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i>* more details.</i></td></tr>
+<tr><th id="14">14</th><td><i>*</i></td></tr>
+<tr><th id="15">15</th><td><i>* You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i>* with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i>*/</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="MapUpdater.h.html">"MapUpdater.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="Map.h.html">"Map.h"</a></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../../include/c++/4.9/mutex.html">&lt;mutex&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>class</b> <dfn class="type def" id="MapUpdateRequest" title='MapUpdateRequest' data-ref="MapUpdateRequest" >MapUpdateRequest</dfn></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <b>private</b>:</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>        <a class="type" href="Map.h.html#Map" title='Map' data-ref="Map" >Map</a>&amp; <dfn class="decl" id="MapUpdateRequest::m_map" title='MapUpdateRequest::m_map' data-ref="MapUpdateRequest::m_map" >m_map</dfn>;</td></tr>
+<tr><th id="30">30</th><td>        <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>&amp; <dfn class="decl" id="MapUpdateRequest::m_updater" title='MapUpdateRequest::m_updater' data-ref="MapUpdateRequest::m_updater" >m_updater</dfn>;</td></tr>
+<tr><th id="31">31</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="MapUpdateRequest::m_diff" title='MapUpdateRequest::m_diff' data-ref="MapUpdateRequest::m_diff" >m_diff</dfn>;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>    <b>public</b>:</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>        <dfn class="decl def" id="_ZN16MapUpdateRequestC1ER3MapR10MapUpdaterj" title='MapUpdateRequest::MapUpdateRequest' data-ref="_ZN16MapUpdateRequestC1ER3MapR10MapUpdaterj" >MapUpdateRequest</dfn>(<a class="type" href="Map.h.html#Map" title='Map' data-ref="Map" >Map</a>&amp; <dfn class="local col1 decl" id="1m" title='m' data-type='Map &amp;' data-ref="1m" >m</dfn>, <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>&amp; <dfn class="local col2 decl" id="2u" title='u' data-type='MapUpdater &amp;' data-ref="2u" >u</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3d" title='d' data-type='uint32' data-ref="3d" >d</dfn>)</td></tr>
+<tr><th id="36">36</th><td>            : <a class="member" href="#MapUpdateRequest::m_map" title='MapUpdateRequest::m_map' data-ref="MapUpdateRequest::m_map" >m_map</a>(<a class="local col1 ref" href="#1m" title='m' data-ref="1m" >m</a>), <a class="member" href="#MapUpdateRequest::m_updater" title='MapUpdateRequest::m_updater' data-ref="MapUpdateRequest::m_updater" >m_updater</a>(<a class="local col2 ref" href="#2u" title='u' data-ref="2u" >u</a>), <a class="member" href="#MapUpdateRequest::m_diff" title='MapUpdateRequest::m_diff' data-ref="MapUpdateRequest::m_diff" >m_diff</a>(<a class="local col3 ref" href="#3d" title='d' data-ref="3d" >d</a>)</td></tr>
+<tr><th id="37">37</th><td>        {</td></tr>
+<tr><th id="38">38</th><td>        }</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>        <em>void</em> <dfn class="decl def" id="_ZN16MapUpdateRequest4callEv" title='MapUpdateRequest::call' data-ref="_ZN16MapUpdateRequest4callEv" >call</dfn>()</td></tr>
+<tr><th id="41">41</th><td>        {</td></tr>
+<tr><th id="42">42</th><td>            <a class="member" href="#MapUpdateRequest::m_map" title='MapUpdateRequest::m_map' data-ref="MapUpdateRequest::m_map" >m_map</a>.<a class="virtual ref" href="Map.h.html#_ZN3Map6UpdateEj" title='Map::Update' data-ref="_ZN3Map6UpdateEj" id="_ZN3Map6UpdateEj" >Update</a> (<a class="member" href="#MapUpdateRequest::m_diff" title='MapUpdateRequest::m_diff' data-ref="MapUpdateRequest::m_diff" >m_diff</a>);</td></tr>
+<tr><th id="43">43</th><td>            <a class="member" href="#MapUpdateRequest::m_updater" title='MapUpdateRequest::m_updater' data-ref="MapUpdateRequest::m_updater" >m_updater</a>.<a class="ref" href="#_ZN10MapUpdater15update_finishedEv" title='MapUpdater::update_finished' data-ref="_ZN10MapUpdater15update_finishedEv" >update_finished</a>();</td></tr>
+<tr><th id="44">44</th><td>        }</td></tr>
+<tr><th id="45">45</th><td>};</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><em>void</em> <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<dfn class="decl def" id="_ZN10MapUpdater8activateEm" title='MapUpdater::activate' data-ref="_ZN10MapUpdater8activateEm" >activate</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="4num_threads" title='num_threads' data-type='size_t' data-ref="4num_threads" >num_threads</dfn>)</td></tr>
+<tr><th id="48">48</th><td>{</td></tr>
+<tr><th id="49">49</th><td>    <b>for</b> (<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="5i" title='i' data-type='size_t' data-ref="5i" >i</dfn> = <var>0</var>; <a class="local col5 ref" href="#5i" title='i' data-ref="5i" >i</a> &lt; <a class="local col4 ref" href="#4num_threads" title='num_threads' data-ref="4num_threads" >num_threads</a>; ++<a class="local col5 ref" href="#5i" title='i' data-ref="5i" >i</a>)</td></tr>
+<tr><th id="50">50</th><td>    {</td></tr>
+<tr><th id="51">51</th><td>        <a class="member" href="MapUpdater.h.html#MapUpdater::_workerThreads" title='MapUpdater::_workerThreads' data-ref="MapUpdater::_workerThreads" id="MapUpdater::_workerThreads" >_workerThreads</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNSt6vector9push_backEOT_" title='std::vector::push_back' data-ref="_ZNSt6vector9push_backEOT_" id="_ZNSt6vector9push_backEOT_" >push_back</a>(<span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/thread.html#std::thread" title='std::thread' data-ref="std::thread" >thread</a><a class="ref" href="../../../../../include/c++/4.9/thread.html#_ZNSt6threadC1EOT_DpOT0_" title='std::thread::thread' data-ref="_ZNSt6threadC1EOT_DpOT0_" id="_ZNSt6threadC1EOT_DpOT0_" >(</a>&amp;<a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<a class="member" href="#_ZN10MapUpdater12WorkerThreadEv" title='MapUpdater::WorkerThread' data-ref="_ZN10MapUpdater12WorkerThreadEv" >WorkerThread</a>, <b>this</b>));</td></tr>
+<tr><th id="52">52</th><td>    }</td></tr>
+<tr><th id="53">53</th><td>}</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><em>void</em> <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<dfn class="decl def" id="_ZN10MapUpdater10deactivateEv" title='MapUpdater::deactivate' data-ref="_ZN10MapUpdater10deactivateEv" >deactivate</dfn>()</td></tr>
+<tr><th id="56">56</th><td>{</td></tr>
+<tr><th id="57">57</th><td>    <a class="member" href="MapUpdater.h.html#MapUpdater::_cancelationToken" title='MapUpdater::_cancelationToken' data-ref="MapUpdater::_cancelationToken" id="MapUpdater::_cancelationToken" >_cancelationToken</a> <a class="ref" href="../../../../../include/c++/4.9/atomic.html#_ZNSt11atomic_boolaSEb" title='std::atomic_bool::operator=' data-ref="_ZNSt11atomic_boolaSEb" id="_ZNSt11atomic_boolaSEb" >=</a> <b>true</b>;</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <a class="member" href="#_ZN10MapUpdater4waitEv" title='MapUpdater::wait' data-ref="_ZN10MapUpdater4waitEv" >wait</a>();</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <a class="member" href="MapUpdater.h.html#MapUpdater::_queue" title='MapUpdater::_queue' data-ref="MapUpdater::_queue" id="MapUpdater::_queue" >_queue</a>.<a class="ref" href="../../../common/Threading/ProducerConsumerQueue.h.html#_ZN21ProducerConsumerQueue6CancelEv" title='ProducerConsumerQueue::Cancel' data-ref="_ZN21ProducerConsumerQueue6CancelEv" id="_ZN21ProducerConsumerQueue6CancelEv" >Cancel</a>();</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>    <b>for</b> (<em>auto</em>&amp; <dfn class="local col6 decl" id="6thread" title='thread' data-type='std::thread &amp;' data-ref="6thread" >thread</dfn> : <a class="member" href="MapUpdater.h.html#MapUpdater::_workerThreads" title='MapUpdater::_workerThreads' data-ref="MapUpdater::_workerThreads" >_workerThreads</a>)</td></tr>
+<tr><th id="64">64</th><td>    {</td></tr>
+<tr><th id="65">65</th><td>        <a class="local col6 ref" href="#6thread" title='thread' data-ref="6thread" >thread</a>.<a class="ref" href="../../../../../include/c++/4.9/thread.html#_ZNSt6thread4joinEv" title='std::thread::join' data-ref="_ZNSt6thread4joinEv" id="_ZNSt6thread4joinEv" >join</a>();</td></tr>
+<tr><th id="66">66</th><td>    }</td></tr>
+<tr><th id="67">67</th><td>}</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><em>void</em> <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<dfn class="decl def" id="_ZN10MapUpdater4waitEv" title='MapUpdater::wait' data-ref="_ZN10MapUpdater4waitEv" >wait</dfn>()</td></tr>
+<tr><th id="70">70</th><td>{</td></tr>
+<tr><th id="71">71</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/mutex.html#std::unique_lock" title='std::unique_lock' data-ref="std::unique_lock" >unique_lock</a>&lt;<span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/mutex.html#std::mutex" title='std::mutex' data-ref="std::mutex" >mutex</a>&gt; <dfn class="local col7 decl" id="7lock" title='lock' data-type='std::unique_lock&lt;std::mutex&gt;' data-ref="7lock" >lock</dfn><a class="ref" href="../../../../../include/c++/4.9/mutex.html#_ZNSt11unique_lockC1ERT_" title='std::unique_lock::unique_lock&lt;_Mutex&gt;' data-ref="_ZNSt11unique_lockC1ERT_" id="_ZNSt11unique_lockC1ERT_" >(</a><a class="member" href="MapUpdater.h.html#MapUpdater::_lock" title='MapUpdater::_lock' data-ref="MapUpdater::_lock" id="MapUpdater::_lock" >_lock</a>);</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>    <b>while</b> (<a class="member" href="MapUpdater.h.html#MapUpdater::pending_requests" title='MapUpdater::pending_requests' data-ref="MapUpdater::pending_requests" id="MapUpdater::pending_requests" >pending_requests</a> &gt; <var>0</var>)</td></tr>
+<tr><th id="74">74</th><td>        <a class="member" href="MapUpdater.h.html#MapUpdater::_condition" title='MapUpdater::_condition' data-ref="MapUpdater::_condition" id="MapUpdater::_condition" >_condition</a>.<a class="ref" href="../../../../../include/c++/4.9/condition_variable.html#_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE" title='std::condition_variable::wait' data-ref="_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE" id="_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE" >wait</a>(<a class="local col7 ref" href="#7lock" title='lock' data-ref="7lock" >lock</a>);</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td>    <a class="local col7 ref" href="#7lock" title='lock' data-ref="7lock" >lock</a>.<a class="ref" href="../../../../../include/c++/4.9/mutex.html#_ZNSt11unique_lock6unlockEv" title='std::unique_lock::unlock' data-ref="_ZNSt11unique_lock6unlockEv" id="_ZNSt11unique_lock6unlockEv" >unlock</a>();</td></tr>
+<tr><th id="77">77</th><td>}</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td><em>void</em> <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<dfn class="decl def" id="_ZN10MapUpdater15schedule_updateER3Mapj" title='MapUpdater::schedule_update' data-ref="_ZN10MapUpdater15schedule_updateER3Mapj" >schedule_update</dfn>(<a class="type" href="Map.h.html#Map" title='Map' data-ref="Map" >Map</a>&amp; <dfn class="local col8 decl" id="8map" title='map' data-type='Map &amp;' data-ref="8map" >map</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="9diff" title='diff' data-type='uint32' data-ref="9diff" >diff</dfn>)</td></tr>
+<tr><th id="80">80</th><td>{</td></tr>
+<tr><th id="81">81</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/mutex.html#std::lock_guard" title='std::lock_guard' data-ref="std::lock_guard" >lock_guard</a>&lt;<span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/mutex.html#std::mutex" title='std::mutex' data-ref="std::mutex" >mutex</a>&gt; <dfn class="local col0 decl" id="10lock" title='lock' data-type='std::lock_guard&lt;std::mutex&gt;' data-ref="10lock" >lock</dfn><a class="ref" href="../../../../../include/c++/4.9/mutex.html#_ZNSt10lock_guardC1ERT_" title='std::lock_guard::lock_guard&lt;_Mutex&gt;' data-ref="_ZNSt10lock_guardC1ERT_" id="_ZNSt10lock_guardC1ERT_" >(</a><a class="member" href="MapUpdater.h.html#MapUpdater::_lock" title='MapUpdater::_lock' data-ref="MapUpdater::_lock" id="MapUpdater::_lock" >_lock</a>);</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>    ++<a class="member" href="MapUpdater.h.html#MapUpdater::pending_requests" title='MapUpdater::pending_requests' data-ref="MapUpdater::pending_requests" id="MapUpdater::pending_requests" >pending_requests</a>;</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>    <a class="member" href="MapUpdater.h.html#MapUpdater::_queue" title='MapUpdater::_queue' data-ref="MapUpdater::_queue" id="MapUpdater::_queue" >_queue</a>.<a class="ref" href="../../../common/Threading/ProducerConsumerQueue.h.html#_ZN21ProducerConsumerQueue4PushERKT_" title='ProducerConsumerQueue::Push' data-ref="_ZN21ProducerConsumerQueue4PushERKT_" id="_ZN21ProducerConsumerQueue4PushERKT_" >Push</a>(<b>new</b> <a class="type" href="#MapUpdateRequest" title='MapUpdateRequest' data-ref="MapUpdateRequest" >MapUpdateRequest</a><a class="ref" href="#_ZN16MapUpdateRequestC1ER3MapR10MapUpdaterj" title='MapUpdateRequest::MapUpdateRequest' data-ref="_ZN16MapUpdateRequestC1ER3MapR10MapUpdaterj" >(</a><a class="local col8 ref" href="#8map" title='map' data-ref="8map" >map</a>, *<b>this</b>, <a class="local col9 ref" href="#9diff" title='diff' data-ref="9diff" >diff</a>));</td></tr>
+<tr><th id="86">86</th><td>}</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><em>bool</em> <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<dfn class="decl def" id="_ZN10MapUpdater9activatedEv" title='MapUpdater::activated' data-ref="_ZN10MapUpdater9activatedEv" >activated</dfn>()</td></tr>
+<tr><th id="89">89</th><td>{</td></tr>
+<tr><th id="90">90</th><td>    <b>return</b> <a class="member" href="MapUpdater.h.html#MapUpdater::_workerThreads" title='MapUpdater::_workerThreads' data-ref="MapUpdater::_workerThreads" id="MapUpdater::_workerThreads" >_workerThreads</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#_ZNKSt6vector4sizeEv" title='std::vector::size' data-ref="_ZNKSt6vector4sizeEv" id="_ZNKSt6vector4sizeEv" >size</a>() &gt; <var>0</var>;</td></tr>
+<tr><th id="91">91</th><td>}</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><em>void</em> <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<dfn class="decl def" id="_ZN10MapUpdater15update_finishedEv" title='MapUpdater::update_finished' data-ref="_ZN10MapUpdater15update_finishedEv" >update_finished</dfn>()</td></tr>
+<tr><th id="94">94</th><td>{</td></tr>
+<tr><th id="95">95</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/mutex.html#std::lock_guard" title='std::lock_guard' data-ref="std::lock_guard" >lock_guard</a>&lt;<span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/mutex.html#std::mutex" title='std::mutex' data-ref="std::mutex" >mutex</a>&gt; <dfn class="local col1 decl" id="11lock" title='lock' data-type='std::lock_guard&lt;std::mutex&gt;' data-ref="11lock" >lock</dfn><a class="ref" href="../../../../../include/c++/4.9/mutex.html#_ZNSt10lock_guardC1ERT_" title='std::lock_guard::lock_guard&lt;_Mutex&gt;' data-ref="_ZNSt10lock_guardC1ERT_" id="_ZNSt10lock_guardC1ERT_" >(</a><a class="member" href="MapUpdater.h.html#MapUpdater::_lock" title='MapUpdater::_lock' data-ref="MapUpdater::_lock" id="MapUpdater::_lock" >_lock</a>);</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td>    --<a class="member" href="MapUpdater.h.html#MapUpdater::pending_requests" title='MapUpdater::pending_requests' data-ref="MapUpdater::pending_requests" id="MapUpdater::pending_requests" >pending_requests</a>;</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>    <a class="member" href="MapUpdater.h.html#MapUpdater::_condition" title='MapUpdater::_condition' data-ref="MapUpdater::_condition" id="MapUpdater::_condition" >_condition</a>.<a class="ref" href="../../../../../include/c++/4.9/condition_variable.html#_ZNSt18condition_variable10notify_allEv" title='std::condition_variable::notify_all' data-ref="_ZNSt18condition_variable10notify_allEv" id="_ZNSt18condition_variable10notify_allEv" >notify_all</a>();</td></tr>
+<tr><th id="100">100</th><td>}</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td><em>void</em> <a class="type" href="MapUpdater.h.html#MapUpdater" title='MapUpdater' data-ref="MapUpdater" >MapUpdater</a>::<dfn class="decl def" id="_ZN10MapUpdater12WorkerThreadEv" title='MapUpdater::WorkerThread' data-ref="_ZN10MapUpdater12WorkerThreadEv" >WorkerThread</dfn>()</td></tr>
+<tr><th id="103">103</th><td>{</td></tr>
+<tr><th id="104">104</th><td>    <b>while</b> (<var>1</var>)</td></tr>
+<tr><th id="105">105</th><td>    {</td></tr>
+<tr><th id="106">106</th><td>        <a class="type" href="#MapUpdateRequest" title='MapUpdateRequest' data-ref="MapUpdateRequest" >MapUpdateRequest</a>* <dfn class="local col2 decl" id="12request" title='request' data-type='MapUpdateRequest *' data-ref="12request" >request</dfn> = <b>nullptr</b>;</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>        <a class="member" href="MapUpdater.h.html#MapUpdater::_queue" title='MapUpdater::_queue' data-ref="MapUpdater::_queue" id="MapUpdater::_queue" >_queue</a>.<a class="ref" href="../../../common/Threading/ProducerConsumerQueue.h.html#_ZN21ProducerConsumerQueue10WaitAndPopERT_" title='ProducerConsumerQueue::WaitAndPop' data-ref="_ZN21ProducerConsumerQueue10WaitAndPopERT_" id="_ZN21ProducerConsumerQueue10WaitAndPopERT_" >WaitAndPop</a>(<a class="local col2 ref" href="#12request" title='request' data-ref="12request" >request</a>);</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>        <b>if</b> (<a class="member" href="MapUpdater.h.html#MapUpdater::_cancelationToken" title='MapUpdater::_cancelationToken' data-ref="MapUpdater::_cancelationToken" id="MapUpdater::_cancelationToken" >_cancelationToken</a>)</td></tr>
+<tr><th id="111">111</th><td>            <b>return</b>;</td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td>        <a class="local col2 ref" href="#12request" title='request' data-ref="12request" >request</a>-&gt;<a class="ref" href="#_ZN16MapUpdateRequest4callEv" title='MapUpdateRequest::call' data-ref="_ZN16MapUpdateRequest4callEv" >call</a>();</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>        <b>delete</b> <a class="local col2 ref" href="#12request" title='request' data-ref="12request" >request</a>;</td></tr>
+<tr><th id="116">116</th><td>    }</td></tr>
+<tr><th id="117">117</th><td>}</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

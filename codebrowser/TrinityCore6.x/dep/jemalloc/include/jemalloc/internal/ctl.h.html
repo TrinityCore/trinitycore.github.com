@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+<title>ctl.h [TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/ctl.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/ctl.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/ctl.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><b>typedef</b> <b>struct</b> <a class="type" href="ctl.h.html#ctl_node_s" title='ctl_node_s' data-ref="ctl_node_s" id="ctl_node_s" ><a class="type" href="ctl.h.html#ctl_node_s" title='ctl_node_s' data-ref="ctl_node_s" >ctl_node_s</a></a> <dfn class="typedef" id="ctl_node_t" title='ctl_node_t' data-type='struct ctl_node_s' data-ref="ctl_node_t" >ctl_node_t</dfn>;</td></tr>
+<tr><th id="5">5</th><td><b>typedef</b> <b>struct</b> <a class="type" href="ctl.h.html#ctl_named_node_s" title='ctl_named_node_s' data-ref="ctl_named_node_s" id="ctl_named_node_s" ><a class="type" href="ctl.h.html#ctl_named_node_s" title='ctl_named_node_s' data-ref="ctl_named_node_s" >ctl_named_node_s</a></a> <dfn class="typedef" id="ctl_named_node_t" title='ctl_named_node_t' data-type='struct ctl_named_node_s' data-ref="ctl_named_node_t" >ctl_named_node_t</dfn>;</td></tr>
+<tr><th id="6">6</th><td><b>typedef</b> <b>struct</b> <a class="type" href="ctl.h.html#ctl_indexed_node_s" title='ctl_indexed_node_s' data-ref="ctl_indexed_node_s" id="ctl_indexed_node_s" ><a class="type" href="ctl.h.html#ctl_indexed_node_s" title='ctl_indexed_node_s' data-ref="ctl_indexed_node_s" >ctl_indexed_node_s</a></a> <dfn class="typedef" id="ctl_indexed_node_t" title='ctl_indexed_node_t' data-type='struct ctl_indexed_node_s' data-ref="ctl_indexed_node_t" >ctl_indexed_node_t</dfn>;</td></tr>
+<tr><th id="7">7</th><td><b>typedef</b> <b>struct</b> <a class="type" href="ctl.h.html#ctl_arena_stats_s" title='ctl_arena_stats_s' data-ref="ctl_arena_stats_s" id="ctl_arena_stats_s" ><a class="type" href="ctl.h.html#ctl_arena_stats_s" title='ctl_arena_stats_s' data-ref="ctl_arena_stats_s" >ctl_arena_stats_s</a></a> <dfn class="typedef" id="ctl_arena_stats_t" title='ctl_arena_stats_t' data-type='struct ctl_arena_stats_s' data-ref="ctl_arena_stats_t" >ctl_arena_stats_t</dfn>;</td></tr>
+<tr><th id="8">8</th><td><b>typedef</b> <b>struct</b> <a class="type" href="ctl.h.html#ctl_stats_s" title='ctl_stats_s' data-ref="ctl_stats_s" id="ctl_stats_s" ><a class="type" href="ctl.h.html#ctl_stats_s" title='ctl_stats_s' data-ref="ctl_stats_s" >ctl_stats_s</a></a> <dfn class="typedef" id="ctl_stats_t" title='ctl_stats_t' data-type='struct ctl_stats_s' data-ref="ctl_stats_t" >ctl_stats_t</dfn>;</td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="11">11</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="12">12</th><td><u>#<span data-ppcond="12">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><b>struct</b> ctl_node_s {</td></tr>
+<tr><th id="15">15</th><td>	bool			named;</td></tr>
+<tr><th id="16">16</th><td>};</td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><b>struct</b> ctl_named_node_s {</td></tr>
+<tr><th id="19">19</th><td>	<b>struct</b> ctl_node_s	node;</td></tr>
+<tr><th id="20">20</th><td>	<em>const</em> <em>char</em>		*name;</td></tr>
+<tr><th id="21">21</th><td>	<i>/* If (nchildren == 0), this is a terminal node. */</i></td></tr>
+<tr><th id="22">22</th><td>	<em>unsigned</em>		nchildren;</td></tr>
+<tr><th id="23">23</th><td>	<em>const</em>			ctl_node_t *children;</td></tr>
+<tr><th id="24">24</th><td>	<em>int</em>			(*ctl)(<em>const</em> size_t *, size_t, <em>void</em> *, size_t *,</td></tr>
+<tr><th id="25">25</th><td>	    <em>void</em> *, size_t);</td></tr>
+<tr><th id="26">26</th><td>};</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>struct</b> ctl_indexed_node_s {</td></tr>
+<tr><th id="29">29</th><td>	<b>struct</b> ctl_node_s	node;</td></tr>
+<tr><th id="30">30</th><td>	<em>const</em> ctl_named_node_t	*(*index)(<em>const</em> size_t *, size_t, size_t);</td></tr>
+<tr><th id="31">31</th><td>};</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><b>struct</b> ctl_arena_stats_s {</td></tr>
+<tr><th id="34">34</th><td>	bool			initialized;</td></tr>
+<tr><th id="35">35</th><td>	<em>unsigned</em>		nthreads;</td></tr>
+<tr><th id="36">36</th><td>	<em>const</em> <em>char</em>		*dss;</td></tr>
+<tr><th id="37">37</th><td>	size_t			pactive;</td></tr>
+<tr><th id="38">38</th><td>	size_t			pdirty;</td></tr>
+<tr><th id="39">39</th><td>	arena_stats_t		astats;</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>	<i>/* Aggregate stats for small size classes, based on bin stats. */</i></td></tr>
+<tr><th id="42">42</th><td>	size_t			allocated_small;</td></tr>
+<tr><th id="43">43</th><td>	uint64_t		nmalloc_small;</td></tr>
+<tr><th id="44">44</th><td>	uint64_t		ndalloc_small;</td></tr>
+<tr><th id="45">45</th><td>	uint64_t		nrequests_small;</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>	malloc_bin_stats_t	bstats[NBINS];</td></tr>
+<tr><th id="48">48</th><td>	malloc_large_stats_t	*lstats;	<i>/* nlclasses elements. */</i></td></tr>
+<tr><th id="49">49</th><td>};</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><b>struct</b> ctl_stats_s {</td></tr>
+<tr><th id="52">52</th><td>	size_t			allocated;</td></tr>
+<tr><th id="53">53</th><td>	size_t			active;</td></tr>
+<tr><th id="54">54</th><td>	size_t			mapped;</td></tr>
+<tr><th id="55">55</th><td>	<b>struct</b> {</td></tr>
+<tr><th id="56">56</th><td>		size_t		current;	<i>/* stats_chunks.curchunks */</i></td></tr>
+<tr><th id="57">57</th><td>		uint64_t	total;		<i>/* stats_chunks.nchunks */</i></td></tr>
+<tr><th id="58">58</th><td>		size_t		high;		<i>/* stats_chunks.highchunks */</i></td></tr>
+<tr><th id="59">59</th><td>	} chunks;</td></tr>
+<tr><th id="60">60</th><td>	<b>struct</b> {</td></tr>
+<tr><th id="61">61</th><td>		size_t		allocated;	<i>/* huge_allocated */</i></td></tr>
+<tr><th id="62">62</th><td>		uint64_t	nmalloc;	<i>/* huge_nmalloc */</i></td></tr>
+<tr><th id="63">63</th><td>		uint64_t	ndalloc;	<i>/* huge_ndalloc */</i></td></tr>
+<tr><th id="64">64</th><td>	} huge;</td></tr>
+<tr><th id="65">65</th><td>	<em>unsigned</em>		narenas;</td></tr>
+<tr><th id="66">66</th><td>	ctl_arena_stats_t	*arenas;	<i>/* (narenas + 1) elements. */</i></td></tr>
+<tr><th id="67">67</th><td>};</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="12">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="70">70</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="71">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><em>int</em>	ctl_byname(<em>const</em> <em>char</em> *name, <em>void</em> *oldp, size_t *oldlenp, <em>void</em> *newp,</td></tr>
+<tr><th id="74">74</th><td>    size_t newlen);</td></tr>
+<tr><th id="75">75</th><td><em>int</em>	ctl_nametomib(<em>const</em> <em>char</em> *name, size_t *mibp, size_t *miblenp);</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><em>int</em>	ctl_bymib(<em>const</em> size_t *mib, size_t miblen, <em>void</em> *oldp, size_t *oldlenp,</td></tr>
+<tr><th id="78">78</th><td>    <em>void</em> *newp, size_t newlen);</td></tr>
+<tr><th id="79">79</th><td>bool	ctl_boot(<em>void</em>);</td></tr>
+<tr><th id="80">80</th><td><em>void</em>	ctl_prefork(<em>void</em>);</td></tr>
+<tr><th id="81">81</th><td><em>void</em>	ctl_postfork_parent(<em>void</em>);</td></tr>
+<tr><th id="82">82</th><td><em>void</em>	ctl_postfork_child(<em>void</em>);</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><u>#define	xmallctl(name, oldp, oldlenp, newp, newlen) do {		\</u></td></tr>
+<tr><th id="85">85</th><td><u>	if (je_mallctl(name, oldp, oldlenp, newp, newlen)		\</u></td></tr>
+<tr><th id="86">86</th><td><u>	    != 0) {							\</u></td></tr>
+<tr><th id="87">87</th><td><u>		malloc_printf(						\</u></td></tr>
+<tr><th id="88">88</th><td><u>		    "&lt;jemalloc&gt;: Failure in xmallctl(\"%s\", ...)\n",	\</u></td></tr>
+<tr><th id="89">89</th><td><u>		    name);						\</u></td></tr>
+<tr><th id="90">90</th><td><u>		abort();						\</u></td></tr>
+<tr><th id="91">91</th><td><u>	}								\</u></td></tr>
+<tr><th id="92">92</th><td><u>} while (0)</u></td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td><u>#define	xmallctlnametomib(name, mibp, miblenp) do {			\</u></td></tr>
+<tr><th id="95">95</th><td><u>	if (je_mallctlnametomib(name, mibp, miblenp) != 0) {		\</u></td></tr>
+<tr><th id="96">96</th><td><u>		malloc_printf("&lt;jemalloc&gt;: Failure in "			\</u></td></tr>
+<tr><th id="97">97</th><td><u>		    "xmallctlnametomib(\"%s\", ...)\n", name);		\</u></td></tr>
+<tr><th id="98">98</th><td><u>		abort();						\</u></td></tr>
+<tr><th id="99">99</th><td><u>	}								\</u></td></tr>
+<tr><th id="100">100</th><td><u>} while (0)</u></td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td><u>#define	xmallctlbymib(mib, miblen, oldp, oldlenp, newp, newlen) do {	\</u></td></tr>
+<tr><th id="103">103</th><td><u>	if (je_mallctlbymib(mib, miblen, oldp, oldlenp, newp,		\</u></td></tr>
+<tr><th id="104">104</th><td><u>	    newlen) != 0) {						\</u></td></tr>
+<tr><th id="105">105</th><td><u>		malloc_write(						\</u></td></tr>
+<tr><th id="106">106</th><td><u>		    "&lt;jemalloc&gt;: Failure in xmallctlbymib()\n");	\</u></td></tr>
+<tr><th id="107">107</th><td><u>		abort();						\</u></td></tr>
+<tr><th id="108">108</th><td><u>	}								\</u></td></tr>
+<tr><th id="109">109</th><td><u>} while (0)</u></td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td><u>#<span data-ppcond="71">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="112">112</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="113">113</th><td><u>#<span data-ppcond="113">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td><u>#<span data-ppcond="113">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="116">116</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore6.x/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

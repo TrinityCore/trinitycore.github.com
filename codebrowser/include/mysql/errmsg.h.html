@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<title>errmsg.h [include/mysql/errmsg.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/mysql/errmsg.h'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>mysql</a>/errmsg.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/ERRMSG_INCLUDED">ERRMSG_INCLUDED</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define <dfn class="macro" id="_M/ERRMSG_INCLUDED" data-ref="_M/ERRMSG_INCLUDED">ERRMSG_INCLUDED</dfn></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>/* Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.</i></td></tr>
+<tr><th id="5">5</th><td><i></i></td></tr>
+<tr><th id="6">6</th><td><i>   This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="7">7</th><td><i>   it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="8">8</th><td><i>   the Free Software Foundation; version 2 of the License.</i></td></tr>
+<tr><th id="9">9</th><td><i></i></td></tr>
+<tr><th id="10">10</th><td><i>   This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="11">11</th><td><i>   but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="12">12</th><td><i>   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="13">13</th><td><i>   GNU General Public License for more details.</i></td></tr>
+<tr><th id="14">14</th><td><i></i></td></tr>
+<tr><th id="15">15</th><td><i>   You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="16">16</th><td><i>   along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="17">17</th><td><i>   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i>/* Error messages for MySQL clients */</i></td></tr>
+<tr><th id="20">20</th><td><i>/* (Error messages for the daemon are in sql/share/errmsg.txt) */</i></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="22">ifdef</span>	<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="23">23</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="22">endif</span></u></td></tr>
+<tr><th id="25">25</th><td><em>void</em>	<dfn class="decl" id="init_client_errs" title='init_client_errs' data-ref="init_client_errs" >init_client_errs</dfn>(<em>void</em>);</td></tr>
+<tr><th id="26">26</th><td><em>void</em>	<dfn class="decl" id="finish_client_errs" title='finish_client_errs' data-ref="finish_client_errs" >finish_client_errs</dfn>(<em>void</em>);</td></tr>
+<tr><th id="27">27</th><td><b>extern</b> <em>const</em> <em>char</em> *<dfn class="decl" id="client_errors" title='client_errors' data-ref="client_errors" >client_errors</dfn>[];	<i>/* Error messages */</i></td></tr>
+<tr><th id="28">28</th><td><u>#<span data-ppcond="28">ifdef</span>	<span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="29">29</th><td>}</td></tr>
+<tr><th id="30">30</th><td><u>#<span data-ppcond="28">endif</span></u></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/CR_MIN_ERROR" data-ref="_M/CR_MIN_ERROR">CR_MIN_ERROR</dfn>		2000	/* For easier client code */</u></td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/CR_MAX_ERROR" data-ref="_M/CR_MAX_ERROR">CR_MAX_ERROR</dfn>		2999</u></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="34">if</span> !defined(<span class="macro" data-ref="_M/ER">ER</span>)</u></td></tr>
+<tr><th id="35">35</th><td><u>#define <dfn class="macro" id="_M/ER" data-ref="_M/ER">ER</dfn>(X) (((X) &gt;= CR_ERROR_FIRST &amp;&amp; (X) &lt;= CR_ERROR_LAST)? \</u></td></tr>
+<tr><th id="36">36</th><td><u>               client_errors[(X)-CR_ERROR_FIRST]: client_errors[CR_UNKNOWN_ERROR])</u></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><u>#<span data-ppcond="34">endif</span></u></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/CLIENT_ERRMAP" data-ref="_M/CLIENT_ERRMAP">CLIENT_ERRMAP</dfn>		2	/* Errormap used by my_error() */</u></td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><i>/* Do not add error numbers before CR_ERROR_FIRST. */</i></td></tr>
+<tr><th id="42">42</th><td><i>/* If necessary to add lower numbers, change CR_ERROR_FIRST accordingly. */</i></td></tr>
+<tr><th id="43">43</th><td><u>#define <dfn class="macro" id="_M/CR_ERROR_FIRST" data-ref="_M/CR_ERROR_FIRST">CR_ERROR_FIRST</dfn>  	2000 /*Copy first error nr.*/</u></td></tr>
+<tr><th id="44">44</th><td><u>#define <dfn class="macro" id="_M/CR_UNKNOWN_ERROR" data-ref="_M/CR_UNKNOWN_ERROR">CR_UNKNOWN_ERROR</dfn>	2000</u></td></tr>
+<tr><th id="45">45</th><td><u>#define <dfn class="macro" id="_M/CR_SOCKET_CREATE_ERROR" data-ref="_M/CR_SOCKET_CREATE_ERROR">CR_SOCKET_CREATE_ERROR</dfn>	2001</u></td></tr>
+<tr><th id="46">46</th><td><u>#define <dfn class="macro" id="_M/CR_CONNECTION_ERROR" data-ref="_M/CR_CONNECTION_ERROR">CR_CONNECTION_ERROR</dfn>	2002</u></td></tr>
+<tr><th id="47">47</th><td><u>#define <dfn class="macro" id="_M/CR_CONN_HOST_ERROR" data-ref="_M/CR_CONN_HOST_ERROR">CR_CONN_HOST_ERROR</dfn>	2003</u></td></tr>
+<tr><th id="48">48</th><td><u>#define <dfn class="macro" id="_M/CR_IPSOCK_ERROR" data-ref="_M/CR_IPSOCK_ERROR">CR_IPSOCK_ERROR</dfn>		2004</u></td></tr>
+<tr><th id="49">49</th><td><u>#define <dfn class="macro" id="_M/CR_UNKNOWN_HOST" data-ref="_M/CR_UNKNOWN_HOST">CR_UNKNOWN_HOST</dfn>		2005</u></td></tr>
+<tr><th id="50">50</th><td><u>#define <dfn class="macro" id="_M/CR_SERVER_GONE_ERROR" data-ref="_M/CR_SERVER_GONE_ERROR">CR_SERVER_GONE_ERROR</dfn>	2006</u></td></tr>
+<tr><th id="51">51</th><td><u>#define <dfn class="macro" id="_M/CR_VERSION_ERROR" data-ref="_M/CR_VERSION_ERROR">CR_VERSION_ERROR</dfn>	2007</u></td></tr>
+<tr><th id="52">52</th><td><u>#define <dfn class="macro" id="_M/CR_OUT_OF_MEMORY" data-ref="_M/CR_OUT_OF_MEMORY">CR_OUT_OF_MEMORY</dfn>	2008</u></td></tr>
+<tr><th id="53">53</th><td><u>#define <dfn class="macro" id="_M/CR_WRONG_HOST_INFO" data-ref="_M/CR_WRONG_HOST_INFO">CR_WRONG_HOST_INFO</dfn>	2009</u></td></tr>
+<tr><th id="54">54</th><td><u>#define <dfn class="macro" id="_M/CR_LOCALHOST_CONNECTION" data-ref="_M/CR_LOCALHOST_CONNECTION">CR_LOCALHOST_CONNECTION</dfn> 2010</u></td></tr>
+<tr><th id="55">55</th><td><u>#define <dfn class="macro" id="_M/CR_TCP_CONNECTION" data-ref="_M/CR_TCP_CONNECTION">CR_TCP_CONNECTION</dfn>	2011</u></td></tr>
+<tr><th id="56">56</th><td><u>#define <dfn class="macro" id="_M/CR_SERVER_HANDSHAKE_ERR" data-ref="_M/CR_SERVER_HANDSHAKE_ERR">CR_SERVER_HANDSHAKE_ERR</dfn> 2012</u></td></tr>
+<tr><th id="57">57</th><td><u>#define <dfn class="macro" id="_M/CR_SERVER_LOST" data-ref="_M/CR_SERVER_LOST">CR_SERVER_LOST</dfn>		2013</u></td></tr>
+<tr><th id="58">58</th><td><u>#define <dfn class="macro" id="_M/CR_COMMANDS_OUT_OF_SYNC" data-ref="_M/CR_COMMANDS_OUT_OF_SYNC">CR_COMMANDS_OUT_OF_SYNC</dfn> 2014</u></td></tr>
+<tr><th id="59">59</th><td><u>#define <dfn class="macro" id="_M/CR_NAMEDPIPE_CONNECTION" data-ref="_M/CR_NAMEDPIPE_CONNECTION">CR_NAMEDPIPE_CONNECTION</dfn> 2015</u></td></tr>
+<tr><th id="60">60</th><td><u>#define <dfn class="macro" id="_M/CR_NAMEDPIPEWAIT_ERROR" data-ref="_M/CR_NAMEDPIPEWAIT_ERROR">CR_NAMEDPIPEWAIT_ERROR</dfn>  2016</u></td></tr>
+<tr><th id="61">61</th><td><u>#define <dfn class="macro" id="_M/CR_NAMEDPIPEOPEN_ERROR" data-ref="_M/CR_NAMEDPIPEOPEN_ERROR">CR_NAMEDPIPEOPEN_ERROR</dfn>  2017</u></td></tr>
+<tr><th id="62">62</th><td><u>#define <dfn class="macro" id="_M/CR_NAMEDPIPESETSTATE_ERROR" data-ref="_M/CR_NAMEDPIPESETSTATE_ERROR">CR_NAMEDPIPESETSTATE_ERROR</dfn> 2018</u></td></tr>
+<tr><th id="63">63</th><td><u>#define <dfn class="macro" id="_M/CR_CANT_READ_CHARSET" data-ref="_M/CR_CANT_READ_CHARSET">CR_CANT_READ_CHARSET</dfn>	2019</u></td></tr>
+<tr><th id="64">64</th><td><u>#define <dfn class="macro" id="_M/CR_NET_PACKET_TOO_LARGE" data-ref="_M/CR_NET_PACKET_TOO_LARGE">CR_NET_PACKET_TOO_LARGE</dfn> 2020</u></td></tr>
+<tr><th id="65">65</th><td><u>#define <dfn class="macro" id="_M/CR_EMBEDDED_CONNECTION" data-ref="_M/CR_EMBEDDED_CONNECTION">CR_EMBEDDED_CONNECTION</dfn>	2021</u></td></tr>
+<tr><th id="66">66</th><td><u>#define <dfn class="macro" id="_M/CR_PROBE_SLAVE_STATUS" data-ref="_M/CR_PROBE_SLAVE_STATUS">CR_PROBE_SLAVE_STATUS</dfn>   2022</u></td></tr>
+<tr><th id="67">67</th><td><u>#define <dfn class="macro" id="_M/CR_PROBE_SLAVE_HOSTS" data-ref="_M/CR_PROBE_SLAVE_HOSTS">CR_PROBE_SLAVE_HOSTS</dfn>    2023</u></td></tr>
+<tr><th id="68">68</th><td><u>#define <dfn class="macro" id="_M/CR_PROBE_SLAVE_CONNECT" data-ref="_M/CR_PROBE_SLAVE_CONNECT">CR_PROBE_SLAVE_CONNECT</dfn>  2024</u></td></tr>
+<tr><th id="69">69</th><td><u>#define <dfn class="macro" id="_M/CR_PROBE_MASTER_CONNECT" data-ref="_M/CR_PROBE_MASTER_CONNECT">CR_PROBE_MASTER_CONNECT</dfn> 2025</u></td></tr>
+<tr><th id="70">70</th><td><u>#define <dfn class="macro" id="_M/CR_SSL_CONNECTION_ERROR" data-ref="_M/CR_SSL_CONNECTION_ERROR">CR_SSL_CONNECTION_ERROR</dfn> 2026</u></td></tr>
+<tr><th id="71">71</th><td><u>#define <dfn class="macro" id="_M/CR_MALFORMED_PACKET" data-ref="_M/CR_MALFORMED_PACKET">CR_MALFORMED_PACKET</dfn>     2027</u></td></tr>
+<tr><th id="72">72</th><td><u>#define <dfn class="macro" id="_M/CR_WRONG_LICENSE" data-ref="_M/CR_WRONG_LICENSE">CR_WRONG_LICENSE</dfn>	2028</u></td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td><i>/* new 4.1 error codes */</i></td></tr>
+<tr><th id="75">75</th><td><u>#define <dfn class="macro" id="_M/CR_NULL_POINTER" data-ref="_M/CR_NULL_POINTER">CR_NULL_POINTER</dfn>		2029</u></td></tr>
+<tr><th id="76">76</th><td><u>#define <dfn class="macro" id="_M/CR_NO_PREPARE_STMT" data-ref="_M/CR_NO_PREPARE_STMT">CR_NO_PREPARE_STMT</dfn>	2030</u></td></tr>
+<tr><th id="77">77</th><td><u>#define <dfn class="macro" id="_M/CR_PARAMS_NOT_BOUND" data-ref="_M/CR_PARAMS_NOT_BOUND">CR_PARAMS_NOT_BOUND</dfn>	2031</u></td></tr>
+<tr><th id="78">78</th><td><u>#define <dfn class="macro" id="_M/CR_DATA_TRUNCATED" data-ref="_M/CR_DATA_TRUNCATED">CR_DATA_TRUNCATED</dfn>	2032</u></td></tr>
+<tr><th id="79">79</th><td><u>#define <dfn class="macro" id="_M/CR_NO_PARAMETERS_EXISTS" data-ref="_M/CR_NO_PARAMETERS_EXISTS">CR_NO_PARAMETERS_EXISTS</dfn> 2033</u></td></tr>
+<tr><th id="80">80</th><td><u>#define <dfn class="macro" id="_M/CR_INVALID_PARAMETER_NO" data-ref="_M/CR_INVALID_PARAMETER_NO">CR_INVALID_PARAMETER_NO</dfn> 2034</u></td></tr>
+<tr><th id="81">81</th><td><u>#define <dfn class="macro" id="_M/CR_INVALID_BUFFER_USE" data-ref="_M/CR_INVALID_BUFFER_USE">CR_INVALID_BUFFER_USE</dfn>	2035</u></td></tr>
+<tr><th id="82">82</th><td><u>#define <dfn class="macro" id="_M/CR_UNSUPPORTED_PARAM_TYPE" data-ref="_M/CR_UNSUPPORTED_PARAM_TYPE">CR_UNSUPPORTED_PARAM_TYPE</dfn> 2036</u></td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_CONNECTION" data-ref="_M/CR_SHARED_MEMORY_CONNECTION">CR_SHARED_MEMORY_CONNECTION</dfn>             2037</u></td></tr>
+<tr><th id="85">85</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_CONNECT_REQUEST_ERROR" data-ref="_M/CR_SHARED_MEMORY_CONNECT_REQUEST_ERROR">CR_SHARED_MEMORY_CONNECT_REQUEST_ERROR</dfn>  2038</u></td></tr>
+<tr><th id="86">86</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_CONNECT_ANSWER_ERROR" data-ref="_M/CR_SHARED_MEMORY_CONNECT_ANSWER_ERROR">CR_SHARED_MEMORY_CONNECT_ANSWER_ERROR</dfn>   2039</u></td></tr>
+<tr><th id="87">87</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_CONNECT_FILE_MAP_ERROR" data-ref="_M/CR_SHARED_MEMORY_CONNECT_FILE_MAP_ERROR">CR_SHARED_MEMORY_CONNECT_FILE_MAP_ERROR</dfn> 2040</u></td></tr>
+<tr><th id="88">88</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_CONNECT_MAP_ERROR" data-ref="_M/CR_SHARED_MEMORY_CONNECT_MAP_ERROR">CR_SHARED_MEMORY_CONNECT_MAP_ERROR</dfn>      2041</u></td></tr>
+<tr><th id="89">89</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_FILE_MAP_ERROR" data-ref="_M/CR_SHARED_MEMORY_FILE_MAP_ERROR">CR_SHARED_MEMORY_FILE_MAP_ERROR</dfn>         2042</u></td></tr>
+<tr><th id="90">90</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_MAP_ERROR" data-ref="_M/CR_SHARED_MEMORY_MAP_ERROR">CR_SHARED_MEMORY_MAP_ERROR</dfn>              2043</u></td></tr>
+<tr><th id="91">91</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_EVENT_ERROR" data-ref="_M/CR_SHARED_MEMORY_EVENT_ERROR">CR_SHARED_MEMORY_EVENT_ERROR</dfn>     	2044</u></td></tr>
+<tr><th id="92">92</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_CONNECT_ABANDONED_ERROR" data-ref="_M/CR_SHARED_MEMORY_CONNECT_ABANDONED_ERROR">CR_SHARED_MEMORY_CONNECT_ABANDONED_ERROR</dfn> 2045</u></td></tr>
+<tr><th id="93">93</th><td><u>#define <dfn class="macro" id="_M/CR_SHARED_MEMORY_CONNECT_SET_ERROR" data-ref="_M/CR_SHARED_MEMORY_CONNECT_SET_ERROR">CR_SHARED_MEMORY_CONNECT_SET_ERROR</dfn>      2046</u></td></tr>
+<tr><th id="94">94</th><td><u>#define <dfn class="macro" id="_M/CR_CONN_UNKNOW_PROTOCOL" data-ref="_M/CR_CONN_UNKNOW_PROTOCOL">CR_CONN_UNKNOW_PROTOCOL</dfn> 		2047</u></td></tr>
+<tr><th id="95">95</th><td><u>#define <dfn class="macro" id="_M/CR_INVALID_CONN_HANDLE" data-ref="_M/CR_INVALID_CONN_HANDLE">CR_INVALID_CONN_HANDLE</dfn>			2048</u></td></tr>
+<tr><th id="96">96</th><td><u>#define <dfn class="macro" id="_M/CR_SECURE_AUTH" data-ref="_M/CR_SECURE_AUTH">CR_SECURE_AUTH</dfn>                          2049</u></td></tr>
+<tr><th id="97">97</th><td><u>#define <dfn class="macro" id="_M/CR_FETCH_CANCELED" data-ref="_M/CR_FETCH_CANCELED">CR_FETCH_CANCELED</dfn>                       2050</u></td></tr>
+<tr><th id="98">98</th><td><u>#define <dfn class="macro" id="_M/CR_NO_DATA" data-ref="_M/CR_NO_DATA">CR_NO_DATA</dfn>                              2051</u></td></tr>
+<tr><th id="99">99</th><td><u>#define <dfn class="macro" id="_M/CR_NO_STMT_METADATA" data-ref="_M/CR_NO_STMT_METADATA">CR_NO_STMT_METADATA</dfn>                     2052</u></td></tr>
+<tr><th id="100">100</th><td><u>#define <dfn class="macro" id="_M/CR_NO_RESULT_SET" data-ref="_M/CR_NO_RESULT_SET">CR_NO_RESULT_SET</dfn>                        2053</u></td></tr>
+<tr><th id="101">101</th><td><u>#define <dfn class="macro" id="_M/CR_NOT_IMPLEMENTED" data-ref="_M/CR_NOT_IMPLEMENTED">CR_NOT_IMPLEMENTED</dfn>                      2054</u></td></tr>
+<tr><th id="102">102</th><td><u>#define <dfn class="macro" id="_M/CR_SERVER_LOST_EXTENDED" data-ref="_M/CR_SERVER_LOST_EXTENDED">CR_SERVER_LOST_EXTENDED</dfn>			2055</u></td></tr>
+<tr><th id="103">103</th><td><u>#define <dfn class="macro" id="_M/CR_STMT_CLOSED" data-ref="_M/CR_STMT_CLOSED">CR_STMT_CLOSED</dfn>				2056</u></td></tr>
+<tr><th id="104">104</th><td><u>#define <dfn class="macro" id="_M/CR_NEW_STMT_METADATA" data-ref="_M/CR_NEW_STMT_METADATA">CR_NEW_STMT_METADATA</dfn>                    2057</u></td></tr>
+<tr><th id="105">105</th><td><u>#define <dfn class="macro" id="_M/CR_ALREADY_CONNECTED" data-ref="_M/CR_ALREADY_CONNECTED">CR_ALREADY_CONNECTED</dfn>                    2058</u></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/CR_AUTH_PLUGIN_CANNOT_LOAD" data-ref="_M/CR_AUTH_PLUGIN_CANNOT_LOAD">CR_AUTH_PLUGIN_CANNOT_LOAD</dfn>              2059</u></td></tr>
+<tr><th id="107">107</th><td><u>#define <dfn class="macro" id="_M/CR_ERROR_LAST" data-ref="_M/CR_ERROR_LAST">CR_ERROR_LAST</dfn>  /*Copy last error nr:*/  2059</u></td></tr>
+<tr><th id="108">108</th><td><i>/* Add error numbers before CR_ERROR_LAST and change it accordingly. */</i></td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td><u>#<span data-ppcond="1">endif</span> /* ERRMSG_INCLUDED */</u></td></tr>
+<tr><th id="111">111</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore3.3.5/src/server/database/Database/MySQLConnection.cpp.html'>TrinityCore3.3.5/src/server/database/Database/MySQLConnection.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

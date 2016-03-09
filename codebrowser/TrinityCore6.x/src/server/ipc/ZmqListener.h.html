@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<title>ZmqListener.h [TrinityCore6.x/src/server/ipc/ZmqListener.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/ipc/ZmqListener.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>server</a>/<a href='./'>ipc</a>/ZmqListener.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/__ZMQLISTENER_H">__ZMQLISTENER_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/__ZMQLISTENER_H" data-ref="_M/__ZMQLISTENER_H">__ZMQLISTENER_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="ZMQTask.h.html">"ZMQTask.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../dep/zmqpp/zmqpp/zmqpp.hpp.html">&lt;zmqpp/zmqpp.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>class</b> <dfn class="type def" id="ZmqListener" title='ZmqListener' data-ref="ZmqListener" >ZmqListener</dfn> : <b>public</b> <a class="type" href="ZMQTask.h.html#ZMQTask" title='ZMQTask' data-ref="ZMQTask" >ZMQTask</a></td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td><i>/*</i></td></tr>
+<tr><th id="27">27</th><td><i> * Read broadcasts from remote PUB socket, and forward them to</i></td></tr>
+<tr><th id="28">28</th><td><i> * another socket.</i></td></tr>
+<tr><th id="29">29</th><td><i> *</i></td></tr>
+<tr><th id="30">30</th><td><i> * from - client SUB socket</i></td></tr>
+<tr><th id="31">31</th><td><i> * to - listen PUSH socket</i></td></tr>
+<tr><th id="32">32</th><td><i> *</i></td></tr>
+<tr><th id="33">33</th><td><i> */</i></td></tr>
+<tr><th id="34">34</th><td><b>public</b>:</td></tr>
+<tr><th id="35">35</th><td>    <a class="decl" href="ZmqListener.cpp.html#_ZN11ZmqListenerC1ERKSsS1_" title='ZmqListener::ZmqListener' data-ref="_ZN11ZmqListenerC1ERKSsS1_" id="_ZN11ZmqListenerC1ERKSsS1_" >ZmqListener</a>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col1 decl" id="1from" title='from' data-type='const std::string &amp;' data-ref="1from" >from</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col2 decl" id="2to" title='to' data-type='const std::string &amp;' data-ref="2to" >to</dfn>);</td></tr>
+<tr><th id="36">36</th><td>    <a class="virtual decl" href="ZmqListener.cpp.html#_ZN11ZmqListenerD1Ev" title='ZmqListener::~ZmqListener' data-ref="_ZN11ZmqListenerD1Ev" id="_ZN11ZmqListenerD1Ev" >~ZmqListener</a>();</td></tr>
+<tr><th id="37">37</th><td>    <em>void</em> <a class="virtual decl" href="ZmqListener.cpp.html#_ZN11ZmqListener3RunEv" title='ZmqListener::Run' data-ref="_ZN11ZmqListener3RunEv" id="_ZN11ZmqListener3RunEv" >Run</a>() override;</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>    <em>void</em> <a class="decl" href="ZmqListener.cpp.html#_ZN11ZmqListener9SubscribeERKSs" title='ZmqListener::Subscribe' data-ref="_ZN11ZmqListener9SubscribeERKSs" id="_ZN11ZmqListener9SubscribeERKSs" >Subscribe</a>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col3 decl" id="3keyword" title='keyword' data-type='const std::string &amp;' data-ref="3keyword" >keyword</dfn>);</td></tr>
+<tr><th id="40">40</th><td>    <em>void</em> <a class="decl" href="ZmqListener.cpp.html#_ZN11ZmqListener11UnsubscribeERKSs" title='ZmqListener::Unsubscribe' data-ref="_ZN11ZmqListener11UnsubscribeERKSs" id="_ZN11ZmqListener11UnsubscribeERKSs" >Unsubscribe</a>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col4 decl" id="4keyword" title='keyword' data-type='const std::string &amp;' data-ref="4keyword" >keyword</dfn>);</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>protected</b>:</td></tr>
+<tr><th id="43">43</th><td>    <em>void</em> <a class="virtual decl" href="ZmqListener.cpp.html#_ZN11ZmqListener10HandleOpenEv" title='ZmqListener::HandleOpen' data-ref="_ZN11ZmqListener10HandleOpenEv" id="_ZN11ZmqListener10HandleOpenEv" >HandleOpen</a>() override;</td></tr>
+<tr><th id="44">44</th><td>    <em>void</em> <a class="virtual decl" href="ZmqListener.cpp.html#_ZN11ZmqListener11HandleCloseEv" title='ZmqListener::HandleClose' data-ref="_ZN11ZmqListener11HandleCloseEv" id="_ZN11ZmqListener11HandleCloseEv" >HandleClose</a>() override;</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><b>private</b>:</td></tr>
+<tr><th id="47">47</th><td>    <span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/socket.hpp.html#zmqpp::socket" title='zmqpp::socket' data-ref="zmqpp::socket" >socket</a>* <dfn class="decl" id="ZmqListener::_from" title='ZmqListener::_from' data-ref="ZmqListener::_from" >_from</dfn>;</td></tr>
+<tr><th id="48">48</th><td>    <span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/socket.hpp.html#zmqpp::socket" title='zmqpp::socket' data-ref="zmqpp::socket" >socket</a>* <dfn class="decl" id="ZmqListener::_to" title='ZmqListener::_to' data-ref="ZmqListener::_to" >_to</dfn>;</td></tr>
+<tr><th id="49">49</th><td>};</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="52">52</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='ZmqListener.cpp.html'>TrinityCore6.x/src/server/ipc/ZmqListener.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

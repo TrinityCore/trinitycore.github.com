@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<title>pit_of_saron.h [TrinityCore6.x/src/server/scripts/Northrend/FrozenHalls/PitOfSaron/pit_of_saron.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/Northrend/FrozenHalls/PitOfSaron/pit_of_saron.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>src</a>/<a href='../../../..'>server</a>/<a href='../../..'>scripts</a>/<a href='../..'>Northrend</a>/<a href='..'>FrozenHalls</a>/<a href='./'>PitOfSaron</a>/pit_of_saron.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/PIT_OF_SARON_H_">PIT_OF_SARON_H_</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/PIT_OF_SARON_H_" data-ref="_M/PIT_OF_SARON_H_">PIT_OF_SARON_H_</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/PoSScriptName" data-ref="_M/PoSScriptName">PoSScriptName</dfn> "instance_pit_of_saron"</u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/DataHeader" data-ref="_M/DataHeader">DataHeader</dfn> "POS"</u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><a class="typedef" href="../../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <em>const</em> <dfn class="decl def" id="_ZL14EncounterCount" title='EncounterCount' data-ref="_ZL14EncounterCount" >EncounterCount</dfn> = <var>3</var>;</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>enum</b> <dfn class="type def" id="DataTypes" title='DataTypes' data-ref="DataTypes" >DataTypes</dfn></td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td>    <i>// Encounter states and GUIDs</i></td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="DataTypes::DATA_GARFROST" title='DataTypes::DATA_GARFROST' data-ref="DataTypes::DATA_GARFROST" >DATA_GARFROST</dfn>           = <var>0</var>,</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="DataTypes::DATA_ICK" title='DataTypes::DATA_ICK' data-ref="DataTypes::DATA_ICK" >DATA_ICK</dfn>                = <var>1</var>,</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="DataTypes::DATA_TYRANNUS" title='DataTypes::DATA_TYRANNUS' data-ref="DataTypes::DATA_TYRANNUS" >DATA_TYRANNUS</dfn>           = <var>2</var>,</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>    <i>// GUIDs</i></td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="DataTypes::DATA_RIMEFANG" title='DataTypes::DATA_RIMEFANG' data-ref="DataTypes::DATA_RIMEFANG" >DATA_RIMEFANG</dfn>           = <var>3</var>,</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="DataTypes::DATA_KRICK" title='DataTypes::DATA_KRICK' data-ref="DataTypes::DATA_KRICK" >DATA_KRICK</dfn>              = <var>4</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="DataTypes::DATA_JAINA_SYLVANAS_1" title='DataTypes::DATA_JAINA_SYLVANAS_1' data-ref="DataTypes::DATA_JAINA_SYLVANAS_1" >DATA_JAINA_SYLVANAS_1</dfn>   = <var>5</var>,    <i>// GUID of either Jaina or Sylvanas part 1, depending on team, as it's the same spawn.</i></td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="DataTypes::DATA_JAINA_SYLVANAS_2" title='DataTypes::DATA_JAINA_SYLVANAS_2' data-ref="DataTypes::DATA_JAINA_SYLVANAS_2" >DATA_JAINA_SYLVANAS_2</dfn>   = <var>6</var>,    <i>// GUID of either Jaina or Sylvanas part 2, depending on team, as it's the same spawn.</i></td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="DataTypes::DATA_TYRANNUS_EVENT" title='DataTypes::DATA_TYRANNUS_EVENT' data-ref="DataTypes::DATA_TYRANNUS_EVENT" >DATA_TYRANNUS_EVENT</dfn>     = <var>7</var>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="DataTypes::DATA_TEAM_IN_INSTANCE" title='DataTypes::DATA_TEAM_IN_INSTANCE' data-ref="DataTypes::DATA_TEAM_IN_INSTANCE" >DATA_TEAM_IN_INSTANCE</dfn>   = <var>8</var></td></tr>
+<tr><th id="40">40</th><td>};</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>enum</b> <dfn class="type def" id="CreatureIds" title='CreatureIds' data-ref="CreatureIds" >CreatureIds</dfn></td></tr>
+<tr><th id="43">43</th><td>{</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="CreatureIds::NPC_GARFROST" title='CreatureIds::NPC_GARFROST' data-ref="CreatureIds::NPC_GARFROST" >NPC_GARFROST</dfn>                                = <var>36494</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="CreatureIds::NPC_KRICK" title='CreatureIds::NPC_KRICK' data-ref="CreatureIds::NPC_KRICK" >NPC_KRICK</dfn>                                   = <var>36477</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="CreatureIds::NPC_ICK" title='CreatureIds::NPC_ICK' data-ref="CreatureIds::NPC_ICK" >NPC_ICK</dfn>                                     = <var>36476</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="CreatureIds::NPC_TYRANNUS" title='CreatureIds::NPC_TYRANNUS' data-ref="CreatureIds::NPC_TYRANNUS" >NPC_TYRANNUS</dfn>                                = <var>36658</var>,</td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="CreatureIds::NPC_RIMEFANG" title='CreatureIds::NPC_RIMEFANG' data-ref="CreatureIds::NPC_RIMEFANG" >NPC_RIMEFANG</dfn>                                = <var>36661</var>,</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="CreatureIds::NPC_TYRANNUS_EVENTS" title='CreatureIds::NPC_TYRANNUS_EVENTS' data-ref="CreatureIds::NPC_TYRANNUS_EVENTS" >NPC_TYRANNUS_EVENTS</dfn>                         = <var>36794</var>,</td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="CreatureIds::NPC_SYLVANAS_PART1" title='CreatureIds::NPC_SYLVANAS_PART1' data-ref="CreatureIds::NPC_SYLVANAS_PART1" >NPC_SYLVANAS_PART1</dfn>                          = <var>36990</var>,</td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="CreatureIds::NPC_SYLVANAS_PART2" title='CreatureIds::NPC_SYLVANAS_PART2' data-ref="CreatureIds::NPC_SYLVANAS_PART2" >NPC_SYLVANAS_PART2</dfn>                          = <var>38189</var>,</td></tr>
+<tr><th id="53">53</th><td>    <dfn class="enum" id="CreatureIds::NPC_JAINA_PART1" title='CreatureIds::NPC_JAINA_PART1' data-ref="CreatureIds::NPC_JAINA_PART1" >NPC_JAINA_PART1</dfn>                             = <var>36993</var>,</td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="CreatureIds::NPC_JAINA_PART2" title='CreatureIds::NPC_JAINA_PART2' data-ref="CreatureIds::NPC_JAINA_PART2" >NPC_JAINA_PART2</dfn>                             = <var>38188</var>,</td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="CreatureIds::NPC_KILARA" title='CreatureIds::NPC_KILARA' data-ref="CreatureIds::NPC_KILARA" >NPC_KILARA</dfn>                                  = <var>37583</var>,</td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="CreatureIds::NPC_ELANDRA" title='CreatureIds::NPC_ELANDRA' data-ref="CreatureIds::NPC_ELANDRA" >NPC_ELANDRA</dfn>                                 = <var>37774</var>,</td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="CreatureIds::NPC_KORALEN" title='CreatureIds::NPC_KORALEN' data-ref="CreatureIds::NPC_KORALEN" >NPC_KORALEN</dfn>                                 = <var>37779</var>,</td></tr>
+<tr><th id="58">58</th><td>    <dfn class="enum" id="CreatureIds::NPC_KORLAEN" title='CreatureIds::NPC_KORLAEN' data-ref="CreatureIds::NPC_KORLAEN" >NPC_KORLAEN</dfn>                                 = <var>37582</var>,</td></tr>
+<tr><th id="59">59</th><td>    <dfn class="enum" id="CreatureIds::NPC_CHAMPION_1_HORDE" title='CreatureIds::NPC_CHAMPION_1_HORDE' data-ref="CreatureIds::NPC_CHAMPION_1_HORDE" >NPC_CHAMPION_1_HORDE</dfn>                        = <var>37584</var>,</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="CreatureIds::NPC_CHAMPION_2_HORDE" title='CreatureIds::NPC_CHAMPION_2_HORDE' data-ref="CreatureIds::NPC_CHAMPION_2_HORDE" >NPC_CHAMPION_2_HORDE</dfn>                        = <var>37587</var>,</td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="CreatureIds::NPC_CHAMPION_3_HORDE" title='CreatureIds::NPC_CHAMPION_3_HORDE' data-ref="CreatureIds::NPC_CHAMPION_3_HORDE" >NPC_CHAMPION_3_HORDE</dfn>                        = <var>37588</var>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="CreatureIds::NPC_CHAMPION_1_ALLIANCE" title='CreatureIds::NPC_CHAMPION_1_ALLIANCE' data-ref="CreatureIds::NPC_CHAMPION_1_ALLIANCE" >NPC_CHAMPION_1_ALLIANCE</dfn>                     = <var>37496</var>,</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="enum" id="CreatureIds::NPC_CHAMPION_2_ALLIANCE" title='CreatureIds::NPC_CHAMPION_2_ALLIANCE' data-ref="CreatureIds::NPC_CHAMPION_2_ALLIANCE" >NPC_CHAMPION_2_ALLIANCE</dfn>                     = <var>37497</var>,</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>    <dfn class="enum" id="CreatureIds::NPC_HORDE_SLAVE_1" title='CreatureIds::NPC_HORDE_SLAVE_1' data-ref="CreatureIds::NPC_HORDE_SLAVE_1" >NPC_HORDE_SLAVE_1</dfn>                           = <var>36770</var>,</td></tr>
+<tr><th id="66">66</th><td>    <dfn class="enum" id="CreatureIds::NPC_HORDE_SLAVE_2" title='CreatureIds::NPC_HORDE_SLAVE_2' data-ref="CreatureIds::NPC_HORDE_SLAVE_2" >NPC_HORDE_SLAVE_2</dfn>                           = <var>36771</var>,</td></tr>
+<tr><th id="67">67</th><td>    <dfn class="enum" id="CreatureIds::NPC_HORDE_SLAVE_3" title='CreatureIds::NPC_HORDE_SLAVE_3' data-ref="CreatureIds::NPC_HORDE_SLAVE_3" >NPC_HORDE_SLAVE_3</dfn>                           = <var>36772</var>,</td></tr>
+<tr><th id="68">68</th><td>    <dfn class="enum" id="CreatureIds::NPC_HORDE_SLAVE_4" title='CreatureIds::NPC_HORDE_SLAVE_4' data-ref="CreatureIds::NPC_HORDE_SLAVE_4" >NPC_HORDE_SLAVE_4</dfn>                           = <var>36773</var>,</td></tr>
+<tr><th id="69">69</th><td>    <dfn class="enum" id="CreatureIds::NPC_ALLIANCE_SLAVE_1" title='CreatureIds::NPC_ALLIANCE_SLAVE_1' data-ref="CreatureIds::NPC_ALLIANCE_SLAVE_1" >NPC_ALLIANCE_SLAVE_1</dfn>                        = <var>36764</var>,</td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="CreatureIds::NPC_ALLIANCE_SLAVE_2" title='CreatureIds::NPC_ALLIANCE_SLAVE_2' data-ref="CreatureIds::NPC_ALLIANCE_SLAVE_2" >NPC_ALLIANCE_SLAVE_2</dfn>                        = <var>36765</var>,</td></tr>
+<tr><th id="71">71</th><td>    <dfn class="enum" id="CreatureIds::NPC_ALLIANCE_SLAVE_3" title='CreatureIds::NPC_ALLIANCE_SLAVE_3' data-ref="CreatureIds::NPC_ALLIANCE_SLAVE_3" >NPC_ALLIANCE_SLAVE_3</dfn>                        = <var>36766</var>,</td></tr>
+<tr><th id="72">72</th><td>    <dfn class="enum" id="CreatureIds::NPC_ALLIANCE_SLAVE_4" title='CreatureIds::NPC_ALLIANCE_SLAVE_4' data-ref="CreatureIds::NPC_ALLIANCE_SLAVE_4" >NPC_ALLIANCE_SLAVE_4</dfn>                        = <var>36767</var>,</td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="CreatureIds::NPC_FREED_SLAVE_1_ALLIANCE" title='CreatureIds::NPC_FREED_SLAVE_1_ALLIANCE' data-ref="CreatureIds::NPC_FREED_SLAVE_1_ALLIANCE" >NPC_FREED_SLAVE_1_ALLIANCE</dfn>                  = <var>37575</var>,</td></tr>
+<tr><th id="74">74</th><td>    <dfn class="enum" id="CreatureIds::NPC_FREED_SLAVE_2_ALLIANCE" title='CreatureIds::NPC_FREED_SLAVE_2_ALLIANCE' data-ref="CreatureIds::NPC_FREED_SLAVE_2_ALLIANCE" >NPC_FREED_SLAVE_2_ALLIANCE</dfn>                  = <var>37572</var>,</td></tr>
+<tr><th id="75">75</th><td>    <dfn class="enum" id="CreatureIds::NPC_FREED_SLAVE_3_ALLIANCE" title='CreatureIds::NPC_FREED_SLAVE_3_ALLIANCE' data-ref="CreatureIds::NPC_FREED_SLAVE_3_ALLIANCE" >NPC_FREED_SLAVE_3_ALLIANCE</dfn>                  = <var>37576</var>,</td></tr>
+<tr><th id="76">76</th><td>    <dfn class="enum" id="CreatureIds::NPC_FREED_SLAVE_1_HORDE" title='CreatureIds::NPC_FREED_SLAVE_1_HORDE' data-ref="CreatureIds::NPC_FREED_SLAVE_1_HORDE" >NPC_FREED_SLAVE_1_HORDE</dfn>                     = <var>37579</var>,</td></tr>
+<tr><th id="77">77</th><td>    <dfn class="enum" id="CreatureIds::NPC_FREED_SLAVE_2_HORDE" title='CreatureIds::NPC_FREED_SLAVE_2_HORDE' data-ref="CreatureIds::NPC_FREED_SLAVE_2_HORDE" >NPC_FREED_SLAVE_2_HORDE</dfn>                     = <var>37578</var>,</td></tr>
+<tr><th id="78">78</th><td>    <dfn class="enum" id="CreatureIds::NPC_FREED_SLAVE_3_HORDE" title='CreatureIds::NPC_FREED_SLAVE_3_HORDE' data-ref="CreatureIds::NPC_FREED_SLAVE_3_HORDE" >NPC_FREED_SLAVE_3_HORDE</dfn>                     = <var>37577</var>,</td></tr>
+<tr><th id="79">79</th><td>    <dfn class="enum" id="CreatureIds::NPC_RESCUED_SLAVE_ALLIANCE" title='CreatureIds::NPC_RESCUED_SLAVE_ALLIANCE' data-ref="CreatureIds::NPC_RESCUED_SLAVE_ALLIANCE" >NPC_RESCUED_SLAVE_ALLIANCE</dfn>                  = <var>36888</var>,</td></tr>
+<tr><th id="80">80</th><td>    <dfn class="enum" id="CreatureIds::NPC_RESCUED_SLAVE_HORDE" title='CreatureIds::NPC_RESCUED_SLAVE_HORDE' data-ref="CreatureIds::NPC_RESCUED_SLAVE_HORDE" >NPC_RESCUED_SLAVE_HORDE</dfn>                     = <var>36889</var>,</td></tr>
+<tr><th id="81">81</th><td>    <dfn class="enum" id="CreatureIds::NPC_MARTIN_VICTUS_1" title='CreatureIds::NPC_MARTIN_VICTUS_1' data-ref="CreatureIds::NPC_MARTIN_VICTUS_1" >NPC_MARTIN_VICTUS_1</dfn>                         = <var>37591</var>,</td></tr>
+<tr><th id="82">82</th><td>    <dfn class="enum" id="CreatureIds::NPC_MARTIN_VICTUS_2" title='CreatureIds::NPC_MARTIN_VICTUS_2' data-ref="CreatureIds::NPC_MARTIN_VICTUS_2" >NPC_MARTIN_VICTUS_2</dfn>                         = <var>37580</var>,</td></tr>
+<tr><th id="83">83</th><td>    <dfn class="enum" id="CreatureIds::NPC_GORKUN_IRONSKULL_1" title='CreatureIds::NPC_GORKUN_IRONSKULL_1' data-ref="CreatureIds::NPC_GORKUN_IRONSKULL_1" >NPC_GORKUN_IRONSKULL_1</dfn>                      = <var>37581</var>,</td></tr>
+<tr><th id="84">84</th><td>    <dfn class="enum" id="CreatureIds::NPC_GORKUN_IRONSKULL_2" title='CreatureIds::NPC_GORKUN_IRONSKULL_2' data-ref="CreatureIds::NPC_GORKUN_IRONSKULL_2" >NPC_GORKUN_IRONSKULL_2</dfn>                      = <var>37592</var>,</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>    <dfn class="enum" id="CreatureIds::NPC_FORGEMASTER_STALKER" title='CreatureIds::NPC_FORGEMASTER_STALKER' data-ref="CreatureIds::NPC_FORGEMASTER_STALKER" >NPC_FORGEMASTER_STALKER</dfn>                     = <var>36495</var>,</td></tr>
+<tr><th id="87">87</th><td>    <dfn class="enum" id="CreatureIds::NPC_EXPLODING_ORB" title='CreatureIds::NPC_EXPLODING_ORB' data-ref="CreatureIds::NPC_EXPLODING_ORB" >NPC_EXPLODING_ORB</dfn>                           = <var>36610</var>,</td></tr>
+<tr><th id="88">88</th><td>    <dfn class="enum" id="CreatureIds::NPC_YMIRJAR_DEATHBRINGER" title='CreatureIds::NPC_YMIRJAR_DEATHBRINGER' data-ref="CreatureIds::NPC_YMIRJAR_DEATHBRINGER" >NPC_YMIRJAR_DEATHBRINGER</dfn>                    = <var>36892</var>,</td></tr>
+<tr><th id="89">89</th><td>    <dfn class="enum" id="CreatureIds::NPC_ICY_BLAST" title='CreatureIds::NPC_ICY_BLAST' data-ref="CreatureIds::NPC_ICY_BLAST" >NPC_ICY_BLAST</dfn>                               = <var>36731</var></td></tr>
+<tr><th id="90">90</th><td>};</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td><b>enum</b> <dfn class="type def" id="GameObjectIds" title='GameObjectIds' data-ref="GameObjectIds" >GameObjectIds</dfn></td></tr>
+<tr><th id="93">93</th><td>{</td></tr>
+<tr><th id="94">94</th><td>    <dfn class="enum" id="GameObjectIds::GO_SARONITE_ROCK" title='GameObjectIds::GO_SARONITE_ROCK' data-ref="GameObjectIds::GO_SARONITE_ROCK" >GO_SARONITE_ROCK</dfn>                            = <var>196485</var>,</td></tr>
+<tr><th id="95">95</th><td>    <dfn class="enum" id="GameObjectIds::GO_ICE_WALL" title='GameObjectIds::GO_ICE_WALL' data-ref="GameObjectIds::GO_ICE_WALL" >GO_ICE_WALL</dfn>                                 = <var>201885</var>,</td></tr>
+<tr><th id="96">96</th><td>    <dfn class="enum" id="GameObjectIds::GO_HALLS_OF_REFLECTION_PORTCULLIS" title='GameObjectIds::GO_HALLS_OF_REFLECTION_PORTCULLIS' data-ref="GameObjectIds::GO_HALLS_OF_REFLECTION_PORTCULLIS" >GO_HALLS_OF_REFLECTION_PORTCULLIS</dfn>           = <var>201848</var></td></tr>
+<tr><th id="97">97</th><td>};</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td><b>template</b>&lt;<b>class</b> AI&gt;</td></tr>
+<tr><th id="100">100</th><td>AI* <dfn class="decl def" id="_Z15GetPitOfSaronAIP8Creature" title='GetPitOfSaronAI' data-ref="_Z15GetPitOfSaronAIP8Creature" >GetPitOfSaronAI</dfn>(<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>)</td></tr>
+<tr><th id="101">101</th><td>{</td></tr>
+<tr><th id="102">102</th><td>    <b>return</b> GetInstanceAI&lt;AI&gt;(<a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="macro" href="#21" title="&quot;instance_pit_of_saron&quot;" data-ref="_M/PoSScriptName">PoSScriptName</a>);</td></tr>
+<tr><th id="103">103</th><td>}</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><u>#<span data-ppcond="18">endif</span> // PIT_OF_SARON_H_</u></td></tr>
+<tr><th id="106">106</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='boss_forgemaster_garfrost.cpp.html'>TrinityCore6.x/src/server/scripts/Northrend/FrozenHalls/PitOfSaron/boss_forgemaster_garfrost.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+<title>inet.hpp [TrinityCore6.x/dep/zmqpp/zmqpp/inet.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/zmqpp/zmqpp/inet.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>zmqpp</a>/<a href='./'>zmqpp</a>/inet.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> *<span class="command"> \file</span></i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> * <span class="command">\date</span>   10 Aug 2011</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> * <span class="command">\author</span> Ben Gray (\@benjamg)</i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><u>#<span data-ppcond="8">ifndef</span> <span class="macro" data-ref="_M/ZMQPP_INET_HPP_">ZMQPP_INET_HPP_</span></u></td></tr>
+<tr><th id="9">9</th><td><u>#define <dfn class="macro" id="_M/ZMQPP_INET_HPP_" data-ref="_M/ZMQPP_INET_HPP_">ZMQPP_INET_HPP_</dfn></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><i class="doc">/** <span class="command">\todo</span> cross-platform version of including headers. */</i></td></tr>
+<tr><th id="12">12</th><td><i class="doc">// We get htons and htonl from here</i></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">ifdef</span> <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="14">14</th><td><u>#include &lt;WinSock2.h&gt;</u></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="13">else</span></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="../../../../include/netinet/in.h.html">&lt;netinet/in.h&gt;</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="compatibility.hpp.html">"compatibility.hpp"</a></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><b>namespace</b> <span class="namespace">zmqpp</span></td></tr>
+<tr><th id="22">22</th><td>{</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="25">25</th><td><i class="doc"> * <span class="command">\brief</span> Possible byte order types.</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="27">27</th><td><i class="doc"> * An enumeration of all the known order types, all two of them.</i></td></tr>
+<tr><th id="28">28</th><td><i class="doc"> * There is also an entry for unknown which is just used as a default.</i></td></tr>
+<tr><th id="29">29</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="30">30</th><td><a class="macro" href="compatibility.hpp.html#85" title="enum class" data-ref="_M/ZMQPP_COMPARABLE_ENUM">ZMQPP_COMPARABLE_ENUM</a> <dfn class="type def" id="zmqpp::order" title='zmqpp::order' data-ref="zmqpp::order" >order</dfn> {</td></tr>
+<tr><th id="31">31</th><td>	<dfn class="enum" id="zmqpp::order::big_endian" title='zmqpp::order::big_endian' data-ref="zmqpp::order::big_endian" >big_endian</dfn>,   <i class="doc">/*!&lt; byte order is big endian */</i></td></tr>
+<tr><th id="32">32</th><td>	<dfn class="enum" id="zmqpp::order::little_endian" title='zmqpp::order::little_endian' data-ref="zmqpp::order::little_endian" >little_endian</dfn> <i class="doc">/*!&lt; byte order is little endian */</i></td></tr>
+<tr><th id="33">33</th><td>};</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc"> * Common code for the 64bit versions of htons/htons and ntohs/ntohl</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc"> * As htons and ntohs (or htonl and ntohs) always just do the same thing, ie</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc"> * swap bytes if the host order differs from network order or otherwise don't</i></td></tr>
+<tr><th id="40">40</th><td><i class="doc"> * do anything, it seemed silly to type the code twice.</i></td></tr>
+<tr><th id="41">41</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc"> * <span class="command">\note</span> This code assumes network order is always big endian. Which it is.</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc"> * <span class="command">\note</span> The host endian is only checked once and afterwards assumed to remain</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc"> *       the same.</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc"> * <span class="command">\param</span> <span class="arg">value_to_check</span> unsigned 64 bit integer to swap</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc"> * <span class="command">\return</span> swapped (or not) unsigned 64 bit integer</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="49">49</th><td><b>inline</b> <a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <dfn class="decl def" id="_ZN5zmqpp14swap_if_neededEm" title='zmqpp::swap_if_needed' data-ref="_ZN5zmqpp14swap_if_neededEm" >swap_if_needed</dfn>(<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <em>const</em> <dfn class="local col1 decl" id="1value_to_check" title='value_to_check' data-type='const uint64_t' data-ref="1value_to_check" >value_to_check</dfn>)</td></tr>
+<tr><th id="50">50</th><td>{</td></tr>
+<tr><th id="51">51</th><td>	<em>static</em> <a class="type" href="#zmqpp::order" title='zmqpp::order' data-ref="zmqpp::order" >order</a> <dfn class="local col2 decl" id="2host_order" title='host_order' data-type='zmqpp::order' data-ref="2host_order" >host_order</dfn> = (<a class="macro" href="../../../../include/netinet/in.h.html#402" title="(__extension__ ({ unsigned int __v, __x = (42); if (__builtin_constant_p (__x)) __v = ((((__x) &amp; 0xff000000) &gt;&gt; 24) | (((__x) &amp; 0x00ff0000) &gt;&gt; 8) | (((__x) &amp; 0x0000ff00) &lt;&lt; 8) | (((__x) &amp; 0x000000ff) &lt;&lt; 24)); else __asm__ (&quot;bswap %0&quot; : &quot;=r&quot; (__v) : &quot;0&quot; (__x)); __v; }))" data-ref="_M/htonl">htonl</a>(<var>42</var>) == <var>42</var>) ? <a class="type" href="#zmqpp::order" title='zmqpp::order' data-ref="zmqpp::order" >order</a>::<a class="enum" href="#zmqpp::order::big_endian" title='zmqpp::order::big_endian' data-ref="zmqpp::order::big_endian" >big_endian</a> : <a class="type" href="#zmqpp::order" title='zmqpp::order' data-ref="zmqpp::order" >order</a>::<a class="enum" href="#zmqpp::order::little_endian" title='zmqpp::order::little_endian' data-ref="zmqpp::order::little_endian" >little_endian</a>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>	<b>if</b> (<a class="type" href="#zmqpp::order" title='zmqpp::order' data-ref="zmqpp::order" >order</a>::<a class="enum" href="#zmqpp::order::big_endian" title='zmqpp::order::big_endian' data-ref="zmqpp::order::big_endian" >big_endian</a> == <a class="local col2 ref" href="#2host_order" title='host_order' data-ref="2host_order" >host_order</a>)</td></tr>
+<tr><th id="54">54</th><td>	{</td></tr>
+<tr><th id="55">55</th><td>		<b>return</b> <a class="local col1 ref" href="#1value_to_check" title='value_to_check' data-ref="1value_to_check" >value_to_check</a>;</td></tr>
+<tr><th id="56">56</th><td>	}</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>	<b>union</b> {</td></tr>
+<tr><th id="59">59</th><td>		<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <dfn class="local col3 decl" id="3integer" title='integer' data-type='uint64_t' data-ref="3integer" >integer</dfn>;</td></tr>
+<tr><th id="60">60</th><td>		<a class="typedef" href="../../../../include/stdint.h.html#uint8_t" title='uint8_t' data-type='unsigned char' data-ref="uint8_t" >uint8_t</a> <dfn class="local col4 decl" id="4bytes" title='bytes' data-type='uint8_t [8]' data-ref="4bytes" >bytes</dfn>[<var>8</var>];</td></tr>
+<tr><th id="61">61</th><td>	} <dfn class="local col5 decl" id="5value" title='value' data-type='union (anonymous union at /home/nayd/TrinityCore6x/dep/zmqpp/zmqpp/inet.hpp:58:2)' data-ref="5value" >value</dfn> { <a class="local col1 ref" href="#1value_to_check" title='value_to_check' data-ref="1value_to_check" ><a class="local col1 ref" href="#1value_to_check" title='value_to_check' data-ref="1value_to_check" >value_to_check</a></a> };</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>	<span class="namespace">std::</span><a class="ref" href="../../../../include/c++/4.9/bits/move.h.html#_ZSt4swapRT_S0_" title='std::swap' data-ref="_ZSt4swapRT_S0_" id="_ZSt4swapRT_S0_" >swap</a>(<a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>0</var>], <a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>7</var>]);</td></tr>
+<tr><th id="64">64</th><td>	<span class="namespace">std::</span><a class="ref" href="../../../../include/c++/4.9/bits/move.h.html#_ZSt4swapRT_S0_" title='std::swap' data-ref="_ZSt4swapRT_S0_" id="_ZSt4swapRT_S0_" >swap</a>(<a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>1</var>], <a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>6</var>]);</td></tr>
+<tr><th id="65">65</th><td>	<span class="namespace">std::</span><a class="ref" href="../../../../include/c++/4.9/bits/move.h.html#_ZSt4swapRT_S0_" title='std::swap' data-ref="_ZSt4swapRT_S0_" id="_ZSt4swapRT_S0_" >swap</a>(<a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>2</var>], <a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>5</var>]);</td></tr>
+<tr><th id="66">66</th><td>	<span class="namespace">std::</span><a class="ref" href="../../../../include/c++/4.9/bits/move.h.html#_ZSt4swapRT_S0_" title='std::swap' data-ref="_ZSt4swapRT_S0_" id="_ZSt4swapRT_S0_" >swap</a>(<a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>3</var>], <a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col4 ref" href="#4bytes" title='bytes' data-ref="4bytes" >bytes</a>[<var>4</var>]);</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>	<b>return</b> <a class="local col5 ref" href="#5value" title='value' data-ref="5value" >value</a>.<a class="local col3 ref" href="#3integer" title='integer' data-ref="3integer" >integer</a>;</td></tr>
+<tr><th id="69">69</th><td>}</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="72">72</th><td><i class="doc"> * 64 bit version of the htons/htonl</i></td></tr>
+<tr><th id="73">73</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="74">74</th><td><i class="doc"> * I've used the name htonll to try and keep with the htonl naming scheme.</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc"> * <span class="command">\param</span> <span class="arg">hostlonglong</span> unsigned 64 bit host order integer</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc"> * <span class="command">\return</span> unsigned 64 bit network order integer</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="79">79</th><td><u>#<span data-ppcond="79">ifndef</span> <span class="macro" data-ref="_M/htonll">htonll</span></u></td></tr>
+<tr><th id="80">80</th><td><b>inline</b> <a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <dfn class="decl def" id="_ZN5zmqpp6htonllEm" title='zmqpp::htonll' data-ref="_ZN5zmqpp6htonllEm" >htonll</dfn>(<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <em>const</em> <dfn class="local col6 decl" id="6hostlonglong" title='hostlonglong' data-type='const uint64_t' data-ref="6hostlonglong" >hostlonglong</dfn>)</td></tr>
+<tr><th id="81">81</th><td>{</td></tr>
+<tr><th id="82">82</th><td>	<b>return</b> <span class="namespace">zmqpp::</span><a class="ref" href="#_ZN5zmqpp14swap_if_neededEm" title='zmqpp::swap_if_needed' data-ref="_ZN5zmqpp14swap_if_neededEm" >swap_if_needed</a>(<a class="local col6 ref" href="#6hostlonglong" title='hostlonglong' data-ref="6hostlonglong" >hostlonglong</a>);</td></tr>
+<tr><th id="83">83</th><td>}</td></tr>
+<tr><th id="84">84</th><td><u>#<span data-ppcond="79">endif</span></u></td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="87">87</th><td><i class="doc"> * 64 bit version of the ntohs/ntohl</i></td></tr>
+<tr><th id="88">88</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc"> * I've used the name htonll to try and keep with the htonl naming scheme.</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc"> * <span class="command">\param</span> <span class="arg">networklonglong</span> unsigned 64 bit network order integer</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc"> * <span class="command">\return</span> unsigned 64 bit host order integer</i></td></tr>
+<tr><th id="93">93</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="94">94</th><td><u>#<span data-ppcond="94">ifndef</span> <span class="macro" data-ref="_M/ntohll">ntohll</span></u></td></tr>
+<tr><th id="95">95</th><td><b>inline</b> <a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <dfn class="decl def" id="_ZN5zmqpp6ntohllEm" title='zmqpp::ntohll' data-ref="_ZN5zmqpp6ntohllEm" >ntohll</dfn>(<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <em>const</em> <dfn class="local col7 decl" id="7networklonglong" title='networklonglong' data-type='const uint64_t' data-ref="7networklonglong" >networklonglong</dfn>)</td></tr>
+<tr><th id="96">96</th><td>{</td></tr>
+<tr><th id="97">97</th><td>	<b>return</b> <span class="namespace">zmqpp::</span><a class="ref" href="#_ZN5zmqpp14swap_if_neededEm" title='zmqpp::swap_if_needed' data-ref="_ZN5zmqpp14swap_if_neededEm" >swap_if_needed</a>(<a class="local col7 ref" href="#7networklonglong" title='networklonglong' data-ref="7networklonglong" >networklonglong</a>);</td></tr>
+<tr><th id="98">98</th><td>}</td></tr>
+<tr><th id="99">99</th><td><u>#<span data-ppcond="94">endif</span></u></td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc"> * floating point version of the htons/htonl</i></td></tr>
+<tr><th id="103">103</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc"> * <span class="command">\param</span> <span class="arg">value</span> host order floating point</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc"> * <span class="command">\returns</span> network order floating point</i></td></tr>
+<tr><th id="106">106</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="107">107</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN5zmqpp5htonfEf" title='zmqpp::htonf' data-ref="_ZN5zmqpp5htonfEf" >htonf</dfn>(<em>float</em> <dfn class="local col8 decl" id="8value" title='value' data-type='float' data-ref="8value" >value</dfn>)</td></tr>
+<tr><th id="108">108</th><td>{</td></tr>
+<tr><th id="109">109</th><td>	<a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(<b>sizeof</b>(<em>float</em>) == <b>sizeof</b>(uint32_t));</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <dfn class="local col9 decl" id="9temp" title='temp' data-type='uint32_t' data-ref="9temp" >temp</dfn>;</td></tr>
+<tr><th id="112">112</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col9 ref" href="#9temp" title='temp' data-ref="9temp" >temp</a>, &amp;<a class="local col8 ref" href="#8value" title='value' data-ref="8value" >value</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>));</td></tr>
+<tr><th id="113">113</th><td>	<a class="local col9 ref" href="#9temp" title='temp' data-ref="9temp" >temp</a> = <a class="macro" href="../../../../include/netinet/in.h.html#402" title="(__extension__ ({ unsigned int __v, __x = (temp); if (__builtin_constant_p (__x)) __v = ((((__x) &amp; 0xff000000) &gt;&gt; 24) | (((__x) &amp; 0x00ff0000) &gt;&gt; 8) | (((__x) &amp; 0x0000ff00) &lt;&lt; 8) | (((__x) &amp; 0x000000ff) &lt;&lt; 24)); else __asm__ (&quot;bswap %0&quot; : &quot;=r&quot; (__v) : &quot;0&quot; (__x)); __v; }))" data-ref="_M/htonl">htonl</a>( <a class="local col9 ref" href="#9temp" title='temp' data-ref="9temp" >temp</a> );</td></tr>
+<tr><th id="114">114</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col8 ref" href="#8value" title='value' data-ref="8value" >value</a>, &amp;<a class="local col9 ref" href="#9temp" title='temp' data-ref="9temp" >temp</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>));</td></tr>
+<tr><th id="115">115</th><td></td></tr>
+<tr><th id="116">116</th><td>	<b>return</b> <a class="local col8 ref" href="#8value" title='value' data-ref="8value" >value</a>;</td></tr>
+<tr><th id="117">117</th><td>}</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc"> * floating point version of the ntohs/ntohl</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="122">122</th><td><i class="doc"> * <span class="command">\param</span> <span class="arg">value</span> network order float</i></td></tr>
+<tr><th id="123">123</th><td><i class="doc"> * <span class="command">\returns</span> host order float</i></td></tr>
+<tr><th id="124">124</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="125">125</th><td><b>inline</b> <em>float</em> <dfn class="decl def" id="_ZN5zmqpp5ntohfEf" title='zmqpp::ntohf' data-ref="_ZN5zmqpp5ntohfEf" >ntohf</dfn>(<em>float</em> <dfn class="local col0 decl" id="10value" title='value' data-type='float' data-ref="10value" >value</dfn>)</td></tr>
+<tr><th id="126">126</th><td>{</td></tr>
+<tr><th id="127">127</th><td>	<a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(<b>sizeof</b>(<em>float</em>) == <b>sizeof</b>(uint32_t));</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a> <dfn class="local col1 decl" id="11temp" title='temp' data-type='uint32_t' data-ref="11temp" >temp</dfn>;</td></tr>
+<tr><th id="130">130</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col1 ref" href="#11temp" title='temp' data-ref="11temp" >temp</a>, &amp;<a class="local col0 ref" href="#10value" title='value' data-ref="10value" >value</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>));</td></tr>
+<tr><th id="131">131</th><td>	<a class="local col1 ref" href="#11temp" title='temp' data-ref="11temp" >temp</a> = <a class="macro" href="../../../../include/netinet/in.h.html#400" title="(__extension__ ({ unsigned int __v, __x = (temp); if (__builtin_constant_p (__x)) __v = ((((__x) &amp; 0xff000000) &gt;&gt; 24) | (((__x) &amp; 0x00ff0000) &gt;&gt; 8) | (((__x) &amp; 0x0000ff00) &lt;&lt; 8) | (((__x) &amp; 0x000000ff) &lt;&lt; 24)); else __asm__ (&quot;bswap %0&quot; : &quot;=r&quot; (__v) : &quot;0&quot; (__x)); __v; }))" data-ref="_M/ntohl">ntohl</a>( <a class="local col1 ref" href="#11temp" title='temp' data-ref="11temp" >temp</a> );</td></tr>
+<tr><th id="132">132</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col0 ref" href="#10value" title='value' data-ref="10value" >value</a>, &amp;<a class="local col1 ref" href="#11temp" title='temp' data-ref="11temp" >temp</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint32_t" title='uint32_t' data-type='unsigned int' data-ref="uint32_t" >uint32_t</a>));</td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td>	<b>return</b> <a class="local col0 ref" href="#10value" title='value' data-ref="10value" >value</a>;</td></tr>
+<tr><th id="135">135</th><td>}</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="138">138</th><td><i class="doc"> * double precision floating point version of the htons/htonl</i></td></tr>
+<tr><th id="139">139</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="140">140</th><td><i class="doc"> * <span class="command">\param</span> <span class="arg">value</span> host order double precision floating point</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc"> * <span class="command">\returns</span> network order double precision floating point</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="143">143</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN5zmqpp5htondEd" title='zmqpp::htond' data-ref="_ZN5zmqpp5htondEd" >htond</dfn>(<em>double</em> <dfn class="local col2 decl" id="12value" title='value' data-type='double' data-ref="12value" >value</dfn>)</td></tr>
+<tr><th id="144">144</th><td>{</td></tr>
+<tr><th id="145">145</th><td>	<a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(<b>sizeof</b>(<em>double</em>) == <b>sizeof</b>(uint64_t));</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <dfn class="local col3 decl" id="13temp" title='temp' data-type='uint64_t' data-ref="13temp" >temp</dfn>;</td></tr>
+<tr><th id="148">148</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col3 ref" href="#13temp" title='temp' data-ref="13temp" >temp</a>, &amp;<a class="local col2 ref" href="#12value" title='value' data-ref="12value" >value</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a>));</td></tr>
+<tr><th id="149">149</th><td>	<a class="local col3 ref" href="#13temp" title='temp' data-ref="13temp" >temp</a> = <a class="ref" href="#_ZN5zmqpp6htonllEm" title='zmqpp::htonll' data-ref="_ZN5zmqpp6htonllEm" >htonll</a>(<a class="local col3 ref" href="#13temp" title='temp' data-ref="13temp" >temp</a>);</td></tr>
+<tr><th id="150">150</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col2 ref" href="#12value" title='value' data-ref="12value" >value</a>, &amp;<a class="local col3 ref" href="#13temp" title='temp' data-ref="13temp" >temp</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a>));</td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td>	<b>return</b> <a class="local col2 ref" href="#12value" title='value' data-ref="12value" >value</a>;</td></tr>
+<tr><th id="153">153</th><td>}</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc"> * double precision floating point version of the ntohs/ntohl</i></td></tr>
+<tr><th id="157">157</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="158">158</th><td><i class="doc"> * <span class="command">\param</span> <span class="arg">value</span> network order double precision floating point</i></td></tr>
+<tr><th id="159">159</th><td><i class="doc"> * <span class="command">\returns</span> host order double precision floating point</i></td></tr>
+<tr><th id="160">160</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="161">161</th><td><b>inline</b> <em>double</em> <dfn class="decl def" id="_ZN5zmqpp5ntohdEd" title='zmqpp::ntohd' data-ref="_ZN5zmqpp5ntohdEd" >ntohd</dfn>(<em>double</em> <dfn class="local col4 decl" id="14value" title='value' data-type='double' data-ref="14value" >value</dfn>)</td></tr>
+<tr><th id="162">162</th><td>{</td></tr>
+<tr><th id="163">163</th><td>	<a class="macro" href="../../../../include/assert.h.html#50" title="(static_cast&lt;void&gt; (0))" data-ref="_M/assert">assert</a>(<b>sizeof</b>(<em>double</em>) == <b>sizeof</b>(uint64_t));</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>	<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a> <dfn class="local col5 decl" id="15temp" title='temp' data-type='uint64_t' data-ref="15temp" >temp</dfn>;</td></tr>
+<tr><th id="166">166</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col5 ref" href="#15temp" title='temp' data-ref="15temp" >temp</a>, &amp;<a class="local col4 ref" href="#14value" title='value' data-ref="14value" >value</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a>));</td></tr>
+<tr><th id="167">167</th><td>	<a class="local col5 ref" href="#15temp" title='temp' data-ref="15temp" >temp</a> = <a class="ref" href="#_ZN5zmqpp6ntohllEm" title='zmqpp::ntohll' data-ref="_ZN5zmqpp6ntohllEm" >ntohll</a>(<a class="local col5 ref" href="#15temp" title='temp' data-ref="15temp" >temp</a>);</td></tr>
+<tr><th id="168">168</th><td>	<a class="ref" href="../../../../include/string.h.html#memcpy" title='memcpy' data-ref="memcpy" id="memcpy" >memcpy</a>(&amp;<a class="local col4 ref" href="#14value" title='value' data-ref="14value" >value</a>, &amp;<a class="local col5 ref" href="#15temp" title='temp' data-ref="15temp" >temp</a>, <b>sizeof</b>(<a class="typedef" href="../../../../include/stdint.h.html#uint64_t" title='uint64_t' data-type='unsigned long' data-ref="uint64_t" >uint64_t</a>));</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td>	<b>return</b> <a class="local col4 ref" href="#14value" title='value' data-ref="14value" >value</a>;</td></tr>
+<tr><th id="171">171</th><td>}</td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td>}</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td><u>#<span data-ppcond="8">endif</span> /* INET_HPP_ */</u></td></tr>
+<tr><th id="176">176</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='message.cpp.html'>TrinityCore6.x/dep/zmqpp/zmqpp/message.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

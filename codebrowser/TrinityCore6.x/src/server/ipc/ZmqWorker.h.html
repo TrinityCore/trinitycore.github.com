@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<title>ZmqWorker.h [TrinityCore6.x/src/server/ipc/ZmqWorker.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/ipc/ZmqWorker.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>server</a>/<a href='./'>ipc</a>/ZmqWorker.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/__ZMQWORKER_H">__ZMQWORKER_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/__ZMQWORKER_H" data-ref="_M/__ZMQWORKER_H">__ZMQWORKER_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="ZMQTask.h.html">"ZMQTask.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../dep/zmqpp/zmqpp/zmqpp.hpp.html">&lt;zmqpp/zmqpp.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>class</b> <dfn class="type def" id="ZmqWorker" title='ZmqWorker' data-ref="ZmqWorker" >ZmqWorker</dfn> : <b>public</b> <a class="type" href="ZMQTask.h.html#ZMQTask" title='ZMQTask' data-ref="ZMQTask" >ZMQTask</a></td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td><b>public</b>:</td></tr>
+<tr><th id="27">27</th><td>    <a class="decl" href="ZmqWorker.cpp.html#_ZN9ZmqWorkerC1ERKSsS1_" title='ZmqWorker::ZmqWorker' data-ref="_ZN9ZmqWorkerC1ERKSsS1_" id="_ZN9ZmqWorkerC1ERKSsS1_" >ZmqWorker</a>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col1 decl" id="1taskUri" title='taskUri' data-type='const std::string &amp;' data-ref="1taskUri" >taskUri</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col2 decl" id="2resUri" title='resUri' data-type='const std::string &amp;' data-ref="2resUri" >resUri</dfn>);</td></tr>
+<tr><th id="28">28</th><td>    <a class="virtual decl" href="ZmqWorker.cpp.html#_ZN9ZmqWorkerD1Ev" title='ZmqWorker::~ZmqWorker' data-ref="_ZN9ZmqWorkerD1Ev" id="_ZN9ZmqWorkerD1Ev" >~ZmqWorker</a>();</td></tr>
+<tr><th id="29">29</th><td>    <em>void</em> <a class="virtual decl" href="ZmqWorker.cpp.html#_ZN9ZmqWorker3RunEv" title='ZmqWorker::Run' data-ref="_ZN9ZmqWorker3RunEv" id="_ZN9ZmqWorker3RunEv" >Run</a>() override;</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>protected</b>:</td></tr>
+<tr><th id="32">32</th><td>    <em>void</em> <a class="virtual decl" href="ZmqWorker.cpp.html#_ZN9ZmqWorker10HandleOpenEv" title='ZmqWorker::HandleOpen' data-ref="_ZN9ZmqWorker10HandleOpenEv" id="_ZN9ZmqWorker10HandleOpenEv" >HandleOpen</a>() override;</td></tr>
+<tr><th id="33">33</th><td>    <em>void</em> <a class="virtual decl" href="ZmqWorker.cpp.html#_ZN9ZmqWorker11HandleCloseEv" title='ZmqWorker::HandleClose' data-ref="_ZN9ZmqWorker11HandleCloseEv" id="_ZN9ZmqWorker11HandleCloseEv" >HandleClose</a>() override;</td></tr>
+<tr><th id="34">34</th><td>    <span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/socket.hpp.html#zmqpp::socket" title='zmqpp::socket' data-ref="zmqpp::socket" >socket</a>* <dfn class="decl" id="ZmqWorker::_results" title='ZmqWorker::_results' data-ref="ZmqWorker::_results" >_results</dfn> = <b>nullptr</b>;</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><b>private</b>:</td></tr>
+<tr><th id="37">37</th><td>    <em>void</em> <a class="decl" href="ZmqWorker.cpp.html#_ZN9ZmqWorker11PerformWorkEv" title='ZmqWorker::PerformWork' data-ref="_ZN9ZmqWorker11PerformWorkEv" id="_ZN9ZmqWorker11PerformWorkEv" >PerformWork</a>();</td></tr>
+<tr><th id="38">38</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN9ZmqWorker8DispatchERKN5zmqpp7messageE" title='ZmqWorker::Dispatch' data-ref="_ZN9ZmqWorker8DispatchERKN5zmqpp7messageE" >Dispatch</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a> <em>const</em>&amp;) = <var>0</var>;</td></tr>
+<tr><th id="39">39</th><td>    <span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/socket.hpp.html#zmqpp::socket" title='zmqpp::socket' data-ref="zmqpp::socket" >socket</a>* <dfn class="decl" id="ZmqWorker::_taskQueue" title='ZmqWorker::_taskQueue' data-ref="ZmqWorker::_taskQueue" >_taskQueue</dfn> = <b>nullptr</b>;</td></tr>
+<tr><th id="40">40</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="ZmqWorker::_taskUri" title='ZmqWorker::_taskUri' data-ref="ZmqWorker::_taskUri" >_taskUri</dfn>;</td></tr>
+<tr><th id="41">41</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="ZmqWorker::_resultsUri" title='ZmqWorker::_resultsUri' data-ref="ZmqWorker::_resultsUri" >_resultsUri</dfn>;</td></tr>
+<tr><th id="42">42</th><td>};</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='ZmqWorker.cpp.html'>TrinityCore6.x/src/server/ipc/ZmqWorker.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,461 @@
+<!doctype html>
+<html>
+<head>
+<title>tcache.h [TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/tcache.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/tcache.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/tcache.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><b>typedef</b> <b>struct</b> <a class="type" href="tcache.h.html#tcache_bin_info_s" title='tcache_bin_info_s' data-ref="tcache_bin_info_s" id="tcache_bin_info_s" ><a class="type" href="tcache.h.html#tcache_bin_info_s" title='tcache_bin_info_s' data-ref="tcache_bin_info_s" >tcache_bin_info_s</a></a> <dfn class="typedef" id="tcache_bin_info_t" title='tcache_bin_info_t' data-type='struct tcache_bin_info_s' data-ref="tcache_bin_info_t" >tcache_bin_info_t</dfn>;</td></tr>
+<tr><th id="5">5</th><td><b>typedef</b> <b>struct</b> <a class="type" href="tcache.h.html#tcache_bin_s" title='tcache_bin_s' data-ref="tcache_bin_s" id="tcache_bin_s" ><a class="type" href="tcache.h.html#tcache_bin_s" title='tcache_bin_s' data-ref="tcache_bin_s" >tcache_bin_s</a></a> <dfn class="typedef" id="tcache_bin_t" title='tcache_bin_t' data-type='struct tcache_bin_s' data-ref="tcache_bin_t" >tcache_bin_t</dfn>;</td></tr>
+<tr><th id="6">6</th><td><b>typedef</b> <b>struct</b> <a class="type" href="tcache.h.html#tcache_s" title='tcache_s' data-ref="tcache_s" id="tcache_s" ><a class="type" href="tcache.h.html#tcache_s" title='tcache_s' data-ref="tcache_s" >tcache_s</a></a> <dfn class="typedef" id="tcache_t" title='tcache_t' data-type='struct tcache_s' data-ref="tcache_t" >tcache_t</dfn>;</td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><i>/*</i></td></tr>
+<tr><th id="9">9</th><td><i> * tcache pointers close to NULL are used to encode state information that is</i></td></tr>
+<tr><th id="10">10</th><td><i> * used for two purposes: preventing thread caching on a per thread basis and</i></td></tr>
+<tr><th id="11">11</th><td><i> * cleaning up during thread shutdown.</i></td></tr>
+<tr><th id="12">12</th><td><i> */</i></td></tr>
+<tr><th id="13">13</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_STATE_DISABLED" data-ref="_M/TCACHE_STATE_DISABLED">TCACHE_STATE_DISABLED</dfn>		((tcache_t *)(uintptr_t)1)</u></td></tr>
+<tr><th id="14">14</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_STATE_REINCARNATED" data-ref="_M/TCACHE_STATE_REINCARNATED">TCACHE_STATE_REINCARNATED</dfn>	((tcache_t *)(uintptr_t)2)</u></td></tr>
+<tr><th id="15">15</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_STATE_PURGATORY" data-ref="_M/TCACHE_STATE_PURGATORY">TCACHE_STATE_PURGATORY</dfn>		((tcache_t *)(uintptr_t)3)</u></td></tr>
+<tr><th id="16">16</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_STATE_MAX" data-ref="_M/TCACHE_STATE_MAX">TCACHE_STATE_MAX</dfn>		TCACHE_STATE_PURGATORY</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><i>/*</i></td></tr>
+<tr><th id="19">19</th><td><i> * Absolute maximum number of cache slots for each small bin in the thread</i></td></tr>
+<tr><th id="20">20</th><td><i> * cache.  This is an additional constraint beyond that imposed as: twice the</i></td></tr>
+<tr><th id="21">21</th><td><i> * number of regions per run for this size class.</i></td></tr>
+<tr><th id="22">22</th><td><i> *</i></td></tr>
+<tr><th id="23">23</th><td><i> * This constant must be an even number.</i></td></tr>
+<tr><th id="24">24</th><td><i> */</i></td></tr>
+<tr><th id="25">25</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_NSLOTS_SMALL_MAX" data-ref="_M/TCACHE_NSLOTS_SMALL_MAX">TCACHE_NSLOTS_SMALL_MAX</dfn>		200</u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><i>/* Number of cache slots for large size classes. */</i></td></tr>
+<tr><th id="28">28</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_NSLOTS_LARGE" data-ref="_M/TCACHE_NSLOTS_LARGE">TCACHE_NSLOTS_LARGE</dfn>		20</u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i>/* (1U &lt;&lt; opt_lg_tcache_max) is used to compute tcache_maxclass. */</i></td></tr>
+<tr><th id="31">31</th><td><u>#define	<dfn class="macro" id="_M/LG_TCACHE_MAXCLASS_DEFAULT" data-ref="_M/LG_TCACHE_MAXCLASS_DEFAULT">LG_TCACHE_MAXCLASS_DEFAULT</dfn>	15</u></td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><i>/*</i></td></tr>
+<tr><th id="34">34</th><td><i> * TCACHE_GC_SWEEP is the approximate number of allocation events between</i></td></tr>
+<tr><th id="35">35</th><td><i> * full GC sweeps.  Integer rounding may cause the actual number to be</i></td></tr>
+<tr><th id="36">36</th><td><i> * slightly higher, since GC is performed incrementally.</i></td></tr>
+<tr><th id="37">37</th><td><i> */</i></td></tr>
+<tr><th id="38">38</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_GC_SWEEP" data-ref="_M/TCACHE_GC_SWEEP">TCACHE_GC_SWEEP</dfn>			8192</u></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><i>/* Number of tcache allocation/deallocation events between incremental GCs. */</i></td></tr>
+<tr><th id="41">41</th><td><u>#define	<dfn class="macro" id="_M/TCACHE_GC_INCR" data-ref="_M/TCACHE_GC_INCR">TCACHE_GC_INCR</dfn>							\</u></td></tr>
+<tr><th id="42">42</th><td><u>    ((TCACHE_GC_SWEEP / NBINS) + ((TCACHE_GC_SWEEP / NBINS == 0) ? 0 : 1))</u></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="45">45</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="46">46</th><td><u>#<span data-ppcond="46">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><b>typedef</b> <b>enum</b> {</td></tr>
+<tr><th id="49">49</th><td>	tcache_enabled_false   = <var>0</var>, <i>/* Enable cast to/from bool. */</i></td></tr>
+<tr><th id="50">50</th><td>	tcache_enabled_true    = <var>1</var>,</td></tr>
+<tr><th id="51">51</th><td>	tcache_enabled_default = <var>2</var></td></tr>
+<tr><th id="52">52</th><td>} tcache_enabled_t;</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><i>/*</i></td></tr>
+<tr><th id="55">55</th><td><i> * Read-only information associated with each element of tcache_t's tbins array</i></td></tr>
+<tr><th id="56">56</th><td><i> * is stored separately, mainly to reduce memory usage.</i></td></tr>
+<tr><th id="57">57</th><td><i> */</i></td></tr>
+<tr><th id="58">58</th><td><b>struct</b> tcache_bin_info_s {</td></tr>
+<tr><th id="59">59</th><td>	<em>unsigned</em>	ncached_max;	<i>/* Upper limit on ncached. */</i></td></tr>
+<tr><th id="60">60</th><td>};</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><b>struct</b> tcache_bin_s {</td></tr>
+<tr><th id="63">63</th><td>	tcache_bin_stats_t tstats;</td></tr>
+<tr><th id="64">64</th><td>	<em>int</em>		low_water;	<i>/* Min # cached since last GC. */</i></td></tr>
+<tr><th id="65">65</th><td>	<em>unsigned</em>	lg_fill_div;	<i>/* Fill (ncached_max &gt;&gt; lg_fill_div). */</i></td></tr>
+<tr><th id="66">66</th><td>	<em>unsigned</em>	ncached;	<i>/* # of cached objects. */</i></td></tr>
+<tr><th id="67">67</th><td>	<em>void</em>		**avail;	<i>/* Stack of available objects. */</i></td></tr>
+<tr><th id="68">68</th><td>};</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><b>struct</b> tcache_s {</td></tr>
+<tr><th id="71">71</th><td>	ql_elm(tcache_t) link;		<i>/* Used for aggregating stats. */</i></td></tr>
+<tr><th id="72">72</th><td>	uint64_t	prof_accumbytes;<i>/* Cleared after arena_prof_accum() */</i></td></tr>
+<tr><th id="73">73</th><td>	arena_t		*arena;		<i>/* This thread's arena. */</i></td></tr>
+<tr><th id="74">74</th><td>	<em>unsigned</em>	ev_cnt;		<i>/* Event count since incremental GC. */</i></td></tr>
+<tr><th id="75">75</th><td>	<em>unsigned</em>	next_gc_bin;	<i>/* Next bin to GC. */</i></td></tr>
+<tr><th id="76">76</th><td>	tcache_bin_t	tbins[<var>1</var>];	<i>/* Dynamically sized. */</i></td></tr>
+<tr><th id="77">77</th><td>	<i>/*</i></td></tr>
+<tr><th id="78">78</th><td><i>	 * The pointer stacks associated with tbins follow as a contiguous</i></td></tr>
+<tr><th id="79">79</th><td><i>	 * array.  During tcache initialization, the avail pointer in each</i></td></tr>
+<tr><th id="80">80</th><td><i>	 * element of tbins is initialized to point to the proper offset within</i></td></tr>
+<tr><th id="81">81</th><td><i>	 * this array.</i></td></tr>
+<tr><th id="82">82</th><td><i>	 */</i></td></tr>
+<tr><th id="83">83</th><td>};</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><u>#<span data-ppcond="46">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="86">86</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="87">87</th><td><u>#<span data-ppcond="87">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td><b>extern</b> bool	opt_tcache;</td></tr>
+<tr><th id="90">90</th><td><b>extern</b> ssize_t	opt_lg_tcache_max;</td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td><b>extern</b> tcache_bin_info_t	*tcache_bin_info;</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td><i>/*</i></td></tr>
+<tr><th id="95">95</th><td><i> * Number of tcache bins.  There are NBINS small-object bins, plus 0 or more</i></td></tr>
+<tr><th id="96">96</th><td><i> * large-object bins.</i></td></tr>
+<tr><th id="97">97</th><td><i> */</i></td></tr>
+<tr><th id="98">98</th><td><b>extern</b> size_t			nhbins;</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td><i>/* Maximum cached size class. */</i></td></tr>
+<tr><th id="101">101</th><td><b>extern</b> size_t			tcache_maxclass;</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>size_t	tcache_salloc(<em>const</em> <em>void</em> *ptr);</td></tr>
+<tr><th id="104">104</th><td><em>void</em>	tcache_event_hard(tcache_t *tcache);</td></tr>
+<tr><th id="105">105</th><td><em>void</em>	*tcache_alloc_small_hard(tcache_t *tcache, tcache_bin_t *tbin,</td></tr>
+<tr><th id="106">106</th><td>    size_t binind);</td></tr>
+<tr><th id="107">107</th><td><em>void</em>	tcache_bin_flush_small(tcache_bin_t *tbin, size_t binind, <em>unsigned</em> rem,</td></tr>
+<tr><th id="108">108</th><td>    tcache_t *tcache);</td></tr>
+<tr><th id="109">109</th><td><em>void</em>	tcache_bin_flush_large(tcache_bin_t *tbin, size_t binind, <em>unsigned</em> rem,</td></tr>
+<tr><th id="110">110</th><td>    tcache_t *tcache);</td></tr>
+<tr><th id="111">111</th><td><em>void</em>	tcache_arena_associate(tcache_t *tcache, arena_t *arena);</td></tr>
+<tr><th id="112">112</th><td><em>void</em>	tcache_arena_dissociate(tcache_t *tcache);</td></tr>
+<tr><th id="113">113</th><td>tcache_t *tcache_create(arena_t *arena);</td></tr>
+<tr><th id="114">114</th><td><em>void</em>	tcache_destroy(tcache_t *tcache);</td></tr>
+<tr><th id="115">115</th><td><em>void</em>	tcache_thread_cleanup(<em>void</em> *arg);</td></tr>
+<tr><th id="116">116</th><td><em>void</em>	tcache_stats_merge(tcache_t *tcache, arena_t *arena);</td></tr>
+<tr><th id="117">117</th><td>bool	tcache_boot0(<em>void</em>);</td></tr>
+<tr><th id="118">118</th><td>bool	tcache_boot1(<em>void</em>);</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><u>#<span data-ppcond="87">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="121">121</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="122">122</th><td><u>#<span data-ppcond="122">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><u>#ifndef JEMALLOC_ENABLE_INLINE</u></td></tr>
+<tr><th id="125">125</th><td>malloc_tsd_protos(JEMALLOC_ATTR(unused), tcache, tcache_t *)</td></tr>
+<tr><th id="126">126</th><td>malloc_tsd_protos(JEMALLOC_ATTR(unused), tcache_enabled, tcache_enabled_t)</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td><em>void</em>	tcache_event(tcache_t *tcache);</td></tr>
+<tr><th id="129">129</th><td><em>void</em>	tcache_flush(<em>void</em>);</td></tr>
+<tr><th id="130">130</th><td>bool	tcache_enabled_get(<em>void</em>);</td></tr>
+<tr><th id="131">131</th><td>tcache_t *tcache_get(bool create);</td></tr>
+<tr><th id="132">132</th><td><em>void</em>	tcache_enabled_set(bool enabled);</td></tr>
+<tr><th id="133">133</th><td><em>void</em>	*tcache_alloc_easy(tcache_bin_t *tbin);</td></tr>
+<tr><th id="134">134</th><td><em>void</em>	*tcache_alloc_small(tcache_t *tcache, size_t size, bool zero);</td></tr>
+<tr><th id="135">135</th><td><em>void</em>	*tcache_alloc_large(tcache_t *tcache, size_t size, bool zero);</td></tr>
+<tr><th id="136">136</th><td><em>void</em>	tcache_dalloc_small(tcache_t *tcache, <em>void</em> *ptr, size_t binind);</td></tr>
+<tr><th id="137">137</th><td><em>void</em>	tcache_dalloc_large(tcache_t *tcache, <em>void</em> *ptr, size_t size);</td></tr>
+<tr><th id="138">138</th><td><u>#endif</u></td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td><u>#if (defined(JEMALLOC_ENABLE_INLINE) || defined(JEMALLOC_TCACHE_C_))</u></td></tr>
+<tr><th id="141">141</th><td><i>/* Map of thread-specific caches. */</i></td></tr>
+<tr><th id="142">142</th><td>malloc_tsd_externs(tcache, tcache_t *)</td></tr>
+<tr><th id="143">143</th><td>malloc_tsd_funcs(JEMALLOC_ALWAYS_INLINE, tcache, tcache_t *, NULL,</td></tr>
+<tr><th id="144">144</th><td>    tcache_thread_cleanup)</td></tr>
+<tr><th id="145">145</th><td><i>/* Per thread flag that allows thread caches to be disabled. */</i></td></tr>
+<tr><th id="146">146</th><td>malloc_tsd_externs(tcache_enabled, tcache_enabled_t)</td></tr>
+<tr><th id="147">147</th><td>malloc_tsd_funcs(JEMALLOC_ALWAYS_INLINE, tcache_enabled, tcache_enabled_t,</td></tr>
+<tr><th id="148">148</th><td>    tcache_enabled_default, malloc_tsd_no_cleanup)</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="151">151</th><td>tcache_flush(<em>void</em>)</td></tr>
+<tr><th id="152">152</th><td>{</td></tr>
+<tr><th id="153">153</th><td>	tcache_t *tcache;</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td>	cassert(config_tcache);</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>	tcache = *tcache_tsd_get();</td></tr>
+<tr><th id="158">158</th><td>	<b>if</b> ((uintptr_t)tcache &lt;= (uintptr_t)TCACHE_STATE_MAX)</td></tr>
+<tr><th id="159">159</th><td>		<b>return</b>;</td></tr>
+<tr><th id="160">160</th><td>	tcache_destroy(tcache);</td></tr>
+<tr><th id="161">161</th><td>	tcache = NULL;</td></tr>
+<tr><th id="162">162</th><td>	tcache_tsd_set(&amp;tcache);</td></tr>
+<tr><th id="163">163</th><td>}</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>JEMALLOC_INLINE bool</td></tr>
+<tr><th id="166">166</th><td>tcache_enabled_get(<em>void</em>)</td></tr>
+<tr><th id="167">167</th><td>{</td></tr>
+<tr><th id="168">168</th><td>	tcache_enabled_t tcache_enabled;</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td>	cassert(config_tcache);</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>	tcache_enabled = *tcache_enabled_tsd_get();</td></tr>
+<tr><th id="173">173</th><td>	<b>if</b> (tcache_enabled == tcache_enabled_default) {</td></tr>
+<tr><th id="174">174</th><td>		tcache_enabled = (tcache_enabled_t)opt_tcache;</td></tr>
+<tr><th id="175">175</th><td>		tcache_enabled_tsd_set(&amp;tcache_enabled);</td></tr>
+<tr><th id="176">176</th><td>	}</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td>	<b>return</b> ((bool)tcache_enabled);</td></tr>
+<tr><th id="179">179</th><td>}</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="182">182</th><td>tcache_enabled_set(bool enabled)</td></tr>
+<tr><th id="183">183</th><td>{</td></tr>
+<tr><th id="184">184</th><td>	tcache_enabled_t tcache_enabled;</td></tr>
+<tr><th id="185">185</th><td>	tcache_t *tcache;</td></tr>
+<tr><th id="186">186</th><td></td></tr>
+<tr><th id="187">187</th><td>	cassert(config_tcache);</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td>	tcache_enabled = (tcache_enabled_t)enabled;</td></tr>
+<tr><th id="190">190</th><td>	tcache_enabled_tsd_set(&amp;tcache_enabled);</td></tr>
+<tr><th id="191">191</th><td>	tcache = *tcache_tsd_get();</td></tr>
+<tr><th id="192">192</th><td>	<b>if</b> (enabled) {</td></tr>
+<tr><th id="193">193</th><td>		<b>if</b> (tcache == TCACHE_STATE_DISABLED) {</td></tr>
+<tr><th id="194">194</th><td>			tcache = NULL;</td></tr>
+<tr><th id="195">195</th><td>			tcache_tsd_set(&amp;tcache);</td></tr>
+<tr><th id="196">196</th><td>		}</td></tr>
+<tr><th id="197">197</th><td>	} <b>else</b> <i>/* disabled */</i> {</td></tr>
+<tr><th id="198">198</th><td>		<b>if</b> (tcache &gt; TCACHE_STATE_MAX) {</td></tr>
+<tr><th id="199">199</th><td>			tcache_destroy(tcache);</td></tr>
+<tr><th id="200">200</th><td>			tcache = NULL;</td></tr>
+<tr><th id="201">201</th><td>		}</td></tr>
+<tr><th id="202">202</th><td>		<b>if</b> (tcache == NULL) {</td></tr>
+<tr><th id="203">203</th><td>			tcache = TCACHE_STATE_DISABLED;</td></tr>
+<tr><th id="204">204</th><td>			tcache_tsd_set(&amp;tcache);</td></tr>
+<tr><th id="205">205</th><td>		}</td></tr>
+<tr><th id="206">206</th><td>	}</td></tr>
+<tr><th id="207">207</th><td>}</td></tr>
+<tr><th id="208">208</th><td></td></tr>
+<tr><th id="209">209</th><td>JEMALLOC_ALWAYS_INLINE tcache_t *</td></tr>
+<tr><th id="210">210</th><td>tcache_get(bool create)</td></tr>
+<tr><th id="211">211</th><td>{</td></tr>
+<tr><th id="212">212</th><td>	tcache_t *tcache;</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td>	<b>if</b> (config_tcache == false)</td></tr>
+<tr><th id="215">215</th><td>		<b>return</b> (NULL);</td></tr>
+<tr><th id="216">216</th><td>	<b>if</b> (config_lazy_lock &amp;&amp; isthreaded == false)</td></tr>
+<tr><th id="217">217</th><td>		<b>return</b> (NULL);</td></tr>
+<tr><th id="218">218</th><td></td></tr>
+<tr><th id="219">219</th><td>	tcache = *tcache_tsd_get();</td></tr>
+<tr><th id="220">220</th><td>	<b>if</b> ((uintptr_t)tcache &lt;= (uintptr_t)TCACHE_STATE_MAX) {</td></tr>
+<tr><th id="221">221</th><td>		<b>if</b> (tcache == TCACHE_STATE_DISABLED)</td></tr>
+<tr><th id="222">222</th><td>			<b>return</b> (NULL);</td></tr>
+<tr><th id="223">223</th><td>		<b>if</b> (tcache == NULL) {</td></tr>
+<tr><th id="224">224</th><td>			<b>if</b> (create == false) {</td></tr>
+<tr><th id="225">225</th><td>				<i>/*</i></td></tr>
+<tr><th id="226">226</th><td><i>				 * Creating a tcache here would cause</i></td></tr>
+<tr><th id="227">227</th><td><i>				 * allocation as a side effect of free().</i></td></tr>
+<tr><th id="228">228</th><td><i>				 * Ordinarily that would be okay since</i></td></tr>
+<tr><th id="229">229</th><td><i>				 * tcache_create() failure is a soft failure</i></td></tr>
+<tr><th id="230">230</th><td><i>				 * that doesn't propagate.  However, if TLS</i></td></tr>
+<tr><th id="231">231</th><td><i>				 * data are freed via free() as in glibc,</i></td></tr>
+<tr><th id="232">232</th><td><i>				 * subtle corruption could result from setting</i></td></tr>
+<tr><th id="233">233</th><td><i>				 * a TLS variable after its backing memory is</i></td></tr>
+<tr><th id="234">234</th><td><i>				 * freed.</i></td></tr>
+<tr><th id="235">235</th><td><i>				 */</i></td></tr>
+<tr><th id="236">236</th><td>				<b>return</b> (NULL);</td></tr>
+<tr><th id="237">237</th><td>			}</td></tr>
+<tr><th id="238">238</th><td>			<b>if</b> (tcache_enabled_get() == false) {</td></tr>
+<tr><th id="239">239</th><td>				tcache_enabled_set(false); <i>/* Memoize. */</i></td></tr>
+<tr><th id="240">240</th><td>				<b>return</b> (NULL);</td></tr>
+<tr><th id="241">241</th><td>			}</td></tr>
+<tr><th id="242">242</th><td>			<b>return</b> (tcache_create(choose_arena(NULL)));</td></tr>
+<tr><th id="243">243</th><td>		}</td></tr>
+<tr><th id="244">244</th><td>		<b>if</b> (tcache == TCACHE_STATE_PURGATORY) {</td></tr>
+<tr><th id="245">245</th><td>			<i>/*</i></td></tr>
+<tr><th id="246">246</th><td><i>			 * Make a note that an allocator function was called</i></td></tr>
+<tr><th id="247">247</th><td><i>			 * after tcache_thread_cleanup() was called.</i></td></tr>
+<tr><th id="248">248</th><td><i>			 */</i></td></tr>
+<tr><th id="249">249</th><td>			tcache = TCACHE_STATE_REINCARNATED;</td></tr>
+<tr><th id="250">250</th><td>			tcache_tsd_set(&amp;tcache);</td></tr>
+<tr><th id="251">251</th><td>			<b>return</b> (NULL);</td></tr>
+<tr><th id="252">252</th><td>		}</td></tr>
+<tr><th id="253">253</th><td>		<b>if</b> (tcache == TCACHE_STATE_REINCARNATED)</td></tr>
+<tr><th id="254">254</th><td>			<b>return</b> (NULL);</td></tr>
+<tr><th id="255">255</th><td>		not_reached();</td></tr>
+<tr><th id="256">256</th><td>	}</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td>	<b>return</b> (tcache);</td></tr>
+<tr><th id="259">259</th><td>}</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="262">262</th><td>tcache_event(tcache_t *tcache)</td></tr>
+<tr><th id="263">263</th><td>{</td></tr>
+<tr><th id="264">264</th><td></td></tr>
+<tr><th id="265">265</th><td>	<b>if</b> (TCACHE_GC_INCR == <var>0</var>)</td></tr>
+<tr><th id="266">266</th><td>		<b>return</b>;</td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td>	tcache-&gt;ev_cnt++;</td></tr>
+<tr><th id="269">269</th><td>	assert(tcache-&gt;ev_cnt &lt;= TCACHE_GC_INCR);</td></tr>
+<tr><th id="270">270</th><td>	<b>if</b> (tcache-&gt;ev_cnt == TCACHE_GC_INCR)</td></tr>
+<tr><th id="271">271</th><td>		tcache_event_hard(tcache);</td></tr>
+<tr><th id="272">272</th><td>}</td></tr>
+<tr><th id="273">273</th><td></td></tr>
+<tr><th id="274">274</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em> *</td></tr>
+<tr><th id="275">275</th><td>tcache_alloc_easy(tcache_bin_t *tbin)</td></tr>
+<tr><th id="276">276</th><td>{</td></tr>
+<tr><th id="277">277</th><td>	<em>void</em> *ret;</td></tr>
+<tr><th id="278">278</th><td></td></tr>
+<tr><th id="279">279</th><td>	<b>if</b> (tbin-&gt;ncached == <var>0</var>) {</td></tr>
+<tr><th id="280">280</th><td>		tbin-&gt;low_water = -<var>1</var>;</td></tr>
+<tr><th id="281">281</th><td>		<b>return</b> (NULL);</td></tr>
+<tr><th id="282">282</th><td>	}</td></tr>
+<tr><th id="283">283</th><td>	tbin-&gt;ncached--;</td></tr>
+<tr><th id="284">284</th><td>	<b>if</b> ((<em>int</em>)tbin-&gt;ncached &lt; tbin-&gt;low_water)</td></tr>
+<tr><th id="285">285</th><td>		tbin-&gt;low_water = tbin-&gt;ncached;</td></tr>
+<tr><th id="286">286</th><td>	ret = tbin-&gt;avail[tbin-&gt;ncached];</td></tr>
+<tr><th id="287">287</th><td>	<b>return</b> (ret);</td></tr>
+<tr><th id="288">288</th><td>}</td></tr>
+<tr><th id="289">289</th><td></td></tr>
+<tr><th id="290">290</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em> *</td></tr>
+<tr><th id="291">291</th><td>tcache_alloc_small(tcache_t *tcache, size_t size, bool zero)</td></tr>
+<tr><th id="292">292</th><td>{</td></tr>
+<tr><th id="293">293</th><td>	<em>void</em> *ret;</td></tr>
+<tr><th id="294">294</th><td>	size_t binind;</td></tr>
+<tr><th id="295">295</th><td>	tcache_bin_t *tbin;</td></tr>
+<tr><th id="296">296</th><td></td></tr>
+<tr><th id="297">297</th><td>	binind = SMALL_SIZE2BIN(size);</td></tr>
+<tr><th id="298">298</th><td>	assert(binind &lt; NBINS);</td></tr>
+<tr><th id="299">299</th><td>	tbin = &amp;tcache-&gt;tbins[binind];</td></tr>
+<tr><th id="300">300</th><td>	size = arena_bin_info[binind].reg_size;</td></tr>
+<tr><th id="301">301</th><td>	ret = tcache_alloc_easy(tbin);</td></tr>
+<tr><th id="302">302</th><td>	<b>if</b> (ret == NULL) {</td></tr>
+<tr><th id="303">303</th><td>		ret = tcache_alloc_small_hard(tcache, tbin, binind);</td></tr>
+<tr><th id="304">304</th><td>		<b>if</b> (ret == NULL)</td></tr>
+<tr><th id="305">305</th><td>			<b>return</b> (NULL);</td></tr>
+<tr><th id="306">306</th><td>	}</td></tr>
+<tr><th id="307">307</th><td>	assert(tcache_salloc(ret) == arena_bin_info[binind].reg_size);</td></tr>
+<tr><th id="308">308</th><td></td></tr>
+<tr><th id="309">309</th><td>	<b>if</b> (zero == false) {</td></tr>
+<tr><th id="310">310</th><td>		<b>if</b> (config_fill) {</td></tr>
+<tr><th id="311">311</th><td>			<b>if</b> (opt_junk) {</td></tr>
+<tr><th id="312">312</th><td>				arena_alloc_junk_small(ret,</td></tr>
+<tr><th id="313">313</th><td>				    &amp;arena_bin_info[binind], false);</td></tr>
+<tr><th id="314">314</th><td>			} <b>else</b> <b>if</b> (opt_zero)</td></tr>
+<tr><th id="315">315</th><td>				memset(ret, <var>0</var>, size);</td></tr>
+<tr><th id="316">316</th><td>		}</td></tr>
+<tr><th id="317">317</th><td>		VALGRIND_MAKE_MEM_UNDEFINED(ret, size);</td></tr>
+<tr><th id="318">318</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="319">319</th><td>		<b>if</b> (config_fill &amp;&amp; opt_junk) {</td></tr>
+<tr><th id="320">320</th><td>			arena_alloc_junk_small(ret, &amp;arena_bin_info[binind],</td></tr>
+<tr><th id="321">321</th><td>			    true);</td></tr>
+<tr><th id="322">322</th><td>		}</td></tr>
+<tr><th id="323">323</th><td>		VALGRIND_MAKE_MEM_UNDEFINED(ret, size);</td></tr>
+<tr><th id="324">324</th><td>		memset(ret, <var>0</var>, size);</td></tr>
+<tr><th id="325">325</th><td>	}</td></tr>
+<tr><th id="326">326</th><td></td></tr>
+<tr><th id="327">327</th><td>	<b>if</b> (config_stats)</td></tr>
+<tr><th id="328">328</th><td>		tbin-&gt;tstats.nrequests++;</td></tr>
+<tr><th id="329">329</th><td>	<b>if</b> (config_prof)</td></tr>
+<tr><th id="330">330</th><td>		tcache-&gt;prof_accumbytes += arena_bin_info[binind].reg_size;</td></tr>
+<tr><th id="331">331</th><td>	tcache_event(tcache);</td></tr>
+<tr><th id="332">332</th><td>	<b>return</b> (ret);</td></tr>
+<tr><th id="333">333</th><td>}</td></tr>
+<tr><th id="334">334</th><td></td></tr>
+<tr><th id="335">335</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em> *</td></tr>
+<tr><th id="336">336</th><td>tcache_alloc_large(tcache_t *tcache, size_t size, bool zero)</td></tr>
+<tr><th id="337">337</th><td>{</td></tr>
+<tr><th id="338">338</th><td>	<em>void</em> *ret;</td></tr>
+<tr><th id="339">339</th><td>	size_t binind;</td></tr>
+<tr><th id="340">340</th><td>	tcache_bin_t *tbin;</td></tr>
+<tr><th id="341">341</th><td></td></tr>
+<tr><th id="342">342</th><td>	size = PAGE_CEILING(size);</td></tr>
+<tr><th id="343">343</th><td>	assert(size &lt;= tcache_maxclass);</td></tr>
+<tr><th id="344">344</th><td>	binind = NBINS + (size &gt;&gt; LG_PAGE) - <var>1</var>;</td></tr>
+<tr><th id="345">345</th><td>	assert(binind &lt; nhbins);</td></tr>
+<tr><th id="346">346</th><td>	tbin = &amp;tcache-&gt;tbins[binind];</td></tr>
+<tr><th id="347">347</th><td>	ret = tcache_alloc_easy(tbin);</td></tr>
+<tr><th id="348">348</th><td>	<b>if</b> (ret == NULL) {</td></tr>
+<tr><th id="349">349</th><td>		<i>/*</i></td></tr>
+<tr><th id="350">350</th><td><i>		 * Only allocate one large object at a time, because it's quite</i></td></tr>
+<tr><th id="351">351</th><td><i>		 * expensive to create one and not use it.</i></td></tr>
+<tr><th id="352">352</th><td><i>		 */</i></td></tr>
+<tr><th id="353">353</th><td>		ret = arena_malloc_large(tcache-&gt;arena, size, zero);</td></tr>
+<tr><th id="354">354</th><td>		<b>if</b> (ret == NULL)</td></tr>
+<tr><th id="355">355</th><td>			<b>return</b> (NULL);</td></tr>
+<tr><th id="356">356</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="357">357</th><td>		<b>if</b> (config_prof &amp;&amp; prof_promote &amp;&amp; size == PAGE) {</td></tr>
+<tr><th id="358">358</th><td>			arena_chunk_t *chunk =</td></tr>
+<tr><th id="359">359</th><td>			    (arena_chunk_t *)CHUNK_ADDR2BASE(ret);</td></tr>
+<tr><th id="360">360</th><td>			size_t pageind = (((uintptr_t)ret - (uintptr_t)chunk) &gt;&gt;</td></tr>
+<tr><th id="361">361</th><td>			    LG_PAGE);</td></tr>
+<tr><th id="362">362</th><td>			arena_mapbits_large_binind_set(chunk, pageind,</td></tr>
+<tr><th id="363">363</th><td>			    BININD_INVALID);</td></tr>
+<tr><th id="364">364</th><td>		}</td></tr>
+<tr><th id="365">365</th><td>		<b>if</b> (zero == false) {</td></tr>
+<tr><th id="366">366</th><td>			<b>if</b> (config_fill) {</td></tr>
+<tr><th id="367">367</th><td>				<b>if</b> (opt_junk)</td></tr>
+<tr><th id="368">368</th><td>					memset(ret, <var>0xa5</var>, size);</td></tr>
+<tr><th id="369">369</th><td>				<b>else</b> <b>if</b> (opt_zero)</td></tr>
+<tr><th id="370">370</th><td>					memset(ret, <var>0</var>, size);</td></tr>
+<tr><th id="371">371</th><td>			}</td></tr>
+<tr><th id="372">372</th><td>			VALGRIND_MAKE_MEM_UNDEFINED(ret, size);</td></tr>
+<tr><th id="373">373</th><td>		} <b>else</b> {</td></tr>
+<tr><th id="374">374</th><td>			VALGRIND_MAKE_MEM_UNDEFINED(ret, size);</td></tr>
+<tr><th id="375">375</th><td>			memset(ret, <var>0</var>, size);</td></tr>
+<tr><th id="376">376</th><td>		}</td></tr>
+<tr><th id="377">377</th><td></td></tr>
+<tr><th id="378">378</th><td>		<b>if</b> (config_stats)</td></tr>
+<tr><th id="379">379</th><td>			tbin-&gt;tstats.nrequests++;</td></tr>
+<tr><th id="380">380</th><td>		<b>if</b> (config_prof)</td></tr>
+<tr><th id="381">381</th><td>			tcache-&gt;prof_accumbytes += size;</td></tr>
+<tr><th id="382">382</th><td>	}</td></tr>
+<tr><th id="383">383</th><td></td></tr>
+<tr><th id="384">384</th><td>	tcache_event(tcache);</td></tr>
+<tr><th id="385">385</th><td>	<b>return</b> (ret);</td></tr>
+<tr><th id="386">386</th><td>}</td></tr>
+<tr><th id="387">387</th><td></td></tr>
+<tr><th id="388">388</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="389">389</th><td>tcache_dalloc_small(tcache_t *tcache, <em>void</em> *ptr, size_t binind)</td></tr>
+<tr><th id="390">390</th><td>{</td></tr>
+<tr><th id="391">391</th><td>	tcache_bin_t *tbin;</td></tr>
+<tr><th id="392">392</th><td>	tcache_bin_info_t *tbin_info;</td></tr>
+<tr><th id="393">393</th><td></td></tr>
+<tr><th id="394">394</th><td>	assert(tcache_salloc(ptr) &lt;= SMALL_MAXCLASS);</td></tr>
+<tr><th id="395">395</th><td></td></tr>
+<tr><th id="396">396</th><td>	<b>if</b> (config_fill &amp;&amp; opt_junk)</td></tr>
+<tr><th id="397">397</th><td>		arena_dalloc_junk_small(ptr, &amp;arena_bin_info[binind]);</td></tr>
+<tr><th id="398">398</th><td></td></tr>
+<tr><th id="399">399</th><td>	tbin = &amp;tcache-&gt;tbins[binind];</td></tr>
+<tr><th id="400">400</th><td>	tbin_info = &amp;tcache_bin_info[binind];</td></tr>
+<tr><th id="401">401</th><td>	<b>if</b> (tbin-&gt;ncached == tbin_info-&gt;ncached_max) {</td></tr>
+<tr><th id="402">402</th><td>		tcache_bin_flush_small(tbin, binind, (tbin_info-&gt;ncached_max &gt;&gt;</td></tr>
+<tr><th id="403">403</th><td>		    <var>1</var>), tcache);</td></tr>
+<tr><th id="404">404</th><td>	}</td></tr>
+<tr><th id="405">405</th><td>	assert(tbin-&gt;ncached &lt; tbin_info-&gt;ncached_max);</td></tr>
+<tr><th id="406">406</th><td>	tbin-&gt;avail[tbin-&gt;ncached] = ptr;</td></tr>
+<tr><th id="407">407</th><td>	tbin-&gt;ncached++;</td></tr>
+<tr><th id="408">408</th><td></td></tr>
+<tr><th id="409">409</th><td>	tcache_event(tcache);</td></tr>
+<tr><th id="410">410</th><td>}</td></tr>
+<tr><th id="411">411</th><td></td></tr>
+<tr><th id="412">412</th><td>JEMALLOC_ALWAYS_INLINE <em>void</em></td></tr>
+<tr><th id="413">413</th><td>tcache_dalloc_large(tcache_t *tcache, <em>void</em> *ptr, size_t size)</td></tr>
+<tr><th id="414">414</th><td>{</td></tr>
+<tr><th id="415">415</th><td>	size_t binind;</td></tr>
+<tr><th id="416">416</th><td>	tcache_bin_t *tbin;</td></tr>
+<tr><th id="417">417</th><td>	tcache_bin_info_t *tbin_info;</td></tr>
+<tr><th id="418">418</th><td></td></tr>
+<tr><th id="419">419</th><td>	assert((size &amp; PAGE_MASK) == <var>0</var>);</td></tr>
+<tr><th id="420">420</th><td>	assert(tcache_salloc(ptr) &gt; SMALL_MAXCLASS);</td></tr>
+<tr><th id="421">421</th><td>	assert(tcache_salloc(ptr) &lt;= tcache_maxclass);</td></tr>
+<tr><th id="422">422</th><td></td></tr>
+<tr><th id="423">423</th><td>	binind = NBINS + (size &gt;&gt; LG_PAGE) - <var>1</var>;</td></tr>
+<tr><th id="424">424</th><td></td></tr>
+<tr><th id="425">425</th><td>	<b>if</b> (config_fill &amp;&amp; opt_junk)</td></tr>
+<tr><th id="426">426</th><td>		memset(ptr, <var>0x5a</var>, size);</td></tr>
+<tr><th id="427">427</th><td></td></tr>
+<tr><th id="428">428</th><td>	tbin = &amp;tcache-&gt;tbins[binind];</td></tr>
+<tr><th id="429">429</th><td>	tbin_info = &amp;tcache_bin_info[binind];</td></tr>
+<tr><th id="430">430</th><td>	<b>if</b> (tbin-&gt;ncached == tbin_info-&gt;ncached_max) {</td></tr>
+<tr><th id="431">431</th><td>		tcache_bin_flush_large(tbin, binind, (tbin_info-&gt;ncached_max &gt;&gt;</td></tr>
+<tr><th id="432">432</th><td>		    <var>1</var>), tcache);</td></tr>
+<tr><th id="433">433</th><td>	}</td></tr>
+<tr><th id="434">434</th><td>	assert(tbin-&gt;ncached &lt; tbin_info-&gt;ncached_max);</td></tr>
+<tr><th id="435">435</th><td>	tbin-&gt;avail[tbin-&gt;ncached] = ptr;</td></tr>
+<tr><th id="436">436</th><td>	tbin-&gt;ncached++;</td></tr>
+<tr><th id="437">437</th><td></td></tr>
+<tr><th id="438">438</th><td>	tcache_event(tcache);</td></tr>
+<tr><th id="439">439</th><td>}</td></tr>
+<tr><th id="440">440</th><td><u>#endif</u></td></tr>
+<tr><th id="441">441</th><td></td></tr>
+<tr><th id="442">442</th><td><u>#<span data-ppcond="122">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="443">443</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="444">444</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore3.3.5/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

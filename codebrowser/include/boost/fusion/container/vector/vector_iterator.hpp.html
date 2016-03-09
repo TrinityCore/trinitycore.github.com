@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<title>vector_iterator.hpp [include/boost/fusion/container/vector/vector_iterator.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/fusion/container/vector/vector_iterator.hpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>include</a>/<a href='../../..'>boost</a>/<a href='../..'>fusion</a>/<a href='..'>container</a>/<a href='./'>vector</a>/vector_iterator.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*=============================================================================</i></td></tr>
+<tr><th id="2">2</th><td><i>    Copyright (c) 2001-2011 Joel de Guzman</i></td></tr>
+<tr><th id="3">3</th><td><i></i></td></tr>
+<tr><th id="4">4</th><td><i>    Distributed under the Boost Software License, Version 1.0. (See accompanying </i></td></tr>
+<tr><th id="5">5</th><td><i>    file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="6">6</th><td><i>==============================================================================*/</i></td></tr>
+<tr><th id="7">7</th><td><u>#<span data-ppcond="7">if</span> !defined(<span class="macro" data-ref="_M/FUSION_VECTOR_ITERATOR_05042005_0635">FUSION_VECTOR_ITERATOR_05042005_0635</span>)</u></td></tr>
+<tr><th id="8">8</th><td><u>#define <dfn class="macro" id="_M/FUSION_VECTOR_ITERATOR_05042005_0635" data-ref="_M/FUSION_VECTOR_ITERATOR_05042005_0635">FUSION_VECTOR_ITERATOR_05042005_0635</dfn></u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#include <a href="../../support/iterator_base.hpp.html">&lt;boost/fusion/support/iterator_base.hpp&gt;</a></u></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="detail/deref_impl.hpp.html">&lt;boost/fusion/container/vector/detail/deref_impl.hpp&gt;</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="detail/value_of_impl.hpp.html">&lt;boost/fusion/container/vector/detail/value_of_impl.hpp&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="detail/next_impl.hpp.html">&lt;boost/fusion/container/vector/detail/next_impl.hpp&gt;</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="detail/prior_impl.hpp.html">&lt;boost/fusion/container/vector/detail/prior_impl.hpp&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="detail/equal_to_impl.hpp.html">&lt;boost/fusion/container/vector/detail/equal_to_impl.hpp&gt;</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="detail/distance_impl.hpp.html">&lt;boost/fusion/container/vector/detail/distance_impl.hpp&gt;</a></u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="detail/advance_impl.hpp.html">&lt;boost/fusion/container/vector/detail/advance_impl.hpp&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../../type_traits/add_const.hpp.html">&lt;boost/type_traits/add_const.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../mpl/int.hpp.html">&lt;boost/mpl/int.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><b>namespace</b> <span class="namespace">boost</span> { <b>namespace</b> <span class="namespace">fusion</span></td></tr>
+<tr><th id="22">22</th><td>{</td></tr>
+<tr><th id="23">23</th><td>    <b>struct</b> <a class="type" href="detail/deref_impl.hpp.html#boost::fusion::vector_iterator_tag" title='boost::fusion::vector_iterator_tag' data-ref="boost::fusion::vector_iterator_tag" id="boost::fusion::vector_iterator_tag" >vector_iterator_tag</a>;</td></tr>
+<tr><th id="24">24</th><td>    <b>struct</b> <a class="type" href="../../support/category_of.hpp.html#boost::fusion::random_access_traversal_tag" title='boost::fusion::random_access_traversal_tag' data-ref="boost::fusion::random_access_traversal_tag" id="boost::fusion::random_access_traversal_tag" >random_access_traversal_tag</a>;</td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td>    <b>template</b> &lt;<b>typename</b> Vector, <em>int</em> N&gt;</td></tr>
+<tr><th id="27">27</th><td>    <b>struct</b> <dfn class="type" id="boost::fusion::vector_iterator_identity" title='boost::fusion::vector_iterator_identity' data-ref="boost::fusion::vector_iterator_identity" >vector_iterator_identity</dfn>;</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>    <b>template</b> &lt;<b>typename</b> Vector, <em>int</em> N&gt;</td></tr>
+<tr><th id="30">30</th><td>    <b>struct</b> <dfn class="type def" id="boost::fusion::vector_iterator" title='boost::fusion::vector_iterator' data-ref="boost::fusion::vector_iterator" >vector_iterator</dfn> : <a class="type" href="../../support/iterator_base.hpp.html#boost::fusion::iterator_base" title='boost::fusion::iterator_base' data-ref="boost::fusion::iterator_base" >iterator_base</a>&lt;<a class="type" href="detail/next_impl.hpp.html#boost::fusion::vector_iterator" title='boost::fusion::vector_iterator' data-ref="boost::fusion::vector_iterator" >vector_iterator</a>&lt;Vector, <a class="tu ref" href="#boost::fusion::vector_iterator::N" title='boost::fusion::vector_iterator::N' data-ref="boost::fusion::vector_iterator::N" >N</a>&gt; &gt;</td></tr>
+<tr><th id="31">31</th><td>    {</td></tr>
+<tr><th id="32">32</th><td>        <b>typedef</b> <span class="namespace">mpl::</span><a class="type" href="../../../mpl/int_fwd.hpp.html#mpl_::int_" title='mpl_::int_' data-ref="mpl_::int_" >int_</a>&lt;<a class="tu ref" href="#boost::fusion::vector_iterator::N" title='boost::fusion::vector_iterator::N' data-ref="boost::fusion::vector_iterator::N" >N</a>&gt; <dfn class="typedef" id="boost::fusion::vector_iterator::index" title='boost::fusion::vector_iterator::index' data-type='mpl::int_&lt;N&gt;' data-ref="boost::fusion::vector_iterator::index" >index</dfn>;</td></tr>
+<tr><th id="33">33</th><td>        <b>typedef</b> Vector <dfn class="typedef" id="boost::fusion::vector_iterator::vector" title='boost::fusion::vector_iterator::vector' data-type='Vector' data-ref="boost::fusion::vector_iterator::vector" >vector</dfn>;</td></tr>
+<tr><th id="34">34</th><td>        <b>typedef</b> <a class="type" href="detail/deref_impl.hpp.html#boost::fusion::vector_iterator_tag" title='boost::fusion::vector_iterator_tag' data-ref="boost::fusion::vector_iterator_tag" >vector_iterator_tag</a> <dfn class="typedef" id="boost::fusion::vector_iterator::fusion_tag" title='boost::fusion::vector_iterator::fusion_tag' data-type='boost::fusion::vector_iterator_tag' data-ref="boost::fusion::vector_iterator::fusion_tag" >fusion_tag</dfn>;</td></tr>
+<tr><th id="35">35</th><td>        <b>typedef</b> <a class="type" href="../../support/category_of.hpp.html#boost::fusion::random_access_traversal_tag" title='boost::fusion::random_access_traversal_tag' data-ref="boost::fusion::random_access_traversal_tag" >random_access_traversal_tag</a> <dfn class="typedef" id="boost::fusion::vector_iterator::category" title='boost::fusion::vector_iterator::category' data-type='boost::fusion::random_access_traversal_tag' data-ref="boost::fusion::vector_iterator::category" >category</dfn>;</td></tr>
+<tr><th id="36">36</th><td>        <b>typedef</b> <a class="type" href="#boost::fusion::vector_iterator_identity" title='boost::fusion::vector_iterator_identity' data-ref="boost::fusion::vector_iterator_identity" >vector_iterator_identity</a>&lt;</td></tr>
+<tr><th id="37">37</th><td>            <b>typename</b> <a class="type" href="../../../type_traits/add_const.hpp.html#33" title='boost::add_const' data-ref="boost::add_const" >add_const</a>&lt;Vector&gt;::type, <a class="tu ref" href="#boost::fusion::vector_iterator::N" title='boost::fusion::vector_iterator::N' data-ref="boost::fusion::vector_iterator::N" >N</a>&gt; <dfn class="typedef" id="boost::fusion::vector_iterator::identity" title='boost::fusion::vector_iterator::identity' data-type='vector_iterator_identity&lt;typename add_const&lt;Vector&gt;::type, N&gt;' data-ref="boost::fusion::vector_iterator::identity" >identity</dfn>;</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>        <dfn class="decl def" id="_ZN5boost6fusion15vector_iteratorC1ERT_" title='boost::fusion::vector_iterator::vector_iterator&lt;Vector, N&gt;' data-ref="_ZN5boost6fusion15vector_iteratorC1ERT_" >vector_iterator</dfn>(Vector&amp; <dfn class="local col4 decl" id="314in_vec" title='in_vec' data-type='Vector &amp;' data-ref="314in_vec" >in_vec</dfn>)</td></tr>
+<tr><th id="40">40</th><td>            : <a class="member" href="#boost::fusion::vector_iterator::vec" title='boost::fusion::vector_iterator::vec' data-ref="boost::fusion::vector_iterator::vec" >vec</a>(<a class="local col4 ref" href="#314in_vec" title='in_vec' data-ref="314in_vec" >in_vec</a>) {}</td></tr>
+<tr><th id="41">41</th><td>        Vector&amp; <dfn class="decl" id="boost::fusion::vector_iterator::vec" title='boost::fusion::vector_iterator::vec' data-ref="boost::fusion::vector_iterator::vec" >vec</dfn>;</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <b>private</b>:</td></tr>
+<tr><th id="44">44</th><td>        <i>// silence MSVC warning C4512: assignment operator could not be generated</i></td></tr>
+<tr><th id="45">45</th><td>        vector_iterator&amp; <dfn class="decl" id="_ZN5boost6fusion15vector_iteratoraSERKNS0_15vector_iteratorIT_XT0_EEE" title='boost::fusion::vector_iterator::operator=' data-ref="_ZN5boost6fusion15vector_iteratoraSERKNS0_15vector_iteratorIT_XT0_EEE" ><b>operator</b>=</dfn> (vector_iterator <em>const</em>&amp;);</td></tr>
+<tr><th id="46">46</th><td>    };</td></tr>
+<tr><th id="47">47</th><td>}}</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><u>#<span data-ppcond="7">endif</span></u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../../TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp.html'>TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

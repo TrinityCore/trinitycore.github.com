@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<title>CreatureGroups.h [TrinityCore3.3.5/src/server/game/Entities/Creature/CreatureGroups.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Entities/Creature/CreatureGroups.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>Entities</a>/<a href='./'>Creature</a>/CreatureGroups.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/_FORMATIONS_H">_FORMATIONS_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/_FORMATIONS_H" data-ref="_M/_FORMATIONS_H">_FORMATIONS_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../common/Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../../../include/c++/4.9/unordered_map.html">&lt;unordered_map&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../../../include/c++/4.9/map.html">&lt;map&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>class</b> <a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" id="Creature" >Creature</a>;</td></tr>
+<tr><th id="27">27</th><td><b>class</b> <a class="type" href="#CreatureGroup" title='CreatureGroup' data-ref="CreatureGroup" >CreatureGroup</a>;</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>struct</b> <dfn class="type def" id="FormationInfo" title='FormationInfo' data-ref="FormationInfo" >FormationInfo</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="FormationInfo::leaderGUID" title='FormationInfo::leaderGUID' data-ref="FormationInfo::leaderGUID" >leaderGUID</dfn>;</td></tr>
+<tr><th id="32">32</th><td>    <em>float</em> <dfn class="decl" id="FormationInfo::follow_dist" title='FormationInfo::follow_dist' data-ref="FormationInfo::follow_dist" >follow_dist</dfn>;</td></tr>
+<tr><th id="33">33</th><td>    <em>float</em> <dfn class="decl" id="FormationInfo::follow_angle" title='FormationInfo::follow_angle' data-ref="FormationInfo::follow_angle" >follow_angle</dfn>;</td></tr>
+<tr><th id="34">34</th><td>    <a class="typedef" href="../../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="FormationInfo::groupAI" title='FormationInfo::groupAI' data-ref="FormationInfo::groupAI" >groupAI</dfn>;</td></tr>
+<tr><th id="35">35</th><td>    <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="FormationInfo::point_1" title='FormationInfo::point_1' data-ref="FormationInfo::point_1" >point_1</dfn>;</td></tr>
+<tr><th id="36">36</th><td>    <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="FormationInfo::point_2" title='FormationInfo::point_2' data-ref="FormationInfo::point_2" >point_2</dfn>;</td></tr>
+<tr><th id="37">37</th><td>};</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../../include/c++/4.9/bits/unordered_map.h.html#std::unordered_map" title='std::unordered_map' data-ref="std::unordered_map" >unordered_map</a>&lt;<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a><i>/*memberDBGUID*/</i>, <a class="type" href="#FormationInfo" title='FormationInfo' data-ref="FormationInfo" >FormationInfo</a>*&gt;   <dfn class="typedef" id="CreatureGroupInfoType" title='CreatureGroupInfoType' data-type='std::unordered_map&lt;uint32, FormationInfo *&gt;' data-ref="CreatureGroupInfoType" >CreatureGroupInfoType</dfn>;</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><b>class</b> <dfn class="type def" id="FormationMgr" title='FormationMgr' data-ref="FormationMgr" >FormationMgr</dfn></td></tr>
+<tr><th id="42">42</th><td>{</td></tr>
+<tr><th id="43">43</th><td>    <b>private</b>:</td></tr>
+<tr><th id="44">44</th><td>        <dfn class="decl def" id="_ZN12FormationMgrC1Ev" title='FormationMgr::FormationMgr' data-ref="_ZN12FormationMgrC1Ev" >FormationMgr</dfn>() { }</td></tr>
+<tr><th id="45">45</th><td>        <dfn class="decl" id="_ZN12FormationMgrD1Ev" title='FormationMgr::~FormationMgr' data-ref="_ZN12FormationMgrD1Ev" >~FormationMgr</dfn>();</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <b>public</b>:</td></tr>
+<tr><th id="48">48</th><td>        <em>static</em> <a class="type" href="#FormationMgr" title='FormationMgr' data-ref="FormationMgr" >FormationMgr</a>* <dfn class="decl def" id="_ZN12FormationMgr8instanceEv" title='FormationMgr::instance' data-ref="_ZN12FormationMgr8instanceEv" >instance</dfn>()</td></tr>
+<tr><th id="49">49</th><td>        {</td></tr>
+<tr><th id="50">50</th><td>            <em>static</em> <a class="type" href="#FormationMgr" title='FormationMgr' data-ref="FormationMgr" >FormationMgr</a> <dfn class="local col1 decl" id="1instance" title='instance' data-type='FormationMgr' data-ref="1instance" >instance</dfn>;</td></tr>
+<tr><th id="51">51</th><td>            <b>return</b> &amp;<a class="local col1 ref" href="#1instance" title='instance' data-ref="1instance" >instance</a>;</td></tr>
+<tr><th id="52">52</th><td>        }</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>        <em>void</em> <dfn class="decl" id="_ZN12FormationMgr18AddCreatureToGroupEjP8Creature" title='FormationMgr::AddCreatureToGroup' data-ref="_ZN12FormationMgr18AddCreatureToGroupEjP8Creature" >AddCreatureToGroup</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="2group_id" title='group_id' data-type='uint32' data-ref="2group_id" >group_id</dfn>, <a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col3 decl" id="3creature" title='creature' data-type='Creature *' data-ref="3creature" >creature</dfn>);</td></tr>
+<tr><th id="55">55</th><td>        <em>void</em> <dfn class="decl" id="_ZN12FormationMgr23RemoveCreatureFromGroupEP13CreatureGroupP8Creature" title='FormationMgr::RemoveCreatureFromGroup' data-ref="_ZN12FormationMgr23RemoveCreatureFromGroupEP13CreatureGroupP8Creature" >RemoveCreatureFromGroup</dfn>(<a class="type" href="#CreatureGroup" title='CreatureGroup' data-ref="CreatureGroup" >CreatureGroup</a>* <dfn class="local col4 decl" id="4group" title='group' data-type='CreatureGroup *' data-ref="4group" >group</dfn>, <a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col5 decl" id="5creature" title='creature' data-type='Creature *' data-ref="5creature" >creature</dfn>);</td></tr>
+<tr><th id="56">56</th><td>        <em>void</em> <dfn class="decl" id="_ZN12FormationMgr22LoadCreatureFormationsEv" title='FormationMgr::LoadCreatureFormations' data-ref="_ZN12FormationMgr22LoadCreatureFormationsEv" >LoadCreatureFormations</dfn>();</td></tr>
+<tr><th id="57">57</th><td>        <a class="typedef" href="#CreatureGroupInfoType" title='CreatureGroupInfoType' data-type='std::unordered_map&lt;uint32, FormationInfo *&gt;' data-ref="CreatureGroupInfoType" >CreatureGroupInfoType</a> <dfn class="decl" id="FormationMgr::CreatureGroupMap" title='FormationMgr::CreatureGroupMap' data-ref="FormationMgr::CreatureGroupMap" >CreatureGroupMap</dfn>;</td></tr>
+<tr><th id="58">58</th><td>};</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><b>class</b> <dfn class="type def" id="CreatureGroup" title='CreatureGroup' data-ref="CreatureGroup" >CreatureGroup</dfn></td></tr>
+<tr><th id="61">61</th><td>{</td></tr>
+<tr><th id="62">62</th><td>    <b>private</b>:</td></tr>
+<tr><th id="63">63</th><td>        <a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="decl" id="CreatureGroup::m_leader" title='CreatureGroup::m_leader' data-ref="CreatureGroup::m_leader" >m_leader</dfn>; <i>//Important do not forget sometimes to work with pointers instead synonims :D:D</i></td></tr>
+<tr><th id="64">64</th><td>        <b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../../include/c++/4.9/bits/stl_map.h.html#std::map" title='std::map' data-ref="std::map" >map</a>&lt;<a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>*, <a class="type" href="#FormationInfo" title='FormationInfo' data-ref="FormationInfo" >FormationInfo</a>*&gt;  <dfn class="typedef" id="CreatureGroup::CreatureGroupMemberType" title='CreatureGroup::CreatureGroupMemberType' data-type='std::map&lt;Creature *, FormationInfo *&gt;' data-ref="CreatureGroup::CreatureGroupMemberType" >CreatureGroupMemberType</dfn>;</td></tr>
+<tr><th id="65">65</th><td>        <a class="typedef" href="#CreatureGroup::CreatureGroupMemberType" title='CreatureGroup::CreatureGroupMemberType' data-type='std::map&lt;Creature *, FormationInfo *&gt;' data-ref="CreatureGroup::CreatureGroupMemberType" >CreatureGroupMemberType</a> <dfn class="decl" id="CreatureGroup::m_members" title='CreatureGroup::m_members' data-ref="CreatureGroup::m_members" >m_members</dfn>;</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="CreatureGroup::m_groupID" title='CreatureGroup::m_groupID' data-ref="CreatureGroup::m_groupID" >m_groupID</dfn>;</td></tr>
+<tr><th id="68">68</th><td>        <em>bool</em> <dfn class="decl" id="CreatureGroup::m_Formed" title='CreatureGroup::m_Formed' data-ref="CreatureGroup::m_Formed" >m_Formed</dfn>;</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>    <b>public</b>:</td></tr>
+<tr><th id="71">71</th><td>        <i>//Group cannot be created empty</i></td></tr>
+<tr><th id="72">72</th><td>        <b>explicit</b> <dfn class="decl def" id="_ZN13CreatureGroupC1Ej" title='CreatureGroup::CreatureGroup' data-ref="_ZN13CreatureGroupC1Ej" >CreatureGroup</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="6id" title='id' data-type='uint32' data-ref="6id" >id</dfn>) : <a class="member" href="#CreatureGroup::m_leader" title='CreatureGroup::m_leader' data-ref="CreatureGroup::m_leader" >m_leader</a>(<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>), <a class="member" href="#CreatureGroup::m_groupID" title='CreatureGroup::m_groupID' data-ref="CreatureGroup::m_groupID" >m_groupID</a>(<a class="local col6 ref" href="#6id" title='id' data-ref="6id" >id</a>), <a class="member" href="#CreatureGroup::m_Formed" title='CreatureGroup::m_Formed' data-ref="CreatureGroup::m_Formed" >m_Formed</a>(<b>false</b>) { }</td></tr>
+<tr><th id="73">73</th><td>        <dfn class="decl def" id="_ZN13CreatureGroupD1Ev" title='CreatureGroup::~CreatureGroup' data-ref="_ZN13CreatureGroupD1Ev" >~CreatureGroup</dfn>() { }</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>        <a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="decl def" id="_ZNK13CreatureGroup9getLeaderEv" title='CreatureGroup::getLeader' data-ref="_ZNK13CreatureGroup9getLeaderEv" >getLeader</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#CreatureGroup::m_leader" title='CreatureGroup::m_leader' data-ref="CreatureGroup::m_leader" >m_leader</a>; }</td></tr>
+<tr><th id="76">76</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK13CreatureGroup5GetIdEv" title='CreatureGroup::GetId' data-ref="_ZNK13CreatureGroup5GetIdEv" >GetId</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#CreatureGroup::m_groupID" title='CreatureGroup::m_groupID' data-ref="CreatureGroup::m_groupID" >m_groupID</a>; }</td></tr>
+<tr><th id="77">77</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK13CreatureGroup7isEmptyEv" title='CreatureGroup::isEmpty' data-ref="_ZNK13CreatureGroup7isEmptyEv" >isEmpty</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#CreatureGroup::m_members" title='CreatureGroup::m_members' data-ref="CreatureGroup::m_members" >m_members</a>.<a class="ref" href="../../../../../../include/c++/4.9/bits/stl_map.h.html#_ZNKSt3map5emptyEv" title='std::map::empty' data-ref="_ZNKSt3map5emptyEv" id="_ZNKSt3map5emptyEv" >empty</a>(); }</td></tr>
+<tr><th id="78">78</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK13CreatureGroup8isFormedEv" title='CreatureGroup::isFormed' data-ref="_ZNK13CreatureGroup8isFormedEv" >isFormed</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#CreatureGroup::m_Formed" title='CreatureGroup::m_Formed' data-ref="CreatureGroup::m_Formed" >m_Formed</a>; }</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>        <em>void</em> <dfn class="decl" id="_ZN13CreatureGroup9AddMemberEP8Creature" title='CreatureGroup::AddMember' data-ref="_ZN13CreatureGroup9AddMemberEP8Creature" >AddMember</dfn>(<a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col7 decl" id="7member" title='member' data-type='Creature *' data-ref="7member" >member</dfn>);</td></tr>
+<tr><th id="81">81</th><td>        <em>void</em> <dfn class="decl" id="_ZN13CreatureGroup12RemoveMemberEP8Creature" title='CreatureGroup::RemoveMember' data-ref="_ZN13CreatureGroup12RemoveMemberEP8Creature" >RemoveMember</dfn>(<a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col8 decl" id="8member" title='member' data-type='Creature *' data-ref="8member" >member</dfn>);</td></tr>
+<tr><th id="82">82</th><td>        <em>void</em> <dfn class="decl" id="_ZN13CreatureGroup14FormationResetEb" title='CreatureGroup::FormationReset' data-ref="_ZN13CreatureGroup14FormationResetEb" >FormationReset</dfn>(<em>bool</em> <dfn class="local col9 decl" id="9dismiss" title='dismiss' data-type='bool' data-ref="9dismiss" >dismiss</dfn>);</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>        <em>void</em> <dfn class="decl" id="_ZN13CreatureGroup12LeaderMoveToEfff" title='CreatureGroup::LeaderMoveTo' data-ref="_ZN13CreatureGroup12LeaderMoveToEfff" >LeaderMoveTo</dfn>(<em>float</em> <dfn class="local col0 decl" id="10x" title='x' data-type='float' data-ref="10x" >x</dfn>, <em>float</em> <dfn class="local col1 decl" id="11y" title='y' data-type='float' data-ref="11y" >y</dfn>, <em>float</em> <dfn class="local col2 decl" id="12z" title='z' data-type='float' data-ref="12z" >z</dfn>);</td></tr>
+<tr><th id="85">85</th><td>        <em>void</em> <dfn class="decl" id="_ZN13CreatureGroup17MemberAttackStartEP8CreatureP4Unit" title='CreatureGroup::MemberAttackStart' data-ref="_ZN13CreatureGroup17MemberAttackStartEP8CreatureP4Unit" >MemberAttackStart</dfn>(<a class="type" href="Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col3 decl" id="13member" title='member' data-type='Creature *' data-ref="13member" >member</dfn>, <a class="type" href="../Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col4 decl" id="14target" title='target' data-type='Unit *' data-ref="14target" >target</dfn>);</td></tr>
+<tr><th id="86">86</th><td>};</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><u>#define <dfn class="macro" id="_M/sFormationMgr" data-ref="_M/sFormationMgr">sFormationMgr</dfn> FormationMgr::instance()</u></td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="91">91</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='Creature.cpp.html'>TrinityCore3.3.5/src/server/game/Entities/Creature/Creature.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

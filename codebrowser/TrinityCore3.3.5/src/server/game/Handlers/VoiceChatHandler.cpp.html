@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<title>VoiceChatHandler.cpp [TrinityCore3.3.5/src/server/game/Handlers/VoiceChatHandler.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Handlers/VoiceChatHandler.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Handlers</a>/VoiceChatHandler.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../common/Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../shared/Packets/WorldPacket.h.html">"WorldPacket.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../Server/WorldSession.h.html">"WorldSession.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession30HandleVoiceSessionEnableOpcodeER11WorldPacket" title='WorldSession::HandleVoiceSessionEnableOpcode' data-ref="_ZN12WorldSession30HandleVoiceSessionEnableOpcodeER11WorldPacket" >HandleVoiceSessionEnableOpcode</dfn>(<a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a>&amp; <dfn class="local col1 decl" id="1recvData" title='recvData' data-type='WorldPacket &amp;' data-ref="1recvData" >recvData</dfn>)</td></tr>
+<tr><th id="24">24</th><td>{</td></tr>
+<tr><th id="25">25</th><td>    <a class="macro" href="../../../common/Logging/Log.h.html#201" title="do { if (Log::instance()-&gt;ShouldLog(&quot;network&quot;, LOG_LEVEL_DEBUG)) { if (false) check_args(&quot;WORLD: CMSG_VOICE_SESSION_ENABLE&quot;); { try { Log::instance()-&gt;outMessage(&quot;network&quot;, LOG_LEVEL_DEBUG, &quot;WORLD: CMSG_VOICE_SESSION_ENABLE&quot;); } catch (std::exception&amp; e) { Log::instance()-&gt;outMessage(&quot;server&quot;, LOG_LEVEL_ERROR, &quot;Wrong format occurred (%s) at %s:%u.&quot;, e.what(), &quot;/home/nayd/TrinityCore/src/server/game/Handlers/VoiceChatHandler.cpp&quot;, 25); } }; } } while (0)" data-ref="_M/TC_LOG_DEBUG">TC_LOG_DEBUG</a>(<q>"network"</q>, <q>"WORLD: CMSG_VOICE_SESSION_ENABLE"</q>);</td></tr>
+<tr><th id="26">26</th><td>    <i>// uint8 isVoiceEnabled, uint8 isMicrophoneEnabled</i></td></tr>
+<tr><th id="27">27</th><td>    <a class="local col1 ref" href="#1recvData" title='recvData' data-ref="1recvData" >recvData</a>.<a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBuffer9read_skipEv" title='ByteBuffer::read_skip' data-ref="_ZN10ByteBuffer9read_skipEv" id="_ZN10ByteBuffer9read_skipEv" >read_skip</a>&lt;<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>&gt;();</td></tr>
+<tr><th id="28">28</th><td>    <a class="local col1 ref" href="#1recvData" title='recvData' data-ref="1recvData" >recvData</a>.<a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBuffer9read_skipEv" title='ByteBuffer::read_skip' data-ref="_ZN10ByteBuffer9read_skipEv" id="_ZN10ByteBuffer9read_skipEv" >read_skip</a>&lt;<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>&gt;();</td></tr>
+<tr><th id="29">29</th><td>}</td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession26HandleChannelVoiceOnOpcodeER11WorldPacket" title='WorldSession::HandleChannelVoiceOnOpcode' data-ref="_ZN12WorldSession26HandleChannelVoiceOnOpcodeER11WorldPacket" >HandleChannelVoiceOnOpcode</dfn>(<a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a>&amp; <i>/*recvData*/</i>)</td></tr>
+<tr><th id="32">32</th><td>{</td></tr>
+<tr><th id="33">33</th><td>    <a class="macro" href="../../../common/Logging/Log.h.html#201" title="do { if (Log::instance()-&gt;ShouldLog(&quot;network&quot;, LOG_LEVEL_DEBUG)) { if (false) check_args(&quot;WORLD: CMSG_CHANNEL_VOICE_ON&quot;); { try { Log::instance()-&gt;outMessage(&quot;network&quot;, LOG_LEVEL_DEBUG, &quot;WORLD: CMSG_CHANNEL_VOICE_ON&quot;); } catch (std::exception&amp; e) { Log::instance()-&gt;outMessage(&quot;server&quot;, LOG_LEVEL_ERROR, &quot;Wrong format occurred (%s) at %s:%u.&quot;, e.what(), &quot;/home/nayd/TrinityCore/src/server/game/Handlers/VoiceChatHandler.cpp&quot;, 33); } }; } } while (0)" data-ref="_M/TC_LOG_DEBUG">TC_LOG_DEBUG</a>(<q>"network"</q>, <q>"WORLD: CMSG_CHANNEL_VOICE_ON"</q>);</td></tr>
+<tr><th id="34">34</th><td>    <i>// Enable Voice button in channel context menu</i></td></tr>
+<tr><th id="35">35</th><td>}</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession27HandleSetActiveVoiceChannelER11WorldPacket" title='WorldSession::HandleSetActiveVoiceChannel' data-ref="_ZN12WorldSession27HandleSetActiveVoiceChannelER11WorldPacket" >HandleSetActiveVoiceChannel</dfn>(<a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a>&amp; <dfn class="local col2 decl" id="2recvData" title='recvData' data-type='WorldPacket &amp;' data-ref="2recvData" >recvData</dfn>)</td></tr>
+<tr><th id="38">38</th><td>{</td></tr>
+<tr><th id="39">39</th><td>    <a class="macro" href="../../../common/Logging/Log.h.html#201" title="do { if (Log::instance()-&gt;ShouldLog(&quot;network&quot;, LOG_LEVEL_DEBUG)) { if (false) check_args(&quot;WORLD: CMSG_SET_ACTIVE_VOICE_CHANNEL&quot;); { try { Log::instance()-&gt;outMessage(&quot;network&quot;, LOG_LEVEL_DEBUG, &quot;WORLD: CMSG_SET_ACTIVE_VOICE_CHANNEL&quot;); } catch (std::exception&amp; e) { Log::instance()-&gt;outMessage(&quot;server&quot;, LOG_LEVEL_ERROR, &quot;Wrong format occurred (%s) at %s:%u.&quot;, e.what(), &quot;/home/nayd/TrinityCore/src/server/game/Handlers/VoiceChatHandler.cpp&quot;, 39); } }; } } while (0)" data-ref="_M/TC_LOG_DEBUG">TC_LOG_DEBUG</a>(<q>"network"</q>, <q>"WORLD: CMSG_SET_ACTIVE_VOICE_CHANNEL"</q>);</td></tr>
+<tr><th id="40">40</th><td>    <a class="local col2 ref" href="#2recvData" title='recvData' data-ref="2recvData" >recvData</a>.<a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBuffer9read_skipEv" title='ByteBuffer::read_skip' data-ref="_ZN10ByteBuffer9read_skipEv" id="_ZN10ByteBuffer9read_skipEv" >read_skip</a>&lt;<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&gt;();</td></tr>
+<tr><th id="41">41</th><td>    <a class="local col2 ref" href="#2recvData" title='recvData' data-ref="2recvData" >recvData</a>.<a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBuffer9read_skipEv" title='ByteBuffer::read_skip' data-ref="_ZN10ByteBuffer9read_skipEv" id="_ZN10ByteBuffer9read_skipEv" >read_skip</a>&lt;<em>char</em>*&gt;();</td></tr>
+<tr><th id="42">42</th><td>}</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

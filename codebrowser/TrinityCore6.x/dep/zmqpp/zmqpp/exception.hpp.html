@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<title>exception.hpp [TrinityCore6.x/dep/zmqpp/zmqpp/exception.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/zmqpp/zmqpp/exception.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>zmqpp</a>/<a href='./'>zmqpp</a>/exception.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> *<span class="command"> \file</span></i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> * <span class="command">\date</span>   9 Aug 2011</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> * <span class="command">\author</span> Ben Gray (\@benjamg)</i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><u>#<span data-ppcond="8">ifndef</span> <span class="macro" data-ref="_M/ZMQPP_EXCEPTION_HPP_">ZMQPP_EXCEPTION_HPP_</span></u></td></tr>
+<tr><th id="9">9</th><td><u>#define <dfn class="macro" id="_M/ZMQPP_EXCEPTION_HPP_" data-ref="_M/ZMQPP_EXCEPTION_HPP_">ZMQPP_EXCEPTION_HPP_</dfn></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../../../../include/c++/4.9/stdexcept.html">&lt;stdexcept&gt;</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="../../../../include/zmq.h.html">&lt;zmq.h&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><b>namespace</b> <span class="namespace">zmqpp</span></td></tr>
+<tr><th id="17">17</th><td>{</td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i class="doc">/** <span class="command">\todo</span> Have a larger variety of exceptions with better state debug information */</i></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="22">22</th><td><i class="doc"> * Represents the base zmqpp exception.</i></td></tr>
+<tr><th id="23">23</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="24">24</th><td><i class="doc"> * All zmqpp runtime exceptions are children of this class.</i></td></tr>
+<tr><th id="25">25</th><td><i class="doc"> * The class itself does not provide any special access fields but it only</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc"> * for convince when catching exceptions.</i></td></tr>
+<tr><th id="27">27</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="28">28</th><td><i class="doc"> * The class extends std::runtime_error.</i></td></tr>
+<tr><th id="29">29</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="30">30</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="31">31</th><td><b>class</b> <dfn class="type def" id="zmqpp::exception" title='zmqpp::exception' data-ref="zmqpp::exception" >exception</dfn> : <b>public</b> <span class="namespace">std::</span><a class="type" href="../../../../include/c++/4.9/stdexcept.html#std::runtime_error" title='std::runtime_error' data-ref="std::runtime_error" >runtime_error</a></td></tr>
+<tr><th id="32">32</th><td>{</td></tr>
+<tr><th id="33">33</th><td><b>public</b>:</td></tr>
+<tr><th id="34">34</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc">	 * Standard exception constructor.</i></td></tr>
+<tr><th id="36">36</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="37">37</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">message</span> a string representing the error message.</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="39">39</th><td>	<dfn class="decl def" id="_ZN5zmqpp9exceptionC1ERKSs" title='zmqpp::exception::exception' data-ref="_ZN5zmqpp9exceptionC1ERKSs" >exception</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col1 decl" id="51message" title='message' data-type='const std::string &amp;' data-ref="51message" >message</dfn>)</td></tr>
+<tr><th id="40">40</th><td>		: std::<span class="namespace"><a class="type" href="../../../../include/c++/4.9/stdexcept.html#std::runtime_error" title='std::runtime_error' data-ref="std::runtime_error" >runtime_error</a></span><a class="ref" href="../../../../include/c++/4.9/stdexcept.html#_ZNSt13runtime_errorC1ERKSs" title='std::runtime_error::runtime_error' data-ref="_ZNSt13runtime_errorC1ERKSs" id="_ZNSt13runtime_errorC1ERKSs" >(</a><a class="local col1 ref" href="#51message" title='message' data-ref="51message" >message</a>)</td></tr>
+<tr><th id="41">41</th><td>	{ }</td></tr>
+<tr><th id="42">42</th><td>};</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc"> * Represents an attempt to use an invalid object.</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="47">47</th><td><i class="doc"> * Objects may be invalid initially or after a shutdown or close.</i></td></tr>
+<tr><th id="48">48</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="49">49</th><td><b>class</b> <dfn class="type def" id="zmqpp::invalid_instance" title='zmqpp::invalid_instance' data-ref="zmqpp::invalid_instance" >invalid_instance</dfn> : <b>public</b> <a class="type" href="#zmqpp::exception" title='zmqpp::exception' data-ref="zmqpp::exception" >exception</a></td></tr>
+<tr><th id="50">50</th><td>{</td></tr>
+<tr><th id="51">51</th><td><b>public</b>:</td></tr>
+<tr><th id="52">52</th><td>	<dfn class="decl def" id="_ZN5zmqpp16invalid_instanceC1ERKSs" title='zmqpp::invalid_instance::invalid_instance' data-ref="_ZN5zmqpp16invalid_instanceC1ERKSs" >invalid_instance</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col2 decl" id="52message" title='message' data-type='const std::string &amp;' data-ref="52message" >message</dfn>)</td></tr>
+<tr><th id="53">53</th><td>		: <a class="type" href="#zmqpp::exception" title='zmqpp::exception' data-ref="zmqpp::exception" >exception</a><a class="ref" href="#_ZN5zmqpp9exceptionC1ERKSs" title='zmqpp::exception::exception' data-ref="_ZN5zmqpp9exceptionC1ERKSs" >(</a><a class="local col2 ref" href="#52message" title='message' data-ref="52message" >message</a>)</td></tr>
+<tr><th id="54">54</th><td>	{ }</td></tr>
+<tr><th id="55">55</th><td>};</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc"> * Represents internal zmq errors.</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc"> * Any error response from the zmq bindings will be wrapped in this error.</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc"> * The class provides access to the zmq error number via zmq_error().</i></td></tr>
+<tr><th id="63">63</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="64">64</th><td><b>class</b> <dfn class="type def" id="zmqpp::zmq_internal_exception" title='zmqpp::zmq_internal_exception' data-ref="zmqpp::zmq_internal_exception" >zmq_internal_exception</dfn> : <b>public</b> <a class="type" href="#zmqpp::exception" title='zmqpp::exception' data-ref="zmqpp::exception" >exception</a></td></tr>
+<tr><th id="65">65</th><td>{</td></tr>
+<tr><th id="66">66</th><td><b>public</b>:</td></tr>
+<tr><th id="67">67</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">	 * Uses the zmq functions to pull out error messages and numbers.</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="70">70</th><td>	<dfn class="decl def" id="_ZN5zmqpp22zmq_internal_exceptionC1Ev" title='zmqpp::zmq_internal_exception::zmq_internal_exception' data-ref="_ZN5zmqpp22zmq_internal_exceptionC1Ev" >zmq_internal_exception</dfn>()</td></tr>
+<tr><th id="71">71</th><td>		: <a class="type" href="#zmqpp::exception" title='zmqpp::exception' data-ref="zmqpp::exception" >exception</a><a class="ref" href="#_ZN5zmqpp9exceptionC1ERKSs" title='zmqpp::exception::exception' data-ref="_ZN5zmqpp9exceptionC1ERKSs" >(</a><a class="ref" href="../../../../include/zmq.h.html#zmq_strerror" title='zmq_strerror' data-ref="zmq_strerror" id="zmq_strerror" >zmq_strerror</a>(<a class="ref" href="../../../../include/zmq.h.html#zmq_errno" title='zmq_errno' data-ref="zmq_errno" id="zmq_errno" >zmq_errno</a>()))</td></tr>
+<tr><th id="72">72</th><td>		, <a class="member" href="#zmqpp::zmq_internal_exception::_error" title='zmqpp::zmq_internal_exception::_error' data-ref="zmqpp::zmq_internal_exception::_error" >_error</a>(<a class="ref" href="../../../../include/zmq.h.html#zmq_errno" title='zmq_errno' data-ref="zmq_errno" id="zmq_errno" >zmq_errno</a>())</td></tr>
+<tr><th id="73">73</th><td>	{ }</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">	 * Retrieve the zmq error number associated with this exception.</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">	 * <span class="command">\return</span> zmq error number</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="79">79</th><td>	<em>int</em> <dfn class="decl def" id="_ZNK5zmqpp22zmq_internal_exception9zmq_errorEv" title='zmqpp::zmq_internal_exception::zmq_error' data-ref="_ZNK5zmqpp22zmq_internal_exception9zmq_errorEv" >zmq_error</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#zmqpp::zmq_internal_exception::_error" title='zmqpp::zmq_internal_exception::_error' data-ref="zmqpp::zmq_internal_exception::_error" >_error</a>; }</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><b>private</b>:</td></tr>
+<tr><th id="82">82</th><td>	<em>int</em> <dfn class="decl" id="zmqpp::zmq_internal_exception::_error" title='zmqpp::zmq_internal_exception::_error' data-ref="zmqpp::zmq_internal_exception::_error" >_error</dfn>;</td></tr>
+<tr><th id="83">83</th><td>};</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td>}</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td><u>#<span data-ppcond="8">endif</span> /* ZMQPP_EXCEPTION_HPP_ */</u></td></tr>
+<tr><th id="88">88</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='context.cpp.html'>TrinityCore6.x/dep/zmqpp/zmqpp/context.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

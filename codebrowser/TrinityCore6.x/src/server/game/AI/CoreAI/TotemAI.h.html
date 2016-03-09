@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<title>TotemAI.h [TrinityCore6.x/src/server/game/AI/CoreAI/TotemAI.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/AI/CoreAI/TotemAI.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>AI</a>/<a href='./'>CoreAI</a>/TotemAI.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_TOTEMAI_H">TRINITY_TOTEMAI_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_TOTEMAI_H" data-ref="_M/TRINITY_TOTEMAI_H">TRINITY_TOTEMAI_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../CreatureAI.h.html">"CreatureAI.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../common/Utilities/Timer.h.html">"Timer.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>class</b> <a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" id="Creature" >Creature</a>;</td></tr>
+<tr><th id="26">26</th><td><b>class</b> <a class="type" href="../../Entities/Totem/Totem.h.html#Totem" title='Totem' data-ref="Totem" id="Totem" >Totem</a>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>class</b> <dfn class="type def" id="TotemAI" title='TotemAI' data-ref="TotemAI" >TotemAI</dfn> : <b>public</b> <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <b>public</b>:</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>        <b>explicit</b> <a class="decl" href="TotemAI.cpp.html#_ZN7TotemAIC1EP8Creature" title='TotemAI::TotemAI' data-ref="_ZN7TotemAIC1EP8Creature" id="_ZN7TotemAIC1EP8Creature" >TotemAI</a>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1c" title='c' data-type='Creature *' data-ref="1c" >c</dfn>);</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>        <em>void</em> <a class="virtual decl" href="TotemAI.cpp.html#_ZN7TotemAI17MoveInLineOfSightEP4Unit" title='TotemAI::MoveInLineOfSight' data-ref="_ZN7TotemAI17MoveInLineOfSightEP4Unit" id="_ZN7TotemAI17MoveInLineOfSightEP4Unit" >MoveInLineOfSight</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col2 decl" id="2who" title='who' data-type='Unit *' data-ref="2who" >who</dfn>) override;</td></tr>
+<tr><th id="35">35</th><td>        <em>void</em> <a class="virtual decl" href="TotemAI.cpp.html#_ZN7TotemAI11AttackStartEP4Unit" title='TotemAI::AttackStart' data-ref="_ZN7TotemAI11AttackStartEP4Unit" id="_ZN7TotemAI11AttackStartEP4Unit" >AttackStart</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col3 decl" id="3victim" title='victim' data-type='Unit *' data-ref="3victim" >victim</dfn>) override;</td></tr>
+<tr><th id="36">36</th><td>        <em>void</em> <a class="virtual decl" href="TotemAI.cpp.html#_ZN7TotemAI14EnterEvadeModeEv" title='TotemAI::EnterEvadeMode' data-ref="_ZN7TotemAI14EnterEvadeModeEv" id="_ZN7TotemAI14EnterEvadeModeEv" >EnterEvadeMode</a>() override;</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>        <em>void</em> <a class="virtual decl" href="TotemAI.cpp.html#_ZN7TotemAI8UpdateAIEj" title='TotemAI::UpdateAI' data-ref="_ZN7TotemAI8UpdateAIEj" id="_ZN7TotemAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="4diff" title='diff' data-type='uint32' data-ref="4diff" >diff</dfn>) override;</td></tr>
+<tr><th id="39">39</th><td>        <em>static</em> <em>int</em> <a class="decl" href="TotemAI.cpp.html#_ZN7TotemAI11PermissibleEPK8Creature" title='TotemAI::Permissible' data-ref="_ZN7TotemAI11PermissibleEPK8Creature" id="_ZN7TotemAI11PermissibleEPK8Creature" >Permissible</a>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a> <em>const</em>* <dfn class="local col5 decl" id="5creature" title='creature' data-type='const Creature *' data-ref="5creature" >creature</dfn>);</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>    <b>private</b>:</td></tr>
+<tr><th id="42">42</th><td>        <a class="type" href="../../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="decl" id="TotemAI::i_victimGuid" title='TotemAI::i_victimGuid' data-ref="TotemAI::i_victimGuid" >i_victimGuid</dfn>;</td></tr>
+<tr><th id="43">43</th><td>};</td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='TotemAI.cpp.html'>TrinityCore6.x/src/server/game/AI/CoreAI/TotemAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

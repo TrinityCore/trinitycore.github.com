@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+<title>static_mutex.hpp [include/boost/regex/pending/static_mutex.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/regex/pending/static_mutex.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>regex</a>/<a href='./'>pending</a>/static_mutex.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> *</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (c) 2004</i></td></tr>
+<tr><th id="4">4</th><td><i> * John Maddock</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * Use, modification and distribution are subject to the </i></td></tr>
+<tr><th id="7">7</th><td><i> * Boost Software License, Version 1.0. (See accompanying file </i></td></tr>
+<tr><th id="8">8</th><td><i> * LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> */</i></td></tr>
+<tr><th id="11">11</th><td> </td></tr>
+<tr><th id="12">12</th><td> <i>/*</i></td></tr>
+<tr><th id="13">13</th><td><i>  *   LOCATION:    see <a href="http://www.boost.org">http://www.boost.org</a> for most recent version.</i></td></tr>
+<tr><th id="14">14</th><td><i>  *   FILE         static_mutex.hpp</i></td></tr>
+<tr><th id="15">15</th><td><i>  *   VERSION      see &lt;boost/version.hpp&gt;</i></td></tr>
+<tr><th id="16">16</th><td><i>  *   DESCRIPTION: Declares static_mutex lock type, there are three different</i></td></tr>
+<tr><th id="17">17</th><td><i>  *                implementations: POSIX pthreads, WIN32 threads, and portable,</i></td></tr>
+<tr><th id="18">18</th><td><i>  *                these are described in more detail below.</i></td></tr>
+<tr><th id="19">19</th><td><i>  */</i></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#<span data-ppcond="21">ifndef</span> <span class="macro" data-ref="_M/BOOST_REGEX_STATIC_MUTEX_HPP">BOOST_REGEX_STATIC_MUTEX_HPP</span></u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/BOOST_REGEX_STATIC_MUTEX_HPP" data-ref="_M/BOOST_REGEX_STATIC_MUTEX_HPP">BOOST_REGEX_STATIC_MUTEX_HPP</dfn></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../config.hpp.html">&lt;boost/config.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../config.hpp.html">&lt;boost/regex/config.hpp&gt;</a> // dll import/export options.</u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="27">ifdef</span> <a class="macro" href="../../config/posix_features.hpp.html#46" data-ref="_M/BOOST_HAS_PTHREADS">BOOST_HAS_PTHREADS</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../../../pthread.h.html">&lt;pthread.h&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="27">endif</span></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><u>#<span data-ppcond="31">if</span> defined(<a class="macro" href="../../config/posix_features.hpp.html#46" data-ref="_M/BOOST_HAS_PTHREADS">BOOST_HAS_PTHREADS</a>) &amp;&amp; defined(<a class="macro" href="../../../pthread.h.html#95" data-ref="_M/PTHREAD_MUTEX_INITIALIZER">PTHREAD_MUTEX_INITIALIZER</a>)</u></td></tr>
+<tr><th id="32">32</th><td><i>//</i></td></tr>
+<tr><th id="33">33</th><td><i>// pthreads version:</i></td></tr>
+<tr><th id="34">34</th><td><i>// simple wrap around a pthread_mutex_t initialized with</i></td></tr>
+<tr><th id="35">35</th><td><i>// PTHREAD_MUTEX_INITIALIZER.</i></td></tr>
+<tr><th id="36">36</th><td><i>//</i></td></tr>
+<tr><th id="37">37</th><td><b>namespace</b> <span class="namespace">boost</span>{</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><b>class</b> <a class="type" href="#boost::static_mutex" title='boost::static_mutex' data-ref="boost::static_mutex" >static_mutex</a>;</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><u>#define <dfn class="macro" id="_M/BOOST_STATIC_MUTEX_INIT" data-ref="_M/BOOST_STATIC_MUTEX_INIT">BOOST_STATIC_MUTEX_INIT</dfn> { PTHREAD_MUTEX_INITIALIZER, }</u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><b>class</b> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <dfn class="type def" id="boost::scoped_static_mutex_lock" title='boost::scoped_static_mutex_lock' data-ref="boost::scoped_static_mutex_lock" >scoped_static_mutex_lock</dfn></td></tr>
+<tr><th id="44">44</th><td>{</td></tr>
+<tr><th id="45">45</th><td><b>public</b>:</td></tr>
+<tr><th id="46">46</th><td>   <dfn class="decl" id="_ZN5boost24scoped_static_mutex_lockC1ERNS_12static_mutexEb" title='boost::scoped_static_mutex_lock::scoped_static_mutex_lock' data-ref="_ZN5boost24scoped_static_mutex_lockC1ERNS_12static_mutexEb" >scoped_static_mutex_lock</dfn>(<a class="type" href="#boost::static_mutex" title='boost::static_mutex' data-ref="boost::static_mutex" >static_mutex</a>&amp; <dfn class="local col5 decl" id="95mut" title='mut' data-type='boost::static_mutex &amp;' data-ref="95mut" >mut</dfn>, <em>bool</em> <dfn class="local col6 decl" id="96lk" title='lk' data-type='bool' data-ref="96lk" >lk</dfn> = <b>true</b>);</td></tr>
+<tr><th id="47">47</th><td>   <dfn class="decl" id="_ZN5boost24scoped_static_mutex_lockD1Ev" title='boost::scoped_static_mutex_lock::~scoped_static_mutex_lock' data-ref="_ZN5boost24scoped_static_mutex_lockD1Ev" >~scoped_static_mutex_lock</dfn>();</td></tr>
+<tr><th id="48">48</th><td>   <b>inline</b> <em>bool</em> <dfn class="decl def" id="_ZNK5boost24scoped_static_mutex_lock6lockedEv" title='boost::scoped_static_mutex_lock::locked' data-ref="_ZNK5boost24scoped_static_mutex_lock6lockedEv" >locked</dfn>()<em>const</em></td></tr>
+<tr><th id="49">49</th><td>   {</td></tr>
+<tr><th id="50">50</th><td>      <b>return</b> <a class="member" href="#boost::scoped_static_mutex_lock::m_have_lock" title='boost::scoped_static_mutex_lock::m_have_lock' data-ref="boost::scoped_static_mutex_lock::m_have_lock" >m_have_lock</a>;</td></tr>
+<tr><th id="51">51</th><td>   }</td></tr>
+<tr><th id="52">52</th><td>   <b>inline</b> <dfn class="decl def" id="_ZNK5boost24scoped_static_mutex_lockcvPKvEv" title='boost::scoped_static_mutex_lock::operator const void *' data-ref="_ZNK5boost24scoped_static_mutex_lockcvPKvEv" ><b>operator</b> <em>void</em> <em>const</em>*</dfn>()<em>const</em></td></tr>
+<tr><th id="53">53</th><td>   {</td></tr>
+<tr><th id="54">54</th><td>      <b>return</b> <a class="member" href="#_ZNK5boost24scoped_static_mutex_lock6lockedEv" title='boost::scoped_static_mutex_lock::locked' data-ref="_ZNK5boost24scoped_static_mutex_lock6lockedEv" >locked</a>() ? <b>this</b> : <var>0</var>;</td></tr>
+<tr><th id="55">55</th><td>   }</td></tr>
+<tr><th id="56">56</th><td>   <em>void</em> <dfn class="decl" id="_ZN5boost24scoped_static_mutex_lock4lockEv" title='boost::scoped_static_mutex_lock::lock' data-ref="_ZN5boost24scoped_static_mutex_lock4lockEv" >lock</dfn>();</td></tr>
+<tr><th id="57">57</th><td>   <em>void</em> <dfn class="decl" id="_ZN5boost24scoped_static_mutex_lock6unlockEv" title='boost::scoped_static_mutex_lock::unlock' data-ref="_ZN5boost24scoped_static_mutex_lock6unlockEv" >unlock</dfn>();</td></tr>
+<tr><th id="58">58</th><td><b>private</b>:</td></tr>
+<tr><th id="59">59</th><td>   <a class="type" href="#boost::static_mutex" title='boost::static_mutex' data-ref="boost::static_mutex" >static_mutex</a>&amp; <dfn class="decl" id="boost::scoped_static_mutex_lock::m_mutex" title='boost::scoped_static_mutex_lock::m_mutex' data-ref="boost::scoped_static_mutex_lock::m_mutex" >m_mutex</dfn>;</td></tr>
+<tr><th id="60">60</th><td>   <em>bool</em> <dfn class="decl" id="boost::scoped_static_mutex_lock::m_have_lock" title='boost::scoped_static_mutex_lock::m_have_lock' data-ref="boost::scoped_static_mutex_lock::m_have_lock" >m_have_lock</dfn>;</td></tr>
+<tr><th id="61">61</th><td>};</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td><b>class</b> <dfn class="type def" id="boost::static_mutex" title='boost::static_mutex' data-ref="boost::static_mutex" >static_mutex</dfn></td></tr>
+<tr><th id="64">64</th><td>{</td></tr>
+<tr><th id="65">65</th><td><b>public</b>:</td></tr>
+<tr><th id="66">66</th><td>   <b>typedef</b> <a class="type" href="#boost::scoped_static_mutex_lock" title='boost::scoped_static_mutex_lock' data-ref="boost::scoped_static_mutex_lock" >scoped_static_mutex_lock</a> <dfn class="typedef" id="boost::static_mutex::scoped_lock" title='boost::static_mutex::scoped_lock' data-type='boost::scoped_static_mutex_lock' data-ref="boost::static_mutex::scoped_lock" >scoped_lock</dfn>;</td></tr>
+<tr><th id="67">67</th><td>   <a class="typedef" href="../../../x86_64-linux-gnu/bits/pthreadtypes.h.html#pthread_mutex_t" title='pthread_mutex_t' data-type='union pthread_mutex_t' data-ref="pthread_mutex_t" >pthread_mutex_t</a> <dfn class="decl" id="boost::static_mutex::m_mutex" title='boost::static_mutex::m_mutex' data-ref="boost::static_mutex::m_mutex" >m_mutex</dfn>;</td></tr>
+<tr><th id="68">68</th><td>};</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="31">elif</span> defined(BOOST_HAS_WINTHREADS)</u></td></tr>
+<tr><th id="72">72</th><td><i>//</i></td></tr>
+<tr><th id="73">73</th><td><i>// Win32 version:</i></td></tr>
+<tr><th id="74">74</th><td><i>// Use a 32-bit int as a lock, along with a test-and-set</i></td></tr>
+<tr><th id="75">75</th><td><i>// implementation using InterlockedCompareExchange.</i></td></tr>
+<tr><th id="76">76</th><td><i>//</i></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><u>#include &lt;boost/cstdint.hpp&gt;</u></td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td><b>namespace</b> boost{</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><b>class</b> BOOST_REGEX_DECL scoped_static_mutex_lock;</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><b>class</b> static_mutex</td></tr>
+<tr><th id="85">85</th><td>{</td></tr>
+<tr><th id="86">86</th><td><b>public</b>:</td></tr>
+<tr><th id="87">87</th><td>   <b>typedef</b> scoped_static_mutex_lock scoped_lock;</td></tr>
+<tr><th id="88">88</th><td>   boost::int32_t m_mutex;</td></tr>
+<tr><th id="89">89</th><td>};</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><u>#define BOOST_STATIC_MUTEX_INIT { 0, }</u></td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><b>class</b> BOOST_REGEX_DECL scoped_static_mutex_lock</td></tr>
+<tr><th id="94">94</th><td>{</td></tr>
+<tr><th id="95">95</th><td><b>public</b>:</td></tr>
+<tr><th id="96">96</th><td>   scoped_static_mutex_lock(static_mutex&amp; mut, <em>bool</em> lk = <b>true</b>);</td></tr>
+<tr><th id="97">97</th><td>   ~scoped_static_mutex_lock();</td></tr>
+<tr><th id="98">98</th><td>   <b>operator</b> <em>void</em> <em>const</em>*()<em>const</em></td></tr>
+<tr><th id="99">99</th><td>   {</td></tr>
+<tr><th id="100">100</th><td>      <b>return</b> locked() ? <b>this</b> : <var>0</var>;</td></tr>
+<tr><th id="101">101</th><td>   }</td></tr>
+<tr><th id="102">102</th><td>   <em>bool</em> locked()<em>const</em></td></tr>
+<tr><th id="103">103</th><td>   {</td></tr>
+<tr><th id="104">104</th><td>      <b>return</b> m_have_lock;</td></tr>
+<tr><th id="105">105</th><td>   }</td></tr>
+<tr><th id="106">106</th><td>   <em>void</em> lock();</td></tr>
+<tr><th id="107">107</th><td>   <em>void</em> unlock();</td></tr>
+<tr><th id="108">108</th><td><b>private</b>:</td></tr>
+<tr><th id="109">109</th><td>   static_mutex&amp; m_mutex;</td></tr>
+<tr><th id="110">110</th><td>   <em>bool</em> m_have_lock;</td></tr>
+<tr><th id="111">111</th><td>   scoped_static_mutex_lock(<em>const</em> scoped_static_mutex_lock&amp;);</td></tr>
+<tr><th id="112">112</th><td>   scoped_static_mutex_lock&amp; <b>operator</b>=(<em>const</em> scoped_static_mutex_lock&amp;);</td></tr>
+<tr><th id="113">113</th><td>};</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><u>#else</u></td></tr>
+<tr><th id="118">118</th><td><i>//</i></td></tr>
+<tr><th id="119">119</th><td><i>// Portable version of a static mutex based on Boost.Thread library:</i></td></tr>
+<tr><th id="120">120</th><td><i>// This has to use a single mutex shared by all instances of static_mutex</i></td></tr>
+<tr><th id="121">121</th><td><i>// because boost::call_once doesn't alow us to pass instance information</i></td></tr>
+<tr><th id="122">122</th><td><i>// down to the initialisation proceedure.  In fact the initialisation routine</i></td></tr>
+<tr><th id="123">123</th><td><i>// may need to be called more than once - but only once per instance.</i></td></tr>
+<tr><th id="124">124</th><td><i>//</i></td></tr>
+<tr><th id="125">125</th><td><i>// Since this preprocessor path is almost never taken, we hide these header</i></td></tr>
+<tr><th id="126">126</th><td><i>// dependencies so that build tools don't find them.</i></td></tr>
+<tr><th id="127">127</th><td><i>//</i></td></tr>
+<tr><th id="128">128</th><td><u>#define B1 &lt;boost/thread/once.hpp&gt;</u></td></tr>
+<tr><th id="129">129</th><td><u>#define B2 &lt;boost/thread/recursive_mutex.hpp&gt;</u></td></tr>
+<tr><th id="130">130</th><td><u>#include B1</u></td></tr>
+<tr><th id="131">131</th><td><u>#include B2</u></td></tr>
+<tr><th id="132">132</th><td><u>#undef B1</u></td></tr>
+<tr><th id="133">133</th><td><u>#undef B2</u></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td><b>namespace</b> boost{</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><b>class</b> BOOST_REGEX_DECL scoped_static_mutex_lock;</td></tr>
+<tr><th id="138">138</th><td><b>extern</b> <q>"C"</q> BOOST_REGEX_DECL <em>void</em> boost_regex_free_static_mutex();</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td><b>class</b> BOOST_REGEX_DECL static_mutex</td></tr>
+<tr><th id="141">141</th><td>{</td></tr>
+<tr><th id="142">142</th><td><b>public</b>:</td></tr>
+<tr><th id="143">143</th><td>   <b>typedef</b> scoped_static_mutex_lock scoped_lock;</td></tr>
+<tr><th id="144">144</th><td>   <em>static</em> <em>void</em> init();</td></tr>
+<tr><th id="145">145</th><td>   <em>static</em> boost::recursive_mutex* m_pmutex;</td></tr>
+<tr><th id="146">146</th><td>   <em>static</em> boost::once_flag m_once;</td></tr>
+<tr><th id="147">147</th><td>};</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td><u>#define BOOST_STATIC_MUTEX_INIT {  }</u></td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><b>class</b> BOOST_REGEX_DECL scoped_static_mutex_lock</td></tr>
+<tr><th id="152">152</th><td>{</td></tr>
+<tr><th id="153">153</th><td><b>public</b>:</td></tr>
+<tr><th id="154">154</th><td>   scoped_static_mutex_lock(static_mutex&amp; mut, <em>bool</em> lk = <b>true</b>);</td></tr>
+<tr><th id="155">155</th><td>   ~scoped_static_mutex_lock();</td></tr>
+<tr><th id="156">156</th><td>   <b>operator</b> <em>void</em> <em>const</em>*()<em>const</em>;</td></tr>
+<tr><th id="157">157</th><td>   <em>bool</em> locked()<em>const</em>;</td></tr>
+<tr><th id="158">158</th><td>   <em>void</em> lock();</td></tr>
+<tr><th id="159">159</th><td>   <em>void</em> unlock();</td></tr>
+<tr><th id="160">160</th><td><b>private</b>:</td></tr>
+<tr><th id="161">161</th><td>   boost::recursive_mutex::scoped_lock* m_plock;</td></tr>
+<tr><th id="162">162</th><td>   <em>bool</em> m_have_lock;</td></tr>
+<tr><th id="163">163</th><td>};</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td><b>inline</b> scoped_static_mutex_lock::<b>operator</b> <em>void</em> <em>const</em>*()<em>const</em></td></tr>
+<tr><th id="166">166</th><td>{</td></tr>
+<tr><th id="167">167</th><td>   <b>return</b> locked() ? <b>this</b> : <var>0</var>;</td></tr>
+<tr><th id="168">168</th><td>}</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td><b>inline</b> <em>bool</em> scoped_static_mutex_lock::locked()<em>const</em></td></tr>
+<tr><th id="171">171</th><td>{</td></tr>
+<tr><th id="172">172</th><td>   <b>return</b> m_have_lock;</td></tr>
+<tr><th id="173">173</th><td>}</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td><u>#<span data-ppcond="31">endif</span></u></td></tr>
+<tr><th id="178">178</th><td></td></tr>
+<tr><th id="179">179</th><td><u>#<span data-ppcond="21">endif</span></u></td></tr>
+<tr><th id="180">180</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/server/game/DataStores/DBCStores.cpp.html'>TrinityCore3.3.5/src/server/game/DataStores/DBCStores.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

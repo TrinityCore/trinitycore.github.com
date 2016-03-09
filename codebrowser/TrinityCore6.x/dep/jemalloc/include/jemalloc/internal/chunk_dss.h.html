@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<title>chunk_dss.h [TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/chunk_dss.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/chunk_dss.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/chunk_dss.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><b>typedef</b> <b>enum</b> {</td></tr>
+<tr><th id="5">5</th><td>	<dfn class="enum" id="::dss_prec_disabled" title='::dss_prec_disabled' data-ref="::dss_prec_disabled" >dss_prec_disabled</dfn>  = <var>0</var>,</td></tr>
+<tr><th id="6">6</th><td>	<dfn class="enum" id="::dss_prec_primary" title='::dss_prec_primary' data-ref="::dss_prec_primary" >dss_prec_primary</dfn>   = <var>1</var>,</td></tr>
+<tr><th id="7">7</th><td>	<dfn class="enum" id="::dss_prec_secondary" title='::dss_prec_secondary' data-ref="::dss_prec_secondary" >dss_prec_secondary</dfn> = <var>2</var>,</td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td>	<dfn class="enum" id="::dss_prec_limit" title='::dss_prec_limit' data-ref="::dss_prec_limit" >dss_prec_limit</dfn>     = <var>3</var></td></tr>
+<tr><th id="10">10</th><td>} <dfn class="typedef" id="dss_prec_t" title='dss_prec_t' data-type='enum dss_prec_t' data-ref="dss_prec_t" >dss_prec_t</dfn>;</td></tr>
+<tr><th id="11">11</th><td><u>#define	<dfn class="macro" id="_M/DSS_PREC_DEFAULT" data-ref="_M/DSS_PREC_DEFAULT">DSS_PREC_DEFAULT</dfn>	dss_prec_secondary</u></td></tr>
+<tr><th id="12">12</th><td><u>#define	<dfn class="macro" id="_M/DSS_DEFAULT" data-ref="_M/DSS_DEFAULT">DSS_DEFAULT</dfn>		"secondary"</u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="15">15</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="16">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><b>extern</b> <em>const</em> <em>char</em> *dss_prec_names[];</td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><u>#<span data-ppcond="16">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="21">21</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="22">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td>dss_prec_t	chunk_dss_prec_get(<em>void</em>);</td></tr>
+<tr><th id="25">25</th><td>bool	chunk_dss_prec_set(dss_prec_t dss_prec);</td></tr>
+<tr><th id="26">26</th><td><em>void</em>	*chunk_alloc_dss(size_t size, size_t alignment, bool *zero);</td></tr>
+<tr><th id="27">27</th><td>bool	chunk_in_dss(<em>void</em> *chunk);</td></tr>
+<tr><th id="28">28</th><td>bool	chunk_dss_boot(<em>void</em>);</td></tr>
+<tr><th id="29">29</th><td><em>void</em>	chunk_dss_prefork(<em>void</em>);</td></tr>
+<tr><th id="30">30</th><td><em>void</em>	chunk_dss_postfork_parent(<em>void</em>);</td></tr>
+<tr><th id="31">31</th><td><em>void</em>	chunk_dss_postfork_child(<em>void</em>);</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="22">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="34">34</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="35">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="35">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="38">38</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore6.x/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

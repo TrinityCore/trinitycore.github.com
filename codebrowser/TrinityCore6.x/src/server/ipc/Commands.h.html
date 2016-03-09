@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<title>Commands.h [TrinityCore6.x/src/server/ipc/Commands.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/ipc/Commands.h'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>src</a>/<a href='..'>server</a>/<a href='./'>ipc</a>/Commands.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/_COMMANDS_H">_COMMANDS_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/_COMMANDS_H" data-ref="_M/_COMMANDS_H">_COMMANDS_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../common/Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../shared/Realm/Realm.h.html">"Realm/Realm.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>enum</b> <dfn class="type def" id="Channels" title='Channels' data-ref="Channels" >Channels</dfn></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <dfn class="enum" id="Channels::IPC_CHANNEL_BNET" title='Channels::IPC_CHANNEL_BNET' data-ref="Channels::IPC_CHANNEL_BNET" >IPC_CHANNEL_BNET</dfn>,</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="Channels::MAX_IPC_CHANNELS" title='Channels::MAX_IPC_CHANNELS' data-ref="Channels::MAX_IPC_CHANNELS" >MAX_IPC_CHANNELS</dfn>,</td></tr>
+<tr><th id="30">30</th><td>};</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>enum</b> <dfn class="type def" id="BnetCommands" title='BnetCommands' data-ref="BnetCommands" >BnetCommands</dfn></td></tr>
+<tr><th id="33">33</th><td>{</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="BnetCommands::BNET_CHANGE_TOON_ONLINE_STATE" title='BnetCommands::BNET_CHANGE_TOON_ONLINE_STATE' data-ref="BnetCommands::BNET_CHANGE_TOON_ONLINE_STATE" >BNET_CHANGE_TOON_ONLINE_STATE</dfn>,</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="BnetCommands::IPC_BNET_MAX_COMMAND" title='BnetCommands::IPC_BNET_MAX_COMMAND' data-ref="BnetCommands::IPC_BNET_MAX_COMMAND" >IPC_BNET_MAX_COMMAND</dfn></td></tr>
+<tr><th id="37">37</th><td>};</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><b>namespace</b> <span class="namespace">IPC</span></td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <b>struct</b> <dfn class="type def" id="IPC::Header" title='IPC::Header' data-ref="IPC::Header" >Header</dfn></td></tr>
+<tr><th id="42">42</th><td>    {</td></tr>
+<tr><th id="43">43</th><td>        <a class="typedef" href="../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="IPC::Header::Channel" title='IPC::Header::Channel' data-ref="IPC::Header::Channel" >Channel</dfn>;</td></tr>
+<tr><th id="44">44</th><td>        <a class="typedef" href="../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="IPC::Header::Command" title='IPC::Header::Command' data-ref="IPC::Header::Command" >Command</dfn>;</td></tr>
+<tr><th id="45">45</th><td>    };</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <b>namespace</b> <span class="namespace">BattlenetComm</span></td></tr>
+<tr><th id="48">48</th><td>    {</td></tr>
+<tr><th id="49">49</th><td>        <b>struct</b> <dfn class="type def" id="IPC::BattlenetComm::Header" title='IPC::BattlenetComm::Header' data-ref="IPC::BattlenetComm::Header" >Header</dfn></td></tr>
+<tr><th id="50">50</th><td>        {</td></tr>
+<tr><th id="51">51</th><td>            <span class="namespace">IPC::</span><a class="type" href="#IPC::Header" title='IPC::Header' data-ref="IPC::Header" >Header</a> <dfn class="decl" id="IPC::BattlenetComm::Header::Ipc" title='IPC::BattlenetComm::Header::Ipc' data-ref="IPC::BattlenetComm::Header::Ipc" >Ipc</dfn>;</td></tr>
+<tr><th id="52">52</th><td>            <span class="namespace">Battlenet::</span><a class="type" href="../shared/Realm/Realm.h.html#Battlenet::RealmHandle" title='Battlenet::RealmHandle' data-ref="Battlenet::RealmHandle" >RealmHandle</a> <dfn class="decl" id="IPC::BattlenetComm::Header::Realm" title='IPC::BattlenetComm::Header::Realm' data-ref="IPC::BattlenetComm::Header::Realm" >Realm</dfn>;</td></tr>
+<tr><th id="53">53</th><td>        };</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>        <b>struct</b> <dfn class="type def" id="IPC::BattlenetComm::ToonHandle" title='IPC::BattlenetComm::ToonHandle' data-ref="IPC::BattlenetComm::ToonHandle" >ToonHandle</dfn></td></tr>
+<tr><th id="56">56</th><td>        {</td></tr>
+<tr><th id="57">57</th><td>            <a class="typedef" href="../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="IPC::BattlenetComm::ToonHandle::AccountId" title='IPC::BattlenetComm::ToonHandle::AccountId' data-ref="IPC::BattlenetComm::ToonHandle::AccountId" >AccountId</dfn>;</td></tr>
+<tr><th id="58">58</th><td>            <a class="typedef" href="../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="IPC::BattlenetComm::ToonHandle::GameAccountId" title='IPC::BattlenetComm::ToonHandle::GameAccountId' data-ref="IPC::BattlenetComm::ToonHandle::GameAccountId" >GameAccountId</dfn>;</td></tr>
+<tr><th id="59">59</th><td>            <a class="typedef" href="../../common/Define.h.html#uint64" title='uint64' data-type='uint64_t' data-ref="uint64" >uint64</a> <dfn class="decl" id="IPC::BattlenetComm::ToonHandle::Guid" title='IPC::BattlenetComm::ToonHandle::Guid' data-ref="IPC::BattlenetComm::ToonHandle::Guid" >Guid</dfn>;</td></tr>
+<tr><th id="60">60</th><td>            <span class="namespace">std::</span><a class="typedef" href="../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="IPC::BattlenetComm::ToonHandle::Name" title='IPC::BattlenetComm::ToonHandle::Name' data-ref="IPC::BattlenetComm::ToonHandle::Name" >Name</dfn>;</td></tr>
+<tr><th id="61">61</th><td>        };</td></tr>
+<tr><th id="62">62</th><td>    }</td></tr>
+<tr><th id="63">63</th><td>}</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><b>namespace</b> <span class="namespace">zmqpp</span></td></tr>
+<tr><th id="66">66</th><td>{</td></tr>
+<tr><th id="67">67</th><td>    <b>class</b> <a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" id="zmqpp::message" >message</a>;</td></tr>
+<tr><th id="68">68</th><td>}</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZrsRN5zmqpp7messageERN3IPC6HeaderE" title='operator&gt;&gt;' data-ref="_ZrsRN5zmqpp7messageERN3IPC6HeaderE" ><b>operator</b>&gt;&gt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col8 decl" id="138msg" title='msg' data-type='zmqpp::message &amp;' data-ref="138msg" >msg</dfn>, <span class="namespace">IPC::</span><a class="type" href="#IPC::Header" title='IPC::Header' data-ref="IPC::Header" >Header</a>&amp; <dfn class="local col9 decl" id="139header" title='header' data-type='IPC::Header &amp;' data-ref="139header" >header</dfn>);</td></tr>
+<tr><th id="71">71</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZrsRN5zmqpp7messageERN9Battlenet11RealmHandleE" title='operator&gt;&gt;' data-ref="_ZrsRN5zmqpp7messageERN9Battlenet11RealmHandleE" ><b>operator</b>&gt;&gt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col0 decl" id="140msg" title='msg' data-type='zmqpp::message &amp;' data-ref="140msg" >msg</dfn>, <span class="namespace">Battlenet::</span><a class="type" href="../shared/Realm/Realm.h.html#Battlenet::RealmHandle" title='Battlenet::RealmHandle' data-ref="Battlenet::RealmHandle" >RealmHandle</a>&amp; <dfn class="local col1 decl" id="141realm" title='realm' data-type='Battlenet::RealmHandle &amp;' data-ref="141realm" >realm</dfn>);</td></tr>
+<tr><th id="72">72</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZrsRN5zmqpp7messageERN3IPC13BattlenetComm6HeaderE" title='operator&gt;&gt;' data-ref="_ZrsRN5zmqpp7messageERN3IPC13BattlenetComm6HeaderE" ><b>operator</b>&gt;&gt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col2 decl" id="142msg" title='msg' data-type='zmqpp::message &amp;' data-ref="142msg" >msg</dfn>, <span class="namespace">IPC::BattlenetComm::</span><a class="type" href="#IPC::BattlenetComm::Header" title='IPC::BattlenetComm::Header' data-ref="IPC::BattlenetComm::Header" >Header</a>&amp; <dfn class="local col3 decl" id="143header" title='header' data-type='IPC::BattlenetComm::Header &amp;' data-ref="143header" >header</dfn>);</td></tr>
+<tr><th id="73">73</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZrsRN5zmqpp7messageERN3IPC13BattlenetComm10ToonHandleE" title='operator&gt;&gt;' data-ref="_ZrsRN5zmqpp7messageERN3IPC13BattlenetComm10ToonHandleE" ><b>operator</b>&gt;&gt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col4 decl" id="144msg" title='msg' data-type='zmqpp::message &amp;' data-ref="144msg" >msg</dfn>, <span class="namespace">IPC::BattlenetComm::</span><a class="type" href="#IPC::BattlenetComm::ToonHandle" title='IPC::BattlenetComm::ToonHandle' data-ref="IPC::BattlenetComm::ToonHandle" >ToonHandle</a>&amp; <dfn class="local col5 decl" id="145toonHandle" title='toonHandle' data-type='IPC::BattlenetComm::ToonHandle &amp;' data-ref="145toonHandle" >toonHandle</dfn>);</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZlsRN5zmqpp7messageERKN3IPC6HeaderE" title='operator&lt;&lt;' data-ref="_ZlsRN5zmqpp7messageERKN3IPC6HeaderE" ><b>operator</b>&lt;&lt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col6 decl" id="146msg" title='msg' data-type='zmqpp::message &amp;' data-ref="146msg" >msg</dfn>, <span class="namespace">IPC::</span><a class="type" href="#IPC::Header" title='IPC::Header' data-ref="IPC::Header" >Header</a> <em>const</em>&amp; <dfn class="local col7 decl" id="147header" title='header' data-type='const IPC::Header &amp;' data-ref="147header" >header</dfn>);</td></tr>
+<tr><th id="76">76</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZlsRN5zmqpp7messageERKN9Battlenet11RealmHandleE" title='operator&lt;&lt;' data-ref="_ZlsRN5zmqpp7messageERKN9Battlenet11RealmHandleE" ><b>operator</b>&lt;&lt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col8 decl" id="148msg" title='msg' data-type='zmqpp::message &amp;' data-ref="148msg" >msg</dfn>, <span class="namespace">Battlenet::</span><a class="type" href="../shared/Realm/Realm.h.html#Battlenet::RealmHandle" title='Battlenet::RealmHandle' data-ref="Battlenet::RealmHandle" >RealmHandle</a> <em>const</em>&amp; <dfn class="local col9 decl" id="149realm" title='realm' data-type='const Battlenet::RealmHandle &amp;' data-ref="149realm" >realm</dfn>);</td></tr>
+<tr><th id="77">77</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZlsRN5zmqpp7messageERKN3IPC13BattlenetComm6HeaderE" title='operator&lt;&lt;' data-ref="_ZlsRN5zmqpp7messageERKN3IPC13BattlenetComm6HeaderE" ><b>operator</b>&lt;&lt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col0 decl" id="150msg" title='msg' data-type='zmqpp::message &amp;' data-ref="150msg" >msg</dfn>, <span class="namespace">IPC::BattlenetComm::</span><a class="type" href="#IPC::BattlenetComm::Header" title='IPC::BattlenetComm::Header' data-ref="IPC::BattlenetComm::Header" >Header</a> <em>const</em>&amp; <dfn class="local col1 decl" id="151header" title='header' data-type='const IPC::BattlenetComm::Header &amp;' data-ref="151header" >header</dfn>);</td></tr>
+<tr><th id="78">78</th><td><span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="decl" id="_ZlsRN5zmqpp7messageERKN3IPC13BattlenetComm10ToonHandleE" title='operator&lt;&lt;' data-ref="_ZlsRN5zmqpp7messageERKN3IPC13BattlenetComm10ToonHandleE" ><b>operator</b>&lt;&lt;</dfn>(<span class="namespace">zmqpp::</span><a class="type" href="../../../dep/zmqpp/zmqpp/message.hpp.html#zmqpp::message" title='zmqpp::message' data-ref="zmqpp::message" >message</a>&amp; <dfn class="local col2 decl" id="152msg" title='msg' data-type='zmqpp::message &amp;' data-ref="152msg" >msg</dfn>, <span class="namespace">IPC::BattlenetComm::</span><a class="type" href="#IPC::BattlenetComm::ToonHandle" title='IPC::BattlenetComm::ToonHandle' data-ref="IPC::BattlenetComm::ToonHandle" >ToonHandle</a> <em>const</em>&amp; <dfn class="local col3 decl" id="153toonHandle" title='toonHandle' data-type='const IPC::BattlenetComm::ToonHandle &amp;' data-ref="153toonHandle" >toonHandle</dfn>);</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td><u>#<span data-ppcond="18">endif</span> // _COMMANDS_H</u></td></tr>
+<tr><th id="81">81</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../bnetserver/Main.cpp.html'>TrinityCore6.x/src/server/bnetserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

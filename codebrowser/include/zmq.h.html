@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+<title>zmq.h [include/zmq.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/zmq.h'; var root_path = '..'; var data_path = '../../data';</script>
+<script src='../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='./'>include</a>/zmq.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i>    Copyright (c) 2007-2011 iMatix Corporation</i></td></tr>
+<tr><th id="3">3</th><td><i>    Copyright (c) 2007-2011 Other contributors as noted in the AUTHORS file</i></td></tr>
+<tr><th id="4">4</th><td><i></i></td></tr>
+<tr><th id="5">5</th><td><i>    This file is part of 0MQ.</i></td></tr>
+<tr><th id="6">6</th><td><i></i></td></tr>
+<tr><th id="7">7</th><td><i>    0MQ is free software; you can redistribute it and/or modify it under</i></td></tr>
+<tr><th id="8">8</th><td><i>    the terms of the GNU Lesser General Public License as published by</i></td></tr>
+<tr><th id="9">9</th><td><i>    the Free Software Foundation; either version 3 of the License, or</i></td></tr>
+<tr><th id="10">10</th><td><i>    (at your option) any later version.</i></td></tr>
+<tr><th id="11">11</th><td><i></i></td></tr>
+<tr><th id="12">12</th><td><i>    0MQ is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="13">13</th><td><i>    but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="14">14</th><td><i>    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="15">15</th><td><i>    GNU Lesser General Public License for more details.</i></td></tr>
+<tr><th id="16">16</th><td><i></i></td></tr>
+<tr><th id="17">17</th><td><i>    You should have received a copy of the GNU Lesser General Public License</i></td></tr>
+<tr><th id="18">18</th><td><i>    along with this program.  If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="19">19</th><td><i>*/</i></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#<span data-ppcond="21">ifndef</span> <span class="macro" data-ref="_M/__ZMQ_H_INCLUDED__">__ZMQ_H_INCLUDED__</span></u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/__ZMQ_H_INCLUDED__" data-ref="_M/__ZMQ_H_INCLUDED__">__ZMQ_H_INCLUDED__</dfn></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="24">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="25">25</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="26">26</th><td><u>#<span data-ppcond="24">endif</span></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="errno.h.html">&lt;errno.h&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include &lt;stddef.h&gt;</u></td></tr>
+<tr><th id="30">30</th><td><u>#<span data-ppcond="30">if</span> defined <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="31">31</th><td><u>#include &lt;winsock2.h&gt;</u></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="30">endif</span></u></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><i>/*  Handle DSO symbol visibility                                             */</i></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="35">if</span> defined <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="36">36</th><td><u>#   if defined DLL_EXPORT</u></td></tr>
+<tr><th id="37">37</th><td><u>#       define ZMQ_EXPORT __declspec(dllexport)</u></td></tr>
+<tr><th id="38">38</th><td><u>#   else</u></td></tr>
+<tr><th id="39">39</th><td><u>#       define ZMQ_EXPORT __declspec(dllimport)</u></td></tr>
+<tr><th id="40">40</th><td><u>#   endif</u></td></tr>
+<tr><th id="41">41</th><td><u>#<span data-ppcond="35">else</span></u></td></tr>
+<tr><th id="42">42</th><td><u>#   <span data-ppcond="42">if</span> defined <span class="macro" data-ref="_M/__SUNPRO_C">__SUNPRO_C</span>  || defined <span class="macro" data-ref="_M/__SUNPRO_CC">__SUNPRO_CC</span></u></td></tr>
+<tr><th id="43">43</th><td><u>#       define ZMQ_EXPORT __global</u></td></tr>
+<tr><th id="44">44</th><td><u>#   <span data-ppcond="42">elif</span> (defined <span class="macro" data-ref="_M/__GNUC__">__GNUC__</span> &amp;&amp; <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &gt;= 4) || defined <span class="macro" data-ref="_M/__INTEL_COMPILER">__INTEL_COMPILER</span></u></td></tr>
+<tr><th id="45">45</th><td><u>#       define <dfn class="macro" id="_M/ZMQ_EXPORT" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</dfn> __attribute__ ((visibility("default")))</u></td></tr>
+<tr><th id="46">46</th><td><u>#   <span data-ppcond="42">else</span></u></td></tr>
+<tr><th id="47">47</th><td><u>#       define ZMQ_EXPORT</u></td></tr>
+<tr><th id="48">48</th><td><u>#   <span data-ppcond="42">endif</span></u></td></tr>
+<tr><th id="49">49</th><td><u>#<span data-ppcond="35">endif</span></u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="52">52</th><td><i>/*  0MQ versioning support.                                                   */</i></td></tr>
+<tr><th id="53">53</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><i>/*  Version macros for compile-time API version detection                     */</i></td></tr>
+<tr><th id="56">56</th><td><u>#define <dfn class="macro" id="_M/ZMQ_VERSION_MAJOR" data-ref="_M/ZMQ_VERSION_MAJOR">ZMQ_VERSION_MAJOR</dfn> 2</u></td></tr>
+<tr><th id="57">57</th><td><u>#define <dfn class="macro" id="_M/ZMQ_VERSION_MINOR" data-ref="_M/ZMQ_VERSION_MINOR">ZMQ_VERSION_MINOR</dfn> 2</u></td></tr>
+<tr><th id="58">58</th><td><u>#define <dfn class="macro" id="_M/ZMQ_VERSION_PATCH" data-ref="_M/ZMQ_VERSION_PATCH">ZMQ_VERSION_PATCH</dfn> 0</u></td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><u>#define <dfn class="macro" id="_M/ZMQ_MAKE_VERSION" data-ref="_M/ZMQ_MAKE_VERSION">ZMQ_MAKE_VERSION</dfn>(major, minor, patch) \</u></td></tr>
+<tr><th id="61">61</th><td><u>    ((major) * 10000 + (minor) * 100 + (patch))</u></td></tr>
+<tr><th id="62">62</th><td><u>#define <dfn class="macro" id="_M/ZMQ_VERSION" data-ref="_M/ZMQ_VERSION">ZMQ_VERSION</dfn> \</u></td></tr>
+<tr><th id="63">63</th><td><u>    ZMQ_MAKE_VERSION(ZMQ_VERSION_MAJOR, ZMQ_VERSION_MINOR, ZMQ_VERSION_PATCH)</u></td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><i>/*  Run-time API version detection                                            */</i></td></tr>
+<tr><th id="66">66</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>void</em> <dfn class="decl" id="zmq_version" title='zmq_version' data-ref="zmq_version" >zmq_version</dfn> (<em>int</em> *<dfn class="local col1 decl" id="1major" title='major' data-type='int *' data-ref="1major" >major</dfn>, <em>int</em> *<dfn class="local col2 decl" id="2minor" title='minor' data-type='int *' data-ref="2minor" >minor</dfn>, <em>int</em> *<dfn class="local col3 decl" id="3patch" title='patch' data-type='int *' data-ref="3patch" >patch</dfn>);</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="69">69</th><td><i>/*  0MQ errors.                                                               */</i></td></tr>
+<tr><th id="70">70</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><i>/*  A number random enough not to collide with different errno ranges on      */</i></td></tr>
+<tr><th id="73">73</th><td><i>/*  different OSes. The assumption is that error_t is at least 32-bit type.   */</i></td></tr>
+<tr><th id="74">74</th><td><u>#define <dfn class="macro" id="_M/ZMQ_HAUSNUMERO" data-ref="_M/ZMQ_HAUSNUMERO">ZMQ_HAUSNUMERO</dfn> 156384712</u></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><i>/*  On Windows platform some of the standard POSIX errnos are not defined.    */</i></td></tr>
+<tr><th id="77">77</th><td><u>#<span data-ppcond="77">ifndef</span> <a class="macro" href="x86_64-linux-gnu/bits/errno.h.html#27" data-ref="_M/ENOTSUP">ENOTSUP</a></u></td></tr>
+<tr><th id="78">78</th><td><u>#define ENOTSUP (ZMQ_HAUSNUMERO + 1)</u></td></tr>
+<tr><th id="79">79</th><td><u>#<span data-ppcond="77">endif</span></u></td></tr>
+<tr><th id="80">80</th><td><u>#<span data-ppcond="80">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#66" data-ref="_M/EPROTONOSUPPORT">EPROTONOSUPPORT</a></u></td></tr>
+<tr><th id="81">81</th><td><u>#define EPROTONOSUPPORT (ZMQ_HAUSNUMERO + 2)</u></td></tr>
+<tr><th id="82">82</th><td><u>#<span data-ppcond="80">endif</span></u></td></tr>
+<tr><th id="83">83</th><td><u>#<span data-ppcond="83">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#78" data-ref="_M/ENOBUFS">ENOBUFS</a></u></td></tr>
+<tr><th id="84">84</th><td><u>#define ENOBUFS (ZMQ_HAUSNUMERO + 3)</u></td></tr>
+<tr><th id="85">85</th><td><u>#<span data-ppcond="83">endif</span></u></td></tr>
+<tr><th id="86">86</th><td><u>#<span data-ppcond="86">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#73" data-ref="_M/ENETDOWN">ENETDOWN</a></u></td></tr>
+<tr><th id="87">87</th><td><u>#define ENETDOWN (ZMQ_HAUSNUMERO + 4)</u></td></tr>
+<tr><th id="88">88</th><td><u>#<span data-ppcond="86">endif</span></u></td></tr>
+<tr><th id="89">89</th><td><u>#<span data-ppcond="89">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#71" data-ref="_M/EADDRINUSE">EADDRINUSE</a></u></td></tr>
+<tr><th id="90">90</th><td><u>#define EADDRINUSE (ZMQ_HAUSNUMERO + 5)</u></td></tr>
+<tr><th id="91">91</th><td><u>#<span data-ppcond="89">endif</span></u></td></tr>
+<tr><th id="92">92</th><td><u>#<span data-ppcond="92">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#72" data-ref="_M/EADDRNOTAVAIL">EADDRNOTAVAIL</a></u></td></tr>
+<tr><th id="93">93</th><td><u>#define EADDRNOTAVAIL (ZMQ_HAUSNUMERO + 6)</u></td></tr>
+<tr><th id="94">94</th><td><u>#<span data-ppcond="92">endif</span></u></td></tr>
+<tr><th id="95">95</th><td><u>#<span data-ppcond="95">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#84" data-ref="_M/ECONNREFUSED">ECONNREFUSED</a></u></td></tr>
+<tr><th id="96">96</th><td><u>#define ECONNREFUSED (ZMQ_HAUSNUMERO + 7)</u></td></tr>
+<tr><th id="97">97</th><td><u>#<span data-ppcond="95">endif</span></u></td></tr>
+<tr><th id="98">98</th><td><u>#<span data-ppcond="98">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#88" data-ref="_M/EINPROGRESS">EINPROGRESS</a></u></td></tr>
+<tr><th id="99">99</th><td><u>#define EINPROGRESS (ZMQ_HAUSNUMERO + 8)</u></td></tr>
+<tr><th id="100">100</th><td><u>#<span data-ppcond="98">endif</span></u></td></tr>
+<tr><th id="101">101</th><td><u>#<span data-ppcond="101">ifndef</span> <a class="macro" href="asm-generic/errno.h.html#61" data-ref="_M/ENOTSOCK">ENOTSOCK</a></u></td></tr>
+<tr><th id="102">102</th><td><u>#define ENOTSOCK (ZMQ_HAUSNUMERO + 9)</u></td></tr>
+<tr><th id="103">103</th><td><u>#<span data-ppcond="101">endif</span></u></td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><i>/*  Native 0MQ error codes.                                                   */</i></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/EFSM" data-ref="_M/EFSM">EFSM</dfn> (ZMQ_HAUSNUMERO + 51)</u></td></tr>
+<tr><th id="107">107</th><td><u>#define <dfn class="macro" id="_M/ENOCOMPATPROTO" data-ref="_M/ENOCOMPATPROTO">ENOCOMPATPROTO</dfn> (ZMQ_HAUSNUMERO + 52)</u></td></tr>
+<tr><th id="108">108</th><td><u>#define <dfn class="macro" id="_M/ETERM" data-ref="_M/ETERM">ETERM</dfn> (ZMQ_HAUSNUMERO + 53)</u></td></tr>
+<tr><th id="109">109</th><td><u>#define <dfn class="macro" id="_M/EMTHREAD" data-ref="_M/EMTHREAD">EMTHREAD</dfn> (ZMQ_HAUSNUMERO + 54)</u></td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td><i>/*  This function retrieves the errno as it is known to 0MQ library. The goal */</i></td></tr>
+<tr><th id="112">112</th><td><i>/*  of this function is to make the code 100% portable, including where 0MQ   */</i></td></tr>
+<tr><th id="113">113</th><td><i>/*  compiled with certain CRT library (on Windows) is linked to an            */</i></td></tr>
+<tr><th id="114">114</th><td><i>/*  application that uses different CRT library.                              */</i></td></tr>
+<tr><th id="115">115</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_errno" title='zmq_errno' data-ref="zmq_errno" >zmq_errno</dfn> (<em>void</em>);</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td><i>/*  Resolves system errors and 0MQ errors to human-readable string.           */</i></td></tr>
+<tr><th id="118">118</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>const</em> <em>char</em> *<dfn class="decl" id="zmq_strerror" title='zmq_strerror' data-ref="zmq_strerror" >zmq_strerror</dfn> (<em>int</em> <dfn class="local col4 decl" id="4errnum" title='errnum' data-type='int' data-ref="4errnum" >errnum</dfn>);</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="121">121</th><td><i>/*  0MQ message definition.                                                   */</i></td></tr>
+<tr><th id="122">122</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><i>/*  Maximal size of "Very Small Message". VSMs are passed by value            */</i></td></tr>
+<tr><th id="125">125</th><td><i>/*  to avoid excessive memory allocation/deallocation.                        */</i></td></tr>
+<tr><th id="126">126</th><td><i>/*  If VMSs larger than 255 bytes are required, type of 'vsm_size'            */</i></td></tr>
+<tr><th id="127">127</th><td><i>/*  field in zmq_msg_t structure should be modified accordingly.              */</i></td></tr>
+<tr><th id="128">128</th><td><u>#define <dfn class="macro" id="_M/ZMQ_MAX_VSM_SIZE" data-ref="_M/ZMQ_MAX_VSM_SIZE">ZMQ_MAX_VSM_SIZE</dfn> 30</u></td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td><i>/*  Message types. These integers may be stored in 'content' member of the    */</i></td></tr>
+<tr><th id="131">131</th><td><i>/*  message instead of regular pointer to the data.                           */</i></td></tr>
+<tr><th id="132">132</th><td><u>#define <dfn class="macro" id="_M/ZMQ_DELIMITER" data-ref="_M/ZMQ_DELIMITER">ZMQ_DELIMITER</dfn> 31</u></td></tr>
+<tr><th id="133">133</th><td><u>#define <dfn class="macro" id="_M/ZMQ_VSM" data-ref="_M/ZMQ_VSM">ZMQ_VSM</dfn> 32</u></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td><i>/*  Message flags. ZMQ_MSG_SHARED is strictly speaking not a message flag     */</i></td></tr>
+<tr><th id="136">136</th><td><i>/*  (it has no equivalent in the wire format), however, making  it a flag     */</i></td></tr>
+<tr><th id="137">137</th><td><i>/*  allows us to pack the stucture tigher and thus improve performance.       */</i></td></tr>
+<tr><th id="138">138</th><td><u>#define <dfn class="macro" id="_M/ZMQ_MSG_MORE" data-ref="_M/ZMQ_MSG_MORE">ZMQ_MSG_MORE</dfn> 1</u></td></tr>
+<tr><th id="139">139</th><td><u>#define <dfn class="macro" id="_M/ZMQ_MSG_SHARED" data-ref="_M/ZMQ_MSG_SHARED">ZMQ_MSG_SHARED</dfn> 128</u></td></tr>
+<tr><th id="140">140</th><td><u>#define <dfn class="macro" id="_M/ZMQ_MSG_MASK" data-ref="_M/ZMQ_MSG_MASK">ZMQ_MSG_MASK</dfn> 129 /* Merges all the flags */</u></td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td><i>/*  A message. Note that 'content' is not a pointer to the raw data.          */</i></td></tr>
+<tr><th id="143">143</th><td><i>/*  Rather it is pointer to zmq::msg_content_t structure                      */</i></td></tr>
+<tr><th id="144">144</th><td><i>/*  (see src/msg_content.hpp for its definition).                             */</i></td></tr>
+<tr><th id="145">145</th><td><b>typedef</b> <b>struct</b></td></tr>
+<tr><th id="146">146</th><td>{</td></tr>
+<tr><th id="147">147</th><td>    <em>void</em> *<dfn class="decl" id="(anonymous)::content" title='(anonymous struct)::content' data-ref="(anonymous)::content" >content</dfn>;</td></tr>
+<tr><th id="148">148</th><td>    <em>unsigned</em> <em>char</em> <dfn class="decl" id="(anonymous)::flags" title='(anonymous struct)::flags' data-ref="(anonymous)::flags" >flags</dfn>;</td></tr>
+<tr><th id="149">149</th><td>    <em>unsigned</em> <em>char</em> <dfn class="decl" id="(anonymous)::vsm_size" title='(anonymous struct)::vsm_size' data-ref="(anonymous)::vsm_size" >vsm_size</dfn>;</td></tr>
+<tr><th id="150">150</th><td>    <em>unsigned</em> <em>char</em> <dfn class="decl" id="(anonymous)::vsm_data" title='(anonymous struct)::vsm_data' data-ref="(anonymous)::vsm_data" >vsm_data</dfn> [<a class="macro" href="#128" title="30" data-ref="_M/ZMQ_MAX_VSM_SIZE">ZMQ_MAX_VSM_SIZE</a>];</td></tr>
+<tr><th id="151">151</th><td>} <dfn class="typedef" id="zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</dfn>;</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td><b>typedef</b> <em>void</em> (<dfn class="typedef" id="zmq_free_fn" title='zmq_free_fn' data-type='void (void *, void *)' data-ref="zmq_free_fn" >zmq_free_fn</dfn>) (<em>void</em> *<dfn class="local col5 decl" id="5data" title='data' data-type='void *' data-ref="5data" >data</dfn>, <em>void</em> *<dfn class="local col6 decl" id="6hint" title='hint' data-type='void *' data-ref="6hint" >hint</dfn>);</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_msg_init" title='zmq_msg_init' data-ref="zmq_msg_init" >zmq_msg_init</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col7 decl" id="7msg" title='msg' data-type='zmq_msg_t *' data-ref="7msg" >msg</dfn>);</td></tr>
+<tr><th id="156">156</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_msg_init_size" title='zmq_msg_init_size' data-ref="zmq_msg_init_size" >zmq_msg_init_size</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col8 decl" id="8msg" title='msg' data-type='zmq_msg_t *' data-ref="8msg" >msg</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="9size" title='size' data-type='size_t' data-ref="9size" >size</dfn>);</td></tr>
+<tr><th id="157">157</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_msg_init_data" title='zmq_msg_init_data' data-ref="zmq_msg_init_data" >zmq_msg_init_data</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col0 decl" id="10msg" title='msg' data-type='zmq_msg_t *' data-ref="10msg" >msg</dfn>, <em>void</em> *<dfn class="local col1 decl" id="11data" title='data' data-type='void *' data-ref="11data" >data</dfn>,</td></tr>
+<tr><th id="158">158</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="12size" title='size' data-type='size_t' data-ref="12size" >size</dfn>, <a class="typedef" href="#zmq_free_fn" title='zmq_free_fn' data-type='void (void *, void *)' data-ref="zmq_free_fn" >zmq_free_fn</a> *<dfn class="local col3 decl" id="13ffn" title='ffn' data-type='zmq_free_fn *' data-ref="13ffn" >ffn</dfn>, <em>void</em> *<dfn class="local col4 decl" id="14hint" title='hint' data-type='void *' data-ref="14hint" >hint</dfn>);</td></tr>
+<tr><th id="159">159</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_msg_close" title='zmq_msg_close' data-ref="zmq_msg_close" >zmq_msg_close</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col5 decl" id="15msg" title='msg' data-type='zmq_msg_t *' data-ref="15msg" >msg</dfn>);</td></tr>
+<tr><th id="160">160</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_msg_move" title='zmq_msg_move' data-ref="zmq_msg_move" >zmq_msg_move</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col6 decl" id="16dest" title='dest' data-type='zmq_msg_t *' data-ref="16dest" >dest</dfn>, <a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col7 decl" id="17src" title='src' data-type='zmq_msg_t *' data-ref="17src" >src</dfn>);</td></tr>
+<tr><th id="161">161</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_msg_copy" title='zmq_msg_copy' data-ref="zmq_msg_copy" >zmq_msg_copy</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col8 decl" id="18dest" title='dest' data-type='zmq_msg_t *' data-ref="18dest" >dest</dfn>, <a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col9 decl" id="19src" title='src' data-type='zmq_msg_t *' data-ref="19src" >src</dfn>);</td></tr>
+<tr><th id="162">162</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>void</em> *<dfn class="decl" id="zmq_msg_data" title='zmq_msg_data' data-ref="zmq_msg_data" >zmq_msg_data</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col0 decl" id="20msg" title='msg' data-type='zmq_msg_t *' data-ref="20msg" >msg</dfn>);</td></tr>
+<tr><th id="163">163</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl" id="zmq_msg_size" title='zmq_msg_size' data-ref="zmq_msg_size" >zmq_msg_size</dfn> (<a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col1 decl" id="21msg" title='msg' data-type='zmq_msg_t *' data-ref="21msg" >msg</dfn>);</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="166">166</th><td><i>/*  0MQ infrastructure (a.k.a. context) initialisation &amp; termination.         */</i></td></tr>
+<tr><th id="167">167</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="168">168</th><td></td></tr>
+<tr><th id="169">169</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>void</em> *<dfn class="decl" id="zmq_init" title='zmq_init' data-ref="zmq_init" >zmq_init</dfn> (<em>int</em> <dfn class="local col2 decl" id="22io_threads" title='io_threads' data-type='int' data-ref="22io_threads" >io_threads</dfn>);</td></tr>
+<tr><th id="170">170</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_term" title='zmq_term' data-ref="zmq_term" >zmq_term</dfn> (<em>void</em> *<dfn class="local col3 decl" id="23context" title='context' data-type='void *' data-ref="23context" >context</dfn>);</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="173">173</th><td><i>/*  0MQ socket definition.                                                    */</i></td></tr>
+<tr><th id="174">174</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td><i>/*  Socket types.                                                             */</i> </td></tr>
+<tr><th id="177">177</th><td><u>#define <dfn class="macro" id="_M/ZMQ_PAIR" data-ref="_M/ZMQ_PAIR">ZMQ_PAIR</dfn> 0</u></td></tr>
+<tr><th id="178">178</th><td><u>#define <dfn class="macro" id="_M/ZMQ_PUB" data-ref="_M/ZMQ_PUB">ZMQ_PUB</dfn> 1</u></td></tr>
+<tr><th id="179">179</th><td><u>#define <dfn class="macro" id="_M/ZMQ_SUB" data-ref="_M/ZMQ_SUB">ZMQ_SUB</dfn> 2</u></td></tr>
+<tr><th id="180">180</th><td><u>#define <dfn class="macro" id="_M/ZMQ_REQ" data-ref="_M/ZMQ_REQ">ZMQ_REQ</dfn> 3</u></td></tr>
+<tr><th id="181">181</th><td><u>#define <dfn class="macro" id="_M/ZMQ_REP" data-ref="_M/ZMQ_REP">ZMQ_REP</dfn> 4</u></td></tr>
+<tr><th id="182">182</th><td><u>#define <dfn class="macro" id="_M/ZMQ_DEALER" data-ref="_M/ZMQ_DEALER">ZMQ_DEALER</dfn> 5</u></td></tr>
+<tr><th id="183">183</th><td><u>#define <dfn class="macro" id="_M/ZMQ_ROUTER" data-ref="_M/ZMQ_ROUTER">ZMQ_ROUTER</dfn> 6</u></td></tr>
+<tr><th id="184">184</th><td><u>#define <dfn class="macro" id="_M/ZMQ_PULL" data-ref="_M/ZMQ_PULL">ZMQ_PULL</dfn> 7</u></td></tr>
+<tr><th id="185">185</th><td><u>#define <dfn class="macro" id="_M/ZMQ_PUSH" data-ref="_M/ZMQ_PUSH">ZMQ_PUSH</dfn> 8</u></td></tr>
+<tr><th id="186">186</th><td><u>#define <dfn class="macro" id="_M/ZMQ_XPUB" data-ref="_M/ZMQ_XPUB">ZMQ_XPUB</dfn> 9</u></td></tr>
+<tr><th id="187">187</th><td><u>#define <dfn class="macro" id="_M/ZMQ_XSUB" data-ref="_M/ZMQ_XSUB">ZMQ_XSUB</dfn> 10</u></td></tr>
+<tr><th id="188">188</th><td><u>#define <dfn class="macro" id="_M/ZMQ_XREQ" data-ref="_M/ZMQ_XREQ">ZMQ_XREQ</dfn> ZMQ_DEALER        /*  Old alias, remove in 3.x               */</u></td></tr>
+<tr><th id="189">189</th><td><u>#define <dfn class="macro" id="_M/ZMQ_XREP" data-ref="_M/ZMQ_XREP">ZMQ_XREP</dfn> ZMQ_ROUTER        /*  Old alias, remove in 3.x               */</u></td></tr>
+<tr><th id="190">190</th><td><u>#define <dfn class="macro" id="_M/ZMQ_UPSTREAM" data-ref="_M/ZMQ_UPSTREAM">ZMQ_UPSTREAM</dfn> ZMQ_PULL      /*  Old alias, remove in 3.x               */</u></td></tr>
+<tr><th id="191">191</th><td><u>#define <dfn class="macro" id="_M/ZMQ_DOWNSTREAM" data-ref="_M/ZMQ_DOWNSTREAM">ZMQ_DOWNSTREAM</dfn> ZMQ_PUSH    /*  Old alias, remove in 3.x               */</u></td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><i>/*  Socket options.                                                           */</i></td></tr>
+<tr><th id="194">194</th><td><u>#define <dfn class="macro" id="_M/ZMQ_HWM" data-ref="_M/ZMQ_HWM">ZMQ_HWM</dfn> 1</u></td></tr>
+<tr><th id="195">195</th><td><u>#define <dfn class="macro" id="_M/ZMQ_SWAP" data-ref="_M/ZMQ_SWAP">ZMQ_SWAP</dfn> 3</u></td></tr>
+<tr><th id="196">196</th><td><u>#define <dfn class="macro" id="_M/ZMQ_AFFINITY" data-ref="_M/ZMQ_AFFINITY">ZMQ_AFFINITY</dfn> 4</u></td></tr>
+<tr><th id="197">197</th><td><u>#define <dfn class="macro" id="_M/ZMQ_IDENTITY" data-ref="_M/ZMQ_IDENTITY">ZMQ_IDENTITY</dfn> 5</u></td></tr>
+<tr><th id="198">198</th><td><u>#define <dfn class="macro" id="_M/ZMQ_SUBSCRIBE" data-ref="_M/ZMQ_SUBSCRIBE">ZMQ_SUBSCRIBE</dfn> 6</u></td></tr>
+<tr><th id="199">199</th><td><u>#define <dfn class="macro" id="_M/ZMQ_UNSUBSCRIBE" data-ref="_M/ZMQ_UNSUBSCRIBE">ZMQ_UNSUBSCRIBE</dfn> 7</u></td></tr>
+<tr><th id="200">200</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RATE" data-ref="_M/ZMQ_RATE">ZMQ_RATE</dfn> 8</u></td></tr>
+<tr><th id="201">201</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RECOVERY_IVL" data-ref="_M/ZMQ_RECOVERY_IVL">ZMQ_RECOVERY_IVL</dfn> 9</u></td></tr>
+<tr><th id="202">202</th><td><u>#define <dfn class="macro" id="_M/ZMQ_MCAST_LOOP" data-ref="_M/ZMQ_MCAST_LOOP">ZMQ_MCAST_LOOP</dfn> 10</u></td></tr>
+<tr><th id="203">203</th><td><u>#define <dfn class="macro" id="_M/ZMQ_SNDBUF" data-ref="_M/ZMQ_SNDBUF">ZMQ_SNDBUF</dfn> 11</u></td></tr>
+<tr><th id="204">204</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RCVBUF" data-ref="_M/ZMQ_RCVBUF">ZMQ_RCVBUF</dfn> 12</u></td></tr>
+<tr><th id="205">205</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RCVMORE" data-ref="_M/ZMQ_RCVMORE">ZMQ_RCVMORE</dfn> 13</u></td></tr>
+<tr><th id="206">206</th><td><u>#define <dfn class="macro" id="_M/ZMQ_FD" data-ref="_M/ZMQ_FD">ZMQ_FD</dfn> 14</u></td></tr>
+<tr><th id="207">207</th><td><u>#define <dfn class="macro" id="_M/ZMQ_EVENTS" data-ref="_M/ZMQ_EVENTS">ZMQ_EVENTS</dfn> 15</u></td></tr>
+<tr><th id="208">208</th><td><u>#define <dfn class="macro" id="_M/ZMQ_TYPE" data-ref="_M/ZMQ_TYPE">ZMQ_TYPE</dfn> 16</u></td></tr>
+<tr><th id="209">209</th><td><u>#define <dfn class="macro" id="_M/ZMQ_LINGER" data-ref="_M/ZMQ_LINGER">ZMQ_LINGER</dfn> 17</u></td></tr>
+<tr><th id="210">210</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RECONNECT_IVL" data-ref="_M/ZMQ_RECONNECT_IVL">ZMQ_RECONNECT_IVL</dfn> 18</u></td></tr>
+<tr><th id="211">211</th><td><u>#define <dfn class="macro" id="_M/ZMQ_BACKLOG" data-ref="_M/ZMQ_BACKLOG">ZMQ_BACKLOG</dfn> 19</u></td></tr>
+<tr><th id="212">212</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RECOVERY_IVL_MSEC" data-ref="_M/ZMQ_RECOVERY_IVL_MSEC">ZMQ_RECOVERY_IVL_MSEC</dfn> 20   /*  opt. recovery time, reconcile in 3.x   */</u></td></tr>
+<tr><th id="213">213</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RECONNECT_IVL_MAX" data-ref="_M/ZMQ_RECONNECT_IVL_MAX">ZMQ_RECONNECT_IVL_MAX</dfn> 21</u></td></tr>
+<tr><th id="214">214</th><td><u>#define <dfn class="macro" id="_M/ZMQ_RCVTIMEO" data-ref="_M/ZMQ_RCVTIMEO">ZMQ_RCVTIMEO</dfn> 27</u></td></tr>
+<tr><th id="215">215</th><td><u>#define <dfn class="macro" id="_M/ZMQ_SNDTIMEO" data-ref="_M/ZMQ_SNDTIMEO">ZMQ_SNDTIMEO</dfn> 28</u></td></tr>
+<tr><th id="216">216</th><td></td></tr>
+<tr><th id="217">217</th><td><i>/*  Send/recv options.                                                        */</i></td></tr>
+<tr><th id="218">218</th><td><u>#define <dfn class="macro" id="_M/ZMQ_NOBLOCK" data-ref="_M/ZMQ_NOBLOCK">ZMQ_NOBLOCK</dfn> 1</u></td></tr>
+<tr><th id="219">219</th><td><u>#define <dfn class="macro" id="_M/ZMQ_SNDMORE" data-ref="_M/ZMQ_SNDMORE">ZMQ_SNDMORE</dfn> 2</u></td></tr>
+<tr><th id="220">220</th><td></td></tr>
+<tr><th id="221">221</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>void</em> *<dfn class="decl" id="zmq_socket" title='zmq_socket' data-ref="zmq_socket" >zmq_socket</dfn> (<em>void</em> *<dfn class="local col4 decl" id="24context" title='context' data-type='void *' data-ref="24context" >context</dfn>, <em>int</em> <dfn class="local col5 decl" id="25type" title='type' data-type='int' data-ref="25type" >type</dfn>);</td></tr>
+<tr><th id="222">222</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_close" title='zmq_close' data-ref="zmq_close" >zmq_close</dfn> (<em>void</em> *<dfn class="local col6 decl" id="26s" title='s' data-type='void *' data-ref="26s" >s</dfn>);</td></tr>
+<tr><th id="223">223</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_setsockopt" title='zmq_setsockopt' data-ref="zmq_setsockopt" >zmq_setsockopt</dfn> (<em>void</em> *<dfn class="local col7 decl" id="27s" title='s' data-type='void *' data-ref="27s" >s</dfn>, <em>int</em> <dfn class="local col8 decl" id="28option" title='option' data-type='int' data-ref="28option" >option</dfn>, <em>const</em> <em>void</em> *<dfn class="local col9 decl" id="29optval" title='optval' data-type='const void *' data-ref="29optval" >optval</dfn>,</td></tr>
+<tr><th id="224">224</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="30optvallen" title='optvallen' data-type='size_t' data-ref="30optvallen" >optvallen</dfn>); </td></tr>
+<tr><th id="225">225</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_getsockopt" title='zmq_getsockopt' data-ref="zmq_getsockopt" >zmq_getsockopt</dfn> (<em>void</em> *<dfn class="local col1 decl" id="31s" title='s' data-type='void *' data-ref="31s" >s</dfn>, <em>int</em> <dfn class="local col2 decl" id="32option" title='option' data-type='int' data-ref="32option" >option</dfn>, <em>void</em> *<dfn class="local col3 decl" id="33optval" title='optval' data-type='void *' data-ref="33optval" >optval</dfn>,</td></tr>
+<tr><th id="226">226</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col4 decl" id="34optvallen" title='optvallen' data-type='size_t *' data-ref="34optvallen" >optvallen</dfn>);</td></tr>
+<tr><th id="227">227</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_bind" title='zmq_bind' data-ref="zmq_bind" >zmq_bind</dfn> (<em>void</em> *<dfn class="local col5 decl" id="35s" title='s' data-type='void *' data-ref="35s" >s</dfn>, <em>const</em> <em>char</em> *<dfn class="local col6 decl" id="36addr" title='addr' data-type='const char *' data-ref="36addr" >addr</dfn>);</td></tr>
+<tr><th id="228">228</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_connect" title='zmq_connect' data-ref="zmq_connect" >zmq_connect</dfn> (<em>void</em> *<dfn class="local col7 decl" id="37s" title='s' data-type='void *' data-ref="37s" >s</dfn>, <em>const</em> <em>char</em> *<dfn class="local col8 decl" id="38addr" title='addr' data-type='const char *' data-ref="38addr" >addr</dfn>);</td></tr>
+<tr><th id="229">229</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_send" title='zmq_send' data-ref="zmq_send" >zmq_send</dfn> (<em>void</em> *<dfn class="local col9 decl" id="39s" title='s' data-type='void *' data-ref="39s" >s</dfn>, <a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col0 decl" id="40msg" title='msg' data-type='zmq_msg_t *' data-ref="40msg" >msg</dfn>, <em>int</em> <dfn class="local col1 decl" id="41flags" title='flags' data-type='int' data-ref="41flags" >flags</dfn>);</td></tr>
+<tr><th id="230">230</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_recv" title='zmq_recv' data-ref="zmq_recv" >zmq_recv</dfn> (<em>void</em> *<dfn class="local col2 decl" id="42s" title='s' data-type='void *' data-ref="42s" >s</dfn>, <a class="typedef" href="#zmq_msg_t" title='zmq_msg_t' data-type='struct zmq_msg_t' data-ref="zmq_msg_t" >zmq_msg_t</a> *<dfn class="local col3 decl" id="43msg" title='msg' data-type='zmq_msg_t *' data-ref="43msg" >msg</dfn>, <em>int</em> <dfn class="local col4 decl" id="44flags" title='flags' data-type='int' data-ref="44flags" >flags</dfn>);</td></tr>
+<tr><th id="231">231</th><td></td></tr>
+<tr><th id="232">232</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="233">233</th><td><i>/*  I/O multiplexing.                                                         */</i></td></tr>
+<tr><th id="234">234</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td><u>#define <dfn class="macro" id="_M/ZMQ_POLLIN" data-ref="_M/ZMQ_POLLIN">ZMQ_POLLIN</dfn> 1</u></td></tr>
+<tr><th id="237">237</th><td><u>#define <dfn class="macro" id="_M/ZMQ_POLLOUT" data-ref="_M/ZMQ_POLLOUT">ZMQ_POLLOUT</dfn> 2</u></td></tr>
+<tr><th id="238">238</th><td><u>#define <dfn class="macro" id="_M/ZMQ_POLLERR" data-ref="_M/ZMQ_POLLERR">ZMQ_POLLERR</dfn> 4</u></td></tr>
+<tr><th id="239">239</th><td></td></tr>
+<tr><th id="240">240</th><td><b>typedef</b> <b>struct</b></td></tr>
+<tr><th id="241">241</th><td>{</td></tr>
+<tr><th id="242">242</th><td>    <em>void</em> *<dfn class="decl" id="(anonymous)::socket" title='(anonymous struct)::socket' data-ref="(anonymous)::socket" >socket</dfn>;</td></tr>
+<tr><th id="243">243</th><td><u>#<span data-ppcond="243">if</span> defined <span class="macro" data-ref="_M/_WIN32">_WIN32</span></u></td></tr>
+<tr><th id="244">244</th><td>    SOCKET fd;</td></tr>
+<tr><th id="245">245</th><td><u>#<span data-ppcond="243">else</span></u></td></tr>
+<tr><th id="246">246</th><td>    <em>int</em> <dfn class="decl" id="(anonymous)::fd" title='(anonymous struct)::fd' data-ref="(anonymous)::fd" >fd</dfn>;</td></tr>
+<tr><th id="247">247</th><td><u>#<span data-ppcond="243">endif</span></u></td></tr>
+<tr><th id="248">248</th><td>    <em>short</em> <dfn class="decl" id="(anonymous)::events" title='(anonymous struct)::events' data-ref="(anonymous)::events" >events</dfn>;</td></tr>
+<tr><th id="249">249</th><td>    <em>short</em> <dfn class="decl" id="(anonymous)::revents" title='(anonymous struct)::revents' data-ref="(anonymous)::revents" >revents</dfn>;</td></tr>
+<tr><th id="250">250</th><td>} <dfn class="typedef" id="zmq_pollitem_t" title='zmq_pollitem_t' data-type='struct zmq_pollitem_t' data-ref="zmq_pollitem_t" >zmq_pollitem_t</dfn>;</td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_poll" title='zmq_poll' data-ref="zmq_poll" >zmq_poll</dfn> (<a class="typedef" href="#zmq_pollitem_t" title='zmq_pollitem_t' data-type='struct zmq_pollitem_t' data-ref="zmq_pollitem_t" >zmq_pollitem_t</a> *<dfn class="local col5 decl" id="45items" title='items' data-type='zmq_pollitem_t *' data-ref="45items" >items</dfn>, <em>int</em> <dfn class="local col6 decl" id="46nitems" title='nitems' data-type='int' data-ref="46nitems" >nitems</dfn>, <em>long</em> <dfn class="local col7 decl" id="47timeout" title='timeout' data-type='long' data-ref="47timeout" >timeout</dfn>);</td></tr>
+<tr><th id="253">253</th><td></td></tr>
+<tr><th id="254">254</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="255">255</th><td><i>/*  Built-in devices                                                          */</i></td></tr>
+<tr><th id="256">256</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td><u>#define <dfn class="macro" id="_M/ZMQ_STREAMER" data-ref="_M/ZMQ_STREAMER">ZMQ_STREAMER</dfn> 1</u></td></tr>
+<tr><th id="259">259</th><td><u>#define <dfn class="macro" id="_M/ZMQ_FORWARDER" data-ref="_M/ZMQ_FORWARDER">ZMQ_FORWARDER</dfn> 2</u></td></tr>
+<tr><th id="260">260</th><td><u>#define <dfn class="macro" id="_M/ZMQ_QUEUE" data-ref="_M/ZMQ_QUEUE">ZMQ_QUEUE</dfn> 3</u></td></tr>
+<tr><th id="261">261</th><td></td></tr>
+<tr><th id="262">262</th><td><a class="macro" href="#45" title="__attribute__ ((visibility(&quot;default&quot;)))" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a> <em>int</em> <dfn class="decl" id="zmq_device" title='zmq_device' data-ref="zmq_device" >zmq_device</dfn> (<em>int</em> <dfn class="local col8 decl" id="48device" title='device' data-type='int' data-ref="48device" >device</dfn>, <em>void</em> * <dfn class="local col9 decl" id="49insocket" title='insocket' data-type='void *' data-ref="49insocket" >insocket</dfn>, <em>void</em>* <dfn class="local col0 decl" id="50outsocket" title='outsocket' data-type='void *' data-ref="50outsocket" >outsocket</dfn>);</td></tr>
+<tr><th id="263">263</th><td></td></tr>
+<tr><th id="264">264</th><td><u>#undef <a class="macro" href="#45" data-ref="_M/ZMQ_EXPORT">ZMQ_EXPORT</a></u></td></tr>
+<tr><th id="265">265</th><td></td></tr>
+<tr><th id="266">266</th><td><u>#<span data-ppcond="266">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="267">267</th><td>}</td></tr>
+<tr><th id="268">268</th><td><u>#<span data-ppcond="266">endif</span></u></td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td><u>#<span data-ppcond="21">endif</span></u></td></tr>
+<tr><th id="271">271</th><td></td></tr>
+<tr><th id="272">272</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../TrinityCore6.x/dep/zmqpp/zmqpp/context.cpp.html'>TrinityCore6.x/dep/zmqpp/zmqpp/context.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+<title>name.hpp [include/boost/parameter/name.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/parameter/name.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>parameter</a>/name.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// Copyright Daniel Wallin 2006. Use, modification and distribution is</i></td></tr>
+<tr><th id="2">2</th><td><i>// subject to the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="3">3</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="4">4</th><td></td></tr>
+<tr><th id="5">5</th><td><u>#<span data-ppcond="5">ifndef</span> <span class="macro" data-ref="_M/BOOST_PARAMETER_NAME_060806_HPP">BOOST_PARAMETER_NAME_060806_HPP</span></u></td></tr>
+<tr><th id="6">6</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_NAME_060806_HPP" data-ref="_M/BOOST_PARAMETER_NAME_060806_HPP">BOOST_PARAMETER_NAME_060806_HPP</dfn></u></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><u># include <a href="keyword.hpp.html">&lt;boost/parameter/keyword.hpp&gt;</a></u></td></tr>
+<tr><th id="9">9</th><td><u># include <a href="value_type.hpp.html">&lt;boost/parameter/value_type.hpp&gt;</a></u></td></tr>
+<tr><th id="10">10</th><td><u># include <a href="../detail/workaround.hpp.html">&lt;boost/detail/workaround.hpp&gt;</a></u></td></tr>
+<tr><th id="11">11</th><td><u># include <a href="../preprocessor/cat.hpp.html">&lt;boost/preprocessor/cat.hpp&gt;</a></u></td></tr>
+<tr><th id="12">12</th><td><u># include <a href="../preprocessor/stringize.hpp.html">&lt;boost/preprocessor/stringize.hpp&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td><u># include <a href="../preprocessor/control/iif.hpp.html">&lt;boost/preprocessor/control/iif.hpp&gt;</a></u></td></tr>
+<tr><th id="14">14</th><td><u># include <a href="../preprocessor/tuple/eat.hpp.html">&lt;boost/preprocessor/tuple/eat.hpp&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td><u># include <a href="../preprocessor/tuple/elem.hpp.html">&lt;boost/preprocessor/tuple/elem.hpp&gt;</a></u></td></tr>
+<tr><th id="16">16</th><td><u># include <a href="../mpl/placeholders.hpp.html">&lt;boost/mpl/placeholders.hpp&gt;</a></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u># <span data-ppcond="18">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_SFINAE">BOOST_NO_SFINAE</span>) \</u></td></tr>
+<tr><th id="19">19</th><td><u>  &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION">BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION</span>) \</u></td></tr>
+<tr><th id="20">20</th><td><u>  &amp;&amp; !<a class="macro" href="../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (__BORLANDC__ != 0) &amp;&amp; (1 % (( (__BORLANDC__ != ((0x592)-(0x592))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(__BORLANDC__, <a class="macro" href="../detail/workaround.hpp.html#258" title="!= ((0x592)-(0x592))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(0x592))</u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#  include <a href="../utility/enable_if.hpp.html">&lt;boost/utility/enable_if.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#  include <a href="../mpl/lambda.hpp.html">&lt;boost/mpl/lambda.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>namespace</b> <span class="namespace">boost</span> { <b>namespace</b> <span class="namespace">parameter</span> { <b>namespace</b> <span class="namespace">aux</span> {</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><i>// Tag type passed to MPL lambda.</i></td></tr>
+<tr><th id="28">28</th><td><b>struct</b> <a class="type" href="aux_/arg_list.hpp.html#boost::parameter::aux::lambda_tag" title='boost::parameter::aux::lambda_tag' data-ref="boost::parameter::aux::lambda_tag" id="boost::parameter::aux::lambda_tag" >lambda_tag</a>;</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>struct</b> <dfn class="type def" id="boost::parameter::aux::name_tag_base" title='boost::parameter::aux::name_tag_base' data-ref="boost::parameter::aux::name_tag_base" >name_tag_base</dfn></td></tr>
+<tr><th id="31">31</th><td>{};</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><b>template</b> &lt;<b>class</b> Tag&gt;</td></tr>
+<tr><th id="34">34</th><td><b>struct</b> <dfn class="type def" id="boost::parameter::aux::name_tag" title='boost::parameter::aux::name_tag' data-ref="boost::parameter::aux::name_tag" >name_tag</dfn></td></tr>
+<tr><th id="35">35</th><td>{};</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="38">38</th><td><b>struct</b> <dfn class="type def" id="boost::parameter::aux::is_name_tag" title='boost::parameter::aux::is_name_tag' data-ref="boost::parameter::aux::is_name_tag" >is_name_tag</dfn></td></tr>
+<tr><th id="39">39</th><td>  : <span class="namespace">mpl::</span><a class="typedef" href="../mpl/bool_fwd.hpp.html#mpl_::false_" title='mpl_::false_' data-type='bool_&lt;false&gt;' data-ref="mpl_::false_" >false_</a></td></tr>
+<tr><th id="40">40</th><td>{};</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>}}} <i>// namespace boost::parameter::aux</i></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><b>namespace</b> <span class="namespace">boost</span> { <b>namespace</b> <span class="namespace">mpl</span> {</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="47">47</th><td><b>struct</b> <dfn class="type def" id="boost::mpl::lambda" title='boost::mpl::lambda' data-ref="boost::mpl::lambda" >lambda</dfn>&lt;</td></tr>
+<tr><th id="48">48</th><td>    T</td></tr>
+<tr><th id="49">49</th><td>  , <b>typename</b> <span class="namespace">boost::</span><a class="type" href="../utility/enable_if.hpp.html#boost::enable_if" title='boost::enable_if' data-ref="boost::enable_if" >enable_if</a>&lt;</td></tr>
+<tr><th id="50">50</th><td>        <span class="namespace">parameter::aux::</span><a class="type" href="#boost::parameter::aux::is_name_tag" title='boost::parameter::aux::is_name_tag' data-ref="boost::parameter::aux::is_name_tag" >is_name_tag</a>&lt;T&gt;, <span class="namespace">parameter::aux::</span><a class="type" href="aux_/arg_list.hpp.html#boost::parameter::aux::lambda_tag" title='boost::parameter::aux::lambda_tag' data-ref="boost::parameter::aux::lambda_tag" >lambda_tag</a></td></tr>
+<tr><th id="51">51</th><td>    &gt;::type</td></tr>
+<tr><th id="52">52</th><td>&gt;</td></tr>
+<tr><th id="53">53</th><td>{</td></tr>
+<tr><th id="54">54</th><td>    <b>typedef</b> <a class="typedef" href="../mpl/bool_fwd.hpp.html#mpl_::true_" title='mpl_::true_' data-type='bool_&lt;true&gt;' data-ref="mpl_::true_" >true_</a> <dfn class="typedef" id="boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::is_le" title='boost::mpl::lambda&lt;type-parameter-0-0, typename enable_if&lt;is_name_tag&lt;type-parameter-0-0&gt;, lambda_tag&gt;::type, int_&lt;aux::template_arity&lt;T&gt;::value&gt; &gt;::is_le' data-type='true_' data-ref="boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::is_le" >is_le</dfn>;</td></tr>
+<tr><th id="55">55</th><td>    <b>typedef</b> <a class="type" href="../mpl/aux_/preprocessed/gcc/bind_fwd.hpp.html#boost::mpl::bind3" title='boost::mpl::bind3' data-ref="boost::mpl::bind3" >bind3</a>&lt; <a class="type" href="../mpl/aux_/preprocessed/gcc/bind.hpp.html#boost::mpl::quote3" title='boost::mpl::quote3' data-ref="boost::mpl::quote3" >quote3</a>&lt;<span class="namespace">parameter::</span>value_type&gt;, <a class="type" href="../mpl/arg_fwd.hpp.html#mpl_::arg" title='mpl_::arg' data-ref="mpl_::arg" >arg</a>&lt;<var>2</var>&gt;, T, <em>void</em>&gt; <dfn class="typedef" id="boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::result_" title='boost::mpl::lambda&lt;type-parameter-0-0, typename enable_if&lt;is_name_tag&lt;type-parameter-0-0&gt;, lambda_tag&gt;::type, int_&lt;aux::template_arity&lt;T&gt;::value&gt; &gt;::result_' data-type='bind3&lt;quote3&lt;parameter::value_type&gt;, arg&lt;2&gt;, T, void&gt;' data-ref="boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::result_" >result_</dfn>;</td></tr>
+<tr><th id="56">56</th><td>    <b>typedef</b> <a class="typedef" href="#boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::result_" title='boost::mpl::lambda&lt;type-parameter-0-0, typename enable_if&lt;is_name_tag&lt;type-parameter-0-0&gt;, lambda_tag&gt;::type, int_&lt;aux::template_arity&lt;T&gt;::value&gt; &gt;::result_' data-type='bind3&lt;quote3&lt;parameter::value_type&gt;, arg&lt;2&gt;, T, void&gt;' data-ref="boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::result_" >result_</a> <dfn class="typedef" id="boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::type" title='boost::mpl::lambda&lt;type-parameter-0-0, typename enable_if&lt;is_name_tag&lt;type-parameter-0-0&gt;, lambda_tag&gt;::type, int_&lt;aux::template_arity&lt;T&gt;::value&gt; &gt;::type' data-type='result_' data-ref="boost::mpl::lambda{type-parameter-0-0,typenameenable_if{is_name_tag{type-parameter-0-0},lambda_tag}::type,int_{aux::template_arity{T}::value}}::type" >type</dfn>;</td></tr>
+<tr><th id="57">57</th><td>};</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>}} <i>// namespace boost::mpl</i></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><u># <span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td><u># <span data-ppcond="63">if</span> <a class="macro" href="../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (__BORLANDC__ != 0) &amp;&amp; (1 % (( (__BORLANDC__ != ((0x564)-(0x564))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(__BORLANDC__, <a class="macro" href="../detail/workaround.hpp.html#258" title="!= ((0x564)-(0x564))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(0x564))</u></td></tr>
+<tr><th id="64">64</th><td><u># include &lt;boost/preprocessor/detail/split.hpp&gt;</u></td></tr>
+<tr><th id="65">65</th><td><i>// From Paul Mensonides</i></td></tr>
+<tr><th id="66">66</th><td><u>#  define BOOST_PARAMETER_IS_BINARY(x) \</u></td></tr>
+<tr><th id="67">67</th><td><u>    BOOST_PP_SPLIT(1, BOOST_PARAMETER_IS_BINARY_C x BOOST_PP_COMMA() 0) \</u></td></tr>
+<tr><th id="68">68</th><td><u>    /**/</u></td></tr>
+<tr><th id="69">69</th><td><u>#  define BOOST_PARAMETER_IS_BINARY_C(x,y) \</u></td></tr>
+<tr><th id="70">70</th><td><u>    ~, 1 BOOST_PP_RPAREN() \</u></td></tr>
+<tr><th id="71">71</th><td><u>    BOOST_PP_TUPLE_EAT(2) BOOST_PP_LPAREN() ~ \</u></td></tr>
+<tr><th id="72">72</th><td><u>    /**/</u></td></tr>
+<tr><th id="73">73</th><td><u># <span data-ppcond="63">else</span></u></td></tr>
+<tr><th id="74">74</th><td><u>#  include <a href="../preprocessor/detail/is_binary.hpp.html">&lt;boost/preprocessor/detail/is_binary.hpp&gt;</a></u></td></tr>
+<tr><th id="75">75</th><td><u>#  define <dfn class="macro" id="_M/BOOST_PARAMETER_IS_BINARY" data-ref="_M/BOOST_PARAMETER_IS_BINARY">BOOST_PARAMETER_IS_BINARY</dfn>(x) BOOST_PP_IS_BINARY(x)</u></td></tr>
+<tr><th id="76">76</th><td><u># <span data-ppcond="63">endif</span></u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><u># <span data-ppcond="78">if</span> <a class="macro" href="../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt; 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt; 1300)</u></td></tr>
+<tr><th id="79">79</th><td><u>#  define BOOST_PARAMETER_NAME_OBJECT(tag, name)                    \</u></td></tr>
+<tr><th id="80">80</th><td><u>    static ::boost::parameter::keyword&lt;tag&gt; const&amp; name             \</u></td></tr>
+<tr><th id="81">81</th><td><u>       = ::boost::parameter::keyword&lt;tag&gt;::instance;</u></td></tr>
+<tr><th id="82">82</th><td><u># <span data-ppcond="78">else</span></u></td></tr>
+<tr><th id="83">83</th><td><u>#  define <dfn class="macro" id="_M/BOOST_PARAMETER_NAME_OBJECT" data-ref="_M/BOOST_PARAMETER_NAME_OBJECT">BOOST_PARAMETER_NAME_OBJECT</dfn>(tag, name)                    \</u></td></tr>
+<tr><th id="84">84</th><td><u>    namespace                                                       \</u></td></tr>
+<tr><th id="85">85</th><td><u>    {                                                               \</u></td></tr>
+<tr><th id="86">86</th><td><u>       ::boost::parameter::keyword&lt;tag&gt; const&amp; name                 \</u></td></tr>
+<tr><th id="87">87</th><td><u>       = ::boost::parameter::keyword&lt;tag&gt;::instance;                \</u></td></tr>
+<tr><th id="88">88</th><td><u>    }</u></td></tr>
+<tr><th id="89">89</th><td><u># <span data-ppcond="78">endif</span></u></td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_BASIC_NAME" data-ref="_M/BOOST_PARAMETER_BASIC_NAME">BOOST_PARAMETER_BASIC_NAME</dfn>(tag_namespace, tag, name)       \</u></td></tr>
+<tr><th id="92">92</th><td><u>    namespace tag_namespace                                         \</u></td></tr>
+<tr><th id="93">93</th><td><u>    {                                                               \</u></td></tr>
+<tr><th id="94">94</th><td><u>      struct tag                                                    \</u></td></tr>
+<tr><th id="95">95</th><td><u>      {                                                             \</u></td></tr>
+<tr><th id="96">96</th><td><u>          static char const* keyword_name()                         \</u></td></tr>
+<tr><th id="97">97</th><td><u>          {                                                         \</u></td></tr>
+<tr><th id="98">98</th><td><u>              return BOOST_PP_STRINGIZE(tag);                       \</u></td></tr>
+<tr><th id="99">99</th><td><u>          }                                                         \</u></td></tr>
+<tr><th id="100">100</th><td><u>                                                                    \</u></td></tr>
+<tr><th id="101">101</th><td><u>          typedef boost::parameter::value_type&lt;                     \</u></td></tr>
+<tr><th id="102">102</th><td><u>              boost::mpl::_2, tag, boost::parameter::void_          \</u></td></tr>
+<tr><th id="103">103</th><td><u>          &gt; _;                                                      \</u></td></tr>
+<tr><th id="104">104</th><td><u>                                                                    \</u></td></tr>
+<tr><th id="105">105</th><td><u>          typedef boost::parameter::value_type&lt;                     \</u></td></tr>
+<tr><th id="106">106</th><td><u>              boost::mpl::_2, tag, boost::parameter::void_          \</u></td></tr>
+<tr><th id="107">107</th><td><u>          &gt; _1;                                                     \</u></td></tr>
+<tr><th id="108">108</th><td><u>      };                                                            \</u></td></tr>
+<tr><th id="109">109</th><td><u>    }                                                               \</u></td></tr>
+<tr><th id="110">110</th><td><u>    BOOST_PARAMETER_NAME_OBJECT(tag_namespace::tag, name)</u></td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_COMPLEX_NAME_TUPLE1" data-ref="_M/BOOST_PARAMETER_COMPLEX_NAME_TUPLE1">BOOST_PARAMETER_COMPLEX_NAME_TUPLE1</dfn>(tag,namespace)         \</u></td></tr>
+<tr><th id="113">113</th><td><u>    (tag, namespace), ~</u></td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_COMPLEX_NAME_TUPLE" data-ref="_M/BOOST_PARAMETER_COMPLEX_NAME_TUPLE">BOOST_PARAMETER_COMPLEX_NAME_TUPLE</dfn>(name)                   \</u></td></tr>
+<tr><th id="116">116</th><td><u>    BOOST_PP_TUPLE_ELEM(2, 0, (BOOST_PARAMETER_COMPLEX_NAME_TUPLE1 name))</u></td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_COMPLEX_NAME_TAG" data-ref="_M/BOOST_PARAMETER_COMPLEX_NAME_TAG">BOOST_PARAMETER_COMPLEX_NAME_TAG</dfn>(name)                     \</u></td></tr>
+<tr><th id="119">119</th><td><u>    BOOST_PP_TUPLE_ELEM(2, 0, BOOST_PARAMETER_COMPLEX_NAME_TUPLE(name))</u></td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_COMPLEX_NAME_NAMESPACE" data-ref="_M/BOOST_PARAMETER_COMPLEX_NAME_NAMESPACE">BOOST_PARAMETER_COMPLEX_NAME_NAMESPACE</dfn>(name)               \</u></td></tr>
+<tr><th id="122">122</th><td><u>    BOOST_PP_TUPLE_ELEM(2, 1, BOOST_PARAMETER_COMPLEX_NAME_TUPLE(name))</u></td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_COMPLEX_NAME" data-ref="_M/BOOST_PARAMETER_COMPLEX_NAME">BOOST_PARAMETER_COMPLEX_NAME</dfn>(name)                         \</u></td></tr>
+<tr><th id="125">125</th><td><u>    BOOST_PARAMETER_BASIC_NAME(                                     \</u></td></tr>
+<tr><th id="126">126</th><td><u>        BOOST_PARAMETER_COMPLEX_NAME_NAMESPACE(name)                \</u></td></tr>
+<tr><th id="127">127</th><td><u>      , BOOST_PP_TUPLE_EAT(2) name                                  \</u></td></tr>
+<tr><th id="128">128</th><td><u>      , BOOST_PARAMETER_COMPLEX_NAME_TAG(name)                      \</u></td></tr>
+<tr><th id="129">129</th><td><u>    )                                                               \</u></td></tr>
+<tr><th id="130">130</th><td><u>/**/</u></td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_SIMPLE_NAME" data-ref="_M/BOOST_PARAMETER_SIMPLE_NAME">BOOST_PARAMETER_SIMPLE_NAME</dfn>(name)                          \</u></td></tr>
+<tr><th id="133">133</th><td><u>    BOOST_PARAMETER_BASIC_NAME(tag, name, BOOST_PP_CAT(_, name))</u></td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_NAME" data-ref="_M/BOOST_PARAMETER_NAME">BOOST_PARAMETER_NAME</dfn>(name)                                 \</u></td></tr>
+<tr><th id="136">136</th><td><u>    BOOST_PP_IIF(                                                   \</u></td></tr>
+<tr><th id="137">137</th><td><u>        BOOST_PARAMETER_IS_BINARY(name)                             \</u></td></tr>
+<tr><th id="138">138</th><td><u>      , BOOST_PARAMETER_COMPLEX_NAME                                \</u></td></tr>
+<tr><th id="139">139</th><td><u>      , BOOST_PARAMETER_SIMPLE_NAME                                 \</u></td></tr>
+<tr><th id="140">140</th><td><u>    )(name)                                                         \</u></td></tr>
+<tr><th id="141">141</th><td><u>/**/</u></td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td><u># define <dfn class="macro" id="_M/BOOST_PARAMETER_TEMPLATE_KEYWORD" data-ref="_M/BOOST_PARAMETER_TEMPLATE_KEYWORD">BOOST_PARAMETER_TEMPLATE_KEYWORD</dfn>(name)                     \</u></td></tr>
+<tr><th id="145">145</th><td><u>    namespace tag                                                   \</u></td></tr>
+<tr><th id="146">146</th><td><u>    {                                                               \</u></td></tr>
+<tr><th id="147">147</th><td><u>      struct name;                                                  \</u></td></tr>
+<tr><th id="148">148</th><td><u>    }                                                               \</u></td></tr>
+<tr><th id="149">149</th><td><u>    template &lt;class T&gt;                                              \</u></td></tr>
+<tr><th id="150">150</th><td><u>    struct name                                                     \</u></td></tr>
+<tr><th id="151">151</th><td><u>      : boost::parameter::template_keyword&lt;tag::name, T&gt;            \</u></td></tr>
+<tr><th id="152">152</th><td><u>    {};                                                             \</u></td></tr>
+<tr><th id="153">153</th><td><u>/**/</u></td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><u>#<span data-ppcond="5">endif</span> // BOOST_PARAMETER_NAME_060806_HPP</u></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp.html'>TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

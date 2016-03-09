@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+<title>minimum_category.hpp [include/boost/iterator/detail/minimum_category.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/iterator/detail/minimum_category.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>iterator</a>/<a href='./'>detail</a>/minimum_category.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// Copyright David Abrahams 2003. Use, modification and distribution is</i></td></tr>
+<tr><th id="2">2</th><td><i>// subject to the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="3">3</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="4">4</th><td><u>#<span data-ppcond="4">ifndef</span> <span class="macro" data-ref="_M/MINIMUM_CATEGORY_DWA20031119_HPP">MINIMUM_CATEGORY_DWA20031119_HPP</span></u></td></tr>
+<tr><th id="5">5</th><td><u># define <dfn class="macro" id="_M/MINIMUM_CATEGORY_DWA20031119_HPP" data-ref="_M/MINIMUM_CATEGORY_DWA20031119_HPP">MINIMUM_CATEGORY_DWA20031119_HPP</dfn></u></td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td><u># include <a href="../../type_traits/is_convertible.hpp.html">&lt;boost/type_traits/is_convertible.hpp&gt;</a></u></td></tr>
+<tr><th id="8">8</th><td><u># include <a href="../../type_traits/is_same.hpp.html">&lt;boost/type_traits/is_same.hpp&gt;</a></u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u># include <a href="../../mpl/aux_/lambda_support.hpp.html">&lt;boost/mpl/aux_/lambda_support.hpp&gt;</a></u></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><b>namespace</b> <span class="namespace">boost</span> { <b>namespace</b> <span class="namespace">detail</span> { </td></tr>
+<tr><th id="13">13</th><td><i>//</i></td></tr>
+<tr><th id="14">14</th><td><i>// Returns the minimum category type or error_type</i></td></tr>
+<tr><th id="15">15</th><td><i>// if T1 and T2 are unrelated.</i></td></tr>
+<tr><th id="16">16</th><td><i>//</i></td></tr>
+<tr><th id="17">17</th><td><i>// For compilers not supporting is_convertible this only</i></td></tr>
+<tr><th id="18">18</th><td><i>// works with the new boost return and traversal category</i></td></tr>
+<tr><th id="19">19</th><td><i>// types. The exact boost _types_ are required. No derived types</i></td></tr>
+<tr><th id="20">20</th><td><i>// will work. </i></td></tr>
+<tr><th id="21">21</th><td><i>//</i></td></tr>
+<tr><th id="22">22</th><td><i>//</i></td></tr>
+<tr><th id="23">23</th><td><b>template</b> &lt;<em>bool</em> GreaterEqual, <em>bool</em> LessEqual&gt;</td></tr>
+<tr><th id="24">24</th><td><b>struct</b> <dfn class="type" id="boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" >minimum_category_impl</dfn></td></tr>
+<tr><th id="25">25</th><td><u># <span data-ppcond="25">if</span> <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt; 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt; 1300)</u></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <b>template</b> &lt;<b>class</b> T1, <b>class</b> T2&gt; <b>struct</b> apply</td></tr>
+<tr><th id="28">28</th><td>    {</td></tr>
+<tr><th id="29">29</th><td>        <b>typedef</b> T2 type;</td></tr>
+<tr><th id="30">30</th><td>    };</td></tr>
+<tr><th id="31">31</th><td>    <b>typedef</b> <em>void</em> type;</td></tr>
+<tr><th id="32">32</th><td>}</td></tr>
+<tr><th id="33">33</th><td><u># <span data-ppcond="25">endif</span></u> </td></tr>
+<tr><th id="34">34</th><td>;</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><b>template</b> &lt;<b>class</b> T1, <b>class</b> T2&gt;</td></tr>
+<tr><th id="37">37</th><td><b>struct</b> <dfn class="type" id="boost::detail::error_not_related_by_convertibility" title='boost::detail::error_not_related_by_convertibility' data-ref="boost::detail::error_not_related_by_convertibility" >error_not_related_by_convertibility</dfn>;</td></tr>
+<tr><th id="38">38</th><td>  </td></tr>
+<tr><th id="39">39</th><td><b>template</b> &lt;&gt;</td></tr>
+<tr><th id="40">40</th><td><b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" ><a class="type" href="#boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" >minimum_category_impl</a></dfn>&lt;<b>true</b>,<b>false</b>&gt;</td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>    <b>template</b> &lt;<b>class</b> T1, <b>class</b> T2&gt; <b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl{true,false}::apply" title='boost::detail::minimum_category_impl&lt;true, false&gt;::apply' data-ref="boost::detail::minimum_category_impl{true,false}::apply" >apply</dfn></td></tr>
+<tr><th id="43">43</th><td>    {</td></tr>
+<tr><th id="44">44</th><td>        <b>typedef</b> T2 <dfn class="typedef" id="boost::detail::minimum_category_impl{true,false}::apply::type" title='boost::detail::minimum_category_impl&lt;true, false&gt;::apply::type' data-type='T2' data-ref="boost::detail::minimum_category_impl{true,false}::apply::type" >type</dfn>;</td></tr>
+<tr><th id="45">45</th><td>    };</td></tr>
+<tr><th id="46">46</th><td>};</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><b>template</b> &lt;&gt;</td></tr>
+<tr><th id="49">49</th><td><b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" ><a class="type" href="#boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" >minimum_category_impl</a></dfn>&lt;<b>false</b>,<b>true</b>&gt;</td></tr>
+<tr><th id="50">50</th><td>{</td></tr>
+<tr><th id="51">51</th><td>    <b>template</b> &lt;<b>class</b> T1, <b>class</b> T2&gt; <b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl{false,true}::apply" title='boost::detail::minimum_category_impl&lt;false, true&gt;::apply' data-ref="boost::detail::minimum_category_impl{false,true}::apply" >apply</dfn></td></tr>
+<tr><th id="52">52</th><td>    {</td></tr>
+<tr><th id="53">53</th><td>        <b>typedef</b> T1 <dfn class="typedef" id="boost::detail::minimum_category_impl{false,true}::apply::type" title='boost::detail::minimum_category_impl&lt;false, true&gt;::apply::type' data-type='T1' data-ref="boost::detail::minimum_category_impl{false,true}::apply::type" >type</dfn>;</td></tr>
+<tr><th id="54">54</th><td>    };</td></tr>
+<tr><th id="55">55</th><td>};</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><b>template</b> &lt;&gt;</td></tr>
+<tr><th id="58">58</th><td><b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" ><a class="type" href="#boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" >minimum_category_impl</a></dfn>&lt;<b>true</b>,<b>true</b>&gt;</td></tr>
+<tr><th id="59">59</th><td>{</td></tr>
+<tr><th id="60">60</th><td>    <b>template</b> &lt;<b>class</b> T1, <b>class</b> T2&gt; <b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl{true,true}::apply" title='boost::detail::minimum_category_impl&lt;true, true&gt;::apply' data-ref="boost::detail::minimum_category_impl{true,true}::apply" >apply</dfn></td></tr>
+<tr><th id="61">61</th><td>    {</td></tr>
+<tr><th id="62">62</th><td>        <a class="macro" href="../../static_assert.hpp.html#78" title="static_assert((is_same&lt;T1,T2&gt;::value), &quot;(is_same&lt;T1,T2&gt;::value)&quot;)" data-ref="_M/BOOST_STATIC_ASSERT">BOOST_STATIC_ASSERT</a>((<a class="type" href="../../type_traits/is_same.hpp.html#37" title='boost::is_same' data-ref="boost::is_same" >is_same</a>&lt;T1,T2&gt;::value));</td></tr>
+<tr><th id="63">63</th><td>        <b>typedef</b> T1 <dfn class="typedef" id="boost::detail::minimum_category_impl{true,true}::apply::type" title='boost::detail::minimum_category_impl&lt;true, true&gt;::apply::type' data-type='T1' data-ref="boost::detail::minimum_category_impl{true,true}::apply::type" >type</dfn>;</td></tr>
+<tr><th id="64">64</th><td>    };</td></tr>
+<tr><th id="65">65</th><td>};</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><b>template</b> &lt;&gt;</td></tr>
+<tr><th id="68">68</th><td><b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" ><a class="type" href="#boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" >minimum_category_impl</a></dfn>&lt;<b>false</b>,<b>false</b>&gt;</td></tr>
+<tr><th id="69">69</th><td>{</td></tr>
+<tr><th id="70">70</th><td>    <b>template</b> &lt;<b>class</b> T1, <b>class</b> T2&gt; <b>struct</b> <dfn class="type def" id="boost::detail::minimum_category_impl{false,false}::apply" title='boost::detail::minimum_category_impl&lt;false, false&gt;::apply' data-ref="boost::detail::minimum_category_impl{false,false}::apply" >apply</dfn></td></tr>
+<tr><th id="71">71</th><td>    : <a class="type" href="#boost::detail::error_not_related_by_convertibility" title='boost::detail::error_not_related_by_convertibility' data-ref="boost::detail::error_not_related_by_convertibility" >error_not_related_by_convertibility</a>&lt;T1,T2&gt;</td></tr>
+<tr><th id="72">72</th><td>    {</td></tr>
+<tr><th id="73">73</th><td>    };</td></tr>
+<tr><th id="74">74</th><td>};</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><b>template</b> &lt;<b>class</b> T1 = <span class="namespace">mpl::</span><a class="typedef" href="../../mpl/aux_/preprocessed/gcc/placeholders.hpp.html#mpl_::_1" title='mpl_::_1' data-type='arg&lt;1&gt;' data-ref="mpl_::_1" >_1</a>, <b>class</b> T2 = <span class="namespace">mpl::</span><a class="typedef" href="../../mpl/aux_/preprocessed/gcc/placeholders.hpp.html#mpl_::_2" title='mpl_::_2' data-type='arg&lt;2&gt;' data-ref="mpl_::_2" >_2</a>&gt;</td></tr>
+<tr><th id="77">77</th><td><b>struct</b> <dfn class="type def" id="boost::detail::minimum_category" title='boost::detail::minimum_category' data-ref="boost::detail::minimum_category" >minimum_category</dfn></td></tr>
+<tr><th id="78">78</th><td>{</td></tr>
+<tr><th id="79">79</th><td>    <b>typedef</b> <a class="type" href="#boost::detail::minimum_category_impl" title='boost::detail::minimum_category_impl' data-ref="boost::detail::minimum_category_impl" >minimum_category_impl</a>&lt; </td></tr>
+<tr><th id="80">80</th><td><u># <span data-ppcond="80">if</span> <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt; 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt; 1300) // ETI workaround</u></td></tr>
+<tr><th id="81">81</th><td>        is_same&lt;T2,<em>int</em>&gt;::value ||</td></tr>
+<tr><th id="82">82</th><td><u># <span data-ppcond="80">endif</span></u> </td></tr>
+<tr><th id="83">83</th><td>        <span class="namespace">::boost::</span><a class="type" href="../../type_traits/is_convertible.hpp.html#484" title='boost::is_convertible' data-ref="boost::is_convertible" >is_convertible</a>&lt;T1,T2&gt;::value</td></tr>
+<tr><th id="84">84</th><td>      , <span class="namespace">::boost::</span><a class="type" href="../../type_traits/is_convertible.hpp.html#484" title='boost::is_convertible' data-ref="boost::is_convertible" >is_convertible</a>&lt;T2,T1&gt;::value</td></tr>
+<tr><th id="85">85</th><td><u># <span data-ppcond="85">if</span> <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt; 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt; 1300) // ETI workaround</u></td></tr>
+<tr><th id="86">86</th><td>        || is_same&lt;T1,<em>int</em>&gt;::value</td></tr>
+<tr><th id="87">87</th><td><u># <span data-ppcond="85">endif</span></u> </td></tr>
+<tr><th id="88">88</th><td>    &gt; <dfn class="typedef" id="boost::detail::minimum_category::outer" title='boost::detail::minimum_category::outer' data-type='minimum_category_impl&lt; ::boost::is_convertible&lt;T1, T2&gt;::value, ::boost::is_convertible&lt;T2, T1&gt;::value&gt;' data-ref="boost::detail::minimum_category::outer" >outer</dfn>;</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>    <b>typedef</b> <b>typename</b> <a class="typedef" href="#boost::detail::minimum_category::outer" title='boost::detail::minimum_category::outer' data-type='minimum_category_impl&lt; ::boost::is_convertible&lt;T1, T2&gt;::value, ::boost::is_convertible&lt;T2, T1&gt;::value&gt;' data-ref="boost::detail::minimum_category::outer" >outer</a>::<b>template</b> apply&lt;T1,T2&gt; <dfn class="typedef" id="boost::detail::minimum_category::inner" title='boost::detail::minimum_category::inner' data-type='typename outer::apply&lt;T1, T2&gt;' data-ref="boost::detail::minimum_category::inner" >inner</dfn>;</td></tr>
+<tr><th id="91">91</th><td>    <b>typedef</b> <b>typename</b> <a class="typedef" href="#boost::detail::minimum_category::inner" title='boost::detail::minimum_category::inner' data-type='typename outer::apply&lt;T1, T2&gt;' data-ref="boost::detail::minimum_category::inner" >inner</a>::type <dfn class="typedef" id="boost::detail::minimum_category::type" title='boost::detail::minimum_category::type' data-type='typename inner::type' data-ref="boost::detail::minimum_category::type" >type</dfn>;</td></tr>
+<tr><th id="92">92</th><td>      </td></tr>
+<tr><th id="93">93</th><td>    <a class="macro" href="../../mpl/aux_/lambda_support.hpp.html#22" title="" data-ref="_M/BOOST_MPL_AUX_LAMBDA_SUPPORT">BOOST_MPL_AUX_LAMBDA_SUPPORT</a>(<var>2</var>,minimum_category,(T1,T2))</td></tr>
+<tr><th id="94">94</th><td>};</td></tr>
+<tr><th id="95">95</th><td>    </td></tr>
+<tr><th id="96">96</th><td><b>template</b> &lt;&gt;</td></tr>
+<tr><th id="97">97</th><td><b>struct</b> <dfn class="type def" id="boost::detail::minimum_category" title='boost::detail::minimum_category' data-ref="boost::detail::minimum_category" ><a class="type" href="#boost::detail::minimum_category" title='boost::detail::minimum_category' data-ref="boost::detail::minimum_category" >minimum_category</a></dfn>&lt;<span class="namespace">mpl::</span><a class="typedef" href="../../mpl/aux_/preprocessed/gcc/placeholders.hpp.html#mpl_::_1" title='mpl_::_1' data-type='arg&lt;1&gt;' data-ref="mpl_::_1" >_1</a>,<span class="namespace">mpl::</span><a class="typedef" href="../../mpl/aux_/preprocessed/gcc/placeholders.hpp.html#mpl_::_2" title='mpl_::_2' data-type='arg&lt;2&gt;' data-ref="mpl_::_2" >_2</a>&gt;</td></tr>
+<tr><th id="98">98</th><td>{</td></tr>
+<tr><th id="99">99</th><td>    <b>template</b> &lt;<b>class</b> T1, <b>class</b> T2&gt;</td></tr>
+<tr><th id="100">100</th><td>    <b>struct</b> <dfn class="type def" id="boost::detail::minimum_category{mpl_::arg{1},mpl_::arg{2}}::apply" title='boost::detail::minimum_category&lt;mpl_::arg&lt;1&gt;, mpl_::arg&lt;2&gt; &gt;::apply' data-ref="boost::detail::minimum_category{mpl_::arg{1},mpl_::arg{2}}::apply" >apply</dfn> : <a class="type" href="#boost::detail::minimum_category" title='boost::detail::minimum_category' data-ref="boost::detail::minimum_category" >minimum_category</a>&lt;T1,T2&gt;</td></tr>
+<tr><th id="101">101</th><td>    {};</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>    <a class="macro" href="../../mpl/aux_/lambda_support.hpp.html#21" title="" data-ref="_M/BOOST_MPL_AUX_LAMBDA_SUPPORT_SPEC">BOOST_MPL_AUX_LAMBDA_SUPPORT_SPEC</a>(<var>2</var>,minimum_category,(mpl::_1,mpl::_2))</td></tr>
+<tr><th id="104">104</th><td>};</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td><u># <span data-ppcond="106">if</span> <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt; 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt; 1300) // ETI workaround</u></td></tr>
+<tr><th id="107">107</th><td><b>template</b> &lt;&gt;</td></tr>
+<tr><th id="108">108</th><td><b>struct</b> minimum_category&lt;<em>int</em>,<em>int</em>&gt;</td></tr>
+<tr><th id="109">109</th><td>{</td></tr>
+<tr><th id="110">110</th><td>    <b>typedef</b> <em>int</em> type;</td></tr>
+<tr><th id="111">111</th><td>};</td></tr>
+<tr><th id="112">112</th><td><u># <span data-ppcond="106">endif</span></u></td></tr>
+<tr><th id="113">113</th><td>    </td></tr>
+<tr><th id="114">114</th><td>}} <i>// namespace boost::detail</i></td></tr>
+<tr><th id="115">115</th><td></td></tr>
+<tr><th id="116">116</th><td><u>#<span data-ppcond="4">endif</span> // MINIMUM_CATEGORY_DWA20031119_HPP</u></td></tr>
+<tr><th id="117">117</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp.html'>TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

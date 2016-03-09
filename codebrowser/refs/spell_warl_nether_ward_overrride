@@ -1,0 +1,74 @@
+<inh f='TrinityCore6.x/src/server/game/Scripting/ScriptMgr.h' l='188' c='SpellScriptLoader'/>
+<def f='TrinityCore6.x/src/server/scripts/Spells/spell_warlock.cpp' l='956'/>
+<size>16</size>
+<doc f='TrinityCore6.x/src/server/scripts/Spells/spell_warlock.cpp' l='885'>/*class spell_warl_life_tap : public SpellScriptLoader
+{
+    public:
+        spell_warl_life_tap() : SpellScriptLoader(&quot;spell_warl_life_tap&quot;) { }
+
+        class spell_warl_life_tap_SpellScript : public SpellScript
+        {
+            PrepareSpellScript(spell_warl_life_tap_SpellScript);
+
+            bool Load() override
+            {
+                return GetCaster()-&gt;GetTypeId() == TYPEID_PLAYER;
+            }
+
+             bool Validate(SpellInfo const* spellInfo) override
+            {
+                if (!sSpellMgr-&gt;GetSpellInfo(SPELL_WARLOCK_LIFE_TAP_ENERGIZE) ||
+                    !sSpellMgr-&gt;GetSpellInfo(SPELL_WARLOCK_LIFE_TAP_ENERGIZE_2))
+                    return false;
+                return true;
+            }
+
+            void HandleDummy(SpellEffIndex effIndex)
+            {
+                Player* caster = GetCaster()-&gt;ToPlayer();
+                if (Unit* target = GetHitUnit())
+                {
+                    int32 damage = caster-&gt;CountPctFromMaxHealth(GetSpellInfo()-&gt;Effects[EFFECT_2].CalcValue());
+                    int32 mana = CalculatePct(damage, GetSpellInfo()-&gt;Effects[EFFECT_1].CalcValue());
+
+                    // Shouldn&apos;t Appear in Combat Log
+                    target-&gt;ModifyHealth(-damage);
+
+                    // Improved Life Tap mod
+                    if (AuraEffect const* aurEff = caster-&gt;GetDummyAuraEffect(SPELLFAMILY_WARLOCK, WARLOCK_ICON_ID_IMPROVED_LIFE_TAP, 0))
+                        AddPct(mana, aurEff-&gt;GetAmount());
+
+                    caster-&gt;CastCustomSpell(target, SPELL_WARLOCK_LIFE_TAP_ENERGIZE, &amp;mana, NULL, NULL, false);
+
+                    // Mana Feed
+                    if (AuraEffect const* aurEff = caster-&gt;GetAuraEffect(SPELL_AURA_ADD_FLAT_MODIFIER, SPELLFAMILY_WARLOCK, WARLOCK_ICON_ID_MANA_FEED, 0))
+                    {
+                        int32 manaFeedVal = aurEff-&gt;GetAmount();
+                        ApplyPct(manaFeedVal, mana);
+                        caster-&gt;CastCustomSpell(caster, SPELL_WARLOCK_LIFE_TAP_ENERGIZE_2, &amp;manaFeedVal, NULL, NULL, true, NULL);
+                    }
+                }
+            }
+
+            SpellCastResult CheckCast()
+            {
+                if (int32(GetCaster()-&gt;GetHealth()) &gt; int32(GetCaster()-&gt;CountPctFromMaxHealth(GetSpellInfo()-&gt;Effects[EFFECT_2].CalcValue())))
+                    return SPELL_CAST_OK;
+                return SPELL_FAILED_FIZZLE;
+            }
+
+            void Register() override
+            {
+                OnEffectHitTarget += SpellEffectFn(spell_warl_life_tap_SpellScript::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+                OnCheckCast += SpellCheckCastFn(spell_warl_life_tap_SpellScript::CheckCast);
+            }
+        };
+
+        SpellScript* GetSpellScript() const override
+        {
+            return new spell_warl_life_tap_SpellScript();
+        }
+};*/
+
+// 687 - Demon Armor
+// 28176 - Fel Armor</doc>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<title>prng.h [TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/prng.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/prng.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/prng.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>/*</i></td></tr>
+<tr><th id="5">5</th><td><i> * Simple linear congruential pseudo-random number generator:</i></td></tr>
+<tr><th id="6">6</th><td><i> *</i></td></tr>
+<tr><th id="7">7</th><td><i> *   prng(y) = (a*x + c) % m</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * where the following constants ensure maximal period:</i></td></tr>
+<tr><th id="10">10</th><td><i> *</i></td></tr>
+<tr><th id="11">11</th><td><i> *   a == Odd number (relatively prime to 2^n), and (a-1) is a multiple of 4.</i></td></tr>
+<tr><th id="12">12</th><td><i> *   c == Odd number (relatively prime to 2^n).</i></td></tr>
+<tr><th id="13">13</th><td><i> *   m == 2^32</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * See Knuth's TAOCP 3rd Ed., Vol. 2, pg. 17 for details on these constraints.</i></td></tr>
+<tr><th id="16">16</th><td><i> *</i></td></tr>
+<tr><th id="17">17</th><td><i> * This choice of m has the disadvantage that the quality of the bits is</i></td></tr>
+<tr><th id="18">18</th><td><i> * proportional to bit position.  For example. the lowest bit has a cycle of 2,</i></td></tr>
+<tr><th id="19">19</th><td><i> * the next has a cycle of 4, etc.  For this reason, we prefer to use the upper</i></td></tr>
+<tr><th id="20">20</th><td><i> * bits.</i></td></tr>
+<tr><th id="21">21</th><td><i> *</i></td></tr>
+<tr><th id="22">22</th><td><i> * Macro parameters:</i></td></tr>
+<tr><th id="23">23</th><td><i> *   uint32_t r          : Result.</i></td></tr>
+<tr><th id="24">24</th><td><i> *   unsigned lg_range   : (0..32], number of least significant bits to return.</i></td></tr>
+<tr><th id="25">25</th><td><i> *   uint32_t state      : Seed value.</i></td></tr>
+<tr><th id="26">26</th><td><i> *   const uint32_t a, c : See above discussion.</i></td></tr>
+<tr><th id="27">27</th><td><i> */</i></td></tr>
+<tr><th id="28">28</th><td><u>#define	<dfn class="macro" id="_M/prng32" data-ref="_M/prng32">prng32</dfn>(r, lg_range, state, a, c) do {				\</u></td></tr>
+<tr><th id="29">29</th><td><u>	assert(lg_range &gt; 0);						\</u></td></tr>
+<tr><th id="30">30</th><td><u>	assert(lg_range &lt;= 32);						\</u></td></tr>
+<tr><th id="31">31</th><td><u>									\</u></td></tr>
+<tr><th id="32">32</th><td><u>	r = (state * (a)) + (c);					\</u></td></tr>
+<tr><th id="33">33</th><td><u>	state = r;							\</u></td></tr>
+<tr><th id="34">34</th><td><u>	r &gt;&gt;= (32 - lg_range);						\</u></td></tr>
+<tr><th id="35">35</th><td><u>} while (false)</u></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><i>/* Same as prng32(), but 64 bits of pseudo-randomness, using uint64_t. */</i></td></tr>
+<tr><th id="38">38</th><td><u>#define	<dfn class="macro" id="_M/prng64" data-ref="_M/prng64">prng64</dfn>(r, lg_range, state, a, c) do {				\</u></td></tr>
+<tr><th id="39">39</th><td><u>	assert(lg_range &gt; 0);						\</u></td></tr>
+<tr><th id="40">40</th><td><u>	assert(lg_range &lt;= 64);						\</u></td></tr>
+<tr><th id="41">41</th><td><u>									\</u></td></tr>
+<tr><th id="42">42</th><td><u>	r = (state * (a)) + (c);					\</u></td></tr>
+<tr><th id="43">43</th><td><u>	state = r;							\</u></td></tr>
+<tr><th id="44">44</th><td><u>	r &gt;&gt;= (64 - lg_range);						\</u></td></tr>
+<tr><th id="45">45</th><td><u>} while (false)</u></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="48">48</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="49">49</th><td><u>#<span data-ppcond="49">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><u>#<span data-ppcond="49">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="52">52</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="53">53</th><td><u>#<span data-ppcond="53">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="53">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="56">56</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="57">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="57">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="60">60</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="61">61</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore3.3.5/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

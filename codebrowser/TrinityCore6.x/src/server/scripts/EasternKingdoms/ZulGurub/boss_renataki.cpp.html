@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<title>boss_renataki.cpp [TrinityCore6.x/src/server/scripts/EasternKingdoms/ZulGurub/boss_renataki.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/EasternKingdoms/ZulGurub/boss_renataki.cpp'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>scripts</a>/<a href='..'>EasternKingdoms</a>/<a href='./'>ZulGurub</a>/boss_renataki.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2006-2009 ScriptDev2 &lt;<a href="https://scriptdev">https://scriptdev</a>2.svn.sourceforge.net/&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../game/Globals/ObjectMgr.h.html">"ObjectMgr.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="zulgurub.h.html">"zulgurub.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>enum</b> <dfn class="type def" id="Yells" title='Yells' data-ref="Yells" >Yells</dfn></td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td>};</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>enum</b> <dfn class="type def" id="Spells" title='Spells' data-ref="Spells" >Spells</dfn></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>};</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>enum</b> <dfn class="type def" id="Events" title='Events' data-ref="Events" >Events</dfn></td></tr>
+<tr><th id="33">33</th><td>{</td></tr>
+<tr><th id="34">34</th><td>};</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><b>class</b> <dfn class="type def" id="boss_renataki" title='boss_renataki' data-ref="boss_renataki" >boss_renataki</dfn> : <b>public</b> <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td>    <b>public</b>:</td></tr>
+<tr><th id="39">39</th><td>        <dfn class="tu decl def" id="_ZN13boss_renatakiC1Ev" title='boss_renataki::boss_renataki' data-type='void boss_renataki::boss_renataki()' data-ref="_ZN13boss_renatakiC1Ev" >boss_renataki</dfn>() : <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"boss_renataki"</q>) { }</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>        <b>struct</b> <dfn class="tu type def" id="boss_renataki::boss_renatakiAI" title='boss_renataki::boss_renatakiAI' data-ref="boss_renataki::boss_renatakiAI" >boss_renatakiAI</dfn> : <b>public</b> <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a></td></tr>
+<tr><th id="42">42</th><td>        {</td></tr>
+<tr><th id="43">43</th><td>            <dfn class="tu decl def" id="_ZN13boss_renataki15boss_renatakiAIC1EP8Creature" title='boss_renataki::boss_renatakiAI::boss_renatakiAI' data-type='void boss_renataki::boss_renatakiAI::boss_renatakiAI(Creature * creature)' data-ref="_ZN13boss_renataki15boss_renatakiAIC1EP8Creature" >boss_renatakiAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) : <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a><a class="ref" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAIC1EP8Creaturej" title='BossAI::BossAI' data-ref="_ZN6BossAIC1EP8Creaturej" id="_ZN6BossAIC1EP8Creaturej" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="enum" href="zulgurub.h.html#DataTypes::DATA_RENATAKI" title='DataTypes::DATA_RENATAKI' data-ref="DataTypes::DATA_RENATAKI" id="DataTypes::DATA_RENATAKI" >DATA_RENATAKI</a>)</td></tr>
+<tr><th id="44">44</th><td>            {</td></tr>
+<tr><th id="45">45</th><td>            }</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_renataki15boss_renatakiAI5ResetEv" title='boss_renataki::boss_renatakiAI::Reset' data-ref="_ZN13boss_renataki15boss_renatakiAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="48">48</th><td>            {</td></tr>
+<tr><th id="49">49</th><td>            }</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_renataki15boss_renatakiAI11EnterCombatEP4Unit" title='boss_renataki::boss_renatakiAI::EnterCombat' data-ref="_ZN13boss_renataki15boss_renatakiAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override</td></tr>
+<tr><th id="52">52</th><td>            {</td></tr>
+<tr><th id="53">53</th><td>            }</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_renataki15boss_renatakiAI8JustDiedEP4Unit" title='boss_renataki::boss_renatakiAI::JustDied' data-ref="_ZN13boss_renataki15boss_renatakiAI8JustDiedEP4Unit" >JustDied</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*killer*/</i>) override</td></tr>
+<tr><th id="56">56</th><td>            {</td></tr>
+<tr><th id="57">57</th><td>            }</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN13boss_renataki15boss_renatakiAI8UpdateAIEj" title='boss_renataki::boss_renatakiAI::UpdateAI' data-ref="_ZN13boss_renataki15boss_renatakiAI8UpdateAIEj" >UpdateAI</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="2diff" title='diff' data-type='uint32' data-ref="2diff" >diff</dfn>) override</td></tr>
+<tr><th id="60">60</th><td>            {</td></tr>
+<tr><th id="61">61</th><td>                <b>if</b> (!<a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI12UpdateVictimEv" title='CreatureAI::UpdateVictim' data-ref="_ZN10CreatureAI12UpdateVictimEv" id="_ZN10CreatureAI12UpdateVictimEv" >UpdateVictim</a>())</td></tr>
+<tr><th id="62">62</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap6UpdateEj" title='EventMap::Update' data-ref="_ZN8EventMap6UpdateEj" id="_ZN8EventMap6UpdateEj" >Update</a>(<a class="local col2 ref" href="#2diff" title='diff' data-ref="2diff" >diff</a>);</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>                <b>if</b> (<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit12HasUnitStateEj" title='Unit::HasUnitState' data-ref="_ZNK4Unit12HasUnitStateEj" id="_ZNK4Unit12HasUnitStateEj" >HasUnitState</a>(<a class="enum" href="../../../game/Entities/Unit/Unit.h.html#UnitState::UNIT_STATE_CASTING" title='UnitState::UNIT_STATE_CASTING' data-ref="UnitState::UNIT_STATE_CASTING" id="UnitState::UNIT_STATE_CASTING" >UNIT_STATE_CASTING</a>))</td></tr>
+<tr><th id="67">67</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="68">68</th><td>                <i>/*</i></td></tr>
+<tr><th id="69">69</th><td><i>                while (uint32 eventId = events.ExecuteEvent())</i></td></tr>
+<tr><th id="70">70</th><td><i>                {</i></td></tr>
+<tr><th id="71">71</th><td><i>                    switch (eventId)</i></td></tr>
+<tr><th id="72">72</th><td><i>                    {</i></td></tr>
+<tr><th id="73">73</th><td><i>                        default:</i></td></tr>
+<tr><th id="74">74</th><td><i>                            break;</i></td></tr>
+<tr><th id="75">75</th><td><i>                    }</i></td></tr>
+<tr><th id="76">76</th><td><i>                }</i></td></tr>
+<tr><th id="77">77</th><td><i>                */</i></td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>                <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI20DoMeleeAttackIfReadyEv" title='UnitAI::DoMeleeAttackIfReady' data-ref="_ZN6UnitAI20DoMeleeAttackIfReadyEv" id="_ZN6UnitAI20DoMeleeAttackIfReadyEv" >DoMeleeAttackIfReady</a>();</td></tr>
+<tr><th id="80">80</th><td>            }</td></tr>
+<tr><th id="81">81</th><td>        };</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>        <a class="type" href="../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK13boss_renataki5GetAIEP8Creature" title='boss_renataki::GetAI' data-ref="_ZNK13boss_renataki5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col3 decl" id="3creature" title='creature' data-type='Creature *' data-ref="3creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="84">84</th><td>        {</td></tr>
+<tr><th id="85">85</th><td>            <b>return</b> <b>new</b> <a class="tu type" href="#boss_renataki::boss_renatakiAI" title='boss_renataki::boss_renatakiAI' data-ref="boss_renataki::boss_renatakiAI" >boss_renatakiAI</a><a class="tu ref" href="#_ZN13boss_renataki15boss_renatakiAIC1EP8Creature" title='boss_renataki::boss_renatakiAI::boss_renatakiAI' data-use='c' data-ref="_ZN13boss_renataki15boss_renatakiAIC1EP8Creature" >(</a><a class="local col3 ref" href="#3creature" title='creature' data-ref="3creature" >creature</a>);</td></tr>
+<tr><th id="86">86</th><td>        }</td></tr>
+<tr><th id="87">87</th><td>};</td></tr>
+<tr><th id="88">88</th><td></td></tr>
+<tr><th id="89">89</th><td><em>void</em> <dfn class="decl def" id="_Z19AddSC_boss_renatakiv" title='AddSC_boss_renataki' data-ref="_Z19AddSC_boss_renatakiv" >AddSC_boss_renataki</dfn>()</td></tr>
+<tr><th id="90">90</th><td>{</td></tr>
+<tr><th id="91">91</th><td>    <b>new</b> <a class="type" href="#boss_renataki" title='boss_renataki' data-ref="boss_renataki" >boss_renataki</a><a class="tu ref" href="#_ZN13boss_renatakiC1Ev" title='boss_renataki::boss_renataki' data-use='c' data-ref="_ZN13boss_renatakiC1Ev" >(</a>);</td></tr>
+<tr><th id="92">92</th><td>}</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

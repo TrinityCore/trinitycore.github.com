@@ -1,0 +1,38 @@
+<dec f='TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/arena.h' l='21'/>
+<use f='TrinityCore3.3.5/dep/jemalloc/src/arena.c' l='2484' u='c'/>
+<doc f='TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/arena.h' l='4'>/*
+ * RUN_MAX_OVRHD indicates maximum desired run header overhead.  Runs are sized
+ * as small as possible such that this setting is still honored, without
+ * violating other constraints.  The goal is to make runs as small as possible
+ * without exceeding a per run external fragmentation threshold.
+ *
+ * We use binary fixed point math for overhead computations, where the binary
+ * point is implicitly RUN_BFP bits to the left.
+ *
+ * Note that it is possible to set RUN_MAX_OVRHD low enough that it cannot be
+ * honored for some/all object sizes, since when heap profiling is enabled
+ * there is one pointer of header overhead per object (plus a constant).  This
+ * constraint is relaxed (ignored) for runs that are so small that the
+ * per-region overhead is greater than:
+ *
+ *   (RUN_MAX_OVRHD / (reg_interval &lt;&lt; (3+RUN_BFP))
+ */</doc>
+<dec f='TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/arena.h' l='21'/>
+<use f='TrinityCore6.x/dep/jemalloc/src/arena.c' l='2484' u='c'/>
+<doc f='TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/arena.h' l='4'>/*
+ * RUN_MAX_OVRHD indicates maximum desired run header overhead.  Runs are sized
+ * as small as possible such that this setting is still honored, without
+ * violating other constraints.  The goal is to make runs as small as possible
+ * without exceeding a per run external fragmentation threshold.
+ *
+ * We use binary fixed point math for overhead computations, where the binary
+ * point is implicitly RUN_BFP bits to the left.
+ *
+ * Note that it is possible to set RUN_MAX_OVRHD low enough that it cannot be
+ * honored for some/all object sizes, since when heap profiling is enabled
+ * there is one pointer of header overhead per object (plus a constant).  This
+ * constraint is relaxed (ignored) for runs that are so small that the
+ * per-region overhead is greater than:
+ *
+ *   (RUN_MAX_OVRHD / (reg_interval &lt;&lt; (3+RUN_BFP))
+ */</doc>

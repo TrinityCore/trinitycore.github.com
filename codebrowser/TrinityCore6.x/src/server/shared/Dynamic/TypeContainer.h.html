@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+<head>
+<title>TypeContainer.h [TrinityCore6.x/src/server/shared/Dynamic/TypeContainer.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/shared/Dynamic/TypeContainer.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>shared</a>/<a href='./'>Dynamic</a>/TypeContainer.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_TYPECONTAINER_H">TRINITY_TYPECONTAINER_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_TYPECONTAINER_H" data-ref="_M/TRINITY_TYPECONTAINER_H">TRINITY_TYPECONTAINER_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i>/*</i></td></tr>
+<tr><th id="23">23</th><td><i> * Here, you'll find a series of containers that allow you to hold multiple</i></td></tr>
+<tr><th id="24">24</th><td><i> * types of object at the same time.</i></td></tr>
+<tr><th id="25">25</th><td><i> */</i></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="../../../../../include/c++/4.9/map.html">&lt;map&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../../../../../include/c++/4.9/unordered_map.html">&lt;unordered_map&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="../../../../../include/c++/4.9/vector.html">&lt;vector&gt;</a></u></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="../../../common/Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="TypeList.h.html">"Dynamic/TypeList.h"</a></u></td></tr>
+<tr><th id="32">32</th><td><u>#include <a href="../../game/Grids/GridRefManager.h.html">"GridRefManager.h"</a></u></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><i>/*</i></td></tr>
+<tr><th id="35">35</th><td><i> * @class ContainerMapList is a mulit-type container for map elements</i></td></tr>
+<tr><th id="36">36</th><td><i> * By itself its meaningless but collaborate along with TypeContainers,</i></td></tr>
+<tr><th id="37">37</th><td><i> * it become the most powerfully container in the whole system.</i></td></tr>
+<tr><th id="38">38</th><td><i> */</i></td></tr>
+<tr><th id="39">39</th><td><b>template</b>&lt;<b>class</b> OBJECT&gt;</td></tr>
+<tr><th id="40">40</th><td><b>struct</b> <dfn class="type def" id="ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</dfn></td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>    <i>//std::map&lt;OBJECT_HANDLE, OBJECT *&gt; _element;</i></td></tr>
+<tr><th id="43">43</th><td>    <a class="type" href="../../game/Grids/GridReference.h.html#GridRefManager" title='GridRefManager' data-ref="GridRefManager" >GridRefManager</a>&lt;OBJECT&gt; <dfn class="decl" id="ContainerMapList::_element" title='ContainerMapList::_element' data-ref="ContainerMapList::_element" >_element</dfn>;</td></tr>
+<tr><th id="44">44</th><td>};</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><b>template</b>&lt;&gt;</td></tr>
+<tr><th id="47">47</th><td><b>struct</b> <dfn class="type def" id="ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" ><a class="type" href="#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a></dfn>&lt;<a class="type" href="TypeList.h.html#TypeNull" title='TypeNull' data-ref="TypeNull" >TypeNull</a>&gt;                <i>/* nothing is in type null */</i></td></tr>
+<tr><th id="48">48</th><td>{</td></tr>
+<tr><th id="49">49</th><td>};</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><b>template</b>&lt;<b>class</b> H, <b>class</b> T&gt;</td></tr>
+<tr><th id="52">52</th><td><b>struct</b> <dfn class="type def" id="ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</dfn>&lt;<a class="type" href="TypeList.h.html#TypeList" title='TypeList' data-ref="TypeList" >TypeList</a>&lt;H, T&gt; &gt;</td></tr>
+<tr><th id="53">53</th><td>{</td></tr>
+<tr><th id="54">54</th><td>    <a class="type" href="#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;H&gt; <dfn class="decl" id="ContainerMapList::_elements" title='ContainerMapList&lt;TypeList&lt;type-parameter-0-0, type-parameter-0-1&gt; &gt;::_elements' data-ref="ContainerMapList::_elements" >_elements</dfn>;</td></tr>
+<tr><th id="55">55</th><td>    <a class="type" href="#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;T&gt; <dfn class="decl" id="ContainerMapList::_TailElements" title='ContainerMapList&lt;TypeList&lt;type-parameter-0-0, type-parameter-0-1&gt; &gt;::_TailElements' data-ref="ContainerMapList::_TailElements" >_TailElements</dfn>;</td></tr>
+<tr><th id="56">56</th><td>};</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><b>template</b>&lt;<b>class</b> OBJECT, <b>class</b> KEY_TYPE&gt;</td></tr>
+<tr><th id="59">59</th><td><b>struct</b> <dfn class="type def" id="ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</dfn></td></tr>
+<tr><th id="60">60</th><td>{</td></tr>
+<tr><th id="61">61</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/unordered_map.h.html#std::unordered_map" title='std::unordered_map' data-ref="std::unordered_map" >unordered_map</a>&lt;KEY_TYPE, OBJECT*&gt; <dfn class="decl" id="ContainerUnorderedMap::_element" title='ContainerUnorderedMap::_element' data-ref="ContainerUnorderedMap::_element" >_element</dfn>;</td></tr>
+<tr><th id="62">62</th><td>};</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><b>template</b>&lt;<b>class</b> KEY_TYPE&gt;</td></tr>
+<tr><th id="65">65</th><td><b>struct</b> <dfn class="type def" id="ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</dfn>&lt;<a class="type" href="TypeList.h.html#TypeNull" title='TypeNull' data-ref="TypeNull" >TypeNull</a>, KEY_TYPE&gt;</td></tr>
+<tr><th id="66">66</th><td>{</td></tr>
+<tr><th id="67">67</th><td>};</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td><b>template</b>&lt;<b>class</b> H, <b>class</b> T, <b>class</b> KEY_TYPE&gt;</td></tr>
+<tr><th id="70">70</th><td><b>struct</b> <dfn class="type def" id="ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</dfn>&lt;<a class="type" href="TypeList.h.html#TypeList" title='TypeList' data-ref="TypeList" >TypeList</a>&lt;H, T&gt;, KEY_TYPE&gt;</td></tr>
+<tr><th id="71">71</th><td>{</td></tr>
+<tr><th id="72">72</th><td>    <a class="type" href="#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;H, KEY_TYPE&gt; <dfn class="decl" id="ContainerUnorderedMap::_elements" title='ContainerUnorderedMap&lt;TypeList&lt;type-parameter-0-0, type-parameter-0-1&gt;, type-parameter-0-2&gt;::_elements' data-ref="ContainerUnorderedMap::_elements" >_elements</dfn>;</td></tr>
+<tr><th id="73">73</th><td>    <a class="type" href="#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;T, KEY_TYPE&gt; <dfn class="decl" id="ContainerUnorderedMap::_TailElements" title='ContainerUnorderedMap&lt;TypeList&lt;type-parameter-0-0, type-parameter-0-1&gt;, type-parameter-0-2&gt;::_TailElements' data-ref="ContainerUnorderedMap::_TailElements" >_TailElements</dfn>;</td></tr>
+<tr><th id="74">74</th><td>};</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><u>#include <a href="TypeContainerFunctions.h.html">"TypeContainerFunctions.h"</a></u></td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><i>/*</i></td></tr>
+<tr><th id="79">79</th><td><i> * @class TypeMapContainer contains a fixed number of types and is</i></td></tr>
+<tr><th id="80">80</th><td><i> * determined at compile time.  This is probably the most complicated</i></td></tr>
+<tr><th id="81">81</th><td><i> * class and do its simplest thing, that is, holds objects</i></td></tr>
+<tr><th id="82">82</th><td><i> * of different types.</i></td></tr>
+<tr><th id="83">83</th><td><i> */</i></td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><b>template</b>&lt;<b>class</b> OBJECT_TYPES&gt;</td></tr>
+<tr><th id="86">86</th><td><b>class</b> <dfn class="type def" id="TypeMapContainer" title='TypeMapContainer' data-ref="TypeMapContainer" >TypeMapContainer</dfn></td></tr>
+<tr><th id="87">87</th><td>{</td></tr>
+<tr><th id="88">88</th><td>    <b>public</b>:</td></tr>
+<tr><th id="89">89</th><td>        <b>template</b>&lt;<b>class</b> SPECIFIC_TYPE&gt; <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="decl def" id="_ZNK16TypeMapContainer5CountEv" title='TypeMapContainer::Count' data-ref="_ZNK16TypeMapContainer5CountEv" >Count</dfn>() <em>const</em> { <b>return</b> <span class="namespace">Trinity::</span>Count(<a class="member" href="#TypeMapContainer::i_elements" title='TypeMapContainer::i_elements' data-ref="TypeMapContainer::i_elements" >i_elements</a>, (SPECIFIC_TYPE*)<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>); }</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>        <i class="doc">/// inserts a specific object into the container</i></td></tr>
+<tr><th id="92">92</th><td>        <b>template</b>&lt;<b>class</b> SPECIFIC_TYPE&gt;</td></tr>
+<tr><th id="93">93</th><td>        <em>bool</em> <dfn class="decl def" id="_ZN16TypeMapContainer6insertEPT_" title='TypeMapContainer::insert' data-ref="_ZN16TypeMapContainer6insertEPT_" >insert</dfn>(SPECIFIC_TYPE *<dfn class="local col3 decl" id="413obj" title='obj' data-type='SPECIFIC_TYPE *' data-ref="413obj" >obj</dfn>)</td></tr>
+<tr><th id="94">94</th><td>        {</td></tr>
+<tr><th id="95">95</th><td>            SPECIFIC_TYPE* <dfn class="local col4 decl" id="414t" title='t' data-type='SPECIFIC_TYPE *' data-ref="414t" >t</dfn> = <span class="namespace">Trinity::</span>Insert(<a class="member" href="#TypeMapContainer::i_elements" title='TypeMapContainer::i_elements' data-ref="TypeMapContainer::i_elements" >i_elements</a>, <a class="local col3 ref" href="#413obj" title='obj' data-ref="413obj" >obj</a>);</td></tr>
+<tr><th id="96">96</th><td>            <b>return</b> (<a class="local col4 ref" href="#414t" title='t' data-ref="414t" >t</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="97">97</th><td>        }</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>        <i class="doc">///  Removes the object from the container, and returns the removed object</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc">        //template&lt;class SPECIFIC_TYPE&gt;</i></td></tr>
+<tr><th id="101">101</th><td><i class="doc">        //bool remove(SPECIFIC_TYPE* obj)</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc">        //{</i></td></tr>
+<tr><th id="103">103</th><td><i class="doc">        //    SPECIFIC_TYPE* t = Trinity::Remove(i_elements, obj);</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc">        //    return (t != NULL);</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">        //}</i></td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td>        <a class="type" href="#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;OBJECT_TYPES&gt; &amp; <dfn class="decl def" id="_ZN16TypeMapContainer11GetElementsEv" title='TypeMapContainer::GetElements' data-ref="_ZN16TypeMapContainer11GetElementsEv" >GetElements</dfn>(<em>void</em>) { <b>return</b> <a class="member" href="#TypeMapContainer::i_elements" title='TypeMapContainer::i_elements' data-ref="TypeMapContainer::i_elements" >i_elements</a>; }</td></tr>
+<tr><th id="108">108</th><td>        <em>const</em> <a class="type" href="#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;OBJECT_TYPES&gt; &amp; <dfn class="decl def" id="_ZNK16TypeMapContainer11GetElementsEv" title='TypeMapContainer::GetElements' data-ref="_ZNK16TypeMapContainer11GetElementsEv" >GetElements</dfn>(<em>void</em>) <em>const</em> { <b>return</b> <a class="member" href="#TypeMapContainer::i_elements" title='TypeMapContainer::i_elements' data-ref="TypeMapContainer::i_elements" >i_elements</a>;}</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>    <b>private</b>:</td></tr>
+<tr><th id="111">111</th><td>        <a class="type" href="#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;OBJECT_TYPES&gt; <dfn class="decl" id="TypeMapContainer::i_elements" title='TypeMapContainer::i_elements' data-ref="TypeMapContainer::i_elements" >i_elements</dfn>;</td></tr>
+<tr><th id="112">112</th><td>};</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td><b>template</b>&lt;<b>class</b> OBJECT_TYPES, <b>class</b> KEY_TYPE&gt;</td></tr>
+<tr><th id="115">115</th><td><b>class</b> <dfn class="type def" id="TypeUnorderedMapContainer" title='TypeUnorderedMapContainer' data-ref="TypeUnorderedMapContainer" >TypeUnorderedMapContainer</dfn></td></tr>
+<tr><th id="116">116</th><td>{</td></tr>
+<tr><th id="117">117</th><td><b>public</b>:</td></tr>
+<tr><th id="118">118</th><td>    <b>template</b>&lt;<b>class</b> SPECIFIC_TYPE&gt;</td></tr>
+<tr><th id="119">119</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN25TypeUnorderedMapContainer6InsertERKT0_PT_" title='TypeUnorderedMapContainer::Insert' data-ref="_ZN25TypeUnorderedMapContainer6InsertERKT0_PT_" >Insert</dfn>(KEY_TYPE <em>const</em>&amp; <dfn class="local col5 decl" id="415handle" title='handle' data-type='const KEY_TYPE &amp;' data-ref="415handle" >handle</dfn>, SPECIFIC_TYPE* <dfn class="local col6 decl" id="416obj" title='obj' data-type='SPECIFIC_TYPE *' data-ref="416obj" >obj</dfn>)</td></tr>
+<tr><th id="120">120</th><td>    {</td></tr>
+<tr><th id="121">121</th><td>        <b>return</b> <span class="namespace">Trinity::</span>Insert(<a class="member" href="#TypeUnorderedMapContainer::_elements" title='TypeUnorderedMapContainer::_elements' data-ref="TypeUnorderedMapContainer::_elements" >_elements</a>, <a class="local col5 ref" href="#415handle" title='handle' data-ref="415handle" >handle</a>, <a class="local col6 ref" href="#416obj" title='obj' data-ref="416obj" >obj</a>);</td></tr>
+<tr><th id="122">122</th><td>    }</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>    <b>template</b>&lt;<b>class</b> SPECIFIC_TYPE&gt;</td></tr>
+<tr><th id="125">125</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN25TypeUnorderedMapContainer6RemoveERKT0_" title='TypeUnorderedMapContainer::Remove' data-ref="_ZN25TypeUnorderedMapContainer6RemoveERKT0_" >Remove</dfn>(KEY_TYPE <em>const</em>&amp; <dfn class="local col7 decl" id="417handle" title='handle' data-type='const KEY_TYPE &amp;' data-ref="417handle" >handle</dfn>)</td></tr>
+<tr><th id="126">126</th><td>    {</td></tr>
+<tr><th id="127">127</th><td>        <b>return</b> <span class="namespace">Trinity::</span>Remove(<a class="member" href="#TypeUnorderedMapContainer::_elements" title='TypeUnorderedMapContainer::_elements' data-ref="TypeUnorderedMapContainer::_elements" >_elements</a>, <a class="local col7 ref" href="#417handle" title='handle' data-ref="417handle" >handle</a>, (SPECIFIC_TYPE*)<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="128">128</th><td>    }</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>    <b>template</b>&lt;<b>class</b> SPECIFIC_TYPE&gt;</td></tr>
+<tr><th id="131">131</th><td>    SPECIFIC_TYPE* <dfn class="decl def" id="_ZN25TypeUnorderedMapContainer4FindERKT0_" title='TypeUnorderedMapContainer::Find' data-ref="_ZN25TypeUnorderedMapContainer4FindERKT0_" >Find</dfn>(KEY_TYPE <em>const</em>&amp; <dfn class="local col8 decl" id="418handle" title='handle' data-type='const KEY_TYPE &amp;' data-ref="418handle" >handle</dfn>)</td></tr>
+<tr><th id="132">132</th><td>    {</td></tr>
+<tr><th id="133">133</th><td>        <b>return</b> <span class="namespace">Trinity::</span>Find(<a class="member" href="#TypeUnorderedMapContainer::_elements" title='TypeUnorderedMapContainer::_elements' data-ref="TypeUnorderedMapContainer::_elements" >_elements</a>, <a class="local col8 ref" href="#418handle" title='handle' data-ref="418handle" >handle</a>, (SPECIFIC_TYPE*)<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="134">134</th><td>    }</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>    <a class="type" href="#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;OBJECT_TYPES, KEY_TYPE&gt;&amp; <dfn class="decl def" id="_ZN25TypeUnorderedMapContainer11GetElementsEv" title='TypeUnorderedMapContainer::GetElements' data-ref="_ZN25TypeUnorderedMapContainer11GetElementsEv" >GetElements</dfn>() { <b>return</b> <a class="member" href="#TypeUnorderedMapContainer::_elements" title='TypeUnorderedMapContainer::_elements' data-ref="TypeUnorderedMapContainer::_elements" >_elements</a>; }</td></tr>
+<tr><th id="137">137</th><td>    <a class="type" href="#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;OBJECT_TYPES, KEY_TYPE&gt; <em>const</em>&amp; <dfn class="decl def" id="_ZNK25TypeUnorderedMapContainer11GetElementsEv" title='TypeUnorderedMapContainer::GetElements' data-ref="_ZNK25TypeUnorderedMapContainer11GetElementsEv" >GetElements</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#TypeUnorderedMapContainer::_elements" title='TypeUnorderedMapContainer::_elements' data-ref="TypeUnorderedMapContainer::_elements" >_elements</a>; }</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><b>private</b>:</td></tr>
+<tr><th id="140">140</th><td>    <a class="type" href="#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;OBJECT_TYPES, KEY_TYPE&gt; <dfn class="decl" id="TypeUnorderedMapContainer::_elements" title='TypeUnorderedMapContainer::_elements' data-ref="TypeUnorderedMapContainer::_elements" >_elements</dfn>;</td></tr>
+<tr><th id="141">141</th><td>};</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="144">144</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../game/AI/CoreAI/CombatAI.cpp.html'>TrinityCore6.x/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

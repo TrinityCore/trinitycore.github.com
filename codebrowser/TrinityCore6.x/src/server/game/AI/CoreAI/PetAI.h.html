@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<title>PetAI.h [TrinityCore6.x/src/server/game/AI/CoreAI/PetAI.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/AI/CoreAI/PetAI.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>AI</a>/<a href='./'>CoreAI</a>/PetAI.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_PETAI_H">TRINITY_PETAI_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_PETAI_H" data-ref="_M/TRINITY_PETAI_H">TRINITY_PETAI_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../CreatureAI.h.html">"CreatureAI.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../common/Utilities/Timer.h.html">"Timer.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>class</b> <a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" id="Creature" >Creature</a>;</td></tr>
+<tr><th id="26">26</th><td><b>class</b> <a class="type" href="../../Spells/Spell.h.html#Spell" title='Spell' data-ref="Spell" id="Spell" >Spell</a>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>class</b> <dfn class="type def" id="PetAI" title='PetAI' data-ref="PetAI" >PetAI</dfn> : <b>public</b> <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <b>public</b>:</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>        <b>explicit</b> <a class="decl" href="PetAI.cpp.html#_ZN5PetAIC1EP8Creature" title='PetAI::PetAI' data-ref="_ZN5PetAIC1EP8Creature" id="_ZN5PetAIC1EP8Creature" >PetAI</a>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1c" title='c' data-type='Creature *' data-ref="1c" >c</dfn>);</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI8UpdateAIEj" title='PetAI::UpdateAI' data-ref="_ZN5PetAI8UpdateAIEj" id="_ZN5PetAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>) override;</td></tr>
+<tr><th id="35">35</th><td>        <em>static</em> <em>int</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI11PermissibleEPK8Creature" title='PetAI::Permissible' data-ref="_ZN5PetAI11PermissibleEPK8Creature" id="_ZN5PetAI11PermissibleEPK8Creature" >Permissible</a>(<em>const</em> <a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>*);</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI10KilledUnitEP4Unit" title='PetAI::KilledUnit' data-ref="_ZN5PetAI10KilledUnitEP4Unit" id="_ZN5PetAI10KilledUnitEP4Unit" >KilledUnit</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*victim*/</i>) override;</td></tr>
+<tr><th id="38">38</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI11AttackStartEP4Unit" title='PetAI::AttackStart' data-ref="_ZN5PetAI11AttackStartEP4Unit" id="_ZN5PetAI11AttackStartEP4Unit" >AttackStart</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col2 decl" id="2target" title='target' data-type='Unit *' data-ref="2target" >target</dfn>) override;</td></tr>
+<tr><th id="39">39</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI14MovementInformEjj" title='PetAI::MovementInform' data-ref="_ZN5PetAI14MovementInformEjj" id="_ZN5PetAI14MovementInformEjj" >MovementInform</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3moveType" title='moveType' data-type='uint32' data-ref="3moveType" >moveType</dfn>, <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="4data" title='data' data-type='uint32' data-ref="4data" >data</dfn>) override;</td></tr>
+<tr><th id="40">40</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI15OwnerAttackedByEP4Unit" title='PetAI::OwnerAttackedBy' data-ref="_ZN5PetAI15OwnerAttackedByEP4Unit" id="_ZN5PetAI15OwnerAttackedByEP4Unit" >OwnerAttackedBy</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col5 decl" id="5attacker" title='attacker' data-type='Unit *' data-ref="5attacker" >attacker</dfn>) override;</td></tr>
+<tr><th id="41">41</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI13OwnerAttackedEP4Unit" title='PetAI::OwnerAttacked' data-ref="_ZN5PetAI13OwnerAttackedEP4Unit" id="_ZN5PetAI13OwnerAttackedEP4Unit" >OwnerAttacked</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col6 decl" id="6target" title='target' data-type='Unit *' data-ref="6target" >target</dfn>) override;</td></tr>
+<tr><th id="42">42</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI10AttackedByEP4Unit" title='PetAI::AttackedBy' data-ref="_ZN5PetAI10AttackedByEP4Unit" id="_ZN5PetAI10AttackedByEP4Unit" >AttackedBy</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col7 decl" id="7attacker" title='attacker' data-type='Unit *' data-ref="7attacker" >attacker</dfn>) override;</td></tr>
+<tr><th id="43">43</th><td>        <em>void</em> <a class="virtual decl" href="PetAI.cpp.html#_ZN5PetAI12ReceiveEmoteEP6Playerj" title='PetAI::ReceiveEmote' data-ref="_ZN5PetAI12ReceiveEmoteEP6Playerj" id="_ZN5PetAI12ReceiveEmoteEP6Playerj" >ReceiveEmote</a>(<a class="type" href="../../Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col8 decl" id="8player" title='player' data-type='Player *' data-ref="8player" >player</dfn>, <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="9textEmote" title='textEmote' data-type='uint32' data-ref="9textEmote" >textEmote</dfn>) override;</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>        <i>// The following aren't used by the PetAI but need to be defined to override</i></td></tr>
+<tr><th id="46">46</th><td><i>        //  default CreatureAI functions which interfere with the PetAI</i></td></tr>
+<tr><th id="47">47</th><td><i>        //</i></td></tr>
+<tr><th id="48">48</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN5PetAI17MoveInLineOfSightEP4Unit" title='PetAI::MoveInLineOfSight' data-ref="_ZN5PetAI17MoveInLineOfSightEP4Unit" >MoveInLineOfSight</dfn>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override { } <i>// CreatureAI interferes with returning pets</i></td></tr>
+<tr><th id="49">49</th><td>        <em>void</em> <dfn class="decl def" id="_ZN5PetAI22MoveInLineOfSight_SafeEP4Unit" title='PetAI::MoveInLineOfSight_Safe' data-ref="_ZN5PetAI22MoveInLineOfSight_SafeEP4Unit" >MoveInLineOfSight_Safe</dfn>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) { } <i>// CreatureAI interferes with returning pets</i></td></tr>
+<tr><th id="50">50</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN5PetAI14EnterEvadeModeEv" title='PetAI::EnterEvadeMode' data-ref="_ZN5PetAI14EnterEvadeModeEv" >EnterEvadeMode</dfn>() override { } <i>// For fleeing, pets don't use this type of Evade mechanic</i></td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td>    <b>private</b>:</td></tr>
+<tr><th id="53">53</th><td>        <em>bool</em> <dfn class="decl" id="_ZNK5PetAI10_isVisibleEP4Unit" title='PetAI::_isVisible' data-ref="_ZNK5PetAI10_isVisibleEP4Unit" >_isVisible</dfn>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>*) <em>const</em>;</td></tr>
+<tr><th id="54">54</th><td>        <em>bool</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI11_needToStopEv" title='PetAI::_needToStop' data-ref="_ZN5PetAI11_needToStopEv" id="_ZN5PetAI11_needToStopEv" >_needToStop</a>(<em>void</em>);</td></tr>
+<tr><th id="55">55</th><td>        <em>void</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI11_stopAttackEv" title='PetAI::_stopAttack' data-ref="_ZN5PetAI11_stopAttackEv" id="_ZN5PetAI11_stopAttackEv" >_stopAttack</a>(<em>void</em>);</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>        <em>void</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI12UpdateAlliesEv" title='PetAI::UpdateAllies' data-ref="_ZN5PetAI12UpdateAlliesEv" id="_ZN5PetAI12UpdateAlliesEv" >UpdateAllies</a>();</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>        <a class="type" href="../../../../common/Utilities/Timer.h.html#TimeTracker" title='TimeTracker' data-ref="TimeTracker" >TimeTracker</a> <dfn class="decl" id="PetAI::i_tracker" title='PetAI::i_tracker' data-ref="PetAI::i_tracker" >i_tracker</dfn>;</td></tr>
+<tr><th id="60">60</th><td>        <a class="typedef" href="../../Entities/Object/ObjectGuid.h.html#GuidSet" title='GuidSet' data-type='std::set&lt;ObjectGuid&gt;' data-ref="GuidSet" >GuidSet</a> <dfn class="decl" id="PetAI::m_AllySet" title='PetAI::m_AllySet' data-ref="PetAI::m_AllySet" >m_AllySet</dfn>;</td></tr>
+<tr><th id="61">61</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="PetAI::m_updateAlliesTimer" title='PetAI::m_updateAlliesTimer' data-ref="PetAI::m_updateAlliesTimer" >m_updateAlliesTimer</dfn>;</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>        <a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <a class="decl" href="PetAI.cpp.html#_ZNK5PetAI16SelectNextTargetEb" title='PetAI::SelectNextTarget' data-ref="_ZNK5PetAI16SelectNextTargetEb" id="_ZNK5PetAI16SelectNextTargetEb" >SelectNextTarget</a>(<em>bool</em> <dfn class="local col0 decl" id="10allowAutoSelect" title='allowAutoSelect' data-type='bool' data-ref="10allowAutoSelect" >allowAutoSelect</dfn>) <em>const</em>;</td></tr>
+<tr><th id="64">64</th><td>        <em>void</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI20HandleReturnMovementEv" title='PetAI::HandleReturnMovement' data-ref="_ZN5PetAI20HandleReturnMovementEv" id="_ZN5PetAI20HandleReturnMovementEv" >HandleReturnMovement</a>();</td></tr>
+<tr><th id="65">65</th><td>        <em>void</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI8DoAttackEP4Unitb" title='PetAI::DoAttack' data-ref="_ZN5PetAI8DoAttackEP4Unitb" id="_ZN5PetAI8DoAttackEP4Unitb" >DoAttack</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col1 decl" id="11target" title='target' data-type='Unit *' data-ref="11target" >target</dfn>, <em>bool</em> <dfn class="local col2 decl" id="12chase" title='chase' data-type='bool' data-ref="12chase" >chase</dfn>);</td></tr>
+<tr><th id="66">66</th><td>        <em>bool</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI9CanAttackEP4Unit" title='PetAI::CanAttack' data-ref="_ZN5PetAI9CanAttackEP4Unit" id="_ZN5PetAI9CanAttackEP4Unit" >CanAttack</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col3 decl" id="13target" title='target' data-type='Unit *' data-ref="13target" >target</dfn>);</td></tr>
+<tr><th id="67">67</th><td>        <em>void</em> <a class="decl" href="PetAI.cpp.html#_ZN5PetAI19ClearCharmInfoFlagsEv" title='PetAI::ClearCharmInfoFlags' data-ref="_ZN5PetAI19ClearCharmInfoFlagsEv" id="_ZN5PetAI19ClearCharmInfoFlagsEv" >ClearCharmInfoFlags</a>();</td></tr>
+<tr><th id="68">68</th><td>};</td></tr>
+<tr><th id="69">69</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='PetAI.cpp.html'>TrinityCore6.x/src/server/game/AI/CoreAI/PetAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<title>null.hpp [include/boost/iostreams/device/null.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/iostreams/device/null.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>iostreams</a>/<a href='./'>device</a>/null.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// (C) Copyright 2008 CodeRage, LLC (turkanis at coderage dot com)</i></td></tr>
+<tr><th id="2">2</th><td><i>// (C) Copyright 2004-2007 Jonathan Turkanis</i></td></tr>
+<tr><th id="3">3</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="4">4</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt.)</i></td></tr>
+<tr><th id="5">5</th><td><i></i></td></tr>
+<tr><th id="6">6</th><td><i>// See <a href="http://www.boost.org/libs/iostreams">http://www.boost.org/libs/iostreams</a> for documentation.</i></td></tr>
+<tr><th id="7">7</th><td><i></i></td></tr>
+<tr><th id="8">8</th><td><i>// Inspired by Daryle Walker's nullbuf from his More I/O submission.</i></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#<span data-ppcond="10">ifndef</span> <span class="macro" data-ref="_M/BOOST_IOSTREAMS_NULL_HPP_INCLUDED">BOOST_IOSTREAMS_NULL_HPP_INCLUDED</span></u></td></tr>
+<tr><th id="11">11</th><td><u>#define <dfn class="macro" id="_M/BOOST_IOSTREAMS_NULL_HPP_INCLUDED" data-ref="_M/BOOST_IOSTREAMS_NULL_HPP_INCLUDED">BOOST_IOSTREAMS_NULL_HPP_INCLUDED</dfn></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="13">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1020)</u></td></tr>
+<tr><th id="14">14</th><td><u># pragma once</u></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="13">endif</span></u></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../categories.hpp.html">&lt;boost/iostreams/categories.hpp&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../detail/ios.hpp.html">&lt;boost/iostreams/detail/ios.hpp&gt;</a> // openmode, streamsize.</u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../positioning.hpp.html">&lt;boost/iostreams/positioning.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><b>namespace</b> <span class="namespace">boost</span> { <b>namespace</b> <span class="namespace">iostreams</span> {</td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><b>template</b>&lt;<b>typename</b> Ch, <b>typename</b> Mode&gt;</td></tr>
+<tr><th id="24">24</th><td><b>class</b> <dfn class="type def" id="boost::iostreams::basic_null_device" title='boost::iostreams::basic_null_device' data-ref="boost::iostreams::basic_null_device" >basic_null_device</dfn> {</td></tr>
+<tr><th id="25">25</th><td><b>public</b>:</td></tr>
+<tr><th id="26">26</th><td>    <b>typedef</b> Ch <dfn class="typedef" id="boost::iostreams::basic_null_device::char_type" title='boost::iostreams::basic_null_device::char_type' data-type='Ch' data-ref="boost::iostreams::basic_null_device::char_type" >char_type</dfn>;</td></tr>
+<tr><th id="27">27</th><td>    <b>struct</b> <dfn class="type def" id="boost::iostreams::basic_null_device::category" title='boost::iostreams::basic_null_device::category' data-ref="boost::iostreams::basic_null_device::category" >category</dfn></td></tr>
+<tr><th id="28">28</th><td>        : <b>public</b> Mode,</td></tr>
+<tr><th id="29">29</th><td>          <b>public</b> <a class="type" href="../categories.hpp.html#boost::iostreams::device_tag" title='boost::iostreams::device_tag' data-ref="boost::iostreams::device_tag" >device_tag</a>,</td></tr>
+<tr><th id="30">30</th><td>          <b>public</b> <a class="type" href="../categories.hpp.html#boost::iostreams::closable_tag" title='boost::iostreams::closable_tag' data-ref="boost::iostreams::closable_tag" >closable_tag</a></td></tr>
+<tr><th id="31">31</th><td>        { };</td></tr>
+<tr><th id="32">32</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../c++/4.9/bits/postypes.h.html#std::streamsize" title='std::streamsize' data-type='ptrdiff_t' data-ref="std::streamsize" >streamsize</a> <dfn class="decl def" id="_ZN5boost9iostreams17basic_null_device4readEPT_l" title='boost::iostreams::basic_null_device::read' data-ref="_ZN5boost9iostreams17basic_null_device4readEPT_l" >read</dfn>(Ch*, <span class="namespace">std::</span><a class="typedef" href="../../../c++/4.9/bits/postypes.h.html#std::streamsize" title='std::streamsize' data-type='ptrdiff_t' data-ref="std::streamsize" >streamsize</a>) { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="33">33</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../c++/4.9/bits/postypes.h.html#std::streamsize" title='std::streamsize' data-type='ptrdiff_t' data-ref="std::streamsize" >streamsize</a> <dfn class="decl def" id="_ZN5boost9iostreams17basic_null_device5writeEPKT_l" title='boost::iostreams::basic_null_device::write' data-ref="_ZN5boost9iostreams17basic_null_device5writeEPKT_l" >write</dfn>(<em>const</em> Ch*, <span class="namespace">std::</span><a class="typedef" href="../../../c++/4.9/bits/postypes.h.html#std::streamsize" title='std::streamsize' data-type='ptrdiff_t' data-ref="std::streamsize" >streamsize</a> <dfn class="local col2 decl" id="1872n" title='n' data-type='std::streamsize' data-ref="1872n" >n</dfn>) { <b>return</b> <a class="local col2 ref" href="#1872n" title='n' data-ref="1872n" >n</a>; }</td></tr>
+<tr><th id="34">34</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../c++/4.9/bits/postypes.h.html#std::streampos" title='std::streampos' data-type='fpos&lt;mbstate_t&gt;' data-ref="std::streampos" >streampos</a> <dfn class="decl def" id="_ZN5boost9iostreams17basic_null_device4seekElSt12_Ios_SeekdirSt13_Ios_Openmode" title='boost::iostreams::basic_null_device::seek' data-ref="_ZN5boost9iostreams17basic_null_device4seekElSt12_Ios_SeekdirSt13_Ios_Openmode" >seek</dfn>( <a class="typedef" href="../positioning.hpp.html#boost::iostreams::stream_offset" title='boost::iostreams::stream_offset' data-type='boost::intmax_t' data-ref="boost::iostreams::stream_offset" >stream_offset</a>, <a class="macro" href="../detail/ios.hpp.html#39" title="std::ios" data-ref="_M/BOOST_IOS">BOOST_IOS</a>::<a class="typedef" href="../../../c++/4.9/bits/ios_base.h.html#std::ios_base::seekdir" title='std::ios_base::seekdir' data-type='std::_Ios_Seekdir' data-ref="std::ios_base::seekdir" >seekdir</a>,</td></tr>
+<tr><th id="35">35</th><td>                         <a class="macro" href="../detail/ios.hpp.html#39" title="std::ios" data-ref="_M/BOOST_IOS">BOOST_IOS</a>::<a class="typedef" href="../../../c++/4.9/bits/ios_base.h.html#std::ios_base::openmode" title='std::ios_base::openmode' data-type='std::_Ios_Openmode' data-ref="std::ios_base::openmode" >openmode</a> = </td></tr>
+<tr><th id="36">36</th><td>                             <a class="macro" href="../detail/ios.hpp.html#39" title="std::ios" data-ref="_M/BOOST_IOS">BOOST_IOS</a>::<a class="ref" href="../../../c++/4.9/bits/ios_base.h.html#_ZNSt8ios_base2inE" title='std::ios_base::in' data-ref="_ZNSt8ios_base2inE" id="_ZNSt8ios_base2inE" >in</a> <a class="ref" href="../../../c++/4.9/bits/ios_base.h.html#_ZStorSt13_Ios_OpenmodeS_" title='std::operator|' data-ref="_ZStorSt13_Ios_OpenmodeS_" id="_ZStorSt13_Ios_OpenmodeS_" >|</a> <a class="macro" href="../detail/ios.hpp.html#39" title="std::ios" data-ref="_M/BOOST_IOS">BOOST_IOS</a>::<a class="ref" href="../../../c++/4.9/bits/ios_base.h.html#_ZNSt8ios_base3outE" title='std::ios_base::out' data-ref="_ZNSt8ios_base3outE" id="_ZNSt8ios_base3outE" >out</a> ) </td></tr>
+<tr><th id="37">37</th><td>    { <b>return</b> -<var>1</var>; }</td></tr>
+<tr><th id="38">38</th><td>    <em>void</em> <dfn class="decl def" id="_ZN5boost9iostreams17basic_null_device5closeEv" title='boost::iostreams::basic_null_device::close' data-ref="_ZN5boost9iostreams17basic_null_device5closeEv" >close</dfn>() { }</td></tr>
+<tr><th id="39">39</th><td>    <em>void</em> <dfn class="decl def" id="_ZN5boost9iostreams17basic_null_device5closeESt13_Ios_Openmode" title='boost::iostreams::basic_null_device::close' data-ref="_ZN5boost9iostreams17basic_null_device5closeESt13_Ios_Openmode" >close</dfn>(<a class="macro" href="../detail/ios.hpp.html#39" title="std::ios" data-ref="_M/BOOST_IOS">BOOST_IOS</a>::<a class="typedef" href="../../../c++/4.9/bits/ios_base.h.html#std::ios_base::openmode" title='std::ios_base::openmode' data-type='std::_Ios_Openmode' data-ref="std::ios_base::openmode" >openmode</a>) { }</td></tr>
+<tr><th id="40">40</th><td>};</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>template</b>&lt;<b>typename</b> Ch&gt;</td></tr>
+<tr><th id="43">43</th><td><b>struct</b> <dfn class="type def" id="boost::iostreams::basic_null_source" title='boost::iostreams::basic_null_source' data-ref="boost::iostreams::basic_null_source" >basic_null_source</dfn> : <b>private</b> <a class="type" href="#boost::iostreams::basic_null_device" title='boost::iostreams::basic_null_device' data-ref="boost::iostreams::basic_null_device" >basic_null_device</a>&lt;Ch, <a class="type" href="../categories.hpp.html#boost::iostreams::input" title='boost::iostreams::input' data-ref="boost::iostreams::input" >input</a>&gt; {</td></tr>
+<tr><th id="44">44</th><td>    <b>typedef</b> Ch          <dfn class="typedef" id="boost::iostreams::basic_null_source::char_type" title='boost::iostreams::basic_null_source::char_type' data-type='Ch' data-ref="boost::iostreams::basic_null_source::char_type" >char_type</dfn>;</td></tr>
+<tr><th id="45">45</th><td>    <b>typedef</b> <a class="type" href="../categories.hpp.html#boost::iostreams::source_tag" title='boost::iostreams::source_tag' data-ref="boost::iostreams::source_tag" >source_tag</a>  <dfn class="typedef" id="boost::iostreams::basic_null_source::category" title='boost::iostreams::basic_null_source::category' data-type='boost::iostreams::source_tag' data-ref="boost::iostreams::basic_null_source::category" >category</dfn>;</td></tr>
+<tr><th id="46">46</th><td>    <b>using</b> <a class="type" href="#boost::iostreams::basic_null_device" title='boost::iostreams::basic_null_device' data-ref="boost::iostreams::basic_null_device" >basic_null_device</a>&lt;Ch, <a class="type" href="../categories.hpp.html#boost::iostreams::input" title='boost::iostreams::input' data-ref="boost::iostreams::input" >input</a>&gt;::read;</td></tr>
+<tr><th id="47">47</th><td>    <b>using</b> <a class="type" href="#boost::iostreams::basic_null_device" title='boost::iostreams::basic_null_device' data-ref="boost::iostreams::basic_null_device" >basic_null_device</a>&lt;Ch, <a class="type" href="../categories.hpp.html#boost::iostreams::input" title='boost::iostreams::input' data-ref="boost::iostreams::input" >input</a>&gt;::close;</td></tr>
+<tr><th id="48">48</th><td>};</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><b>typedef</b> <a class="type" href="#boost::iostreams::basic_null_source" title='boost::iostreams::basic_null_source' data-ref="boost::iostreams::basic_null_source" >basic_null_source</a>&lt;<em>char</em>&gt;     <dfn class="typedef" id="boost::iostreams::null_source" title='boost::iostreams::null_source' data-type='basic_null_source&lt;char&gt;' data-ref="boost::iostreams::null_source" >null_source</dfn>;</td></tr>
+<tr><th id="51">51</th><td><b>typedef</b> <a class="type" href="#boost::iostreams::basic_null_source" title='boost::iostreams::basic_null_source' data-ref="boost::iostreams::basic_null_source" >basic_null_source</a>&lt;<em>wchar_t</em>&gt;  <dfn class="typedef" id="boost::iostreams::wnull_source" title='boost::iostreams::wnull_source' data-type='basic_null_source&lt;wchar_t&gt;' data-ref="boost::iostreams::wnull_source" >wnull_source</dfn>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><b>template</b>&lt;<b>typename</b> Ch&gt;</td></tr>
+<tr><th id="54">54</th><td><b>struct</b> <dfn class="type def" id="boost::iostreams::basic_null_sink" title='boost::iostreams::basic_null_sink' data-ref="boost::iostreams::basic_null_sink" >basic_null_sink</dfn> : <b>private</b> <a class="type" href="#boost::iostreams::basic_null_device" title='boost::iostreams::basic_null_device' data-ref="boost::iostreams::basic_null_device" >basic_null_device</a>&lt;Ch, <a class="type" href="../categories.hpp.html#boost::iostreams::output" title='boost::iostreams::output' data-ref="boost::iostreams::output" >output</a>&gt; {</td></tr>
+<tr><th id="55">55</th><td>    <b>typedef</b> Ch        <dfn class="typedef" id="boost::iostreams::basic_null_sink::char_type" title='boost::iostreams::basic_null_sink::char_type' data-type='Ch' data-ref="boost::iostreams::basic_null_sink::char_type" >char_type</dfn>;</td></tr>
+<tr><th id="56">56</th><td>    <b>typedef</b> <a class="type" href="../categories.hpp.html#boost::iostreams::sink_tag" title='boost::iostreams::sink_tag' data-ref="boost::iostreams::sink_tag" >sink_tag</a>  <dfn class="typedef" id="boost::iostreams::basic_null_sink::category" title='boost::iostreams::basic_null_sink::category' data-type='boost::iostreams::sink_tag' data-ref="boost::iostreams::basic_null_sink::category" >category</dfn>;</td></tr>
+<tr><th id="57">57</th><td>    <b>using</b> <a class="type" href="#boost::iostreams::basic_null_device" title='boost::iostreams::basic_null_device' data-ref="boost::iostreams::basic_null_device" >basic_null_device</a>&lt;Ch, <a class="type" href="../categories.hpp.html#boost::iostreams::output" title='boost::iostreams::output' data-ref="boost::iostreams::output" >output</a>&gt;::write;</td></tr>
+<tr><th id="58">58</th><td>    <b>using</b> <a class="type" href="#boost::iostreams::basic_null_device" title='boost::iostreams::basic_null_device' data-ref="boost::iostreams::basic_null_device" >basic_null_device</a>&lt;Ch, <a class="type" href="../categories.hpp.html#boost::iostreams::output" title='boost::iostreams::output' data-ref="boost::iostreams::output" >output</a>&gt;::close;</td></tr>
+<tr><th id="59">59</th><td>};</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><b>typedef</b> <a class="type" href="#boost::iostreams::basic_null_sink" title='boost::iostreams::basic_null_sink' data-ref="boost::iostreams::basic_null_sink" >basic_null_sink</a>&lt;<em>char</em>&gt;     <dfn class="typedef" id="boost::iostreams::null_sink" title='boost::iostreams::null_sink' data-type='basic_null_sink&lt;char&gt;' data-ref="boost::iostreams::null_sink" >null_sink</dfn>;</td></tr>
+<tr><th id="62">62</th><td><b>typedef</b> <a class="type" href="#boost::iostreams::basic_null_sink" title='boost::iostreams::basic_null_sink' data-ref="boost::iostreams::basic_null_sink" >basic_null_sink</a>&lt;<em>wchar_t</em>&gt;  <dfn class="typedef" id="boost::iostreams::wnull_sink" title='boost::iostreams::wnull_sink' data-type='basic_null_sink&lt;wchar_t&gt;' data-ref="boost::iostreams::wnull_sink" >wnull_sink</dfn>;</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>} } <i>// End namespaces iostreams, boost.</i></td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><u>#<span data-ppcond="10">endif</span> // #ifndef BOOST_IOSTREAMS_NULL_HPP_INCLUDED</u></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp.html'>TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

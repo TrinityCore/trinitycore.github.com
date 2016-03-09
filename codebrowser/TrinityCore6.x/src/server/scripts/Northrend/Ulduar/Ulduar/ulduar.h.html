@@ -1,0 +1,479 @@
+<!doctype html>
+<html>
+<head>
+<title>ulduar.h [TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/ulduar.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/ulduar.h'; var root_path = '../../../../../../..'; var data_path = '../../../../../../../../data';</script>
+<script src='../../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../../..'>TrinityCore6.x</a>/<a href='../../../../..'>src</a>/<a href='../../../..'>server</a>/<a href='../../..'>scripts</a>/<a href='../..'>Northrend</a>/<a href='..'>Ulduar</a>/<a href='./'>Ulduar</a>/ulduar.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/DEF_ULDUAR_H">DEF_ULDUAR_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/DEF_ULDUAR_H" data-ref="_M/DEF_ULDUAR_H">DEF_ULDUAR_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/UlduarScriptName" data-ref="_M/UlduarScriptName">UlduarScriptName</dfn> "instance_ulduar"</u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/DataHeader" data-ref="_M/DataHeader">DataHeader</dfn> "UU"</u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>extern</b> <a class="type" href="../../../../game/Entities/Object/Position.h.html#Position" title='Position' data-ref="Position" >Position</a> <em>const</em> <dfn class="decl" id="ObservationRingKeepersPos" title='ObservationRingKeepersPos' data-ref="ObservationRingKeepersPos" >ObservationRingKeepersPos</dfn>[<var>4</var>];</td></tr>
+<tr><th id="25">25</th><td><b>extern</b> <a class="type" href="../../../../game/Entities/Object/Position.h.html#Position" title='Position' data-ref="Position" >Position</a> <em>const</em> <dfn class="decl" id="YSKeepersPos" title='YSKeepersPos' data-ref="YSKeepersPos" >YSKeepersPos</dfn>[<var>4</var>];</td></tr>
+<tr><th id="26">26</th><td><b>extern</b> <a class="type" href="../../../../game/Entities/Object/Position.h.html#Position" title='Position' data-ref="Position" >Position</a> <em>const</em> <dfn class="decl" id="AlgalonLandPos" title='AlgalonLandPos' data-ref="AlgalonLandPos" >AlgalonLandPos</dfn>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>enum</b> <dfn class="type def" id="UlduarBosses" title='UlduarBosses' data-ref="UlduarBosses" >UlduarBosses</dfn></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="UlduarBosses::MAX_ENCOUNTER" title='UlduarBosses::MAX_ENCOUNTER' data-ref="UlduarBosses::MAX_ENCOUNTER" >MAX_ENCOUNTER</dfn>            = <var>17</var>,</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_LEVIATHAN" title='UlduarBosses::BOSS_LEVIATHAN' data-ref="UlduarBosses::BOSS_LEVIATHAN" >BOSS_LEVIATHAN</dfn>           = <var>0</var>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_IGNIS" title='UlduarBosses::BOSS_IGNIS' data-ref="UlduarBosses::BOSS_IGNIS" >BOSS_IGNIS</dfn>               = <var>1</var>,</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_RAZORSCALE" title='UlduarBosses::BOSS_RAZORSCALE' data-ref="UlduarBosses::BOSS_RAZORSCALE" >BOSS_RAZORSCALE</dfn>          = <var>2</var>,</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_XT002" title='UlduarBosses::BOSS_XT002' data-ref="UlduarBosses::BOSS_XT002" >BOSS_XT002</dfn>               = <var>3</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_ASSEMBLY_OF_IRON" title='UlduarBosses::BOSS_ASSEMBLY_OF_IRON' data-ref="UlduarBosses::BOSS_ASSEMBLY_OF_IRON" >BOSS_ASSEMBLY_OF_IRON</dfn>    = <var>4</var>,</td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_KOLOGARN" title='UlduarBosses::BOSS_KOLOGARN' data-ref="UlduarBosses::BOSS_KOLOGARN" >BOSS_KOLOGARN</dfn>            = <var>5</var>,</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_AURIAYA" title='UlduarBosses::BOSS_AURIAYA' data-ref="UlduarBosses::BOSS_AURIAYA" >BOSS_AURIAYA</dfn>             = <var>6</var>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_HODIR" title='UlduarBosses::BOSS_HODIR' data-ref="UlduarBosses::BOSS_HODIR" >BOSS_HODIR</dfn>               = <var>7</var>,</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_THORIM" title='UlduarBosses::BOSS_THORIM' data-ref="UlduarBosses::BOSS_THORIM" >BOSS_THORIM</dfn>              = <var>8</var>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_FREYA" title='UlduarBosses::BOSS_FREYA' data-ref="UlduarBosses::BOSS_FREYA" >BOSS_FREYA</dfn>               = <var>9</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_MIMIRON" title='UlduarBosses::BOSS_MIMIRON' data-ref="UlduarBosses::BOSS_MIMIRON" >BOSS_MIMIRON</dfn>             = <var>10</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_VEZAX" title='UlduarBosses::BOSS_VEZAX' data-ref="UlduarBosses::BOSS_VEZAX" >BOSS_VEZAX</dfn>               = <var>11</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_YOGG_SARON" title='UlduarBosses::BOSS_YOGG_SARON' data-ref="UlduarBosses::BOSS_YOGG_SARON" >BOSS_YOGG_SARON</dfn>          = <var>12</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_ALGALON" title='UlduarBosses::BOSS_ALGALON' data-ref="UlduarBosses::BOSS_ALGALON" >BOSS_ALGALON</dfn>             = <var>13</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_BRIGHTLEAF" title='UlduarBosses::BOSS_BRIGHTLEAF' data-ref="UlduarBosses::BOSS_BRIGHTLEAF" >BOSS_BRIGHTLEAF</dfn>          = <var>14</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_IRONBRANCH" title='UlduarBosses::BOSS_IRONBRANCH' data-ref="UlduarBosses::BOSS_IRONBRANCH" >BOSS_IRONBRANCH</dfn>          = <var>15</var>,</td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="UlduarBosses::BOSS_STONEBARK" title='UlduarBosses::BOSS_STONEBARK' data-ref="UlduarBosses::BOSS_STONEBARK" >BOSS_STONEBARK</dfn>           = <var>16</var>,</td></tr>
+<tr><th id="49">49</th><td>};</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><b>enum</b> <dfn class="type def" id="UlduarNPCs" title='UlduarNPCs' data-ref="UlduarNPCs" >UlduarNPCs</dfn></td></tr>
+<tr><th id="52">52</th><td>{</td></tr>
+<tr><th id="53">53</th><td>    <i>// General</i></td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_LEVIATHAN" title='UlduarNPCs::NPC_LEVIATHAN' data-ref="UlduarNPCs::NPC_LEVIATHAN" >NPC_LEVIATHAN</dfn>                           = <var>33113</var>,</td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SALVAGED_DEMOLISHER" title='UlduarNPCs::NPC_SALVAGED_DEMOLISHER' data-ref="UlduarNPCs::NPC_SALVAGED_DEMOLISHER" >NPC_SALVAGED_DEMOLISHER</dfn>                 = <var>33109</var>,</td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SALVAGED_SIEGE_ENGINE" title='UlduarNPCs::NPC_SALVAGED_SIEGE_ENGINE' data-ref="UlduarNPCs::NPC_SALVAGED_SIEGE_ENGINE" >NPC_SALVAGED_SIEGE_ENGINE</dfn>               = <var>33060</var>,</td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SALVAGED_CHOPPER" title='UlduarNPCs::NPC_SALVAGED_CHOPPER' data-ref="UlduarNPCs::NPC_SALVAGED_CHOPPER" >NPC_SALVAGED_CHOPPER</dfn>                    = <var>33062</var>,</td></tr>
+<tr><th id="58">58</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_IGNIS" title='UlduarNPCs::NPC_IGNIS' data-ref="UlduarNPCs::NPC_IGNIS" >NPC_IGNIS</dfn>                               = <var>33118</var>,</td></tr>
+<tr><th id="59">59</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_RAZORSCALE" title='UlduarNPCs::NPC_RAZORSCALE' data-ref="UlduarNPCs::NPC_RAZORSCALE" >NPC_RAZORSCALE</dfn>                          = <var>33186</var>,</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_RAZORSCALE_CONTROLLER" title='UlduarNPCs::NPC_RAZORSCALE_CONTROLLER' data-ref="UlduarNPCs::NPC_RAZORSCALE_CONTROLLER" >NPC_RAZORSCALE_CONTROLLER</dfn>               = <var>33233</var>,</td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_STEELFORGED_DEFFENDER" title='UlduarNPCs::NPC_STEELFORGED_DEFFENDER' data-ref="UlduarNPCs::NPC_STEELFORGED_DEFFENDER" >NPC_STEELFORGED_DEFFENDER</dfn>               = <var>33236</var>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_EXPEDITION_COMMANDER" title='UlduarNPCs::NPC_EXPEDITION_COMMANDER' data-ref="UlduarNPCs::NPC_EXPEDITION_COMMANDER" >NPC_EXPEDITION_COMMANDER</dfn>                = <var>33210</var>,</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_XT002" title='UlduarNPCs::NPC_XT002' data-ref="UlduarNPCs::NPC_XT002" >NPC_XT002</dfn>                               = <var>33293</var>,</td></tr>
+<tr><th id="64">64</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_XT_TOY_PILE" title='UlduarNPCs::NPC_XT_TOY_PILE' data-ref="UlduarNPCs::NPC_XT_TOY_PILE" >NPC_XT_TOY_PILE</dfn>                         = <var>33337</var>,</td></tr>
+<tr><th id="65">65</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_STEELBREAKER" title='UlduarNPCs::NPC_STEELBREAKER' data-ref="UlduarNPCs::NPC_STEELBREAKER" >NPC_STEELBREAKER</dfn>                        = <var>32867</var>,</td></tr>
+<tr><th id="66">66</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MOLGEIM" title='UlduarNPCs::NPC_MOLGEIM' data-ref="UlduarNPCs::NPC_MOLGEIM" >NPC_MOLGEIM</dfn>                             = <var>32927</var>,</td></tr>
+<tr><th id="67">67</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRUNDIR" title='UlduarNPCs::NPC_BRUNDIR' data-ref="UlduarNPCs::NPC_BRUNDIR" >NPC_BRUNDIR</dfn>                             = <var>32857</var>,</td></tr>
+<tr><th id="68">68</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_KOLOGARN" title='UlduarNPCs::NPC_KOLOGARN' data-ref="UlduarNPCs::NPC_KOLOGARN" >NPC_KOLOGARN</dfn>                            = <var>32930</var>,</td></tr>
+<tr><th id="69">69</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FOCUSED_EYEBEAM" title='UlduarNPCs::NPC_FOCUSED_EYEBEAM' data-ref="UlduarNPCs::NPC_FOCUSED_EYEBEAM" >NPC_FOCUSED_EYEBEAM</dfn>                     = <var>33632</var>,</td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FOCUSED_EYEBEAM_RIGHT" title='UlduarNPCs::NPC_FOCUSED_EYEBEAM_RIGHT' data-ref="UlduarNPCs::NPC_FOCUSED_EYEBEAM_RIGHT" >NPC_FOCUSED_EYEBEAM_RIGHT</dfn>               = <var>33802</var>,</td></tr>
+<tr><th id="71">71</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_LEFT_ARM" title='UlduarNPCs::NPC_LEFT_ARM' data-ref="UlduarNPCs::NPC_LEFT_ARM" >NPC_LEFT_ARM</dfn>                            = <var>32933</var>,</td></tr>
+<tr><th id="72">72</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_RIGHT_ARM" title='UlduarNPCs::NPC_RIGHT_ARM' data-ref="UlduarNPCs::NPC_RIGHT_ARM" >NPC_RIGHT_ARM</dfn>                           = <var>32934</var>,</td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_RUBBLE" title='UlduarNPCs::NPC_RUBBLE' data-ref="UlduarNPCs::NPC_RUBBLE" >NPC_RUBBLE</dfn>                              = <var>33768</var>,</td></tr>
+<tr><th id="74">74</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_AURIAYA" title='UlduarNPCs::NPC_AURIAYA' data-ref="UlduarNPCs::NPC_AURIAYA" >NPC_AURIAYA</dfn>                             = <var>33515</var>,</td></tr>
+<tr><th id="75">75</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MIMIRON" title='UlduarNPCs::NPC_MIMIRON' data-ref="UlduarNPCs::NPC_MIMIRON" >NPC_MIMIRON</dfn>                             = <var>33350</var>,</td></tr>
+<tr><th id="76">76</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_HODIR" title='UlduarNPCs::NPC_HODIR' data-ref="UlduarNPCs::NPC_HODIR" >NPC_HODIR</dfn>                               = <var>32845</var>,</td></tr>
+<tr><th id="77">77</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_THORIM" title='UlduarNPCs::NPC_THORIM' data-ref="UlduarNPCs::NPC_THORIM" >NPC_THORIM</dfn>                              = <var>32865</var>,</td></tr>
+<tr><th id="78">78</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FREYA" title='UlduarNPCs::NPC_FREYA' data-ref="UlduarNPCs::NPC_FREYA" >NPC_FREYA</dfn>                               = <var>32906</var>,</td></tr>
+<tr><th id="79">79</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_VEZAX" title='UlduarNPCs::NPC_VEZAX' data-ref="UlduarNPCs::NPC_VEZAX" >NPC_VEZAX</dfn>                               = <var>33271</var>,</td></tr>
+<tr><th id="80">80</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_YOGG_SARON" title='UlduarNPCs::NPC_YOGG_SARON' data-ref="UlduarNPCs::NPC_YOGG_SARON" >NPC_YOGG_SARON</dfn>                          = <var>33288</var>,</td></tr>
+<tr><th id="81">81</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ALGALON" title='UlduarNPCs::NPC_ALGALON' data-ref="UlduarNPCs::NPC_ALGALON" >NPC_ALGALON</dfn>                             = <var>32871</var>,</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>    <i>// Flame Leviathan</i></td></tr>
+<tr><th id="84">84</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ULDUAR_COLOSSUS" title='UlduarNPCs::NPC_ULDUAR_COLOSSUS' data-ref="UlduarNPCs::NPC_ULDUAR_COLOSSUS" >NPC_ULDUAR_COLOSSUS</dfn>                     = <var>33237</var>,</td></tr>
+<tr><th id="85">85</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRANN_BRONZEBEARD_INTRO" title='UlduarNPCs::NPC_BRANN_BRONZEBEARD_INTRO' data-ref="UlduarNPCs::NPC_BRANN_BRONZEBEARD_INTRO" >NPC_BRANN_BRONZEBEARD_INTRO</dfn>             = <var>33579</var>,</td></tr>
+<tr><th id="86">86</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRANN_BRONZEBEARD_FLYING_MACHINE" title='UlduarNPCs::NPC_BRANN_BRONZEBEARD_FLYING_MACHINE' data-ref="UlduarNPCs::NPC_BRANN_BRONZEBEARD_FLYING_MACHINE" >NPC_BRANN_BRONZEBEARD_FLYING_MACHINE</dfn>    = <var>34119</var>,</td></tr>
+<tr><th id="87">87</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRANN_S_FLYING_MACHINE" title='UlduarNPCs::NPC_BRANN_S_FLYING_MACHINE' data-ref="UlduarNPCs::NPC_BRANN_S_FLYING_MACHINE" >NPC_BRANN_S_FLYING_MACHINE</dfn>              = <var>34120</var>,</td></tr>
+<tr><th id="88">88</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ARCHMAGE_PENTARUS" title='UlduarNPCs::NPC_ARCHMAGE_PENTARUS' data-ref="UlduarNPCs::NPC_ARCHMAGE_PENTARUS" >NPC_ARCHMAGE_PENTARUS</dfn>                   = <var>33624</var>,</td></tr>
+<tr><th id="89">89</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ARCHMAGE_RHYDIAN" title='UlduarNPCs::NPC_ARCHMAGE_RHYDIAN' data-ref="UlduarNPCs::NPC_ARCHMAGE_RHYDIAN" >NPC_ARCHMAGE_RHYDIAN</dfn>                    = <var>33696</var>,</td></tr>
+<tr><th id="90">90</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_LORE_KEEPER_OF_NORGANNON" title='UlduarNPCs::NPC_LORE_KEEPER_OF_NORGANNON' data-ref="UlduarNPCs::NPC_LORE_KEEPER_OF_NORGANNON" >NPC_LORE_KEEPER_OF_NORGANNON</dfn>            = <var>33686</var>,</td></tr>
+<tr><th id="91">91</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_HIGH_EXPLORER_DELLORAH" title='UlduarNPCs::NPC_HIGH_EXPLORER_DELLORAH' data-ref="UlduarNPCs::NPC_HIGH_EXPLORER_DELLORAH" >NPC_HIGH_EXPLORER_DELLORAH</dfn>              = <var>33701</var>,</td></tr>
+<tr><th id="92">92</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRONZEBEARD_RADIO" title='UlduarNPCs::NPC_BRONZEBEARD_RADIO' data-ref="UlduarNPCs::NPC_BRONZEBEARD_RADIO" >NPC_BRONZEBEARD_RADIO</dfn>                   = <var>34054</var>,</td></tr>
+<tr><th id="93">93</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FLAME_LEVIATHAN" title='UlduarNPCs::NPC_FLAME_LEVIATHAN' data-ref="UlduarNPCs::NPC_FLAME_LEVIATHAN" >NPC_FLAME_LEVIATHAN</dfn>                     = <var>33113</var>,</td></tr>
+<tr><th id="94">94</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FLAME_LEVIATHAN_SEAT" title='UlduarNPCs::NPC_FLAME_LEVIATHAN_SEAT' data-ref="UlduarNPCs::NPC_FLAME_LEVIATHAN_SEAT" >NPC_FLAME_LEVIATHAN_SEAT</dfn>                = <var>33114</var>,</td></tr>
+<tr><th id="95">95</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FLAME_LEVIATHAN_TURRET" title='UlduarNPCs::NPC_FLAME_LEVIATHAN_TURRET' data-ref="UlduarNPCs::NPC_FLAME_LEVIATHAN_TURRET" >NPC_FLAME_LEVIATHAN_TURRET</dfn>              = <var>33139</var>,</td></tr>
+<tr><th id="96">96</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_LEVIATHAN_DEFENSE_TURRET" title='UlduarNPCs::NPC_LEVIATHAN_DEFENSE_TURRET' data-ref="UlduarNPCs::NPC_LEVIATHAN_DEFENSE_TURRET" >NPC_LEVIATHAN_DEFENSE_TURRET</dfn>            = <var>33142</var>,</td></tr>
+<tr><th id="97">97</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_OVERLOAD_CONTROL_DEVICE" title='UlduarNPCs::NPC_OVERLOAD_CONTROL_DEVICE' data-ref="UlduarNPCs::NPC_OVERLOAD_CONTROL_DEVICE" >NPC_OVERLOAD_CONTROL_DEVICE</dfn>             = <var>33143</var>,</td></tr>
+<tr><th id="98">98</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ORBITAL_SUPPORT" title='UlduarNPCs::NPC_ORBITAL_SUPPORT' data-ref="UlduarNPCs::NPC_ORBITAL_SUPPORT" >NPC_ORBITAL_SUPPORT</dfn>                     = <var>34286</var>,</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>    <i>// Mimiron</i></td></tr>
+<tr><th id="101">101</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_LEVIATHAN_MKII" title='UlduarNPCs::NPC_LEVIATHAN_MKII' data-ref="UlduarNPCs::NPC_LEVIATHAN_MKII" >NPC_LEVIATHAN_MKII</dfn>                      = <var>33432</var>,</td></tr>
+<tr><th id="102">102</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_VX_001" title='UlduarNPCs::NPC_VX_001' data-ref="UlduarNPCs::NPC_VX_001" >NPC_VX_001</dfn>                              = <var>33651</var>,</td></tr>
+<tr><th id="103">103</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_AERIAL_COMMAND_UNIT" title='UlduarNPCs::NPC_AERIAL_COMMAND_UNIT' data-ref="UlduarNPCs::NPC_AERIAL_COMMAND_UNIT" >NPC_AERIAL_COMMAND_UNIT</dfn>                 = <var>33670</var>,</td></tr>
+<tr><th id="104">104</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ASSAULT_BOT" title='UlduarNPCs::NPC_ASSAULT_BOT' data-ref="UlduarNPCs::NPC_ASSAULT_BOT" >NPC_ASSAULT_BOT</dfn>                         = <var>34057</var>,</td></tr>
+<tr><th id="105">105</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BOMB_BOT" title='UlduarNPCs::NPC_BOMB_BOT' data-ref="UlduarNPCs::NPC_BOMB_BOT" >NPC_BOMB_BOT</dfn>                            = <var>33836</var>,</td></tr>
+<tr><th id="106">106</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_JUNK_BOT" title='UlduarNPCs::NPC_JUNK_BOT' data-ref="UlduarNPCs::NPC_JUNK_BOT" >NPC_JUNK_BOT</dfn>                            = <var>33855</var>,</td></tr>
+<tr><th id="107">107</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_EMERGENCY_FIRE_BOT" title='UlduarNPCs::NPC_EMERGENCY_FIRE_BOT' data-ref="UlduarNPCs::NPC_EMERGENCY_FIRE_BOT" >NPC_EMERGENCY_FIRE_BOT</dfn>                  = <var>34147</var>,</td></tr>
+<tr><th id="108">108</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FROST_BOMB" title='UlduarNPCs::NPC_FROST_BOMB' data-ref="UlduarNPCs::NPC_FROST_BOMB" >NPC_FROST_BOMB</dfn>                          = <var>34149</var>,</td></tr>
+<tr><th id="109">109</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BURST_TARGET" title='UlduarNPCs::NPC_BURST_TARGET' data-ref="UlduarNPCs::NPC_BURST_TARGET" >NPC_BURST_TARGET</dfn>                        = <var>34211</var>,</td></tr>
+<tr><th id="110">110</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FLAME" title='UlduarNPCs::NPC_FLAME' data-ref="UlduarNPCs::NPC_FLAME" >NPC_FLAME</dfn>                               = <var>34363</var>,</td></tr>
+<tr><th id="111">111</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FLAME_SPREAD" title='UlduarNPCs::NPC_FLAME_SPREAD' data-ref="UlduarNPCs::NPC_FLAME_SPREAD" >NPC_FLAME_SPREAD</dfn>                        = <var>34121</var>,</td></tr>
+<tr><th id="112">112</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_DB_TARGET" title='UlduarNPCs::NPC_DB_TARGET' data-ref="UlduarNPCs::NPC_DB_TARGET" >NPC_DB_TARGET</dfn>                           = <var>33576</var>,</td></tr>
+<tr><th id="113">113</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ROCKET_MIMIRON_VISUAL" title='UlduarNPCs::NPC_ROCKET_MIMIRON_VISUAL' data-ref="UlduarNPCs::NPC_ROCKET_MIMIRON_VISUAL" >NPC_ROCKET_MIMIRON_VISUAL</dfn>               = <var>34050</var>,</td></tr>
+<tr><th id="114">114</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_WORLD_TRIGGER_MIMIRON" title='UlduarNPCs::NPC_WORLD_TRIGGER_MIMIRON' data-ref="UlduarNPCs::NPC_WORLD_TRIGGER_MIMIRON" >NPC_WORLD_TRIGGER_MIMIRON</dfn>               = <var>21252</var>,</td></tr>
+<tr><th id="115">115</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_COMPUTER" title='UlduarNPCs::NPC_COMPUTER' data-ref="UlduarNPCs::NPC_COMPUTER" >NPC_COMPUTER</dfn>                            = <var>34143</var>,</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td>    <i>// Freya's Keepers</i></td></tr>
+<tr><th id="118">118</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_IRONBRANCH" title='UlduarNPCs::NPC_IRONBRANCH' data-ref="UlduarNPCs::NPC_IRONBRANCH" >NPC_IRONBRANCH</dfn>                          = <var>32913</var>,</td></tr>
+<tr><th id="119">119</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRIGHTLEAF" title='UlduarNPCs::NPC_BRIGHTLEAF' data-ref="UlduarNPCs::NPC_BRIGHTLEAF" >NPC_BRIGHTLEAF</dfn>                          = <var>32915</var>,</td></tr>
+<tr><th id="120">120</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_STONEBARK" title='UlduarNPCs::NPC_STONEBARK' data-ref="UlduarNPCs::NPC_STONEBARK" >NPC_STONEBARK</dfn>                           = <var>32914</var>,</td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td>    <i>// Hodir's Helper NPCs</i></td></tr>
+<tr><th id="123">123</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_TOR_GREYCLOUD" title='UlduarNPCs::NPC_TOR_GREYCLOUD' data-ref="UlduarNPCs::NPC_TOR_GREYCLOUD" >NPC_TOR_GREYCLOUD</dfn>                       = <var>32941</var>,</td></tr>
+<tr><th id="124">124</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_KAR_GREYCLOUD" title='UlduarNPCs::NPC_KAR_GREYCLOUD' data-ref="UlduarNPCs::NPC_KAR_GREYCLOUD" >NPC_KAR_GREYCLOUD</dfn>                       = <var>33333</var>,</td></tr>
+<tr><th id="125">125</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_EIVI_NIGHTFEATHER" title='UlduarNPCs::NPC_EIVI_NIGHTFEATHER' data-ref="UlduarNPCs::NPC_EIVI_NIGHTFEATHER" >NPC_EIVI_NIGHTFEATHER</dfn>                   = <var>33325</var>,</td></tr>
+<tr><th id="126">126</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ELLIE_NIGHTFEATHER" title='UlduarNPCs::NPC_ELLIE_NIGHTFEATHER' data-ref="UlduarNPCs::NPC_ELLIE_NIGHTFEATHER" >NPC_ELLIE_NIGHTFEATHER</dfn>                  = <var>32901</var>,</td></tr>
+<tr><th id="127">127</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SPIRITWALKER_TARA" title='UlduarNPCs::NPC_SPIRITWALKER_TARA' data-ref="UlduarNPCs::NPC_SPIRITWALKER_TARA" >NPC_SPIRITWALKER_TARA</dfn>                   = <var>33332</var>,</td></tr>
+<tr><th id="128">128</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SPIRITWALKER_YONA" title='UlduarNPCs::NPC_SPIRITWALKER_YONA' data-ref="UlduarNPCs::NPC_SPIRITWALKER_YONA" >NPC_SPIRITWALKER_YONA</dfn>                   = <var>32950</var>,</td></tr>
+<tr><th id="129">129</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ELEMENTALIST_MAHFUUN" title='UlduarNPCs::NPC_ELEMENTALIST_MAHFUUN' data-ref="UlduarNPCs::NPC_ELEMENTALIST_MAHFUUN" >NPC_ELEMENTALIST_MAHFUUN</dfn>                = <var>33328</var>,</td></tr>
+<tr><th id="130">130</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ELEMENTALIST_AVUUN" title='UlduarNPCs::NPC_ELEMENTALIST_AVUUN' data-ref="UlduarNPCs::NPC_ELEMENTALIST_AVUUN" >NPC_ELEMENTALIST_AVUUN</dfn>                  = <var>32900</var>,</td></tr>
+<tr><th id="131">131</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_AMIRA_BLAZEWEAVER" title='UlduarNPCs::NPC_AMIRA_BLAZEWEAVER' data-ref="UlduarNPCs::NPC_AMIRA_BLAZEWEAVER" >NPC_AMIRA_BLAZEWEAVER</dfn>                   = <var>33331</var>,</td></tr>
+<tr><th id="132">132</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_VEESHA_BLAZEWEAVER" title='UlduarNPCs::NPC_VEESHA_BLAZEWEAVER' data-ref="UlduarNPCs::NPC_VEESHA_BLAZEWEAVER" >NPC_VEESHA_BLAZEWEAVER</dfn>                  = <var>32946</var>,</td></tr>
+<tr><th id="133">133</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MISSY_FLAMECUFFS" title='UlduarNPCs::NPC_MISSY_FLAMECUFFS' data-ref="UlduarNPCs::NPC_MISSY_FLAMECUFFS" >NPC_MISSY_FLAMECUFFS</dfn>                    = <var>32893</var>,</td></tr>
+<tr><th id="134">134</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SISSY_FLAMECUFFS" title='UlduarNPCs::NPC_SISSY_FLAMECUFFS' data-ref="UlduarNPCs::NPC_SISSY_FLAMECUFFS" >NPC_SISSY_FLAMECUFFS</dfn>                    = <var>33327</var>,</td></tr>
+<tr><th id="135">135</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BATTLE_PRIEST_ELIZA" title='UlduarNPCs::NPC_BATTLE_PRIEST_ELIZA' data-ref="UlduarNPCs::NPC_BATTLE_PRIEST_ELIZA" >NPC_BATTLE_PRIEST_ELIZA</dfn>                 = <var>32948</var>,</td></tr>
+<tr><th id="136">136</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BATTLE_PRIEST_GINA" title='UlduarNPCs::NPC_BATTLE_PRIEST_GINA' data-ref="UlduarNPCs::NPC_BATTLE_PRIEST_GINA" >NPC_BATTLE_PRIEST_GINA</dfn>                  = <var>33330</var>,</td></tr>
+<tr><th id="137">137</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FIELD_MEDIC_PENNY" title='UlduarNPCs::NPC_FIELD_MEDIC_PENNY' data-ref="UlduarNPCs::NPC_FIELD_MEDIC_PENNY" >NPC_FIELD_MEDIC_PENNY</dfn>                   = <var>32897</var>,</td></tr>
+<tr><th id="138">138</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FIELD_MEDIC_JESSI" title='UlduarNPCs::NPC_FIELD_MEDIC_JESSI' data-ref="UlduarNPCs::NPC_FIELD_MEDIC_JESSI" >NPC_FIELD_MEDIC_JESSI</dfn>                   = <var>33326</var>,</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td>    <i>// Freya's trash NPCs</i></td></tr>
+<tr><th id="141">141</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_CORRUPTED_SERVITOR" title='UlduarNPCs::NPC_CORRUPTED_SERVITOR' data-ref="UlduarNPCs::NPC_CORRUPTED_SERVITOR" >NPC_CORRUPTED_SERVITOR</dfn>                  = <var>33354</var>,</td></tr>
+<tr><th id="142">142</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MISGUIDED_NYMPH" title='UlduarNPCs::NPC_MISGUIDED_NYMPH' data-ref="UlduarNPCs::NPC_MISGUIDED_NYMPH" >NPC_MISGUIDED_NYMPH</dfn>                     = <var>33355</var>,</td></tr>
+<tr><th id="143">143</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_GUARDIAN_LASHER" title='UlduarNPCs::NPC_GUARDIAN_LASHER' data-ref="UlduarNPCs::NPC_GUARDIAN_LASHER" >NPC_GUARDIAN_LASHER</dfn>                     = <var>33430</var>,</td></tr>
+<tr><th id="144">144</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FOREST_SWARMER" title='UlduarNPCs::NPC_FOREST_SWARMER' data-ref="UlduarNPCs::NPC_FOREST_SWARMER" >NPC_FOREST_SWARMER</dfn>                      = <var>33431</var>,</td></tr>
+<tr><th id="145">145</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MANGROVE_ENT" title='UlduarNPCs::NPC_MANGROVE_ENT' data-ref="UlduarNPCs::NPC_MANGROVE_ENT" >NPC_MANGROVE_ENT</dfn>                        = <var>33525</var>,</td></tr>
+<tr><th id="146">146</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_IRONROOT_LASHER" title='UlduarNPCs::NPC_IRONROOT_LASHER' data-ref="UlduarNPCs::NPC_IRONROOT_LASHER" >NPC_IRONROOT_LASHER</dfn>                     = <var>33526</var>,</td></tr>
+<tr><th id="147">147</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_NATURES_BLADE" title='UlduarNPCs::NPC_NATURES_BLADE' data-ref="UlduarNPCs::NPC_NATURES_BLADE" >NPC_NATURES_BLADE</dfn>                       = <var>33527</var>,</td></tr>
+<tr><th id="148">148</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_GUARDIAN_OF_LIFE" title='UlduarNPCs::NPC_GUARDIAN_OF_LIFE' data-ref="UlduarNPCs::NPC_GUARDIAN_OF_LIFE" >NPC_GUARDIAN_OF_LIFE</dfn>                    = <var>33528</var>,</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>    <i>// Freya Achievement Trigger</i></td></tr>
+<tr><th id="151">151</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FREYA_ACHIEVE_TRIGGER" title='UlduarNPCs::NPC_FREYA_ACHIEVE_TRIGGER' data-ref="UlduarNPCs::NPC_FREYA_ACHIEVE_TRIGGER" >NPC_FREYA_ACHIEVE_TRIGGER</dfn>               = <var>33406</var>,</td></tr>
+<tr><th id="152">152</th><td></td></tr>
+<tr><th id="153">153</th><td>    <i>// Yogg-Saron</i></td></tr>
+<tr><th id="154">154</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SARA" title='UlduarNPCs::NPC_SARA' data-ref="UlduarNPCs::NPC_SARA" >NPC_SARA</dfn>                                = <var>33134</var>,</td></tr>
+<tr><th id="155">155</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_GUARDIAN_OF_YOGG_SARON" title='UlduarNPCs::NPC_GUARDIAN_OF_YOGG_SARON' data-ref="UlduarNPCs::NPC_GUARDIAN_OF_YOGG_SARON" >NPC_GUARDIAN_OF_YOGG_SARON</dfn>              = <var>33136</var>,</td></tr>
+<tr><th id="156">156</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_HODIR_OBSERVATION_RING" title='UlduarNPCs::NPC_HODIR_OBSERVATION_RING' data-ref="UlduarNPCs::NPC_HODIR_OBSERVATION_RING" >NPC_HODIR_OBSERVATION_RING</dfn>              = <var>33213</var>,</td></tr>
+<tr><th id="157">157</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FREYA_OBSERVATION_RING" title='UlduarNPCs::NPC_FREYA_OBSERVATION_RING' data-ref="UlduarNPCs::NPC_FREYA_OBSERVATION_RING" >NPC_FREYA_OBSERVATION_RING</dfn>              = <var>33241</var>,</td></tr>
+<tr><th id="158">158</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_THORIM_OBSERVATION_RING" title='UlduarNPCs::NPC_THORIM_OBSERVATION_RING' data-ref="UlduarNPCs::NPC_THORIM_OBSERVATION_RING" >NPC_THORIM_OBSERVATION_RING</dfn>             = <var>33242</var>,</td></tr>
+<tr><th id="159">159</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MIMIRON_OBSERVATION_RING" title='UlduarNPCs::NPC_MIMIRON_OBSERVATION_RING' data-ref="UlduarNPCs::NPC_MIMIRON_OBSERVATION_RING" >NPC_MIMIRON_OBSERVATION_RING</dfn>            = <var>33244</var>,</td></tr>
+<tr><th id="160">160</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_VOICE_OF_YOGG_SARON" title='UlduarNPCs::NPC_VOICE_OF_YOGG_SARON' data-ref="UlduarNPCs::NPC_VOICE_OF_YOGG_SARON" >NPC_VOICE_OF_YOGG_SARON</dfn>                 = <var>33280</var>,</td></tr>
+<tr><th id="161">161</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_OMINOUS_CLOUD" title='UlduarNPCs::NPC_OMINOUS_CLOUD' data-ref="UlduarNPCs::NPC_OMINOUS_CLOUD" >NPC_OMINOUS_CLOUD</dfn>                       = <var>33292</var>,</td></tr>
+<tr><th id="162">162</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_FREYA_YS" title='UlduarNPCs::NPC_FREYA_YS' data-ref="UlduarNPCs::NPC_FREYA_YS" >NPC_FREYA_YS</dfn>                            = <var>33410</var>,</td></tr>
+<tr><th id="163">163</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_HODIR_YS" title='UlduarNPCs::NPC_HODIR_YS' data-ref="UlduarNPCs::NPC_HODIR_YS" >NPC_HODIR_YS</dfn>                            = <var>33411</var>,</td></tr>
+<tr><th id="164">164</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MIMIRON_YS" title='UlduarNPCs::NPC_MIMIRON_YS' data-ref="UlduarNPCs::NPC_MIMIRON_YS" >NPC_MIMIRON_YS</dfn>                          = <var>33412</var>,</td></tr>
+<tr><th id="165">165</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_THORIM_YS" title='UlduarNPCs::NPC_THORIM_YS' data-ref="UlduarNPCs::NPC_THORIM_YS" >NPC_THORIM_YS</dfn>                           = <var>33413</var>,</td></tr>
+<tr><th id="166">166</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SUIT_OF_ARMOR" title='UlduarNPCs::NPC_SUIT_OF_ARMOR' data-ref="UlduarNPCs::NPC_SUIT_OF_ARMOR" >NPC_SUIT_OF_ARMOR</dfn>                       = <var>33433</var>,</td></tr>
+<tr><th id="167">167</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_KING_LLANE" title='UlduarNPCs::NPC_KING_LLANE' data-ref="UlduarNPCs::NPC_KING_LLANE" >NPC_KING_LLANE</dfn>                          = <var>33437</var>,</td></tr>
+<tr><th id="168">168</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_THE_LICH_KING" title='UlduarNPCs::NPC_THE_LICH_KING' data-ref="UlduarNPCs::NPC_THE_LICH_KING" >NPC_THE_LICH_KING</dfn>                       = <var>33441</var>,</td></tr>
+<tr><th id="169">169</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_IMMOLATED_CHAMPION" title='UlduarNPCs::NPC_IMMOLATED_CHAMPION' data-ref="UlduarNPCs::NPC_IMMOLATED_CHAMPION" >NPC_IMMOLATED_CHAMPION</dfn>                  = <var>33442</var>,</td></tr>
+<tr><th id="170">170</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_YSERA" title='UlduarNPCs::NPC_YSERA' data-ref="UlduarNPCs::NPC_YSERA" >NPC_YSERA</dfn>                               = <var>33495</var>,</td></tr>
+<tr><th id="171">171</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_NELTHARION" title='UlduarNPCs::NPC_NELTHARION' data-ref="UlduarNPCs::NPC_NELTHARION" >NPC_NELTHARION</dfn>                          = <var>33523</var>,</td></tr>
+<tr><th id="172">172</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MALYGOS" title='UlduarNPCs::NPC_MALYGOS' data-ref="UlduarNPCs::NPC_MALYGOS" >NPC_MALYGOS</dfn>                             = <var>33535</var>,</td></tr>
+<tr><th id="173">173</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_DEATH_RAY" title='UlduarNPCs::NPC_DEATH_RAY' data-ref="UlduarNPCs::NPC_DEATH_RAY" >NPC_DEATH_RAY</dfn>                           = <var>33881</var>,</td></tr>
+<tr><th id="174">174</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_DEATH_ORB" title='UlduarNPCs::NPC_DEATH_ORB' data-ref="UlduarNPCs::NPC_DEATH_ORB" >NPC_DEATH_ORB</dfn>                           = <var>33882</var>,</td></tr>
+<tr><th id="175">175</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRAIN_OF_YOGG_SARON" title='UlduarNPCs::NPC_BRAIN_OF_YOGG_SARON' data-ref="UlduarNPCs::NPC_BRAIN_OF_YOGG_SARON" >NPC_BRAIN_OF_YOGG_SARON</dfn>                 = <var>33890</var>,</td></tr>
+<tr><th id="176">176</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_INFLUENCE_TENTACLE" title='UlduarNPCs::NPC_INFLUENCE_TENTACLE' data-ref="UlduarNPCs::NPC_INFLUENCE_TENTACLE" >NPC_INFLUENCE_TENTACLE</dfn>                  = <var>33943</var>,</td></tr>
+<tr><th id="177">177</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_TURNED_CHAMPION" title='UlduarNPCs::NPC_TURNED_CHAMPION' data-ref="UlduarNPCs::NPC_TURNED_CHAMPION" >NPC_TURNED_CHAMPION</dfn>                     = <var>33962</var>,</td></tr>
+<tr><th id="178">178</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_CRUSHER_TENTACLE" title='UlduarNPCs::NPC_CRUSHER_TENTACLE' data-ref="UlduarNPCs::NPC_CRUSHER_TENTACLE" >NPC_CRUSHER_TENTACLE</dfn>                    = <var>33966</var>,</td></tr>
+<tr><th id="179">179</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_CONSTRICTOR_TENTACLE" title='UlduarNPCs::NPC_CONSTRICTOR_TENTACLE' data-ref="UlduarNPCs::NPC_CONSTRICTOR_TENTACLE" >NPC_CONSTRICTOR_TENTACLE</dfn>                = <var>33983</var>,</td></tr>
+<tr><th id="180">180</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_CORRUPTOR_TENTACLE" title='UlduarNPCs::NPC_CORRUPTOR_TENTACLE' data-ref="UlduarNPCs::NPC_CORRUPTOR_TENTACLE" >NPC_CORRUPTOR_TENTACLE</dfn>                  = <var>33985</var>,</td></tr>
+<tr><th id="181">181</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_IMMORTAL_GUARDIAN" title='UlduarNPCs::NPC_IMMORTAL_GUARDIAN' data-ref="UlduarNPCs::NPC_IMMORTAL_GUARDIAN" >NPC_IMMORTAL_GUARDIAN</dfn>                   = <var>33988</var>,</td></tr>
+<tr><th id="182">182</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_SANITY_WELL" title='UlduarNPCs::NPC_SANITY_WELL' data-ref="UlduarNPCs::NPC_SANITY_WELL" >NPC_SANITY_WELL</dfn>                         = <var>33991</var>,</td></tr>
+<tr><th id="183">183</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_DESCEND_INTO_MADNESS" title='UlduarNPCs::NPC_DESCEND_INTO_MADNESS' data-ref="UlduarNPCs::NPC_DESCEND_INTO_MADNESS" >NPC_DESCEND_INTO_MADNESS</dfn>                = <var>34072</var>,</td></tr>
+<tr><th id="184">184</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_MARKED_IMMORTAL_GUARDIAN" title='UlduarNPCs::NPC_MARKED_IMMORTAL_GUARDIAN' data-ref="UlduarNPCs::NPC_MARKED_IMMORTAL_GUARDIAN" >NPC_MARKED_IMMORTAL_GUARDIAN</dfn>            = <var>36064</var>,</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>    <i>// Algalon the Observer</i></td></tr>
+<tr><th id="187">187</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BRANN_BRONZBEARD_ALG" title='UlduarNPCs::NPC_BRANN_BRONZBEARD_ALG' data-ref="UlduarNPCs::NPC_BRANN_BRONZBEARD_ALG" >NPC_BRANN_BRONZBEARD_ALG</dfn>                = <var>34064</var>,</td></tr>
+<tr><th id="188">188</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_AZEROTH" title='UlduarNPCs::NPC_AZEROTH' data-ref="UlduarNPCs::NPC_AZEROTH" >NPC_AZEROTH</dfn>                             = <var>34246</var>,</td></tr>
+<tr><th id="189">189</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_LIVING_CONSTELLATION" title='UlduarNPCs::NPC_LIVING_CONSTELLATION' data-ref="UlduarNPCs::NPC_LIVING_CONSTELLATION" >NPC_LIVING_CONSTELLATION</dfn>                = <var>33052</var>,</td></tr>
+<tr><th id="190">190</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ALGALON_STALKER" title='UlduarNPCs::NPC_ALGALON_STALKER' data-ref="UlduarNPCs::NPC_ALGALON_STALKER" >NPC_ALGALON_STALKER</dfn>                     = <var>33086</var>,</td></tr>
+<tr><th id="191">191</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_COLLAPSING_STAR" title='UlduarNPCs::NPC_COLLAPSING_STAR' data-ref="UlduarNPCs::NPC_COLLAPSING_STAR" >NPC_COLLAPSING_STAR</dfn>                     = <var>32955</var>,</td></tr>
+<tr><th id="192">192</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_BLACK_HOLE" title='UlduarNPCs::NPC_BLACK_HOLE' data-ref="UlduarNPCs::NPC_BLACK_HOLE" >NPC_BLACK_HOLE</dfn>                          = <var>32953</var>,</td></tr>
+<tr><th id="193">193</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_WORM_HOLE" title='UlduarNPCs::NPC_WORM_HOLE' data-ref="UlduarNPCs::NPC_WORM_HOLE" >NPC_WORM_HOLE</dfn>                           = <var>34099</var>,</td></tr>
+<tr><th id="194">194</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ALGALON_VOID_ZONE_VISUAL_STALKER" title='UlduarNPCs::NPC_ALGALON_VOID_ZONE_VISUAL_STALKER' data-ref="UlduarNPCs::NPC_ALGALON_VOID_ZONE_VISUAL_STALKER" >NPC_ALGALON_VOID_ZONE_VISUAL_STALKER</dfn>    = <var>34100</var>,</td></tr>
+<tr><th id="195">195</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ALGALON_STALKER_ASTEROID_TARGET_01" title='UlduarNPCs::NPC_ALGALON_STALKER_ASTEROID_TARGET_01' data-ref="UlduarNPCs::NPC_ALGALON_STALKER_ASTEROID_TARGET_01" >NPC_ALGALON_STALKER_ASTEROID_TARGET_01</dfn>  = <var>33104</var>,</td></tr>
+<tr><th id="196">196</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_ALGALON_STALKER_ASTEROID_TARGET_02" title='UlduarNPCs::NPC_ALGALON_STALKER_ASTEROID_TARGET_02' data-ref="UlduarNPCs::NPC_ALGALON_STALKER_ASTEROID_TARGET_02" >NPC_ALGALON_STALKER_ASTEROID_TARGET_02</dfn>  = <var>33105</var>,</td></tr>
+<tr><th id="197">197</th><td>    <dfn class="enum" id="UlduarNPCs::NPC_UNLEASHED_DARK_MATTER" title='UlduarNPCs::NPC_UNLEASHED_DARK_MATTER' data-ref="UlduarNPCs::NPC_UNLEASHED_DARK_MATTER" >NPC_UNLEASHED_DARK_MATTER</dfn>               = <var>34097</var>,</td></tr>
+<tr><th id="198">198</th><td>};</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td><b>enum</b> <dfn class="type def" id="UlduarGameObjects" title='UlduarGameObjects' data-ref="UlduarGameObjects" >UlduarGameObjects</dfn></td></tr>
+<tr><th id="201">201</th><td>{</td></tr>
+<tr><th id="202">202</th><td>    <i>// Leviathan</i></td></tr>
+<tr><th id="203">203</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_LEVIATHAN_DOOR" title='UlduarGameObjects::GO_LEVIATHAN_DOOR' data-ref="UlduarGameObjects::GO_LEVIATHAN_DOOR" >GO_LEVIATHAN_DOOR</dfn>                       = <var>194905</var>,</td></tr>
+<tr><th id="204">204</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_LEVIATHAN_GATE" title='UlduarGameObjects::GO_LEVIATHAN_GATE' data-ref="UlduarGameObjects::GO_LEVIATHAN_GATE" >GO_LEVIATHAN_GATE</dfn>                       = <var>194630</var>,</td></tr>
+<tr><th id="205">205</th><td></td></tr>
+<tr><th id="206">206</th><td>    <i>// Razorscale</i></td></tr>
+<tr><th id="207">207</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_MOLE_MACHINE" title='UlduarGameObjects::GO_MOLE_MACHINE' data-ref="UlduarGameObjects::GO_MOLE_MACHINE" >GO_MOLE_MACHINE</dfn>                         = <var>194316</var>,</td></tr>
+<tr><th id="208">208</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_RAZOR_HARPOON_1" title='UlduarGameObjects::GO_RAZOR_HARPOON_1' data-ref="UlduarGameObjects::GO_RAZOR_HARPOON_1" >GO_RAZOR_HARPOON_1</dfn>                      = <var>194542</var>,</td></tr>
+<tr><th id="209">209</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_RAZOR_HARPOON_2" title='UlduarGameObjects::GO_RAZOR_HARPOON_2' data-ref="UlduarGameObjects::GO_RAZOR_HARPOON_2" >GO_RAZOR_HARPOON_2</dfn>                      = <var>194541</var>,</td></tr>
+<tr><th id="210">210</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_RAZOR_HARPOON_3" title='UlduarGameObjects::GO_RAZOR_HARPOON_3' data-ref="UlduarGameObjects::GO_RAZOR_HARPOON_3" >GO_RAZOR_HARPOON_3</dfn>                      = <var>194543</var>,</td></tr>
+<tr><th id="211">211</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_RAZOR_HARPOON_4" title='UlduarGameObjects::GO_RAZOR_HARPOON_4' data-ref="UlduarGameObjects::GO_RAZOR_HARPOON_4" >GO_RAZOR_HARPOON_4</dfn>                      = <var>194519</var>,</td></tr>
+<tr><th id="212">212</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_RAZOR_BROKEN_HARPOON" title='UlduarGameObjects::GO_RAZOR_BROKEN_HARPOON' data-ref="UlduarGameObjects::GO_RAZOR_BROKEN_HARPOON" >GO_RAZOR_BROKEN_HARPOON</dfn>                 = <var>194565</var>,</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td>    <i>// XT-002</i></td></tr>
+<tr><th id="215">215</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_XT_002_DOOR" title='UlduarGameObjects::GO_XT_002_DOOR' data-ref="UlduarGameObjects::GO_XT_002_DOOR" >GO_XT_002_DOOR</dfn>                          = <var>194631</var>,</td></tr>
+<tr><th id="216">216</th><td></td></tr>
+<tr><th id="217">217</th><td>    <i>// Assembly of Iron</i></td></tr>
+<tr><th id="218">218</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_IRON_COUNCIL_DOOR" title='UlduarGameObjects::GO_IRON_COUNCIL_DOOR' data-ref="UlduarGameObjects::GO_IRON_COUNCIL_DOOR" >GO_IRON_COUNCIL_DOOR</dfn>                    = <var>194554</var>,</td></tr>
+<tr><th id="219">219</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_ARCHIVUM_DOOR" title='UlduarGameObjects::GO_ARCHIVUM_DOOR' data-ref="UlduarGameObjects::GO_ARCHIVUM_DOOR" >GO_ARCHIVUM_DOOR</dfn>                        = <var>194556</var>,</td></tr>
+<tr><th id="220">220</th><td></td></tr>
+<tr><th id="221">221</th><td>    <i>// Kologarn</i></td></tr>
+<tr><th id="222">222</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_KOLOGARN_CHEST_HERO" title='UlduarGameObjects::GO_KOLOGARN_CHEST_HERO' data-ref="UlduarGameObjects::GO_KOLOGARN_CHEST_HERO" >GO_KOLOGARN_CHEST_HERO</dfn>                  = <var>195047</var>,</td></tr>
+<tr><th id="223">223</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_KOLOGARN_CHEST" title='UlduarGameObjects::GO_KOLOGARN_CHEST' data-ref="UlduarGameObjects::GO_KOLOGARN_CHEST" >GO_KOLOGARN_CHEST</dfn>                       = <var>195046</var>,</td></tr>
+<tr><th id="224">224</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_KOLOGARN_BRIDGE" title='UlduarGameObjects::GO_KOLOGARN_BRIDGE' data-ref="UlduarGameObjects::GO_KOLOGARN_BRIDGE" >GO_KOLOGARN_BRIDGE</dfn>                      = <var>194232</var>,</td></tr>
+<tr><th id="225">225</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_KOLOGARN_DOOR" title='UlduarGameObjects::GO_KOLOGARN_DOOR' data-ref="UlduarGameObjects::GO_KOLOGARN_DOOR" >GO_KOLOGARN_DOOR</dfn>                        = <var>194553</var>,</td></tr>
+<tr><th id="226">226</th><td></td></tr>
+<tr><th id="227">227</th><td>    <i>// Hodir</i></td></tr>
+<tr><th id="228">228</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_HODIR_ENTRANCE" title='UlduarGameObjects::GO_HODIR_ENTRANCE' data-ref="UlduarGameObjects::GO_HODIR_ENTRANCE" >GO_HODIR_ENTRANCE</dfn>                       = <var>194442</var>,</td></tr>
+<tr><th id="229">229</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_HODIR_DOOR" title='UlduarGameObjects::GO_HODIR_DOOR' data-ref="UlduarGameObjects::GO_HODIR_DOOR" >GO_HODIR_DOOR</dfn>                           = <var>194634</var>,</td></tr>
+<tr><th id="230">230</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_HODIR_ICE_DOOR" title='UlduarGameObjects::GO_HODIR_ICE_DOOR' data-ref="UlduarGameObjects::GO_HODIR_ICE_DOOR" >GO_HODIR_ICE_DOOR</dfn>                       = <var>194441</var>,</td></tr>
+<tr><th id="231">231</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_HODIR_RARE_CACHE_OF_WINTER" title='UlduarGameObjects::GO_HODIR_RARE_CACHE_OF_WINTER' data-ref="UlduarGameObjects::GO_HODIR_RARE_CACHE_OF_WINTER" >GO_HODIR_RARE_CACHE_OF_WINTER</dfn>           = <var>194200</var>,</td></tr>
+<tr><th id="232">232</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_HODIR_RARE_CACHE_OF_WINTER_HERO" title='UlduarGameObjects::GO_HODIR_RARE_CACHE_OF_WINTER_HERO' data-ref="UlduarGameObjects::GO_HODIR_RARE_CACHE_OF_WINTER_HERO" >GO_HODIR_RARE_CACHE_OF_WINTER_HERO</dfn>      = <var>194201</var>,</td></tr>
+<tr><th id="233">233</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_HODIR_CHEST_HERO" title='UlduarGameObjects::GO_HODIR_CHEST_HERO' data-ref="UlduarGameObjects::GO_HODIR_CHEST_HERO" >GO_HODIR_CHEST_HERO</dfn>                     = <var>194308</var>,</td></tr>
+<tr><th id="234">234</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_HODIR_CHEST" title='UlduarGameObjects::GO_HODIR_CHEST' data-ref="UlduarGameObjects::GO_HODIR_CHEST" >GO_HODIR_CHEST</dfn>                          = <var>194307</var>,</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td>    <i>// Thorim</i></td></tr>
+<tr><th id="237">237</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_THORIM_CHEST_HERO" title='UlduarGameObjects::GO_THORIM_CHEST_HERO' data-ref="UlduarGameObjects::GO_THORIM_CHEST_HERO" >GO_THORIM_CHEST_HERO</dfn>                    = <var>194315</var>,</td></tr>
+<tr><th id="238">238</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_THORIM_CHEST" title='UlduarGameObjects::GO_THORIM_CHEST' data-ref="UlduarGameObjects::GO_THORIM_CHEST" >GO_THORIM_CHEST</dfn>                         = <var>194314</var>,</td></tr>
+<tr><th id="239">239</th><td></td></tr>
+<tr><th id="240">240</th><td>    <i>// Mimiron</i></td></tr>
+<tr><th id="241">241</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_MIMIRON_TRAM" title='UlduarGameObjects::GO_MIMIRON_TRAM' data-ref="UlduarGameObjects::GO_MIMIRON_TRAM" >GO_MIMIRON_TRAM</dfn>                         = <var>194675</var>,</td></tr>
+<tr><th id="242">242</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_MIMIRON_ELEVATOR" title='UlduarGameObjects::GO_MIMIRON_ELEVATOR' data-ref="UlduarGameObjects::GO_MIMIRON_ELEVATOR" >GO_MIMIRON_ELEVATOR</dfn>                     = <var>194749</var>,</td></tr>
+<tr><th id="243">243</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_MIMIRON_BUTTON" title='UlduarGameObjects::GO_MIMIRON_BUTTON' data-ref="UlduarGameObjects::GO_MIMIRON_BUTTON" >GO_MIMIRON_BUTTON</dfn>                       = <var>194739</var>,</td></tr>
+<tr><th id="244">244</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_MIMIRON_DOOR_1" title='UlduarGameObjects::GO_MIMIRON_DOOR_1' data-ref="UlduarGameObjects::GO_MIMIRON_DOOR_1" >GO_MIMIRON_DOOR_1</dfn>                       = <var>194774</var>,</td></tr>
+<tr><th id="245">245</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_MIMIRON_DOOR_2" title='UlduarGameObjects::GO_MIMIRON_DOOR_2' data-ref="UlduarGameObjects::GO_MIMIRON_DOOR_2" >GO_MIMIRON_DOOR_2</dfn>                       = <var>194775</var>,</td></tr>
+<tr><th id="246">246</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_MIMIRON_DOOR_3" title='UlduarGameObjects::GO_MIMIRON_DOOR_3' data-ref="UlduarGameObjects::GO_MIMIRON_DOOR_3" >GO_MIMIRON_DOOR_3</dfn>                       = <var>194776</var>,</td></tr>
+<tr><th id="247">247</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_CACHE_OF_INNOVATION" title='UlduarGameObjects::GO_CACHE_OF_INNOVATION' data-ref="UlduarGameObjects::GO_CACHE_OF_INNOVATION" >GO_CACHE_OF_INNOVATION</dfn>                  = <var>194789</var>,</td></tr>
+<tr><th id="248">248</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_CACHE_OF_INNOVATION_FIREFIGHTER" title='UlduarGameObjects::GO_CACHE_OF_INNOVATION_FIREFIGHTER' data-ref="UlduarGameObjects::GO_CACHE_OF_INNOVATION_FIREFIGHTER" >GO_CACHE_OF_INNOVATION_FIREFIGHTER</dfn>      = <var>194957</var>,</td></tr>
+<tr><th id="249">249</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_CACHE_OF_INNOVATION_HERO" title='UlduarGameObjects::GO_CACHE_OF_INNOVATION_HERO' data-ref="UlduarGameObjects::GO_CACHE_OF_INNOVATION_HERO" >GO_CACHE_OF_INNOVATION_HERO</dfn>             = <var>194956</var>,</td></tr>
+<tr><th id="250">250</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_CACHE_OF_INNOVATION_FIREFIGHTER_HERO" title='UlduarGameObjects::GO_CACHE_OF_INNOVATION_FIREFIGHTER_HERO' data-ref="UlduarGameObjects::GO_CACHE_OF_INNOVATION_FIREFIGHTER_HERO" >GO_CACHE_OF_INNOVATION_FIREFIGHTER_HERO</dfn> = <var>194958</var>,</td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td>    <i>// Vezax</i></td></tr>
+<tr><th id="253">253</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_VEZAX_DOOR" title='UlduarGameObjects::GO_VEZAX_DOOR' data-ref="UlduarGameObjects::GO_VEZAX_DOOR" >GO_VEZAX_DOOR</dfn>                           = <var>194750</var>,</td></tr>
+<tr><th id="254">254</th><td></td></tr>
+<tr><th id="255">255</th><td>    <i>// Yogg-Saron</i></td></tr>
+<tr><th id="256">256</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_YOGG_SARON_DOOR" title='UlduarGameObjects::GO_YOGG_SARON_DOOR' data-ref="UlduarGameObjects::GO_YOGG_SARON_DOOR" >GO_YOGG_SARON_DOOR</dfn>                      = <var>194773</var>,</td></tr>
+<tr><th id="257">257</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_BRAIN_ROOM_DOOR_1" title='UlduarGameObjects::GO_BRAIN_ROOM_DOOR_1' data-ref="UlduarGameObjects::GO_BRAIN_ROOM_DOOR_1" >GO_BRAIN_ROOM_DOOR_1</dfn>                    = <var>194635</var>,</td></tr>
+<tr><th id="258">258</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_BRAIN_ROOM_DOOR_2" title='UlduarGameObjects::GO_BRAIN_ROOM_DOOR_2' data-ref="UlduarGameObjects::GO_BRAIN_ROOM_DOOR_2" >GO_BRAIN_ROOM_DOOR_2</dfn>                    = <var>194636</var>,</td></tr>
+<tr><th id="259">259</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_BRAIN_ROOM_DOOR_3" title='UlduarGameObjects::GO_BRAIN_ROOM_DOOR_3' data-ref="UlduarGameObjects::GO_BRAIN_ROOM_DOOR_3" >GO_BRAIN_ROOM_DOOR_3</dfn>                    = <var>194637</var>,</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>    <i>// Algalon the Observer</i></td></tr>
+<tr><th id="262">262</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_CELESTIAL_PLANETARIUM_ACCESS_10" title='UlduarGameObjects::GO_CELESTIAL_PLANETARIUM_ACCESS_10' data-ref="UlduarGameObjects::GO_CELESTIAL_PLANETARIUM_ACCESS_10" >GO_CELESTIAL_PLANETARIUM_ACCESS_10</dfn>      = <var>194628</var>,</td></tr>
+<tr><th id="263">263</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_CELESTIAL_PLANETARIUM_ACCESS_25" title='UlduarGameObjects::GO_CELESTIAL_PLANETARIUM_ACCESS_25' data-ref="UlduarGameObjects::GO_CELESTIAL_PLANETARIUM_ACCESS_25" >GO_CELESTIAL_PLANETARIUM_ACCESS_25</dfn>      = <var>194752</var>,</td></tr>
+<tr><th id="264">264</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_01" title='UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_01' data-ref="UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_01" >GO_DOODAD_UL_SIGILDOOR_01</dfn>               = <var>194767</var>,</td></tr>
+<tr><th id="265">265</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_02" title='UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_02' data-ref="UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_02" >GO_DOODAD_UL_SIGILDOOR_02</dfn>               = <var>194911</var>,</td></tr>
+<tr><th id="266">266</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_03" title='UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_03' data-ref="UlduarGameObjects::GO_DOODAD_UL_SIGILDOOR_03" >GO_DOODAD_UL_SIGILDOOR_03</dfn>               = <var>194910</var>,</td></tr>
+<tr><th id="267">267</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_DOODAD_UL_UNIVERSEFLOOR_01" title='UlduarGameObjects::GO_DOODAD_UL_UNIVERSEFLOOR_01' data-ref="UlduarGameObjects::GO_DOODAD_UL_UNIVERSEFLOOR_01" >GO_DOODAD_UL_UNIVERSEFLOOR_01</dfn>           = <var>194715</var>,</td></tr>
+<tr><th id="268">268</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_DOODAD_UL_UNIVERSEFLOOR_02" title='UlduarGameObjects::GO_DOODAD_UL_UNIVERSEFLOOR_02' data-ref="UlduarGameObjects::GO_DOODAD_UL_UNIVERSEFLOOR_02" >GO_DOODAD_UL_UNIVERSEFLOOR_02</dfn>           = <var>194716</var>,</td></tr>
+<tr><th id="269">269</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_DOODAD_UL_UNIVERSEGLOBE01" title='UlduarGameObjects::GO_DOODAD_UL_UNIVERSEGLOBE01' data-ref="UlduarGameObjects::GO_DOODAD_UL_UNIVERSEGLOBE01" >GO_DOODAD_UL_UNIVERSEGLOBE01</dfn>            = <var>194148</var>,</td></tr>
+<tr><th id="270">270</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_DOODAD_UL_ULDUAR_TRAPDOOR_03" title='UlduarGameObjects::GO_DOODAD_UL_ULDUAR_TRAPDOOR_03' data-ref="UlduarGameObjects::GO_DOODAD_UL_ULDUAR_TRAPDOOR_03" >GO_DOODAD_UL_ULDUAR_TRAPDOOR_03</dfn>         = <var>194253</var>,</td></tr>
+<tr><th id="271">271</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_GIFT_OF_THE_OBSERVER_10" title='UlduarGameObjects::GO_GIFT_OF_THE_OBSERVER_10' data-ref="UlduarGameObjects::GO_GIFT_OF_THE_OBSERVER_10" >GO_GIFT_OF_THE_OBSERVER_10</dfn>              = <var>194821</var>,</td></tr>
+<tr><th id="272">272</th><td>    <dfn class="enum" id="UlduarGameObjects::GO_GIFT_OF_THE_OBSERVER_25" title='UlduarGameObjects::GO_GIFT_OF_THE_OBSERVER_25' data-ref="UlduarGameObjects::GO_GIFT_OF_THE_OBSERVER_25" >GO_GIFT_OF_THE_OBSERVER_25</dfn>              = <var>194822</var>,</td></tr>
+<tr><th id="273">273</th><td>};</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td><b>enum</b> <dfn class="type def" id="EventIds" title='EventIds' data-ref="EventIds" >EventIds</dfn></td></tr>
+<tr><th id="276">276</th><td>{</td></tr>
+<tr><th id="277">277</th><td>    <dfn class="enum" id="EventIds::EVENT_TOWER_OF_STORM_DESTROYED" title='EventIds::EVENT_TOWER_OF_STORM_DESTROYED' data-ref="EventIds::EVENT_TOWER_OF_STORM_DESTROYED" >EVENT_TOWER_OF_STORM_DESTROYED</dfn>      = <var>21031</var>,</td></tr>
+<tr><th id="278">278</th><td>    <dfn class="enum" id="EventIds::EVENT_TOWER_OF_FROST_DESTROYED" title='EventIds::EVENT_TOWER_OF_FROST_DESTROYED' data-ref="EventIds::EVENT_TOWER_OF_FROST_DESTROYED" >EVENT_TOWER_OF_FROST_DESTROYED</dfn>      = <var>21032</var>,</td></tr>
+<tr><th id="279">279</th><td>    <dfn class="enum" id="EventIds::EVENT_TOWER_OF_FLAMES_DESTROYED" title='EventIds::EVENT_TOWER_OF_FLAMES_DESTROYED' data-ref="EventIds::EVENT_TOWER_OF_FLAMES_DESTROYED" >EVENT_TOWER_OF_FLAMES_DESTROYED</dfn>     = <var>21033</var>,</td></tr>
+<tr><th id="280">280</th><td>    <dfn class="enum" id="EventIds::EVENT_TOWER_OF_LIFE_DESTROYED" title='EventIds::EVENT_TOWER_OF_LIFE_DESTROYED' data-ref="EventIds::EVENT_TOWER_OF_LIFE_DESTROYED" >EVENT_TOWER_OF_LIFE_DESTROYED</dfn>       = <var>21030</var>,</td></tr>
+<tr><th id="281">281</th><td>    <dfn class="enum" id="EventIds::EVENT_ACTIVATE_SANITY_WELL" title='EventIds::EVENT_ACTIVATE_SANITY_WELL' data-ref="EventIds::EVENT_ACTIVATE_SANITY_WELL" >EVENT_ACTIVATE_SANITY_WELL</dfn>          = <var>21432</var>,</td></tr>
+<tr><th id="282">282</th><td>    <dfn class="enum" id="EventIds::EVENT_HODIRS_PROTECTIVE_GAZE_PROC" title='EventIds::EVENT_HODIRS_PROTECTIVE_GAZE_PROC' data-ref="EventIds::EVENT_HODIRS_PROTECTIVE_GAZE_PROC" >EVENT_HODIRS_PROTECTIVE_GAZE_PROC</dfn>   = <var>21437</var>,</td></tr>
+<tr><th id="283">283</th><td>};</td></tr>
+<tr><th id="284">284</th><td></td></tr>
+<tr><th id="285">285</th><td><b>enum</b> <dfn class="type def" id="LeviathanActions" title='LeviathanActions' data-ref="LeviathanActions" >LeviathanActions</dfn></td></tr>
+<tr><th id="286">286</th><td>{</td></tr>
+<tr><th id="287">287</th><td>    <dfn class="enum" id="LeviathanActions::ACTION_TOWER_OF_STORM_DESTROYED" title='LeviathanActions::ACTION_TOWER_OF_STORM_DESTROYED' data-ref="LeviathanActions::ACTION_TOWER_OF_STORM_DESTROYED" >ACTION_TOWER_OF_STORM_DESTROYED</dfn>     = <var>1</var>,</td></tr>
+<tr><th id="288">288</th><td>    <dfn class="enum" id="LeviathanActions::ACTION_TOWER_OF_FROST_DESTROYED" title='LeviathanActions::ACTION_TOWER_OF_FROST_DESTROYED' data-ref="LeviathanActions::ACTION_TOWER_OF_FROST_DESTROYED" >ACTION_TOWER_OF_FROST_DESTROYED</dfn>     = <var>2</var>,</td></tr>
+<tr><th id="289">289</th><td>    <dfn class="enum" id="LeviathanActions::ACTION_TOWER_OF_FLAMES_DESTROYED" title='LeviathanActions::ACTION_TOWER_OF_FLAMES_DESTROYED' data-ref="LeviathanActions::ACTION_TOWER_OF_FLAMES_DESTROYED" >ACTION_TOWER_OF_FLAMES_DESTROYED</dfn>    = <var>3</var>,</td></tr>
+<tr><th id="290">290</th><td>    <dfn class="enum" id="LeviathanActions::ACTION_TOWER_OF_LIFE_DESTROYED" title='LeviathanActions::ACTION_TOWER_OF_LIFE_DESTROYED' data-ref="LeviathanActions::ACTION_TOWER_OF_LIFE_DESTROYED" >ACTION_TOWER_OF_LIFE_DESTROYED</dfn>      = <var>4</var>,</td></tr>
+<tr><th id="291">291</th><td>    <dfn class="enum" id="LeviathanActions::ACTION_MOVE_TO_CENTER_POSITION" title='LeviathanActions::ACTION_MOVE_TO_CENTER_POSITION' data-ref="LeviathanActions::ACTION_MOVE_TO_CENTER_POSITION" >ACTION_MOVE_TO_CENTER_POSITION</dfn>      = <var>10</var>,</td></tr>
+<tr><th id="292">292</th><td>};</td></tr>
+<tr><th id="293">293</th><td></td></tr>
+<tr><th id="294">294</th><td><b>enum</b> <dfn class="type def" id="UlduarAchievementCriteriaIds" title='UlduarAchievementCriteriaIds' data-ref="UlduarAchievementCriteriaIds" >UlduarAchievementCriteriaIds</dfn></td></tr>
+<tr><th id="295">295</th><td>{</td></tr>
+<tr><th id="296">296</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_CON_SPEED_ATORY" title='UlduarAchievementCriteriaIds::CRITERIA_CON_SPEED_ATORY' data-ref="UlduarAchievementCriteriaIds::CRITERIA_CON_SPEED_ATORY" >CRITERIA_CON_SPEED_ATORY</dfn>                 = <var>21597</var>,</td></tr>
+<tr><th id="297">297</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_LUMBERJACKED" title='UlduarAchievementCriteriaIds::CRITERIA_LUMBERJACKED' data-ref="UlduarAchievementCriteriaIds::CRITERIA_LUMBERJACKED" >CRITERIA_LUMBERJACKED</dfn>                    = <var>21686</var>,</td></tr>
+<tr><th id="298">298</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_DISARMED" title='UlduarAchievementCriteriaIds::CRITERIA_DISARMED' data-ref="UlduarAchievementCriteriaIds::CRITERIA_DISARMED" >CRITERIA_DISARMED</dfn>                        = <var>21687</var>,</td></tr>
+<tr><th id="299">299</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_STORMWIND_25" title='UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_STORMWIND_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_STORMWIND_25" >CRITERIA_WAITS_DREAMING_STORMWIND_25</dfn>     = <var>10321</var>,</td></tr>
+<tr><th id="300">300</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_CHAMBER_25" title='UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_CHAMBER_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_CHAMBER_25" >CRITERIA_WAITS_DREAMING_CHAMBER_25</dfn>       = <var>10322</var>,</td></tr>
+<tr><th id="301">301</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_ICECROWN_25" title='UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_ICECROWN_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_ICECROWN_25" >CRITERIA_WAITS_DREAMING_ICECROWN_25</dfn>      = <var>10323</var>,</td></tr>
+<tr><th id="302">302</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_STORMWIND_10" title='UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_STORMWIND_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_STORMWIND_10" >CRITERIA_WAITS_DREAMING_STORMWIND_10</dfn>     = <var>10324</var>,</td></tr>
+<tr><th id="303">303</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_CHAMBER_10" title='UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_CHAMBER_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_CHAMBER_10" >CRITERIA_WAITS_DREAMING_CHAMBER_10</dfn>       = <var>10325</var>,</td></tr>
+<tr><th id="304">304</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_ICECROWN_10" title='UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_ICECROWN_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_WAITS_DREAMING_ICECROWN_10" >CRITERIA_WAITS_DREAMING_ICECROWN_10</dfn>      = <var>10326</var>,</td></tr>
+<tr><th id="305">305</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_DRIVE_ME_CRAZY_10" title='UlduarAchievementCriteriaIds::CRITERIA_DRIVE_ME_CRAZY_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_DRIVE_ME_CRAZY_10" >CRITERIA_DRIVE_ME_CRAZY_10</dfn>               = <var>10185</var>,</td></tr>
+<tr><th id="306">306</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_DRIVE_ME_CRAZY_25" title='UlduarAchievementCriteriaIds::CRITERIA_DRIVE_ME_CRAZY_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_DRIVE_ME_CRAZY_25" >CRITERIA_DRIVE_ME_CRAZY_25</dfn>               = <var>10296</var>,</td></tr>
+<tr><th id="307">307</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_10" title='UlduarAchievementCriteriaIds::CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_10" >CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_10</dfn> = <var>10410</var>,</td></tr>
+<tr><th id="308">308</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_25" title='UlduarAchievementCriteriaIds::CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_25" >CRITERIA_THREE_LIGHTS_IN_THE_DARKNESS_25</dfn> = <var>10414</var>,</td></tr>
+<tr><th id="309">309</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_10" title='UlduarAchievementCriteriaIds::CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_10" >CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_10</dfn>   = <var>10388</var>,</td></tr>
+<tr><th id="310">310</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_25" title='UlduarAchievementCriteriaIds::CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_25" >CRITERIA_TWO_LIGHTS_IN_THE_DARKNESS_25</dfn>   = <var>10415</var>,</td></tr>
+<tr><th id="311">311</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_10" title='UlduarAchievementCriteriaIds::CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_10" >CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_10</dfn>    = <var>10409</var>,</td></tr>
+<tr><th id="312">312</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_25" title='UlduarAchievementCriteriaIds::CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_25" >CRITERIA_ONE_LIGHT_IN_THE_DARKNESS_25</dfn>    = <var>10416</var>,</td></tr>
+<tr><th id="313">313</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_ALONE_IN_THE_DARKNESS_10" title='UlduarAchievementCriteriaIds::CRITERIA_ALONE_IN_THE_DARKNESS_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_ALONE_IN_THE_DARKNESS_10" >CRITERIA_ALONE_IN_THE_DARKNESS_10</dfn>        = <var>10412</var>,</td></tr>
+<tr><th id="314">314</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_ALONE_IN_THE_DARKNESS_25" title='UlduarAchievementCriteriaIds::CRITERIA_ALONE_IN_THE_DARKNESS_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_ALONE_IN_THE_DARKNESS_25" >CRITERIA_ALONE_IN_THE_DARKNESS_25</dfn>        = <var>10417</var>,</td></tr>
+<tr><th id="315">315</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_HERALD_OF_TITANS" title='UlduarAchievementCriteriaIds::CRITERIA_HERALD_OF_TITANS' data-ref="UlduarAchievementCriteriaIds::CRITERIA_HERALD_OF_TITANS" >CRITERIA_HERALD_OF_TITANS</dfn>                = <var>10678</var>,</td></tr>
+<tr><th id="316">316</th><td></td></tr>
+<tr><th id="317">317</th><td>    <i>// Champion of Ulduar</i></td></tr>
+<tr><th id="318">318</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_LEVIATHAN_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_LEVIATHAN_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_LEVIATHAN_10" >CRITERIA_C_O_U_LEVIATHAN_10</dfn>              = <var>10042</var>,</td></tr>
+<tr><th id="319">319</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IGNIS_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IGNIS_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IGNIS_10" >CRITERIA_C_O_U_IGNIS_10</dfn>                  = <var>10342</var>,</td></tr>
+<tr><th id="320">320</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_RAZORSCALE_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_RAZORSCALE_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_RAZORSCALE_10" >CRITERIA_C_O_U_RAZORSCALE_10</dfn>             = <var>10340</var>,</td></tr>
+<tr><th id="321">321</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_XT002_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_XT002_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_XT002_10" >CRITERIA_C_O_U_XT002_10</dfn>                  = <var>10341</var>,</td></tr>
+<tr><th id="322">322</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IRON_COUNCIL_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IRON_COUNCIL_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IRON_COUNCIL_10" >CRITERIA_C_O_U_IRON_COUNCIL_10</dfn>           = <var>10598</var>,</td></tr>
+<tr><th id="323">323</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_KOLOGARN_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_KOLOGARN_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_KOLOGARN_10" >CRITERIA_C_O_U_KOLOGARN_10</dfn>               = <var>10348</var>,</td></tr>
+<tr><th id="324">324</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_AURIAYA_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_AURIAYA_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_AURIAYA_10" >CRITERIA_C_O_U_AURIAYA_10</dfn>                = <var>10351</var>,</td></tr>
+<tr><th id="325">325</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_HODIR_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_HODIR_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_HODIR_10" >CRITERIA_C_O_U_HODIR_10</dfn>                  = <var>10439</var>,</td></tr>
+<tr><th id="326">326</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_THORIM_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_THORIM_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_THORIM_10" >CRITERIA_C_O_U_THORIM_10</dfn>                 = <var>10403</var>,</td></tr>
+<tr><th id="327">327</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_FREYA_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_FREYA_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_FREYA_10" >CRITERIA_C_O_U_FREYA_10</dfn>                  = <var>10582</var>,</td></tr>
+<tr><th id="328">328</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_MIMIRON_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_MIMIRON_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_MIMIRON_10" >CRITERIA_C_O_U_MIMIRON_10</dfn>                = <var>10347</var>,</td></tr>
+<tr><th id="329">329</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_VEZAX_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_VEZAX_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_VEZAX_10" >CRITERIA_C_O_U_VEZAX_10</dfn>                  = <var>10349</var>,</td></tr>
+<tr><th id="330">330</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_YOGG_SARON_10" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_YOGG_SARON_10' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_YOGG_SARON_10" >CRITERIA_C_O_U_YOGG_SARON_10</dfn>             = <var>10350</var>,</td></tr>
+<tr><th id="331">331</th><td>    <i>// Conqueror of Ulduar</i></td></tr>
+<tr><th id="332">332</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_LEVIATHAN_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_LEVIATHAN_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_LEVIATHAN_25" >CRITERIA_C_O_U_LEVIATHAN_25</dfn>              = <var>10352</var>,</td></tr>
+<tr><th id="333">333</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IGNIS_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IGNIS_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IGNIS_25" >CRITERIA_C_O_U_IGNIS_25</dfn>                  = <var>10355</var>,</td></tr>
+<tr><th id="334">334</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_RAZORSCALE_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_RAZORSCALE_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_RAZORSCALE_25" >CRITERIA_C_O_U_RAZORSCALE_25</dfn>             = <var>10353</var>,</td></tr>
+<tr><th id="335">335</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_XT002_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_XT002_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_XT002_25" >CRITERIA_C_O_U_XT002_25</dfn>                  = <var>10354</var>,</td></tr>
+<tr><th id="336">336</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IRON_COUNCIL_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IRON_COUNCIL_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_IRON_COUNCIL_25" >CRITERIA_C_O_U_IRON_COUNCIL_25</dfn>           = <var>10599</var>,</td></tr>
+<tr><th id="337">337</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_KOLOGARN_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_KOLOGARN_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_KOLOGARN_25" >CRITERIA_C_O_U_KOLOGARN_25</dfn>               = <var>10357</var>,</td></tr>
+<tr><th id="338">338</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_AURIAYA_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_AURIAYA_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_AURIAYA_25" >CRITERIA_C_O_U_AURIAYA_25</dfn>                = <var>10363</var>,</td></tr>
+<tr><th id="339">339</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_HODIR_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_HODIR_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_HODIR_25" >CRITERIA_C_O_U_HODIR_25</dfn>                  = <var>10719</var>,</td></tr>
+<tr><th id="340">340</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_THORIM_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_THORIM_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_THORIM_25" >CRITERIA_C_O_U_THORIM_25</dfn>                 = <var>10404</var>,</td></tr>
+<tr><th id="341">341</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_FREYA_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_FREYA_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_FREYA_25" >CRITERIA_C_O_U_FREYA_25</dfn>                  = <var>10583</var>,</td></tr>
+<tr><th id="342">342</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_MIMIRON_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_MIMIRON_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_MIMIRON_25" >CRITERIA_C_O_U_MIMIRON_25</dfn>                = <var>10361</var>,</td></tr>
+<tr><th id="343">343</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_VEZAX_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_VEZAX_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_VEZAX_25" >CRITERIA_C_O_U_VEZAX_25</dfn>                  = <var>10362</var>,</td></tr>
+<tr><th id="344">344</th><td>    <dfn class="enum" id="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_YOGG_SARON_25" title='UlduarAchievementCriteriaIds::CRITERIA_C_O_U_YOGG_SARON_25' data-ref="UlduarAchievementCriteriaIds::CRITERIA_C_O_U_YOGG_SARON_25" >CRITERIA_C_O_U_YOGG_SARON_25</dfn>             = <var>10364</var></td></tr>
+<tr><th id="345">345</th><td>};</td></tr>
+<tr><th id="346">346</th><td></td></tr>
+<tr><th id="347">347</th><td><b>enum</b> <dfn class="type def" id="UlduarData" title='UlduarData' data-ref="UlduarData" >UlduarData</dfn></td></tr>
+<tr><th id="348">348</th><td>{</td></tr>
+<tr><th id="349">349</th><td>    <i>// Colossus (Leviathan)</i></td></tr>
+<tr><th id="350">350</th><td>    <dfn class="enum" id="UlduarData::DATA_COLOSSUS" title='UlduarData::DATA_COLOSSUS' data-ref="UlduarData::DATA_COLOSSUS" >DATA_COLOSSUS</dfn>                = <var>20</var>,</td></tr>
+<tr><th id="351">351</th><td></td></tr>
+<tr><th id="352">352</th><td>    <i>// Razorscale</i></td></tr>
+<tr><th id="353">353</th><td>    <dfn class="enum" id="UlduarData::DATA_EXPEDITION_COMMANDER" title='UlduarData::DATA_EXPEDITION_COMMANDER' data-ref="UlduarData::DATA_EXPEDITION_COMMANDER" >DATA_EXPEDITION_COMMANDER</dfn>,</td></tr>
+<tr><th id="354">354</th><td>    <dfn class="enum" id="UlduarData::DATA_RAZORSCALE_CONTROL" title='UlduarData::DATA_RAZORSCALE_CONTROL' data-ref="UlduarData::DATA_RAZORSCALE_CONTROL" >DATA_RAZORSCALE_CONTROL</dfn>,</td></tr>
+<tr><th id="355">355</th><td></td></tr>
+<tr><th id="356">356</th><td>    <i>// XT-002</i></td></tr>
+<tr><th id="357">357</th><td>    <dfn class="enum" id="UlduarData::DATA_TOY_PILE_0" title='UlduarData::DATA_TOY_PILE_0' data-ref="UlduarData::DATA_TOY_PILE_0" >DATA_TOY_PILE_0</dfn>,</td></tr>
+<tr><th id="358">358</th><td>    <dfn class="enum" id="UlduarData::DATA_TOY_PILE_1" title='UlduarData::DATA_TOY_PILE_1' data-ref="UlduarData::DATA_TOY_PILE_1" >DATA_TOY_PILE_1</dfn>,</td></tr>
+<tr><th id="359">359</th><td>    <dfn class="enum" id="UlduarData::DATA_TOY_PILE_2" title='UlduarData::DATA_TOY_PILE_2' data-ref="UlduarData::DATA_TOY_PILE_2" >DATA_TOY_PILE_2</dfn>,</td></tr>
+<tr><th id="360">360</th><td>    <dfn class="enum" id="UlduarData::DATA_TOY_PILE_3" title='UlduarData::DATA_TOY_PILE_3' data-ref="UlduarData::DATA_TOY_PILE_3" >DATA_TOY_PILE_3</dfn>,</td></tr>
+<tr><th id="361">361</th><td></td></tr>
+<tr><th id="362">362</th><td>    <i>// Assembly of Iron</i></td></tr>
+<tr><th id="363">363</th><td>    <dfn class="enum" id="UlduarData::DATA_STEELBREAKER" title='UlduarData::DATA_STEELBREAKER' data-ref="UlduarData::DATA_STEELBREAKER" >DATA_STEELBREAKER</dfn>,</td></tr>
+<tr><th id="364">364</th><td>    <dfn class="enum" id="UlduarData::DATA_MOLGEIM" title='UlduarData::DATA_MOLGEIM' data-ref="UlduarData::DATA_MOLGEIM" >DATA_MOLGEIM</dfn>,</td></tr>
+<tr><th id="365">365</th><td>    <dfn class="enum" id="UlduarData::DATA_BRUNDIR" title='UlduarData::DATA_BRUNDIR' data-ref="UlduarData::DATA_BRUNDIR" >DATA_BRUNDIR</dfn>,</td></tr>
+<tr><th id="366">366</th><td></td></tr>
+<tr><th id="367">367</th><td>    <i>// Hodir</i></td></tr>
+<tr><th id="368">368</th><td>    <dfn class="enum" id="UlduarData::DATA_HODIR_RARE_CACHE" title='UlduarData::DATA_HODIR_RARE_CACHE' data-ref="UlduarData::DATA_HODIR_RARE_CACHE" >DATA_HODIR_RARE_CACHE</dfn>,</td></tr>
+<tr><th id="369">369</th><td></td></tr>
+<tr><th id="370">370</th><td>    <i>// Mimiron</i></td></tr>
+<tr><th id="371">371</th><td>    <dfn class="enum" id="UlduarData::DATA_LEVIATHAN_MK_II" title='UlduarData::DATA_LEVIATHAN_MK_II' data-ref="UlduarData::DATA_LEVIATHAN_MK_II" >DATA_LEVIATHAN_MK_II</dfn>,</td></tr>
+<tr><th id="372">372</th><td>    <dfn class="enum" id="UlduarData::DATA_VX_001" title='UlduarData::DATA_VX_001' data-ref="UlduarData::DATA_VX_001" >DATA_VX_001</dfn>,</td></tr>
+<tr><th id="373">373</th><td>    <dfn class="enum" id="UlduarData::DATA_AERIAL_COMMAND_UNIT" title='UlduarData::DATA_AERIAL_COMMAND_UNIT' data-ref="UlduarData::DATA_AERIAL_COMMAND_UNIT" >DATA_AERIAL_COMMAND_UNIT</dfn>,</td></tr>
+<tr><th id="374">374</th><td>    <dfn class="enum" id="UlduarData::DATA_COMPUTER" title='UlduarData::DATA_COMPUTER' data-ref="UlduarData::DATA_COMPUTER" >DATA_COMPUTER</dfn>,</td></tr>
+<tr><th id="375">375</th><td>    <dfn class="enum" id="UlduarData::DATA_MIMIRON_WORLD_TRIGGER" title='UlduarData::DATA_MIMIRON_WORLD_TRIGGER' data-ref="UlduarData::DATA_MIMIRON_WORLD_TRIGGER" >DATA_MIMIRON_WORLD_TRIGGER</dfn>,</td></tr>
+<tr><th id="376">376</th><td>    <dfn class="enum" id="UlduarData::DATA_MIMIRON_ELEVATOR" title='UlduarData::DATA_MIMIRON_ELEVATOR' data-ref="UlduarData::DATA_MIMIRON_ELEVATOR" >DATA_MIMIRON_ELEVATOR</dfn>,</td></tr>
+<tr><th id="377">377</th><td>    <dfn class="enum" id="UlduarData::DATA_MIMIRON_TRAM" title='UlduarData::DATA_MIMIRON_TRAM' data-ref="UlduarData::DATA_MIMIRON_TRAM" >DATA_MIMIRON_TRAM</dfn>,</td></tr>
+<tr><th id="378">378</th><td>    <dfn class="enum" id="UlduarData::DATA_MIMIRON_BUTTON" title='UlduarData::DATA_MIMIRON_BUTTON' data-ref="UlduarData::DATA_MIMIRON_BUTTON" >DATA_MIMIRON_BUTTON</dfn>,</td></tr>
+<tr><th id="379">379</th><td></td></tr>
+<tr><th id="380">380</th><td>    <i>// Yogg-Saron</i></td></tr>
+<tr><th id="381">381</th><td>    <dfn class="enum" id="UlduarData::DATA_VOICE_OF_YOGG_SARON" title='UlduarData::DATA_VOICE_OF_YOGG_SARON' data-ref="UlduarData::DATA_VOICE_OF_YOGG_SARON" >DATA_VOICE_OF_YOGG_SARON</dfn>,</td></tr>
+<tr><th id="382">382</th><td>    <dfn class="enum" id="UlduarData::DATA_SARA" title='UlduarData::DATA_SARA' data-ref="UlduarData::DATA_SARA" >DATA_SARA</dfn>,</td></tr>
+<tr><th id="383">383</th><td>    <dfn class="enum" id="UlduarData::DATA_BRAIN_OF_YOGG_SARON" title='UlduarData::DATA_BRAIN_OF_YOGG_SARON' data-ref="UlduarData::DATA_BRAIN_OF_YOGG_SARON" >DATA_BRAIN_OF_YOGG_SARON</dfn>,</td></tr>
+<tr><th id="384">384</th><td>    <dfn class="enum" id="UlduarData::DATA_FREYA_YS" title='UlduarData::DATA_FREYA_YS' data-ref="UlduarData::DATA_FREYA_YS" >DATA_FREYA_YS</dfn>,</td></tr>
+<tr><th id="385">385</th><td>    <dfn class="enum" id="UlduarData::DATA_HODIR_YS" title='UlduarData::DATA_HODIR_YS' data-ref="UlduarData::DATA_HODIR_YS" >DATA_HODIR_YS</dfn>,</td></tr>
+<tr><th id="386">386</th><td>    <dfn class="enum" id="UlduarData::DATA_THORIM_YS" title='UlduarData::DATA_THORIM_YS' data-ref="UlduarData::DATA_THORIM_YS" >DATA_THORIM_YS</dfn>,</td></tr>
+<tr><th id="387">387</th><td>    <dfn class="enum" id="UlduarData::DATA_MIMIRON_YS" title='UlduarData::DATA_MIMIRON_YS' data-ref="UlduarData::DATA_MIMIRON_YS" >DATA_MIMIRON_YS</dfn>,</td></tr>
+<tr><th id="388">388</th><td>    <dfn class="enum" id="UlduarData::DATA_ILLUSION" title='UlduarData::DATA_ILLUSION' data-ref="UlduarData::DATA_ILLUSION" >DATA_ILLUSION</dfn>,</td></tr>
+<tr><th id="389">389</th><td>    <dfn class="enum" id="UlduarData::DATA_DRIVE_ME_CRAZY" title='UlduarData::DATA_DRIVE_ME_CRAZY' data-ref="UlduarData::DATA_DRIVE_ME_CRAZY" >DATA_DRIVE_ME_CRAZY</dfn>,</td></tr>
+<tr><th id="390">390</th><td>    <dfn class="enum" id="UlduarData::DATA_KEEPERS_COUNT" title='UlduarData::DATA_KEEPERS_COUNT' data-ref="UlduarData::DATA_KEEPERS_COUNT" >DATA_KEEPERS_COUNT</dfn>,</td></tr>
+<tr><th id="391">391</th><td></td></tr>
+<tr><th id="392">392</th><td>    <i>// Algalon the Observer</i></td></tr>
+<tr><th id="393">393</th><td>    <dfn class="enum" id="UlduarData::DATA_ALGALON_SUMMON_STATE" title='UlduarData::DATA_ALGALON_SUMMON_STATE' data-ref="UlduarData::DATA_ALGALON_SUMMON_STATE" >DATA_ALGALON_SUMMON_STATE</dfn>,</td></tr>
+<tr><th id="394">394</th><td>    <dfn class="enum" id="UlduarData::DATA_SIGILDOOR_01" title='UlduarData::DATA_SIGILDOOR_01' data-ref="UlduarData::DATA_SIGILDOOR_01" >DATA_SIGILDOOR_01</dfn>,</td></tr>
+<tr><th id="395">395</th><td>    <dfn class="enum" id="UlduarData::DATA_SIGILDOOR_02" title='UlduarData::DATA_SIGILDOOR_02' data-ref="UlduarData::DATA_SIGILDOOR_02" >DATA_SIGILDOOR_02</dfn>,</td></tr>
+<tr><th id="396">396</th><td>    <dfn class="enum" id="UlduarData::DATA_SIGILDOOR_03" title='UlduarData::DATA_SIGILDOOR_03' data-ref="UlduarData::DATA_SIGILDOOR_03" >DATA_SIGILDOOR_03</dfn>,</td></tr>
+<tr><th id="397">397</th><td>    <dfn class="enum" id="UlduarData::DATA_UNIVERSE_FLOOR_01" title='UlduarData::DATA_UNIVERSE_FLOOR_01' data-ref="UlduarData::DATA_UNIVERSE_FLOOR_01" >DATA_UNIVERSE_FLOOR_01</dfn>,</td></tr>
+<tr><th id="398">398</th><td>    <dfn class="enum" id="UlduarData::DATA_UNIVERSE_FLOOR_02" title='UlduarData::DATA_UNIVERSE_FLOOR_02' data-ref="UlduarData::DATA_UNIVERSE_FLOOR_02" >DATA_UNIVERSE_FLOOR_02</dfn>,</td></tr>
+<tr><th id="399">399</th><td>    <dfn class="enum" id="UlduarData::DATA_UNIVERSE_GLOBE" title='UlduarData::DATA_UNIVERSE_GLOBE' data-ref="UlduarData::DATA_UNIVERSE_GLOBE" >DATA_UNIVERSE_GLOBE</dfn>,</td></tr>
+<tr><th id="400">400</th><td>    <dfn class="enum" id="UlduarData::DATA_ALGALON_TRAPDOOR" title='UlduarData::DATA_ALGALON_TRAPDOOR' data-ref="UlduarData::DATA_ALGALON_TRAPDOOR" >DATA_ALGALON_TRAPDOOR</dfn>,</td></tr>
+<tr><th id="401">401</th><td>    <dfn class="enum" id="UlduarData::DATA_BRANN_BRONZEBEARD_ALG" title='UlduarData::DATA_BRANN_BRONZEBEARD_ALG' data-ref="UlduarData::DATA_BRANN_BRONZEBEARD_ALG" >DATA_BRANN_BRONZEBEARD_ALG</dfn>,</td></tr>
+<tr><th id="402">402</th><td></td></tr>
+<tr><th id="403">403</th><td>    <i>// Misc</i></td></tr>
+<tr><th id="404">404</th><td>    <dfn class="enum" id="UlduarData::DATA_BRANN_BRONZEBEARD_INTRO" title='UlduarData::DATA_BRANN_BRONZEBEARD_INTRO' data-ref="UlduarData::DATA_BRANN_BRONZEBEARD_INTRO" >DATA_BRANN_BRONZEBEARD_INTRO</dfn>,</td></tr>
+<tr><th id="405">405</th><td>    <dfn class="enum" id="UlduarData::DATA_LORE_KEEPER_OF_NORGANNON" title='UlduarData::DATA_LORE_KEEPER_OF_NORGANNON' data-ref="UlduarData::DATA_LORE_KEEPER_OF_NORGANNON" >DATA_LORE_KEEPER_OF_NORGANNON</dfn>,</td></tr>
+<tr><th id="406">406</th><td>    <dfn class="enum" id="UlduarData::DATA_DELLORAH" title='UlduarData::DATA_DELLORAH' data-ref="UlduarData::DATA_DELLORAH" >DATA_DELLORAH</dfn>,</td></tr>
+<tr><th id="407">407</th><td>    <dfn class="enum" id="UlduarData::DATA_BRONZEBEARD_RADIO" title='UlduarData::DATA_BRONZEBEARD_RADIO' data-ref="UlduarData::DATA_BRONZEBEARD_RADIO" >DATA_BRONZEBEARD_RADIO</dfn></td></tr>
+<tr><th id="408">408</th><td>};</td></tr>
+<tr><th id="409">409</th><td></td></tr>
+<tr><th id="410">410</th><td><b>enum</b> <dfn class="type def" id="UlduarWorldStates" title='UlduarWorldStates' data-ref="UlduarWorldStates" >UlduarWorldStates</dfn></td></tr>
+<tr><th id="411">411</th><td>{</td></tr>
+<tr><th id="412">412</th><td>    <dfn class="enum" id="UlduarWorldStates::WORLD_STATE_ALGALON_DESPAWN_TIMER" title='UlduarWorldStates::WORLD_STATE_ALGALON_DESPAWN_TIMER' data-ref="UlduarWorldStates::WORLD_STATE_ALGALON_DESPAWN_TIMER" >WORLD_STATE_ALGALON_DESPAWN_TIMER</dfn>   = <var>4131</var>,</td></tr>
+<tr><th id="413">413</th><td>    <dfn class="enum" id="UlduarWorldStates::WORLD_STATE_ALGALON_TIMER_ENABLED" title='UlduarWorldStates::WORLD_STATE_ALGALON_TIMER_ENABLED' data-ref="UlduarWorldStates::WORLD_STATE_ALGALON_TIMER_ENABLED" >WORLD_STATE_ALGALON_TIMER_ENABLED</dfn>   = <var>4132</var>,</td></tr>
+<tr><th id="414">414</th><td>};</td></tr>
+<tr><th id="415">415</th><td></td></tr>
+<tr><th id="416">416</th><td><b>enum</b> <dfn class="type def" id="UlduarAchievementData" title='UlduarAchievementData' data-ref="UlduarAchievementData" >UlduarAchievementData</dfn></td></tr>
+<tr><th id="417">417</th><td>{</td></tr>
+<tr><th id="418">418</th><td>    <i>// FL Achievement boolean</i></td></tr>
+<tr><th id="419">419</th><td>    <dfn class="enum" id="UlduarAchievementData::DATA_UNBROKEN" title='UlduarAchievementData::DATA_UNBROKEN' data-ref="UlduarAchievementData::DATA_UNBROKEN" >DATA_UNBROKEN</dfn> = <var>29052906</var>, <i>// 2905, 2906 are achievement IDs,</i></td></tr>
+<tr><th id="420">420</th><td>    <dfn class="enum" id="UlduarAchievementData::MAX_HERALD_ARMOR_ITEMLEVEL" title='UlduarAchievementData::MAX_HERALD_ARMOR_ITEMLEVEL' data-ref="UlduarAchievementData::MAX_HERALD_ARMOR_ITEMLEVEL" >MAX_HERALD_ARMOR_ITEMLEVEL</dfn>  = <var>226</var>,</td></tr>
+<tr><th id="421">421</th><td>    <dfn class="enum" id="UlduarAchievementData::MAX_HERALD_WEAPON_ITEMLEVEL" title='UlduarAchievementData::MAX_HERALD_WEAPON_ITEMLEVEL' data-ref="UlduarAchievementData::MAX_HERALD_WEAPON_ITEMLEVEL" >MAX_HERALD_WEAPON_ITEMLEVEL</dfn> = <var>232</var>,</td></tr>
+<tr><th id="422">422</th><td>    <dfn class="enum" id="UlduarAchievementData::SPELL_LUMBERJACKED_CREDIT" title='UlduarAchievementData::SPELL_LUMBERJACKED_CREDIT' data-ref="UlduarAchievementData::SPELL_LUMBERJACKED_CREDIT" >SPELL_LUMBERJACKED_CREDIT</dfn> = <var>65296</var></td></tr>
+<tr><th id="423">423</th><td>};</td></tr>
+<tr><th id="424">424</th><td></td></tr>
+<tr><th id="425">425</th><td><b>enum</b> <dfn class="type def" id="UlduarEvents" title='UlduarEvents' data-ref="UlduarEvents" >UlduarEvents</dfn></td></tr>
+<tr><th id="426">426</th><td>{</td></tr>
+<tr><th id="427">427</th><td>    <dfn class="enum" id="UlduarEvents::EVENT_DESPAWN_ALGALON" title='UlduarEvents::EVENT_DESPAWN_ALGALON' data-ref="UlduarEvents::EVENT_DESPAWN_ALGALON" >EVENT_DESPAWN_ALGALON</dfn>       = <var>1</var>,</td></tr>
+<tr><th id="428">428</th><td>    <dfn class="enum" id="UlduarEvents::EVENT_UPDATE_ALGALON_TIMER" title='UlduarEvents::EVENT_UPDATE_ALGALON_TIMER' data-ref="UlduarEvents::EVENT_UPDATE_ALGALON_TIMER" >EVENT_UPDATE_ALGALON_TIMER</dfn>  = <var>2</var>,</td></tr>
+<tr><th id="429">429</th><td>    <dfn class="enum" id="UlduarEvents::ACTION_INIT_ALGALON" title='UlduarEvents::ACTION_INIT_ALGALON' data-ref="UlduarEvents::ACTION_INIT_ALGALON" >ACTION_INIT_ALGALON</dfn>         = <var>6</var>,</td></tr>
+<tr><th id="430">430</th><td>    <dfn class="enum" id="UlduarEvents::EVENT_DESPAWN_LEVIATHAN_VEHICLES" title='UlduarEvents::EVENT_DESPAWN_LEVIATHAN_VEHICLES' data-ref="UlduarEvents::EVENT_DESPAWN_LEVIATHAN_VEHICLES" >EVENT_DESPAWN_LEVIATHAN_VEHICLES</dfn> = <var>7</var></td></tr>
+<tr><th id="431">431</th><td>};</td></tr>
+<tr><th id="432">432</th><td></td></tr>
+<tr><th id="433">433</th><td><b>enum</b> <dfn class="type def" id="YoggSaronIllusions" title='YoggSaronIllusions' data-ref="YoggSaronIllusions" >YoggSaronIllusions</dfn></td></tr>
+<tr><th id="434">434</th><td>{</td></tr>
+<tr><th id="435">435</th><td>    <dfn class="enum" id="YoggSaronIllusions::CHAMBER_ILLUSION" title='YoggSaronIllusions::CHAMBER_ILLUSION' data-ref="YoggSaronIllusions::CHAMBER_ILLUSION" >CHAMBER_ILLUSION</dfn>            = <var>0</var>,</td></tr>
+<tr><th id="436">436</th><td>    <dfn class="enum" id="YoggSaronIllusions::ICECROWN_ILLUSION" title='YoggSaronIllusions::ICECROWN_ILLUSION' data-ref="YoggSaronIllusions::ICECROWN_ILLUSION" >ICECROWN_ILLUSION</dfn>           = <var>1</var>,</td></tr>
+<tr><th id="437">437</th><td>    <dfn class="enum" id="YoggSaronIllusions::STORMWIND_ILLUSION" title='YoggSaronIllusions::STORMWIND_ILLUSION' data-ref="YoggSaronIllusions::STORMWIND_ILLUSION" >STORMWIND_ILLUSION</dfn>          = <var>2</var>,</td></tr>
+<tr><th id="438">438</th><td>};</td></tr>
+<tr><th id="439">439</th><td></td></tr>
+<tr><th id="440">440</th><td><b>template</b>&lt;<b>class</b> AI, <b>class</b> T&gt;</td></tr>
+<tr><th id="441">441</th><td>AI* <dfn class="decl def" id="_Z11GetUlduarAIPT0_" title='GetUlduarAI' data-ref="_Z11GetUlduarAIPT0_" >GetUlduarAI</dfn>(T* <dfn class="local col1 decl" id="1obj" title='obj' data-type='T *' data-ref="1obj" >obj</dfn>)</td></tr>
+<tr><th id="442">442</th><td>{</td></tr>
+<tr><th id="443">443</th><td>    <b>return</b> GetInstanceAI&lt;AI, T&gt;(<a class="local col1 ref" href="#1obj" title='obj' data-ref="1obj" >obj</a>, <a class="macro" href="#21" title="&quot;instance_ulduar&quot;" data-ref="_M/UlduarScriptName">UlduarScriptName</a>);</td></tr>
+<tr><th id="444">444</th><td>}</td></tr>
+<tr><th id="445">445</th><td></td></tr>
+<tr><th id="446">446</th><td><b>class</b> <dfn class="type def" id="PlayerOrPetCheck" title='PlayerOrPetCheck' data-ref="PlayerOrPetCheck" >PlayerOrPetCheck</dfn></td></tr>
+<tr><th id="447">447</th><td>{</td></tr>
+<tr><th id="448">448</th><td>    <b>public</b>:</td></tr>
+<tr><th id="449">449</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK16PlayerOrPetCheckclEP11WorldObject" title='PlayerOrPetCheck::operator()' data-ref="_ZNK16PlayerOrPetCheckclEP11WorldObject" ><b>operator</b>()</dfn>(<a class="type" href="../../../../game/Entities/Object/Object.h.html#WorldObject" title='WorldObject' data-ref="WorldObject" >WorldObject</a>* <dfn class="local col2 decl" id="2object" title='object' data-type='WorldObject *' data-ref="2object" >object</dfn>) <em>const</em></td></tr>
+<tr><th id="450">450</th><td>        {</td></tr>
+<tr><th id="451">451</th><td>            <b>if</b> (<a class="local col2 ref" href="#2object" title='object' data-ref="2object" >object</a>-&gt;<a class="ref" href="../../../../game/Entities/Object/Object.h.html#_ZNK6Object9GetTypeIdEv" title='Object::GetTypeId' data-ref="_ZNK6Object9GetTypeIdEv" id="_ZNK6Object9GetTypeIdEv" >GetTypeId</a>() == <a class="enum" href="../../../../game/Entities/Object/ObjectGuid.h.html#TypeID::TYPEID_PLAYER" title='TypeID::TYPEID_PLAYER' data-ref="TypeID::TYPEID_PLAYER" id="TypeID::TYPEID_PLAYER" >TYPEID_PLAYER</a>)</td></tr>
+<tr><th id="452">452</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="453">453</th><td></td></tr>
+<tr><th id="454">454</th><td>            <b>if</b> (<a class="type" href="../../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col3 decl" id="3creature" title='creature' data-type='Creature *' data-ref="3creature" ><a class="local col3 ref" href="#3creature" title='creature' data-ref="3creature" >creature</a></dfn> = <a class="local col2 ref" href="#2object" title='object' data-ref="2object" >object</a>-&gt;<a class="ref" href="../../../../game/Entities/Object/Object.h.html#_ZN6Object10ToCreatureEv" title='Object::ToCreature' data-ref="_ZN6Object10ToCreatureEv" id="_ZN6Object10ToCreatureEv" >ToCreature</a>())</td></tr>
+<tr><th id="455">455</th><td>                <b>return</b> !<a class="local col3 ref" href="#3creature" title='creature' data-ref="3creature" >creature</a>-&gt;<a class="ref" href="../../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit5IsPetEv" title='Unit::IsPet' data-ref="_ZNK4Unit5IsPetEv" id="_ZNK4Unit5IsPetEv" >IsPet</a>();</td></tr>
+<tr><th id="456">456</th><td></td></tr>
+<tr><th id="457">457</th><td>            <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="458">458</th><td>        }</td></tr>
+<tr><th id="459">459</th><td>};</td></tr>
+<tr><th id="460">460</th><td></td></tr>
+<tr><th id="461">461</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="462">462</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='boss_algalon_the_observer.cpp.html'>TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

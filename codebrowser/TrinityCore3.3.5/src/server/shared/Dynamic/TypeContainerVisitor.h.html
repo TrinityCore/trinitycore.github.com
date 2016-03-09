@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+<title>TypeContainerVisitor.h [TrinityCore3.3.5/src/server/shared/Dynamic/TypeContainerVisitor.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/shared/Dynamic/TypeContainerVisitor.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>shared</a>/<a href='./'>Dynamic</a>/TypeContainerVisitor.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_TYPECONTAINERVISITOR_H">TRINITY_TYPECONTAINERVISITOR_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_TYPECONTAINERVISITOR_H" data-ref="_M/TRINITY_TYPECONTAINERVISITOR_H">TRINITY_TYPECONTAINERVISITOR_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i>/*</i></td></tr>
+<tr><th id="23">23</th><td><i> * @class TypeContainerVisitor is implemented as a visitor pattern.  It is</i></td></tr>
+<tr><th id="24">24</th><td><i> * a visitor to the TypeContainerList or TypeContainerMapList.  The visitor has</i></td></tr>
+<tr><th id="25">25</th><td><i> * to overload its types as a visit method is called.</i></td></tr>
+<tr><th id="26">26</th><td><i> */</i></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../../../common/Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="TypeContainer.h.html">"Dynamic/TypeContainer.h"</a></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><i>// forward declaration</i></td></tr>
+<tr><th id="32">32</th><td><b>template</b>&lt;<b>class</b> T, <b>class</b> Y&gt; <b>class</b> <a class="type" href="#TypeContainerVisitor" title='TypeContainerVisitor' data-ref="TypeContainerVisitor" >TypeContainerVisitor</a>;</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><i>// visitor helper</i></td></tr>
+<tr><th id="35">35</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> TYPE_CONTAINER&gt; <em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_RT0_" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_RT0_" >VisitorHelper</dfn>(VISITOR &amp;<dfn class="local col5 decl" id="275v" title='v' data-type='VISITOR &amp;' data-ref="275v" >v</dfn>, TYPE_CONTAINER &amp;<dfn class="local col6 decl" id="276c" title='c' data-type='TYPE_CONTAINER &amp;' data-ref="276c" >c</dfn>)</td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td>    <a class="local col5 ref" href="#275v" title='v' data-ref="275v" >v</a>.Visit(<a class="local col6 ref" href="#276c" title='c' data-ref="276c" >c</a>);</td></tr>
+<tr><th id="38">38</th><td>}</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><i>// terminate condition container map list</i></td></tr>
+<tr><th id="41">41</th><td><b>template</b>&lt;<b>class</b> VISITOR&gt; <em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R16ContainerMapListI8TypeNullE" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R16ContainerMapListI8TypeNullE" >VisitorHelper</dfn>(VISITOR &amp;<i>/*v*/</i>, <a class="type" href="TypeContainer.h.html#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;<a class="type" href="TypeList.h.html#TypeNull" title='TypeNull' data-ref="TypeNull" >TypeNull</a>&gt; &amp;<i>/*c*/</i>) { }</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> T&gt; <em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R16ContainerMapListIT0_E" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R16ContainerMapListIT0_E" >VisitorHelper</dfn>(VISITOR &amp;<dfn class="local col7 decl" id="277v" title='v' data-type='VISITOR &amp;' data-ref="277v" >v</dfn>, <a class="type" href="TypeContainer.h.html#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;T&gt; &amp;<dfn class="local col8 decl" id="278c" title='c' data-type='ContainerMapList&lt;T&gt; &amp;' data-ref="278c" >c</dfn>)</td></tr>
+<tr><th id="44">44</th><td>{</td></tr>
+<tr><th id="45">45</th><td>    <a class="local col7 ref" href="#277v" title='v' data-ref="277v" >v</a>.Visit(<a class="local col8 ref" href="#278c" title='c' data-ref="278c" >c</a>._element);</td></tr>
+<tr><th id="46">46</th><td>}</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><i>// recursion container map list</i></td></tr>
+<tr><th id="49">49</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> H, <b>class</b> T&gt; <em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R16ContainerMapListI8TypeListIT0_T1_EE" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R16ContainerMapListI8TypeListIT0_T1_EE" >VisitorHelper</dfn>(VISITOR &amp;<dfn class="local col9 decl" id="279v" title='v' data-type='VISITOR &amp;' data-ref="279v" >v</dfn>, <a class="type" href="TypeContainer.h.html#ContainerMapList" title='ContainerMapList' data-ref="ContainerMapList" >ContainerMapList</a>&lt;<a class="type" href="TypeList.h.html#TypeList" title='TypeList' data-ref="TypeList" >TypeList</a>&lt;H, T&gt; &gt; &amp;<dfn class="local col0 decl" id="280c" title='c' data-type='ContainerMapList&lt;TypeList&lt;H, T&gt; &gt; &amp;' data-ref="280c" >c</dfn>)</td></tr>
+<tr><th id="50">50</th><td>{</td></tr>
+<tr><th id="51">51</th><td>    VisitorHelper(<a class="local col9 ref" href="#279v" title='v' data-ref="279v" >v</a>, <a class="local col0 ref" href="#280c" title='c' data-ref="280c" >c</a>._elements);</td></tr>
+<tr><th id="52">52</th><td>    VisitorHelper(<a class="local col9 ref" href="#279v" title='v' data-ref="279v" >v</a>, <a class="local col0 ref" href="#280c" title='c' data-ref="280c" >c</a>._TailElements);</td></tr>
+<tr><th id="53">53</th><td>}</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><i>// for TypeMapContainer</i></td></tr>
+<tr><th id="56">56</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> OBJECT_TYPES&gt; <em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R16TypeMapContainerIT0_E" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R16TypeMapContainerIT0_E" >VisitorHelper</dfn>(VISITOR &amp;<dfn class="local col1 decl" id="281v" title='v' data-type='VISITOR &amp;' data-ref="281v" >v</dfn>, <a class="type" href="TypeContainer.h.html#TypeMapContainer" title='TypeMapContainer' data-ref="TypeMapContainer" >TypeMapContainer</a>&lt;OBJECT_TYPES&gt; &amp;<dfn class="local col2 decl" id="282c" title='c' data-type='TypeMapContainer&lt;OBJECT_TYPES&gt; &amp;' data-ref="282c" >c</dfn>)</td></tr>
+<tr><th id="57">57</th><td>{</td></tr>
+<tr><th id="58">58</th><td>    VisitorHelper(<a class="local col1 ref" href="#281v" title='v' data-ref="281v" >v</a>, <a class="local col2 ref" href="#282c" title='c' data-ref="282c" >c</a>.GetElements());</td></tr>
+<tr><th id="59">59</th><td>}</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><i>// TypeUnorderedMapContainer</i></td></tr>
+<tr><th id="62">62</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> KEY_TYPE&gt;</td></tr>
+<tr><th id="63">63</th><td><em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R21ContainerUnorderedMapI8TypeNullT0_E" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R21ContainerUnorderedMapI8TypeNullT0_E" >VisitorHelper</dfn>(VISITOR&amp; <i>/*v*/</i>, <a class="type" href="TypeContainer.h.html#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;<a class="type" href="TypeList.h.html#TypeNull" title='TypeNull' data-ref="TypeNull" >TypeNull</a>, KEY_TYPE&gt;&amp; <i>/*c*/</i>) { }</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> KEY_TYPE, <b>class</b> T&gt;</td></tr>
+<tr><th id="66">66</th><td><em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R21ContainerUnorderedMapIT1_T0_E" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R21ContainerUnorderedMapIT1_T0_E" >VisitorHelper</dfn>(VISITOR&amp; <dfn class="local col3 decl" id="283v" title='v' data-type='VISITOR &amp;' data-ref="283v" >v</dfn>, <a class="type" href="TypeContainer.h.html#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;T, KEY_TYPE&gt;&amp; <dfn class="local col4 decl" id="284c" title='c' data-type='ContainerUnorderedMap&lt;T, KEY_TYPE&gt; &amp;' data-ref="284c" >c</dfn>)</td></tr>
+<tr><th id="67">67</th><td>{</td></tr>
+<tr><th id="68">68</th><td>    <a class="local col3 ref" href="#283v" title='v' data-ref="283v" >v</a>.Visit(<a class="local col4 ref" href="#284c" title='c' data-ref="284c" >c</a>._element);</td></tr>
+<tr><th id="69">69</th><td>}</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> KEY_TYPE, <b>class</b> H, <b>class</b> T&gt;</td></tr>
+<tr><th id="72">72</th><td><em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R21ContainerUnorderedMapI8TypeListIT1_T2_ET0_E" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R21ContainerUnorderedMapI8TypeListIT1_T2_ET0_E" >VisitorHelper</dfn>(VISITOR&amp; <dfn class="local col5 decl" id="285v" title='v' data-type='VISITOR &amp;' data-ref="285v" >v</dfn>, <a class="type" href="TypeContainer.h.html#ContainerUnorderedMap" title='ContainerUnorderedMap' data-ref="ContainerUnorderedMap" >ContainerUnorderedMap</a>&lt;<a class="type" href="TypeList.h.html#TypeList" title='TypeList' data-ref="TypeList" >TypeList</a>&lt;H, T&gt;, KEY_TYPE&gt;&amp; <dfn class="local col6 decl" id="286c" title='c' data-type='ContainerUnorderedMap&lt;TypeList&lt;H, T&gt;, KEY_TYPE&gt; &amp;' data-ref="286c" >c</dfn>)</td></tr>
+<tr><th id="73">73</th><td>{</td></tr>
+<tr><th id="74">74</th><td>    VisitorHelper(<a class="local col5 ref" href="#285v" title='v' data-ref="285v" >v</a>, <a class="local col6 ref" href="#286c" title='c' data-ref="286c" >c</a>._elements);</td></tr>
+<tr><th id="75">75</th><td>    VisitorHelper(<a class="local col5 ref" href="#285v" title='v' data-ref="285v" >v</a>, <a class="local col6 ref" href="#286c" title='c' data-ref="286c" >c</a>._TailElements);</td></tr>
+<tr><th id="76">76</th><td>}</td></tr>
+<tr><th id="77">77</th><td></td></tr>
+<tr><th id="78">78</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> OBJECT_TYPES, <b>class</b> KEY_TYPE&gt;</td></tr>
+<tr><th id="79">79</th><td><em>void</em> <dfn class="decl def" id="_Z13VisitorHelperRT_R25TypeUnorderedMapContainerIT0_T1_E" title='VisitorHelper' data-ref="_Z13VisitorHelperRT_R25TypeUnorderedMapContainerIT0_T1_E" >VisitorHelper</dfn>(VISITOR&amp; <dfn class="local col7 decl" id="287v" title='v' data-type='VISITOR &amp;' data-ref="287v" >v</dfn>, <a class="type" href="TypeContainer.h.html#TypeUnorderedMapContainer" title='TypeUnorderedMapContainer' data-ref="TypeUnorderedMapContainer" >TypeUnorderedMapContainer</a>&lt;OBJECT_TYPES, KEY_TYPE&gt;&amp; <dfn class="local col8 decl" id="288c" title='c' data-type='TypeUnorderedMapContainer&lt;OBJECT_TYPES, KEY_TYPE&gt; &amp;' data-ref="288c" >c</dfn>)</td></tr>
+<tr><th id="80">80</th><td>{</td></tr>
+<tr><th id="81">81</th><td>    VisitorHelper(<a class="local col7 ref" href="#287v" title='v' data-ref="287v" >v</a>, <a class="local col8 ref" href="#288c" title='c' data-ref="288c" >c</a>.GetElements());</td></tr>
+<tr><th id="82">82</th><td>}</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><b>template</b>&lt;<b>class</b> VISITOR, <b>class</b> TYPE_CONTAINER&gt;</td></tr>
+<tr><th id="85">85</th><td><b>class</b> <dfn class="type def" id="TypeContainerVisitor" title='TypeContainerVisitor' data-ref="TypeContainerVisitor" >TypeContainerVisitor</dfn></td></tr>
+<tr><th id="86">86</th><td>{</td></tr>
+<tr><th id="87">87</th><td>    <b>public</b>:</td></tr>
+<tr><th id="88">88</th><td>        <dfn class="decl def" id="_ZN20TypeContainerVisitorC1ERT_" title='TypeContainerVisitor::TypeContainerVisitor&lt;T, Y&gt;' data-ref="_ZN20TypeContainerVisitorC1ERT_" >TypeContainerVisitor</dfn>(VISITOR &amp;<dfn class="local col9 decl" id="289v" title='v' data-type='VISITOR &amp;' data-ref="289v" >v</dfn>) : <a class="member" href="#TypeContainerVisitor::i_visitor" title='TypeContainerVisitor::i_visitor' data-ref="TypeContainerVisitor::i_visitor" >i_visitor</a>(<a class="local col9 ref" href="#289v" title='v' data-ref="289v" >v</a>) { }</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>        <em>void</em> <dfn class="decl def" id="_ZN20TypeContainerVisitor5VisitERT0_" title='TypeContainerVisitor::Visit' data-ref="_ZN20TypeContainerVisitor5VisitERT0_" >Visit</dfn>(TYPE_CONTAINER &amp;<dfn class="local col0 decl" id="290c" title='c' data-type='TYPE_CONTAINER &amp;' data-ref="290c" >c</dfn>)</td></tr>
+<tr><th id="91">91</th><td>        {</td></tr>
+<tr><th id="92">92</th><td>            VisitorHelper(<a class="member" href="#TypeContainerVisitor::i_visitor" title='TypeContainerVisitor::i_visitor' data-ref="TypeContainerVisitor::i_visitor" >i_visitor</a>, <a class="local col0 ref" href="#290c" title='c' data-ref="290c" >c</a>);</td></tr>
+<tr><th id="93">93</th><td>        }</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>        <em>void</em> <dfn class="decl def" id="_ZNK20TypeContainerVisitor5VisitERKT0_" title='TypeContainerVisitor::Visit' data-ref="_ZNK20TypeContainerVisitor5VisitERKT0_" >Visit</dfn>(<em>const</em> TYPE_CONTAINER &amp;<dfn class="local col1 decl" id="291c" title='c' data-type='const TYPE_CONTAINER &amp;' data-ref="291c" >c</dfn>) <em>const</em></td></tr>
+<tr><th id="96">96</th><td>        {</td></tr>
+<tr><th id="97">97</th><td>            VisitorHelper(<a class="member" href="#TypeContainerVisitor::i_visitor" title='TypeContainerVisitor::i_visitor' data-ref="TypeContainerVisitor::i_visitor" >i_visitor</a>, <a class="local col1 ref" href="#291c" title='c' data-ref="291c" >c</a>);</td></tr>
+<tr><th id="98">98</th><td>        }</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>    <b>private</b>:</td></tr>
+<tr><th id="101">101</th><td>        VISITOR &amp;<dfn class="decl" id="TypeContainerVisitor::i_visitor" title='TypeContainerVisitor::i_visitor' data-ref="TypeContainerVisitor::i_visitor" >i_visitor</dfn>;</td></tr>
+<tr><th id="102">102</th><td>};</td></tr>
+<tr><th id="103">103</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../game/AI/CoreAI/CombatAI.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

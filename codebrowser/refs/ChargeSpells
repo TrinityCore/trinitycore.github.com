@@ -1,0 +1,64 @@
+<def f='TrinityCore3.3.5/src/server/scripts/Spells/spell_generic.cpp' l='2038'/>
+<doc f='TrinityCore3.3.5/src/server/scripts/Spells/spell_generic.cpp' l='2006'>/* DOCUMENTATION: Charge spells
+    Charge spells can be classified in four groups:
+
+        - Spells on vehicle bar used by players:
+            + EFFECT_0: SCRIPT_EFFECT
+            + EFFECT_1: TRIGGER_SPELL
+            + EFFECT_2: NONE
+        - Spells cast by player&apos;s mounts triggered by script:
+            + EFFECT_0: CHARGE
+            + EFFECT_1: TRIGGER_SPELL
+            + EFFECT_2: APPLY_AURA
+        - Spells cast by players on the target triggered by script:
+            + EFFECT_0: SCHOOL_DAMAGE
+            + EFFECT_1: SCRIPT_EFFECT
+            + EFFECT_2: NONE
+        - Spells cast by NPCs on players:
+            + EFFECT_0: SCHOOL_DAMAGE
+            + EFFECT_1: CHARGE
+            + EFFECT_2: SCRIPT_EFFECT
+
+    In the following script we handle the SCRIPT_EFFECT and CHARGE
+        - When handling SCRIPT_EFFECT:
+            + EFFECT_0: Corresponds to &quot;Spells on vehicle bar used by players&quot; and we make player&apos;s mount cast
+              the charge effect on the current target (&quot;Spells cast by player&apos;s mounts triggered by script&quot;).
+            + EFFECT_1 and EFFECT_2: Triggered when &quot;Spells cast by player&apos;s mounts triggered by script&quot; hits target,
+              corresponding to &quot;Spells cast by players on the target triggered by script&quot; and &quot;Spells cast by
+              NPCs on players&quot; and we check Defend layers and drop a charge of the first found.
+        - When handling CHARGE:
+            + Only launched for &quot;Spells cast by player&apos;s mounts triggered by script&quot;, makes the player cast the
+              damaging spell on target with a small chance of failing it.
+*/</doc>
+<def f='TrinityCore6.x/src/server/scripts/Spells/spell_generic.cpp' l='1878'/>
+<doc f='TrinityCore6.x/src/server/scripts/Spells/spell_generic.cpp' l='1846'>/* DOCUMENTATION: Charge spells
+    Charge spells can be classified in four groups:
+
+        - Spells on vehicle bar used by players:
+            + EFFECT_0: SCRIPT_EFFECT
+            + EFFECT_1: TRIGGER_SPELL
+            + EFFECT_2: NONE
+        - Spells cast by player&apos;s mounts triggered by script:
+            + EFFECT_0: CHARGE
+            + EFFECT_1: TRIGGER_SPELL
+            + EFFECT_2: APPLY_AURA
+        - Spells cast by players on the target triggered by script:
+            + EFFECT_0: SCHOOL_DAMAGE
+            + EFFECT_1: SCRIPT_EFFECT
+            + EFFECT_2: NONE
+        - Spells cast by NPCs on players:
+            + EFFECT_0: SCHOOL_DAMAGE
+            + EFFECT_1: CHARGE
+            + EFFECT_2: SCRIPT_EFFECT
+
+    In the following script we handle the SCRIPT_EFFECT and CHARGE
+        - When handling SCRIPT_EFFECT:
+            + EFFECT_0: Corresponds to &quot;Spells on vehicle bar used by players&quot; and we make player&apos;s mount cast
+              the charge effect on the current target (&quot;Spells cast by player&apos;s mounts triggered by script&quot;).
+            + EFFECT_1 and EFFECT_2: Triggered when &quot;Spells cast by player&apos;s mounts triggered by script&quot; hits target,
+              corresponding to &quot;Spells cast by players on the target triggered by script&quot; and &quot;Spells cast by
+              NPCs on players&quot; and we check Defend layers and drop a charge of the first found.
+        - When handling CHARGE:
+            + Only launched for &quot;Spells cast by player&apos;s mounts triggered by script&quot;, makes the player cast the
+              damaging spell on target with a small chance of failing it.
+*/</doc>

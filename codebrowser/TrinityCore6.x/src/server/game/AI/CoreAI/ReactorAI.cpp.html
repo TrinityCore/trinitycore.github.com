@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+<title>ReactorAI.cpp [TrinityCore6.x/src/server/game/AI/CoreAI/ReactorAI.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/AI/CoreAI/ReactorAI.cpp'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>AI</a>/<a href='./'>CoreAI</a>/ReactorAI.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../../../shared/Packets/ByteBuffer.h.html">"ByteBuffer.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="ReactorAI.h.html">"ReactorAI.h"</a></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><em>int</em> <a class="type" href="ReactorAI.h.html#ReactorAI" title='ReactorAI' data-ref="ReactorAI" >ReactorAI</a>::<dfn class="decl def" id="_ZN9ReactorAI11PermissibleEPK8Creature" title='ReactorAI::Permissible' data-ref="_ZN9ReactorAI11PermissibleEPK8Creature" >Permissible</dfn>(<em>const</em> <a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col3 decl" id="3creature" title='creature' data-type='const Creature *' data-ref="3creature" >creature</dfn>)</td></tr>
+<tr><th id="23">23</th><td>{</td></tr>
+<tr><th id="24">24</th><td>    <b>if</b> (<a class="local col3 ref" href="#3creature" title='creature' data-ref="3creature" >creature</a>-&gt;<a class="ref" href="../../Entities/Creature/Creature.h.html#_ZNK8Creature10IsCivilianEv" title='Creature::IsCivilian' data-ref="_ZNK8Creature10IsCivilianEv" id="_ZNK8Creature10IsCivilianEv" >IsCivilian</a>() || <a class="local col3 ref" href="#3creature" title='creature' data-ref="3creature" >creature</a>-&gt;<a class="ref" href="../../Entities/Unit/Unit.h.html#_ZNK4Unit14IsNeutralToAllEv" title='Unit::IsNeutralToAll' data-ref="_ZNK4Unit14IsNeutralToAllEv" id="_ZNK4Unit14IsNeutralToAllEv" >IsNeutralToAll</a>())</td></tr>
+<tr><th id="25">25</th><td>        <b>return</b> <a class="enum" href="../CreatureAI.h.html#Permitions::PERMIT_BASE_REACTIVE" title='Permitions::PERMIT_BASE_REACTIVE' data-ref="Permitions::PERMIT_BASE_REACTIVE" id="Permitions::PERMIT_BASE_REACTIVE" >PERMIT_BASE_REACTIVE</a>;</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td>    <b>return</b> <a class="enum" href="../CreatureAI.h.html#Permitions::PERMIT_BASE_NO" title='Permitions::PERMIT_BASE_NO' data-ref="Permitions::PERMIT_BASE_NO" id="Permitions::PERMIT_BASE_NO" >PERMIT_BASE_NO</a>;</td></tr>
+<tr><th id="28">28</th><td>}</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><em>void</em> <a class="type" href="ReactorAI.h.html#ReactorAI" title='ReactorAI' data-ref="ReactorAI" >ReactorAI</a>::<dfn class="virtual decl def" id="_ZN9ReactorAI8UpdateAIEj" title='ReactorAI::UpdateAI' data-ref="_ZN9ReactorAI8UpdateAIEj" >UpdateAI</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <i>/*diff*/</i>)</td></tr>
+<tr><th id="31">31</th><td>{</td></tr>
+<tr><th id="32">32</th><td>    <b>if</b> (!<a class="member" href="../CreatureAI.h.html#_ZN10CreatureAI12UpdateVictimEv" title='CreatureAI::UpdateVictim' data-ref="_ZN10CreatureAI12UpdateVictimEv" id="_ZN10CreatureAI12UpdateVictimEv" >UpdateVictim</a>())</td></tr>
+<tr><th id="33">33</th><td>        <b>return</b>;</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>    <a class="member" href="UnitAI.h.html#_ZN6UnitAI20DoMeleeAttackIfReadyEv" title='UnitAI::DoMeleeAttackIfReady' data-ref="_ZN6UnitAI20DoMeleeAttackIfReadyEv" id="_ZN6UnitAI20DoMeleeAttackIfReadyEv" >DoMeleeAttackIfReady</a>();</td></tr>
+<tr><th id="36">36</th><td>}</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<title>filtered.hpp [include/boost/range/adaptor/filtered.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/range/adaptor/filtered.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>range</a>/<a href='./'>adaptor</a>/filtered.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// Boost.Range library</i></td></tr>
+<tr><th id="2">2</th><td><i>//</i></td></tr>
+<tr><th id="3">3</th><td><i>//  Copyright Thorsten Ottosen, Neil Groves 2006 - 2008. Use, modification and</i></td></tr>
+<tr><th id="4">4</th><td><i>//  distribution is subject to the Boost Software License, Version</i></td></tr>
+<tr><th id="5">5</th><td><i>//  1.0. (See accompanying file LICENSE_1_0.txt or copy at</i></td></tr>
+<tr><th id="6">6</th><td><i>//  <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="7">7</th><td><i>//</i></td></tr>
+<tr><th id="8">8</th><td><i>// For more information, see <a href="http://www.boost.org/libs/range/">http://www.boost.org/libs/range/</a></i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifndef</span> <span class="macro" data-ref="_M/BOOST_RANGE_ADAPTOR_FILTERED_HPP">BOOST_RANGE_ADAPTOR_FILTERED_HPP</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#define <dfn class="macro" id="_M/BOOST_RANGE_ADAPTOR_FILTERED_HPP" data-ref="_M/BOOST_RANGE_ADAPTOR_FILTERED_HPP">BOOST_RANGE_ADAPTOR_FILTERED_HPP</dfn></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="argument_fwd.hpp.html">&lt;boost/range/adaptor/argument_fwd.hpp&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="../iterator_range.hpp.html">&lt;boost/range/iterator_range.hpp&gt;</a></u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="../../iterator/filter_iterator.hpp.html">&lt;boost/iterator/filter_iterator.hpp&gt;</a></u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><b>namespace</b> <span class="namespace">boost</span></td></tr>
+<tr><th id="19">19</th><td>{</td></tr>
+<tr><th id="20">20</th><td>    <b>namespace</b> <span class="namespace">range_detail</span></td></tr>
+<tr><th id="21">21</th><td>    {</td></tr>
+<tr><th id="22">22</th><td>        <b>template</b>&lt; <b>class</b> P, <b>class</b> R &gt;</td></tr>
+<tr><th id="23">23</th><td>        <b>struct</b> <dfn class="type def" id="boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</dfn> :</td></tr>
+<tr><th id="24">24</th><td>            <span class="namespace">boost::</span><a class="type" href="../iterator_range_core.hpp.html#boost::iterator_range" title='boost::iterator_range' data-ref="boost::iterator_range" >iterator_range</a>&lt;</td></tr>
+<tr><th id="25">25</th><td>                <span class="namespace">boost::</span><a class="type" href="../../iterator/filter_iterator.hpp.html#boost::filter_iterator" title='boost::filter_iterator' data-ref="boost::filter_iterator" >filter_iterator</a>&lt; P,</td></tr>
+<tr><th id="26">26</th><td>                    <a class="macro" href="../../config/suffix.hpp.html#465" title="typename" data-ref="_M/BOOST_DEDUCED_TYPENAME">BOOST_DEDUCED_TYPENAME</a> <a class="type" href="../iterator.hpp.html#boost::range_iterator" title='boost::range_iterator' data-ref="boost::range_iterator" >range_iterator</a>&lt;R&gt;::type</td></tr>
+<tr><th id="27">27</th><td>                &gt;</td></tr>
+<tr><th id="28">28</th><td>            &gt;</td></tr>
+<tr><th id="29">29</th><td>        {</td></tr>
+<tr><th id="30">30</th><td>        <b>private</b>:</td></tr>
+<tr><th id="31">31</th><td>            <b>typedef</b> <span class="namespace">boost::</span><a class="type" href="../iterator_range_core.hpp.html#boost::iterator_range" title='boost::iterator_range' data-ref="boost::iterator_range" >iterator_range</a>&lt;</td></tr>
+<tr><th id="32">32</th><td>                        <span class="namespace">boost::</span><a class="type" href="../../iterator/filter_iterator.hpp.html#boost::filter_iterator" title='boost::filter_iterator' data-ref="boost::filter_iterator" >filter_iterator</a>&lt; P,</td></tr>
+<tr><th id="33">33</th><td>                            <a class="macro" href="../../config/suffix.hpp.html#465" title="typename" data-ref="_M/BOOST_DEDUCED_TYPENAME">BOOST_DEDUCED_TYPENAME</a> <a class="type" href="../iterator.hpp.html#boost::range_iterator" title='boost::range_iterator' data-ref="boost::range_iterator" >range_iterator</a>&lt;R&gt;::type</td></tr>
+<tr><th id="34">34</th><td>                        &gt;</td></tr>
+<tr><th id="35">35</th><td>                    &gt; <dfn class="typedef" id="boost::range_detail::filtered_range::base" title='boost::range_detail::filtered_range::base' data-type='boost::iterator_range&lt;boost::filter_iterator&lt;P, typename range_iterator&lt;R&gt;::type&gt; &gt;' data-ref="boost::range_detail::filtered_range::base" >base</dfn>;</td></tr>
+<tr><th id="36">36</th><td>        <b>public</b>:</td></tr>
+<tr><th id="37">37</th><td>            <dfn class="decl def" id="_ZN5boost12range_detail14filtered_rangeC1ET_RT0_" title='boost::range_detail::filtered_range::filtered_range&lt;P, R&gt;' data-ref="_ZN5boost12range_detail14filtered_rangeC1ET_RT0_" >filtered_range</dfn>( P <dfn class="local col6 decl" id="1346p" title='p' data-type='P' data-ref="1346p" >p</dfn>, R&amp; <dfn class="local col7 decl" id="1347r" title='r' data-type='R &amp;' data-ref="1347r" >r</dfn> )</td></tr>
+<tr><th id="38">38</th><td>            : <a class="typedef" href="#boost::range_detail::filtered_range::base" title='boost::range_detail::filtered_range::base' data-type='boost::iterator_range&lt;boost::filter_iterator&lt;P, typename range_iterator&lt;R&gt;::type&gt; &gt;' data-ref="boost::range_detail::filtered_range::base" >base</a>( make_filter_iterator( <a class="local col6 ref" href="#1346p" title='p' data-ref="1346p" >p</a>, <span class="namespace">boost::</span>begin(<a class="local col7 ref" href="#1347r" title='r' data-ref="1347r" >r</a>), <span class="namespace">boost::</span>end(<a class="local col7 ref" href="#1347r" title='r' data-ref="1347r" >r</a>) ),</td></tr>
+<tr><th id="39">39</th><td>                    make_filter_iterator( <a class="local col6 ref" href="#1346p" title='p' data-ref="1346p" >p</a>, <span class="namespace">boost::</span>end(<a class="local col7 ref" href="#1347r" title='r' data-ref="1347r" >r</a>), <span class="namespace">boost::</span>end(<a class="local col7 ref" href="#1347r" title='r' data-ref="1347r" >r</a>) ) )</td></tr>
+<tr><th id="40">40</th><td>            { }</td></tr>
+<tr><th id="41">41</th><td>        };</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>        <b>template</b>&lt; <b>class</b> T &gt;</td></tr>
+<tr><th id="44">44</th><td>        <b>struct</b> <dfn class="type def" id="boost::range_detail::filter_holder" title='boost::range_detail::filter_holder' data-ref="boost::range_detail::filter_holder" >filter_holder</dfn> : <a class="type" href="argument_fwd.hpp.html#boost::range_detail::holder" title='boost::range_detail::holder' data-ref="boost::range_detail::holder" >holder</a>&lt;T&gt;</td></tr>
+<tr><th id="45">45</th><td>        {</td></tr>
+<tr><th id="46">46</th><td>            <dfn class="decl def" id="_ZN5boost12range_detail13filter_holderC1ET_" title='boost::range_detail::filter_holder::filter_holder&lt;T&gt;' data-ref="_ZN5boost12range_detail13filter_holderC1ET_" >filter_holder</dfn>( T <dfn class="local col8 decl" id="1348r" title='r' data-type='T' data-ref="1348r" >r</dfn> ) : <a class="type" href="argument_fwd.hpp.html#boost::range_detail::holder" title='boost::range_detail::holder' data-ref="boost::range_detail::holder" >holder</a>&lt;T&gt;(<a class="local col8 ref" href="#1348r" title='r' data-ref="1348r" >r</a>)</td></tr>
+<tr><th id="47">47</th><td>            { }</td></tr>
+<tr><th id="48">48</th><td>        };</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>        <b>template</b>&lt; <b>class</b> InputRng, <b>class</b> Predicate &gt;</td></tr>
+<tr><th id="51">51</th><td>        <b>inline</b> <a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, InputRng&gt;</td></tr>
+<tr><th id="52">52</th><td>        <dfn class="decl def" id="_ZN5boost12range_detailorERT_RKNS0_13filter_holderIT0_EE" title='boost::range_detail::operator|' data-ref="_ZN5boost12range_detailorERT_RKNS0_13filter_holderIT0_EE" ><b>operator</b>|</dfn>( InputRng&amp; <dfn class="local col9 decl" id="1349r" title='r' data-type='InputRng &amp;' data-ref="1349r" >r</dfn>,</td></tr>
+<tr><th id="53">53</th><td>                   <em>const</em> <a class="type" href="#boost::range_detail::filter_holder" title='boost::range_detail::filter_holder' data-ref="boost::range_detail::filter_holder" >filter_holder</a>&lt;Predicate&gt;&amp; <dfn class="local col0 decl" id="1350f" title='f' data-type='const filter_holder&lt;Predicate&gt; &amp;' data-ref="1350f" >f</dfn> )</td></tr>
+<tr><th id="54">54</th><td>        {</td></tr>
+<tr><th id="55">55</th><td>            <b>return</b> <a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, InputRng&gt;( <a class="local col0 ref" href="#1350f" title='f' data-ref="1350f" >f</a>.val, <a class="local col9 ref" href="#1349r" title='r' data-ref="1349r" >r</a> );</td></tr>
+<tr><th id="56">56</th><td>        }</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>        <b>template</b>&lt; <b>class</b> InputRng, <b>class</b> Predicate &gt;</td></tr>
+<tr><th id="59">59</th><td>        <b>inline</b> <a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, <em>const</em> InputRng&gt;</td></tr>
+<tr><th id="60">60</th><td>        <dfn class="decl def" id="_ZN5boost12range_detailorERKT_RKNS0_13filter_holderIT0_EE" title='boost::range_detail::operator|' data-ref="_ZN5boost12range_detailorERKT_RKNS0_13filter_holderIT0_EE" ><b>operator</b>|</dfn>( <em>const</em> InputRng&amp; <dfn class="local col1 decl" id="1351r" title='r' data-type='const InputRng &amp;' data-ref="1351r" >r</dfn>,</td></tr>
+<tr><th id="61">61</th><td>                   <em>const</em> <a class="type" href="#boost::range_detail::filter_holder" title='boost::range_detail::filter_holder' data-ref="boost::range_detail::filter_holder" >filter_holder</a>&lt;Predicate&gt;&amp; <dfn class="local col2 decl" id="1352f" title='f' data-type='const filter_holder&lt;Predicate&gt; &amp;' data-ref="1352f" >f</dfn> )</td></tr>
+<tr><th id="62">62</th><td>        {</td></tr>
+<tr><th id="63">63</th><td>            <b>return</b> <a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, <em>const</em> InputRng&gt;( <a class="local col2 ref" href="#1352f" title='f' data-ref="1352f" >f</a>.val, <a class="local col1 ref" href="#1351r" title='r' data-ref="1351r" >r</a> );</td></tr>
+<tr><th id="64">64</th><td>        }</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    } <i>// 'range_detail'</i></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <i>// Unusual use of 'using' is intended to bring filter_range into the boost namespace</i></td></tr>
+<tr><th id="69">69</th><td><i>    // while leaving the mechanics of the '|' operator in range_detail and maintain</i></td></tr>
+<tr><th id="70">70</th><td><i>    // argument dependent lookup.</i></td></tr>
+<tr><th id="71">71</th><td><i>    // filter_range logically needs to be in the boost namespace to allow user of</i></td></tr>
+<tr><th id="72">72</th><td><i>    // the library to define the return type for filter()</i></td></tr>
+<tr><th id="73">73</th><td>    <b>using</b> <span class="namespace">range_detail::</span>filtered_range;</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>    <b>namespace</b> <span class="namespace">adaptors</span></td></tr>
+<tr><th id="76">76</th><td>    {</td></tr>
+<tr><th id="77">77</th><td>        <b>namespace</b></td></tr>
+<tr><th id="78">78</th><td>        {</td></tr>
+<tr><th id="79">79</th><td>            <em>const</em> <span class="namespace">range_detail::</span><a class="type" href="argument_fwd.hpp.html#boost::range_detail::forwarder" title='boost::range_detail::forwarder' data-ref="boost::range_detail::forwarder" >forwarder</a>&lt;<span class="namespace">range_detail::</span>filter_holder&gt;</td></tr>
+<tr><th id="80">80</th><td>                    <dfn class="decl def" id="_ZN5boost8adaptors12_GLOBAL__N_1L8filteredE" title='boost::adaptors::(anonymous namespace)::filtered' data-ref="_ZN5boost8adaptors12_GLOBAL__N_1L8filteredE" >filtered</dfn> =</td></tr>
+<tr><th id="81">81</th><td>                       <span class="namespace">range_detail::</span><a class="type" href="argument_fwd.hpp.html#boost::range_detail::forwarder" title='boost::range_detail::forwarder' data-ref="boost::range_detail::forwarder" >forwarder</a>&lt;<span class="namespace">range_detail::</span>filter_holder&gt;<a class="ref" href="argument_fwd.hpp.html#_ZN5boost12range_detail9forwarderINS0_13filter_holderEEC1Ev" title='boost::range_detail::forwarder&lt;range_detail::filter_holder&gt;::forwarder' data-ref="_ZN5boost12range_detail9forwarderINS0_13filter_holderEEC1Ev" id="_ZN5boost12range_detail9forwarderINS0_13filter_holderEEC1Ev" >(</a>);</td></tr>
+<tr><th id="82">82</th><td>        }</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>        <b>template</b>&lt;<b>class</b> InputRange, <b>class</b> Predicate&gt;</td></tr>
+<tr><th id="85">85</th><td>        <b>inline</b> <a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, InputRange&gt;</td></tr>
+<tr><th id="86">86</th><td>        <dfn class="decl def" id="_ZN5boost8adaptors6filterERT_T0_" title='boost::adaptors::filter' data-ref="_ZN5boost8adaptors6filterERT_T0_" >filter</dfn>(InputRange&amp; <dfn class="local col3 decl" id="1353rng" title='rng' data-type='InputRange &amp;' data-ref="1353rng" >rng</dfn>, Predicate <dfn class="local col4 decl" id="1354filter_pred" title='filter_pred' data-type='Predicate' data-ref="1354filter_pred" >filter_pred</dfn>)</td></tr>
+<tr><th id="87">87</th><td>        {</td></tr>
+<tr><th id="88">88</th><td>            <b>return</b> <span class="namespace">range_detail::</span><a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, InputRange&gt;( <a class="local col4 ref" href="#1354filter_pred" title='filter_pred' data-ref="1354filter_pred" >filter_pred</a>, <a class="local col3 ref" href="#1353rng" title='rng' data-ref="1353rng" >rng</a> );</td></tr>
+<tr><th id="89">89</th><td>        }</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>        <b>template</b>&lt;<b>class</b> InputRange, <b>class</b> Predicate&gt;</td></tr>
+<tr><th id="92">92</th><td>        <b>inline</b> <a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, <em>const</em> InputRange&gt;</td></tr>
+<tr><th id="93">93</th><td>        <dfn class="decl def" id="_ZN5boost8adaptors6filterERKT_T0_" title='boost::adaptors::filter' data-ref="_ZN5boost8adaptors6filterERKT_T0_" >filter</dfn>(<em>const</em> InputRange&amp; <dfn class="local col5 decl" id="1355rng" title='rng' data-type='const InputRange &amp;' data-ref="1355rng" >rng</dfn>, Predicate <dfn class="local col6 decl" id="1356filter_pred" title='filter_pred' data-type='Predicate' data-ref="1356filter_pred" >filter_pred</dfn>)</td></tr>
+<tr><th id="94">94</th><td>        {</td></tr>
+<tr><th id="95">95</th><td>            <b>return</b> <span class="namespace">range_detail::</span><a class="type" href="#boost::range_detail::filtered_range" title='boost::range_detail::filtered_range' data-ref="boost::range_detail::filtered_range" >filtered_range</a>&lt;Predicate, <em>const</em> InputRange&gt;( <a class="local col6 ref" href="#1356filter_pred" title='filter_pred' data-ref="1356filter_pred" >filter_pred</a>, <a class="local col5 ref" href="#1355rng" title='rng' data-ref="1355rng" >rng</a> );</td></tr>
+<tr><th id="96">96</th><td>        }</td></tr>
+<tr><th id="97">97</th><td>    } <i>// 'adaptors'</i></td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>}</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><u>#<span data-ppcond="11">endif</span></u></td></tr>
+<tr><th id="102">102</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp.html'>TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

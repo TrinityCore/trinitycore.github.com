@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<title>SplineImpl.h [TrinityCore3.3.5/src/server/game/Movement/Spline/SplineImpl.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Movement/Spline/SplineImpl.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>Movement</a>/<a href='./'>Spline</a>/SplineImpl.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="5">5</th><td><i> * it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="6">6</th><td><i> * the Free Software Foundation; either version 2 of the License, or</i></td></tr>
+<tr><th id="7">7</th><td><i> * (at your option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="10">10</th><td><i> * but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="11">11</th><td><i> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="12">12</th><td><i> * GNU General Public License for more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="15">15</th><td><i> * along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="16">16</th><td><i> * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>namespace</b> <span class="namespace">Movement</span></td></tr>
+<tr><th id="20">20</th><td>{</td></tr>
+<tr><th id="21">21</th><td><b>template</b>&lt;<b>typename</b> length_type&gt; <em>void</em> <a class="type" href="Spline.h.html#Movement::Spline" title='Movement::Spline' data-ref="Movement::Spline" >Spline</a>&lt;length_type&gt;::<dfn class="decl def" id="_ZNK8Movement6Spline16evaluate_percentEfRN3G3D7Vector3E" title='Movement::Spline::evaluate_percent' data-ref="_ZNK8Movement6Spline16evaluate_percentEfRN3G3D7Vector3E" >evaluate_percent</dfn>( <em>float</em> <dfn class="local col3 decl" id="213t" title='t' data-type='float' data-ref="213t" >t</dfn>, <a class="type" href="../../../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a> &amp; <dfn class="local col4 decl" id="214c" title='c' data-type='G3D::Vector3 &amp;' data-ref="214c" >c</dfn> ) <em>const</em></td></tr>
+<tr><th id="22">22</th><td>{</td></tr>
+<tr><th id="23">23</th><td>    <a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a> <dfn class="local col5 decl" id="215Index" title='Index' data-type='index_type' data-ref="215Index" >Index</dfn>;</td></tr>
+<tr><th id="24">24</th><td>    <em>float</em> <dfn class="local col6 decl" id="216u" title='u' data-type='float' data-ref="216u" >u</dfn>;</td></tr>
+<tr><th id="25">25</th><td>    <a class="member" href="#_ZNK8Movement6Spline12computeIndexEfRiRf" title='Movement::Spline::computeIndex' data-ref="_ZNK8Movement6Spline12computeIndexEfRiRf" >computeIndex</a>(<a class="local col3 ref" href="#213t" title='t' data-ref="213t" >t</a>, <a class="local col5 ref" href="#215Index" title='Index' data-ref="215Index" >Index</a>, <a class="local col6 ref" href="#216u" title='u' data-ref="216u" >u</a>);</td></tr>
+<tr><th id="26">26</th><td>    evaluate_percent(<a class="local col5 ref" href="#215Index" title='Index' data-ref="215Index" >Index</a>, <a class="local col6 ref" href="#216u" title='u' data-ref="216u" >u</a>, <a class="local col4 ref" href="#214c" title='c' data-ref="214c" >c</a>);</td></tr>
+<tr><th id="27">27</th><td>}</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>template</b>&lt;<b>typename</b> length_type&gt; <em>void</em> <a class="type" href="Spline.h.html#Movement::Spline" title='Movement::Spline' data-ref="Movement::Spline" >Spline</a>&lt;length_type&gt;::<dfn class="decl def" id="_ZNK8Movement6Spline19evaluate_derivativeEfRN3G3D7Vector3E" title='Movement::Spline::evaluate_derivative' data-ref="_ZNK8Movement6Spline19evaluate_derivativeEfRN3G3D7Vector3E" >evaluate_derivative</dfn>(<em>float</em> <dfn class="local col7 decl" id="217t" title='t' data-type='float' data-ref="217t" >t</dfn>, <a class="type" href="../../../../../dep/g3dlite/include/G3D/Vector3.h.html#G3D::Vector3" title='G3D::Vector3' data-ref="G3D::Vector3" >Vector3</a>&amp; <dfn class="local col8 decl" id="218hermite" title='hermite' data-type='G3D::Vector3 &amp;' data-ref="218hermite" >hermite</dfn>) <em>const</em></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a> <dfn class="local col9 decl" id="219Index" title='Index' data-type='index_type' data-ref="219Index" >Index</dfn>;</td></tr>
+<tr><th id="32">32</th><td>    <em>float</em> <dfn class="local col0 decl" id="220u" title='u' data-type='float' data-ref="220u" >u</dfn>;</td></tr>
+<tr><th id="33">33</th><td>    <a class="member" href="#_ZNK8Movement6Spline12computeIndexEfRiRf" title='Movement::Spline::computeIndex' data-ref="_ZNK8Movement6Spline12computeIndexEfRiRf" >computeIndex</a>(<a class="local col7 ref" href="#217t" title='t' data-ref="217t" >t</a>, <a class="local col9 ref" href="#219Index" title='Index' data-ref="219Index" >Index</a>, <a class="local col0 ref" href="#220u" title='u' data-ref="220u" >u</a>);</td></tr>
+<tr><th id="34">34</th><td>    evaluate_derivative(<a class="local col9 ref" href="#219Index" title='Index' data-ref="219Index" >Index</a>, <a class="local col0 ref" href="#220u" title='u' data-ref="220u" >u</a>, <a class="local col8 ref" href="#218hermite" title='hermite' data-ref="218hermite" >hermite</a>);</td></tr>
+<tr><th id="35">35</th><td>}</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>template</b>&lt;<b>typename</b> length_type&gt; <a class="type" href="Spline.h.html#Movement::SplineBase" title='Movement::SplineBase' data-ref="Movement::SplineBase" >SplineBase</a>::<a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a> <a class="type" href="Spline.h.html#Movement::Spline" title='Movement::Spline' data-ref="Movement::Spline" >Spline</a>&lt;length_type&gt;::<dfn class="decl def" id="_ZNK8Movement6Spline20computeIndexInBoundsET_" title='Movement::Spline::computeIndexInBounds' data-ref="_ZNK8Movement6Spline20computeIndexInBoundsET_" >computeIndexInBounds</dfn>(length_type <dfn class="local col1 decl" id="221length_" title='length_' data-type='length_type' data-ref="221length_" >length_</dfn>) <em>const</em></td></tr>
+<tr><th id="38">38</th><td>{</td></tr>
+<tr><th id="39">39</th><td><i>// Temporary disabled: causes infinite loop with t = 1.f</i></td></tr>
+<tr><th id="40">40</th><td><i>/*</i></td></tr>
+<tr><th id="41">41</th><td><i>    index_type hi = index_hi;</i></td></tr>
+<tr><th id="42">42</th><td><i>    index_type lo = index_lo;</i></td></tr>
+<tr><th id="43">43</th><td><i></i></td></tr>
+<tr><th id="44">44</th><td><i>    index_type i = lo + (float)(hi - lo) * t;</i></td></tr>
+<tr><th id="45">45</th><td><i></i></td></tr>
+<tr><th id="46">46</th><td><i>    while ((lengths[i] &gt; length) || (lengths[i + 1] &lt;= length))</i></td></tr>
+<tr><th id="47">47</th><td><i>    {</i></td></tr>
+<tr><th id="48">48</th><td><i>        if (lengths[i] &gt; length)</i></td></tr>
+<tr><th id="49">49</th><td><i>            hi = i - 1; // too big</i></td></tr>
+<tr><th id="50">50</th><td><i>        else if (lengths[i + 1] &lt;= length)</i></td></tr>
+<tr><th id="51">51</th><td><i>            lo = i + 1; // too small</i></td></tr>
+<tr><th id="52">52</th><td><i></i></td></tr>
+<tr><th id="53">53</th><td><i>        i = (hi + lo) / 2;</i></td></tr>
+<tr><th id="54">54</th><td><i>    }*/</i></td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a> <dfn class="local col2 decl" id="222i" title='i' data-type='index_type' data-ref="222i" >i</dfn> = <a class="member" href="Spline.h.html#Movement::SplineBase::index_lo" title='Movement::SplineBase::index_lo' data-ref="Movement::SplineBase::index_lo" id="Movement::SplineBase::index_lo" >index_lo</a>;</td></tr>
+<tr><th id="57">57</th><td>    <a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a> <dfn class="local col3 decl" id="223N" title='N' data-type='index_type' data-ref="223N" >N</dfn> = <a class="member" href="Spline.h.html#Movement::SplineBase::index_hi" title='Movement::SplineBase::index_hi' data-ref="Movement::SplineBase::index_hi" id="Movement::SplineBase::index_hi" >index_hi</a>;</td></tr>
+<tr><th id="58">58</th><td>    <b>while</b> (<a class="local col2 ref" href="#222i" title='i' data-ref="222i" >i</a>+<var>1</var> &lt; <a class="local col3 ref" href="#223N" title='N' data-ref="223N" >N</a> &amp;&amp; <a class="member" href="Spline.h.html#Movement::Spline::lengths" title='Movement::Spline::lengths' data-ref="Movement::Spline::lengths" id="Movement::Spline::lengths" >lengths</a>[<a class="local col2 ref" href="#222i" title='i' data-ref="222i" >i</a>+<var>1</var>] &lt; <a class="local col1 ref" href="#221length_" title='length_' data-ref="221length_" >length_</a>)</td></tr>
+<tr><th id="59">59</th><td>        ++<a class="local col2 ref" href="#222i" title='i' data-ref="222i" >i</a>;</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <b>return</b> <a class="local col2 ref" href="#222i" title='i' data-ref="222i" >i</a>;</td></tr>
+<tr><th id="62">62</th><td>}</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><b>template</b>&lt;<b>typename</b> length_type&gt; <em>void</em> <a class="type" href="Spline.h.html#Movement::Spline" title='Movement::Spline' data-ref="Movement::Spline" >Spline</a>&lt;length_type&gt;::<dfn class="decl def" id="_ZNK8Movement6Spline12computeIndexEfRiRf" title='Movement::Spline::computeIndex' data-ref="_ZNK8Movement6Spline12computeIndexEfRiRf" >computeIndex</dfn>(<em>float</em> <dfn class="local col4 decl" id="224t" title='t' data-type='float' data-ref="224t" >t</dfn>, <a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a>&amp; <dfn class="local col5 decl" id="225index" title='index' data-type='index_type &amp;' data-ref="225index" >index</dfn>, <em>float</em>&amp; <dfn class="local col6 decl" id="226u" title='u' data-type='float &amp;' data-ref="226u" >u</dfn>) <em>const</em></td></tr>
+<tr><th id="65">65</th><td>{</td></tr>
+<tr><th id="66">66</th><td>    <a class="macro" href="../../../../common/Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col4 ref" href="#224t" title='t' data-ref="224t" >t</a> &gt;= <var>0.f</var> &amp;&amp; <a class="local col4 ref" href="#224t" title='t' data-ref="224t" >t</a> &lt;= <var>1.f</var>);</td></tr>
+<tr><th id="67">67</th><td>    length_type <dfn class="local col7 decl" id="227length_" title='length_' data-type='length_type' data-ref="227length_" >length_</dfn> = <a class="local col4 ref" href="#224t" title='t' data-ref="224t" >t</a> * length();</td></tr>
+<tr><th id="68">68</th><td>    <a class="local col5 ref" href="#225index" title='index' data-ref="225index" >index</a> = computeIndexInBounds(<a class="local col7 ref" href="#227length_" title='length_' data-ref="227length_" >length_</a>);</td></tr>
+<tr><th id="69">69</th><td>    <a class="macro" href="../../../../common/Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col5 ref" href="#225index" title='index' data-ref="225index" >index</a> &lt; <a class="member" href="Spline.h.html#Movement::SplineBase::index_hi" title='Movement::SplineBase::index_hi' data-ref="Movement::SplineBase::index_hi" id="Movement::SplineBase::index_hi" >index_hi</a>);</td></tr>
+<tr><th id="70">70</th><td>    <a class="local col6 ref" href="#226u" title='u' data-ref="226u" >u</a> = (<a class="local col7 ref" href="#227length_" title='length_' data-ref="227length_" >length_</a> - length(<a class="local col5 ref" href="#225index" title='index' data-ref="225index" >index</a>)) / (<em>float</em>)length(<a class="local col5 ref" href="#225index" title='index' data-ref="225index" >index</a>, <a class="local col5 ref" href="#225index" title='index' data-ref="225index" >index</a>+<var>1</var>);</td></tr>
+<tr><th id="71">71</th><td>}</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td><b>template</b>&lt;<b>typename</b> length_type&gt; <a class="type" href="Spline.h.html#Movement::SplineBase" title='Movement::SplineBase' data-ref="Movement::SplineBase" >SplineBase</a>::<a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a> <a class="type" href="Spline.h.html#Movement::Spline" title='Movement::Spline' data-ref="Movement::Spline" >Spline</a>&lt;length_type&gt;::<dfn class="decl def" id="_ZNK8Movement6Spline20computeIndexInBoundsEf" title='Movement::Spline::computeIndexInBounds' data-ref="_ZNK8Movement6Spline20computeIndexInBoundsEf" >computeIndexInBounds</dfn>( <em>float</em> <dfn class="local col8 decl" id="228t" title='t' data-type='float' data-ref="228t" >t</dfn> ) <em>const</em></td></tr>
+<tr><th id="74">74</th><td>{</td></tr>
+<tr><th id="75">75</th><td>    <a class="macro" href="../../../../common/Debugging/Errors.h.html#53" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<a class="local col8 ref" href="#228t" title='t' data-ref="228t" >t</a> &gt;= <var>0.f</var> &amp;&amp; <a class="local col8 ref" href="#228t" title='t' data-ref="228t" >t</a> &lt;= <var>1.f</var>);</td></tr>
+<tr><th id="76">76</th><td>    <b>return</b> computeIndexInBounds(<a class="local col8 ref" href="#228t" title='t' data-ref="228t" >t</a> * length());</td></tr>
+<tr><th id="77">77</th><td>}</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td><b>template</b>&lt;<b>typename</b> length_type&gt; <em>void</em> <a class="type" href="Spline.h.html#Movement::Spline" title='Movement::Spline' data-ref="Movement::Spline" >Spline</a>&lt;length_type&gt;::<dfn class="decl def" id="_ZN8Movement6Spline11initLengthsEv" title='Movement::Spline::initLengths' data-ref="_ZN8Movement6Spline11initLengthsEv" >initLengths</dfn>()</td></tr>
+<tr><th id="80">80</th><td>{</td></tr>
+<tr><th id="81">81</th><td>    <a class="typedef" href="Spline.h.html#Movement::SplineBase::index_type" title='Movement::SplineBase::index_type' data-type='int' data-ref="Movement::SplineBase::index_type" >index_type</a> <dfn class="local col9 decl" id="229i" title='i' data-type='index_type' data-ref="229i" >i</dfn> = <a class="member" href="Spline.h.html#Movement::SplineBase::index_lo" title='Movement::SplineBase::index_lo' data-ref="Movement::SplineBase::index_lo" id="Movement::SplineBase::index_lo" >index_lo</a>;</td></tr>
+<tr><th id="82">82</th><td>    length_type <dfn class="local col0 decl" id="230length" title='length' data-type='length_type' data-ref="230length" >length</dfn> = <var>0</var>;</td></tr>
+<tr><th id="83">83</th><td>    <a class="member" href="Spline.h.html#Movement::Spline::lengths" title='Movement::Spline::lengths' data-ref="Movement::Spline::lengths" id="Movement::Spline::lengths" >lengths</a>.resize(<a class="member" href="Spline.h.html#Movement::SplineBase::index_hi" title='Movement::SplineBase::index_hi' data-ref="Movement::SplineBase::index_hi" >index_hi</a>+<var>1</var>);</td></tr>
+<tr><th id="84">84</th><td>    <b>while</b> (<a class="local col9 ref" href="#229i" title='i' data-ref="229i" >i</a> &lt; <a class="member" href="Spline.h.html#Movement::SplineBase::index_hi" title='Movement::SplineBase::index_hi' data-ref="Movement::SplineBase::index_hi" id="Movement::SplineBase::index_hi" >index_hi</a>)</td></tr>
+<tr><th id="85">85</th><td>    {</td></tr>
+<tr><th id="86">86</th><td>        <a class="local col0 ref" href="#230length" title='length' data-ref="230length" >length</a> += <a class="member" href="Spline.h.html#_ZNK8Movement10SplineBase9SegLengthEi" title='Movement::SplineBase::SegLength' data-ref="_ZNK8Movement10SplineBase9SegLengthEi" id="_ZNK8Movement10SplineBase9SegLengthEi" >SegLength</a>(<a class="local col9 ref" href="#229i" title='i' data-ref="229i" >i</a>);</td></tr>
+<tr><th id="87">87</th><td>        <a class="member" href="Spline.h.html#Movement::Spline::lengths" title='Movement::Spline::lengths' data-ref="Movement::Spline::lengths" id="Movement::Spline::lengths" >lengths</a>[++<a class="local col9 ref" href="#229i" title='i' data-ref="229i" >i</a>] = <a class="local col0 ref" href="#230length" title='length' data-ref="230length" >length</a>;</td></tr>
+<tr><th id="88">88</th><td>    }</td></tr>
+<tr><th id="89">89</th><td>}</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><b>template</b>&lt;<b>typename</b> length_type&gt; <em>void</em> <a class="type" href="Spline.h.html#Movement::Spline" title='Movement::Spline' data-ref="Movement::Spline" >Spline</a>&lt;length_type&gt;::<dfn class="decl def" id="_ZN8Movement6Spline5clearEv" title='Movement::Spline::clear' data-ref="_ZN8Movement6Spline5clearEv" >clear</dfn>()</td></tr>
+<tr><th id="92">92</th><td>{</td></tr>
+<tr><th id="93">93</th><td>    <a class="type" href="Spline.h.html#Movement::SplineBase" title='Movement::SplineBase' data-ref="Movement::SplineBase" >SplineBase</a>::<a class="member" href="Spline.h.html#_ZN8Movement10SplineBase5clearEv" title='Movement::SplineBase::clear' data-ref="_ZN8Movement10SplineBase5clearEv" id="_ZN8Movement10SplineBase5clearEv" >clear</a>();</td></tr>
+<tr><th id="94">94</th><td>    <a class="member" href="Spline.h.html#Movement::Spline::lengths" title='Movement::Spline::lengths' data-ref="Movement::Spline::lengths" id="Movement::Spline::lengths" >lengths</a>.clear();</td></tr>
+<tr><th id="95">95</th><td>}</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td>}</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../Battlegrounds/Battleground.cpp.html'>TrinityCore3.3.5/src/server/game/Battlegrounds/Battleground.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

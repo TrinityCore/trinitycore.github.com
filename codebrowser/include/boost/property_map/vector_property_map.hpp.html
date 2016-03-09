@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+<title>vector_property_map.hpp [include/boost/property_map/vector_property_map.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/property_map/vector_property_map.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>property_map</a>/vector_property_map.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// Copyright (C) Vladimir Prus 2003.</i></td></tr>
+<tr><th id="2">2</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See</i></td></tr>
+<tr><th id="3">3</th><td><i>// accompanying file LICENSE_1_0.txt or copy at</i></td></tr>
+<tr><th id="4">4</th><td><i>// <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="5">5</th><td><i>//</i></td></tr>
+<tr><th id="6">6</th><td><i>// See <a href="http://www.boost.org/libs/graph/vector_property_map.html">http://www.boost.org/libs/graph/vector_property_map.html</a> for</i></td></tr>
+<tr><th id="7">7</th><td><i>// documentation.</i></td></tr>
+<tr><th id="8">8</th><td><i>//</i></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#<span data-ppcond="10">ifndef</span> <span class="macro" data-ref="_M/VECTOR_PROPERTY_MAP_HPP_VP_2003_03_04">VECTOR_PROPERTY_MAP_HPP_VP_2003_03_04</span></u></td></tr>
+<tr><th id="11">11</th><td><u>#define <dfn class="macro" id="_M/VECTOR_PROPERTY_MAP_HPP_VP_2003_03_04" data-ref="_M/VECTOR_PROPERTY_MAP_HPP_VP_2003_03_04">VECTOR_PROPERTY_MAP_HPP_VP_2003_03_04</dfn></u></td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><u>#include <a href="property_map.hpp.html">&lt;boost/property_map/property_map.hpp&gt;</a></u></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="../shared_ptr.hpp.html">&lt;boost/shared_ptr.hpp&gt;</a></u></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="../../c++/4.9/vector.html">&lt;vector&gt;</a></u></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="18">18</th><td>    <b>template</b>&lt;<b>typename</b> T, <b>typename</b> IndexMap = <a class="typedef" href="property_map.hpp.html#boost::identity_property_map" title='boost::identity_property_map' data-type='typed_identity_property_map&lt;std::size_t&gt;' data-ref="boost::identity_property_map" >identity_property_map</a>&gt;</td></tr>
+<tr><th id="19">19</th><td>    <b>class</b> <dfn class="type def" id="boost::vector_property_map" title='boost::vector_property_map' data-ref="boost::vector_property_map" >vector_property_map</dfn></td></tr>
+<tr><th id="20">20</th><td>        : <b>public</b> <span class="namespace">boost::</span><a class="type" href="property_map.hpp.html#boost::put_get_helper" title='boost::put_get_helper' data-ref="boost::put_get_helper" >put_get_helper</a>&lt; </td></tr>
+<tr><th id="21">21</th><td>              <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_iterator_base_types.h.html#std::iterator_traits" title='std::iterator_traits' data-ref="std::iterator_traits" >iterator_traits</a>&lt; </td></tr>
+<tr><th id="22">22</th><td>                  <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;::iterator &gt;::reference,</td></tr>
+<tr><th id="23">23</th><td>              <a class="type" href="#boost::vector_property_map" title='boost::vector_property_map' data-ref="boost::vector_property_map" >vector_property_map</a>&lt;T, IndexMap&gt; &gt;</td></tr>
+<tr><th id="24">24</th><td>    {</td></tr>
+<tr><th id="25">25</th><td>    <b>public</b>:</td></tr>
+<tr><th id="26">26</th><td>        <b>typedef</b> <b>typename</b> <a class="type" href="property_map.hpp.html#boost::property_traits" title='boost::property_traits' data-ref="boost::property_traits" >property_traits</a>&lt;IndexMap&gt;::key_type  <dfn class="typedef" id="boost::vector_property_map::key_type" title='boost::vector_property_map::key_type' data-type='typename property_traits&lt;IndexMap&gt;::key_type' data-ref="boost::vector_property_map::key_type" >key_type</dfn>;</td></tr>
+<tr><th id="27">27</th><td>        <b>typedef</b> T <dfn class="typedef" id="boost::vector_property_map::value_type" title='boost::vector_property_map::value_type' data-type='T' data-ref="boost::vector_property_map::value_type" >value_type</dfn>;</td></tr>
+<tr><th id="28">28</th><td>        <b>typedef</b> <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_iterator_base_types.h.html#std::iterator_traits" title='std::iterator_traits' data-ref="std::iterator_traits" >iterator_traits</a>&lt; </td></tr>
+<tr><th id="29">29</th><td>            <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;::iterator &gt;::reference <dfn class="typedef" id="boost::vector_property_map::reference" title='boost::vector_property_map::reference' data-type='typename std::iterator_traits&lt;typename std::vector&lt;T&gt;::iterator&gt;::reference' data-ref="boost::vector_property_map::reference" >reference</dfn>;</td></tr>
+<tr><th id="30">30</th><td>        <b>typedef</b> <span class="namespace">boost::</span><a class="type" href="property_map.hpp.html#boost::lvalue_property_map_tag" title='boost::lvalue_property_map_tag' data-ref="boost::lvalue_property_map_tag" >lvalue_property_map_tag</a> <dfn class="typedef" id="boost::vector_property_map::category" title='boost::vector_property_map::category' data-type='boost::lvalue_property_map_tag' data-ref="boost::vector_property_map::category" >category</dfn>;</td></tr>
+<tr><th id="31">31</th><td>        </td></tr>
+<tr><th id="32">32</th><td>        <dfn class="decl def" id="_ZN5boost19vector_property_mapC1ERKT0_" title='boost::vector_property_map::vector_property_map&lt;T, IndexMap&gt;' data-ref="_ZN5boost19vector_property_mapC1ERKT0_" >vector_property_map</dfn>(<em>const</em> IndexMap&amp; <dfn class="local col3 decl" id="993index" title='index' data-type='const IndexMap &amp;' data-ref="993index" >index</dfn> = IndexMap())</td></tr>
+<tr><th id="33">33</th><td>        : <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>(<b>new</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;()), <a class="member" href="#boost::vector_property_map::index" title='boost::vector_property_map::index' data-ref="boost::vector_property_map::index" >index</a>(<a class="local col3 ref" href="#993index" title='index' data-ref="993index" >index</a>)</td></tr>
+<tr><th id="34">34</th><td>        {}</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>        <dfn class="decl def" id="_ZN5boost19vector_property_mapC1EjRKT0_" title='boost::vector_property_map::vector_property_map&lt;T, IndexMap&gt;' data-ref="_ZN5boost19vector_property_mapC1EjRKT0_" >vector_property_map</dfn>(<em>unsigned</em> <dfn class="local col4 decl" id="994initial_size" title='initial_size' data-type='unsigned int' data-ref="994initial_size" >initial_size</dfn>, </td></tr>
+<tr><th id="37">37</th><td>                            <em>const</em> IndexMap&amp; <dfn class="local col5 decl" id="995index" title='index' data-type='const IndexMap &amp;' data-ref="995index" >index</dfn> = IndexMap())</td></tr>
+<tr><th id="38">38</th><td>        : <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>(<b>new</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;(<a class="local col4 ref" href="#994initial_size" title='initial_size' data-ref="994initial_size" >initial_size</a>)), <a class="member" href="#boost::vector_property_map::index" title='boost::vector_property_map::index' data-ref="boost::vector_property_map::index" >index</a>(<a class="local col5 ref" href="#995index" title='index' data-ref="995index" >index</a>)</td></tr>
+<tr><th id="39">39</th><td>        {}</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td>        <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;::iterator <dfn class="decl def" id="_ZN5boost19vector_property_map13storage_beginEv" title='boost::vector_property_map::storage_begin' data-ref="_ZN5boost19vector_property_map13storage_beginEv" >storage_begin</dfn>()</td></tr>
+<tr><th id="42">42</th><td>        {</td></tr>
+<tr><th id="43">43</th><td>            <b>return</b> <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>-&gt;begin();</td></tr>
+<tr><th id="44">44</th><td>        }</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>        <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;::iterator <dfn class="decl def" id="_ZN5boost19vector_property_map11storage_endEv" title='boost::vector_property_map::storage_end' data-ref="_ZN5boost19vector_property_map11storage_endEv" >storage_end</dfn>()</td></tr>
+<tr><th id="47">47</th><td>        {</td></tr>
+<tr><th id="48">48</th><td>            <b>return</b> <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>-&gt;end();</td></tr>
+<tr><th id="49">49</th><td>        }</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>        <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;::const_iterator <dfn class="decl def" id="_ZNK5boost19vector_property_map13storage_beginEv" title='boost::vector_property_map::storage_begin' data-ref="_ZNK5boost19vector_property_map13storage_beginEv" >storage_begin</dfn>() <em>const</em></td></tr>
+<tr><th id="52">52</th><td>        {</td></tr>
+<tr><th id="53">53</th><td>            <b>return</b> <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>-&gt;begin();</td></tr>
+<tr><th id="54">54</th><td>        }</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>        <b>typename</b> <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt;::const_iterator <dfn class="decl def" id="_ZNK5boost19vector_property_map11storage_endEv" title='boost::vector_property_map::storage_end' data-ref="_ZNK5boost19vector_property_map11storage_endEv" >storage_end</dfn>() <em>const</em></td></tr>
+<tr><th id="57">57</th><td>        {</td></tr>
+<tr><th id="58">58</th><td>            <b>return</b> <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>-&gt;end();</td></tr>
+<tr><th id="59">59</th><td>        }</td></tr>
+<tr><th id="60">60</th><td>                 </td></tr>
+<tr><th id="61">61</th><td>        IndexMap&amp;       <dfn class="decl def" id="_ZN5boost19vector_property_map13get_index_mapEv" title='boost::vector_property_map::get_index_map' data-ref="_ZN5boost19vector_property_map13get_index_mapEv" >get_index_map</dfn>()       { <b>return</b> <a class="member" href="#boost::vector_property_map::index" title='boost::vector_property_map::index' data-ref="boost::vector_property_map::index" >index</a>; }</td></tr>
+<tr><th id="62">62</th><td>        <em>const</em> IndexMap&amp; <dfn class="decl def" id="_ZNK5boost19vector_property_map13get_index_mapEv" title='boost::vector_property_map::get_index_map' data-ref="_ZNK5boost19vector_property_map13get_index_mapEv" >get_index_map</dfn>() <em>const</em> { <b>return</b> <a class="member" href="#boost::vector_property_map::index" title='boost::vector_property_map::index' data-ref="boost::vector_property_map::index" >index</a>; }</td></tr>
+<tr><th id="63">63</th><td>          </td></tr>
+<tr><th id="64">64</th><td>    <b>public</b>:</td></tr>
+<tr><th id="65">65</th><td>        <i>// Copy ctor absent, default semantics is OK.</i></td></tr>
+<tr><th id="66">66</th><td><i>        // Assignment operator absent, default semantics is OK.</i></td></tr>
+<tr><th id="67">67</th><td><i>        // CONSIDER: not sure that assignment to 'index' is correct.</i></td></tr>
+<tr><th id="68">68</th><td>        </td></tr>
+<tr><th id="69">69</th><td>        <a class="typedef" href="#boost::vector_property_map::reference" title='boost::vector_property_map::reference' data-type='typename std::iterator_traits&lt;typename std::vector&lt;T&gt;::iterator&gt;::reference' data-ref="boost::vector_property_map::reference" >reference</a> <dfn class="decl def" id="_ZNK5boost19vector_property_mapixERKNS_15property_traitsIT0_E8key_typeE" title='boost::vector_property_map::operator[]' data-ref="_ZNK5boost19vector_property_mapixERKNS_15property_traitsIT0_E8key_typeE" ><b>operator</b>[]</dfn>(<em>const</em> <a class="typedef" href="#boost::vector_property_map::key_type" title='boost::vector_property_map::key_type' data-type='typename property_traits&lt;IndexMap&gt;::key_type' data-ref="boost::vector_property_map::key_type" >key_type</a>&amp; <dfn class="local col6 decl" id="996v" title='v' data-type='const key_type &amp;' data-ref="996v" >v</dfn>) <em>const</em> {</td></tr>
+<tr><th id="70">70</th><td>            <b>typename</b> <a class="type" href="property_map.hpp.html#boost::property_traits" title='boost::property_traits' data-ref="boost::property_traits" >property_traits</a>&lt;IndexMap&gt;::value_type <dfn class="local col7 decl" id="997i" title='i' data-type='typename property_traits&lt;IndexMap&gt;::value_type' data-ref="997i" >i</dfn> = get(<a class="member" href="#boost::vector_property_map::index" title='boost::vector_property_map::index' data-ref="boost::vector_property_map::index" >index</a>, <a class="local col6 ref" href="#996v" title='v' data-ref="996v" >v</a>);</td></tr>
+<tr><th id="71">71</th><td>            <b>if</b> (<b>static_cast</b>&lt;<em>unsigned</em>&gt;(<a class="local col7 ref" href="#997i" title='i' data-ref="997i" >i</a>) &gt;= <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>-&gt;size()) {</td></tr>
+<tr><th id="72">72</th><td>                <a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>-&gt;resize(<a class="local col7 ref" href="#997i" title='i' data-ref="997i" >i</a> + <var>1</var>, T());</td></tr>
+<tr><th id="73">73</th><td>            }</td></tr>
+<tr><th id="74">74</th><td>            <b>return</b> (*<a class="member" href="#boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</a>)[<a class="local col7 ref" href="#997i" title='i' data-ref="997i" >i</a>];</td></tr>
+<tr><th id="75">75</th><td>        }</td></tr>
+<tr><th id="76">76</th><td>    <b>private</b>:</td></tr>
+<tr><th id="77">77</th><td>        <i>// Conceptually, we have a vector of infinite size. For practical </i></td></tr>
+<tr><th id="78">78</th><td><i>        // purposes, we start with an empty vector and grow it as needed.</i></td></tr>
+<tr><th id="79">79</th><td><i>        // Note that we cannot store pointer to vector here -- we cannot</i></td></tr>
+<tr><th id="80">80</th><td><i>        // store pointer to data, because if copy of property map resizes</i></td></tr>
+<tr><th id="81">81</th><td><i>        // the vector, the pointer to data will be invalidated. </i></td></tr>
+<tr><th id="82">82</th><td><i>        // I wonder if class 'pmap_ref' is simply needed.</i></td></tr>
+<tr><th id="83">83</th><td>        <a class="type" href="../exception/exception.hpp.html#boost::shared_ptr" title='boost::shared_ptr' data-ref="boost::shared_ptr" >shared_ptr</a>&lt; <span class="namespace">std::</span><a class="type" href="../../c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;T&gt; &gt; <dfn class="decl" id="boost::vector_property_map::store" title='boost::vector_property_map::store' data-ref="boost::vector_property_map::store" >store</dfn>;        </td></tr>
+<tr><th id="84">84</th><td>        IndexMap <dfn class="decl" id="boost::vector_property_map::index" title='boost::vector_property_map::index' data-ref="boost::vector_property_map::index" >index</dfn>;</td></tr>
+<tr><th id="85">85</th><td>    };</td></tr>
+<tr><th id="86">86</th><td>    </td></tr>
+<tr><th id="87">87</th><td>    <b>template</b>&lt;<b>typename</b> T, <b>typename</b> IndexMap&gt;</td></tr>
+<tr><th id="88">88</th><td>    <a class="type" href="#boost::vector_property_map" title='boost::vector_property_map' data-ref="boost::vector_property_map" >vector_property_map</a>&lt;T, IndexMap&gt;</td></tr>
+<tr><th id="89">89</th><td>    <dfn class="decl def" id="_ZN5boost24make_vector_property_mapET0_" title='boost::make_vector_property_map' data-ref="_ZN5boost24make_vector_property_mapET0_" >make_vector_property_map</dfn>(IndexMap <dfn class="local col8 decl" id="998index" title='index' data-type='IndexMap' data-ref="998index" >index</dfn>)</td></tr>
+<tr><th id="90">90</th><td>    {</td></tr>
+<tr><th id="91">91</th><td>        <b>return</b> <a class="type" href="#boost::vector_property_map" title='boost::vector_property_map' data-ref="boost::vector_property_map" >vector_property_map</a>&lt;T, IndexMap&gt;(<a class="local col8 ref" href="#998index" title='index' data-ref="998index" >index</a>);</td></tr>
+<tr><th id="92">92</th><td>    }</td></tr>
+<tr><th id="93">93</th><td>}</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td><u>#<span data-ppcond="95">ifdef</span> <span class="macro" data-ref="_M/BOOST_GRAPH_USE_MPI">BOOST_GRAPH_USE_MPI</span></u></td></tr>
+<tr><th id="96">96</th><td><u>#include &lt;boost/property_map/parallel/distributed_property_map.hpp&gt;</u></td></tr>
+<tr><th id="97">97</th><td><u>#include &lt;boost/property_map/parallel/local_property_map.hpp&gt;</u></td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td><b>namespace</b> boost {</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><i class="doc">/** Distributed vector property map.</i></td></tr>
+<tr><th id="102">102</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="103">103</th><td><i class="doc"> * This specialization of <span class="command">@ref</span> <span class="verb">vector_property_map builds a</span></i></td></tr>
+<tr><th id="104">104</th><td><i class="doc"> * distributed vector property map given the local index maps</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc"> * generated by distributed graph types that automatically have index</i></td></tr>
+<tr><th id="106">106</th><td><i class="doc"> * properties. </i></td></tr>
+<tr><th id="107">107</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="108">108</th><td><i class="doc"> * This specialization is useful when creating external distributed</i></td></tr>
+<tr><th id="109">109</th><td><i class="doc"> * property maps via the same syntax used to create external</i></td></tr>
+<tr><th id="110">110</th><td><i class="doc"> * sequential property maps.</i></td></tr>
+<tr><th id="111">111</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="112">112</th><td><b>template</b>&lt;<b>typename</b> T, <b>typename</b> ProcessGroup, <b>typename</b> GlobalMap, </td></tr>
+<tr><th id="113">113</th><td>         <b>typename</b> StorageMap&gt;</td></tr>
+<tr><th id="114">114</th><td><b>class</b> vector_property_map&lt;T, </td></tr>
+<tr><th id="115">115</th><td>                          local_property_map&lt;ProcessGroup, GlobalMap,</td></tr>
+<tr><th id="116">116</th><td>                                             StorageMap&gt; &gt;</td></tr>
+<tr><th id="117">117</th><td>  : <b>public</b> parallel::distributed_property_map&lt;</td></tr>
+<tr><th id="118">118</th><td>             ProcessGroup, GlobalMap, vector_property_map&lt;T, StorageMap&gt; &gt;</td></tr>
+<tr><th id="119">119</th><td>{</td></tr>
+<tr><th id="120">120</th><td>  <b>typedef</b> vector_property_map&lt;T, StorageMap&gt; local_iterator_map;</td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td>  <b>typedef</b> parallel::distributed_property_map&lt;ProcessGroup, GlobalMap, </td></tr>
+<tr><th id="123">123</th><td>                                             local_iterator_map&gt; inherited;</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td>  <b>typedef</b> local_property_map&lt;ProcessGroup, GlobalMap, StorageMap&gt; index_map_type;</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><b>public</b>:</td></tr>
+<tr><th id="128">128</th><td>  vector_property_map(<em>const</em> index_map_type&amp; index = index_map_type())</td></tr>
+<tr><th id="129">129</th><td>    : inherited(index.process_group(), index.global(),</td></tr>
+<tr><th id="130">130</th><td>                local_iterator_map(index.base())) { }</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>  vector_property_map(<em>unsigned</em> inital_size, </td></tr>
+<tr><th id="133">133</th><td>                      <em>const</em> index_map_type&amp; index = index_map_type())</td></tr>
+<tr><th id="134">134</th><td>    : inherited(index.process_group(),  index.global(),</td></tr>
+<tr><th id="135">135</th><td>                local_iterator_map(inital_size, index.base())) { }</td></tr>
+<tr><th id="136">136</th><td>};</td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td><i class="doc">/** Distributed vector property map.</i></td></tr>
+<tr><th id="139">139</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="140">140</th><td><i class="doc"> * This specialization of <span class="command">@ref</span> <span class="verb">vector_property_map builds a</span></i></td></tr>
+<tr><th id="141">141</th><td><i class="doc"> * distributed vector property map given the local index maps</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc"> * generated by distributed graph types that automatically have index</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc"> * properties. </i></td></tr>
+<tr><th id="144">144</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc"> * This specialization is useful when creating external distributed</i></td></tr>
+<tr><th id="146">146</th><td><i class="doc"> * property maps via the same syntax used to create external</i></td></tr>
+<tr><th id="147">147</th><td><i class="doc"> * sequential property maps.</i></td></tr>
+<tr><th id="148">148</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="149">149</th><td><b>template</b>&lt;<b>typename</b> T, <b>typename</b> ProcessGroup, <b>typename</b> GlobalMap, </td></tr>
+<tr><th id="150">150</th><td>         <b>typename</b> StorageMap&gt;</td></tr>
+<tr><th id="151">151</th><td><b>class</b> vector_property_map&lt;</td></tr>
+<tr><th id="152">152</th><td>        T, </td></tr>
+<tr><th id="153">153</th><td>        parallel::distributed_property_map&lt;</td></tr>
+<tr><th id="154">154</th><td>          ProcessGroup,</td></tr>
+<tr><th id="155">155</th><td>          GlobalMap,</td></tr>
+<tr><th id="156">156</th><td>          StorageMap</td></tr>
+<tr><th id="157">157</th><td>        &gt;</td></tr>
+<tr><th id="158">158</th><td>      &gt; </td></tr>
+<tr><th id="159">159</th><td>  : <b>public</b> parallel::distributed_property_map&lt;</td></tr>
+<tr><th id="160">160</th><td>             ProcessGroup, GlobalMap, vector_property_map&lt;T, StorageMap&gt; &gt;</td></tr>
+<tr><th id="161">161</th><td>{</td></tr>
+<tr><th id="162">162</th><td>  <b>typedef</b> vector_property_map&lt;T, StorageMap&gt; local_iterator_map;</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>  <b>typedef</b> parallel::distributed_property_map&lt;ProcessGroup, GlobalMap, </td></tr>
+<tr><th id="165">165</th><td>                                             local_iterator_map&gt; inherited;</td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td>  <b>typedef</b> parallel::distributed_property_map&lt;ProcessGroup, GlobalMap, </td></tr>
+<tr><th id="168">168</th><td>                                             StorageMap&gt;</td></tr>
+<tr><th id="169">169</th><td>    index_map_type;</td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td><b>public</b>:</td></tr>
+<tr><th id="172">172</th><td>  vector_property_map(<em>const</em> index_map_type&amp; index = index_map_type())</td></tr>
+<tr><th id="173">173</th><td>    : inherited(index.process_group(), index.global(),</td></tr>
+<tr><th id="174">174</th><td>                local_iterator_map(index.base())) { }</td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td>  vector_property_map(<em>unsigned</em> inital_size, </td></tr>
+<tr><th id="177">177</th><td>                      <em>const</em> index_map_type&amp; index = index_map_type())</td></tr>
+<tr><th id="178">178</th><td>    : inherited(index.process_group(), index.global(),</td></tr>
+<tr><th id="179">179</th><td>                local_iterator_map(inital_size, index.base())) { }</td></tr>
+<tr><th id="180">180</th><td>};</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>}</td></tr>
+<tr><th id="183">183</th><td><u>#<span data-ppcond="95">endif</span> // BOOST_GRAPH_USE_MPI</u></td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td><u>#<span data-ppcond="10">endif</span></u></td></tr>
+<tr><th id="186">186</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp.html'>TrinityCore6.x/src/server/game/Entities/Taxi/TaxiPathGraph.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

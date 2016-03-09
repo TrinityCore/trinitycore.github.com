@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+<title>instances.hpp [include/boost/regex/v4/instances.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/regex/v4/instances.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>regex</a>/<a href='./'>v4</a>/instances.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> *</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (c) 1998-2002</i></td></tr>
+<tr><th id="4">4</th><td><i> * John Maddock</i></td></tr>
+<tr><th id="5">5</th><td><i> *</i></td></tr>
+<tr><th id="6">6</th><td><i> * Use, modification and distribution are subject to the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Boost Software License, Version 1.0. (See accompanying file</i></td></tr>
+<tr><th id="8">8</th><td><i> * LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> */</i></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td> <i>/*</i></td></tr>
+<tr><th id="13">13</th><td><i>  *   LOCATION:    see <a href="http://www.boost.org">http://www.boost.org</a> for most recent version.</i></td></tr>
+<tr><th id="14">14</th><td><i>  *   FILE         instances.cpp</i></td></tr>
+<tr><th id="15">15</th><td><i>  *   VERSION      see &lt;boost/version.hpp&gt;</i></td></tr>
+<tr><th id="16">16</th><td><i>  *   DESCRIPTION: Defines those template instances that are placed in the</i></td></tr>
+<tr><th id="17">17</th><td><i>  *                library rather than in the users object files.</i></td></tr>
+<tr><th id="18">18</th><td><i>  */</i></td></tr>
+<tr><th id="19">19</th><td><i></i></td></tr>
+<tr><th id="20">20</th><td><i>//</i></td></tr>
+<tr><th id="21">21</th><td><i>// note no include guard, we may include this multiple times:</i></td></tr>
+<tr><th id="22">22</th><td><i>//</i></td></tr>
+<tr><th id="23">23</th><td><u>#<span data-ppcond="23">ifndef</span> <span class="macro" data-ref="_M/BOOST_REGEX_NO_EXTERNAL_TEMPLATES">BOOST_REGEX_NO_EXTERNAL_TEMPLATES</span></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>namespace</b> <span class="namespace">boost</span>{</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><i>//</i></td></tr>
+<tr><th id="28">28</th><td><i>// this header can be included multiple times, each time with</i></td></tr>
+<tr><th id="29">29</th><td><i>// a different character type, BOOST_REGEX_CHAR_T must be defined</i></td></tr>
+<tr><th id="30">30</th><td><i>// first:</i></td></tr>
+<tr><th id="31">31</th><td><i>//</i></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="32">ifndef</span> <a class="macro" href="regex.hpp.html#93" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a></u></td></tr>
+<tr><th id="33">33</th><td><u>#  error "BOOST_REGEX_CHAR_T not defined"</u></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="32">endif</span></u></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><u>#<span data-ppcond="36">ifndef</span> <span class="macro" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</span></u></td></tr>
+<tr><th id="37">37</th><td><u>#  define <dfn class="macro" id="_M/BOOST_REGEX_TRAITS_T" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</dfn> , boost::regex_traits&lt;BOOST_REGEX_CHAR_T &gt;</u></td></tr>
+<tr><th id="38">38</th><td><u>#<span data-ppcond="36">endif</span></u></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><i>//</i></td></tr>
+<tr><th id="41">41</th><td><i>// what follows is compiler specific:</i></td></tr>
+<tr><th id="42">42</th><td><i>//</i></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="44">if</span>  defined(<span class="macro" data-ref="_M/__BORLANDC__">__BORLANDC__</span>) &amp;&amp; (__BORLANDC__ &lt; 0x600)</u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><u>#ifdef BOOST_HAS_ABI_HEADERS</u></td></tr>
+<tr><th id="47">47</th><td><u>#  include BOOST_ABI_PREFIX</u></td></tr>
+<tr><th id="48">48</th><td><u>#endif</u></td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><u>#  ifndef BOOST_REGEX_INSTANTIATE</u></td></tr>
+<tr><th id="51">51</th><td><u>#     pragma option push -Jgx</u></td></tr>
+<tr><th id="52">52</th><td><u>#  endif</u></td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><b>template</b> <b>class</b> BOOST_REGEX_DECL basic_regex&lt; BOOST_REGEX_CHAR_T BOOST_REGEX_TRAITS_T &gt;;</td></tr>
+<tr><th id="55">55</th><td><b>template</b> <b>class</b> BOOST_REGEX_DECL match_results&lt; <em>const</em> BOOST_REGEX_CHAR_T* &gt;;</td></tr>
+<tr><th id="56">56</th><td><u>#ifndef BOOST_NO_STD_ALLOCATOR</u></td></tr>
+<tr><th id="57">57</th><td><b>template</b> <b>class</b> BOOST_REGEX_DECL ::boost::re_detail::perl_matcher&lt;BOOST_REGEX_CHAR_T <em>const</em> *, match_results&lt; <em>const</em> BOOST_REGEX_CHAR_T* &gt;::allocator_type BOOST_REGEX_TRAITS_T &gt;;</td></tr>
+<tr><th id="58">58</th><td><u>#endif</u></td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><u>#  ifndef BOOST_REGEX_INSTANTIATE</u></td></tr>
+<tr><th id="61">61</th><td><u>#     pragma option pop</u></td></tr>
+<tr><th id="62">62</th><td><u>#  endif</u></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><u>#ifdef BOOST_HAS_ABI_HEADERS</u></td></tr>
+<tr><th id="65">65</th><td><u>#  include BOOST_ABI_SUFFIX</u></td></tr>
+<tr><th id="66">66</th><td><u>#endif</u></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="44">elif</span> defined(<span class="macro" data-ref="_M/BOOST_MSVC">BOOST_MSVC</span>) || defined(<span class="macro" data-ref="_M/__ICL">__ICL</span>)</u></td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><u>#  ifndef BOOST_REGEX_INSTANTIATE</u></td></tr>
+<tr><th id="71">71</th><td><u>#     ifdef __GNUC__</u></td></tr>
+<tr><th id="72">72</th><td><u>#        define template __extension__ extern template</u></td></tr>
+<tr><th id="73">73</th><td><u>#     else</u></td></tr>
+<tr><th id="74">74</th><td><u>#        if BOOST_MSVC &gt; 1310</u></td></tr>
+<tr><th id="75">75</th><td><u>#           define BOOST_REGEX_TEMPLATE_DECL</u></td></tr>
+<tr><th id="76">76</th><td><u>#        endif</u></td></tr>
+<tr><th id="77">77</th><td><u>#        define template extern template</u></td></tr>
+<tr><th id="78">78</th><td><u>#     endif</u></td></tr>
+<tr><th id="79">79</th><td><u>#  endif</u></td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><u>#ifndef BOOST_REGEX_TEMPLATE_DECL</u></td></tr>
+<tr><th id="82">82</th><td><u>#  define BOOST_REGEX_TEMPLATE_DECL BOOST_REGEX_DECL</u></td></tr>
+<tr><th id="83">83</th><td><u>#endif</u></td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><u>#  ifdef BOOST_MSVC</u></td></tr>
+<tr><th id="86">86</th><td><u>#     pragma warning(push)</u></td></tr>
+<tr><th id="87">87</th><td><u>#     pragma warning(disable : 4251 4231)</u></td></tr>
+<tr><th id="88">88</th><td><u>#     if BOOST_MSVC &lt; 1600</u></td></tr>
+<tr><th id="89">89</th><td><u>#     pragma warning(disable : 4660)</u></td></tr>
+<tr><th id="90">90</th><td><u>#     endif</u></td></tr>
+<tr><th id="91">91</th><td><u>#  endif</u></td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><b>template</b> <b>class</b> BOOST_REGEX_TEMPLATE_DECL basic_regex&lt; BOOST_REGEX_CHAR_T BOOST_REGEX_TRAITS_T &gt;;</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td><u>#if !BOOST_WORKAROUND(BOOST_MSVC, &lt; 1300)</u></td></tr>
+<tr><th id="96">96</th><td><b>template</b> <b>class</b> BOOST_REGEX_TEMPLATE_DECL match_results&lt; <em>const</em> BOOST_REGEX_CHAR_T* &gt;;</td></tr>
+<tr><th id="97">97</th><td><u>#endif</u></td></tr>
+<tr><th id="98">98</th><td><u>#ifndef BOOST_NO_STD_ALLOCATOR</u></td></tr>
+<tr><th id="99">99</th><td><b>template</b> <b>class</b> BOOST_REGEX_TEMPLATE_DECL ::boost::re_detail::perl_matcher&lt;BOOST_REGEX_CHAR_T <em>const</em> *, match_results&lt; <em>const</em> BOOST_REGEX_CHAR_T* &gt;::allocator_type BOOST_REGEX_TRAITS_T &gt;;</td></tr>
+<tr><th id="100">100</th><td><u>#endif</u></td></tr>
+<tr><th id="101">101</th><td><u>#if !(defined(BOOST_DINKUMWARE_STDLIB) &amp;&amp; (BOOST_DINKUMWARE_STDLIB &lt;= 1))\</u></td></tr>
+<tr><th id="102">102</th><td><u>   &amp;&amp; !(defined(BOOST_INTEL_CXX_VERSION) &amp;&amp; (BOOST_INTEL_CXX_VERSION &lt;= 800))\</u></td></tr>
+<tr><th id="103">103</th><td><u>   &amp;&amp; !(defined(__SGI_STL_PORT) || defined(_STLPORT_VERSION))\</u></td></tr>
+<tr><th id="104">104</th><td><u>   &amp;&amp; !defined(BOOST_REGEX_ICU_INSTANCES)</u></td></tr>
+<tr><th id="105">105</th><td><u>#if !BOOST_WORKAROUND(BOOST_MSVC, &lt; 1300)</u></td></tr>
+<tr><th id="106">106</th><td><b>template</b> <b>class</b> BOOST_REGEX_TEMPLATE_DECL match_results&lt; std::basic_string&lt;BOOST_REGEX_CHAR_T&gt;::const_iterator &gt;;</td></tr>
+<tr><th id="107">107</th><td><u>#endif</u></td></tr>
+<tr><th id="108">108</th><td><u>#ifndef BOOST_NO_STD_ALLOCATOR</u></td></tr>
+<tr><th id="109">109</th><td><b>template</b> <b>class</b> BOOST_REGEX_TEMPLATE_DECL ::boost::re_detail::perl_matcher&lt; std::basic_string&lt;BOOST_REGEX_CHAR_T&gt;::const_iterator, match_results&lt; std::basic_string&lt;BOOST_REGEX_CHAR_T&gt;::const_iterator &gt;::allocator_type, boost::regex_traits&lt;BOOST_REGEX_CHAR_T &gt; &gt;;</td></tr>
+<tr><th id="110">110</th><td><u>#endif</u></td></tr>
+<tr><th id="111">111</th><td><u>#endif</u></td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td><u>#  ifdef BOOST_MSVC</u></td></tr>
+<tr><th id="115">115</th><td><u>#     pragma warning(pop)</u></td></tr>
+<tr><th id="116">116</th><td><u>#  endif</u></td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td><u>#  ifdef template</u></td></tr>
+<tr><th id="119">119</th><td><u>#     undef template</u></td></tr>
+<tr><th id="120">120</th><td><u>#  endif</u></td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td><u>#undef BOOST_REGEX_TEMPLATE_DECL</u></td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><u>#<span data-ppcond="44">elif</span> (defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; (<span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> &gt;= 3)) || !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_EXTERN_TEMPLATE">BOOST_NO_CXX11_EXTERN_TEMPLATE</span>)</u></td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td><u>#  <span data-ppcond="126">ifndef</span> <span class="macro" data-ref="_M/BOOST_REGEX_INSTANTIATE">BOOST_REGEX_INSTANTIATE</span></u></td></tr>
+<tr><th id="127">127</th><td><u>#     <span data-ppcond="127">ifdef</span> <span class="macro" data-ref="_M/__GNUC__">__GNUC__</span></u></td></tr>
+<tr><th id="128">128</th><td><u>#        define <dfn class="macro" id="_M/template" data-ref="_M/template">template</dfn> __extension__ extern template</u></td></tr>
+<tr><th id="129">129</th><td><u>#     <span data-ppcond="127">else</span></u></td></tr>
+<tr><th id="130">130</th><td><u>#        define template extern template</u></td></tr>
+<tr><th id="131">131</th><td><u>#     <span data-ppcond="127">endif</span></u></td></tr>
+<tr><th id="132">132</th><td><u>#  <span data-ppcond="126">endif</span></u></td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><u>#<span data-ppcond="134">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_STD_LOCALE">BOOST_NO_STD_LOCALE</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_REGEX_ICU_INSTANCES">BOOST_REGEX_ICU_INSTANCES</span>)</u></td></tr>
+<tr><th id="135">135</th><td><b>namespace</b> <span class="namespace">re_detail</span>{</td></tr>
+<tr><th id="136">136</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="137">137</th><td>std::locale cpp_regex_traits_base&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::imbue(<em>const</em> std::locale&amp; l);</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="140">140</th><td>cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::string_type </td></tr>
+<tr><th id="141">141</th><td>   cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::transform_primary(<em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p1, <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p2) <em>const</em>;</td></tr>
+<tr><th id="142">142</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="143">143</th><td>cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::string_type </td></tr>
+<tr><th id="144">144</th><td>   cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::transform(<em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p1, <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p2) <em>const</em>;</td></tr>
+<tr><th id="145">145</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="146">146</th><td>cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::string_type </td></tr>
+<tr><th id="147">147</th><td>   cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::lookup_collatename(<em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p1, <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p2) <em>const</em>;</td></tr>
+<tr><th id="148">148</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="149">149</th><td><em>void</em> cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::init();</td></tr>
+<tr><th id="150">150</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="151">151</th><td>cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::char_class_type </td></tr>
+<tr><th id="152">152</th><td>   cpp_regex_traits_implementation&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::lookup_classname_imp(<em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p1, <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p2) <em>const</em>;</td></tr>
+<tr><th id="153">153</th><td><u>#<span data-ppcond="153">ifdef</span> <span class="macro" data-ref="_M/BOOST_REGEX_BUGGY_CTYPE_FACET">BOOST_REGEX_BUGGY_CTYPE_FACET</span></u></td></tr>
+<tr><th id="154">154</th><td><b>template</b> BOOST_REGEX_DECL</td></tr>
+<tr><th id="155">155</th><td><em>bool</em> cpp_regex_traits_implementation&lt;BOOST_REGEX_CHAR_T&gt;::isctype(<em>const</em> BOOST_REGEX_CHAR_T c, char_class_type mask) <em>const</em>;</td></tr>
+<tr><th id="156">156</th><td><u>#<span data-ppcond="153">endif</span></u></td></tr>
+<tr><th id="157">157</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="158">158</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="159">159</th><td><em>int</em> cpp_regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::toi(<em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>*&amp; first, <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* last, <em>int</em> radix)<em>const</em>;</td></tr>
+<tr><th id="160">160</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="161">161</th><td>std::string cpp_regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::catalog_name(<em>const</em> std::string&amp; name);</td></tr>
+<tr><th id="162">162</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="163">163</th><td>std::string&amp; cpp_regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::get_catalog_name_inst();</td></tr>
+<tr><th id="164">164</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="165">165</th><td>std::string cpp_regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::get_catalog_name();</td></tr>
+<tr><th id="166">166</th><td><u>#<span data-ppcond="166">ifdef</span> <a class="macro" href="../../config/stdlib/libstdcpp3.hpp.html#45" data-ref="_M/BOOST_HAS_THREADS">BOOST_HAS_THREADS</a></u></td></tr>
+<tr><th id="167">167</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a></td></tr>
+<tr><th id="168">168</th><td>static_mutex&amp; cpp_regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::get_mutex_inst();</td></tr>
+<tr><th id="169">169</th><td><u>#<span data-ppcond="166">endif</span></u></td></tr>
+<tr><th id="170">170</th><td><u>#<span data-ppcond="134">endif</span></u></td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> basic_regex&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;&amp; </td></tr>
+<tr><th id="173">173</th><td>   basic_regex&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;::do_assign(</td></tr>
+<tr><th id="174">174</th><td>      <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p1, </td></tr>
+<tr><th id="175">175</th><td>      <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* p2, </td></tr>
+<tr><th id="176">176</th><td>      flag_type f);</td></tr>
+<tr><th id="177">177</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> basic_regex&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;::locale_type <a class="macro" href="../config.hpp.html#242" title="" data-ref="_M/BOOST_REGEX_CALL">BOOST_REGEX_CALL</a> </td></tr>
+<tr><th id="178">178</th><td>   basic_regex&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;::imbue(locale_type l);</td></tr>
+<tr><th id="179">179</th><td></td></tr>
+<tr><th id="180">180</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>void</em> <a class="macro" href="../config.hpp.html#242" title="" data-ref="_M/BOOST_REGEX_CALL">BOOST_REGEX_CALL</a> </td></tr>
+<tr><th id="181">181</th><td>   match_results&lt;<em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>*&gt;::maybe_assign(</td></tr>
+<tr><th id="182">182</th><td>      <em>const</em> match_results&lt;<em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>*&gt;&amp; m);</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td><b>namespace</b> <span class="namespace">re_detail</span>{</td></tr>
+<tr><th id="185">185</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>void</em> perl_matcher&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <em>const</em> *, match_results&lt; <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* &gt;::allocator_type <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;::construct_init(</td></tr>
+<tr><th id="186">186</th><td>      <em>const</em> basic_regex&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;&amp; e, match_flag_type f);</td></tr>
+<tr><th id="187">187</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>bool</em> perl_matcher&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <em>const</em> *, match_results&lt; <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* &gt;::allocator_type <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;::match();</td></tr>
+<tr><th id="188">188</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>bool</em> perl_matcher&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> <em>const</em> *, match_results&lt; <em>const</em> <a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>* &gt;::allocator_type <a class="macro" href="#37" title=", boost::regex_traits&lt;char &gt;" data-ref="_M/BOOST_REGEX_TRAITS_T">BOOST_REGEX_TRAITS_T</a> &gt;::find();</td></tr>
+<tr><th id="189">189</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td><u>#<span data-ppcond="191">if</span> (defined(<span class="macro" data-ref="_M/__GLIBCPP__">__GLIBCPP__</span>) || defined(<a class="macro" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#34" data-ref="_M/__GLIBCXX__">__GLIBCXX__</a>)) \</u></td></tr>
+<tr><th id="192">192</th><td><u>   &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_REGEX_ICU_INSTANCES">BOOST_REGEX_ICU_INSTANCES</span>)\</u></td></tr>
+<tr><th id="193">193</th><td><u>   &amp;&amp; !defined(<span class="macro" data-ref="_M/__SGI_STL_PORT">__SGI_STL_PORT</span>)\</u></td></tr>
+<tr><th id="194">194</th><td><u>   &amp;&amp; !defined(<span class="macro" data-ref="_M/_STLPORT_VERSION">_STLPORT_VERSION</span>)</u></td></tr>
+<tr><th id="195">195</th><td><i>// std:basic_string&lt;&gt;::const_iterator instances as well:</i></td></tr>
+<tr><th id="196">196</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>void</em> <a class="macro" href="../config.hpp.html#242" title="" data-ref="_M/BOOST_REGEX_CALL">BOOST_REGEX_CALL</a> </td></tr>
+<tr><th id="197">197</th><td>   match_results&lt;std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator&gt;::maybe_assign(</td></tr>
+<tr><th id="198">198</th><td>      <em>const</em> match_results&lt;std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator&gt;&amp; m);</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td><b>namespace</b> <span class="namespace">re_detail</span>{</td></tr>
+<tr><th id="201">201</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>void</em> perl_matcher&lt;std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator, match_results&lt; std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator &gt;::allocator_type, boost::regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> &gt; &gt;::construct_init(</td></tr>
+<tr><th id="202">202</th><td>      <em>const</em> basic_regex&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;&amp; e, match_flag_type f);</td></tr>
+<tr><th id="203">203</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>bool</em> perl_matcher&lt;std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator, match_results&lt; std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator &gt;::allocator_type, boost::regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> &gt; &gt;::match();</td></tr>
+<tr><th id="204">204</th><td><a class="macro" href="#128" title="__extension__ extern template" data-ref="_M/template"><b>template</b></a> <a class="macro" href="../config.hpp.html#207" title="" data-ref="_M/BOOST_REGEX_DECL">BOOST_REGEX_DECL</a> <em>bool</em> perl_matcher&lt;std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator, match_results&lt; std::basic_string&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a>&gt;::const_iterator &gt;::allocator_type, boost::regex_traits&lt;<a class="macro" href="regex.hpp.html#93" title="char" data-ref="_M/BOOST_REGEX_CHAR_T">BOOST_REGEX_CHAR_T</a> &gt; &gt;::find();</td></tr>
+<tr><th id="205">205</th><td>} <i>// namespace</i></td></tr>
+<tr><th id="206">206</th><td><u>#<span data-ppcond="191">endif</span></u></td></tr>
+<tr><th id="207">207</th><td></td></tr>
+<tr><th id="208">208</th><td><u>#  <span data-ppcond="208">ifdef</span> <a class="macro" href="#128" data-ref="_M/template">template</a></u></td></tr>
+<tr><th id="209">209</th><td><u>#     undef <a class="macro" href="#128" data-ref="_M/template">template</a></u></td></tr>
+<tr><th id="210">210</th><td><u>#  <span data-ppcond="208">endif</span></u></td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td></td></tr>
+<tr><th id="213">213</th><td><u>#<span data-ppcond="44">endif</span></u></td></tr>
+<tr><th id="214">214</th><td></td></tr>
+<tr><th id="215">215</th><td>} <i>// namespace boost</i></td></tr>
+<tr><th id="216">216</th><td></td></tr>
+<tr><th id="217">217</th><td><u>#<span data-ppcond="23">endif</span> // BOOST_REGEX_NO_EXTERNAL_TEMPLATES</u></td></tr>
+<tr><th id="218">218</th><td></td></tr>
+<tr><th id="219">219</th><td></td></tr>
+<tr><th id="220">220</th><td></td></tr>
+<tr><th id="221">221</th><td></td></tr>
+<tr><th id="222">222</th><td></td></tr>
+<tr><th id="223">223</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/server/game/DataStores/DBCStores.cpp.html'>TrinityCore3.3.5/src/server/game/DataStores/DBCStores.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

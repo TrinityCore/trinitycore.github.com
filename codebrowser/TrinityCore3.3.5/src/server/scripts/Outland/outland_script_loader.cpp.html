@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+<head>
+<title>outland_script_loader.cpp [TrinityCore3.3.5/src/server/scripts/Outland/outland_script_loader.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/scripts/Outland/outland_script_loader.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>scripts</a>/<a href='./'>Outland</a>/outland_script_loader.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td><i></i></td></tr>
+<tr><th id="18">18</th><td><i>// This is where scripts' loading functions should be declared:</i></td></tr>
+<tr><th id="19">19</th><td><i>// Auchindoun - Auchenai Crypts</i></td></tr>
+<tr><th id="20">20</th><td><em>void</em> <dfn class="decl" id="_Z35AddSC_boss_shirrak_the_dead_watcherv" title='AddSC_boss_shirrak_the_dead_watcher' data-ref="_Z35AddSC_boss_shirrak_the_dead_watcherv" >AddSC_boss_shirrak_the_dead_watcher</dfn>();</td></tr>
+<tr><th id="21">21</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_boss_exarch_maladaarv" title='AddSC_boss_exarch_maladaar' data-ref="_Z26AddSC_boss_exarch_maladaarv" >AddSC_boss_exarch_maladaar</dfn>();</td></tr>
+<tr><th id="22">22</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_instance_auchenai_cryptsv" title='AddSC_instance_auchenai_crypts' data-ref="_Z30AddSC_instance_auchenai_cryptsv" >AddSC_instance_auchenai_crypts</dfn>();</td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><i>// Auchindoun - Mana Tombs</i></td></tr>
+<tr><th id="25">25</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_boss_pandemoniusv" title='AddSC_boss_pandemonius' data-ref="_Z22AddSC_boss_pandemoniusv" >AddSC_boss_pandemonius</dfn>();</td></tr>
+<tr><th id="26">26</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_boss_nexusprince_shaffarv" title='AddSC_boss_nexusprince_shaffar' data-ref="_Z30AddSC_boss_nexusprince_shaffarv" >AddSC_boss_nexusprince_shaffar</dfn>();</td></tr>
+<tr><th id="27">27</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_instance_mana_tombsv" title='AddSC_instance_mana_tombs' data-ref="_Z25AddSC_instance_mana_tombsv" >AddSC_instance_mana_tombs</dfn>();</td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><i>// Auchindoun - Sekketh Halls</i></td></tr>
+<tr><th id="30">30</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_boss_darkweaver_sythv" title='AddSC_boss_darkweaver_syth' data-ref="_Z26AddSC_boss_darkweaver_sythv" >AddSC_boss_darkweaver_syth</dfn>();</td></tr>
+<tr><th id="31">31</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_boss_talon_king_ikissv" title='AddSC_boss_talon_king_ikiss' data-ref="_Z27AddSC_boss_talon_king_ikissv" >AddSC_boss_talon_king_ikiss</dfn>();</td></tr>
+<tr><th id="32">32</th><td><em>void</em> <dfn class="decl" id="_Z15AddSC_boss_anzuv" title='AddSC_boss_anzu' data-ref="_Z15AddSC_boss_anzuv" >AddSC_boss_anzu</dfn>();</td></tr>
+<tr><th id="33">33</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_instance_sethekk_hallsv" title='AddSC_instance_sethekk_halls' data-ref="_Z28AddSC_instance_sethekk_hallsv" >AddSC_instance_sethekk_halls</dfn>();</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i>// Auchindoun - Shadow Labyrinth</i></td></tr>
+<tr><th id="36">36</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_boss_ambassador_hellmawv" title='AddSC_boss_ambassador_hellmaw' data-ref="_Z29AddSC_boss_ambassador_hellmawv" >AddSC_boss_ambassador_hellmaw</dfn>();</td></tr>
+<tr><th id="37">37</th><td><em>void</em> <dfn class="decl" id="_Z33AddSC_boss_blackheart_the_inciterv" title='AddSC_boss_blackheart_the_inciter' data-ref="_Z33AddSC_boss_blackheart_the_inciterv" >AddSC_boss_blackheart_the_inciter</dfn>();</td></tr>
+<tr><th id="38">38</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_boss_grandmaster_vorpilv" title='AddSC_boss_grandmaster_vorpil' data-ref="_Z29AddSC_boss_grandmaster_vorpilv" >AddSC_boss_grandmaster_vorpil</dfn>();</td></tr>
+<tr><th id="39">39</th><td><em>void</em> <dfn class="decl" id="_Z17AddSC_boss_murmurv" title='AddSC_boss_murmur' data-ref="_Z17AddSC_boss_murmurv" >AddSC_boss_murmur</dfn>();</td></tr>
+<tr><th id="40">40</th><td><em>void</em> <dfn class="decl" id="_Z31AddSC_instance_shadow_labyrinthv" title='AddSC_instance_shadow_labyrinth' data-ref="_Z31AddSC_instance_shadow_labyrinthv" >AddSC_instance_shadow_labyrinth</dfn>();</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><i>// Black Temple</i></td></tr>
+<tr><th id="43">43</th><td><em>void</em> <dfn class="decl" id="_Z18AddSC_black_templev" title='AddSC_black_temple' data-ref="_Z18AddSC_black_templev" >AddSC_black_temple</dfn>();</td></tr>
+<tr><th id="44">44</th><td><em>void</em> <dfn class="decl" id="_Z18AddSC_boss_illidanv" title='AddSC_boss_illidan' data-ref="_Z18AddSC_boss_illidanv" >AddSC_boss_illidan</dfn>();</td></tr>
+<tr><th id="45">45</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_boss_shade_of_akamav" title='AddSC_boss_shade_of_akama' data-ref="_Z25AddSC_boss_shade_of_akamav" >AddSC_boss_shade_of_akama</dfn>();</td></tr>
+<tr><th id="46">46</th><td><em>void</em> <dfn class="decl" id="_Z19AddSC_boss_supremusv" title='AddSC_boss_supremus' data-ref="_Z19AddSC_boss_supremusv" >AddSC_boss_supremus</dfn>();</td></tr>
+<tr><th id="47">47</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_boss_gurtogg_bloodboilv" title='AddSC_boss_gurtogg_bloodboil' data-ref="_Z28AddSC_boss_gurtogg_bloodboilv" >AddSC_boss_gurtogg_bloodboil</dfn>();</td></tr>
+<tr><th id="48">48</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_boss_mother_shahrazv" title='AddSC_boss_mother_shahraz' data-ref="_Z25AddSC_boss_mother_shahrazv" >AddSC_boss_mother_shahraz</dfn>();</td></tr>
+<tr><th id="49">49</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_boss_reliquary_of_soulsv" title='AddSC_boss_reliquary_of_souls' data-ref="_Z29AddSC_boss_reliquary_of_soulsv" >AddSC_boss_reliquary_of_souls</dfn>();</td></tr>
+<tr><th id="50">50</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_boss_teron_gorefiendv" title='AddSC_boss_teron_gorefiend' data-ref="_Z26AddSC_boss_teron_gorefiendv" >AddSC_boss_teron_gorefiend</dfn>();</td></tr>
+<tr><th id="51">51</th><td><em>void</em> <dfn class="decl" id="_Z19AddSC_boss_najentusv" title='AddSC_boss_najentus' data-ref="_Z19AddSC_boss_najentusv" >AddSC_boss_najentus</dfn>();</td></tr>
+<tr><th id="52">52</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_boss_illidari_councilv" title='AddSC_boss_illidari_council' data-ref="_Z27AddSC_boss_illidari_councilv" >AddSC_boss_illidari_council</dfn>();</td></tr>
+<tr><th id="53">53</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_instance_black_templev" title='AddSC_instance_black_temple' data-ref="_Z27AddSC_instance_black_templev" >AddSC_instance_black_temple</dfn>();</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><i>// Coilfang Reservoir - Serpent Shrine Cavern</i></td></tr>
+<tr><th id="56">56</th><td><em>void</em> <dfn class="decl" id="_Z32AddSC_boss_fathomlord_karathressv" title='AddSC_boss_fathomlord_karathress' data-ref="_Z32AddSC_boss_fathomlord_karathressv" >AddSC_boss_fathomlord_karathress</dfn>();</td></tr>
+<tr><th id="57">57</th><td><em>void</em> <dfn class="decl" id="_Z31AddSC_boss_hydross_the_unstablev" title='AddSC_boss_hydross_the_unstable' data-ref="_Z31AddSC_boss_hydross_the_unstablev" >AddSC_boss_hydross_the_unstable</dfn>();</td></tr>
+<tr><th id="58">58</th><td><em>void</em> <dfn class="decl" id="_Z21AddSC_boss_lady_vashjv" title='AddSC_boss_lady_vashj' data-ref="_Z21AddSC_boss_lady_vashjv" >AddSC_boss_lady_vashj</dfn>();</td></tr>
+<tr><th id="59">59</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_boss_leotheras_the_blindv" title='AddSC_boss_leotheras_the_blind' data-ref="_Z30AddSC_boss_leotheras_the_blindv" >AddSC_boss_leotheras_the_blind</dfn>();</td></tr>
+<tr><th id="60">60</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_boss_morogrim_tidewalkerv" title='AddSC_boss_morogrim_tidewalker' data-ref="_Z30AddSC_boss_morogrim_tidewalkerv" >AddSC_boss_morogrim_tidewalker</dfn>();</td></tr>
+<tr><th id="61">61</th><td><em>void</em> <dfn class="decl" id="_Z35AddSC_instance_serpentshrine_cavernv" title='AddSC_instance_serpentshrine_cavern' data-ref="_Z35AddSC_instance_serpentshrine_cavernv" >AddSC_instance_serpentshrine_cavern</dfn>();</td></tr>
+<tr><th id="62">62</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_boss_the_lurker_belowv" title='AddSC_boss_the_lurker_below' data-ref="_Z27AddSC_boss_the_lurker_belowv" >AddSC_boss_the_lurker_below</dfn>();</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><i>// Coilfang Reservoir - The Steam Vault</i></td></tr>
+<tr><th id="65">65</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_boss_hydromancer_thespiav" title='AddSC_boss_hydromancer_thespia' data-ref="_Z30AddSC_boss_hydromancer_thespiav" >AddSC_boss_hydromancer_thespia</dfn>();</td></tr>
+<tr><th id="66">66</th><td><em>void</em> <dfn class="decl" id="_Z32AddSC_boss_mekgineer_steamriggerv" title='AddSC_boss_mekgineer_steamrigger' data-ref="_Z32AddSC_boss_mekgineer_steamriggerv" >AddSC_boss_mekgineer_steamrigger</dfn>();</td></tr>
+<tr><th id="67">67</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_boss_warlord_kalithreshv" title='AddSC_boss_warlord_kalithresh' data-ref="_Z29AddSC_boss_warlord_kalithreshv" >AddSC_boss_warlord_kalithresh</dfn>();</td></tr>
+<tr><th id="68">68</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_instance_steam_vaultv" title='AddSC_instance_steam_vault' data-ref="_Z26AddSC_instance_steam_vaultv" >AddSC_instance_steam_vault</dfn>();</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><i>// Coilfang Reservoir - The Slave Pens</i></td></tr>
+<tr><th id="71">71</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_instance_the_slave_pensv" title='AddSC_instance_the_slave_pens' data-ref="_Z29AddSC_instance_the_slave_pensv" >AddSC_instance_the_slave_pens</dfn>();</td></tr>
+<tr><th id="72">72</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_boss_mennu_the_betrayerv" title='AddSC_boss_mennu_the_betrayer' data-ref="_Z29AddSC_boss_mennu_the_betrayerv" >AddSC_boss_mennu_the_betrayer</dfn>();</td></tr>
+<tr><th id="73">73</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_boss_rokmar_the_cracklerv" title='AddSC_boss_rokmar_the_crackler' data-ref="_Z30AddSC_boss_rokmar_the_cracklerv" >AddSC_boss_rokmar_the_crackler</dfn>();</td></tr>
+<tr><th id="74">74</th><td><em>void</em> <dfn class="decl" id="_Z21AddSC_boss_quagmirranv" title='AddSC_boss_quagmirran' data-ref="_Z21AddSC_boss_quagmirranv" >AddSC_boss_quagmirran</dfn>();</td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><i>// Coilfang Reservoir - The Underbog</i></td></tr>
+<tr><th id="77">77</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_instance_the_underbogv" title='AddSC_instance_the_underbog' data-ref="_Z27AddSC_instance_the_underbogv" >AddSC_instance_the_underbog</dfn>();</td></tr>
+<tr><th id="78">78</th><td><em>void</em> <dfn class="decl" id="_Z20AddSC_boss_hungarfenv" title='AddSC_boss_hungarfen' data-ref="_Z20AddSC_boss_hungarfenv" >AddSC_boss_hungarfen</dfn>();</td></tr>
+<tr><th id="79">79</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_boss_the_black_stalkerv" title='AddSC_boss_the_black_stalker' data-ref="_Z28AddSC_boss_the_black_stalkerv" >AddSC_boss_the_black_stalker</dfn>();</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><i>// Gruul's Lair</i></td></tr>
+<tr><th id="82">82</th><td><em>void</em> <dfn class="decl" id="_Z16AddSC_boss_gruulv" title='AddSC_boss_gruul' data-ref="_Z16AddSC_boss_gruulv" >AddSC_boss_gruul</dfn>();</td></tr>
+<tr><th id="83">83</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_boss_high_king_maulgarv" title='AddSC_boss_high_king_maulgar' data-ref="_Z28AddSC_boss_high_king_maulgarv" >AddSC_boss_high_king_maulgar</dfn>();</td></tr>
+<tr><th id="84">84</th><td><em>void</em> <dfn class="decl" id="_Z26AddSC_instance_gruuls_lairv" title='AddSC_instance_gruuls_lair' data-ref="_Z26AddSC_instance_gruuls_lairv" >AddSC_instance_gruuls_lair</dfn>();</td></tr>
+<tr><th id="85">85</th><td><em>void</em> <dfn class="decl" id="_Z18AddSC_boss_broggokv" title='AddSC_boss_broggok' data-ref="_Z18AddSC_boss_broggokv" >AddSC_boss_broggok</dfn>();                   <i>//HC Blood Furnace</i></td></tr>
+<tr><th id="86">86</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_boss_kelidan_the_breakerv" title='AddSC_boss_kelidan_the_breaker' data-ref="_Z30AddSC_boss_kelidan_the_breakerv" >AddSC_boss_kelidan_the_breaker</dfn>();</td></tr>
+<tr><th id="87">87</th><td><em>void</em> <dfn class="decl" id="_Z20AddSC_boss_the_makerv" title='AddSC_boss_the_maker' data-ref="_Z20AddSC_boss_the_makerv" >AddSC_boss_the_maker</dfn>();</td></tr>
+<tr><th id="88">88</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_instance_blood_furnacev" title='AddSC_instance_blood_furnace' data-ref="_Z28AddSC_instance_blood_furnacev" >AddSC_instance_blood_furnace</dfn>();</td></tr>
+<tr><th id="89">89</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_boss_magtheridonv" title='AddSC_boss_magtheridon' data-ref="_Z22AddSC_boss_magtheridonv" >AddSC_boss_magtheridon</dfn>();               <i>//HC Magtheridon's Lair</i></td></tr>
+<tr><th id="90">90</th><td><em>void</em> <dfn class="decl" id="_Z32AddSC_instance_magtheridons_lairv" title='AddSC_instance_magtheridons_lair' data-ref="_Z32AddSC_instance_magtheridons_lairv" >AddSC_instance_magtheridons_lair</dfn>();</td></tr>
+<tr><th id="91">91</th><td><em>void</em> <dfn class="decl" id="_Z35AddSC_boss_grand_warlock_nethekursev" title='AddSC_boss_grand_warlock_nethekurse' data-ref="_Z35AddSC_boss_grand_warlock_nethekursev" >AddSC_boss_grand_warlock_nethekurse</dfn>();  <i>//HC Shattered Halls</i></td></tr>
+<tr><th id="92">92</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_boss_warbringer_omroggv" title='AddSC_boss_warbringer_omrogg' data-ref="_Z28AddSC_boss_warbringer_omroggv" >AddSC_boss_warbringer_omrogg</dfn>();</td></tr>
+<tr><th id="93">93</th><td><em>void</em> <dfn class="decl" id="_Z37AddSC_boss_warchief_kargath_bladefistv" title='AddSC_boss_warchief_kargath_bladefist' data-ref="_Z37AddSC_boss_warchief_kargath_bladefistv" >AddSC_boss_warchief_kargath_bladefist</dfn>();</td></tr>
+<tr><th id="94">94</th><td><em>void</em> <dfn class="decl" id="_Z21AddSC_shattered_hallsv" title='AddSC_shattered_halls' data-ref="_Z21AddSC_shattered_hallsv" >AddSC_shattered_halls</dfn>();</td></tr>
+<tr><th id="95">95</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_instance_shattered_hallsv" title='AddSC_instance_shattered_halls' data-ref="_Z30AddSC_instance_shattered_hallsv" >AddSC_instance_shattered_halls</dfn>();</td></tr>
+<tr><th id="96">96</th><td><em>void</em> <dfn class="decl" id="_Z32AddSC_boss_watchkeeper_gargolmarv" title='AddSC_boss_watchkeeper_gargolmar' data-ref="_Z32AddSC_boss_watchkeeper_gargolmarv" >AddSC_boss_watchkeeper_gargolmar</dfn>();     <i>//HC Ramparts</i></td></tr>
+<tr><th id="97">97</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_boss_omor_the_unscarredv" title='AddSC_boss_omor_the_unscarred' data-ref="_Z29AddSC_boss_omor_the_unscarredv" >AddSC_boss_omor_the_unscarred</dfn>();</td></tr>
+<tr><th id="98">98</th><td><em>void</em> <dfn class="decl" id="_Z30AddSC_boss_vazruden_the_heraldv" title='AddSC_boss_vazruden_the_herald' data-ref="_Z30AddSC_boss_vazruden_the_heraldv" >AddSC_boss_vazruden_the_herald</dfn>();</td></tr>
+<tr><th id="99">99</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_instance_rampartsv" title='AddSC_instance_ramparts' data-ref="_Z23AddSC_instance_rampartsv" >AddSC_instance_ramparts</dfn>();</td></tr>
+<tr><th id="100">100</th><td><em>void</em> <dfn class="decl" id="_Z14AddSC_arcatrazv" title='AddSC_arcatraz' data-ref="_Z14AddSC_arcatrazv" >AddSC_arcatraz</dfn>();                       <i>//TK Arcatraz</i></td></tr>
+<tr><th id="101">101</th><td><em>void</em> <dfn class="decl" id="_Z31AddSC_boss_zereketh_the_unboundv" title='AddSC_boss_zereketh_the_unbound' data-ref="_Z31AddSC_boss_zereketh_the_unboundv" >AddSC_boss_zereketh_the_unbound</dfn>();</td></tr>
+<tr><th id="102">102</th><td><em>void</em> <dfn class="decl" id="_Z32AddSC_boss_dalliah_the_doomsayerv" title='AddSC_boss_dalliah_the_doomsayer' data-ref="_Z32AddSC_boss_dalliah_the_doomsayerv" >AddSC_boss_dalliah_the_doomsayer</dfn>();</td></tr>
+<tr><th id="103">103</th><td><em>void</em> <dfn class="decl" id="_Z36AddSC_boss_wrath_scryer_soccothratesv" title='AddSC_boss_wrath_scryer_soccothrates' data-ref="_Z36AddSC_boss_wrath_scryer_soccothratesv" >AddSC_boss_wrath_scryer_soccothrates</dfn>();</td></tr>
+<tr><th id="104">104</th><td><em>void</em> <dfn class="decl" id="_Z28AddSC_boss_harbinger_skyrissv" title='AddSC_boss_harbinger_skyriss' data-ref="_Z28AddSC_boss_harbinger_skyrissv" >AddSC_boss_harbinger_skyriss</dfn>();</td></tr>
+<tr><th id="105">105</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_instance_arcatrazv" title='AddSC_instance_arcatraz' data-ref="_Z23AddSC_instance_arcatrazv" >AddSC_instance_arcatraz</dfn>();</td></tr>
+<tr><th id="106">106</th><td><em>void</em> <dfn class="decl" id="_Z33AddSC_boss_high_botanist_freywinnv" title='AddSC_boss_high_botanist_freywinn' data-ref="_Z33AddSC_boss_high_botanist_freywinnv" >AddSC_boss_high_botanist_freywinn</dfn>();    <i>//TK Botanica</i></td></tr>
+<tr><th id="107">107</th><td><em>void</em> <dfn class="decl" id="_Z14AddSC_boss_lajv" title='AddSC_boss_laj' data-ref="_Z14AddSC_boss_lajv" >AddSC_boss_laj</dfn>();</td></tr>
+<tr><th id="108">108</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_boss_warp_splinterv" title='AddSC_boss_warp_splinter' data-ref="_Z24AddSC_boss_warp_splinterv" >AddSC_boss_warp_splinter</dfn>();</td></tr>
+<tr><th id="109">109</th><td><em>void</em> <dfn class="decl" id="_Z31AddSC_boss_thorngrin_the_tenderv" title='AddSC_boss_thorngrin_the_tender' data-ref="_Z31AddSC_boss_thorngrin_the_tenderv" >AddSC_boss_thorngrin_the_tender</dfn>();</td></tr>
+<tr><th id="110">110</th><td><em>void</em> <dfn class="decl" id="_Z29AddSC_boss_commander_sarannisv" title='AddSC_boss_commander_sarannis' data-ref="_Z29AddSC_boss_commander_sarannisv" >AddSC_boss_commander_sarannis</dfn>();</td></tr>
+<tr><th id="111">111</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_instance_the_botanicav" title='AddSC_instance_the_botanica' data-ref="_Z27AddSC_instance_the_botanicav" >AddSC_instance_the_botanica</dfn>();</td></tr>
+<tr><th id="112">112</th><td><em>void</em> <dfn class="decl" id="_Z15AddSC_boss_alarv" title='AddSC_boss_alar' data-ref="_Z15AddSC_boss_alarv" >AddSC_boss_alar</dfn>();                      <i>//TK The Eye</i></td></tr>
+<tr><th id="113">113</th><td><em>void</em> <dfn class="decl" id="_Z19AddSC_boss_kaelthasv" title='AddSC_boss_kaelthas' data-ref="_Z19AddSC_boss_kaelthasv" >AddSC_boss_kaelthas</dfn>();</td></tr>
+<tr><th id="114">114</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_boss_void_reaverv" title='AddSC_boss_void_reaver' data-ref="_Z22AddSC_boss_void_reaverv" >AddSC_boss_void_reaver</dfn>();</td></tr>
+<tr><th id="115">115</th><td><em>void</em> <dfn class="decl" id="_Z36AddSC_boss_high_astromancer_solarianv" title='AddSC_boss_high_astromancer_solarian' data-ref="_Z36AddSC_boss_high_astromancer_solarianv" >AddSC_boss_high_astromancer_solarian</dfn>();</td></tr>
+<tr><th id="116">116</th><td><em>void</em> <dfn class="decl" id="_Z22AddSC_instance_the_eyev" title='AddSC_instance_the_eye' data-ref="_Z22AddSC_instance_the_eyev" >AddSC_instance_the_eye</dfn>();</td></tr>
+<tr><th id="117">117</th><td><em>void</em> <dfn class="decl" id="_Z13AddSC_the_eyev" title='AddSC_the_eye' data-ref="_Z13AddSC_the_eyev" >AddSC_the_eye</dfn>();</td></tr>
+<tr><th id="118">118</th><td><em>void</em> <dfn class="decl" id="_Z32AddSC_boss_gatewatcher_iron_handv" title='AddSC_boss_gatewatcher_iron_hand' data-ref="_Z32AddSC_boss_gatewatcher_iron_handv" >AddSC_boss_gatewatcher_iron_hand</dfn>();     <i>//TK The Mechanar</i></td></tr>
+<tr><th id="119">119</th><td><em>void</em> <dfn class="decl" id="_Z31AddSC_boss_gatewatcher_gyrokillv" title='AddSC_boss_gatewatcher_gyrokill' data-ref="_Z31AddSC_boss_gatewatcher_gyrokillv" >AddSC_boss_gatewatcher_gyrokill</dfn>();</td></tr>
+<tr><th id="120">120</th><td><em>void</em> <dfn class="decl" id="_Z33AddSC_boss_nethermancer_sepethreav" title='AddSC_boss_nethermancer_sepethrea' data-ref="_Z33AddSC_boss_nethermancer_sepethreav" >AddSC_boss_nethermancer_sepethrea</dfn>();</td></tr>
+<tr><th id="121">121</th><td><em>void</em> <dfn class="decl" id="_Z35AddSC_boss_pathaleon_the_calculatorv" title='AddSC_boss_pathaleon_the_calculator' data-ref="_Z35AddSC_boss_pathaleon_the_calculatorv" >AddSC_boss_pathaleon_the_calculator</dfn>();</td></tr>
+<tr><th id="122">122</th><td><em>void</em> <dfn class="decl" id="_Z33AddSC_boss_mechano_lord_capacitusv" title='AddSC_boss_mechano_lord_capacitus' data-ref="_Z33AddSC_boss_mechano_lord_capacitusv" >AddSC_boss_mechano_lord_capacitus</dfn>();</td></tr>
+<tr><th id="123">123</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_instance_mechanarv" title='AddSC_instance_mechanar' data-ref="_Z23AddSC_instance_mechanarv" >AddSC_instance_mechanar</dfn>();</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><em>void</em> <dfn class="decl" id="_Z27AddSC_blades_edge_mountainsv" title='AddSC_blades_edge_mountains' data-ref="_Z27AddSC_blades_edge_mountainsv" >AddSC_blades_edge_mountains</dfn>();</td></tr>
+<tr><th id="126">126</th><td><em>void</em> <dfn class="decl" id="_Z25AddSC_boss_doomlordkazzakv" title='AddSC_boss_doomlordkazzak' data-ref="_Z25AddSC_boss_doomlordkazzakv" >AddSC_boss_doomlordkazzak</dfn>();</td></tr>
+<tr><th id="127">127</th><td><em>void</em> <dfn class="decl" id="_Z21AddSC_boss_doomwalkerv" title='AddSC_boss_doomwalker' data-ref="_Z21AddSC_boss_doomwalkerv" >AddSC_boss_doomwalker</dfn>();</td></tr>
+<tr><th id="128">128</th><td><em>void</em> <dfn class="decl" id="_Z24AddSC_hellfire_peninsulav" title='AddSC_hellfire_peninsula' data-ref="_Z24AddSC_hellfire_peninsulav" >AddSC_hellfire_peninsula</dfn>();</td></tr>
+<tr><th id="129">129</th><td><em>void</em> <dfn class="decl" id="_Z13AddSC_nagrandv" title='AddSC_nagrand' data-ref="_Z13AddSC_nagrandv" >AddSC_nagrand</dfn>();</td></tr>
+<tr><th id="130">130</th><td><em>void</em> <dfn class="decl" id="_Z17AddSC_netherstormv" title='AddSC_netherstorm' data-ref="_Z17AddSC_netherstormv" >AddSC_netherstorm</dfn>();</td></tr>
+<tr><th id="131">131</th><td><em>void</em> <dfn class="decl" id="_Z23AddSC_shadowmoon_valleyv" title='AddSC_shadowmoon_valley' data-ref="_Z23AddSC_shadowmoon_valleyv" >AddSC_shadowmoon_valley</dfn>();</td></tr>
+<tr><th id="132">132</th><td><em>void</em> <dfn class="decl" id="_Z20AddSC_shattrath_cityv" title='AddSC_shattrath_city' data-ref="_Z20AddSC_shattrath_cityv" >AddSC_shattrath_city</dfn>();</td></tr>
+<tr><th id="133">133</th><td><em>void</em> <dfn class="decl" id="_Z21AddSC_terokkar_forestv" title='AddSC_terokkar_forest' data-ref="_Z21AddSC_terokkar_forestv" >AddSC_terokkar_forest</dfn>();</td></tr>
+<tr><th id="134">134</th><td><em>void</em> <dfn class="decl" id="_Z17AddSC_zangarmarshv" title='AddSC_zangarmarsh' data-ref="_Z17AddSC_zangarmarshv" >AddSC_zangarmarsh</dfn>();</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td><i>// The name of this function should match:</i></td></tr>
+<tr><th id="137">137</th><td><i>// void Add${NameOfDirectory}Scripts()</i></td></tr>
+<tr><th id="138">138</th><td><em>void</em> <dfn class="decl def" id="_Z17AddOutlandScriptsv" title='AddOutlandScripts' data-ref="_Z17AddOutlandScriptsv" >AddOutlandScripts</dfn>()</td></tr>
+<tr><th id="139">139</th><td>{</td></tr>
+<tr><th id="140">140</th><td>    <i>// Auchindoun - Auchenai Crypts</i></td></tr>
+<tr><th id="141">141</th><td>    <a class="ref" href="#_Z35AddSC_boss_shirrak_the_dead_watcherv" title='AddSC_boss_shirrak_the_dead_watcher' data-ref="_Z35AddSC_boss_shirrak_the_dead_watcherv" >AddSC_boss_shirrak_the_dead_watcher</a>();</td></tr>
+<tr><th id="142">142</th><td>    <a class="ref" href="#_Z26AddSC_boss_exarch_maladaarv" title='AddSC_boss_exarch_maladaar' data-ref="_Z26AddSC_boss_exarch_maladaarv" >AddSC_boss_exarch_maladaar</a>();</td></tr>
+<tr><th id="143">143</th><td>    <a class="ref" href="#_Z30AddSC_instance_auchenai_cryptsv" title='AddSC_instance_auchenai_crypts' data-ref="_Z30AddSC_instance_auchenai_cryptsv" >AddSC_instance_auchenai_crypts</a>();</td></tr>
+<tr><th id="144">144</th><td></td></tr>
+<tr><th id="145">145</th><td>    <i>// Auchindoun - Mana Tombs</i></td></tr>
+<tr><th id="146">146</th><td>    <a class="ref" href="#_Z22AddSC_boss_pandemoniusv" title='AddSC_boss_pandemonius' data-ref="_Z22AddSC_boss_pandemoniusv" >AddSC_boss_pandemonius</a>();</td></tr>
+<tr><th id="147">147</th><td>    <a class="ref" href="#_Z30AddSC_boss_nexusprince_shaffarv" title='AddSC_boss_nexusprince_shaffar' data-ref="_Z30AddSC_boss_nexusprince_shaffarv" >AddSC_boss_nexusprince_shaffar</a>();</td></tr>
+<tr><th id="148">148</th><td>    <a class="ref" href="#_Z25AddSC_instance_mana_tombsv" title='AddSC_instance_mana_tombs' data-ref="_Z25AddSC_instance_mana_tombsv" >AddSC_instance_mana_tombs</a>();</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>    <i>// Auchindoun - Sekketh Halls</i></td></tr>
+<tr><th id="151">151</th><td>    <a class="ref" href="#_Z26AddSC_boss_darkweaver_sythv" title='AddSC_boss_darkweaver_syth' data-ref="_Z26AddSC_boss_darkweaver_sythv" >AddSC_boss_darkweaver_syth</a>();</td></tr>
+<tr><th id="152">152</th><td>    <a class="ref" href="#_Z27AddSC_boss_talon_king_ikissv" title='AddSC_boss_talon_king_ikiss' data-ref="_Z27AddSC_boss_talon_king_ikissv" >AddSC_boss_talon_king_ikiss</a>();</td></tr>
+<tr><th id="153">153</th><td>    <a class="ref" href="#_Z15AddSC_boss_anzuv" title='AddSC_boss_anzu' data-ref="_Z15AddSC_boss_anzuv" >AddSC_boss_anzu</a>();</td></tr>
+<tr><th id="154">154</th><td>    <a class="ref" href="#_Z28AddSC_instance_sethekk_hallsv" title='AddSC_instance_sethekk_halls' data-ref="_Z28AddSC_instance_sethekk_hallsv" >AddSC_instance_sethekk_halls</a>();</td></tr>
+<tr><th id="155">155</th><td></td></tr>
+<tr><th id="156">156</th><td>    <i>// Auchindoun - Shadow Labyrinth</i></td></tr>
+<tr><th id="157">157</th><td>    <a class="ref" href="#_Z29AddSC_boss_ambassador_hellmawv" title='AddSC_boss_ambassador_hellmaw' data-ref="_Z29AddSC_boss_ambassador_hellmawv" >AddSC_boss_ambassador_hellmaw</a>();</td></tr>
+<tr><th id="158">158</th><td>    <a class="ref" href="#_Z33AddSC_boss_blackheart_the_inciterv" title='AddSC_boss_blackheart_the_inciter' data-ref="_Z33AddSC_boss_blackheart_the_inciterv" >AddSC_boss_blackheart_the_inciter</a>();</td></tr>
+<tr><th id="159">159</th><td>    <a class="ref" href="#_Z29AddSC_boss_grandmaster_vorpilv" title='AddSC_boss_grandmaster_vorpil' data-ref="_Z29AddSC_boss_grandmaster_vorpilv" >AddSC_boss_grandmaster_vorpil</a>();</td></tr>
+<tr><th id="160">160</th><td>    <a class="ref" href="#_Z17AddSC_boss_murmurv" title='AddSC_boss_murmur' data-ref="_Z17AddSC_boss_murmurv" >AddSC_boss_murmur</a>();</td></tr>
+<tr><th id="161">161</th><td>    <a class="ref" href="#_Z31AddSC_instance_shadow_labyrinthv" title='AddSC_instance_shadow_labyrinth' data-ref="_Z31AddSC_instance_shadow_labyrinthv" >AddSC_instance_shadow_labyrinth</a>();</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td>    <i>// Black Temple</i></td></tr>
+<tr><th id="164">164</th><td>    <a class="ref" href="#_Z18AddSC_black_templev" title='AddSC_black_temple' data-ref="_Z18AddSC_black_templev" >AddSC_black_temple</a>();</td></tr>
+<tr><th id="165">165</th><td>    <a class="ref" href="#_Z18AddSC_boss_illidanv" title='AddSC_boss_illidan' data-ref="_Z18AddSC_boss_illidanv" >AddSC_boss_illidan</a>();</td></tr>
+<tr><th id="166">166</th><td>    <a class="ref" href="#_Z25AddSC_boss_shade_of_akamav" title='AddSC_boss_shade_of_akama' data-ref="_Z25AddSC_boss_shade_of_akamav" >AddSC_boss_shade_of_akama</a>();</td></tr>
+<tr><th id="167">167</th><td>    <a class="ref" href="#_Z19AddSC_boss_supremusv" title='AddSC_boss_supremus' data-ref="_Z19AddSC_boss_supremusv" >AddSC_boss_supremus</a>();</td></tr>
+<tr><th id="168">168</th><td>    <a class="ref" href="#_Z28AddSC_boss_gurtogg_bloodboilv" title='AddSC_boss_gurtogg_bloodboil' data-ref="_Z28AddSC_boss_gurtogg_bloodboilv" >AddSC_boss_gurtogg_bloodboil</a>();</td></tr>
+<tr><th id="169">169</th><td>    <a class="ref" href="#_Z25AddSC_boss_mother_shahrazv" title='AddSC_boss_mother_shahraz' data-ref="_Z25AddSC_boss_mother_shahrazv" >AddSC_boss_mother_shahraz</a>();</td></tr>
+<tr><th id="170">170</th><td>    <a class="ref" href="#_Z29AddSC_boss_reliquary_of_soulsv" title='AddSC_boss_reliquary_of_souls' data-ref="_Z29AddSC_boss_reliquary_of_soulsv" >AddSC_boss_reliquary_of_souls</a>();</td></tr>
+<tr><th id="171">171</th><td>    <a class="ref" href="#_Z26AddSC_boss_teron_gorefiendv" title='AddSC_boss_teron_gorefiend' data-ref="_Z26AddSC_boss_teron_gorefiendv" >AddSC_boss_teron_gorefiend</a>();</td></tr>
+<tr><th id="172">172</th><td>    <a class="ref" href="#_Z19AddSC_boss_najentusv" title='AddSC_boss_najentus' data-ref="_Z19AddSC_boss_najentusv" >AddSC_boss_najentus</a>();</td></tr>
+<tr><th id="173">173</th><td>    <a class="ref" href="#_Z27AddSC_boss_illidari_councilv" title='AddSC_boss_illidari_council' data-ref="_Z27AddSC_boss_illidari_councilv" >AddSC_boss_illidari_council</a>();</td></tr>
+<tr><th id="174">174</th><td>    <a class="ref" href="#_Z27AddSC_instance_black_templev" title='AddSC_instance_black_temple' data-ref="_Z27AddSC_instance_black_templev" >AddSC_instance_black_temple</a>();</td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td>    <i>// Coilfang Reservoir - Serpent Shrine Cavern</i></td></tr>
+<tr><th id="177">177</th><td>    <a class="ref" href="#_Z32AddSC_boss_fathomlord_karathressv" title='AddSC_boss_fathomlord_karathress' data-ref="_Z32AddSC_boss_fathomlord_karathressv" >AddSC_boss_fathomlord_karathress</a>();</td></tr>
+<tr><th id="178">178</th><td>    <a class="ref" href="#_Z31AddSC_boss_hydross_the_unstablev" title='AddSC_boss_hydross_the_unstable' data-ref="_Z31AddSC_boss_hydross_the_unstablev" >AddSC_boss_hydross_the_unstable</a>();</td></tr>
+<tr><th id="179">179</th><td>    <a class="ref" href="#_Z21AddSC_boss_lady_vashjv" title='AddSC_boss_lady_vashj' data-ref="_Z21AddSC_boss_lady_vashjv" >AddSC_boss_lady_vashj</a>();</td></tr>
+<tr><th id="180">180</th><td>    <a class="ref" href="#_Z30AddSC_boss_leotheras_the_blindv" title='AddSC_boss_leotheras_the_blind' data-ref="_Z30AddSC_boss_leotheras_the_blindv" >AddSC_boss_leotheras_the_blind</a>();</td></tr>
+<tr><th id="181">181</th><td>    <a class="ref" href="#_Z30AddSC_boss_morogrim_tidewalkerv" title='AddSC_boss_morogrim_tidewalker' data-ref="_Z30AddSC_boss_morogrim_tidewalkerv" >AddSC_boss_morogrim_tidewalker</a>();</td></tr>
+<tr><th id="182">182</th><td>    <a class="ref" href="#_Z35AddSC_instance_serpentshrine_cavernv" title='AddSC_instance_serpentshrine_cavern' data-ref="_Z35AddSC_instance_serpentshrine_cavernv" >AddSC_instance_serpentshrine_cavern</a>();</td></tr>
+<tr><th id="183">183</th><td>    <a class="ref" href="#_Z27AddSC_boss_the_lurker_belowv" title='AddSC_boss_the_lurker_below' data-ref="_Z27AddSC_boss_the_lurker_belowv" >AddSC_boss_the_lurker_below</a>();</td></tr>
+<tr><th id="184">184</th><td></td></tr>
+<tr><th id="185">185</th><td>    <i>// Coilfang Reservoir - The Steam Vault</i></td></tr>
+<tr><th id="186">186</th><td>    <a class="ref" href="#_Z26AddSC_instance_steam_vaultv" title='AddSC_instance_steam_vault' data-ref="_Z26AddSC_instance_steam_vaultv" >AddSC_instance_steam_vault</a>();</td></tr>
+<tr><th id="187">187</th><td>    <a class="ref" href="#_Z30AddSC_boss_hydromancer_thespiav" title='AddSC_boss_hydromancer_thespia' data-ref="_Z30AddSC_boss_hydromancer_thespiav" >AddSC_boss_hydromancer_thespia</a>();</td></tr>
+<tr><th id="188">188</th><td>    <a class="ref" href="#_Z32AddSC_boss_mekgineer_steamriggerv" title='AddSC_boss_mekgineer_steamrigger' data-ref="_Z32AddSC_boss_mekgineer_steamriggerv" >AddSC_boss_mekgineer_steamrigger</a>();</td></tr>
+<tr><th id="189">189</th><td>    <a class="ref" href="#_Z29AddSC_boss_warlord_kalithreshv" title='AddSC_boss_warlord_kalithresh' data-ref="_Z29AddSC_boss_warlord_kalithreshv" >AddSC_boss_warlord_kalithresh</a>();</td></tr>
+<tr><th id="190">190</th><td></td></tr>
+<tr><th id="191">191</th><td>    <i>// Coilfang Reservoir - The Slave Pens</i></td></tr>
+<tr><th id="192">192</th><td>    <a class="ref" href="#_Z29AddSC_instance_the_slave_pensv" title='AddSC_instance_the_slave_pens' data-ref="_Z29AddSC_instance_the_slave_pensv" >AddSC_instance_the_slave_pens</a>();</td></tr>
+<tr><th id="193">193</th><td>    <a class="ref" href="#_Z29AddSC_boss_mennu_the_betrayerv" title='AddSC_boss_mennu_the_betrayer' data-ref="_Z29AddSC_boss_mennu_the_betrayerv" >AddSC_boss_mennu_the_betrayer</a>();</td></tr>
+<tr><th id="194">194</th><td>    <a class="ref" href="#_Z30AddSC_boss_rokmar_the_cracklerv" title='AddSC_boss_rokmar_the_crackler' data-ref="_Z30AddSC_boss_rokmar_the_cracklerv" >AddSC_boss_rokmar_the_crackler</a>();</td></tr>
+<tr><th id="195">195</th><td>    <a class="ref" href="#_Z21AddSC_boss_quagmirranv" title='AddSC_boss_quagmirran' data-ref="_Z21AddSC_boss_quagmirranv" >AddSC_boss_quagmirran</a>();</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td>    <i>// Coilfang Reservoir - The Underbog</i></td></tr>
+<tr><th id="198">198</th><td>    <a class="ref" href="#_Z27AddSC_instance_the_underbogv" title='AddSC_instance_the_underbog' data-ref="_Z27AddSC_instance_the_underbogv" >AddSC_instance_the_underbog</a>();</td></tr>
+<tr><th id="199">199</th><td>    <a class="ref" href="#_Z20AddSC_boss_hungarfenv" title='AddSC_boss_hungarfen' data-ref="_Z20AddSC_boss_hungarfenv" >AddSC_boss_hungarfen</a>();</td></tr>
+<tr><th id="200">200</th><td>    <a class="ref" href="#_Z28AddSC_boss_the_black_stalkerv" title='AddSC_boss_the_black_stalker' data-ref="_Z28AddSC_boss_the_black_stalkerv" >AddSC_boss_the_black_stalker</a>();</td></tr>
+<tr><th id="201">201</th><td></td></tr>
+<tr><th id="202">202</th><td>    <i>// Gruul's Lair</i></td></tr>
+<tr><th id="203">203</th><td>    <a class="ref" href="#_Z16AddSC_boss_gruulv" title='AddSC_boss_gruul' data-ref="_Z16AddSC_boss_gruulv" >AddSC_boss_gruul</a>();</td></tr>
+<tr><th id="204">204</th><td>    <a class="ref" href="#_Z28AddSC_boss_high_king_maulgarv" title='AddSC_boss_high_king_maulgar' data-ref="_Z28AddSC_boss_high_king_maulgarv" >AddSC_boss_high_king_maulgar</a>();</td></tr>
+<tr><th id="205">205</th><td>    <a class="ref" href="#_Z26AddSC_instance_gruuls_lairv" title='AddSC_instance_gruuls_lair' data-ref="_Z26AddSC_instance_gruuls_lairv" >AddSC_instance_gruuls_lair</a>();</td></tr>
+<tr><th id="206">206</th><td>    <a class="ref" href="#_Z18AddSC_boss_broggokv" title='AddSC_boss_broggok' data-ref="_Z18AddSC_boss_broggokv" >AddSC_boss_broggok</a>();                   <i>//HC Blood Furnace</i></td></tr>
+<tr><th id="207">207</th><td>    <a class="ref" href="#_Z30AddSC_boss_kelidan_the_breakerv" title='AddSC_boss_kelidan_the_breaker' data-ref="_Z30AddSC_boss_kelidan_the_breakerv" >AddSC_boss_kelidan_the_breaker</a>();</td></tr>
+<tr><th id="208">208</th><td>    <a class="ref" href="#_Z20AddSC_boss_the_makerv" title='AddSC_boss_the_maker' data-ref="_Z20AddSC_boss_the_makerv" >AddSC_boss_the_maker</a>();</td></tr>
+<tr><th id="209">209</th><td>    <a class="ref" href="#_Z28AddSC_instance_blood_furnacev" title='AddSC_instance_blood_furnace' data-ref="_Z28AddSC_instance_blood_furnacev" >AddSC_instance_blood_furnace</a>();</td></tr>
+<tr><th id="210">210</th><td>    <a class="ref" href="#_Z22AddSC_boss_magtheridonv" title='AddSC_boss_magtheridon' data-ref="_Z22AddSC_boss_magtheridonv" >AddSC_boss_magtheridon</a>();               <i>//HC Magtheridon's Lair</i></td></tr>
+<tr><th id="211">211</th><td>    <a class="ref" href="#_Z32AddSC_instance_magtheridons_lairv" title='AddSC_instance_magtheridons_lair' data-ref="_Z32AddSC_instance_magtheridons_lairv" >AddSC_instance_magtheridons_lair</a>();</td></tr>
+<tr><th id="212">212</th><td>    <a class="ref" href="#_Z35AddSC_boss_grand_warlock_nethekursev" title='AddSC_boss_grand_warlock_nethekurse' data-ref="_Z35AddSC_boss_grand_warlock_nethekursev" >AddSC_boss_grand_warlock_nethekurse</a>();  <i>//HC Shattered Halls</i></td></tr>
+<tr><th id="213">213</th><td>    <a class="ref" href="#_Z28AddSC_boss_warbringer_omroggv" title='AddSC_boss_warbringer_omrogg' data-ref="_Z28AddSC_boss_warbringer_omroggv" >AddSC_boss_warbringer_omrogg</a>();</td></tr>
+<tr><th id="214">214</th><td>    <a class="ref" href="#_Z37AddSC_boss_warchief_kargath_bladefistv" title='AddSC_boss_warchief_kargath_bladefist' data-ref="_Z37AddSC_boss_warchief_kargath_bladefistv" >AddSC_boss_warchief_kargath_bladefist</a>();</td></tr>
+<tr><th id="215">215</th><td>    <a class="ref" href="#_Z21AddSC_shattered_hallsv" title='AddSC_shattered_halls' data-ref="_Z21AddSC_shattered_hallsv" >AddSC_shattered_halls</a>();</td></tr>
+<tr><th id="216">216</th><td>    <a class="ref" href="#_Z30AddSC_instance_shattered_hallsv" title='AddSC_instance_shattered_halls' data-ref="_Z30AddSC_instance_shattered_hallsv" >AddSC_instance_shattered_halls</a>();</td></tr>
+<tr><th id="217">217</th><td>    <a class="ref" href="#_Z32AddSC_boss_watchkeeper_gargolmarv" title='AddSC_boss_watchkeeper_gargolmar' data-ref="_Z32AddSC_boss_watchkeeper_gargolmarv" >AddSC_boss_watchkeeper_gargolmar</a>();     <i>//HC Ramparts</i></td></tr>
+<tr><th id="218">218</th><td>    <a class="ref" href="#_Z29AddSC_boss_omor_the_unscarredv" title='AddSC_boss_omor_the_unscarred' data-ref="_Z29AddSC_boss_omor_the_unscarredv" >AddSC_boss_omor_the_unscarred</a>();</td></tr>
+<tr><th id="219">219</th><td>    <a class="ref" href="#_Z30AddSC_boss_vazruden_the_heraldv" title='AddSC_boss_vazruden_the_herald' data-ref="_Z30AddSC_boss_vazruden_the_heraldv" >AddSC_boss_vazruden_the_herald</a>();</td></tr>
+<tr><th id="220">220</th><td>    <a class="ref" href="#_Z23AddSC_instance_rampartsv" title='AddSC_instance_ramparts' data-ref="_Z23AddSC_instance_rampartsv" >AddSC_instance_ramparts</a>();</td></tr>
+<tr><th id="221">221</th><td>    <a class="ref" href="#_Z14AddSC_arcatrazv" title='AddSC_arcatraz' data-ref="_Z14AddSC_arcatrazv" >AddSC_arcatraz</a>();                       <i>//TK Arcatraz</i></td></tr>
+<tr><th id="222">222</th><td>    <a class="ref" href="#_Z31AddSC_boss_zereketh_the_unboundv" title='AddSC_boss_zereketh_the_unbound' data-ref="_Z31AddSC_boss_zereketh_the_unboundv" >AddSC_boss_zereketh_the_unbound</a>();</td></tr>
+<tr><th id="223">223</th><td>    <a class="ref" href="#_Z32AddSC_boss_dalliah_the_doomsayerv" title='AddSC_boss_dalliah_the_doomsayer' data-ref="_Z32AddSC_boss_dalliah_the_doomsayerv" >AddSC_boss_dalliah_the_doomsayer</a>();</td></tr>
+<tr><th id="224">224</th><td>    <a class="ref" href="#_Z36AddSC_boss_wrath_scryer_soccothratesv" title='AddSC_boss_wrath_scryer_soccothrates' data-ref="_Z36AddSC_boss_wrath_scryer_soccothratesv" >AddSC_boss_wrath_scryer_soccothrates</a>();</td></tr>
+<tr><th id="225">225</th><td>    <a class="ref" href="#_Z28AddSC_boss_harbinger_skyrissv" title='AddSC_boss_harbinger_skyriss' data-ref="_Z28AddSC_boss_harbinger_skyrissv" >AddSC_boss_harbinger_skyriss</a>();</td></tr>
+<tr><th id="226">226</th><td>    <a class="ref" href="#_Z23AddSC_instance_arcatrazv" title='AddSC_instance_arcatraz' data-ref="_Z23AddSC_instance_arcatrazv" >AddSC_instance_arcatraz</a>();</td></tr>
+<tr><th id="227">227</th><td>    <a class="ref" href="#_Z33AddSC_boss_high_botanist_freywinnv" title='AddSC_boss_high_botanist_freywinn' data-ref="_Z33AddSC_boss_high_botanist_freywinnv" >AddSC_boss_high_botanist_freywinn</a>();    <i>//TK Botanica</i></td></tr>
+<tr><th id="228">228</th><td>    <a class="ref" href="#_Z14AddSC_boss_lajv" title='AddSC_boss_laj' data-ref="_Z14AddSC_boss_lajv" >AddSC_boss_laj</a>();</td></tr>
+<tr><th id="229">229</th><td>    <a class="ref" href="#_Z24AddSC_boss_warp_splinterv" title='AddSC_boss_warp_splinter' data-ref="_Z24AddSC_boss_warp_splinterv" >AddSC_boss_warp_splinter</a>();</td></tr>
+<tr><th id="230">230</th><td>    <a class="ref" href="#_Z31AddSC_boss_thorngrin_the_tenderv" title='AddSC_boss_thorngrin_the_tender' data-ref="_Z31AddSC_boss_thorngrin_the_tenderv" >AddSC_boss_thorngrin_the_tender</a>();</td></tr>
+<tr><th id="231">231</th><td>    <a class="ref" href="#_Z29AddSC_boss_commander_sarannisv" title='AddSC_boss_commander_sarannis' data-ref="_Z29AddSC_boss_commander_sarannisv" >AddSC_boss_commander_sarannis</a>();</td></tr>
+<tr><th id="232">232</th><td>    <a class="ref" href="#_Z27AddSC_instance_the_botanicav" title='AddSC_instance_the_botanica' data-ref="_Z27AddSC_instance_the_botanicav" >AddSC_instance_the_botanica</a>();</td></tr>
+<tr><th id="233">233</th><td>    <a class="ref" href="#_Z15AddSC_boss_alarv" title='AddSC_boss_alar' data-ref="_Z15AddSC_boss_alarv" >AddSC_boss_alar</a>();                      <i>//TK The Eye</i></td></tr>
+<tr><th id="234">234</th><td>    <a class="ref" href="#_Z19AddSC_boss_kaelthasv" title='AddSC_boss_kaelthas' data-ref="_Z19AddSC_boss_kaelthasv" >AddSC_boss_kaelthas</a>();</td></tr>
+<tr><th id="235">235</th><td>    <a class="ref" href="#_Z22AddSC_boss_void_reaverv" title='AddSC_boss_void_reaver' data-ref="_Z22AddSC_boss_void_reaverv" >AddSC_boss_void_reaver</a>();</td></tr>
+<tr><th id="236">236</th><td>    <a class="ref" href="#_Z36AddSC_boss_high_astromancer_solarianv" title='AddSC_boss_high_astromancer_solarian' data-ref="_Z36AddSC_boss_high_astromancer_solarianv" >AddSC_boss_high_astromancer_solarian</a>();</td></tr>
+<tr><th id="237">237</th><td>    <a class="ref" href="#_Z22AddSC_instance_the_eyev" title='AddSC_instance_the_eye' data-ref="_Z22AddSC_instance_the_eyev" >AddSC_instance_the_eye</a>();</td></tr>
+<tr><th id="238">238</th><td>    <a class="ref" href="#_Z13AddSC_the_eyev" title='AddSC_the_eye' data-ref="_Z13AddSC_the_eyev" >AddSC_the_eye</a>();</td></tr>
+<tr><th id="239">239</th><td>    <a class="ref" href="#_Z32AddSC_boss_gatewatcher_iron_handv" title='AddSC_boss_gatewatcher_iron_hand' data-ref="_Z32AddSC_boss_gatewatcher_iron_handv" >AddSC_boss_gatewatcher_iron_hand</a>();     <i>//TK The Mechanar</i></td></tr>
+<tr><th id="240">240</th><td>    <a class="ref" href="#_Z31AddSC_boss_gatewatcher_gyrokillv" title='AddSC_boss_gatewatcher_gyrokill' data-ref="_Z31AddSC_boss_gatewatcher_gyrokillv" >AddSC_boss_gatewatcher_gyrokill</a>();</td></tr>
+<tr><th id="241">241</th><td>    <a class="ref" href="#_Z33AddSC_boss_nethermancer_sepethreav" title='AddSC_boss_nethermancer_sepethrea' data-ref="_Z33AddSC_boss_nethermancer_sepethreav" >AddSC_boss_nethermancer_sepethrea</a>();</td></tr>
+<tr><th id="242">242</th><td>    <a class="ref" href="#_Z35AddSC_boss_pathaleon_the_calculatorv" title='AddSC_boss_pathaleon_the_calculator' data-ref="_Z35AddSC_boss_pathaleon_the_calculatorv" >AddSC_boss_pathaleon_the_calculator</a>();</td></tr>
+<tr><th id="243">243</th><td>    <a class="ref" href="#_Z33AddSC_boss_mechano_lord_capacitusv" title='AddSC_boss_mechano_lord_capacitus' data-ref="_Z33AddSC_boss_mechano_lord_capacitusv" >AddSC_boss_mechano_lord_capacitus</a>();</td></tr>
+<tr><th id="244">244</th><td>    <a class="ref" href="#_Z23AddSC_instance_mechanarv" title='AddSC_instance_mechanar' data-ref="_Z23AddSC_instance_mechanarv" >AddSC_instance_mechanar</a>();</td></tr>
+<tr><th id="245">245</th><td></td></tr>
+<tr><th id="246">246</th><td>    <a class="ref" href="#_Z27AddSC_blades_edge_mountainsv" title='AddSC_blades_edge_mountains' data-ref="_Z27AddSC_blades_edge_mountainsv" >AddSC_blades_edge_mountains</a>();</td></tr>
+<tr><th id="247">247</th><td>    <a class="ref" href="#_Z25AddSC_boss_doomlordkazzakv" title='AddSC_boss_doomlordkazzak' data-ref="_Z25AddSC_boss_doomlordkazzakv" >AddSC_boss_doomlordkazzak</a>();</td></tr>
+<tr><th id="248">248</th><td>    <a class="ref" href="#_Z21AddSC_boss_doomwalkerv" title='AddSC_boss_doomwalker' data-ref="_Z21AddSC_boss_doomwalkerv" >AddSC_boss_doomwalker</a>();</td></tr>
+<tr><th id="249">249</th><td>    <a class="ref" href="#_Z24AddSC_hellfire_peninsulav" title='AddSC_hellfire_peninsula' data-ref="_Z24AddSC_hellfire_peninsulav" >AddSC_hellfire_peninsula</a>();</td></tr>
+<tr><th id="250">250</th><td>    <a class="ref" href="#_Z13AddSC_nagrandv" title='AddSC_nagrand' data-ref="_Z13AddSC_nagrandv" >AddSC_nagrand</a>();</td></tr>
+<tr><th id="251">251</th><td>    <a class="ref" href="#_Z17AddSC_netherstormv" title='AddSC_netherstorm' data-ref="_Z17AddSC_netherstormv" >AddSC_netherstorm</a>();</td></tr>
+<tr><th id="252">252</th><td>    <a class="ref" href="#_Z23AddSC_shadowmoon_valleyv" title='AddSC_shadowmoon_valley' data-ref="_Z23AddSC_shadowmoon_valleyv" >AddSC_shadowmoon_valley</a>();</td></tr>
+<tr><th id="253">253</th><td>    <a class="ref" href="#_Z20AddSC_shattrath_cityv" title='AddSC_shattrath_city' data-ref="_Z20AddSC_shattrath_cityv" >AddSC_shattrath_city</a>();</td></tr>
+<tr><th id="254">254</th><td>    <a class="ref" href="#_Z21AddSC_terokkar_forestv" title='AddSC_terokkar_forest' data-ref="_Z21AddSC_terokkar_forestv" >AddSC_terokkar_forest</a>();</td></tr>
+<tr><th id="255">255</th><td>    <a class="ref" href="#_Z17AddSC_zangarmarshv" title='AddSC_zangarmarsh' data-ref="_Z17AddSC_zangarmarshv" >AddSC_zangarmarsh</a>();</td></tr>
+<tr><th id="256">256</th><td>}</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

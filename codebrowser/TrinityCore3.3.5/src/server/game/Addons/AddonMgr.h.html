@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<title>AddonMgr.h [TrinityCore3.3.5/src/server/game/Addons/AddonMgr.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Addons/AddonMgr.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Addons</a>/AddonMgr.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/_ADDONMGR_H">_ADDONMGR_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/_ADDONMGR_H" data-ref="_M/_ADDONMGR_H">_ADDONMGR_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../common/Define.h.html">"Define.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../../include/c++/4.9/list.html">&lt;list&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>struct</b> <dfn class="type def" id="AddonInfo" title='AddonInfo' data-ref="AddonInfo" >AddonInfo</dfn></td></tr>
+<tr><th id="27">27</th><td>{</td></tr>
+<tr><th id="28">28</th><td>    <dfn class="decl def" id="_ZN9AddonInfoC1ERKSshjhb" title='AddonInfo::AddonInfo' data-ref="_ZN9AddonInfoC1ERKSshjhb" >AddonInfo</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col6 decl" id="26name" title='name' data-type='const std::string &amp;' data-ref="26name" >name</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col7 decl" id="27enabled" title='enabled' data-type='uint8' data-ref="27enabled" >enabled</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="28crc" title='crc' data-type='uint32' data-ref="28crc" >crc</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col9 decl" id="29state" title='state' data-type='uint8' data-ref="29state" >state</dfn>, <em>bool</em> <dfn class="local col0 decl" id="30crcOrPubKey" title='crcOrPubKey' data-type='bool' data-ref="30crcOrPubKey" >crcOrPubKey</dfn>)</td></tr>
+<tr><th id="29">29</th><td>        : <a class="member" href="#AddonInfo::Name" title='AddonInfo::Name' data-ref="AddonInfo::Name" >Name</a><a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" id="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" >(</a><a class="local col6 ref" href="#26name" title='name' data-ref="26name" >name</a>), <a class="member" href="#AddonInfo::Enabled" title='AddonInfo::Enabled' data-ref="AddonInfo::Enabled" >Enabled</a>(<a class="local col7 ref" href="#27enabled" title='enabled' data-ref="27enabled" >enabled</a>), <a class="member" href="#AddonInfo::CRC" title='AddonInfo::CRC' data-ref="AddonInfo::CRC" >CRC</a>(<a class="local col8 ref" href="#28crc" title='crc' data-ref="28crc" >crc</a>), <a class="member" href="#AddonInfo::State" title='AddonInfo::State' data-ref="AddonInfo::State" >State</a>(<a class="local col9 ref" href="#29state" title='state' data-ref="29state" >state</a>), <a class="member" href="#AddonInfo::UsePublicKeyOrCRC" title='AddonInfo::UsePublicKeyOrCRC' data-ref="AddonInfo::UsePublicKeyOrCRC" >UsePublicKeyOrCRC</a>(<a class="local col0 ref" href="#30crcOrPubKey" title='crcOrPubKey' data-ref="30crcOrPubKey" >crcOrPubKey</a>)</td></tr>
+<tr><th id="30">30</th><td>        { }</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="AddonInfo::Name" title='AddonInfo::Name' data-ref="AddonInfo::Name" >Name</dfn>;</td></tr>
+<tr><th id="33">33</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="AddonInfo::Enabled" title='AddonInfo::Enabled' data-ref="AddonInfo::Enabled" >Enabled</dfn>;</td></tr>
+<tr><th id="34">34</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="AddonInfo::CRC" title='AddonInfo::CRC' data-ref="AddonInfo::CRC" >CRC</dfn>;</td></tr>
+<tr><th id="35">35</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="AddonInfo::State" title='AddonInfo::State' data-ref="AddonInfo::State" >State</dfn>;</td></tr>
+<tr><th id="36">36</th><td>    <em>bool</em> <dfn class="decl" id="AddonInfo::UsePublicKeyOrCRC" title='AddonInfo::UsePublicKeyOrCRC' data-ref="AddonInfo::UsePublicKeyOrCRC" >UsePublicKeyOrCRC</dfn>;</td></tr>
+<tr><th id="37">37</th><td>};</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><b>struct</b> <dfn class="type def" id="SavedAddon" title='SavedAddon' data-ref="SavedAddon" >SavedAddon</dfn></td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="decl def" id="_ZN10SavedAddonC1ERKSsj" title='SavedAddon::SavedAddon' data-ref="_ZN10SavedAddonC1ERKSsj" >SavedAddon</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col1 decl" id="31name" title='name' data-type='const std::string &amp;' data-ref="31name" >name</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="32crc" title='crc' data-type='uint32' data-ref="32crc" >crc</dfn>) : <a class="member" href="#SavedAddon::Name" title='SavedAddon::Name' data-ref="SavedAddon::Name" >Name</a><a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" title='std::basic_string::basic_string&lt;_CharT, _Traits, _Alloc&gt;' data-ref="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" id="_ZNSt12basic_stringC1ERKSbIT_T0_T1_E" >(</a><a class="local col1 ref" href="#31name" title='name' data-ref="31name" >name</a>)</td></tr>
+<tr><th id="42">42</th><td>    {</td></tr>
+<tr><th id="43">43</th><td>        <a class="member" href="#SavedAddon::CRC" title='SavedAddon::CRC' data-ref="SavedAddon::CRC" >CRC</a> = <a class="local col2 ref" href="#32crc" title='crc' data-ref="32crc" >crc</a>;</td></tr>
+<tr><th id="44">44</th><td>    }</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="SavedAddon::Name" title='SavedAddon::Name' data-ref="SavedAddon::Name" >Name</dfn>;</td></tr>
+<tr><th id="47">47</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="SavedAddon::CRC" title='SavedAddon::CRC' data-ref="SavedAddon::CRC" >CRC</dfn>;</td></tr>
+<tr><th id="48">48</th><td>};</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><b>struct</b> <dfn class="type def" id="BannedAddon" title='BannedAddon' data-ref="BannedAddon" >BannedAddon</dfn></td></tr>
+<tr><th id="51">51</th><td>{</td></tr>
+<tr><th id="52">52</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BannedAddon::Id" title='BannedAddon::Id' data-ref="BannedAddon::Id" >Id</dfn>;</td></tr>
+<tr><th id="53">53</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="BannedAddon::NameMD5" title='BannedAddon::NameMD5' data-ref="BannedAddon::NameMD5" >NameMD5</dfn>[<var>16</var>];</td></tr>
+<tr><th id="54">54</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="BannedAddon::VersionMD5" title='BannedAddon::VersionMD5' data-ref="BannedAddon::VersionMD5" >VersionMD5</dfn>[<var>16</var>];</td></tr>
+<tr><th id="55">55</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BannedAddon::Timestamp" title='BannedAddon::Timestamp' data-ref="BannedAddon::Timestamp" >Timestamp</dfn>;</td></tr>
+<tr><th id="56">56</th><td>};</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><u>#define <dfn class="macro" id="_M/STANDARD_ADDON_CRC" data-ref="_M/STANDARD_ADDON_CRC">STANDARD_ADDON_CRC</dfn> 0x4C1C776D</u></td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><b>namespace</b> <span class="namespace">AddonMgr</span></td></tr>
+<tr><th id="61">61</th><td>{</td></tr>
+<tr><th id="62">62</th><td>    <em>void</em> <dfn class="decl" id="_ZN8AddonMgr10LoadFromDBEv" title='AddonMgr::LoadFromDB' data-ref="_ZN8AddonMgr10LoadFromDBEv" >LoadFromDB</dfn>();</td></tr>
+<tr><th id="63">63</th><td>    <em>void</em> <dfn class="decl" id="_ZN8AddonMgr9SaveAddonERK9AddonInfo" title='AddonMgr::SaveAddon' data-ref="_ZN8AddonMgr9SaveAddonERK9AddonInfo" >SaveAddon</dfn>(<a class="type" href="#AddonInfo" title='AddonInfo' data-ref="AddonInfo" >AddonInfo</a> <em>const</em>&amp; <dfn class="local col3 decl" id="33addon" title='addon' data-type='const AddonInfo &amp;' data-ref="33addon" >addon</dfn>);</td></tr>
+<tr><th id="64">64</th><td>    <a class="type" href="#SavedAddon" title='SavedAddon' data-ref="SavedAddon" >SavedAddon</a> <em>const</em>* <dfn class="decl" id="_ZN8AddonMgr12GetAddonInfoERKSs" title='AddonMgr::GetAddonInfo' data-ref="_ZN8AddonMgr12GetAddonInfoERKSs" >GetAddonInfo</dfn>(<em>const</em> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col4 decl" id="34name" title='name' data-type='const std::string &amp;' data-ref="34name" >name</dfn>);</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_list.h.html#std::list" title='std::list' data-ref="std::list" >list</a>&lt;<a class="type" href="#BannedAddon" title='BannedAddon' data-ref="BannedAddon" >BannedAddon</a>&gt; <dfn class="typedef" id="AddonMgr::BannedAddonList" title='AddonMgr::BannedAddonList' data-type='std::list&lt;BannedAddon&gt;' data-ref="AddonMgr::BannedAddonList" >BannedAddonList</dfn>;</td></tr>
+<tr><th id="67">67</th><td>    <a class="typedef" href="#AddonMgr::BannedAddonList" title='AddonMgr::BannedAddonList' data-type='std::list&lt;BannedAddon&gt;' data-ref="AddonMgr::BannedAddonList" >BannedAddonList</a> <em>const</em>* <dfn class="decl" id="_ZN8AddonMgr15GetBannedAddonsEv" title='AddonMgr::GetBannedAddons' data-ref="_ZN8AddonMgr15GetBannedAddonsEv" >GetBannedAddons</dfn>();</td></tr>
+<tr><th id="68">68</th><td>}</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="71">71</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../AI/CoreAI/TotemAI.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CoreAI/TotemAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

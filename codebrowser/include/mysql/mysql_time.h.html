@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<title>mysql_time.h [include/mysql/mysql_time.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/mysql/mysql_time.h'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>include</a>/<a href='./'>mysql</a>/mysql_time.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* Copyright (c) 2004, 2006 MySQL AB</i></td></tr>
+<tr><th id="2">2</th><td><i>   Use is subject to license terms</i></td></tr>
+<tr><th id="3">3</th><td><i></i></td></tr>
+<tr><th id="4">4</th><td><i> This program is free software; you can redistribute it and/or modify</i></td></tr>
+<tr><th id="5">5</th><td><i> it under the terms of the GNU General Public License as published by</i></td></tr>
+<tr><th id="6">6</th><td><i> the Free Software Foundation; version 2 of the License.</i></td></tr>
+<tr><th id="7">7</th><td><i></i></td></tr>
+<tr><th id="8">8</th><td><i> This program is distributed in the hope that it will be useful,</i></td></tr>
+<tr><th id="9">9</th><td><i> but WITHOUT ANY WARRANTY; without even the implied warranty of</i></td></tr>
+<tr><th id="10">10</th><td><i> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</i></td></tr>
+<tr><th id="11">11</th><td><i> GNU General Public License for more details.</i></td></tr>
+<tr><th id="12">12</th><td><i></i></td></tr>
+<tr><th id="13">13</th><td><i> You should have received a copy of the GNU General Public License</i></td></tr>
+<tr><th id="14">14</th><td><i> along with this program; if not, write to the Free Software</i></td></tr>
+<tr><th id="15">15</th><td><i> Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA */</i></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u>#<span data-ppcond="17">ifndef</span> <span class="macro" data-ref="_M/_mysql_time_h_">_mysql_time_h_</span></u></td></tr>
+<tr><th id="18">18</th><td><u>#define <dfn class="macro" id="_M/_mysql_time_h_" data-ref="_M/_mysql_time_h_">_mysql_time_h_</dfn></u></td></tr>
+<tr><th id="19">19</th><td></td></tr>
+<tr><th id="20">20</th><td><i>/*</i></td></tr>
+<tr><th id="21">21</th><td><i>  Time declarations shared between the server and client API:</i></td></tr>
+<tr><th id="22">22</th><td><i>  you should not add anything to this header unless it's used</i></td></tr>
+<tr><th id="23">23</th><td><i>  (and hence should be visible) in mysql.h.</i></td></tr>
+<tr><th id="24">24</th><td><i>  If you're looking for a place to add new time-related declaration,</i></td></tr>
+<tr><th id="25">25</th><td><i>  it's most likely my_time.h. See also "C API Handling of Date</i></td></tr>
+<tr><th id="26">26</th><td><i>  and Time Values" chapter in documentation.</i></td></tr>
+<tr><th id="27">27</th><td><i>*/</i></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>enum</b> <dfn class="type def" id="enum_mysql_timestamp_type" title='enum_mysql_timestamp_type' data-ref="enum_mysql_timestamp_type" >enum_mysql_timestamp_type</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>  <dfn class="enum" id="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_NONE" title='enum_mysql_timestamp_type::MYSQL_TIMESTAMP_NONE' data-ref="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_NONE" >MYSQL_TIMESTAMP_NONE</dfn>= -<var>2</var>, <dfn class="enum" id="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_ERROR" title='enum_mysql_timestamp_type::MYSQL_TIMESTAMP_ERROR' data-ref="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_ERROR" >MYSQL_TIMESTAMP_ERROR</dfn>= -<var>1</var>,</td></tr>
+<tr><th id="32">32</th><td>  <dfn class="enum" id="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_DATE" title='enum_mysql_timestamp_type::MYSQL_TIMESTAMP_DATE' data-ref="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_DATE" >MYSQL_TIMESTAMP_DATE</dfn>= <var>0</var>, <dfn class="enum" id="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_DATETIME" title='enum_mysql_timestamp_type::MYSQL_TIMESTAMP_DATETIME' data-ref="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_DATETIME" >MYSQL_TIMESTAMP_DATETIME</dfn>= <var>1</var>, <dfn class="enum" id="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_TIME" title='enum_mysql_timestamp_type::MYSQL_TIMESTAMP_TIME' data-ref="enum_mysql_timestamp_type::MYSQL_TIMESTAMP_TIME" >MYSQL_TIMESTAMP_TIME</dfn>= <var>2</var></td></tr>
+<tr><th id="33">33</th><td>};</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><i>/*</i></td></tr>
+<tr><th id="37">37</th><td><i>  Structure which is used to represent datetime values inside MySQL.</i></td></tr>
+<tr><th id="38">38</th><td><i></i></td></tr>
+<tr><th id="39">39</th><td><i>  We assume that values in this structure are normalized, i.e. year &lt;= 9999,</i></td></tr>
+<tr><th id="40">40</th><td><i>  month &lt;= 12, day &lt;= 31, hour &lt;= 23, hour &lt;= 59, hour &lt;= 59. Many functions</i></td></tr>
+<tr><th id="41">41</th><td><i>  in server such as my_system_gmt_sec() or make_time() family of functions</i></td></tr>
+<tr><th id="42">42</th><td><i>  rely on this (actually now usage of make_*() family relies on a bit weaker</i></td></tr>
+<tr><th id="43">43</th><td><i>  restriction). Also functions that produce MYSQL_TIME as result ensure this.</i></td></tr>
+<tr><th id="44">44</th><td><i>  There is one exception to this rule though if this structure holds time</i></td></tr>
+<tr><th id="45">45</th><td><i>  value (time_type == MYSQL_TIMESTAMP_TIME) days and hour member can hold</i></td></tr>
+<tr><th id="46">46</th><td><i>  bigger values.</i></td></tr>
+<tr><th id="47">47</th><td><i>*/</i></td></tr>
+<tr><th id="48">48</th><td><b>typedef</b> <b>struct</b> <dfn class="type def" id="st_mysql_time" title='st_mysql_time' data-ref="st_mysql_time" ><a class="type" href="#st_mysql_time" title='st_mysql_time' data-ref="st_mysql_time" >st_mysql_time</a></dfn></td></tr>
+<tr><th id="49">49</th><td>{</td></tr>
+<tr><th id="50">50</th><td>  <em>unsigned</em> <em>int</em>  <dfn class="decl" id="st_mysql_time::year" title='st_mysql_time::year' data-ref="st_mysql_time::year" >year</dfn>, <dfn class="decl" id="st_mysql_time::month" title='st_mysql_time::month' data-ref="st_mysql_time::month" >month</dfn>, <dfn class="decl" id="st_mysql_time::day" title='st_mysql_time::day' data-ref="st_mysql_time::day" >day</dfn>, <dfn class="decl" id="st_mysql_time::hour" title='st_mysql_time::hour' data-ref="st_mysql_time::hour" >hour</dfn>, <dfn class="decl" id="st_mysql_time::minute" title='st_mysql_time::minute' data-ref="st_mysql_time::minute" >minute</dfn>, <dfn class="decl" id="st_mysql_time::second" title='st_mysql_time::second' data-ref="st_mysql_time::second" >second</dfn>;</td></tr>
+<tr><th id="51">51</th><td>  <em>unsigned</em> <em>long</em> <dfn class="decl" id="st_mysql_time::second_part" title='st_mysql_time::second_part' data-ref="st_mysql_time::second_part" >second_part</dfn>;</td></tr>
+<tr><th id="52">52</th><td>  <a class="typedef" href="mysql.h.html#my_bool" title='my_bool' data-type='char' data-ref="my_bool" >my_bool</a>       <dfn class="decl" id="st_mysql_time::neg" title='st_mysql_time::neg' data-ref="st_mysql_time::neg" >neg</dfn>;</td></tr>
+<tr><th id="53">53</th><td>  <b>enum</b> <a class="type" href="#enum_mysql_timestamp_type" title='enum_mysql_timestamp_type' data-ref="enum_mysql_timestamp_type" >enum_mysql_timestamp_type</a> <dfn class="decl" id="st_mysql_time::time_type" title='st_mysql_time::time_type' data-ref="st_mysql_time::time_type" >time_type</dfn>;</td></tr>
+<tr><th id="54">54</th><td>} <dfn class="typedef" id="MYSQL_TIME" title='MYSQL_TIME' data-type='struct st_mysql_time' data-ref="MYSQL_TIME" >MYSQL_TIME</dfn>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td><u>#<span data-ppcond="17">endif</span> /* _mysql_time_h_ */</u></td></tr>
+<tr><th id="57">57</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../TrinityCore3.3.5/src/server/authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

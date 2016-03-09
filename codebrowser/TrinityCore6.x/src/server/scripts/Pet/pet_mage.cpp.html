@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<title>pet_mage.cpp [TrinityCore6.x/src/server/scripts/Pet/pet_mage.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/Pet/pet_mage.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>scripts</a>/<a href='./'>Pet</a>/pet_mage.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><i>/*</i></td></tr>
+<tr><th id="19">19</th><td><i> * Ordered alphabetically using scriptname.</i></td></tr>
+<tr><th id="20">20</th><td><i> * Scriptnames of files in this file should be prefixed with "npc_pet_mag_".</i></td></tr>
+<tr><th id="21">21</th><td><i> */</i></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../game/AI/CoreAI/CombatAI.h.html">"CombatAI.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../game/Entities/Pet/Pet.h.html">"Pet.h"</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>enum</b> <dfn class="type def" id="MageSpells" title='MageSpells' data-ref="MageSpells" >MageSpells</dfn></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="MageSpells::SPELL_MAGE_CLONE_ME" title='MageSpells::SPELL_MAGE_CLONE_ME' data-ref="MageSpells::SPELL_MAGE_CLONE_ME" >SPELL_MAGE_CLONE_ME</dfn>                 = <var>45204</var>,</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="MageSpells::SPELL_MAGE_MASTERS_THREAT_LIST" title='MageSpells::SPELL_MAGE_MASTERS_THREAT_LIST' data-ref="MageSpells::SPELL_MAGE_MASTERS_THREAT_LIST" >SPELL_MAGE_MASTERS_THREAT_LIST</dfn>      = <var>58838</var></td></tr>
+<tr><th id="32">32</th><td>};</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><b>class</b> <dfn class="type def" id="npc_pet_mage_mirror_image" title='npc_pet_mage_mirror_image' data-ref="npc_pet_mage_mirror_image" >npc_pet_mage_mirror_image</dfn> : <b>public</b> <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="35">35</th><td>{</td></tr>
+<tr><th id="36">36</th><td>    <b>public</b>:</td></tr>
+<tr><th id="37">37</th><td>        <dfn class="tu decl def" id="_ZN25npc_pet_mage_mirror_imageC1Ev" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_image' data-type='void npc_pet_mage_mirror_image::npc_pet_mage_mirror_image()' data-ref="_ZN25npc_pet_mage_mirror_imageC1Ev" >npc_pet_mage_mirror_image</dfn>() : <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"npc_pet_mage_mirror_image"</q>) { }</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>        <b>struct</b> <dfn class="tu type def" id="npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI' data-ref="npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI" >npc_pet_mage_mirror_imageAI</dfn> : <a class="type" href="../../game/AI/CoreAI/CombatAI.h.html#CasterAI" title='CasterAI' data-ref="CasterAI" >CasterAI</a></td></tr>
+<tr><th id="40">40</th><td>        {</td></tr>
+<tr><th id="41">41</th><td>            <dfn class="tu decl def" id="_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAIC1EP8Creature" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI::npc_pet_mage_mirror_imageAI' data-type='void npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI::npc_pet_mage_mirror_imageAI(Creature * creature)' data-ref="_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAIC1EP8Creature" >npc_pet_mage_mirror_imageAI</dfn>(<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) : <a class="type" href="../../game/AI/CoreAI/CombatAI.h.html#CasterAI" title='CasterAI' data-ref="CasterAI" >CasterAI</a><a class="ref" href="../../game/AI/CoreAI/CombatAI.h.html#_ZN8CasterAIC1EP8Creature" title='CasterAI::CasterAI' data-ref="_ZN8CasterAIC1EP8Creature" id="_ZN8CasterAIC1EP8Creature" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>) { }</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAI12InitializeAIEv" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI::InitializeAI' data-ref="_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAI12InitializeAIEv" >InitializeAI</dfn>() override</td></tr>
+<tr><th id="44">44</th><td>            {</td></tr>
+<tr><th id="45">45</th><td>                <a class="type" href="../../game/AI/CoreAI/CombatAI.h.html#CasterAI" title='CasterAI' data-ref="CasterAI" >CasterAI</a>::<a class="virtual member" href="../../game/AI/CoreAI/CombatAI.h.html#_ZN8CasterAI12InitializeAIEv" title='CasterAI::InitializeAI' data-ref="_ZN8CasterAI12InitializeAIEv" id="_ZN8CasterAI12InitializeAIEv" >InitializeAI</a>();</td></tr>
+<tr><th id="46">46</th><td>                <a class="type" href="../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col2 decl" id="2owner" title='owner' data-type='Unit *' data-ref="2owner" >owner</dfn> = <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit8GetOwnerEv" title='Unit::GetOwner' data-ref="_ZNK4Unit8GetOwnerEv" id="_ZNK4Unit8GetOwnerEv" >GetOwner</a>();</td></tr>
+<tr><th id="47">47</th><td>                <b>if</b> (!<a class="local col2 ref" href="#2owner" title='owner' data-ref="2owner" >owner</a>)</td></tr>
+<tr><th id="48">48</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="49">49</th><td>                <i>// Inherit Master's Threat List (not yet implemented)</i></td></tr>
+<tr><th id="50">50</th><td>                <a class="local col2 ref" href="#2owner" title='owner' data-ref="2owner" >owner</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" title='Unit::CastSpell' data-ref="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" id="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" >CastSpell</a>((<a class="type" href="../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>*)<span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <a class="enum" href="#MageSpells::SPELL_MAGE_MASTERS_THREAT_LIST" title='MageSpells::SPELL_MAGE_MASTERS_THREAT_LIST' data-ref="MageSpells::SPELL_MAGE_MASTERS_THREAT_LIST" >SPELL_MAGE_MASTERS_THREAT_LIST</a>, <b>true</b>);</td></tr>
+<tr><th id="51">51</th><td>                <i>// here mirror image casts on summoner spell (not present in client dbc) 49866</i></td></tr>
+<tr><th id="52">52</th><td><i>                // here should be auras (not present in client dbc): 35657, 35658, 35659, 35660 selfcast by mirror images (stats related?)</i></td></tr>
+<tr><th id="53">53</th><td><i>                // Clone Me!</i></td></tr>
+<tr><th id="54">54</th><td>                <a class="local col2 ref" href="#2owner" title='owner' data-ref="2owner" >owner</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" title='Unit::CastSpell' data-ref="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" id="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" >CastSpell</a>(<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#MageSpells::SPELL_MAGE_CLONE_ME" title='MageSpells::SPELL_MAGE_CLONE_ME' data-ref="MageSpells::SPELL_MAGE_CLONE_ME" >SPELL_MAGE_CLONE_ME</a>, <b>false</b>);</td></tr>
+<tr><th id="55">55</th><td>            }</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>            <i>// Do not reload Creature templates on evade mode enter - prevent visual lost</i></td></tr>
+<tr><th id="58">58</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAI14EnterEvadeModeEv" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI::EnterEvadeMode' data-ref="_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAI14EnterEvadeModeEv" >EnterEvadeMode</dfn>() override</td></tr>
+<tr><th id="59">59</th><td>            {</td></tr>
+<tr><th id="60">60</th><td>                <b>if</b> (<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Creature/Creature.h.html#_ZNK8Creature13IsInEvadeModeEv" title='Creature::IsInEvadeMode' data-ref="_ZNK8Creature13IsInEvadeModeEv" id="_ZNK8Creature13IsInEvadeModeEv" >IsInEvadeMode</a>() || !<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit7IsAliveEv" title='Unit::IsAlive' data-ref="_ZNK4Unit7IsAliveEv" id="_ZNK4Unit7IsAliveEv" >IsAlive</a>())</td></tr>
+<tr><th id="61">61</th><td>                    <b>return</b>;</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>                <a class="type" href="../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col3 decl" id="3owner" title='owner' data-type='Unit *' data-ref="3owner" >owner</dfn> = <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit17GetCharmerOrOwnerEv" title='Unit::GetCharmerOrOwner' data-ref="_ZNK4Unit17GetCharmerOrOwnerEv" id="_ZNK4Unit17GetCharmerOrOwnerEv" >GetCharmerOrOwner</a>();</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>                <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit10CombatStopEb" title='Unit::CombatStop' data-ref="_ZN4Unit10CombatStopEb" id="_ZN4Unit10CombatStopEb" >CombatStop</a>(<b>true</b>);</td></tr>
+<tr><th id="66">66</th><td>                <b>if</b> (<a class="local col3 ref" href="#3owner" title='owner' data-ref="3owner" >owner</a> &amp;&amp; !<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit12HasUnitStateEj" title='Unit::HasUnitState' data-ref="_ZNK4Unit12HasUnitStateEj" id="_ZNK4Unit12HasUnitStateEj" >HasUnitState</a>(<a class="enum" href="../../game/Entities/Unit/Unit.h.html#UnitState::UNIT_STATE_FOLLOW" title='UnitState::UNIT_STATE_FOLLOW' data-ref="UnitState::UNIT_STATE_FOLLOW" id="UnitState::UNIT_STATE_FOLLOW" >UNIT_STATE_FOLLOW</a>))</td></tr>
+<tr><th id="67">67</th><td>                {</td></tr>
+<tr><th id="68">68</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit15GetMotionMasterEv" title='Unit::GetMotionMaster' data-ref="_ZN4Unit15GetMotionMasterEv" id="_ZN4Unit15GetMotionMasterEv" >GetMotionMaster</a>()-&gt;<a class="ref" href="../../game/Movement/MotionMaster.h.html#_ZN12MotionMaster5ClearEb" title='MotionMaster::Clear' data-ref="_ZN12MotionMaster5ClearEb" id="_ZN12MotionMaster5ClearEb" >Clear</a>(<b>false</b>);</td></tr>
+<tr><th id="69">69</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit15GetMotionMasterEv" title='Unit::GetMotionMaster' data-ref="_ZN4Unit15GetMotionMasterEv" id="_ZN4Unit15GetMotionMasterEv" >GetMotionMaster</a>()-&gt;<a class="ref" href="../../game/Movement/MotionMaster.h.html#_ZN12MotionMaster10MoveFollowEP4Unitff12MovementSlot" title='MotionMaster::MoveFollow' data-ref="_ZN12MotionMaster10MoveFollowEP4Unitff12MovementSlot" id="_ZN12MotionMaster10MoveFollowEP4Unitff12MovementSlot" >MoveFollow</a>(<a class="local col3 ref" href="#3owner" title='owner' data-ref="3owner" >owner</a>, <a class="macro" href="../../game/Entities/Pet/PetDefines.h.html#77" title="1.0f" data-ref="_M/PET_FOLLOW_DIST">PET_FOLLOW_DIST</a>, <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="virtual ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit14GetFollowAngleEv" title='Unit::GetFollowAngle' data-ref="_ZNK4Unit14GetFollowAngleEv" id="_ZNK4Unit14GetFollowAngleEv" >GetFollowAngle</a>(), <a class="enum" href="../../game/Movement/MotionMaster.h.html#MovementSlot::MOTION_SLOT_ACTIVE" title='MovementSlot::MOTION_SLOT_ACTIVE' data-ref="MovementSlot::MOTION_SLOT_ACTIVE" id="MovementSlot::MOTION_SLOT_ACTIVE" >MOTION_SLOT_ACTIVE</a>);</td></tr>
+<tr><th id="70">70</th><td>                }</td></tr>
+<tr><th id="71">71</th><td>            }</td></tr>
+<tr><th id="72">72</th><td>        };</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>        <a class="type" href="../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK25npc_pet_mage_mirror_image5GetAIEP8Creature" title='npc_pet_mage_mirror_image::GetAI' data-ref="_ZNK25npc_pet_mage_mirror_image5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col4 decl" id="4creature" title='creature' data-type='Creature *' data-ref="4creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="75">75</th><td>        {</td></tr>
+<tr><th id="76">76</th><td>            <b>return</b> <b>new</b> <a class="tu type" href="#npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI' data-ref="npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI" >npc_pet_mage_mirror_imageAI</a><a class="tu ref" href="#_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAIC1EP8Creature" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_imageAI::npc_pet_mage_mirror_imageAI' data-use='c' data-ref="_ZN25npc_pet_mage_mirror_image27npc_pet_mage_mirror_imageAIC1EP8Creature" >(</a><a class="local col4 ref" href="#4creature" title='creature' data-ref="4creature" >creature</a>);</td></tr>
+<tr><th id="77">77</th><td>        }</td></tr>
+<tr><th id="78">78</th><td>};</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td><em>void</em> <dfn class="decl def" id="_Z22AddSC_mage_pet_scriptsv" title='AddSC_mage_pet_scripts' data-ref="_Z22AddSC_mage_pet_scriptsv" >AddSC_mage_pet_scripts</dfn>()</td></tr>
+<tr><th id="81">81</th><td>{</td></tr>
+<tr><th id="82">82</th><td>    <b>new</b> <a class="type" href="#npc_pet_mage_mirror_image" title='npc_pet_mage_mirror_image' data-ref="npc_pet_mage_mirror_image" >npc_pet_mage_mirror_image</a><a class="tu ref" href="#_ZN25npc_pet_mage_mirror_imageC1Ev" title='npc_pet_mage_mirror_image::npc_pet_mage_mirror_image' data-use='c' data-ref="_ZN25npc_pet_mage_mirror_imageC1Ev" >(</a>);</td></tr>
+<tr><th id="83">83</th><td>}</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

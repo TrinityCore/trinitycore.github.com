@@ -1,0 +1,168 @@
+<dec f='TrinityCore3.3.5/src/server/game/Entities/Object/Object.h' l='437' type='void WorldObject::GetNearPoint2D(float &amp; x, float &amp; y, float distance, float absAngle) const'/>
+<def f='TrinityCore3.3.5/src/server/game/Entities/Object/Object.cpp' l='2158' type='void WorldObject::GetNearPoint2D(float &amp; x, float &amp; y, float distance2d, float absAngle) const'/>
+<use f='TrinityCore3.3.5/src/server/game/Entities/Object/Object.cpp' l='2169' u='c' c='_ZNK11WorldObject12GetNearPointEPKS_RfS2_S2_fff'/>
+<use f='TrinityCore3.3.5/src/server/game/Entities/Object/Object.cpp' l='2190' u='c' c='_ZNK11WorldObject12GetNearPointEPKS_RfS2_S2_fff'/>
+<doc f='TrinityCore3.3.5/src/server/game/Entities/Object/Object.cpp' l='2083'>/*
+namespace Trinity
+{
+    class NearUsedPosDo
+    {
+        public:
+            NearUsedPosDo(WorldObject const&amp; obj, WorldObject const* searcher, float angle, ObjectPosSelector&amp; selector)
+                : i_object(obj), i_searcher(searcher), i_angle(angle), i_selector(selector) { }
+
+            void operator()(Corpse*) const { }
+            void operator()(DynamicObject*) const { }
+
+            void operator()(Creature* c) const
+            {
+                // skip self or target
+                if (c == i_searcher || c == &amp;i_object)
+                    return;
+
+                float x, y, z;
+
+                if (!c-&gt;IsAlive() || c-&gt;HasUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED | UNIT_STATE_DISTRACTED) ||
+                    !c-&gt;GetMotionMaster()-&gt;GetDestination(x, y, z))
+                {
+                    x = c-&gt;GetPositionX();
+                    y = c-&gt;GetPositionY();
+                }
+
+                add(c, x, y);
+            }
+
+            template&lt;class T&gt;
+                void operator()(T* u) const
+            {
+                // skip self or target
+                if (u == i_searcher || u == &amp;i_object)
+                    return;
+
+                float x, y;
+
+                x = u-&gt;GetPositionX();
+                y = u-&gt;GetPositionY();
+
+                add(u, x, y);
+            }
+
+            // we must add used pos that can fill places around center
+            void add(WorldObject* u, float x, float y) const
+            {
+                // u is too nearest/far away to i_object
+                if (!i_object.IsInRange2d(x, y, i_selector.m_dist - i_selector.m_size, i_selector.m_dist + i_selector.m_size))
+                    return;
+
+                float angle = i_object.GetAngle(u)-i_angle;
+
+                // move angle to range -pi ... +pi
+                while (angle &gt; M_PI)
+                    angle -= 2.0f * M_PI;
+                while (angle &lt; -M_PI)
+                    angle += 2.0f * M_PI;
+
+                // dist include size of u
+                float dist2d = i_object.GetDistance2d(x, y);
+                i_selector.AddUsedPos(u-&gt;GetObjectSize(), angle, dist2d + i_object.GetObjectSize());
+            }
+        private:
+            WorldObject const&amp; i_object;
+            WorldObject const* i_searcher;
+            float              i_angle;
+            ObjectPosSelector&amp; i_selector;
+    };
+}                                                           // namespace Trinity
+*/
+
+//===================================================================================================</doc>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_lord_marrowgar.cpp' l='383' u='c' c='_ZN13npc_coldflame15npc_coldflameAI12IsSummonedByEP4Unit'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_lord_marrowgar.cpp' l='396' u='c' c='_ZN13npc_coldflame15npc_coldflameAI12IsSummonedByEP4Unit'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Nexus/EyeOfEternity/boss_malygos.cpp' l='465' u='c' c='_ZN12boss_malygos14boss_malygosAI8DoActionEi'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Nexus/EyeOfEternity/boss_malygos.cpp' l='852' u='c' c='_ZN12boss_malygos14boss_malygosAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Nexus/EyeOfEternity/boss_malygos.cpp' l='1683' u='c' c='_ZN27spell_malygos_random_portal39spell_malygos_random_portal_SpellScript11HandleDummyE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/zone_icecrown.cpp' l='763' u='c' c='_ZN23npc_frostbrood_skytalon25npc_frostbrood_skytalonAI8UpdateAIEj'/>
+<dec f='TrinityCore6.x/src/server/game/Entities/Object/Object.h' l='434' type='void WorldObject::GetNearPoint2D(float &amp; x, float &amp; y, float distance, float absAngle) const'/>
+<def f='TrinityCore6.x/src/server/game/Entities/Object/Object.cpp' l='2575' type='void WorldObject::GetNearPoint2D(float &amp; x, float &amp; y, float distance2d, float absAngle) const'/>
+<use f='TrinityCore6.x/src/server/game/Entities/Object/Object.cpp' l='2586' u='c' c='_ZNK11WorldObject12GetNearPointEPKS_RfS2_S2_fff'/>
+<use f='TrinityCore6.x/src/server/game/Entities/Object/Object.cpp' l='2607' u='c' c='_ZNK11WorldObject12GetNearPointEPKS_RfS2_S2_fff'/>
+<doc f='TrinityCore6.x/src/server/game/Entities/Object/Object.cpp' l='2500'>/*
+namespace Trinity
+{
+    class NearUsedPosDo
+    {
+        public:
+            NearUsedPosDo(WorldObject const&amp; obj, WorldObject const* searcher, float angle, ObjectPosSelector&amp; selector)
+                : i_object(obj), i_searcher(searcher), i_angle(angle), i_selector(selector) { }
+
+            void operator()(Corpse*) const { }
+            void operator()(DynamicObject*) const { }
+
+            void operator()(Creature* c) const
+            {
+                // skip self or target
+                if (c == i_searcher || c == &amp;i_object)
+                    return;
+
+                float x, y, z;
+
+                if (!c-&gt;IsAlive() || c-&gt;HasUnitState(UNIT_STATE_ROOT | UNIT_STATE_STUNNED | UNIT_STATE_DISTRACTED) ||
+                    !c-&gt;GetMotionMaster()-&gt;GetDestination(x, y, z))
+                {
+                    x = c-&gt;GetPositionX();
+                    y = c-&gt;GetPositionY();
+                }
+
+                add(c, x, y);
+            }
+
+            template&lt;class T&gt;
+                void operator()(T* u) const
+            {
+                // skip self or target
+                if (u == i_searcher || u == &amp;i_object)
+                    return;
+
+                float x, y;
+
+                x = u-&gt;GetPositionX();
+                y = u-&gt;GetPositionY();
+
+                add(u, x, y);
+            }
+
+            // we must add used pos that can fill places around center
+            void add(WorldObject* u, float x, float y) const
+            {
+                // u is too nearest/far away to i_object
+                if (!i_object.IsInRange2d(x, y, i_selector.m_dist - i_selector.m_size, i_selector.m_dist + i_selector.m_size))
+                    return;
+
+                float angle = i_object.GetAngle(u)-i_angle;
+
+                // move angle to range -pi ... +pi
+                while (angle &gt; M_PI)
+                    angle -= 2.0f * M_PI;
+                while (angle &lt; -M_PI)
+                    angle += 2.0f * M_PI;
+
+                // dist include size of u
+                float dist2d = i_object.GetDistance2d(x, y);
+                i_selector.AddUsedPos(u-&gt;GetObjectSize(), angle, dist2d + i_object.GetObjectSize());
+            }
+        private:
+            WorldObject const&amp; i_object;
+            WorldObject const* i_searcher;
+            float              i_angle;
+            ObjectPosSelector&amp; i_selector;
+    };
+}                                                           // namespace Trinity
+*/
+
+//===================================================================================================</doc>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_lord_marrowgar.cpp' l='383' u='c' c='_ZN13npc_coldflame15npc_coldflameAI12IsSummonedByEP4Unit'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_lord_marrowgar.cpp' l='396' u='c' c='_ZN13npc_coldflame15npc_coldflameAI12IsSummonedByEP4Unit'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Nexus/EyeOfEternity/boss_malygos.cpp' l='465' u='c' c='_ZN12boss_malygos14boss_malygosAI8DoActionEi'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Nexus/EyeOfEternity/boss_malygos.cpp' l='852' u='c' c='_ZN12boss_malygos14boss_malygosAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Nexus/EyeOfEternity/boss_malygos.cpp' l='1683' u='c' c='_ZN27spell_malygos_random_portal39spell_malygos_random_portal_SpellScript11HandleDummyE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/zone_icecrown.cpp' l='764' u='c' c='_ZN23npc_frostbrood_skytalon25npc_frostbrood_skytalonAI8UpdateAIEj'/>

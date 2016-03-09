@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+<head>
+<title>resolve.hpp [include/boost/iostreams/detail/resolve.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/iostreams/detail/resolve.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>include</a>/<a href='../..'>boost</a>/<a href='..'>iostreams</a>/<a href='./'>detail</a>/resolve.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>// (C) Copyright 2008 CodeRage, LLC (turkanis at coderage dot com)</i></td></tr>
+<tr><th id="2">2</th><td><i>// (C) Copyright 2003-2007 Jonathan Turkanis</i></td></tr>
+<tr><th id="3">3</th><td><i>// Distributed under the Boost Software License, Version 1.0. (See accompanying</i></td></tr>
+<tr><th id="4">4</th><td><i>// file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt.)</i></td></tr>
+<tr><th id="5">5</th><td><i></i></td></tr>
+<tr><th id="6">6</th><td><i>// See <a href="http://www.boost.org/libs/iostreams">http://www.boost.org/libs/iostreams</a> for documentation.</i></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><u>#<span data-ppcond="8">ifndef</span> <span class="macro" data-ref="_M/BOOST_IOSTREAMS_DETAIL_RESOLVE_HPP_INCLUDED">BOOST_IOSTREAMS_DETAIL_RESOLVE_HPP_INCLUDED</span></u></td></tr>
+<tr><th id="9">9</th><td><u>#define <dfn class="macro" id="_M/BOOST_IOSTREAMS_DETAIL_RESOLVE_HPP_INCLUDED" data-ref="_M/BOOST_IOSTREAMS_DETAIL_RESOLVE_HPP_INCLUDED">BOOST_IOSTREAMS_DETAIL_RESOLVE_HPP_INCLUDED</dfn></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">if</span> defined(<span class="macro" data-ref="_M/_MSC_VER">_MSC_VER</span>) &amp;&amp; (_MSC_VER &gt;= 1020)</u></td></tr>
+<tr><th id="12">12</th><td><u># pragma once</u></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="11">endif</span></u>              </td></tr>
+<tr><th id="14">14</th><td></td></tr>
+<tr><th id="15">15</th><td><u>#include <a href="../../config.hpp.html">&lt;boost/config.hpp&gt;</a> // partial spec, put size_t in std.</u></td></tr>
+<tr><th id="16">16</th><td><u>#include <a href="../../../c++/4.9/cstddef.html">&lt;cstddef&gt;</a>          // std::size_t.</u></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="../../detail/is_incrementable.hpp.html">&lt;boost/detail/is_incrementable.hpp&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../../detail/workaround.hpp.html">&lt;boost/detail/workaround.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="adapter/mode_adapter.hpp.html">&lt;boost/iostreams/detail/adapter/mode_adapter.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="adapter/output_iterator_adapter.hpp.html">&lt;boost/iostreams/detail/adapter/output_iterator_adapter.hpp&gt;</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="adapter/range_adapter.hpp.html">&lt;boost/iostreams/detail/adapter/range_adapter.hpp&gt;</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="config/gcc.hpp.html">&lt;boost/iostreams/detail/config/gcc.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="config/overload_resolution.hpp.html">&lt;boost/iostreams/detail/config/overload_resolution.hpp&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="config/wide_streams.hpp.html">&lt;boost/iostreams/detail/config/wide_streams.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="enable_if_stream.hpp.html">&lt;boost/iostreams/detail/enable_if_stream.hpp&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="is_dereferenceable.hpp.html">&lt;boost/iostreams/detail/is_dereferenceable.hpp&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="is_iterator_range.hpp.html">&lt;boost/iostreams/detail/is_iterator_range.hpp&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="select.hpp.html">&lt;boost/iostreams/detail/select.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="wrap_unwrap.hpp.html">&lt;boost/iostreams/detail/wrap_unwrap.hpp&gt;</a></u></td></tr>
+<tr><th id="30">30</th><td><u>#include <a href="../device/array.hpp.html">&lt;boost/iostreams/device/array.hpp&gt;</a></u></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="../traits.hpp.html">&lt;boost/iostreams/traits.hpp&gt;</a></u></td></tr>
+<tr><th id="32">32</th><td><u>#include <a href="../../mpl/and.hpp.html">&lt;boost/mpl/and.hpp&gt;</a></u></td></tr>
+<tr><th id="33">33</th><td><u>#include <a href="../../mpl/bool.hpp.html">&lt;boost/mpl/bool.hpp&gt;</a> // true_.</u></td></tr>
+<tr><th id="34">34</th><td><u>#include <a href="../../mpl/if.hpp.html">&lt;boost/mpl/if.hpp&gt;</a></u></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="35">if</span> !<a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt;= 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt;= 1300)</u></td></tr>
+<tr><th id="36">36</th><td><u># include <a href="../../range/iterator_range.hpp.html">&lt;boost/range/iterator_range.hpp&gt;</a></u></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="35">endif</span> // #if BOOST_WORKAROUND(BOOST_MSVC, &lt;= 1300)</u></td></tr>
+<tr><th id="38">38</th><td><u>#include <a href="../../type_traits/is_array.hpp.html">&lt;boost/type_traits/is_array.hpp&gt;</a></u></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><i>// Must come last.</i></td></tr>
+<tr><th id="41">41</th><td><u>#include <a href="config/disable_warnings.hpp.html">&lt;boost/iostreams/detail/config/disable_warnings.hpp&gt;</a> // VC7.1 C4224.</u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><b>namespace</b> <span class="namespace">boost</span> { <b>namespace</b> <span class="namespace">iostreams</span> { <b>namespace</b> <span class="namespace">detail</span> {</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><i>//------------------Definition of resolve-------------------------------------//</i></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><u>#<span data-ppcond="47">ifndef</span> <span class="macro" data-ref="_M/BOOST_IOSTREAMS_BROKEN_OVERLOAD_RESOLUTION">BOOST_IOSTREAMS_BROKEN_OVERLOAD_RESOLUTION</span> //-------------------------//</u></td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="50">50</th><td><b>struct</b> <dfn class="type def" id="boost::iostreams::detail::resolve_traits" title='boost::iostreams::detail::resolve_traits' data-ref="boost::iostreams::detail::resolve_traits" >resolve_traits</dfn> {</td></tr>
+<tr><th id="51">51</th><td>    <b>typedef</b> <b>typename</b> </td></tr>
+<tr><th id="52">52</th><td>            <span class="namespace">mpl::</span><a class="type" href="../../mpl/if.hpp.html#boost::mpl::if_" title='boost::mpl::if_' data-ref="boost::mpl::if_" >if_</a>&lt;</td></tr>
+<tr><th id="53">53</th><td>                <span class="namespace">boost::detail::</span><a class="type" href="../../detail/is_incrementable.hpp.html#boost::detail::is_incrementable" title='boost::detail::is_incrementable' data-ref="boost::detail::is_incrementable" >is_incrementable</a>&lt;T&gt;,</td></tr>
+<tr><th id="54">54</th><td>                <a class="type" href="adapter/output_iterator_adapter.hpp.html#boost::iostreams::detail::output_iterator_adapter" title='boost::iostreams::detail::output_iterator_adapter' data-ref="boost::iostreams::detail::output_iterator_adapter" >output_iterator_adapter</a>&lt;Mode, Ch, T&gt;,</td></tr>
+<tr><th id="55">55</th><td>                <em>const</em> T&amp;</td></tr>
+<tr><th id="56">56</th><td>            &gt;::type <dfn class="typedef" id="boost::iostreams::detail::resolve_traits::type" title='boost::iostreams::detail::resolve_traits::type' data-type='typename mpl::if_&lt;boost::detail::is_incrementable&lt;T&gt;, output_iterator_adapter&lt;Mode, Ch, T&gt;, const T &amp;&gt;::type' data-ref="boost::iostreams::detail::resolve_traits::type" >type</dfn>;</td></tr>
+<tr><th id="57">57</th><td>};</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><u># <span data-ppcond="59">ifndef</span> <span class="macro" data-ref="_M/BOOST_IOSTREAMS_NO_STREAM_TEMPLATES">BOOST_IOSTREAMS_NO_STREAM_TEMPLATES</span> //-------------------------------//</u></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="62">62</th><td><b>typename</b> <a class="type" href="#boost::iostreams::detail::resolve_traits" title='boost::iostreams::detail::resolve_traits' data-ref="boost::iostreams::detail::resolve_traits" >resolve_traits</a>&lt;Mode, Ch, T&gt;::type</td></tr>
+<tr><th id="63">63</th><td><dfn class="decl def" id="_ZN5boost9iostreams6detail7resolveERKT1_PNS_10disable_ifINS0_9is_std_ioIS2_EEvE4typeE" title='boost::iostreams::detail::resolve' data-ref="_ZN5boost9iostreams6detail7resolveERKT1_PNS_10disable_ifINS0_9is_std_ioIS2_EEvE4typeE" >resolve</dfn>( <em>const</em> T&amp; <dfn class="local col7 decl" id="2147t" title='t' data-type='const T &amp;' data-ref="2147t" >t</dfn> </td></tr>
+<tr><th id="64">64</th><td>         <a class="macro" href="enable_if_stream.hpp.html#24" title=", typename boost::disable_if&lt; boost::iostreams::is_std_io&lt;T&gt; &gt;::type* = 0" data-ref="_M/BOOST_IOSTREAMS_DISABLE_IF_STREAM">BOOST_IOSTREAMS_DISABLE_IF_STREAM</a>(T)</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>         <i>// I suspect that the compilers which require this workaround may</i></td></tr>
+<tr><th id="67">67</th><td><i>         // be correct, but I'm not sure why :(</i></td></tr>
+<tr><th id="68">68</th><td>         <u>#<span data-ppcond="68">if</span> <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_INTEL_CXX_VERSION != 0) &amp;&amp; (1 % (( (BOOST_INTEL_CXX_VERSION != ((810)-(810))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_INTEL_CXX_VERSION, <a class="macro" href="../../detail/workaround.hpp.html#258" title="!= ((810)-(810))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(810)) ||\</u></td></tr>
+<tr><th id="69">69</th><td><u>             <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (__MWERKS__ != 0) &amp;&amp; (1 % (( (__MWERKS__ != ((0x3205)-(0x3205))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(__MWERKS__, <a class="macro" href="../../detail/workaround.hpp.html#258" title="!= ((0x3205)-(0x3205))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(0x3205)) || \</u></td></tr>
+<tr><th id="70">70</th><td><u>             <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; ((4 * 100 + 2) != 0) &amp;&amp; (1 % (( ((4 * 100 + 2) != ((400)-(400))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(<a class="macro" href="config/gcc.hpp.html#21" title="(4 * 100 + 2)" data-ref="_M/BOOST_IOSTREAMS_GCC">BOOST_IOSTREAMS_GCC</a>, <a class="macro" href="../../detail/workaround.hpp.html#258" title="!= ((400)-(400))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(400)) ||\</u></td></tr>
+<tr><th id="71">71</th><td><u>             <a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (__IBMCPP__ != 0) &amp;&amp; (1 % (( (__IBMCPP__ != ((1110)-(1110))) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(__IBMCPP__, <a class="macro" href="../../detail/workaround.hpp.html#258" title="!= ((1110)-(1110))" data-ref="_M/BOOST_TESTED_AT">BOOST_TESTED_AT</a>(1110))</u></td></tr>
+<tr><th id="72">72</th><td>             <i class="doc">/**/</i></td></tr>
+<tr><th id="73">73</th><td>         , <b>typename</b> disable_if&lt; is_iterator_range&lt;T&gt; &gt;::type* = <var>0</var></td></tr>
+<tr><th id="74">74</th><td>         <u>#<span data-ppcond="68">endif</span></u></td></tr>
+<tr><th id="75">75</th><td>         )</td></tr>
+<tr><th id="76">76</th><td>{</td></tr>
+<tr><th id="77">77</th><td>    <b>typedef</b> <b>typename</b> <a class="type" href="#boost::iostreams::detail::resolve_traits" title='boost::iostreams::detail::resolve_traits' data-ref="boost::iostreams::detail::resolve_traits" >resolve_traits</a>&lt;Mode, Ch, T&gt;::type <dfn class="local col8 typedef" id="2148return_type" title='return_type' data-type='typename resolve_traits&lt;Mode, Ch, T&gt;::type' data-ref="2148return_type" >return_type</dfn>;</td></tr>
+<tr><th id="78">78</th><td>    <b>return</b> <a class="local col8 typedef" href="#2148return_type" title='return_type' data-type='typename resolve_traits&lt;Mode, Ch, T&gt;::type' data-ref="2148return_type" >return_type</a>(<a class="local col7 ref" href="#2147t" title='t' data-ref="2147t" >t</a>);</td></tr>
+<tr><th id="79">79</th><td>}</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> Tr&gt;</td></tr>
+<tr><th id="82">82</th><td><a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_streambuf" title='std::basic_streambuf' data-ref="std::basic_streambuf" >basic_streambuf</a>&lt;Ch, Tr&gt; &gt; </td></tr>
+<tr><th id="83">83</th><td><dfn class="decl def" id="_ZN5boost9iostreams6detail7resolveERSt15basic_streambufIT0_T1_E" title='boost::iostreams::detail::resolve' data-ref="_ZN5boost9iostreams6detail7resolveERSt15basic_streambufIT0_T1_E" >resolve</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_streambuf" title='std::basic_streambuf' data-ref="std::basic_streambuf" >basic_streambuf</a>&lt;Ch, Tr&gt;&amp; <dfn class="local col9 decl" id="2149sb" title='sb' data-type='std::basic_streambuf&lt;Ch, Tr&gt; &amp;' data-ref="2149sb" >sb</dfn>)</td></tr>
+<tr><th id="84">84</th><td>{ <b>return</b> <a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_streambuf" title='std::basic_streambuf' data-ref="std::basic_streambuf" >basic_streambuf</a>&lt;Ch, Tr&gt; &gt;(wrap(<a class="local col9 ref" href="#2149sb" title='sb' data-ref="2149sb" >sb</a>)); }</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> Tr&gt;</td></tr>
+<tr><th id="87">87</th><td><a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_istream" title='std::basic_istream' data-ref="std::basic_istream" >basic_istream</a>&lt;Ch, Tr&gt; &gt; </td></tr>
+<tr><th id="88">88</th><td><dfn class="decl def" id="_ZN5boost9iostreams6detail7resolveERSt13basic_istreamIT0_T1_E" title='boost::iostreams::detail::resolve' data-ref="_ZN5boost9iostreams6detail7resolveERSt13basic_istreamIT0_T1_E" >resolve</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_istream" title='std::basic_istream' data-ref="std::basic_istream" >basic_istream</a>&lt;Ch, Tr&gt;&amp; <dfn class="local col0 decl" id="2150is" title='is' data-type='std::basic_istream&lt;Ch, Tr&gt; &amp;' data-ref="2150is" >is</dfn>)</td></tr>
+<tr><th id="89">89</th><td>{ <b>return</b> <a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_istream" title='std::basic_istream' data-ref="std::basic_istream" >basic_istream</a>&lt;Ch, Tr&gt; &gt;(wrap(<a class="local col0 ref" href="#2150is" title='is' data-ref="2150is" >is</a>)); }</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> Tr&gt;</td></tr>
+<tr><th id="92">92</th><td><a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_ostream" title='std::basic_ostream' data-ref="std::basic_ostream" >basic_ostream</a>&lt;Ch, Tr&gt; &gt; </td></tr>
+<tr><th id="93">93</th><td><dfn class="decl def" id="_ZN5boost9iostreams6detail7resolveERSt13basic_ostreamIT0_T1_E" title='boost::iostreams::detail::resolve' data-ref="_ZN5boost9iostreams6detail7resolveERSt13basic_ostreamIT0_T1_E" >resolve</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_ostream" title='std::basic_ostream' data-ref="std::basic_ostream" >basic_ostream</a>&lt;Ch, Tr&gt;&amp; <dfn class="local col1 decl" id="2151os" title='os' data-type='std::basic_ostream&lt;Ch, Tr&gt; &amp;' data-ref="2151os" >os</dfn>)</td></tr>
+<tr><th id="94">94</th><td>{ <b>return</b> <a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_ostream" title='std::basic_ostream' data-ref="std::basic_ostream" >basic_ostream</a>&lt;Ch, Tr&gt; &gt;(wrap(<a class="local col1 ref" href="#2151os" title='os' data-ref="2151os" >os</a>)); }</td></tr>
+<tr><th id="95">95</th><td></td></tr>
+<tr><th id="96">96</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> Tr&gt;</td></tr>
+<tr><th id="97">97</th><td><a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_iostream" title='std::basic_iostream' data-ref="std::basic_iostream" >basic_iostream</a>&lt;Ch, Tr&gt; &gt; </td></tr>
+<tr><th id="98">98</th><td><dfn class="decl def" id="_ZN5boost9iostreams6detail7resolveERSt14basic_iostreamIT0_T1_E" title='boost::iostreams::detail::resolve' data-ref="_ZN5boost9iostreams6detail7resolveERSt14basic_iostreamIT0_T1_E" >resolve</dfn>(<span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_iostream" title='std::basic_iostream' data-ref="std::basic_iostream" >basic_iostream</a>&lt;Ch, Tr&gt;&amp; <dfn class="local col2 decl" id="2152io" title='io' data-type='std::basic_iostream&lt;Ch, Tr&gt; &amp;' data-ref="2152io" >io</dfn>)</td></tr>
+<tr><th id="99">99</th><td>{ <b>return</b> <a class="type" href="adapter/mode_adapter.hpp.html#boost::iostreams::detail::mode_adapter" title='boost::iostreams::detail::mode_adapter' data-ref="boost::iostreams::detail::mode_adapter" >mode_adapter</a>&lt; Mode, <span class="namespace">std::</span><a class="type" href="../../../c++/4.9/iosfwd.html#std::basic_iostream" title='std::basic_iostream' data-ref="std::basic_iostream" >basic_iostream</a>&lt;Ch, Tr&gt; &gt;(wrap(<a class="local col2 ref" href="#2152io" title='io' data-ref="2152io" >io</a>)); }</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <span class="namespace">std::</span><a class="typedef" href="../../../x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> N&gt;</td></tr>
+<tr><th id="102">102</th><td><a class="type" href="../device/array.hpp.html#boost::iostreams::detail::array_adapter" title='boost::iostreams::detail::array_adapter' data-ref="boost::iostreams::detail::array_adapter" >array_adapter</a>&lt;Mode, Ch&gt; <dfn class="decl def" id="_ZN5boost9iostreams6detail7resolveERAT1__T0_" title='boost::iostreams::detail::resolve' data-ref="_ZN5boost9iostreams6detail7resolveERAT1__T0_" >resolve</dfn>(Ch (&amp;<dfn class="local col3 decl" id="2153array" title='array' data-type='Ch (&amp;)[N]' data-ref="2153array" >array</dfn>)[<a class="tu ref" href="#N" title='N' data-ref="N" >N</a>])</td></tr>
+<tr><th id="103">103</th><td>{ <b>return</b> <a class="type" href="../device/array.hpp.html#boost::iostreams::detail::array_adapter" title='boost::iostreams::detail::array_adapter' data-ref="boost::iostreams::detail::array_adapter" >array_adapter</a>&lt;Mode, Ch&gt;(<a class="local col3 ref" href="#2153array" title='array' data-ref="2153array" >array</a>); }</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><u>#  <span data-ppcond="105">if</span> !<a class="macro" href="../../detail/workaround.hpp.html#233" title="((1 + 0 == 0) &amp;&amp; (BOOST_MSVC != 0) &amp;&amp; (1 % (( (BOOST_MSVC &lt;= 1300) ) + 1)))" data-ref="_M/BOOST_WORKAROUND">BOOST_WORKAROUND</a>(BOOST_MSVC, &lt;= 1300)</u></td></tr>
+<tr><th id="106">106</th><td>    <b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> Iter&gt;</td></tr>
+<tr><th id="107">107</th><td>    <a class="type" href="adapter/range_adapter.hpp.html#boost::iostreams::detail::range_adapter" title='boost::iostreams::detail::range_adapter' data-ref="boost::iostreams::detail::range_adapter" >range_adapter</a>&lt; Mode, <span class="namespace">boost::</span><a class="type" href="../../range/iterator_range_core.hpp.html#boost::iterator_range" title='boost::iterator_range' data-ref="boost::iterator_range" >iterator_range</a>&lt;Iter&gt; &gt; </td></tr>
+<tr><th id="108">108</th><td>    <dfn class="decl def" id="_ZN5boost9iostreams6detail7resolveERKNS_14iterator_rangeIT1_EE" title='boost::iostreams::detail::resolve' data-ref="_ZN5boost9iostreams6detail7resolveERKNS_14iterator_rangeIT1_EE" >resolve</dfn>(<em>const</em> <span class="namespace">boost::</span><a class="type" href="../../range/iterator_range_core.hpp.html#boost::iterator_range" title='boost::iterator_range' data-ref="boost::iterator_range" >iterator_range</a>&lt;Iter&gt;&amp; <dfn class="local col4 decl" id="2154rng" title='rng' data-type='const boost::iterator_range&lt;Iter&gt; &amp;' data-ref="2154rng" >rng</dfn>)</td></tr>
+<tr><th id="109">109</th><td>    { <b>return</b> <a class="type" href="adapter/range_adapter.hpp.html#boost::iostreams::detail::range_adapter" title='boost::iostreams::detail::range_adapter' data-ref="boost::iostreams::detail::range_adapter" >range_adapter</a>&lt; Mode, <span class="namespace">boost::</span><a class="type" href="../../range/iterator_range_core.hpp.html#boost::iterator_range" title='boost::iterator_range' data-ref="boost::iterator_range" >iterator_range</a>&lt;Iter&gt; &gt;(<a class="local col4 ref" href="#2154rng" title='rng' data-ref="2154rng" >rng</a>); }</td></tr>
+<tr><th id="110">110</th><td><u>#  <span data-ppcond="105">endif</span> // #if BOOST_WORKAROUND(BOOST_MSVC, &lt;= 1300)</u></td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td><u># <span data-ppcond="59">else</span> // # ifndef BOOST_IOSTREAMS_NO_STREAM_TEMPLATES //---------------------//</u></td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="115">115</th><td><b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type</td></tr>
+<tr><th id="116">116</th><td>resolve( <em>const</em> T&amp; t </td></tr>
+<tr><th id="117">117</th><td>         BOOST_IOSTREAMS_DISABLE_IF_STREAM(T)</td></tr>
+<tr><th id="118">118</th><td>         <u>#if defined(__GNUC__)</u></td></tr>
+<tr><th id="119">119</th><td>         , <b>typename</b> disable_if&lt; is_iterator_range&lt;T&gt; &gt;::type* = <var>0</var></td></tr>
+<tr><th id="120">120</th><td>         <u>#endif</u></td></tr>
+<tr><th id="121">121</th><td>         )</td></tr>
+<tr><th id="122">122</th><td>{</td></tr>
+<tr><th id="123">123</th><td>    <b>typedef</b> <b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type return_type;</td></tr>
+<tr><th id="124">124</th><td>    <b>return</b> return_type(t);</td></tr>
+<tr><th id="125">125</th><td>}</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch&gt;</td></tr>
+<tr><th id="128">128</th><td>mode_adapter&lt;Mode, std::streambuf&gt; </td></tr>
+<tr><th id="129">129</th><td>resolve(std::streambuf&amp; sb) </td></tr>
+<tr><th id="130">130</th><td>{ <b>return</b> mode_adapter&lt;Mode, std::streambuf&gt;(wrap(sb)); }</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch&gt;</td></tr>
+<tr><th id="133">133</th><td>mode_adapter&lt;Mode, std::istream&gt; </td></tr>
+<tr><th id="134">134</th><td>resolve(std::istream&amp; is)</td></tr>
+<tr><th id="135">135</th><td>{ <b>return</b> mode_adapter&lt;Mode, std::istream&gt;(wrap(is)); }</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch&gt;</td></tr>
+<tr><th id="138">138</th><td>mode_adapter&lt;Mode, std::ostream&gt; </td></tr>
+<tr><th id="139">139</th><td>resolve(std::ostream&amp; os)</td></tr>
+<tr><th id="140">140</th><td>{ <b>return</b> mode_adapter&lt;Mode, std::ostream&gt;(wrap(os)); }</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch&gt;</td></tr>
+<tr><th id="143">143</th><td>mode_adapter&lt;Mode, std::iostream&gt; </td></tr>
+<tr><th id="144">144</th><td>resolve(std::iostream&amp; io)</td></tr>
+<tr><th id="145">145</th><td>{ <b>return</b> mode_adapter&lt;Mode, std::iostream&gt;(wrap(io)); }</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, std::size_t N&gt;</td></tr>
+<tr><th id="148">148</th><td>array_adapter&lt;Mode, Ch&gt; resolve(Ch (&amp;array)[N])</td></tr>
+<tr><th id="149">149</th><td>{ <b>return</b> array_adapter&lt;Mode, Ch&gt;(array); }</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> Iter&gt;</td></tr>
+<tr><th id="152">152</th><td>range_adapter&lt; Mode, boost::iterator_range&lt;Iter&gt; &gt; </td></tr>
+<tr><th id="153">153</th><td>resolve(<em>const</em> boost::iterator_range&lt;Iter&gt;&amp; rng)</td></tr>
+<tr><th id="154">154</th><td>{ <b>return</b> range_adapter&lt; Mode, boost::iterator_range&lt;Iter&gt; &gt;(rng); }</td></tr>
+<tr><th id="155">155</th><td></td></tr>
+<tr><th id="156">156</th><td><u># <span data-ppcond="59">endif</span> // # ifndef BOOST_IOSTREAMS_NO_STREAM_TEMPLATES //--------------------//</u></td></tr>
+<tr><th id="157">157</th><td><u>#<span data-ppcond="47">else</span> // #ifndef BOOST_IOSTREAMS_BROKEN_OVERLOAD_RESOLUTION //----------------//</u></td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="160">160</th><td><b>struct</b> resolve_traits {</td></tr>
+<tr><th id="161">161</th><td>    <i>// Note: test for is_iterator_range must come before test for output</i></td></tr>
+<tr><th id="162">162</th><td><i>    // iterator.</i></td></tr>
+<tr><th id="163">163</th><td>    <b>typedef</b> <b>typename</b> </td></tr>
+<tr><th id="164">164</th><td>            iostreams::select&lt;  <i>// Disambiguation for Tru64.</i></td></tr>
+<tr><th id="165">165</th><td>                is_std_io&lt;T&gt;,</td></tr>
+<tr><th id="166">166</th><td>                mode_adapter&lt;Mode, T&gt;,</td></tr>
+<tr><th id="167">167</th><td>                is_iterator_range&lt;T&gt;,</td></tr>
+<tr><th id="168">168</th><td>                range_adapter&lt;Mode, T&gt;,</td></tr>
+<tr><th id="169">169</th><td>                is_dereferenceable&lt;T&gt;,</td></tr>
+<tr><th id="170">170</th><td>                output_iterator_adapter&lt;Mode, Ch, T&gt;,</td></tr>
+<tr><th id="171">171</th><td>                is_array&lt;T&gt;,</td></tr>
+<tr><th id="172">172</th><td>                array_adapter&lt;Mode, T&gt;,</td></tr>
+<tr><th id="173">173</th><td>                else_,</td></tr>
+<tr><th id="174">174</th><td>                <u>#if !BOOST_WORKAROUND(__BORLANDC__, &lt; 0x600)</u></td></tr>
+<tr><th id="175">175</th><td>                    <em>const</em> T&amp;</td></tr>
+<tr><th id="176">176</th><td>                <u>#else</u></td></tr>
+<tr><th id="177">177</th><td>                    T</td></tr>
+<tr><th id="178">178</th><td>                <u>#endif</u></td></tr>
+<tr><th id="179">179</th><td>            &gt;::type type;</td></tr>
+<tr><th id="180">180</th><td>};</td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="183">183</th><td><b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type </td></tr>
+<tr><th id="184">184</th><td>resolve(<em>const</em> T&amp; t, mpl::true_)</td></tr>
+<tr><th id="185">185</th><td>{   <i>// Bad overload resolution.</i></td></tr>
+<tr><th id="186">186</th><td>    <b>typedef</b> <b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type return_type;</td></tr>
+<tr><th id="187">187</th><td>    <b>return</b> return_type(wrap(<b>const_cast</b>&lt;T&amp;&gt;(t)));</td></tr>
+<tr><th id="188">188</th><td>}</td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="191">191</th><td><b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type </td></tr>
+<tr><th id="192">192</th><td>resolve(<em>const</em> T&amp; t, mpl::false_)</td></tr>
+<tr><th id="193">193</th><td>{ </td></tr>
+<tr><th id="194">194</th><td>    <b>typedef</b> <b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type return_type;</td></tr>
+<tr><th id="195">195</th><td>    <b>return</b> return_type(t);</td></tr>
+<tr><th id="196">196</th><td>}</td></tr>
+<tr><th id="197">197</th><td></td></tr>
+<tr><th id="198">198</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="199">199</th><td><b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type </td></tr>
+<tr><th id="200">200</th><td>resolve(<em>const</em> T&amp; t BOOST_IOSTREAMS_DISABLE_IF_STREAM(T))</td></tr>
+<tr><th id="201">201</th><td>{ <b>return</b> resolve&lt;Mode, Ch&gt;(t, is_std_io&lt;T&gt;()); }</td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td><u># if !BOOST_WORKAROUND(__BORLANDC__, &lt; 0x600) &amp;&amp; \</u></td></tr>
+<tr><th id="204">204</th><td><u>     !BOOST_WORKAROUND(BOOST_MSVC, &lt;= 1300) &amp;&amp; \</u></td></tr>
+<tr><th id="205">205</th><td><u>     !defined(__GNUC__) // ---------------------------------------------------//</u></td></tr>
+<tr><th id="206">206</th><td></td></tr>
+<tr><th id="207">207</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="208">208</th><td><b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type </td></tr>
+<tr><th id="209">209</th><td>resolve(T&amp; t, mpl::true_)</td></tr>
+<tr><th id="210">210</th><td>{ </td></tr>
+<tr><th id="211">211</th><td>    <b>typedef</b> <b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type return_type;</td></tr>
+<tr><th id="212">212</th><td>    <b>return</b> return_type(wrap(t));</td></tr>
+<tr><th id="213">213</th><td>}</td></tr>
+<tr><th id="214">214</th><td></td></tr>
+<tr><th id="215">215</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="216">216</th><td><b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type </td></tr>
+<tr><th id="217">217</th><td>resolve(T&amp; t, mpl::false_)</td></tr>
+<tr><th id="218">218</th><td>{ </td></tr>
+<tr><th id="219">219</th><td>    <b>typedef</b> <b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type return_type;</td></tr>
+<tr><th id="220">220</th><td>    <b>return</b> return_type(t);</td></tr>
+<tr><th id="221">221</th><td>}</td></tr>
+<tr><th id="222">222</th><td></td></tr>
+<tr><th id="223">223</th><td><b>template</b>&lt;<b>typename</b> Mode, <b>typename</b> Ch, <b>typename</b> T&gt;</td></tr>
+<tr><th id="224">224</th><td><b>typename</b> resolve_traits&lt;Mode, Ch, T&gt;::type </td></tr>
+<tr><th id="225">225</th><td>resolve(T&amp; t BOOST_IOSTREAMS_ENABLE_IF_STREAM(T))</td></tr>
+<tr><th id="226">226</th><td>{ <b>return</b> resolve&lt;Mode, Ch&gt;(t, is_std_io&lt;T&gt;()); }</td></tr>
+<tr><th id="227">227</th><td></td></tr>
+<tr><th id="228">228</th><td><u># endif // Borland 5.x, VC6-7.0 or GCC 2.9x //--------------------------------//</u></td></tr>
+<tr><th id="229">229</th><td><u>#<span data-ppcond="47">endif</span> // #ifndef BOOST_IOSTREAMS_BROKEN_OVERLOAD_RESOLUTION //---------------//</u></td></tr>
+<tr><th id="230">230</th><td></td></tr>
+<tr><th id="231">231</th><td>} } } <i>// End namespaces detail, iostreams, boost.</i></td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td><u>#include <a href="config/enable_warnings.hpp.html">&lt;boost/iostreams/detail/config/enable_warnings.hpp&gt;</a> // VC7.1 4224.</u></td></tr>
+<tr><th id="234">234</th><td></td></tr>
+<tr><th id="235">235</th><td><u>#<span data-ppcond="8">endif</span> // BOOST_IOSTREAMS_DETAIL_RESOLVE_HPP_INCLUDED</u></td></tr>
+<tr><th id="236">236</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../../TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp.html'>TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

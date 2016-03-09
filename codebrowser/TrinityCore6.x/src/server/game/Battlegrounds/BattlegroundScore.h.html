@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<title>BattlegroundScore.h [TrinityCore6.x/src/server/game/Battlegrounds/BattlegroundScore.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/Battlegrounds/BattlegroundScore.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Battlegrounds</a>/BattlegroundScore.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/TRINITY_BATTLEGROUND_SCORE_H">TRINITY_BATTLEGROUND_SCORE_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/TRINITY_BATTLEGROUND_SCORE_H" data-ref="_M/TRINITY_BATTLEGROUND_SCORE_H">TRINITY_BATTLEGROUND_SCORE_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../Server/WorldPacket.h.html">"WorldPacket.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../Entities/Player/Player.h.html">"Player.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../Globals/ObjectAccessor.h.html">"ObjectAccessor.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>enum</b> <dfn class="type def" id="ScoreType" title='ScoreType' data-ref="ScoreType" >ScoreType</dfn></td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <dfn class="enum" id="ScoreType::SCORE_KILLING_BLOWS" title='ScoreType::SCORE_KILLING_BLOWS' data-ref="ScoreType::SCORE_KILLING_BLOWS" >SCORE_KILLING_BLOWS</dfn>         = <var>1</var>,</td></tr>
+<tr><th id="28">28</th><td>    <dfn class="enum" id="ScoreType::SCORE_DEATHS" title='ScoreType::SCORE_DEATHS' data-ref="ScoreType::SCORE_DEATHS" >SCORE_DEATHS</dfn>                = <var>2</var>,</td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="ScoreType::SCORE_HONORABLE_KILLS" title='ScoreType::SCORE_HONORABLE_KILLS' data-ref="ScoreType::SCORE_HONORABLE_KILLS" >SCORE_HONORABLE_KILLS</dfn>       = <var>3</var>,</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="ScoreType::SCORE_BONUS_HONOR" title='ScoreType::SCORE_BONUS_HONOR' data-ref="ScoreType::SCORE_BONUS_HONOR" >SCORE_BONUS_HONOR</dfn>           = <var>4</var>,</td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="ScoreType::SCORE_DAMAGE_DONE" title='ScoreType::SCORE_DAMAGE_DONE' data-ref="ScoreType::SCORE_DAMAGE_DONE" >SCORE_DAMAGE_DONE</dfn>           = <var>5</var>,</td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="ScoreType::SCORE_HEALING_DONE" title='ScoreType::SCORE_HEALING_DONE' data-ref="ScoreType::SCORE_HEALING_DONE" >SCORE_HEALING_DONE</dfn>          = <var>6</var>,</td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td>    <i>// WS, EY and TP</i></td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="ScoreType::SCORE_FLAG_CAPTURES" title='ScoreType::SCORE_FLAG_CAPTURES' data-ref="ScoreType::SCORE_FLAG_CAPTURES" >SCORE_FLAG_CAPTURES</dfn>         = <var>7</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="ScoreType::SCORE_FLAG_RETURNS" title='ScoreType::SCORE_FLAG_RETURNS' data-ref="ScoreType::SCORE_FLAG_RETURNS" >SCORE_FLAG_RETURNS</dfn>          = <var>8</var>,</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>    <i>// AB and IC</i></td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="ScoreType::SCORE_BASES_ASSAULTED" title='ScoreType::SCORE_BASES_ASSAULTED' data-ref="ScoreType::SCORE_BASES_ASSAULTED" >SCORE_BASES_ASSAULTED</dfn>       = <var>9</var>,</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="ScoreType::SCORE_BASES_DEFENDED" title='ScoreType::SCORE_BASES_DEFENDED' data-ref="ScoreType::SCORE_BASES_DEFENDED" >SCORE_BASES_DEFENDED</dfn>        = <var>10</var>,</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>    <i>// AV</i></td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="ScoreType::SCORE_GRAVEYARDS_ASSAULTED" title='ScoreType::SCORE_GRAVEYARDS_ASSAULTED' data-ref="ScoreType::SCORE_GRAVEYARDS_ASSAULTED" >SCORE_GRAVEYARDS_ASSAULTED</dfn>  = <var>11</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="ScoreType::SCORE_GRAVEYARDS_DEFENDED" title='ScoreType::SCORE_GRAVEYARDS_DEFENDED' data-ref="ScoreType::SCORE_GRAVEYARDS_DEFENDED" >SCORE_GRAVEYARDS_DEFENDED</dfn>   = <var>12</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="ScoreType::SCORE_TOWERS_ASSAULTED" title='ScoreType::SCORE_TOWERS_ASSAULTED' data-ref="ScoreType::SCORE_TOWERS_ASSAULTED" >SCORE_TOWERS_ASSAULTED</dfn>      = <var>13</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="ScoreType::SCORE_TOWERS_DEFENDED" title='ScoreType::SCORE_TOWERS_DEFENDED' data-ref="ScoreType::SCORE_TOWERS_DEFENDED" >SCORE_TOWERS_DEFENDED</dfn>       = <var>14</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="ScoreType::SCORE_MINES_CAPTURED" title='ScoreType::SCORE_MINES_CAPTURED' data-ref="ScoreType::SCORE_MINES_CAPTURED" >SCORE_MINES_CAPTURED</dfn>        = <var>15</var>,</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <i>// SOTA</i></td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="ScoreType::SCORE_DESTROYED_DEMOLISHER" title='ScoreType::SCORE_DESTROYED_DEMOLISHER' data-ref="ScoreType::SCORE_DESTROYED_DEMOLISHER" >SCORE_DESTROYED_DEMOLISHER</dfn>  = <var>16</var>,</td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="ScoreType::SCORE_DESTROYED_WALL" title='ScoreType::SCORE_DESTROYED_WALL' data-ref="ScoreType::SCORE_DESTROYED_WALL" >SCORE_DESTROYED_WALL</dfn>        = <var>17</var></td></tr>
+<tr><th id="52">52</th><td>};</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><b>struct</b> <dfn class="type def" id="BattlegroundScore" title='BattlegroundScore' data-ref="BattlegroundScore" >BattlegroundScore</dfn></td></tr>
+<tr><th id="55">55</th><td>{</td></tr>
+<tr><th id="56">56</th><td>    <b>friend</b> <b>class</b> <a class="type" href="#Arena" title='Arena' data-ref="Arena" >Arena</a>;</td></tr>
+<tr><th id="57">57</th><td>    <b>friend</b> <b>class</b> <a class="type" href="Battleground.h.html#Battleground" title='Battleground' data-ref="Battleground" >Battleground</a>;</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="60">60</th><td>        <dfn class="decl def" id="_ZN17BattlegroundScoreC1E10ObjectGuidj" title='BattlegroundScore::BattlegroundScore' data-ref="_ZN17BattlegroundScoreC1E10ObjectGuidj" >BattlegroundScore</dfn>(<a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="local col7 decl" id="177playerGuid" title='playerGuid' data-type='ObjectGuid' data-ref="177playerGuid" >playerGuid</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="178team" title='team' data-type='uint32' data-ref="178team" >team</dfn>) : <a class="member" href="#BattlegroundScore::PlayerGuid" title='BattlegroundScore::PlayerGuid' data-ref="BattlegroundScore::PlayerGuid" >PlayerGuid</a><a class="ref" href="../Entities/Object/ObjectGuid.h.html#_ZN10ObjectGuidC1ERKS_" title='ObjectGuid::ObjectGuid' data-ref="_ZN10ObjectGuidC1ERKS_" id="_ZN10ObjectGuidC1ERKS_" >(</a><a class="local col7 ref" href="#177playerGuid" title='playerGuid' data-ref="177playerGuid" >playerGuid</a>), <a class="member" href="#BattlegroundScore::TeamId" title='BattlegroundScore::TeamId' data-ref="BattlegroundScore::TeamId" >TeamId</a>(<a class="local col8 ref" href="#178team" title='team' data-ref="178team" >team</a> == <a class="enum" href="../Miscellaneous/SharedDefines.h.html#Team::ALLIANCE" title='Team::ALLIANCE' data-ref="Team::ALLIANCE" id="Team::ALLIANCE" >ALLIANCE</a> ? <var>1</var> : <var>0</var>),</td></tr>
+<tr><th id="61">61</th><td>            <a class="member" href="#BattlegroundScore::KillingBlows" title='BattlegroundScore::KillingBlows' data-ref="BattlegroundScore::KillingBlows" >KillingBlows</a>(<var>0</var>), <a class="member" href="#BattlegroundScore::Deaths" title='BattlegroundScore::Deaths' data-ref="BattlegroundScore::Deaths" >Deaths</a>(<var>0</var>), <a class="member" href="#BattlegroundScore::HonorableKills" title='BattlegroundScore::HonorableKills' data-ref="BattlegroundScore::HonorableKills" >HonorableKills</a>(<var>0</var>), <a class="member" href="#BattlegroundScore::BonusHonor" title='BattlegroundScore::BonusHonor' data-ref="BattlegroundScore::BonusHonor" >BonusHonor</a>(<var>0</var>), <a class="member" href="#BattlegroundScore::DamageDone" title='BattlegroundScore::DamageDone' data-ref="BattlegroundScore::DamageDone" >DamageDone</a>(<var>0</var>), <a class="member" href="#BattlegroundScore::HealingDone" title='BattlegroundScore::HealingDone' data-ref="BattlegroundScore::HealingDone" >HealingDone</a>(<var>0</var>) { }</td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td>        <b>virtual</b> <dfn class="virtual decl def" id="_ZN17BattlegroundScoreD1Ev" title='BattlegroundScore::~BattlegroundScore' data-ref="_ZN17BattlegroundScoreD1Ev" >~BattlegroundScore</dfn>() { }</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN17BattlegroundScore11UpdateScoreEjj" title='BattlegroundScore::UpdateScore' data-ref="_ZN17BattlegroundScore11UpdateScoreEjj" >UpdateScore</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="179type" title='type' data-type='uint32' data-ref="179type" >type</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col0 decl" id="180value" title='value' data-type='uint32' data-ref="180value" >value</dfn>)</td></tr>
+<tr><th id="66">66</th><td>        {</td></tr>
+<tr><th id="67">67</th><td>            <b>switch</b> (<a class="local col9 ref" href="#179type" title='type' data-ref="179type" >type</a>)</td></tr>
+<tr><th id="68">68</th><td>            {</td></tr>
+<tr><th id="69">69</th><td>                <b>case</b> <a class="enum" href="#ScoreType::SCORE_KILLING_BLOWS" title='ScoreType::SCORE_KILLING_BLOWS' data-ref="ScoreType::SCORE_KILLING_BLOWS" >SCORE_KILLING_BLOWS</a>:   <i>// Killing blows</i></td></tr>
+<tr><th id="70">70</th><td>                    <a class="member" href="#BattlegroundScore::KillingBlows" title='BattlegroundScore::KillingBlows' data-ref="BattlegroundScore::KillingBlows" >KillingBlows</a> += <a class="local col0 ref" href="#180value" title='value' data-ref="180value" >value</a>;</td></tr>
+<tr><th id="71">71</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="72">72</th><td>                <b>case</b> <a class="enum" href="#ScoreType::SCORE_DEATHS" title='ScoreType::SCORE_DEATHS' data-ref="ScoreType::SCORE_DEATHS" >SCORE_DEATHS</a>:          <i>// Deaths</i></td></tr>
+<tr><th id="73">73</th><td>                    <a class="member" href="#BattlegroundScore::Deaths" title='BattlegroundScore::Deaths' data-ref="BattlegroundScore::Deaths" >Deaths</a> += <a class="local col0 ref" href="#180value" title='value' data-ref="180value" >value</a>;</td></tr>
+<tr><th id="74">74</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="75">75</th><td>                <b>case</b> <a class="enum" href="#ScoreType::SCORE_HONORABLE_KILLS" title='ScoreType::SCORE_HONORABLE_KILLS' data-ref="ScoreType::SCORE_HONORABLE_KILLS" >SCORE_HONORABLE_KILLS</a>: <i>// Honorable kills</i></td></tr>
+<tr><th id="76">76</th><td>                    <a class="member" href="#BattlegroundScore::HonorableKills" title='BattlegroundScore::HonorableKills' data-ref="BattlegroundScore::HonorableKills" >HonorableKills</a> += <a class="local col0 ref" href="#180value" title='value' data-ref="180value" >value</a>;</td></tr>
+<tr><th id="77">77</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="78">78</th><td>                <b>case</b> <a class="enum" href="#ScoreType::SCORE_BONUS_HONOR" title='ScoreType::SCORE_BONUS_HONOR' data-ref="ScoreType::SCORE_BONUS_HONOR" >SCORE_BONUS_HONOR</a>:     <i>// Honor bonus</i></td></tr>
+<tr><th id="79">79</th><td>                    <a class="member" href="#BattlegroundScore::BonusHonor" title='BattlegroundScore::BonusHonor' data-ref="BattlegroundScore::BonusHonor" >BonusHonor</a> += <a class="local col0 ref" href="#180value" title='value' data-ref="180value" >value</a>;</td></tr>
+<tr><th id="80">80</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="81">81</th><td>                <b>case</b> <a class="enum" href="#ScoreType::SCORE_DAMAGE_DONE" title='ScoreType::SCORE_DAMAGE_DONE' data-ref="ScoreType::SCORE_DAMAGE_DONE" >SCORE_DAMAGE_DONE</a>:     <i>// Damage Done</i></td></tr>
+<tr><th id="82">82</th><td>                    <a class="member" href="#BattlegroundScore::DamageDone" title='BattlegroundScore::DamageDone' data-ref="BattlegroundScore::DamageDone" >DamageDone</a> += <a class="local col0 ref" href="#180value" title='value' data-ref="180value" >value</a>;</td></tr>
+<tr><th id="83">83</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="84">84</th><td>                <b>case</b> <a class="enum" href="#ScoreType::SCORE_HEALING_DONE" title='ScoreType::SCORE_HEALING_DONE' data-ref="ScoreType::SCORE_HEALING_DONE" >SCORE_HEALING_DONE</a>:    <i>// Healing Done</i></td></tr>
+<tr><th id="85">85</th><td>                    <a class="member" href="#BattlegroundScore::HealingDone" title='BattlegroundScore::HealingDone' data-ref="BattlegroundScore::HealingDone" >HealingDone</a> += <a class="local col0 ref" href="#180value" title='value' data-ref="180value" >value</a>;</td></tr>
+<tr><th id="86">86</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="87">87</th><td>                <b>default</b>:</td></tr>
+<tr><th id="88">88</th><td>                    <a class="macro" href="../../../common/Debugging/Errors.h.html#55" title="WPAssert" data-ref="_M/ASSERT">ASSERT</a>(<b>false</b> &amp;&amp; <q>"Not implemented Battleground score type!"</q>);</td></tr>
+<tr><th id="89">89</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="90">90</th><td>            }</td></tr>
+<tr><th id="91">91</th><td>        }</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN17BattlegroundScore20BuildObjectivesBlockERSt6vectorIiSaIiEE" title='BattlegroundScore::BuildObjectivesBlock' data-ref="_ZN17BattlegroundScore20BuildObjectivesBlockERSt6vectorIiSaIiEE" >BuildObjectivesBlock</dfn>(<span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;<a class="typedef" href="../../../common/Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a>&gt;&amp; <i>/*stats*/</i>) = <var>0</var>;</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>        <i>// For Logging purpose</i></td></tr>
+<tr><th id="96">96</th><td>        <b>virtual</b> <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="virtual decl def" id="_ZNK17BattlegroundScore8ToStringEv" title='BattlegroundScore::ToString' data-ref="_ZNK17BattlegroundScore8ToStringEv" >ToString</dfn>() <em>const</em> { <b>return</b> <q>""</q>; }</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK17BattlegroundScore15GetKillingBlowsEv" title='BattlegroundScore::GetKillingBlows' data-ref="_ZNK17BattlegroundScore15GetKillingBlowsEv" >GetKillingBlows</dfn>() <em>const</em>    { <b>return</b> <a class="member" href="#BattlegroundScore::KillingBlows" title='BattlegroundScore::KillingBlows' data-ref="BattlegroundScore::KillingBlows" >KillingBlows</a>; }</td></tr>
+<tr><th id="99">99</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK17BattlegroundScore9GetDeathsEv" title='BattlegroundScore::GetDeaths' data-ref="_ZNK17BattlegroundScore9GetDeathsEv" >GetDeaths</dfn>() <em>const</em>          { <b>return</b> <a class="member" href="#BattlegroundScore::Deaths" title='BattlegroundScore::Deaths' data-ref="BattlegroundScore::Deaths" >Deaths</a>; }</td></tr>
+<tr><th id="100">100</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK17BattlegroundScore17GetHonorableKillsEv" title='BattlegroundScore::GetHonorableKills' data-ref="_ZNK17BattlegroundScore17GetHonorableKillsEv" >GetHonorableKills</dfn>() <em>const</em>  { <b>return</b> <a class="member" href="#BattlegroundScore::HonorableKills" title='BattlegroundScore::HonorableKills' data-ref="BattlegroundScore::HonorableKills" >HonorableKills</a>; }</td></tr>
+<tr><th id="101">101</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK17BattlegroundScore13GetBonusHonorEv" title='BattlegroundScore::GetBonusHonor' data-ref="_ZNK17BattlegroundScore13GetBonusHonorEv" >GetBonusHonor</dfn>() <em>const</em>      { <b>return</b> <a class="member" href="#BattlegroundScore::BonusHonor" title='BattlegroundScore::BonusHonor' data-ref="BattlegroundScore::BonusHonor" >BonusHonor</a>; }</td></tr>
+<tr><th id="102">102</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK17BattlegroundScore13GetDamageDoneEv" title='BattlegroundScore::GetDamageDone' data-ref="_ZNK17BattlegroundScore13GetDamageDoneEv" >GetDamageDone</dfn>() <em>const</em>      { <b>return</b> <a class="member" href="#BattlegroundScore::DamageDone" title='BattlegroundScore::DamageDone' data-ref="BattlegroundScore::DamageDone" >DamageDone</a>; }</td></tr>
+<tr><th id="103">103</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZNK17BattlegroundScore14GetHealingDoneEv" title='BattlegroundScore::GetHealingDone' data-ref="_ZNK17BattlegroundScore14GetHealingDoneEv" >GetHealingDone</dfn>() <em>const</em>     { <b>return</b> <a class="member" href="#BattlegroundScore::HealingDone" title='BattlegroundScore::HealingDone' data-ref="BattlegroundScore::HealingDone" >HealingDone</a>; }</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td>        <b>virtual</b> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="virtual decl def" id="_ZNK17BattlegroundScore8GetAttr1Ev" title='BattlegroundScore::GetAttr1' data-ref="_ZNK17BattlegroundScore8GetAttr1Ev" >GetAttr1</dfn>() <em>const</em> { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="106">106</th><td>        <b>virtual</b> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="virtual decl def" id="_ZNK17BattlegroundScore8GetAttr2Ev" title='BattlegroundScore::GetAttr2' data-ref="_ZNK17BattlegroundScore8GetAttr2Ev" >GetAttr2</dfn>() <em>const</em> { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="107">107</th><td>        <b>virtual</b> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="virtual decl def" id="_ZNK17BattlegroundScore8GetAttr3Ev" title='BattlegroundScore::GetAttr3' data-ref="_ZNK17BattlegroundScore8GetAttr3Ev" >GetAttr3</dfn>() <em>const</em> { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="108">108</th><td>        <b>virtual</b> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="virtual decl def" id="_ZNK17BattlegroundScore8GetAttr4Ev" title='BattlegroundScore::GetAttr4' data-ref="_ZNK17BattlegroundScore8GetAttr4Ev" >GetAttr4</dfn>() <em>const</em> { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="109">109</th><td>        <b>virtual</b> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="virtual decl def" id="_ZNK17BattlegroundScore8GetAttr5Ev" title='BattlegroundScore::GetAttr5' data-ref="_ZNK17BattlegroundScore8GetAttr5Ev" >GetAttr5</dfn>() <em>const</em> { <b>return</b> <var>0</var>; }</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>        <a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a> <dfn class="decl" id="BattlegroundScore::PlayerGuid" title='BattlegroundScore::PlayerGuid' data-ref="BattlegroundScore::PlayerGuid" >PlayerGuid</dfn>;</td></tr>
+<tr><th id="112">112</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="BattlegroundScore::TeamId" title='BattlegroundScore::TeamId' data-ref="BattlegroundScore::TeamId" >TeamId</dfn>;</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>        <i>// Default score, present in every type</i></td></tr>
+<tr><th id="115">115</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BattlegroundScore::KillingBlows" title='BattlegroundScore::KillingBlows' data-ref="BattlegroundScore::KillingBlows" >KillingBlows</dfn>;</td></tr>
+<tr><th id="116">116</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BattlegroundScore::Deaths" title='BattlegroundScore::Deaths' data-ref="BattlegroundScore::Deaths" >Deaths</dfn>;</td></tr>
+<tr><th id="117">117</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BattlegroundScore::HonorableKills" title='BattlegroundScore::HonorableKills' data-ref="BattlegroundScore::HonorableKills" >HonorableKills</dfn>;</td></tr>
+<tr><th id="118">118</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BattlegroundScore::BonusHonor" title='BattlegroundScore::BonusHonor' data-ref="BattlegroundScore::BonusHonor" >BonusHonor</dfn>;</td></tr>
+<tr><th id="119">119</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BattlegroundScore::DamageDone" title='BattlegroundScore::DamageDone' data-ref="BattlegroundScore::DamageDone" >DamageDone</dfn>;</td></tr>
+<tr><th id="120">120</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="BattlegroundScore::HealingDone" title='BattlegroundScore::HealingDone' data-ref="BattlegroundScore::HealingDone" >HealingDone</dfn>;</td></tr>
+<tr><th id="121">121</th><td>};</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><u>#<span data-ppcond="18">endif</span> // TRINITY_BATTLEGROUND_SCORE_H</u></td></tr>
+<tr><th id="124">124</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Achievements/AchievementMgr.cpp.html'>TrinityCore6.x/src/server/game/Achievements/AchievementMgr.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

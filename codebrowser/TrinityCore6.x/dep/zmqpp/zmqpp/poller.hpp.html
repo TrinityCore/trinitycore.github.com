@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+<head>
+<title>poller.hpp [TrinityCore6.x/dep/zmqpp/zmqpp/poller.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/zmqpp/zmqpp/poller.hpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore6.x</a>/<a href='../..'>dep</a>/<a href='..'>zmqpp</a>/<a href='./'>zmqpp</a>/poller.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i class="doc">/**</i></td></tr>
+<tr><th id="2">2</th><td><i class="doc"> *<span class="command"> \file</span></i></td></tr>
+<tr><th id="3">3</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="4">4</th><td><i class="doc"> * <span class="command">\date</span>   9 Aug 2011</i></td></tr>
+<tr><th id="5">5</th><td><i class="doc"> * <span class="command">\author</span> Ben Gray (\@benjamg)</i></td></tr>
+<tr><th id="6">6</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><u>#<span data-ppcond="8">ifndef</span> <span class="macro" data-ref="_M/ZMQPP_POLLER_HPP_">ZMQPP_POLLER_HPP_</span></u></td></tr>
+<tr><th id="9">9</th><td><u>#define <dfn class="macro" id="_M/ZMQPP_POLLER_HPP_" data-ref="_M/ZMQPP_POLLER_HPP_">ZMQPP_POLLER_HPP_</dfn></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><u>#include <a href="../../../../include/c++/4.9/unordered_map.html">&lt;unordered_map&gt;</a></u></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../../../../include/c++/4.9/vector.html">&lt;vector&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#include <a href="compatibility.hpp.html">"compatibility.hpp"</a></u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><b>namespace</b> <span class="namespace">zmqpp</span></td></tr>
+<tr><th id="17">17</th><td>{</td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>class</b> <a class="type" href="socket.hpp.html#zmqpp::socket" title='zmqpp::socket' data-ref="zmqpp::socket" id="zmqpp::socket" >socket</a>;</td></tr>
+<tr><th id="20">20</th><td><b>typedef</b> <a class="type" href="socket.hpp.html#zmqpp::socket" title='zmqpp::socket' data-ref="zmqpp::socket" >socket</a> <dfn class="typedef" id="zmqpp::socket_t" title='zmqpp::socket_t' data-type='zmqpp::socket' data-ref="zmqpp::socket_t" >socket_t</dfn>;</td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i class="doc">/*!</i></td></tr>
+<tr><th id="23">23</th><td><i class="doc"> * Polling wrapper.</i></td></tr>
+<tr><th id="24">24</th><td><i class="doc"> *</i></td></tr>
+<tr><th id="25">25</th><td><i class="doc"> * Allows access to polling for any number of sockets or file descriptors.</i></td></tr>
+<tr><th id="26">26</th><td><i class="doc"> */</i></td></tr>
+<tr><th id="27">27</th><td><b>class</b> <dfn class="type def" id="zmqpp::poller" title='zmqpp::poller' data-ref="zmqpp::poller" >poller</dfn></td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td><b>public</b>:</td></tr>
+<tr><th id="30">30</th><td>	<em>static</em> <em>const</em> <em>long</em> <dfn class="decl" id="_ZN5zmqpp6poller12wait_foreverE" title='zmqpp::poller::wait_forever' data-ref="_ZN5zmqpp6poller12wait_foreverE" >wait_forever</dfn>; <i class="doc">/*!&lt; Block forever flag, default setting. */</i></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>	<em>static</em> <em>const</em> <em>short</em> <dfn class="decl" id="_ZN5zmqpp6poller9poll_noneE" title='zmqpp::poller::poll_none' data-ref="_ZN5zmqpp6poller9poll_noneE" >poll_none</dfn>;   <i class="doc">/*!&lt; No polling flags set. */</i></td></tr>
+<tr><th id="33">33</th><td>	<em>static</em> <em>const</em> <em>short</em> <dfn class="decl" id="_ZN5zmqpp6poller7poll_inE" title='zmqpp::poller::poll_in' data-ref="_ZN5zmqpp6poller7poll_inE" >poll_in</dfn>;     <i class="doc">/*!&lt; Monitor inbound flag. */</i></td></tr>
+<tr><th id="34">34</th><td>	<em>static</em> <em>const</em> <em>short</em> <dfn class="decl" id="_ZN5zmqpp6poller8poll_outE" title='zmqpp::poller::poll_out' data-ref="_ZN5zmqpp6poller8poll_outE" >poll_out</dfn>;    <i class="doc">/*!&lt; Monitor output flag. */</i></td></tr>
+<tr><th id="35">35</th><td>	<em>static</em> <em>const</em> <em>short</em> <dfn class="decl" id="_ZN5zmqpp6poller10poll_errorE" title='zmqpp::poller::poll_error' data-ref="_ZN5zmqpp6poller10poll_errorE" >poll_error</dfn>;  <i class="doc">/*!&lt; Monitor error flag<span class="command">.\n</span> Only for file descriptors. */</i></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="38">38</th><td><i class="doc">	 * Construct an empty polling model.</i></td></tr>
+<tr><th id="39">39</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="40">40</th><td>	<a class="decl" href="poller.cpp.html#_ZN5zmqpp6pollerC1Ev" title='zmqpp::poller::poller' data-ref="_ZN5zmqpp6pollerC1Ev" id="_ZN5zmqpp6pollerC1Ev" >poller</a>();</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="43">43</th><td><i class="doc">	 * Cleanup poller.</i></td></tr>
+<tr><th id="44">44</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="45">45</th><td><i class="doc">	 * Any sockets will need to be closed separately.</i></td></tr>
+<tr><th id="46">46</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="47">47</th><td>	<a class="decl" href="poller.cpp.html#_ZN5zmqpp6pollerD1Ev" title='zmqpp::poller::~poller' data-ref="_ZN5zmqpp6pollerD1Ev" id="_ZN5zmqpp6pollerD1Ev" >~poller</a>();</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="50">50</th><td><i class="doc">	 * Add a socket to the polling model and set which events to monitor.</i></td></tr>
+<tr><th id="51">51</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="52">52</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">socket</span> the socket to monitor.</i></td></tr>
+<tr><th id="53">53</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">event</span> the event flags to monitor on the socket.</i></td></tr>
+<tr><th id="54">54</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="55">55</th><td>	<em>void</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller3addERNS_6socketEs" title='zmqpp::poller::add' data-ref="_ZN5zmqpp6poller3addERNS_6socketEs" id="_ZN5zmqpp6poller3addERNS_6socketEs" >add</a>(<a class="typedef" href="#zmqpp::socket_t" title='zmqpp::socket_t' data-type='zmqpp::socket' data-ref="zmqpp::socket_t" >socket_t</a>&amp; <dfn class="local col4 decl" id="64socket" title='socket' data-type='socket_t &amp;' data-ref="64socket" >socket</dfn>, <em>short</em> <em>const</em> <dfn class="local col5 decl" id="65event" title='event' data-type='const short' data-ref="65event" >event</dfn> = <a class="member" href="#_ZN5zmqpp6poller7poll_inE" title='zmqpp::poller::poll_in' data-ref="_ZN5zmqpp6poller7poll_inE" ><a class="member" href="#_ZN5zmqpp6poller7poll_inE" title='zmqpp::poller::poll_in' data-ref="_ZN5zmqpp6poller7poll_inE" >poll_in</a></a>);</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="58">58</th><td><i class="doc">	 * Add a file descriptor to the polling model and set which events to monitor.</i></td></tr>
+<tr><th id="59">59</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="60">60</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">descriptor</span> the file descriptor to monitor.</i></td></tr>
+<tr><th id="61">61</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">event</span> the event flags to monitor.</i></td></tr>
+<tr><th id="62">62</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="63">63</th><td>	<em>void</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller3addEis" title='zmqpp::poller::add' data-ref="_ZN5zmqpp6poller3addEis" id="_ZN5zmqpp6poller3addEis" >add</a>(<em>int</em> <em>const</em> <dfn class="local col6 decl" id="66descriptor" title='descriptor' data-type='const int' data-ref="66descriptor" >descriptor</dfn>, <em>short</em> <em>const</em> <dfn class="local col7 decl" id="67event" title='event' data-type='const short' data-ref="67event" >event</dfn> = <a class="member" href="#_ZN5zmqpp6poller7poll_inE" title='zmqpp::poller::poll_in' data-ref="_ZN5zmqpp6poller7poll_inE" ><a class="member" href="#_ZN5zmqpp6poller7poll_inE" title='zmqpp::poller::poll_in' data-ref="_ZN5zmqpp6poller7poll_inE" >poll_in</a></a> | <a class="member" href="#_ZN5zmqpp6poller10poll_errorE" title='zmqpp::poller::poll_error' data-ref="_ZN5zmqpp6poller10poll_errorE" ><a class="member" href="#_ZN5zmqpp6poller10poll_errorE" title='zmqpp::poller::poll_error' data-ref="_ZN5zmqpp6poller10poll_errorE" >poll_error</a></a>);</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="66">66</th><td><i class="doc">	 * Check if we are monitoring a given socket with this poller.</i></td></tr>
+<tr><th id="67">67</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="68">68</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">socket</span> the socket to check.</i></td></tr>
+<tr><th id="69">69</th><td><i class="doc">	 * <span class="command">\return</span> true if it is there.</i></td></tr>
+<tr><th id="70">70</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="71">71</th><td>	<em>bool</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller3hasERKNS_6socketE" title='zmqpp::poller::has' data-ref="_ZN5zmqpp6poller3hasERKNS_6socketE" id="_ZN5zmqpp6poller3hasERKNS_6socketE" >has</a>(<a class="typedef" href="#zmqpp::socket_t" title='zmqpp::socket_t' data-type='zmqpp::socket' data-ref="zmqpp::socket_t" >socket_t</a> <em>const</em>&amp; <dfn class="local col8 decl" id="68socket" title='socket' data-type='const socket_t &amp;' data-ref="68socket" >socket</dfn>);</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="74">74</th><td><i class="doc">	 * Check if we are monitoring a given file descriptor with this poller.</i></td></tr>
+<tr><th id="75">75</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="76">76</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">descriptor</span> the file descriptor to check.</i></td></tr>
+<tr><th id="77">77</th><td><i class="doc">	 * <span class="command">\return</span> true if it is there.</i></td></tr>
+<tr><th id="78">78</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="79">79</th><td>	<em>bool</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller3hasEi" title='zmqpp::poller::has' data-ref="_ZN5zmqpp6poller3hasEi" id="_ZN5zmqpp6poller3hasEi" >has</a>(<em>int</em> <em>const</em> <dfn class="local col9 decl" id="69descriptor" title='descriptor' data-type='const int' data-ref="69descriptor" >descriptor</dfn>);</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="82">82</th><td><i class="doc">	 * Stop monitoring a socket.</i></td></tr>
+<tr><th id="83">83</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="84">84</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">socket</span> the socket to stop monitoring.</i></td></tr>
+<tr><th id="85">85</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="86">86</th><td>	<em>void</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller6removeERKNS_6socketE" title='zmqpp::poller::remove' data-ref="_ZN5zmqpp6poller6removeERKNS_6socketE" id="_ZN5zmqpp6poller6removeERKNS_6socketE" >remove</a>(<a class="typedef" href="#zmqpp::socket_t" title='zmqpp::socket_t' data-type='zmqpp::socket' data-ref="zmqpp::socket_t" >socket_t</a> <em>const</em>&amp; <dfn class="local col0 decl" id="70socket" title='socket' data-type='const socket_t &amp;' data-ref="70socket" >socket</dfn>);</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="89">89</th><td><i class="doc">	 * Stop monitoring a file descriptor.</i></td></tr>
+<tr><th id="90">90</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="91">91</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">descriptor</span> the file descriptor to stop monitoring.</i></td></tr>
+<tr><th id="92">92</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="93">93</th><td>	<em>void</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller6removeEi" title='zmqpp::poller::remove' data-ref="_ZN5zmqpp6poller6removeEi" id="_ZN5zmqpp6poller6removeEi" >remove</a>(<em>int</em> <em>const</em> <dfn class="local col1 decl" id="71descriptor" title='descriptor' data-type='const int' data-ref="71descriptor" >descriptor</dfn>);</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="96">96</th><td><i class="doc">	 * Update the monitored event flags for a given socket.</i></td></tr>
+<tr><th id="97">97</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="98">98</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">socket</span> the socket to update event flags.</i></td></tr>
+<tr><th id="99">99</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">event</span> the event flags to monitor on the socket.</i></td></tr>
+<tr><th id="100">100</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="101">101</th><td>	<em>void</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller9check_forERKNS_6socketEs" title='zmqpp::poller::check_for' data-ref="_ZN5zmqpp6poller9check_forERKNS_6socketEs" id="_ZN5zmqpp6poller9check_forERKNS_6socketEs" >check_for</a>(<a class="typedef" href="#zmqpp::socket_t" title='zmqpp::socket_t' data-type='zmqpp::socket' data-ref="zmqpp::socket_t" >socket_t</a> <em>const</em>&amp; <dfn class="local col2 decl" id="72socket" title='socket' data-type='const socket_t &amp;' data-ref="72socket" >socket</dfn>, <em>short</em> <em>const</em> <dfn class="local col3 decl" id="73event" title='event' data-type='const short' data-ref="73event" >event</dfn>);</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="104">104</th><td><i class="doc">	 * Update the monitored event flags for a given file descriptor.</i></td></tr>
+<tr><th id="105">105</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="106">106</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">descriptor</span> the file descriptor to update event flags.</i></td></tr>
+<tr><th id="107">107</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">event</span> the event flags to monitor on the socket.</i></td></tr>
+<tr><th id="108">108</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="109">109</th><td>	<em>void</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller9check_forEis" title='zmqpp::poller::check_for' data-ref="_ZN5zmqpp6poller9check_forEis" id="_ZN5zmqpp6poller9check_forEis" >check_for</a>(<em>int</em> <em>const</em> <dfn class="local col4 decl" id="74descriptor" title='descriptor' data-type='const int' data-ref="74descriptor" >descriptor</dfn>, <em>short</em> <em>const</em> <dfn class="local col5 decl" id="75event" title='event' data-type='const short' data-ref="75event" >event</dfn>);</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="112">112</th><td><i class="doc">	 * Poll for monitored events.</i></td></tr>
+<tr><th id="113">113</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="114">114</th><td><i class="doc">	 * By default this method will block forever or until at least one of the monitored</i></td></tr>
+<tr><th id="115">115</th><td><i class="doc">	 * sockets or file descriptors has events.</i></td></tr>
+<tr><th id="116">116</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="117">117</th><td><i class="doc">	 * If a timeout is set and was reached then this function returns false.</i></td></tr>
+<tr><th id="118">118</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="119">119</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">timeout</span> milliseconds to timeout.</i></td></tr>
+<tr><th id="120">120</th><td><i class="doc">	 * <span class="command">\return</span> true if there is an event..</i></td></tr>
+<tr><th id="121">121</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="122">122</th><td>	<em>bool</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller4pollEl" title='zmqpp::poller::poll' data-ref="_ZN5zmqpp6poller4pollEl" id="_ZN5zmqpp6poller4pollEl" >poll</a>(<em>long</em> <dfn class="local col6 decl" id="76timeout" title='timeout' data-type='long' data-ref="76timeout" >timeout</dfn> = <a class="member" href="#_ZN5zmqpp6poller12wait_foreverE" title='zmqpp::poller::wait_forever' data-ref="_ZN5zmqpp6poller12wait_foreverE" ><a class="member" href="#_ZN5zmqpp6poller12wait_foreverE" title='zmqpp::poller::wait_forever' data-ref="_ZN5zmqpp6poller12wait_foreverE" >wait_forever</a></a>);</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="125">125</th><td><i class="doc">	 * Get the event flags triggered for a socket.</i></td></tr>
+<tr><th id="126">126</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="127">127</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">socket</span> the socket to get triggered event flags for.</i></td></tr>
+<tr><th id="128">128</th><td><i class="doc">	 * <span class="command">\return</span> the event flags.</i></td></tr>
+<tr><th id="129">129</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="130">130</th><td>	<em>short</em> <a class="decl" href="poller.cpp.html#_ZNK5zmqpp6poller6eventsERKNS_6socketE" title='zmqpp::poller::events' data-ref="_ZNK5zmqpp6poller6eventsERKNS_6socketE" id="_ZNK5zmqpp6poller6eventsERKNS_6socketE" >events</a>(<a class="typedef" href="#zmqpp::socket_t" title='zmqpp::socket_t' data-type='zmqpp::socket' data-ref="zmqpp::socket_t" >socket_t</a> <em>const</em>&amp; <dfn class="local col7 decl" id="77socket" title='socket' data-type='const socket_t &amp;' data-ref="77socket" >socket</dfn>) <em>const</em>;</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="133">133</th><td><i class="doc">	 * Get the event flags triggered for a file descriptor.</i></td></tr>
+<tr><th id="134">134</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="135">135</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">descriptor</span> the file descriptor to get triggered event flags for.</i></td></tr>
+<tr><th id="136">136</th><td><i class="doc">	 * <span class="command">\return</span> the event flags.</i></td></tr>
+<tr><th id="137">137</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="138">138</th><td>	<em>short</em> <a class="decl" href="poller.cpp.html#_ZNK5zmqpp6poller6eventsEi" title='zmqpp::poller::events' data-ref="_ZNK5zmqpp6poller6eventsEi" id="_ZNK5zmqpp6poller6eventsEi" >events</a>(<em>int</em> <em>const</em> <dfn class="local col8 decl" id="78descriptor" title='descriptor' data-type='const int' data-ref="78descriptor" >descriptor</dfn>) <em>const</em>;</td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="141">141</th><td><i class="doc">	 * Check either a file descriptor or socket for input events.</i></td></tr>
+<tr><th id="142">142</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="143">143</th><td><i class="doc">	 * Templated helper method that calls through to event and checks for a given flag</i></td></tr>
+<tr><th id="144">144</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="145">145</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">watchable</span> either a file descriptor or socket known to the poller.</i></td></tr>
+<tr><th id="146">146</th><td><i class="doc">	 * <span class="command">\return</span> true if there is input.</i></td></tr>
+<tr><th id="147">147</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="148">148</th><td>	<b>template</b>&lt;<b>typename</b> Watched&gt;</td></tr>
+<tr><th id="149">149</th><td>	<em>bool</em> <dfn class="decl def" id="_ZNK5zmqpp6poller9has_inputERKT_" title='zmqpp::poller::has_input' data-ref="_ZNK5zmqpp6poller9has_inputERKT_" >has_input</dfn>(Watched <em>const</em>&amp; <dfn class="local col9 decl" id="79watchable" title='watchable' data-type='const Watched &amp;' data-ref="79watchable" >watchable</dfn>) <em>const</em> { <b>return</b> events(<a class="local col9 ref" href="#79watchable" title='watchable' data-ref="79watchable" >watchable</a>) &amp; <a class="member" href="#_ZN5zmqpp6poller7poll_inE" title='zmqpp::poller::poll_in' data-ref="_ZN5zmqpp6poller7poll_inE" >poll_in</a>; }</td></tr>
+<tr><th id="150">150</th><td></td></tr>
+<tr><th id="151">151</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="152">152</th><td><i class="doc">	 * Check either a file descriptor or socket for output events.</i></td></tr>
+<tr><th id="153">153</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="154">154</th><td><i class="doc">	 * Templated helper method that calls through to event and checks for a given flag</i></td></tr>
+<tr><th id="155">155</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="156">156</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">watchable</span> either a file descriptor or socket known to the poller.</i></td></tr>
+<tr><th id="157">157</th><td><i class="doc">	 * <span class="command">\return</span> true if there is output.</i></td></tr>
+<tr><th id="158">158</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="159">159</th><td>	<b>template</b>&lt;<b>typename</b> Watched&gt;</td></tr>
+<tr><th id="160">160</th><td>	<em>bool</em> <dfn class="decl def" id="_ZNK5zmqpp6poller10has_outputERKT_" title='zmqpp::poller::has_output' data-ref="_ZNK5zmqpp6poller10has_outputERKT_" >has_output</dfn>(Watched <em>const</em>&amp; <dfn class="local col0 decl" id="80watchable" title='watchable' data-type='const Watched &amp;' data-ref="80watchable" >watchable</dfn>) <em>const</em> { <b>return</b> events(<a class="local col0 ref" href="#80watchable" title='watchable' data-ref="80watchable" >watchable</a>) &amp; <a class="member" href="#_ZN5zmqpp6poller8poll_outE" title='zmqpp::poller::poll_out' data-ref="_ZN5zmqpp6poller8poll_outE" >poll_out</a>; }</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>	<i class="doc">/*!</i></td></tr>
+<tr><th id="163">163</th><td><i class="doc">	 * Check a file descriptor.</i></td></tr>
+<tr><th id="164">164</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="165">165</th><td><i class="doc">	 * Templated helper method that calls through to event and checks for a given flag</i></td></tr>
+<tr><th id="166">166</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="167">167</th><td><i class="doc">	 * Technically this template works for sockets as well but the error flag is never set for</i></td></tr>
+<tr><th id="168">168</th><td><i class="doc">	 * sockets so I have no idea why someone would call it.</i></td></tr>
+<tr><th id="169">169</th><td><i class="doc">	 *</i></td></tr>
+<tr><th id="170">170</th><td><i class="doc">	 * <span class="command">\param</span> <span class="arg">watchable</span> a file descriptor know to the poller.</i></td></tr>
+<tr><th id="171">171</th><td><i class="doc">	 * <span class="command">\return</span> true if there is an error.</i></td></tr>
+<tr><th id="172">172</th><td><i class="doc">	 */</i></td></tr>
+<tr><th id="173">173</th><td>	<b>template</b>&lt;<b>typename</b> Watched&gt;</td></tr>
+<tr><th id="174">174</th><td>	<em>bool</em> <dfn class="decl def" id="_ZNK5zmqpp6poller9has_errorERKT_" title='zmqpp::poller::has_error' data-ref="_ZNK5zmqpp6poller9has_errorERKT_" >has_error</dfn>(Watched <em>const</em>&amp; <dfn class="local col1 decl" id="81watchable" title='watchable' data-type='const Watched &amp;' data-ref="81watchable" >watchable</dfn>) <em>const</em> { <b>return</b> events(<a class="local col1 ref" href="#81watchable" title='watchable' data-ref="81watchable" >watchable</a>) &amp; <a class="member" href="#_ZN5zmqpp6poller10poll_errorE" title='zmqpp::poller::poll_error' data-ref="_ZN5zmqpp6poller10poll_errorE" >poll_error</a>; }</td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td><b>private</b>:</td></tr>
+<tr><th id="177">177</th><td>	<span class="namespace">std::</span><a class="type" href="../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;<a class="typedef" href="../../../../include/zmq.h.html#zmq_pollitem_t" title='zmq_pollitem_t' data-type='struct zmq_pollitem_t' data-ref="zmq_pollitem_t" >zmq_pollitem_t</a>&gt; <dfn class="decl" id="zmqpp::poller::_items" title='zmqpp::poller::_items' data-ref="zmqpp::poller::_items" >_items</dfn>;</td></tr>
+<tr><th id="178">178</th><td>	<span class="namespace">std::</span><a class="type" href="../../../../include/c++/4.9/bits/unordered_map.h.html#std::unordered_map" title='std::unordered_map' data-ref="std::unordered_map" >unordered_map</a>&lt;<em>void</em> *, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>&gt; <dfn class="decl" id="zmqpp::poller::_index" title='zmqpp::poller::_index' data-ref="zmqpp::poller::_index" >_index</dfn>;</td></tr>
+<tr><th id="179">179</th><td>	<span class="namespace">std::</span><a class="type" href="../../../../include/c++/4.9/bits/unordered_map.h.html#std::unordered_map" title='std::unordered_map' data-ref="std::unordered_map" >unordered_map</a>&lt;<em>int</em>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>&gt; <dfn class="decl" id="zmqpp::poller::_fdindex" title='zmqpp::poller::_fdindex' data-ref="zmqpp::poller::_fdindex" >_fdindex</dfn>;</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>	<em>void</em> <a class="decl" href="poller.cpp.html#_ZN5zmqpp6poller7reindexEm" title='zmqpp::poller::reindex' data-ref="_ZN5zmqpp6poller7reindexEm" id="_ZN5zmqpp6poller7reindexEm" >reindex</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <em>const</em> <dfn class="local col2 decl" id="82index" title='index' data-type='const size_t' data-ref="82index" >index</dfn>);</td></tr>
+<tr><th id="182">182</th><td>};</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td>}</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td><u>#<span data-ppcond="8">endif</span> /* ZMQPP_POLLER_HPP_ */</u></td></tr>
+<tr><th id="187">187</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='poller.cpp.html'>TrinityCore6.x/dep/zmqpp/zmqpp/poller.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

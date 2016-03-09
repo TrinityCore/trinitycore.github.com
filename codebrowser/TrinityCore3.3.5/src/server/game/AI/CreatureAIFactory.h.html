@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<title>CreatureAIFactory.h [TrinityCore3.3.5/src/server/game/AI/CreatureAIFactory.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/AI/CreatureAIFactory.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>AI</a>/CreatureAIFactory.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_CREATUREAIFACTORY_H">TRINITY_CREATUREAIFACTORY_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_CREATUREAIFACTORY_H" data-ref="_M/TRINITY_CREATUREAIFACTORY_H">TRINITY_CREATUREAIFACTORY_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i>//#include "Policies/Singleton.h"</i></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../shared/Dynamic/ObjectRegistry.h.html">"ObjectRegistry.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../shared/Dynamic/FactoryHolder.h.html">"FactoryHolder.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="CoreAI/GameObjectAI.h.html">"GameObjectAI.h"</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>struct</b> <dfn class="type def" id="SelectableAI" title='SelectableAI' data-ref="SelectableAI" >SelectableAI</dfn> : <b>public</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>&gt;, <b>public</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#Permissible" title='Permissible' data-ref="Permissible" >Permissible</a>&lt;<a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>&gt;</td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td>    <dfn class="decl def" id="_ZN12SelectableAIC1EPKc" title='SelectableAI::SelectableAI' data-ref="_ZN12SelectableAIC1EPKc" >SelectableAI</dfn>(<em>const</em> <em>char</em>* <dfn class="local col1 decl" id="51id" title='id' data-type='const char *' data-ref="51id" >id</dfn>) : <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>&gt;<a class="ref" href="../../shared/Dynamic/FactoryHolder.h.html#_ZN13FactoryHolderC1ET0_" title='FactoryHolder::FactoryHolder&lt;T, Key&gt;' data-ref="_ZN13FactoryHolderC1ET0_" id="_ZN13FactoryHolderC1ET0_" >(</a><a class="local col1 ref" href="#51id" title='id' data-ref="51id" >id</a>) { }</td></tr>
+<tr><th id="30">30</th><td>};</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><b>template</b>&lt;<b>class</b> REAL_AI&gt;</td></tr>
+<tr><th id="33">33</th><td><b>struct</b> <dfn class="type def" id="CreatureAIFactory" title='CreatureAIFactory' data-ref="CreatureAIFactory" >CreatureAIFactory</dfn> : <b>public</b> <a class="type" href="#SelectableAI" title='SelectableAI' data-ref="SelectableAI" >SelectableAI</a></td></tr>
+<tr><th id="34">34</th><td>{</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="decl def" id="_ZN17CreatureAIFactoryC1EPKc" title='CreatureAIFactory::CreatureAIFactory&lt;REAL_AI&gt;' data-ref="_ZN17CreatureAIFactoryC1EPKc" >CreatureAIFactory</dfn>(<em>const</em> <em>char</em>* <dfn class="local col2 decl" id="52name" title='name' data-type='const char *' data-ref="52name" >name</dfn>) : <a class="type" href="#SelectableAI" title='SelectableAI' data-ref="SelectableAI" >SelectableAI</a>(<a class="local col2 ref" href="#52name" title='name' data-ref="52name" >name</a>) { }</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <a class="type" href="CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <a class="virtual decl" href="#_ZNK17CreatureAIFactory6CreateEPv" title='CreatureAIFactory::Create' data-ref="_ZNK17CreatureAIFactory6CreateEPv" >Create</a>(<em>void</em>*) <em>const</em> override;</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>    <em>int</em> <dfn class="virtual decl def" id="_ZNK17CreatureAIFactory6PermitEPK8Creature" title='CreatureAIFactory::Permit' data-ref="_ZNK17CreatureAIFactory6PermitEPK8Creature" >Permit</dfn>(<em>const</em> <a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col3 decl" id="53c" title='c' data-type='const Creature *' data-ref="53c" >c</dfn>) <em>const</em> override { <b>return</b> REAL_AI::Permissible(<a class="local col3 ref" href="#53c" title='c' data-ref="53c" >c</a>); }</td></tr>
+<tr><th id="40">40</th><td>};</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td><b>template</b>&lt;<b>class</b> REAL_AI&gt;</td></tr>
+<tr><th id="43">43</th><td><b>inline</b> <a class="type" href="CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>*</td></tr>
+<tr><th id="44">44</th><td><a class="type" href="#CreatureAIFactory" title='CreatureAIFactory' data-ref="CreatureAIFactory" >CreatureAIFactory</a>&lt;REAL_AI&gt;::<dfn class="virtual decl def" id="_ZNK17CreatureAIFactory6CreateEPv" title='CreatureAIFactory::Create' data-ref="_ZNK17CreatureAIFactory6CreateEPv" >Create</dfn>(<em>void</em>* <dfn class="local col4 decl" id="54data" title='data' data-type='void *' data-ref="54data" >data</dfn>) <em>const</em></td></tr>
+<tr><th id="45">45</th><td>{</td></tr>
+<tr><th id="46">46</th><td>    <a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col5 decl" id="55creature" title='creature' data-type='Creature *' data-ref="55creature" >creature</dfn> = <b>reinterpret_cast</b>&lt;<a class="type" href="../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>*&gt;(<a class="local col4 ref" href="#54data" title='data' data-ref="54data" >data</a>);</td></tr>
+<tr><th id="47">47</th><td>    <b>return</b> (<b>new</b> REAL_AI(<a class="local col5 ref" href="#55creature" title='creature' data-ref="55creature" >creature</a>));</td></tr>
+<tr><th id="48">48</th><td>}</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><b>typedef</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>&gt; <dfn class="typedef" id="CreatureAICreator" title='CreatureAICreator' data-type='FactoryHolder&lt;CreatureAI&gt;' data-ref="CreatureAICreator" >CreatureAICreator</dfn>;</td></tr>
+<tr><th id="51">51</th><td><b>typedef</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>&gt;::<a class="typedef" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder{CreatureAI,std::basic_string{char}}::FactoryHolderRegistry" title='FactoryHolder&lt;CreatureAI, std::basic_string&lt;char&gt; &gt;::FactoryHolderRegistry' data-type='ObjectRegistry&lt;FactoryHolder&lt;CreatureAI, std::basic_string&lt;char&gt; &gt;, std::basic_string&lt;char&gt; &gt;' data-ref="FactoryHolder{CreatureAI,std::basic_string{char}}::FactoryHolderRegistry" >FactoryHolderRegistry</a> <dfn class="typedef" id="CreatureAIRegistry" title='CreatureAIRegistry' data-type='FactoryHolder&lt;CreatureAI&gt;::FactoryHolderRegistry' data-ref="CreatureAIRegistry" >CreatureAIRegistry</dfn>;</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><u>#define <dfn class="macro" id="_M/sCreatureAIRegistry" data-ref="_M/sCreatureAIRegistry">sCreatureAIRegistry</dfn> CreatureAIRegistry::instance()</u></td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><i>//GO</i></td></tr>
+<tr><th id="56">56</th><td><b>struct</b> <dfn class="type def" id="SelectableGameObjectAI" title='SelectableGameObjectAI' data-ref="SelectableGameObjectAI" >SelectableGameObjectAI</dfn> : <b>public</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CoreAI/GameObjectAI.h.html#GameObjectAI" title='GameObjectAI' data-ref="GameObjectAI" >GameObjectAI</a>&gt;, <b>public</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#Permissible" title='Permissible' data-ref="Permissible" >Permissible</a>&lt;<a class="type" href="../Entities/GameObject/GameObject.h.html#GameObject" title='GameObject' data-ref="GameObject" >GameObject</a>&gt;</td></tr>
+<tr><th id="57">57</th><td>{</td></tr>
+<tr><th id="58">58</th><td>    <dfn class="decl def" id="_ZN22SelectableGameObjectAIC1EPKc" title='SelectableGameObjectAI::SelectableGameObjectAI' data-ref="_ZN22SelectableGameObjectAIC1EPKc" >SelectableGameObjectAI</dfn>(<em>const</em> <em>char</em>* <dfn class="local col6 decl" id="56id" title='id' data-type='const char *' data-ref="56id" >id</dfn>) : <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CoreAI/GameObjectAI.h.html#GameObjectAI" title='GameObjectAI' data-ref="GameObjectAI" >GameObjectAI</a>&gt;<a class="ref" href="../../shared/Dynamic/FactoryHolder.h.html#_ZN13FactoryHolderC1ET0_" title='FactoryHolder::FactoryHolder&lt;T, Key&gt;' data-ref="_ZN13FactoryHolderC1ET0_" id="_ZN13FactoryHolderC1ET0_" >(</a><a class="local col6 ref" href="#56id" title='id' data-ref="56id" >id</a>) { }</td></tr>
+<tr><th id="59">59</th><td>};</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><b>template</b>&lt;<b>class</b> REAL_GO_AI&gt;</td></tr>
+<tr><th id="62">62</th><td><b>struct</b> <dfn class="type def" id="GameObjectAIFactory" title='GameObjectAIFactory' data-ref="GameObjectAIFactory" >GameObjectAIFactory</dfn> : <b>public</b> <a class="type" href="#SelectableGameObjectAI" title='SelectableGameObjectAI' data-ref="SelectableGameObjectAI" >SelectableGameObjectAI</a></td></tr>
+<tr><th id="63">63</th><td>{</td></tr>
+<tr><th id="64">64</th><td>    <dfn class="decl def" id="_ZN19GameObjectAIFactoryC1EPKc" title='GameObjectAIFactory::GameObjectAIFactory&lt;REAL_GO_AI&gt;' data-ref="_ZN19GameObjectAIFactoryC1EPKc" >GameObjectAIFactory</dfn>(<em>const</em> <em>char</em>* <dfn class="local col7 decl" id="57name" title='name' data-type='const char *' data-ref="57name" >name</dfn>) : <a class="type" href="#SelectableGameObjectAI" title='SelectableGameObjectAI' data-ref="SelectableGameObjectAI" >SelectableGameObjectAI</a>(<a class="local col7 ref" href="#57name" title='name' data-ref="57name" >name</a>) { }</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td>    <a class="type" href="CoreAI/GameObjectAI.h.html#GameObjectAI" title='GameObjectAI' data-ref="GameObjectAI" >GameObjectAI</a>* <a class="virtual decl" href="#_ZNK19GameObjectAIFactory6CreateEPv" title='GameObjectAIFactory::Create' data-ref="_ZNK19GameObjectAIFactory6CreateEPv" >Create</a>(<em>void</em>*) <em>const</em> override;</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>    <em>int</em> <dfn class="virtual decl def" id="_ZNK19GameObjectAIFactory6PermitEPK10GameObject" title='GameObjectAIFactory::Permit' data-ref="_ZNK19GameObjectAIFactory6PermitEPK10GameObject" >Permit</dfn>(<em>const</em> <a class="type" href="../Entities/GameObject/GameObject.h.html#GameObject" title='GameObject' data-ref="GameObject" >GameObject</a>* <dfn class="local col8 decl" id="58g" title='g' data-type='const GameObject *' data-ref="58g" >g</dfn>) <em>const</em> override { <b>return</b> REAL_GO_AI::Permissible(<a class="local col8 ref" href="#58g" title='g' data-ref="58g" >g</a>); }</td></tr>
+<tr><th id="69">69</th><td>};</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><b>template</b>&lt;<b>class</b> REAL_GO_AI&gt;</td></tr>
+<tr><th id="72">72</th><td><b>inline</b> <a class="type" href="CoreAI/GameObjectAI.h.html#GameObjectAI" title='GameObjectAI' data-ref="GameObjectAI" >GameObjectAI</a>*</td></tr>
+<tr><th id="73">73</th><td><a class="type" href="#GameObjectAIFactory" title='GameObjectAIFactory' data-ref="GameObjectAIFactory" >GameObjectAIFactory</a>&lt;REAL_GO_AI&gt;::<dfn class="virtual decl def" id="_ZNK19GameObjectAIFactory6CreateEPv" title='GameObjectAIFactory::Create' data-ref="_ZNK19GameObjectAIFactory6CreateEPv" >Create</dfn>(<em>void</em>* <dfn class="local col9 decl" id="59data" title='data' data-type='void *' data-ref="59data" >data</dfn>) <em>const</em></td></tr>
+<tr><th id="74">74</th><td>{</td></tr>
+<tr><th id="75">75</th><td>    <a class="type" href="../Entities/GameObject/GameObject.h.html#GameObject" title='GameObject' data-ref="GameObject" >GameObject</a>* <dfn class="local col0 decl" id="60go" title='go' data-type='GameObject *' data-ref="60go" >go</dfn> = <b>reinterpret_cast</b>&lt;<a class="type" href="../Entities/GameObject/GameObject.h.html#GameObject" title='GameObject' data-ref="GameObject" >GameObject</a>*&gt;(<a class="local col9 ref" href="#59data" title='data' data-ref="59data" >data</a>);</td></tr>
+<tr><th id="76">76</th><td>    <b>return</b> (<b>new</b> REAL_GO_AI(<a class="local col0 ref" href="#60go" title='go' data-ref="60go" >go</a>));</td></tr>
+<tr><th id="77">77</th><td>}</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td><b>typedef</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CoreAI/GameObjectAI.h.html#GameObjectAI" title='GameObjectAI' data-ref="GameObjectAI" >GameObjectAI</a>&gt; <dfn class="typedef" id="GameObjectAICreator" title='GameObjectAICreator' data-type='FactoryHolder&lt;GameObjectAI&gt;' data-ref="GameObjectAICreator" >GameObjectAICreator</dfn>;</td></tr>
+<tr><th id="80">80</th><td><b>typedef</b> <a class="type" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder" title='FactoryHolder' data-ref="FactoryHolder" >FactoryHolder</a>&lt;<a class="type" href="CoreAI/GameObjectAI.h.html#GameObjectAI" title='GameObjectAI' data-ref="GameObjectAI" >GameObjectAI</a>&gt;::<a class="typedef" href="../../shared/Dynamic/FactoryHolder.h.html#FactoryHolder{GameObjectAI,std::basic_string{char}}::FactoryHolderRegistry" title='FactoryHolder&lt;GameObjectAI, std::basic_string&lt;char&gt; &gt;::FactoryHolderRegistry' data-type='ObjectRegistry&lt;FactoryHolder&lt;GameObjectAI, std::basic_string&lt;char&gt; &gt;, std::basic_string&lt;char&gt; &gt;' data-ref="FactoryHolder{GameObjectAI,std::basic_string{char}}::FactoryHolderRegistry" >FactoryHolderRegistry</a> <dfn class="typedef" id="GameObjectAIRegistry" title='GameObjectAIRegistry' data-type='FactoryHolder&lt;GameObjectAI&gt;::FactoryHolderRegistry' data-ref="GameObjectAIRegistry" >GameObjectAIRegistry</dfn>;</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><u>#define <dfn class="macro" id="_M/sGameObjectAIRegistry" data-ref="_M/sGameObjectAIRegistry">sGameObjectAIRegistry</dfn> GameObjectAIRegistry::instance()</u></td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="85">85</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='CreatureAIRegistry.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CreatureAIRegistry.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

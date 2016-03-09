@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+<title>boss_herod.cpp [TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletMonastery/boss_herod.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletMonastery/boss_herod.cpp'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>scripts</a>/<a href='..'>EasternKingdoms</a>/<a href='./'>ScarletMonastery</a>/boss_herod.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2006-2009 ScriptDev2 &lt;<a href="https://scriptdev">https://scriptdev</a>2.svn.sourceforge.net/&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i>/* ScriptData</i></td></tr>
+<tr><th id="20">20</th><td><i>SDName: Boss_Herod</i></td></tr>
+<tr><th id="21">21</th><td><i>SD%Complete: 95</i></td></tr>
+<tr><th id="22">22</th><td><i>SDComment: Should in addition spawn Myrmidons in the hallway outside</i></td></tr>
+<tr><th id="23">23</th><td><i>SDCategory: Scarlet Monastery</i></td></tr>
+<tr><th id="24">24</th><td><i>EndScriptData */</i></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../../../game/AI/ScriptedAI/ScriptedEscortAI.h.html">"ScriptedEscortAI.h"</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#include <a href="scarlet_monastery.h.html">"scarlet_monastery.h"</a></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><b>enum</b> <dfn class="type def" id="Says" title='Says' data-ref="Says" >Says</dfn></td></tr>
+<tr><th id="32">32</th><td>{</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="Says::SAY_AGGRO" title='Says::SAY_AGGRO' data-ref="Says::SAY_AGGRO" >SAY_AGGRO</dfn>                   = <var>0</var>,</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="Says::SAY_WHIRLWIND" title='Says::SAY_WHIRLWIND' data-ref="Says::SAY_WHIRLWIND" >SAY_WHIRLWIND</dfn>               = <var>1</var>,</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="Says::SAY_ENRAGE" title='Says::SAY_ENRAGE' data-ref="Says::SAY_ENRAGE" >SAY_ENRAGE</dfn>                  = <var>2</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="Says::SAY_KILL" title='Says::SAY_KILL' data-ref="Says::SAY_KILL" >SAY_KILL</dfn>                    = <var>3</var>,</td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="Says::EMOTE_ENRAGE" title='Says::EMOTE_ENRAGE' data-ref="Says::EMOTE_ENRAGE" >EMOTE_ENRAGE</dfn>                = <var>4</var></td></tr>
+<tr><th id="38">38</th><td>};</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><b>enum</b> <dfn class="type def" id="Spells" title='Spells' data-ref="Spells" >Spells</dfn></td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="Spells::SPELL_RUSHINGCHARGE" title='Spells::SPELL_RUSHINGCHARGE' data-ref="Spells::SPELL_RUSHINGCHARGE" >SPELL_RUSHINGCHARGE</dfn>         = <var>8260</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="Spells::SPELL_CLEAVE" title='Spells::SPELL_CLEAVE' data-ref="Spells::SPELL_CLEAVE" >SPELL_CLEAVE</dfn>                = <var>15496</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="Spells::SPELL_WHIRLWIND" title='Spells::SPELL_WHIRLWIND' data-ref="Spells::SPELL_WHIRLWIND" >SPELL_WHIRLWIND</dfn>             = <var>8989</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="Spells::SPELL_FRENZY" title='Spells::SPELL_FRENZY' data-ref="Spells::SPELL_FRENZY" >SPELL_FRENZY</dfn>                = <var>8269</var></td></tr>
+<tr><th id="46">46</th><td>};</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><b>enum</b> <dfn class="type def" id="Npcs" title='Npcs' data-ref="Npcs" >Npcs</dfn></td></tr>
+<tr><th id="49">49</th><td>{</td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="Npcs::NPC_SCARLET_TRAINEE" title='Npcs::NPC_SCARLET_TRAINEE' data-ref="Npcs::NPC_SCARLET_TRAINEE" >NPC_SCARLET_TRAINEE</dfn>         = <var>6575</var>,</td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="Npcs::NPC_SCARLET_MYRMIDON" title='Npcs::NPC_SCARLET_MYRMIDON' data-ref="Npcs::NPC_SCARLET_MYRMIDON" >NPC_SCARLET_MYRMIDON</dfn>        = <var>4295</var></td></tr>
+<tr><th id="52">52</th><td>};</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><b>enum</b> <dfn class="type def" id="Events" title='Events' data-ref="Events" >Events</dfn></td></tr>
+<tr><th id="55">55</th><td>{</td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="Events::EVENT_CLEAVE" title='Events::EVENT_CLEAVE' data-ref="Events::EVENT_CLEAVE" >EVENT_CLEAVE</dfn>                = <var>1</var>,</td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="Events::EVENT_WHIRLWIND" title='Events::EVENT_WHIRLWIND' data-ref="Events::EVENT_WHIRLWIND" >EVENT_WHIRLWIND</dfn></td></tr>
+<tr><th id="58">58</th><td>};</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><a class="type" href="../../../game/Entities/Object/Position.h.html#Position" title='Position' data-ref="Position" >Position</a> <em>const</em> <dfn class="tu decl def" id="_ZL17ScarletTraineePos" title='ScarletTraineePos' data-type='const Position' data-ref="_ZL17ScarletTraineePos" >ScarletTraineePos</dfn> = <a class="ref" href="../../../game/Entities/Object/Position.h.html#_ZN8PositionC1Effff" title='Position::Position' data-ref="_ZN8PositionC1Effff" id="_ZN8PositionC1Effff" >{</a> <var>1939.18f</var>, -<var>431.58f</var>, <var>17.09f</var>, <var>6.22f</var> };</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><b>class</b> <dfn class="type def" id="boss_herod" title='boss_herod' data-ref="boss_herod" >boss_herod</dfn> : <b>public</b> <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="63">63</th><td>{</td></tr>
+<tr><th id="64">64</th><td>    <b>public</b>:</td></tr>
+<tr><th id="65">65</th><td>        <dfn class="tu decl def" id="_ZN10boss_herodC1Ev" title='boss_herod::boss_herod' data-type='void boss_herod::boss_herod()' data-ref="_ZN10boss_herodC1Ev" >boss_herod</dfn>() : <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"boss_herod"</q>) { }</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>        <b>struct</b> <dfn class="tu type def" id="boss_herod::boss_herodAI" title='boss_herod::boss_herodAI' data-ref="boss_herod::boss_herodAI" >boss_herodAI</dfn> : <b>public</b> <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a></td></tr>
+<tr><th id="68">68</th><td>        {</td></tr>
+<tr><th id="69">69</th><td>            <dfn class="tu decl def" id="_ZN10boss_herod12boss_herodAIC1EP8Creature" title='boss_herod::boss_herodAI::boss_herodAI' data-type='void boss_herod::boss_herodAI::boss_herodAI(Creature * creature)' data-ref="_ZN10boss_herod12boss_herodAIC1EP8Creature" >boss_herodAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) : <a class="type" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI" title='BossAI' data-ref="BossAI" >BossAI</a><a class="ref" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAIC1EP8Creaturej" title='BossAI::BossAI' data-ref="_ZN6BossAIC1EP8Creaturej" id="_ZN6BossAIC1EP8Creaturej" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>, <a class="enum" href="scarlet_monastery.h.html#DataTypes::DATA_HEROD" title='DataTypes::DATA_HEROD' data-ref="DataTypes::DATA_HEROD" id="DataTypes::DATA_HEROD" >DATA_HEROD</a>)</td></tr>
+<tr><th id="70">70</th><td>            {</td></tr>
+<tr><th id="71">71</th><td>                <a class="tu member" href="#boss_herod::boss_herodAI::_enrage" title='boss_herod::boss_herodAI::_enrage' data-use='w' data-ref="boss_herod::boss_herodAI::_enrage" >_enrage</a> = <b>false</b>;</td></tr>
+<tr><th id="72">72</th><td>            }</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_herod12boss_herodAI5ResetEv" title='boss_herod::boss_herodAI::Reset' data-ref="_ZN10boss_herod12boss_herodAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="75">75</th><td>            {</td></tr>
+<tr><th id="76">76</th><td>                <a class="tu member" href="#boss_herod::boss_herodAI::_enrage" title='boss_herod::boss_herodAI::_enrage' data-use='w' data-ref="boss_herod::boss_herodAI::_enrage" >_enrage</a> = <b>false</b>;</td></tr>
+<tr><th id="77">77</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI6_ResetEv" title='BossAI::_Reset' data-ref="_ZN6BossAI6_ResetEv" id="_ZN6BossAI6_ResetEv" >_Reset</a>();</td></tr>
+<tr><th id="78">78</th><td>            }</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_herod12boss_herodAI11EnterCombatEP4Unit" title='boss_herod::boss_herodAI::EnterCombat' data-ref="_ZN10boss_herod12boss_herodAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override</td></tr>
+<tr><th id="81">81</th><td>            {</td></tr>
+<tr><th id="82">82</th><td>                <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Says::SAY_AGGRO" title='Says::SAY_AGGRO' data-ref="Says::SAY_AGGRO" >SAY_AGGRO</a>);</td></tr>
+<tr><th id="83">83</th><td>                <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Spells::SPELL_RUSHINGCHARGE" title='Spells::SPELL_RUSHINGCHARGE' data-ref="Spells::SPELL_RUSHINGCHARGE" >SPELL_RUSHINGCHARGE</a>);</td></tr>
+<tr><th id="84">84</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI12_EnterCombatEv" title='BossAI::_EnterCombat' data-ref="_ZN6BossAI12_EnterCombatEv" id="_ZN6BossAI12_EnterCombatEv" >_EnterCombat</a>();</td></tr>
+<tr><th id="85">85</th><td></td></tr>
+<tr><th id="86">86</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_CLEAVE" title='Events::EVENT_CLEAVE' data-ref="Events::EVENT_CLEAVE" >EVENT_CLEAVE</a>, <var>12000</var>);</td></tr>
+<tr><th id="87">87</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_WHIRLWIND" title='Events::EVENT_WHIRLWIND' data-ref="Events::EVENT_WHIRLWIND" >EVENT_WHIRLWIND</a>, <var>60000</var>);</td></tr>
+<tr><th id="88">88</th><td>            }</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_herod12boss_herodAI10KilledUnitEP4Unit" title='boss_herod::boss_herodAI::KilledUnit' data-ref="_ZN10boss_herod12boss_herodAI10KilledUnitEP4Unit" >KilledUnit</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*victim*/</i>) override</td></tr>
+<tr><th id="91">91</th><td>            {</td></tr>
+<tr><th id="92">92</th><td>                <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Says::SAY_KILL" title='Says::SAY_KILL' data-ref="Says::SAY_KILL" >SAY_KILL</a>);</td></tr>
+<tr><th id="93">93</th><td>            }</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_herod12boss_herodAI8JustDiedEP4Unit" title='boss_herod::boss_herodAI::JustDied' data-ref="_ZN10boss_herod12boss_herodAI8JustDiedEP4Unit" >JustDied</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*killer*/</i>) override</td></tr>
+<tr><th id="96">96</th><td>            {</td></tr>
+<tr><th id="97">97</th><td>                <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZN6BossAI9_JustDiedEv" title='BossAI::_JustDied' data-ref="_ZN6BossAI9_JustDiedEv" id="_ZN6BossAI9_JustDiedEv" >_JustDied</a>();</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>                <b>for</b> (<a class="typedef" href="../../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col2 decl" id="2i" title='i' data-type='uint8' data-ref="2i" >i</dfn> = <var>0</var>; <a class="local col2 ref" href="#2i" title='i' data-ref="2i" >i</a> &lt; <var>20</var>; ++<a class="local col2 ref" href="#2i" title='i' data-ref="2i" >i</a>)</td></tr>
+<tr><th id="100">100</th><td>                    <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Object/Object.h.html#_ZNK11WorldObject14SummonCreatureEjRK8Position14TempSummonTypejj" title='WorldObject::SummonCreature' data-ref="_ZNK11WorldObject14SummonCreatureEjRK8Position14TempSummonTypejj" id="_ZNK11WorldObject14SummonCreatureEjRK8Position14TempSummonTypejj" >SummonCreature</a>(<a class="enum" href="#Npcs::NPC_SCARLET_TRAINEE" title='Npcs::NPC_SCARLET_TRAINEE' data-ref="Npcs::NPC_SCARLET_TRAINEE" >NPC_SCARLET_TRAINEE</a>, <a class="tu ref" href="#_ZL17ScarletTraineePos" title='ScarletTraineePos' data-use='r' data-ref="_ZL17ScarletTraineePos" >ScarletTraineePos</a>, <a class="enum" href="../../../game/Entities/Object/Object.h.html#TempSummonType::TEMPSUMMON_TIMED_OR_DEAD_DESPAWN" title='TempSummonType::TEMPSUMMON_TIMED_OR_DEAD_DESPAWN' data-ref="TempSummonType::TEMPSUMMON_TIMED_OR_DEAD_DESPAWN" id="TempSummonType::TEMPSUMMON_TIMED_OR_DEAD_DESPAWN" >TEMPSUMMON_TIMED_OR_DEAD_DESPAWN</a>, <var>600000</var>);</td></tr>
+<tr><th id="101">101</th><td>            }</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_herod12boss_herodAI11DamageTakenEP4UnitRj" title='boss_herod::boss_herodAI::DamageTaken' data-ref="_ZN10boss_herod12boss_herodAI11DamageTakenEP4UnitRj" >DamageTaken</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*attacker*/</i>, <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&amp; <dfn class="local col3 decl" id="3damage" title='damage' data-type='uint32 &amp;' data-ref="3damage" >damage</dfn>) override</td></tr>
+<tr><th id="104">104</th><td>            {</td></tr>
+<tr><th id="105">105</th><td>                <b>if</b> (!<a class="tu member" href="#boss_herod::boss_herodAI::_enrage" title='boss_herod::boss_herodAI::_enrage' data-use='r' data-ref="boss_herod::boss_herodAI::_enrage" >_enrage</a> &amp;&amp; <a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../../game/Entities/Unit/Unit.h.html#_ZNK4Unit21HealthBelowPctDamagedEij" title='Unit::HealthBelowPctDamaged' data-ref="_ZNK4Unit21HealthBelowPctDamagedEij" id="_ZNK4Unit21HealthBelowPctDamagedEij" >HealthBelowPctDamaged</a>(<var>30</var>, <a class="local col3 ref" href="#3damage" title='damage' data-ref="3damage" >damage</a>))</td></tr>
+<tr><th id="106">106</th><td>                {</td></tr>
+<tr><th id="107">107</th><td>                    <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Says::EMOTE_ENRAGE" title='Says::EMOTE_ENRAGE' data-ref="Says::EMOTE_ENRAGE" >EMOTE_ENRAGE</a>);</td></tr>
+<tr><th id="108">108</th><td>                    <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Says::SAY_ENRAGE" title='Says::SAY_ENRAGE' data-ref="Says::SAY_ENRAGE" >SAY_ENRAGE</a>);</td></tr>
+<tr><th id="109">109</th><td>                    <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#Spells::SPELL_FRENZY" title='Spells::SPELL_FRENZY' data-ref="Spells::SPELL_FRENZY" >SPELL_FRENZY</a>);</td></tr>
+<tr><th id="110">110</th><td>                    <a class="tu member" href="#boss_herod::boss_herodAI::_enrage" title='boss_herod::boss_herodAI::_enrage' data-use='w' data-ref="boss_herod::boss_herodAI::_enrage" >_enrage</a> = <b>true</b>;</td></tr>
+<tr><th id="111">111</th><td>                }</td></tr>
+<tr><th id="112">112</th><td>            }</td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td>            <em>void</em> <dfn class="virtual decl def" id="_ZN10boss_herod12boss_herodAI12ExecuteEventEj" title='boss_herod::boss_herodAI::ExecuteEvent' data-ref="_ZN10boss_herod12boss_herodAI12ExecuteEventEj" >ExecuteEvent</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="4eventId" title='eventId' data-type='uint32' data-ref="4eventId" >eventId</dfn>) override</td></tr>
+<tr><th id="115">115</th><td>            {</td></tr>
+<tr><th id="116">116</th><td>                <b>switch</b> (<a class="local col4 ref" href="#4eventId" title='eventId' data-ref="4eventId" >eventId</a>)</td></tr>
+<tr><th id="117">117</th><td>                {</td></tr>
+<tr><th id="118">118</th><td>                    <b>case</b> <a class="enum" href="#Events::EVENT_CLEAVE" title='Events::EVENT_CLEAVE' data-ref="Events::EVENT_CLEAVE" >EVENT_CLEAVE</a>:</td></tr>
+<tr><th id="119">119</th><td>                        <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12DoCastVictimEjb" title='UnitAI::DoCastVictim' data-ref="_ZN6UnitAI12DoCastVictimEjb" id="_ZN6UnitAI12DoCastVictimEjb" >DoCastVictim</a>(<a class="enum" href="#Spells::SPELL_CLEAVE" title='Spells::SPELL_CLEAVE' data-ref="Spells::SPELL_CLEAVE" >SPELL_CLEAVE</a>);</td></tr>
+<tr><th id="120">120</th><td>                        <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_CLEAVE" title='Events::EVENT_CLEAVE' data-ref="Events::EVENT_CLEAVE" >EVENT_CLEAVE</a>, <var>12000</var>);</td></tr>
+<tr><th id="121">121</th><td>                        <b>break</b>;</td></tr>
+<tr><th id="122">122</th><td>                    <b>case</b> <a class="enum" href="#Events::EVENT_WHIRLWIND" title='Events::EVENT_WHIRLWIND' data-ref="Events::EVENT_WHIRLWIND" >EVENT_WHIRLWIND</a>:</td></tr>
+<tr><th id="123">123</th><td>                        <a class="member" href="../../../game/AI/CreatureAI.h.html#_ZN10CreatureAI4TalkEhPK11WorldObject" title='CreatureAI::Talk' data-ref="_ZN10CreatureAI4TalkEhPK11WorldObject" id="_ZN10CreatureAI4TalkEhPK11WorldObject" >Talk</a>(<a class="enum" href="#Says::SAY_WHIRLWIND" title='Says::SAY_WHIRLWIND' data-ref="Says::SAY_WHIRLWIND" >SAY_WHIRLWIND</a>);</td></tr>
+<tr><th id="124">124</th><td>                        <a class="member" href="../../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI12DoCastVictimEjb" title='UnitAI::DoCastVictim' data-ref="_ZN6UnitAI12DoCastVictimEjb" id="_ZN6UnitAI12DoCastVictimEjb" >DoCastVictim</a>(<a class="enum" href="#Spells::SPELL_WHIRLWIND" title='Spells::SPELL_WHIRLWIND' data-ref="Spells::SPELL_WHIRLWIND" >SPELL_WHIRLWIND</a>);</td></tr>
+<tr><th id="125">125</th><td>                        <a class="member" href="../../../game/AI/ScriptedAI/ScriptedCreature.h.html#BossAI::events" title='BossAI::events' data-ref="BossAI::events" id="BossAI::events" >events</a>.<a class="ref" href="../../../../common/Utilities/EventMap.h.html#_ZN8EventMap13ScheduleEventEjjjh" title='EventMap::ScheduleEvent' data-ref="_ZN8EventMap13ScheduleEventEjjjh" id="_ZN8EventMap13ScheduleEventEjjjh" >ScheduleEvent</a>(<a class="enum" href="#Events::EVENT_WHIRLWIND" title='Events::EVENT_WHIRLWIND' data-ref="Events::EVENT_WHIRLWIND" >EVENT_WHIRLWIND</a>, <var>30000</var>);</td></tr>
+<tr><th id="126">126</th><td>                        <b>break</b>;</td></tr>
+<tr><th id="127">127</th><td>                    <b>default</b>:</td></tr>
+<tr><th id="128">128</th><td>                        <b>break</b>;</td></tr>
+<tr><th id="129">129</th><td>                }</td></tr>
+<tr><th id="130">130</th><td>            }</td></tr>
+<tr><th id="131">131</th><td></td></tr>
+<tr><th id="132">132</th><td>            <b>private</b>:</td></tr>
+<tr><th id="133">133</th><td>                <em>bool</em> <dfn class="tu decl" id="boss_herod::boss_herodAI::_enrage" title='boss_herod::boss_herodAI::_enrage' data-type='bool' data-ref="boss_herod::boss_herodAI::_enrage" >_enrage</dfn>;</td></tr>
+<tr><th id="134">134</th><td>        };</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>        <a class="type" href="../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK10boss_herod5GetAIEP8Creature" title='boss_herod::GetAI' data-ref="_ZNK10boss_herod5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col5 decl" id="5creature" title='creature' data-type='Creature *' data-ref="5creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="137">137</th><td>        {</td></tr>
+<tr><th id="138">138</th><td>            <b>return</b> <a class="ref" href="scarlet_monastery.h.html#_Z21GetScarletMonasteryAIP8Creature" title='GetScarletMonasteryAI' data-ref="_Z21GetScarletMonasteryAIP8Creature" id="_Z21GetScarletMonasteryAIP8Creature" >GetScarletMonasteryAI</a>&lt;<a class="tu type" href="#boss_herod::boss_herodAI" title='boss_herod::boss_herodAI' data-ref="boss_herod::boss_herodAI" >boss_herodAI</a>&gt;(<a class="local col5 ref" href="#5creature" title='creature' data-ref="5creature" >creature</a>);</td></tr>
+<tr><th id="139">139</th><td>        }</td></tr>
+<tr><th id="140">140</th><td>};</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td><b>class</b> <dfn class="type def" id="npc_scarlet_trainee" title='npc_scarlet_trainee' data-ref="npc_scarlet_trainee" >npc_scarlet_trainee</dfn> : <b>public</b> <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="143">143</th><td>{</td></tr>
+<tr><th id="144">144</th><td><b>public</b>:</td></tr>
+<tr><th id="145">145</th><td>    <dfn class="tu decl def" id="_ZN19npc_scarlet_traineeC1Ev" title='npc_scarlet_trainee::npc_scarlet_trainee' data-type='void npc_scarlet_trainee::npc_scarlet_trainee()' data-ref="_ZN19npc_scarlet_traineeC1Ev" >npc_scarlet_trainee</dfn>() : <a class="type" href="../../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"npc_scarlet_trainee"</q>) { }</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td>    <a class="type" href="../../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK19npc_scarlet_trainee5GetAIEP8Creature" title='npc_scarlet_trainee::GetAI' data-ref="_ZNK19npc_scarlet_trainee5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col6 decl" id="6creature" title='creature' data-type='Creature *' data-ref="6creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="148">148</th><td>    {</td></tr>
+<tr><th id="149">149</th><td>        <b>return</b> <b>new</b> <a class="tu type" href="#npc_scarlet_trainee::npc_scarlet_traineeAI" title='npc_scarlet_trainee::npc_scarlet_traineeAI' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI" >npc_scarlet_traineeAI</a><a class="tu ref" href="#_ZN19npc_scarlet_trainee21npc_scarlet_traineeAIC1EP8Creature" title='npc_scarlet_trainee::npc_scarlet_traineeAI::npc_scarlet_traineeAI' data-use='c' data-ref="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAIC1EP8Creature" >(</a><a class="local col6 ref" href="#6creature" title='creature' data-ref="6creature" >creature</a>);</td></tr>
+<tr><th id="150">150</th><td>    }</td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td>    <b>struct</b> <dfn class="tu type def" id="npc_scarlet_trainee::npc_scarlet_traineeAI" title='npc_scarlet_trainee::npc_scarlet_traineeAI' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI" >npc_scarlet_traineeAI</dfn> : <b>public</b> <a class="type" href="../../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a></td></tr>
+<tr><th id="153">153</th><td>    {</td></tr>
+<tr><th id="154">154</th><td>        <dfn class="tu decl def" id="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAIC1EP8Creature" title='npc_scarlet_trainee::npc_scarlet_traineeAI::npc_scarlet_traineeAI' data-type='void npc_scarlet_trainee::npc_scarlet_traineeAI::npc_scarlet_traineeAI(Creature * creature)' data-ref="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAIC1EP8Creature" >npc_scarlet_traineeAI</dfn>(<a class="type" href="../../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col7 decl" id="7creature" title='creature' data-type='Creature *' data-ref="7creature" >creature</dfn>) : <a class="type" href="../../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a><a class="ref" href="../../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAIC1EP8Creature" title='npc_escortAI::npc_escortAI' data-ref="_ZN12npc_escortAIC1EP8Creature" id="_ZN12npc_escortAIC1EP8Creature" >(</a><a class="local col7 ref" href="#7creature" title='creature' data-ref="7creature" >creature</a>)</td></tr>
+<tr><th id="155">155</th><td>        {</td></tr>
+<tr><th id="156">156</th><td>            <a class="tu member" href="#npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" title='npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer' data-use='w' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" >Start_Timer</a> = <a class="ref" href="../../../../common/Utilities/Random.h.html#_Z5urandjj" title='urand' data-ref="_Z5urandjj" id="_Z5urandjj" >urand</a>(<var>1000</var>, <var>6000</var>);</td></tr>
+<tr><th id="157">157</th><td>        }</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="tu decl" id="npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" title='npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer' data-type='uint32' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" >Start_Timer</dfn>;</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI5ResetEv" title='npc_scarlet_trainee::npc_scarlet_traineeAI::Reset' data-ref="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI5ResetEv" >Reset</dfn>() override { }</td></tr>
+<tr><th id="162">162</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI15WaypointReachedEj" title='npc_scarlet_trainee::npc_scarlet_traineeAI::WaypointReached' data-ref="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI15WaypointReachedEj" >WaypointReached</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <i>/*waypointId*/</i>) override { }</td></tr>
+<tr><th id="163">163</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI11EnterCombatEP4Unit" title='npc_scarlet_trainee::npc_scarlet_traineeAI::EnterCombat' data-ref="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override { }</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI8UpdateAIEj" title='npc_scarlet_trainee::npc_scarlet_traineeAI::UpdateAI' data-ref="_ZN19npc_scarlet_trainee21npc_scarlet_traineeAI8UpdateAIEj" >UpdateAI</dfn>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="8diff" title='diff' data-type='uint32' data-ref="8diff" >diff</dfn>) override</td></tr>
+<tr><th id="166">166</th><td>        {</td></tr>
+<tr><th id="167">167</th><td>            <b>if</b> (<a class="tu member" href="#npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" title='npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer' data-use='r' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" >Start_Timer</a>)</td></tr>
+<tr><th id="168">168</th><td>            {</td></tr>
+<tr><th id="169">169</th><td>                <b>if</b> (<a class="tu member" href="#npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" title='npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer' data-use='r' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" >Start_Timer</a> &lt;= <a class="local col8 ref" href="#8diff" title='diff' data-ref="8diff" >diff</a>)</td></tr>
+<tr><th id="170">170</th><td>                {</td></tr>
+<tr><th id="171">171</th><td>                    <a class="member" href="../../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" title='npc_escortAI::Start' data-ref="_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" id="_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" >Start</a>(<b>true</b>, <b>true</b>);</td></tr>
+<tr><th id="172">172</th><td>                    <a class="tu member" href="#npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" title='npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer' data-use='w' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" >Start_Timer</a> = <var>0</var>;</td></tr>
+<tr><th id="173">173</th><td>                } <b>else</b> <a class="tu member" href="#npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" title='npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer' data-use='w' data-ref="npc_scarlet_trainee::npc_scarlet_traineeAI::Start_Timer" >Start_Timer</a> -= <a class="local col8 ref" href="#8diff" title='diff' data-ref="8diff" >diff</a>;</td></tr>
+<tr><th id="174">174</th><td>            }</td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td>            <a class="type" href="../../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a>::<a class="virtual member" href="../../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI8UpdateAIEj" title='npc_escortAI::UpdateAI' data-ref="_ZN12npc_escortAI8UpdateAIEj" id="_ZN12npc_escortAI8UpdateAIEj" >UpdateAI</a>(<a class="local col8 ref" href="#8diff" title='diff' data-ref="8diff" >diff</a>);</td></tr>
+<tr><th id="177">177</th><td>        }</td></tr>
+<tr><th id="178">178</th><td>    };</td></tr>
+<tr><th id="179">179</th><td>};</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td><em>void</em> <dfn class="decl def" id="_Z16AddSC_boss_herodv" title='AddSC_boss_herod' data-ref="_Z16AddSC_boss_herodv" >AddSC_boss_herod</dfn>()</td></tr>
+<tr><th id="182">182</th><td>{</td></tr>
+<tr><th id="183">183</th><td>    <b>new</b> <a class="type" href="#boss_herod" title='boss_herod' data-ref="boss_herod" >boss_herod</a><a class="tu ref" href="#_ZN10boss_herodC1Ev" title='boss_herod::boss_herod' data-use='c' data-ref="_ZN10boss_herodC1Ev" >(</a>);</td></tr>
+<tr><th id="184">184</th><td>    <b>new</b> <a class="type" href="#npc_scarlet_trainee" title='npc_scarlet_trainee' data-ref="npc_scarlet_trainee" >npc_scarlet_trainee</a><a class="tu ref" href="#_ZN19npc_scarlet_traineeC1Ev" title='npc_scarlet_trainee::npc_scarlet_trainee' data-use='c' data-ref="_ZN19npc_scarlet_traineeC1Ev" >(</a>);</td></tr>
+<tr><th id="185">185</th><td>}</td></tr>
+<tr><th id="186">186</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

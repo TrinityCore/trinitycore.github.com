@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+<title>Socket.h [TrinityCore3.3.5/src/server/shared/Networking/Socket.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/shared/Networking/Socket.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>shared</a>/<a href='./'>Networking</a>/Socket.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/__SOCKET_H__">__SOCKET_H__</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/__SOCKET_H__" data-ref="_M/__SOCKET_H__">__SOCKET_H__</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="MessageBuffer.h.html">"MessageBuffer.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../common/Logging/Log.h.html">"Log.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../../include/c++/4.9/atomic.html">&lt;atomic&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../../include/c++/4.9/queue.html">&lt;queue&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../../../../include/c++/4.9/memory.html">&lt;memory&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="../../../../../include/c++/4.9/functional.html">&lt;functional&gt;</a></u></td></tr>
+<tr><th id="27">27</th><td><u>#include <a href="../../../../../include/c++/4.9/type_traits.html">&lt;type_traits&gt;</a></u></td></tr>
+<tr><th id="28">28</th><td><u>#include <a href="../../../../../include/boost/asio/ip/tcp.hpp.html">&lt;boost/asio/ip/tcp.hpp&gt;</a></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>using</b> <span class="namespace">boost::asio::ip::</span>tcp;</td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/READ_BLOCK_SIZE" data-ref="_M/READ_BLOCK_SIZE">READ_BLOCK_SIZE</dfn> 4096</u></td></tr>
+<tr><th id="33">33</th><td><u>#<span data-ppcond="33">ifdef</span> <span class="macro" data-ref="_M/BOOST_ASIO_HAS_IOCP">BOOST_ASIO_HAS_IOCP</span></u></td></tr>
+<tr><th id="34">34</th><td><u>#define TC_SOCKET_USE_IOCP</u></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="33">endif</span></u></td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>template</b>&lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="38">38</th><td><b>class</b> <dfn class="type def" id="Socket" title='Socket' data-ref="Socket" >Socket</dfn> : <b>public</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/shared_ptr_base.h.html#std::enable_shared_from_this" title='std::enable_shared_from_this' data-ref="std::enable_shared_from_this" >enable_shared_from_this</a>&lt;T&gt;</td></tr>
+<tr><th id="39">39</th><td>{</td></tr>
+<tr><th id="40">40</th><td><b>public</b>:</td></tr>
+<tr><th id="41">41</th><td>    <b>explicit</b> <dfn class="decl def" id="_ZN6SocketC1EON5boost4asio19basic_stream_socketINS1_2ip3tcpENS1_21stream_socket_serviceIS4_EEEE" title='Socket::Socket&lt;T&gt;' data-ref="_ZN6SocketC1EON5boost4asio19basic_stream_socketINS1_2ip3tcpENS1_21stream_socket_serviceIS4_EEEE" >Socket</dfn>(<a class="type" href="../../../../../include/boost/asio/ip/tcp.hpp.html#boost::asio::ip::tcp" title='boost::asio::ip::tcp' data-ref="boost::asio::ip::tcp" >tcp</a>::<a class="typedef" href="../../../../../include/boost/asio/ip/tcp.hpp.html#boost::asio::ip::tcp::socket" title='boost::asio::ip::tcp::socket' data-type='basic_stream_socket&lt;boost::asio::ip::tcp&gt;' data-ref="boost::asio::ip::tcp::socket" >socket</a>&amp;&amp; <dfn class="local col9 decl" id="5919socket" title='socket' data-type='tcp::socket &amp;&amp;' data-ref="5919socket" >socket</dfn>) : <a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a><a class="ref" href="../../../../../include/boost/asio/basic_stream_socket.hpp.html#_ZN5boost4asio19basic_stream_socketC1EONS0_19basic_stream_socketIT_T0_EE" title='boost::asio::basic_stream_socket::basic_stream_socket&lt;Protocol, StreamSocketService&gt;' data-ref="_ZN5boost4asio19basic_stream_socketC1EONS0_19basic_stream_socketIT_T0_EE" id="_ZN5boost4asio19basic_stream_socketC1EONS0_19basic_stream_socketIT_T0_EE" >(</a><span class="namespace">std::</span><a class="ref" href="../../../../../include/c++/4.9/bits/move.h.html#_ZSt4moveOT_" title='std::move' data-ref="_ZSt4moveOT_" id="_ZSt4moveOT_" >move</a>(<a class="local col9 ref" href="#5919socket" title='socket' data-ref="5919socket" >socket</a>)), <a class="member" href="#Socket::_remoteAddress" title='Socket::_remoteAddress' data-ref="Socket::_remoteAddress" >_remoteAddress</a>(<a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a>.remote_endpoint().address()),</td></tr>
+<tr><th id="42">42</th><td>        <a class="member" href="#Socket::_remotePort" title='Socket::_remotePort' data-ref="Socket::_remotePort" >_remotePort</a>(<a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a>.remote_endpoint().port()), <a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a><a class="ref" href="MessageBuffer.h.html#_ZN13MessageBufferC1Ev" title='MessageBuffer::MessageBuffer' data-ref="_ZN13MessageBufferC1Ev" id="_ZN13MessageBufferC1Ev" >(</a>), <a class="member" href="#Socket::_closed" title='Socket::_closed' data-ref="Socket::_closed" >_closed</a><a class="ref" href="../../../../../include/c++/4.9/atomic.html#_ZNSt6atomicIbEC1Eb" title='std::atomic&lt;bool&gt;::atomic' data-ref="_ZNSt6atomicIbEC1Eb" id="_ZNSt6atomicIbEC1Eb" >(</a><b>false</b>), <a class="member" href="#Socket::_closing" title='Socket::_closing' data-ref="Socket::_closing" >_closing</a><a class="ref" href="../../../../../include/c++/4.9/atomic.html#_ZNSt6atomicIbEC1Eb" title='std::atomic&lt;bool&gt;::atomic' data-ref="_ZNSt6atomicIbEC1Eb" id="_ZNSt6atomicIbEC1Eb" >(</a><b>false</b>), <a class="member" href="#Socket::_isWritingAsync" title='Socket::_isWritingAsync' data-ref="Socket::_isWritingAsync" >_isWritingAsync</a>(<b>false</b>)</td></tr>
+<tr><th id="43">43</th><td>    {</td></tr>
+<tr><th id="44">44</th><td>        <a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a>.<a class="ref" href="MessageBuffer.h.html#_ZN13MessageBuffer6ResizeEm" title='MessageBuffer::Resize' data-ref="_ZN13MessageBuffer6ResizeEm" id="_ZN13MessageBuffer6ResizeEm" >Resize</a>(<a class="macro" href="#32" title="4096" data-ref="_M/READ_BLOCK_SIZE">READ_BLOCK_SIZE</a>);</td></tr>
+<tr><th id="45">45</th><td>    }</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <b>virtual</b> <dfn class="virtual decl def" id="_ZN6SocketD1Ev" title='Socket::~Socket&lt;T&gt;' data-ref="_ZN6SocketD1Ev" >~Socket</dfn>()</td></tr>
+<tr><th id="48">48</th><td>    {</td></tr>
+<tr><th id="49">49</th><td>        <a class="member" href="#Socket::_closed" title='Socket::_closed' data-ref="Socket::_closed" >_closed</a> = <b>true</b>;</td></tr>
+<tr><th id="50">50</th><td>        <span class="namespace">boost::system::</span><a class="type" href="../../../../../include/boost/system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col0 decl" id="5920error" title='error' data-type='boost::system::error_code' data-ref="5920error" >error</dfn>;</td></tr>
+<tr><th id="51">51</th><td>        <a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a>.close(<a class="local col0 ref" href="#5920error" title='error' data-ref="5920error" >error</a>);</td></tr>
+<tr><th id="52">52</th><td>    }</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Socket5StartEv" title='Socket::Start' data-ref="_ZN6Socket5StartEv" >Start</dfn>() = <var>0</var>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td>    <b>virtual</b> <em>bool</em> <dfn class="virtual decl def" id="_ZN6Socket6UpdateEv" title='Socket::Update' data-ref="_ZN6Socket6UpdateEv" >Update</dfn>()</td></tr>
+<tr><th id="57">57</th><td>    {</td></tr>
+<tr><th id="58">58</th><td>        <b>if</b> (!<a class="member" href="#_ZNK6Socket6IsOpenEv" title='Socket::IsOpen' data-ref="_ZNK6Socket6IsOpenEv" >IsOpen</a>())</td></tr>
+<tr><th id="59">59</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td><u>#<span data-ppcond="61">ifndef</span> <span class="macro" data-ref="_M/TC_SOCKET_USE_IOCP">TC_SOCKET_USE_IOCP</span></u></td></tr>
+<tr><th id="62">62</th><td>        <b>if</b> (<a class="member" href="#Socket::_isWritingAsync" title='Socket::_isWritingAsync' data-ref="Socket::_isWritingAsync" >_isWritingAsync</a> || <a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_queue.h.html#_ZNKSt5queue5emptyEv" title='std::queue::empty' data-ref="_ZNKSt5queue5emptyEv" id="_ZNKSt5queue5emptyEv" >empty</a>())</td></tr>
+<tr><th id="63">63</th><td>            <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td>        <b>for</b> (; <a class="member" href="#_ZN6Socket11HandleQueueEv" title='Socket::HandleQueue' data-ref="_ZN6Socket11HandleQueueEv" >HandleQueue</a>();)</td></tr>
+<tr><th id="66">66</th><td>            ;</td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="61">endif</span></u></td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>        <b>return</b> <b>true</b>;</td></tr>
+<tr><th id="70">70</th><td>    }</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>    <span class="namespace">boost::asio::ip::</span><a class="type" href="../../../../../include/boost/asio/ip/address.hpp.html#boost::asio::ip::address" title='boost::asio::ip::address' data-ref="boost::asio::ip::address" >address</a> <dfn class="decl def" id="_ZNK6Socket18GetRemoteIpAddressEv" title='Socket::GetRemoteIpAddress' data-ref="_ZNK6Socket18GetRemoteIpAddressEv" >GetRemoteIpAddress</dfn>() <em>const</em></td></tr>
+<tr><th id="73">73</th><td>    {</td></tr>
+<tr><th id="74">74</th><td>        <b>return</b> <a class="member" href="#Socket::_remoteAddress" title='Socket::_remoteAddress' data-ref="Socket::_remoteAddress" >_remoteAddress</a>;</td></tr>
+<tr><th id="75">75</th><td>    }</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="decl def" id="_ZNK6Socket13GetRemotePortEv" title='Socket::GetRemotePort' data-ref="_ZNK6Socket13GetRemotePortEv" >GetRemotePort</dfn>() <em>const</em></td></tr>
+<tr><th id="78">78</th><td>    {</td></tr>
+<tr><th id="79">79</th><td>        <b>return</b> <a class="member" href="#Socket::_remotePort" title='Socket::_remotePort' data-ref="Socket::_remotePort" >_remotePort</a>;</td></tr>
+<tr><th id="80">80</th><td>    }</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td>    <em>void</em> <dfn class="decl def" id="_ZN6Socket9AsyncReadEv" title='Socket::AsyncRead' data-ref="_ZN6Socket9AsyncReadEv" >AsyncRead</dfn>()</td></tr>
+<tr><th id="83">83</th><td>    {</td></tr>
+<tr><th id="84">84</th><td>        <b>if</b> (!<a class="member" href="#_ZNK6Socket6IsOpenEv" title='Socket::IsOpen' data-ref="_ZNK6Socket6IsOpenEv" >IsOpen</a>())</td></tr>
+<tr><th id="85">85</th><td>            <b>return</b>;</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>        <a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a>.<a class="ref" href="MessageBuffer.h.html#_ZN13MessageBuffer9NormalizeEv" title='MessageBuffer::Normalize' data-ref="_ZN13MessageBuffer9NormalizeEv" id="_ZN13MessageBuffer9NormalizeEv" >Normalize</a>();</td></tr>
+<tr><th id="88">88</th><td>        <a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a>.<a class="ref" href="MessageBuffer.h.html#_ZN13MessageBuffer15EnsureFreeSpaceEv" title='MessageBuffer::EnsureFreeSpace' data-ref="_ZN13MessageBuffer15EnsureFreeSpaceEv" id="_ZN13MessageBuffer15EnsureFreeSpaceEv" >EnsureFreeSpace</a>();</td></tr>
+<tr><th id="89">89</th><td>        <a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a>.async_read_some(<span class="namespace">boost::asio::</span>buffer(<a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a>.<a class="ref" href="MessageBuffer.h.html#_ZN13MessageBuffer15GetWritePointerEv" title='MessageBuffer::GetWritePointer' data-ref="_ZN13MessageBuffer15GetWritePointerEv" id="_ZN13MessageBuffer15GetWritePointerEv" >GetWritePointer</a>(), <a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a>.<a class="ref" href="MessageBuffer.h.html#_ZNK13MessageBuffer17GetRemainingSpaceEv" title='MessageBuffer::GetRemainingSpace' data-ref="_ZNK13MessageBuffer17GetRemainingSpaceEv" id="_ZNK13MessageBuffer17GetRemainingSpaceEv" >GetRemainingSpace</a>()),</td></tr>
+<tr><th id="90">90</th><td>            <span class="namespace">std::</span>bind(&amp;<a class="type" href="#Socket" title='Socket' data-ref="Socket" >Socket</a>&lt;T&gt;::<a class="member" href="#_ZN6Socket19ReadHandlerInternalEN5boost6system10error_codeEm" title='Socket::ReadHandlerInternal' data-ref="_ZN6Socket19ReadHandlerInternalEN5boost6system10error_codeEm" >ReadHandlerInternal</a>, <b>this</b>-&gt;shared_from_this(), <span class="namespace">std::placeholders::</span><a class="ref" href="../../../../../include/c++/4.9/functional.html#_ZNSt12placeholders2_1E" title='std::placeholders::_1' data-ref="_ZNSt12placeholders2_1E" >_1</a>, <span class="namespace">std::placeholders::</span><a class="ref" href="../../../../../include/c++/4.9/functional.html#_ZNSt12placeholders2_2E" title='std::placeholders::_2' data-ref="_ZNSt12placeholders2_2E" >_2</a>));</td></tr>
+<tr><th id="91">91</th><td>    }</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>    <em>void</em> <dfn class="decl def" id="_ZN6Socket11QueuePacketEO13MessageBuffer" title='Socket::QueuePacket' data-ref="_ZN6Socket11QueuePacketEO13MessageBuffer" >QueuePacket</dfn>(<a class="type" href="MessageBuffer.h.html#MessageBuffer" title='MessageBuffer' data-ref="MessageBuffer" >MessageBuffer</a>&amp;&amp; <dfn class="local col1 decl" id="5921buffer" title='buffer' data-type='MessageBuffer &amp;&amp;' data-ref="5921buffer" >buffer</dfn>)</td></tr>
+<tr><th id="94">94</th><td>    {</td></tr>
+<tr><th id="95">95</th><td>        <a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.push(<span class="namespace">std::</span><a class="ref" href="../../../../../include/c++/4.9/bits/move.h.html#_ZSt4moveOT_" title='std::move' data-ref="_ZSt4moveOT_" id="_ZSt4moveOT_" >move</a>(<a class="local col1 ref" href="#5921buffer" title='buffer' data-ref="5921buffer" >buffer</a>));</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td><u>#<span data-ppcond="97">ifdef</span> <span class="macro" data-ref="_M/TC_SOCKET_USE_IOCP">TC_SOCKET_USE_IOCP</span></u></td></tr>
+<tr><th id="98">98</th><td>        AsyncProcessQueue();</td></tr>
+<tr><th id="99">99</th><td><u>#<span data-ppcond="97">endif</span></u></td></tr>
+<tr><th id="100">100</th><td>    }</td></tr>
+<tr><th id="101">101</th><td></td></tr>
+<tr><th id="102">102</th><td>    <em>bool</em> <dfn class="decl def" id="_ZNK6Socket6IsOpenEv" title='Socket::IsOpen' data-ref="_ZNK6Socket6IsOpenEv" >IsOpen</dfn>() <em>const</em> { <b>return</b> !<a class="member" href="#Socket::_closed" title='Socket::_closed' data-ref="Socket::_closed" >_closed</a> &amp;&amp; !<a class="member" href="#Socket::_closing" title='Socket::_closing' data-ref="Socket::_closing" >_closing</a>; }</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>    <em>void</em> <dfn class="decl def" id="_ZN6Socket11CloseSocketEv" title='Socket::CloseSocket' data-ref="_ZN6Socket11CloseSocketEv" >CloseSocket</dfn>()</td></tr>
+<tr><th id="105">105</th><td>    {</td></tr>
+<tr><th id="106">106</th><td>        <b>if</b> (<a class="member" href="#Socket::_closed" title='Socket::_closed' data-ref="Socket::_closed" >_closed</a>.exchange(<b>true</b>))</td></tr>
+<tr><th id="107">107</th><td>            <b>return</b>;</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td>        <span class="namespace">boost::system::</span><a class="type" href="../../../../../include/boost/system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col2 decl" id="5922shutdownError" title='shutdownError' data-type='boost::system::error_code' data-ref="5922shutdownError" >shutdownError</dfn>;</td></tr>
+<tr><th id="110">110</th><td>        <a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a>.shutdown(<span class="namespace">boost::asio::</span><a class="type" href="../../../../../include/boost/asio/socket_base.hpp.html#boost::asio::socket_base" title='boost::asio::socket_base' data-ref="boost::asio::socket_base" >socket_base</a>::<a class="enum" href="../../../../../include/boost/asio/socket_base.hpp.html#boost::asio::socket_base::shutdown_type::shutdown_send" title='boost::asio::socket_base::shutdown_type::shutdown_send' data-ref="boost::asio::socket_base::shutdown_type::shutdown_send" >shutdown_send</a>, <a class="local col2 ref" href="#5922shutdownError" title='shutdownError' data-ref="5922shutdownError" >shutdownError</a>);</td></tr>
+<tr><th id="111">111</th><td>        <b>if</b> (<a class="local col2 ref" href="#5922shutdownError" title='shutdownError' data-ref="5922shutdownError" >shutdownError</a>)</td></tr>
+<tr><th id="112">112</th><td>            <a class="macro" href="../../../common/Logging/Log.h.html#201" title="do { if (Log::instance()-&gt;ShouldLog(&quot;network&quot;, LOG_LEVEL_DEBUG)) { if (false) check_args(&quot;Socket::CloseSocket: %s errored when shutting down socket: %i (%s)&quot;, GetRemoteIpAddress().to_string().c_str(), shutdownError.value(), shutdownError.message().c_str()); { try { Log::instance()-&gt;outMessage(&quot;network&quot;, LOG_LEVEL_DEBUG, &quot;Socket::CloseSocket: %s errored when shutting down socket: %i (%s)&quot;, GetRemoteIpAddress().to_string().c_str(), shutdownError.value(), shutdownError.message().c_str()); } catch (std::exception&amp; e) { Log::instance()-&gt;outMessage(&quot;server&quot;, LOG_LEVEL_ERROR, &quot;Wrong format occurred (%s) at %s:%u.&quot;, e.what(), &quot;/home/nayd/TrinityCore/src/server/shared/Networking/Socket.h&quot;, 113); } }; } } while (0)" data-ref="_M/TC_LOG_DEBUG">TC_LOG_DEBUG</a>(<q>"network"</q>, <q>"Socket::CloseSocket: %s errored when shutting down socket: %i (%s)"</q>, <a class="member" href="#_ZNK6Socket18GetRemoteIpAddressEv" title='Socket::GetRemoteIpAddress' data-ref="_ZNK6Socket18GetRemoteIpAddressEv" ><a class="member" href="#_ZNK6Socket18GetRemoteIpAddressEv" title='Socket::GetRemoteIpAddress' data-ref="_ZNK6Socket18GetRemoteIpAddressEv" >GetRemoteIpAddress</a></a>().to_string().c_str(),</td></tr>
+<tr><th id="113">113</th><td>                <a class="local col2 ref" href="#5922shutdownError" title='shutdownError' data-ref="5922shutdownError" ><a class="local col2 ref" href="#5922shutdownError" title='shutdownError' data-ref="5922shutdownError" >shutdownError</a></a>.<a class="ref" href="../../../../../include/boost/system/error_code.hpp.html#_ZNK5boost6system10error_code5valueEv" title='boost::system::error_code::value' data-ref="_ZNK5boost6system10error_code5valueEv" id="_ZNK5boost6system10error_code5valueEv" ><a class="ref" href="../../../../../include/boost/system/error_code.hpp.html#_ZNK5boost6system10error_code5valueEv" title='boost::system::error_code::value' data-ref="_ZNK5boost6system10error_code5valueEv" id="_ZNK5boost6system10error_code5valueEv" >value</a></a>(), <a class="local col2 ref" href="#5922shutdownError" title='shutdownError' data-ref="5922shutdownError" ><a class="local col2 ref" href="#5922shutdownError" title='shutdownError' data-ref="5922shutdownError" >shutdownError</a></a>.<a class="ref" href="../../../../../include/boost/system/error_code.hpp.html#_ZNK5boost6system10error_code7messageEv" title='boost::system::error_code::message' data-ref="_ZNK5boost6system10error_code7messageEv" id="_ZNK5boost6system10error_code7messageEv" ><a class="ref" href="../../../../../include/boost/system/error_code.hpp.html#_ZNK5boost6system10error_code7messageEv" title='boost::system::error_code::message' data-ref="_ZNK5boost6system10error_code7messageEv" id="_ZNK5boost6system10error_code7messageEv" >message</a></a>().<a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" ><a class="ref" href="../../../../../include/c++/4.9/bits/basic_string.h.html#_ZNKSt12basic_string5c_strEv" title='std::basic_string::c_str' data-ref="_ZNKSt12basic_string5c_strEv" id="_ZNKSt12basic_string5c_strEv" >c_str</a></a>());</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>        <a class="virtual member" href="#_ZN6Socket7OnCloseEv" title='Socket::OnClose' data-ref="_ZN6Socket7OnCloseEv" >OnClose</a>();</td></tr>
+<tr><th id="116">116</th><td>    }</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>    <i class="doc">/// Marks the socket for closing after write buffer becomes empty</i></td></tr>
+<tr><th id="119">119</th><td>    <em>void</em> <dfn class="decl def" id="_ZN6Socket18DelayedCloseSocketEv" title='Socket::DelayedCloseSocket' data-ref="_ZN6Socket18DelayedCloseSocketEv" >DelayedCloseSocket</dfn>() { <a class="member" href="#Socket::_closing" title='Socket::_closing' data-ref="Socket::_closing" >_closing</a> = <b>true</b>; }</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>    <a class="type" href="MessageBuffer.h.html#MessageBuffer" title='MessageBuffer' data-ref="MessageBuffer" >MessageBuffer</a>&amp; <dfn class="decl def" id="_ZN6Socket13GetReadBufferEv" title='Socket::GetReadBuffer' data-ref="_ZN6Socket13GetReadBufferEv" >GetReadBuffer</dfn>() { <b>return</b> <a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a>; }</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><b>protected</b>:</td></tr>
+<tr><th id="124">124</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl def" id="_ZN6Socket7OnCloseEv" title='Socket::OnClose' data-ref="_ZN6Socket7OnCloseEv" >OnClose</dfn>() { }</td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td>    <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Socket11ReadHandlerEv" title='Socket::ReadHandler' data-ref="_ZN6Socket11ReadHandlerEv" >ReadHandler</dfn>() = <var>0</var>;</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN6Socket17AsyncProcessQueueEv" title='Socket::AsyncProcessQueue' data-ref="_ZN6Socket17AsyncProcessQueueEv" >AsyncProcessQueue</dfn>()</td></tr>
+<tr><th id="129">129</th><td>    {</td></tr>
+<tr><th id="130">130</th><td>        <b>if</b> (<a class="member" href="#Socket::_isWritingAsync" title='Socket::_isWritingAsync' data-ref="Socket::_isWritingAsync" >_isWritingAsync</a>)</td></tr>
+<tr><th id="131">131</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>        <a class="member" href="#Socket::_isWritingAsync" title='Socket::_isWritingAsync' data-ref="Socket::_isWritingAsync" >_isWritingAsync</a> = <b>true</b>;</td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td><u>#<span data-ppcond="135">ifdef</span> <span class="macro" data-ref="_M/TC_SOCKET_USE_IOCP">TC_SOCKET_USE_IOCP</span></u></td></tr>
+<tr><th id="136">136</th><td>        MessageBuffer&amp; buffer = _writeQueue.front();</td></tr>
+<tr><th id="137">137</th><td>        _socket.async_write_some(boost::asio::buffer(buffer.GetReadPointer(), buffer.GetActiveSize()), std::bind(&amp;Socket&lt;T&gt;::WriteHandler,</td></tr>
+<tr><th id="138">138</th><td>            <b>this</b>-&gt;shared_from_this(), std::placeholders::_1, std::placeholders::_2));</td></tr>
+<tr><th id="139">139</th><td><u>#<span data-ppcond="135">else</span></u></td></tr>
+<tr><th id="140">140</th><td>        <a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a>.async_write_some(<span class="namespace">boost::asio::</span><a class="type" href="../../../../../include/boost/asio/buffer.hpp.html#boost::asio::null_buffers" title='boost::asio::null_buffers' data-ref="boost::asio::null_buffers" >null_buffers</a><a class="ref" href="../../../../../include/boost/asio/buffer.hpp.html#_ZN5boost4asio12null_buffersC1Ev" title='boost::asio::null_buffers::null_buffers' data-ref="_ZN5boost4asio12null_buffersC1Ev" id="_ZN5boost4asio12null_buffersC1Ev" >(</a>), <span class="namespace">std::</span>bind(&amp;<a class="type" href="#Socket" title='Socket' data-ref="Socket" >Socket</a>&lt;T&gt;::<a class="member" href="#_ZN6Socket19WriteHandlerWrapperEN5boost6system10error_codeEm" title='Socket::WriteHandlerWrapper' data-ref="_ZN6Socket19WriteHandlerWrapperEN5boost6system10error_codeEm" >WriteHandlerWrapper</a>,</td></tr>
+<tr><th id="141">141</th><td>            <b>this</b>-&gt;shared_from_this(), <span class="namespace">std::placeholders::</span><a class="ref" href="../../../../../include/c++/4.9/functional.html#_ZNSt12placeholders2_1E" title='std::placeholders::_1' data-ref="_ZNSt12placeholders2_1E" >_1</a>, <span class="namespace">std::placeholders::</span><a class="ref" href="../../../../../include/c++/4.9/functional.html#_ZNSt12placeholders2_2E" title='std::placeholders::_2' data-ref="_ZNSt12placeholders2_2E" >_2</a>));</td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="135">endif</span></u></td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="145">145</th><td>    }</td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td><b>private</b>:</td></tr>
+<tr><th id="148">148</th><td>    <em>void</em> <dfn class="decl def" id="_ZN6Socket19ReadHandlerInternalEN5boost6system10error_codeEm" title='Socket::ReadHandlerInternal' data-ref="_ZN6Socket19ReadHandlerInternalEN5boost6system10error_codeEm" >ReadHandlerInternal</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../../../../../include/boost/system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col3 decl" id="5923error" title='error' data-type='boost::system::error_code' data-ref="5923error" >error</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="5924transferredBytes" title='transferredBytes' data-type='size_t' data-ref="5924transferredBytes" >transferredBytes</dfn>)</td></tr>
+<tr><th id="149">149</th><td>    {</td></tr>
+<tr><th id="150">150</th><td>        <b>if</b> (<a class="local col3 ref" href="#5923error" title='error' data-ref="5923error" >error</a>)</td></tr>
+<tr><th id="151">151</th><td>        {</td></tr>
+<tr><th id="152">152</th><td>            <a class="member" href="#_ZN6Socket11CloseSocketEv" title='Socket::CloseSocket' data-ref="_ZN6Socket11CloseSocketEv" >CloseSocket</a>();</td></tr>
+<tr><th id="153">153</th><td>            <b>return</b>;</td></tr>
+<tr><th id="154">154</th><td>        }</td></tr>
+<tr><th id="155">155</th><td></td></tr>
+<tr><th id="156">156</th><td>        <a class="member" href="#Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</a>.<a class="ref" href="MessageBuffer.h.html#_ZN13MessageBuffer14WriteCompletedEm" title='MessageBuffer::WriteCompleted' data-ref="_ZN13MessageBuffer14WriteCompletedEm" id="_ZN13MessageBuffer14WriteCompletedEm" >WriteCompleted</a>(<a class="local col4 ref" href="#5924transferredBytes" title='transferredBytes' data-ref="5924transferredBytes" >transferredBytes</a>);</td></tr>
+<tr><th id="157">157</th><td>        <a class="virtual member" href="#_ZN6Socket11ReadHandlerEv" title='Socket::ReadHandler' data-ref="_ZN6Socket11ReadHandlerEv" >ReadHandler</a>();</td></tr>
+<tr><th id="158">158</th><td>    }</td></tr>
+<tr><th id="159">159</th><td></td></tr>
+<tr><th id="160">160</th><td><u>#<span data-ppcond="160">ifdef</span> <span class="macro" data-ref="_M/TC_SOCKET_USE_IOCP">TC_SOCKET_USE_IOCP</span></u></td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>    <em>void</em> WriteHandler(boost::system::error_code error, std::size_t transferedBytes)</td></tr>
+<tr><th id="163">163</th><td>    {</td></tr>
+<tr><th id="164">164</th><td>        <b>if</b> (!error)</td></tr>
+<tr><th id="165">165</th><td>        {</td></tr>
+<tr><th id="166">166</th><td>            _isWritingAsync = <b>false</b>;</td></tr>
+<tr><th id="167">167</th><td>            _writeQueue.front().ReadCompleted(transferedBytes);</td></tr>
+<tr><th id="168">168</th><td>            <b>if</b> (!_writeQueue.front().GetActiveSize())</td></tr>
+<tr><th id="169">169</th><td>                _writeQueue.pop();</td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td>            <b>if</b> (!_writeQueue.empty())</td></tr>
+<tr><th id="172">172</th><td>                AsyncProcessQueue();</td></tr>
+<tr><th id="173">173</th><td>            <b>else</b> <b>if</b> (_closing)</td></tr>
+<tr><th id="174">174</th><td>                CloseSocket();</td></tr>
+<tr><th id="175">175</th><td>        }</td></tr>
+<tr><th id="176">176</th><td>        <b>else</b></td></tr>
+<tr><th id="177">177</th><td>            CloseSocket();</td></tr>
+<tr><th id="178">178</th><td>    }</td></tr>
+<tr><th id="179">179</th><td></td></tr>
+<tr><th id="180">180</th><td><u>#<span data-ppcond="160">else</span></u></td></tr>
+<tr><th id="181">181</th><td></td></tr>
+<tr><th id="182">182</th><td>    <em>void</em> <dfn class="decl def" id="_ZN6Socket19WriteHandlerWrapperEN5boost6system10error_codeEm" title='Socket::WriteHandlerWrapper' data-ref="_ZN6Socket19WriteHandlerWrapperEN5boost6system10error_codeEm" >WriteHandlerWrapper</dfn>(<span class="namespace">boost::system::</span><a class="type" href="../../../../../include/boost/system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <i>/*error*/</i>, <span class="namespace">std::</span><a class="typedef" href="../../../../../include/x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <i>/*transferedBytes*/</i>)</td></tr>
+<tr><th id="183">183</th><td>    {</td></tr>
+<tr><th id="184">184</th><td>        <a class="member" href="#Socket::_isWritingAsync" title='Socket::_isWritingAsync' data-ref="Socket::_isWritingAsync" >_isWritingAsync</a> = <b>false</b>;</td></tr>
+<tr><th id="185">185</th><td>        <a class="member" href="#_ZN6Socket11HandleQueueEv" title='Socket::HandleQueue' data-ref="_ZN6Socket11HandleQueueEv" >HandleQueue</a>();</td></tr>
+<tr><th id="186">186</th><td>    }</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>    <em>bool</em> <dfn class="decl def" id="_ZN6Socket11HandleQueueEv" title='Socket::HandleQueue' data-ref="_ZN6Socket11HandleQueueEv" >HandleQueue</dfn>()</td></tr>
+<tr><th id="189">189</th><td>    {</td></tr>
+<tr><th id="190">190</th><td>        <b>if</b> (!<a class="member" href="#_ZNK6Socket6IsOpenEv" title='Socket::IsOpen' data-ref="_ZNK6Socket6IsOpenEv" >IsOpen</a>())</td></tr>
+<tr><th id="191">191</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td>        <b>if</b> (<a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_queue.h.html#_ZNKSt5queue5emptyEv" title='std::queue::empty' data-ref="_ZNKSt5queue5emptyEv" id="_ZNKSt5queue5emptyEv" >empty</a>())</td></tr>
+<tr><th id="194">194</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="195">195</th><td></td></tr>
+<tr><th id="196">196</th><td>        <a class="type" href="MessageBuffer.h.html#MessageBuffer" title='MessageBuffer' data-ref="MessageBuffer" >MessageBuffer</a>&amp; <dfn class="local col5 decl" id="5925queuedMessage" title='queuedMessage' data-type='MessageBuffer &amp;' data-ref="5925queuedMessage" >queuedMessage</dfn> = <a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.front();</td></tr>
+<tr><th id="197">197</th><td></td></tr>
+<tr><th id="198">198</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../../../include/x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col6 decl" id="5926bytesToSend" title='bytesToSend' data-type='std::size_t' data-ref="5926bytesToSend" >bytesToSend</dfn> = <a class="local col5 ref" href="#5925queuedMessage" title='queuedMessage' data-ref="5925queuedMessage" >queuedMessage</a>.<a class="ref" href="MessageBuffer.h.html#_ZNK13MessageBuffer13GetActiveSizeEv" title='MessageBuffer::GetActiveSize' data-ref="_ZNK13MessageBuffer13GetActiveSizeEv" id="_ZNK13MessageBuffer13GetActiveSizeEv" >GetActiveSize</a>();</td></tr>
+<tr><th id="199">199</th><td></td></tr>
+<tr><th id="200">200</th><td>        <span class="namespace">boost::system::</span><a class="type" href="../../../../../include/boost/system/error_code.hpp.html#boost::system::error_code" title='boost::system::error_code' data-ref="boost::system::error_code" >error_code</a> <dfn class="local col7 decl" id="5927error" title='error' data-type='boost::system::error_code' data-ref="5927error" >error</dfn>;</td></tr>
+<tr><th id="201">201</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../../../include/x86_64-linux-gnu/c++/4.9/bits/c++config.h.html#std::size_t" title='std::size_t' data-type='unsigned long' data-ref="std::size_t" >size_t</a> <dfn class="local col8 decl" id="5928bytesSent" title='bytesSent' data-type='std::size_t' data-ref="5928bytesSent" >bytesSent</dfn> = <a class="member" href="#Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</a>.write_some(<span class="namespace">boost::asio::</span><a class="ref" href="../../../../../include/boost/asio/buffer.hpp.html#_ZN5boost4asio6bufferEPvm" title='boost::asio::buffer' data-ref="_ZN5boost4asio6bufferEPvm" id="_ZN5boost4asio6bufferEPvm" >buffer</a>(<a class="local col5 ref" href="#5925queuedMessage" title='queuedMessage' data-ref="5925queuedMessage" >queuedMessage</a>.<a class="ref" href="MessageBuffer.h.html#_ZN13MessageBuffer14GetReadPointerEv" title='MessageBuffer::GetReadPointer' data-ref="_ZN13MessageBuffer14GetReadPointerEv" id="_ZN13MessageBuffer14GetReadPointerEv" >GetReadPointer</a>(), <a class="local col6 ref" href="#5926bytesToSend" title='bytesToSend' data-ref="5926bytesToSend" >bytesToSend</a>), <a class="local col7 ref" href="#5927error" title='error' data-ref="5927error" >error</a>);</td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td>        <b>if</b> (<a class="local col7 ref" href="#5927error" title='error' data-ref="5927error" >error</a>)</td></tr>
+<tr><th id="204">204</th><td>        {</td></tr>
+<tr><th id="205">205</th><td>            <b>if</b> (<a class="local col7 ref" href="#5927error" title='error' data-ref="5927error" >error</a> <a class="ref" href="../../../../../include/boost/system/error_code.hpp.html#_ZN5boost6systemeqERKNS0_10error_codeES3_" title='boost::system::operator==' data-ref="_ZN5boost6systemeqERKNS0_10error_codeES3_" id="_ZN5boost6systemeqERKNS0_10error_codeES3_" >==</a> <span class="namespace">boost::asio::error::</span><a class="enum" href="../../../../../include/boost/asio/error.hpp.html#boost::asio::error::basic_errors::would_block" title='boost::asio::error::basic_errors::would_block' data-ref="boost::asio::error::basic_errors::would_block" id="boost::asio::error::basic_errors::would_block" >would_block</a> || <a class="local col7 ref" href="#5927error" title='error' data-ref="5927error" >error</a> <a class="ref" href="../../../../../include/boost/system/error_code.hpp.html#_ZN5boost6systemeqERKNS0_10error_codeES3_" title='boost::system::operator==' data-ref="_ZN5boost6systemeqERKNS0_10error_codeES3_" id="_ZN5boost6systemeqERKNS0_10error_codeES3_" >==</a> <span class="namespace">boost::asio::error::</span><a class="enum" href="../../../../../include/boost/asio/error.hpp.html#boost::asio::error::basic_errors::try_again" title='boost::asio::error::basic_errors::try_again' data-ref="boost::asio::error::basic_errors::try_again" id="boost::asio::error::basic_errors::try_again" >try_again</a>)</td></tr>
+<tr><th id="206">206</th><td>                <b>return</b> <a class="member" href="#_ZN6Socket17AsyncProcessQueueEv" title='Socket::AsyncProcessQueue' data-ref="_ZN6Socket17AsyncProcessQueueEv" >AsyncProcessQueue</a>();</td></tr>
+<tr><th id="207">207</th><td></td></tr>
+<tr><th id="208">208</th><td>            <a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_queue.h.html#_ZNSt5queue3popEv" title='std::queue::pop' data-ref="_ZNSt5queue3popEv" id="_ZNSt5queue3popEv" >pop</a>();</td></tr>
+<tr><th id="209">209</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="210">210</th><td>        }</td></tr>
+<tr><th id="211">211</th><td>        <b>else</b> <b>if</b> (<a class="local col8 ref" href="#5928bytesSent" title='bytesSent' data-ref="5928bytesSent" >bytesSent</a> == <var>0</var>)</td></tr>
+<tr><th id="212">212</th><td>        {</td></tr>
+<tr><th id="213">213</th><td>            <a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_queue.h.html#_ZNSt5queue3popEv" title='std::queue::pop' data-ref="_ZNSt5queue3popEv" id="_ZNSt5queue3popEv" >pop</a>();</td></tr>
+<tr><th id="214">214</th><td>            <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="215">215</th><td>        }</td></tr>
+<tr><th id="216">216</th><td>        <b>else</b> <b>if</b> (<a class="local col8 ref" href="#5928bytesSent" title='bytesSent' data-ref="5928bytesSent" >bytesSent</a> &lt; <a class="local col6 ref" href="#5926bytesToSend" title='bytesToSend' data-ref="5926bytesToSend" >bytesToSend</a>) <i>// now n &gt; 0</i></td></tr>
+<tr><th id="217">217</th><td>        {</td></tr>
+<tr><th id="218">218</th><td>            <a class="local col5 ref" href="#5925queuedMessage" title='queuedMessage' data-ref="5925queuedMessage" >queuedMessage</a>.<a class="ref" href="MessageBuffer.h.html#_ZN13MessageBuffer13ReadCompletedEm" title='MessageBuffer::ReadCompleted' data-ref="_ZN13MessageBuffer13ReadCompletedEm" id="_ZN13MessageBuffer13ReadCompletedEm" >ReadCompleted</a>(<a class="local col8 ref" href="#5928bytesSent" title='bytesSent' data-ref="5928bytesSent" >bytesSent</a>);</td></tr>
+<tr><th id="219">219</th><td>            <b>return</b> <a class="member" href="#_ZN6Socket17AsyncProcessQueueEv" title='Socket::AsyncProcessQueue' data-ref="_ZN6Socket17AsyncProcessQueueEv" >AsyncProcessQueue</a>();</td></tr>
+<tr><th id="220">220</th><td>        }</td></tr>
+<tr><th id="221">221</th><td></td></tr>
+<tr><th id="222">222</th><td>        <a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_queue.h.html#_ZNSt5queue3popEv" title='std::queue::pop' data-ref="_ZNSt5queue3popEv" id="_ZNSt5queue3popEv" >pop</a>();</td></tr>
+<tr><th id="223">223</th><td>        <b>return</b> !<a class="member" href="#Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</a>.<a class="ref" href="../../../../../include/c++/4.9/bits/stl_queue.h.html#_ZNKSt5queue5emptyEv" title='std::queue::empty' data-ref="_ZNKSt5queue5emptyEv" id="_ZNKSt5queue5emptyEv" >empty</a>();</td></tr>
+<tr><th id="224">224</th><td>    }</td></tr>
+<tr><th id="225">225</th><td></td></tr>
+<tr><th id="226">226</th><td><u>#<span data-ppcond="160">endif</span></u></td></tr>
+<tr><th id="227">227</th><td></td></tr>
+<tr><th id="228">228</th><td>    <a class="type" href="../../../../../include/boost/asio/ip/tcp.hpp.html#boost::asio::ip::tcp" title='boost::asio::ip::tcp' data-ref="boost::asio::ip::tcp" >tcp</a>::<a class="typedef" href="../../../../../include/boost/asio/ip/tcp.hpp.html#boost::asio::ip::tcp::socket" title='boost::asio::ip::tcp::socket' data-type='basic_stream_socket&lt;boost::asio::ip::tcp&gt;' data-ref="boost::asio::ip::tcp::socket" >socket</a> <dfn class="decl" id="Socket::_socket" title='Socket::_socket' data-ref="Socket::_socket" >_socket</dfn>;</td></tr>
+<tr><th id="229">229</th><td></td></tr>
+<tr><th id="230">230</th><td>    <span class="namespace">boost::asio::ip::</span><a class="type" href="../../../../../include/boost/asio/ip/address.hpp.html#boost::asio::ip::address" title='boost::asio::ip::address' data-ref="boost::asio::ip::address" >address</a> <dfn class="decl" id="Socket::_remoteAddress" title='Socket::_remoteAddress' data-ref="Socket::_remoteAddress" >_remoteAddress</dfn>;</td></tr>
+<tr><th id="231">231</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="decl" id="Socket::_remotePort" title='Socket::_remotePort' data-ref="Socket::_remotePort" >_remotePort</dfn>;</td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td>    <a class="type" href="MessageBuffer.h.html#MessageBuffer" title='MessageBuffer' data-ref="MessageBuffer" >MessageBuffer</a> <dfn class="decl" id="Socket::_readBuffer" title='Socket::_readBuffer' data-ref="Socket::_readBuffer" >_readBuffer</dfn>;</td></tr>
+<tr><th id="234">234</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_queue.h.html#std::queue" title='std::queue' data-ref="std::queue" >queue</a>&lt;<a class="type" href="MessageBuffer.h.html#MessageBuffer" title='MessageBuffer' data-ref="MessageBuffer" >MessageBuffer</a>&gt; <dfn class="decl" id="Socket::_writeQueue" title='Socket::_writeQueue' data-ref="Socket::_writeQueue" >_writeQueue</dfn>;</td></tr>
+<tr><th id="235">235</th><td></td></tr>
+<tr><th id="236">236</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/atomic_base.h.html#std::atomic" title='std::atomic' data-ref="std::atomic" >atomic</a>&lt;<em>bool</em>&gt; <dfn class="decl" id="Socket::_closed" title='Socket::_closed' data-ref="Socket::_closed" >_closed</dfn>;</td></tr>
+<tr><th id="237">237</th><td>    <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/atomic_base.h.html#std::atomic" title='std::atomic' data-ref="std::atomic" >atomic</a>&lt;<em>bool</em>&gt; <dfn class="decl" id="Socket::_closing" title='Socket::_closing' data-ref="Socket::_closing" >_closing</dfn>;</td></tr>
+<tr><th id="238">238</th><td></td></tr>
+<tr><th id="239">239</th><td>    <em>bool</em> <dfn class="decl" id="Socket::_isWritingAsync" title='Socket::_isWritingAsync' data-ref="Socket::_isWritingAsync" >_isWritingAsync</dfn>;</td></tr>
+<tr><th id="240">240</th><td>};</td></tr>
+<tr><th id="241">241</th><td></td></tr>
+<tr><th id="242">242</th><td><u>#<span data-ppcond="18">endif</span> // __SOCKET_H__</u></td></tr>
+<tr><th id="243">243</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../authserver/Main.cpp.html'>TrinityCore3.3.5/src/server/authserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

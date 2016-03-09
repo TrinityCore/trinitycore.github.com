@@ -1,0 +1,68 @@
+<dec f='TrinityCore3.3.5/src/server/game/Spells/SpellScript.h' l='363' type='const WorldLocation * SpellScript::GetExplTargetDest()'/>
+<doc f='TrinityCore3.3.5/src/server/game/Spells/SpellScript.h' l='351'>// methods useable after spell is prepared
+        // accessors to the explicit targets of the spell
+        // explicit target - target selected by caster (player, game client, or script - DoCast(explicitTarget, ...), required for spell to be cast
+        // examples:
+        // -shadowstep - explicit target is the unit you want to go behind of
+        // -chain heal - explicit target is the unit to be healed first
+        // -holy nova/arcane explosion - explicit target = NULL because target you are selecting doesn&apos;t affect how spell targets are selected
+        // you can determine if spell requires explicit targets by dbc columns:
+        // - Targets - mask of explicit target types
+        // - ImplicitTargetXX set to TARGET_XXX_TARGET_YYY, _TARGET_ here means that explicit target is used by the effect, so spell needs one too
+
+        // returns: WorldLocation which was selected as a spell destination or NULL</doc>
+<def f='TrinityCore3.3.5/src/server/game/Spells/SpellScript.cpp' l='399' type='const WorldLocation * SpellScript::GetExplTargetDest()'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheCrusader/boss_northrend_beasts.cpp' l='827' u='c' c='_ZN22spell_gormok_fire_bomb34spell_gormok_fire_bomb_SpellScript15TriggerFireBombE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_rotface.cpp' l='749' u='c' c='_ZN37spell_rotface_unstable_ooze_explosion49spell_rotface_unstable_ooze_explosion_SpellScript11CheckTargetE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_rotface.cpp' l='755' u='c' c='_ZN37spell_rotface_unstable_ooze_explosion49spell_rotface_unstable_ooze_explosion_SpellScript11CheckTargetE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_sindragosa.cpp' l='1075' u='c' c='_ZN23spell_sindragosa_s_fury35spell_sindragosa_s_fury_SpellScript10SelectDestEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_sindragosa.cpp' l='1438' u='c' c='_ZN24spell_rimefang_icy_blast36spell_rimefang_icy_blast_SpellScript20HandleTriggerMissileE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_the_lich_king.cpp' l='2464' u='c' c='_ZN35spell_the_lich_king_summon_into_air47spell_the_lich_king_summon_into_air_SpellScript13ModDestHeightE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/IcecrownCitadel/boss_the_lich_king.cpp' l='2701' u='c' c='_ZN39spell_the_lich_king_vile_spirits_visual51spell_the_lich_king_vile_spirits_visual_SpellScript13ModDestHeightE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp' l='1316' u='c' c='_ZN33spell_algalon_cosmic_smash_damage45spell_algalon_cosmic_smash_damage_SpellScript17RecalculateDamageEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp' l='1319' u='c' c='_ZN33spell_algalon_cosmic_smash_damage45spell_algalon_cosmic_smash_damage_SpellScript17RecalculateDamageEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp' l='1319' u='c' c='_ZN33spell_algalon_cosmic_smash_damage45spell_algalon_cosmic_smash_damage_SpellScript17RecalculateDamageEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Ulduar/Ulduar/boss_flame_leviathan.cpp' l='1745' u='c' c='_ZN29spell_vehicle_throw_passenger41spell_vehicle_throw_passenger_SpellScript12HandleScriptE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/Ulduar/Ulduar/boss_razorscale.cpp' l='1079' u='c' c='_ZN32spell_razorscale_devouring_flame44spell_razorscale_devouring_flame_SpellScript12HandleSummonE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/isle_of_conquest.cpp' l='244' u='c' c='_ZN16spell_ioc_launch28spell_ioc_launch_SpellScript6LaunchEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/isle_of_conquest.cpp' l='247' u='c' c='_ZN16spell_ioc_launch28spell_ioc_launch_SpellScript6LaunchEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Spells/spell_dk.cpp' l='659' u='c' c='_ZN19spell_dk_death_grip31spell_dk_death_grip_SpellScript11HandleDummyE13SpellEffIndex'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Spells/spell_quest.cpp' l='1883' u='c' c='_ZN27spell_q13086_cannons_target39spell_q13086_cannons_target_SpellScript17HandleEffectDummyE13SpellEffIndex'/>
+<dec f='TrinityCore6.x/src/server/game/Spells/SpellScript.h' l='364' type='const WorldLocation * SpellScript::GetExplTargetDest()'/>
+<doc f='TrinityCore6.x/src/server/game/Spells/SpellScript.h' l='352'>// methods useable after spell is prepared
+        // accessors to the explicit targets of the spell
+        // explicit target - target selected by caster (player, game client, or script - DoCast(explicitTarget, ...), required for spell to be cast
+        // examples:
+        // -shadowstep - explicit target is the unit you want to go behind of
+        // -chain heal - explicit target is the unit to be healed first
+        // -holy nova/arcane explosion - explicit target = NULL because target you are selecting doesn&apos;t affect how spell targets are selected
+        // you can determine if spell requires explicit targets by dbc columns:
+        // - Targets - mask of explicit target types
+        // - ImplicitTargetXX set to TARGET_XXX_TARGET_YYY, _TARGET_ here means that explicit target is used by the effect, so spell needs one too
+
+        // returns: WorldLocation which was selected as a spell destination or NULL</doc>
+<def f='TrinityCore6.x/src/server/game/Spells/SpellScript.cpp' l='409' type='const WorldLocation * SpellScript::GetExplTargetDest()'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/HallsOfOrigination/boss_anraphet.cpp' l='509' u='c' c='_ZN34spell_anraphet_omega_stance_summon46spell_anraphet_omega_stance_summon_SpellScript13ModDestHeightE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/HallsOfOrigination/boss_anraphet.cpp' l='546' u='c' c='_ZN32spell_omega_stance_spider_effect44spell_omega_stance_spider_effect_SpellScript15SetDestPositionE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheCrusader/boss_northrend_beasts.cpp' l='832' u='c' c='_ZN22spell_gormok_fire_bomb34spell_gormok_fire_bomb_SpellScript15TriggerFireBombE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_rotface.cpp' l='750' u='c' c='_ZN37spell_rotface_unstable_ooze_explosion49spell_rotface_unstable_ooze_explosion_SpellScript11CheckTargetE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_rotface.cpp' l='756' u='c' c='_ZN37spell_rotface_unstable_ooze_explosion49spell_rotface_unstable_ooze_explosion_SpellScript11CheckTargetE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_sindragosa.cpp' l='1067' u='c' c='_ZN23spell_sindragosa_s_fury35spell_sindragosa_s_fury_SpellScript10SelectDestEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_sindragosa.cpp' l='1430' u='c' c='_ZN24spell_rimefang_icy_blast36spell_rimefang_icy_blast_SpellScript20HandleTriggerMissileE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_the_lich_king.cpp' l='2438' u='c' c='_ZN35spell_the_lich_king_summon_into_air47spell_the_lich_king_summon_into_air_SpellScript13ModDestHeightE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/IcecrownCitadel/boss_the_lich_king.cpp' l='2675' u='c' c='_ZN39spell_the_lich_king_vile_spirits_visual51spell_the_lich_king_vile_spirits_visual_SpellScript13ModDestHeightE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp' l='1316' u='c' c='_ZN33spell_algalon_cosmic_smash_damage45spell_algalon_cosmic_smash_damage_SpellScript17RecalculateDamageEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp' l='1319' u='c' c='_ZN33spell_algalon_cosmic_smash_damage45spell_algalon_cosmic_smash_damage_SpellScript17RecalculateDamageEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/boss_algalon_the_observer.cpp' l='1319' u='c' c='_ZN33spell_algalon_cosmic_smash_damage45spell_algalon_cosmic_smash_damage_SpellScript17RecalculateDamageEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/boss_flame_leviathan.cpp' l='1744' u='c' c='_ZN29spell_vehicle_throw_passenger41spell_vehicle_throw_passenger_SpellScript12HandleScriptE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/Ulduar/Ulduar/boss_razorscale.cpp' l='1079' u='c' c='_ZN32spell_razorscale_devouring_flame44spell_razorscale_devouring_flame_SpellScript12HandleSummonE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/isle_of_conquest.cpp' l='244' u='c' c='_ZN16spell_ioc_launch28spell_ioc_launch_SpellScript6LaunchEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/isle_of_conquest.cpp' l='248' u='c' c='_ZN16spell_ioc_launch28spell_ioc_launch_SpellScript6LaunchEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/isle_of_conquest.cpp' l='249' u='c' c='_ZN16spell_ioc_launch28spell_ioc_launch_SpellScript6LaunchEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/isle_of_conquest.cpp' l='250' u='c' c='_ZN16spell_ioc_launch28spell_ioc_launch_SpellScript6LaunchEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Spells/spell_dk.cpp' l='387' u='c' c='_ZN24spell_dk_death_and_decay36spell_dk_death_and_decay_SpellScript11HandleDummyE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Spells/spell_dk.cpp' l='556' u='c' c='_ZN19spell_dk_death_grip31spell_dk_death_grip_SpellScript11HandleDummyE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Spells/spell_mage.cpp' l='210' u='c' c='_ZN21spell_mage_blast_wave33spell_mage_blast_wave_SpellScript25HandleImprovedFlamestrikeEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Spells/spell_mage.cpp' l='1369' u='c' c='_ZN31spell_mage_ring_of_frost_freeze43spell_mage_ring_of_frost_freeze_SpellScript13FilterTargetsERSt4listIP11WorldObjectSaIS3_EE'/>
+<use f='TrinityCore6.x/src/server/scripts/Spells/spell_quest.cpp' l='1883' u='c' c='_ZN27spell_q13086_cannons_target39spell_q13086_cannons_target_SpellScript17HandleEffectDummyE13SpellEffIndex'/>
+<use f='TrinityCore6.x/src/server/scripts/Spells/spell_warrior.cpp' l='974' u='c' c='_ZN22spell_warr_heroic_leap34spell_warr_heroic_leap_SpellScript14CheckElevationEv'/>

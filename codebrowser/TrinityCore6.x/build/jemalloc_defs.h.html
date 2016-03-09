@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+<head>
+<title>jemalloc_defs.h [TrinityCore6.x/build/jemalloc_defs.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/build/jemalloc_defs.h'; var root_path = '../..'; var data_path = '../../../data';</script>
+<script src='../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='..'>TrinityCore6.x</a>/<a href='./'>build</a>/jemalloc_defs.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* include/jemalloc/jemalloc_defs.h.  Generated from jemalloc_defs.h.in by configure.  */</i></td></tr>
+<tr><th id="2">2</th><td><i>/*</i></td></tr>
+<tr><th id="3">3</th><td><i> * If JEMALLOC_PREFIX is defined via --with-jemalloc-prefix, it will cause all</i></td></tr>
+<tr><th id="4">4</th><td><i> * public APIs to be prefixed.  This makes it possible, with some care, to use</i></td></tr>
+<tr><th id="5">5</th><td><i> * multiple allocators simultaneously.</i></td></tr>
+<tr><th id="6">6</th><td><i> */</i></td></tr>
+<tr><th id="7">7</th><td><i>/* #undef JEMALLOC_PREFIX */</i></td></tr>
+<tr><th id="8">8</th><td><i>/* #undef JEMALLOC_CPREFIX */</i></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><i>/*</i></td></tr>
+<tr><th id="11">11</th><td><i> * Name mangling for public symbols is controlled by --with-mangling and</i></td></tr>
+<tr><th id="12">12</th><td><i> * --with-jemalloc-prefix.  With default settings the je_ prefix is stripped by</i></td></tr>
+<tr><th id="13">13</th><td><i> * these macro definitions.</i></td></tr>
+<tr><th id="14">14</th><td><i> */</i></td></tr>
+<tr><th id="15">15</th><td><u>#define <dfn class="macro" id="_M/je_malloc_conf" data-ref="_M/je_malloc_conf">je_malloc_conf</dfn> malloc_conf</u></td></tr>
+<tr><th id="16">16</th><td><u>#define <dfn class="macro" id="_M/je_malloc_message" data-ref="_M/je_malloc_message">je_malloc_message</dfn> malloc_message</u></td></tr>
+<tr><th id="17">17</th><td><u>#define <dfn class="macro" id="_M/je_malloc" data-ref="_M/je_malloc">je_malloc</dfn> malloc</u></td></tr>
+<tr><th id="18">18</th><td><u>#define <dfn class="macro" id="_M/je_calloc" data-ref="_M/je_calloc">je_calloc</dfn> calloc</u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/je_posix_memalign" data-ref="_M/je_posix_memalign">je_posix_memalign</dfn> posix_memalign</u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/je_aligned_alloc" data-ref="_M/je_aligned_alloc">je_aligned_alloc</dfn> aligned_alloc</u></td></tr>
+<tr><th id="21">21</th><td><u>#define <dfn class="macro" id="_M/je_realloc" data-ref="_M/je_realloc">je_realloc</dfn> realloc</u></td></tr>
+<tr><th id="22">22</th><td><u>#define <dfn class="macro" id="_M/je_free" data-ref="_M/je_free">je_free</dfn> free</u></td></tr>
+<tr><th id="23">23</th><td><u>#define <dfn class="macro" id="_M/je_malloc_usable_size" data-ref="_M/je_malloc_usable_size">je_malloc_usable_size</dfn> malloc_usable_size</u></td></tr>
+<tr><th id="24">24</th><td><u>#define <dfn class="macro" id="_M/je_malloc_stats_print" data-ref="_M/je_malloc_stats_print">je_malloc_stats_print</dfn> malloc_stats_print</u></td></tr>
+<tr><th id="25">25</th><td><u>#define <dfn class="macro" id="_M/je_mallctl" data-ref="_M/je_mallctl">je_mallctl</dfn> mallctl</u></td></tr>
+<tr><th id="26">26</th><td><u>#define <dfn class="macro" id="_M/je_mallctlnametomib" data-ref="_M/je_mallctlnametomib">je_mallctlnametomib</dfn> mallctlnametomib</u></td></tr>
+<tr><th id="27">27</th><td><u>#define <dfn class="macro" id="_M/je_mallctlbymib" data-ref="_M/je_mallctlbymib">je_mallctlbymib</dfn> mallctlbymib</u></td></tr>
+<tr><th id="28">28</th><td><u>#define <dfn class="macro" id="_M/je_memalign" data-ref="_M/je_memalign">je_memalign</dfn> memalign</u></td></tr>
+<tr><th id="29">29</th><td><u>#define <dfn class="macro" id="_M/je_valloc" data-ref="_M/je_valloc">je_valloc</dfn> valloc</u></td></tr>
+<tr><th id="30">30</th><td><u>#define <dfn class="macro" id="_M/je_allocm" data-ref="_M/je_allocm">je_allocm</dfn> allocm</u></td></tr>
+<tr><th id="31">31</th><td><u>#define <dfn class="macro" id="_M/je_rallocm" data-ref="_M/je_rallocm">je_rallocm</dfn> rallocm</u></td></tr>
+<tr><th id="32">32</th><td><u>#define <dfn class="macro" id="_M/je_sallocm" data-ref="_M/je_sallocm">je_sallocm</dfn> sallocm</u></td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/je_dallocm" data-ref="_M/je_dallocm">je_dallocm</dfn> dallocm</u></td></tr>
+<tr><th id="34">34</th><td><u>#define <dfn class="macro" id="_M/je_nallocm" data-ref="_M/je_nallocm">je_nallocm</dfn> nallocm</u></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><i>/*</i></td></tr>
+<tr><th id="37">37</th><td><i> * JEMALLOC_PRIVATE_NAMESPACE is used as a prefix for all library-private APIs.</i></td></tr>
+<tr><th id="38">38</th><td><i> * For shared libraries, symbol visibility mechanisms prevent these symbols</i></td></tr>
+<tr><th id="39">39</th><td><i> * from being exported, but for static libraries, naming collisions are a real</i></td></tr>
+<tr><th id="40">40</th><td><i> * possibility.</i></td></tr>
+<tr><th id="41">41</th><td><i> */</i></td></tr>
+<tr><th id="42">42</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_PRIVATE_NAMESPACE" data-ref="_M/JEMALLOC_PRIVATE_NAMESPACE">JEMALLOC_PRIVATE_NAMESPACE</dfn> ""</u></td></tr>
+<tr><th id="43">43</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_N" data-ref="_M/JEMALLOC_N">JEMALLOC_N</dfn>(string_that_no_one_should_want_to_use_as_a_jemalloc_private_namespace_prefix) string_that_no_one_should_want_to_use_as_a_jemalloc_private_namespace_prefix</u></td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><i>/*</i></td></tr>
+<tr><th id="46">46</th><td><i> * Hyper-threaded CPUs may need a special instruction inside spin loops in</i></td></tr>
+<tr><th id="47">47</th><td><i> * order to yield to another virtual CPU.</i></td></tr>
+<tr><th id="48">48</th><td><i> */</i></td></tr>
+<tr><th id="49">49</th><td><u>#define <dfn class="macro" id="_M/CPU_SPINWAIT" data-ref="_M/CPU_SPINWAIT">CPU_SPINWAIT</dfn> __asm__ volatile("pause")</u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td><i>/* Defined if the equivalent of FreeBSD's atomic(9) functions are available. */</i></td></tr>
+<tr><th id="52">52</th><td><i>/* #undef JEMALLOC_ATOMIC9 */</i></td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><i>/*</i></td></tr>
+<tr><th id="55">55</th><td><i> * Defined if OSAtomic*() functions are available, as provided by Darwin, and</i></td></tr>
+<tr><th id="56">56</th><td><i> * documented in the atomic(3) manual page.</i></td></tr>
+<tr><th id="57">57</th><td><i> */</i></td></tr>
+<tr><th id="58">58</th><td><i>/* #undef JEMALLOC_OSATOMIC */</i></td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><i>/*</i></td></tr>
+<tr><th id="61">61</th><td><i> * Defined if __sync_add_and_fetch(uint32_t *, uint32_t) and</i></td></tr>
+<tr><th id="62">62</th><td><i> * __sync_sub_and_fetch(uint32_t *, uint32_t) are available, despite</i></td></tr>
+<tr><th id="63">63</th><td><i> * __GCC_HAVE_SYNC_COMPARE_AND_SWAP_4 not being defined (which means the</i></td></tr>
+<tr><th id="64">64</th><td><i> * functions are defined in libgcc instead of being inlines)</i></td></tr>
+<tr><th id="65">65</th><td><i> */</i></td></tr>
+<tr><th id="66">66</th><td><i>/* #undef JE_FORCE_SYNC_COMPARE_AND_SWAP_4 */</i></td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td><i>/*</i></td></tr>
+<tr><th id="69">69</th><td><i> * Defined if __sync_add_and_fetch(uint64_t *, uint64_t) and</i></td></tr>
+<tr><th id="70">70</th><td><i> * __sync_sub_and_fetch(uint64_t *, uint64_t) are available, despite</i></td></tr>
+<tr><th id="71">71</th><td><i> * __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 not being defined (which means the</i></td></tr>
+<tr><th id="72">72</th><td><i> * functions are defined in libgcc instead of being inlines)</i></td></tr>
+<tr><th id="73">73</th><td><i> */</i></td></tr>
+<tr><th id="74">74</th><td><i>/* #undef JE_FORCE_SYNC_COMPARE_AND_SWAP_8 */</i></td></tr>
+<tr><th id="75">75</th><td></td></tr>
+<tr><th id="76">76</th><td><i>/*</i></td></tr>
+<tr><th id="77">77</th><td><i> * Defined if OSSpin*() functions are available, as provided by Darwin, and</i></td></tr>
+<tr><th id="78">78</th><td><i> * documented in the spinlock(3) manual page.</i></td></tr>
+<tr><th id="79">79</th><td><i> */</i></td></tr>
+<tr><th id="80">80</th><td><i>/* #undef JEMALLOC_OSSPIN */</i></td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><i>/*</i></td></tr>
+<tr><th id="83">83</th><td><i> * Defined if _malloc_thread_cleanup() exists.  At least in the case of</i></td></tr>
+<tr><th id="84">84</th><td><i> * FreeBSD, pthread_key_create() allocates, which if used during malloc</i></td></tr>
+<tr><th id="85">85</th><td><i> * bootstrapping will cause recursion into the pthreads library.  Therefore, if</i></td></tr>
+<tr><th id="86">86</th><td><i> * _malloc_thread_cleanup() exists, use it as the basis for thread cleanup in</i></td></tr>
+<tr><th id="87">87</th><td><i> * malloc_tsd.</i></td></tr>
+<tr><th id="88">88</th><td><i> */</i></td></tr>
+<tr><th id="89">89</th><td><i>/* #undef JEMALLOC_MALLOC_THREAD_CLEANUP */</i></td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><i>/*</i></td></tr>
+<tr><th id="92">92</th><td><i> * Defined if threaded initialization is known to be safe on this platform.</i></td></tr>
+<tr><th id="93">93</th><td><i> * Among other things, it must be possible to initialize a mutex without</i></td></tr>
+<tr><th id="94">94</th><td><i> * triggering allocation in order for threaded allocation to be safe.</i></td></tr>
+<tr><th id="95">95</th><td><i> */</i></td></tr>
+<tr><th id="96">96</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_THREADED_INIT" data-ref="_M/JEMALLOC_THREADED_INIT">JEMALLOC_THREADED_INIT</dfn></u> </td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td><i>/*</i></td></tr>
+<tr><th id="99">99</th><td><i> * Defined if the pthreads implementation defines</i></td></tr>
+<tr><th id="100">100</th><td><i> * _pthread_mutex_init_calloc_cb(), in which case the function is used in order</i></td></tr>
+<tr><th id="101">101</th><td><i> * to avoid recursive allocation during mutex initialization.</i></td></tr>
+<tr><th id="102">102</th><td><i> */</i></td></tr>
+<tr><th id="103">103</th><td><i>/* #undef JEMALLOC_MUTEX_INIT_CB */</i></td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><i>/* Defined if __attribute__((...)) syntax is supported. */</i></td></tr>
+<tr><th id="106">106</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_HAVE_ATTR" data-ref="_M/JEMALLOC_HAVE_ATTR">JEMALLOC_HAVE_ATTR</dfn></u> </td></tr>
+<tr><th id="107">107</th><td><u>#<span data-ppcond="107">ifdef</span> <a class="macro" href="#106" data-ref="_M/JEMALLOC_HAVE_ATTR">JEMALLOC_HAVE_ATTR</a></u></td></tr>
+<tr><th id="108">108</th><td><u>#  define <dfn class="macro" id="_M/JEMALLOC_ATTR" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</dfn>(s) __attribute__((s))</u></td></tr>
+<tr><th id="109">109</th><td><u>#  define <dfn class="macro" id="_M/JEMALLOC_EXPORT" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</dfn> JEMALLOC_ATTR(visibility("default"))</u></td></tr>
+<tr><th id="110">110</th><td><u>#  define <dfn class="macro" id="_M/JEMALLOC_ALIGNED" data-ref="_M/JEMALLOC_ALIGNED">JEMALLOC_ALIGNED</dfn>(s) JEMALLOC_ATTR(aligned(s))</u></td></tr>
+<tr><th id="111">111</th><td><u>#  define <dfn class="macro" id="_M/JEMALLOC_SECTION" data-ref="_M/JEMALLOC_SECTION">JEMALLOC_SECTION</dfn>(s) JEMALLOC_ATTR(section(s))</u></td></tr>
+<tr><th id="112">112</th><td><u>#  define <dfn class="macro" id="_M/JEMALLOC_NOINLINE" data-ref="_M/JEMALLOC_NOINLINE">JEMALLOC_NOINLINE</dfn> JEMALLOC_ATTR(noinline)</u></td></tr>
+<tr><th id="113">113</th><td><u>#<span data-ppcond="107">elif</span> _MSC_VER</u></td></tr>
+<tr><th id="114">114</th><td><u>#  define JEMALLOC_ATTR(s)</u></td></tr>
+<tr><th id="115">115</th><td><u>#  ifdef DLLEXPORT</u></td></tr>
+<tr><th id="116">116</th><td><u>#    define JEMALLOC_EXPORT __declspec(dllexport)</u></td></tr>
+<tr><th id="117">117</th><td><u>#  else</u></td></tr>
+<tr><th id="118">118</th><td><u>#    define JEMALLOC_EXPORT __declspec(dllimport)</u></td></tr>
+<tr><th id="119">119</th><td><u>#  endif</u></td></tr>
+<tr><th id="120">120</th><td><u>#  define JEMALLOC_ALIGNED(s) __declspec(align(s))</u></td></tr>
+<tr><th id="121">121</th><td><u>#  define JEMALLOC_SECTION(s) __declspec(allocate(s))</u></td></tr>
+<tr><th id="122">122</th><td><u>#  define JEMALLOC_NOINLINE __declspec(noinline)</u></td></tr>
+<tr><th id="123">123</th><td><u>#else</u></td></tr>
+<tr><th id="124">124</th><td><u>#  define JEMALLOC_ATTR(s)</u></td></tr>
+<tr><th id="125">125</th><td><u>#  define JEMALLOC_EXPORT</u></td></tr>
+<tr><th id="126">126</th><td><u>#  define JEMALLOC_ALIGNED(s)</u></td></tr>
+<tr><th id="127">127</th><td><u>#  define JEMALLOC_SECTION(s)</u></td></tr>
+<tr><th id="128">128</th><td><u>#  define JEMALLOC_NOINLINE</u></td></tr>
+<tr><th id="129">129</th><td><u>#<span data-ppcond="107">endif</span></u></td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td><i>/* Defined if sbrk() is supported. */</i></td></tr>
+<tr><th id="132">132</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_HAVE_SBRK" data-ref="_M/JEMALLOC_HAVE_SBRK">JEMALLOC_HAVE_SBRK</dfn></u> </td></tr>
+<tr><th id="133">133</th><td></td></tr>
+<tr><th id="134">134</th><td><i>/* Non-empty if the tls_model attribute is supported. */</i></td></tr>
+<tr><th id="135">135</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_TLS_MODEL" data-ref="_M/JEMALLOC_TLS_MODEL">JEMALLOC_TLS_MODEL</dfn> __attribute__((tls_model("initial-exec")))</u></td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td><i>/* JEMALLOC_CC_SILENCE enables code that silences unuseful compiler warnings. */</i></td></tr>
+<tr><th id="138">138</th><td><i>/* #undef JEMALLOC_CC_SILENCE */</i></td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td><i>/*</i></td></tr>
+<tr><th id="141">141</th><td><i> * JEMALLOC_DEBUG enables assertions and other sanity checks, and disables</i></td></tr>
+<tr><th id="142">142</th><td><i> * inline functions.</i></td></tr>
+<tr><th id="143">143</th><td><i> */</i></td></tr>
+<tr><th id="144">144</th><td><i>/* #undef JEMALLOC_DEBUG */</i></td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td><i>/* JEMALLOC_STATS enables statistics calculation. */</i></td></tr>
+<tr><th id="147">147</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_STATS" data-ref="_M/JEMALLOC_STATS">JEMALLOC_STATS</dfn></u> </td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td><i>/* JEMALLOC_PROF enables allocation profiling. */</i></td></tr>
+<tr><th id="150">150</th><td><i>/* #undef JEMALLOC_PROF */</i></td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td><i>/* Use libunwind for profile backtracing if defined. */</i></td></tr>
+<tr><th id="153">153</th><td><i>/* #undef JEMALLOC_PROF_LIBUNWIND */</i></td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td><i>/* Use libgcc for profile backtracing if defined. */</i></td></tr>
+<tr><th id="156">156</th><td><i>/* #undef JEMALLOC_PROF_LIBGCC */</i></td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td><i>/* Use gcc intrinsics for profile backtracing if defined. */</i></td></tr>
+<tr><th id="159">159</th><td><i>/* #undef JEMALLOC_PROF_GCC */</i></td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td><i>/*</i></td></tr>
+<tr><th id="162">162</th><td><i> * JEMALLOC_TCACHE enables a thread-specific caching layer for small objects.</i></td></tr>
+<tr><th id="163">163</th><td><i> * This makes it possible to allocate/deallocate objects without any locking</i></td></tr>
+<tr><th id="164">164</th><td><i> * when the cache is in the steady state.</i></td></tr>
+<tr><th id="165">165</th><td><i> */</i></td></tr>
+<tr><th id="166">166</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_TCACHE" data-ref="_M/JEMALLOC_TCACHE">JEMALLOC_TCACHE</dfn></u> </td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td><i>/*</i></td></tr>
+<tr><th id="169">169</th><td><i> * JEMALLOC_DSS enables use of sbrk(2) to allocate chunks from the data storage</i></td></tr>
+<tr><th id="170">170</th><td><i> * segment (DSS).</i></td></tr>
+<tr><th id="171">171</th><td><i> */</i></td></tr>
+<tr><th id="172">172</th><td><i>/* #undef JEMALLOC_DSS */</i></td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td><i>/* Support memory filling (junk/zero/quarantine/redzone). */</i></td></tr>
+<tr><th id="175">175</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_FILL" data-ref="_M/JEMALLOC_FILL">JEMALLOC_FILL</dfn></u> </td></tr>
+<tr><th id="176">176</th><td></td></tr>
+<tr><th id="177">177</th><td><i>/* Support the experimental API. */</i></td></tr>
+<tr><th id="178">178</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_EXPERIMENTAL" data-ref="_M/JEMALLOC_EXPERIMENTAL">JEMALLOC_EXPERIMENTAL</dfn></u> </td></tr>
+<tr><th id="179">179</th><td></td></tr>
+<tr><th id="180">180</th><td><i>/* Support utrace(2)-based tracing. */</i></td></tr>
+<tr><th id="181">181</th><td><i>/* #undef JEMALLOC_UTRACE */</i></td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td><i>/* Support Valgrind. */</i></td></tr>
+<tr><th id="184">184</th><td><i>/* #undef JEMALLOC_VALGRIND */</i></td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td><i>/* Support optional abort() on OOM. */</i></td></tr>
+<tr><th id="187">187</th><td><i>/* #undef JEMALLOC_XMALLOC */</i></td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td><i>/* Support lazy locking (avoid locking unless a second thread is launched). */</i></td></tr>
+<tr><th id="190">190</th><td><i>/* #undef JEMALLOC_LAZY_LOCK */</i></td></tr>
+<tr><th id="191">191</th><td></td></tr>
+<tr><th id="192">192</th><td><i>/* One page is 2^STATIC_PAGE_SHIFT bytes. */</i></td></tr>
+<tr><th id="193">193</th><td><u>#define <dfn class="macro" id="_M/STATIC_PAGE_SHIFT" data-ref="_M/STATIC_PAGE_SHIFT">STATIC_PAGE_SHIFT</dfn> 12</u></td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td><i>/*</i></td></tr>
+<tr><th id="196">196</th><td><i> * If defined, use munmap() to unmap freed chunks, rather than storing them for</i></td></tr>
+<tr><th id="197">197</th><td><i> * later reuse.  This is disabled by default on Linux because common sequences</i></td></tr>
+<tr><th id="198">198</th><td><i> * of mmap()/munmap() calls will cause virtual memory map holes.</i></td></tr>
+<tr><th id="199">199</th><td><i> */</i></td></tr>
+<tr><th id="200">200</th><td><i>/* #undef JEMALLOC_MUNMAP */</i></td></tr>
+<tr><th id="201">201</th><td></td></tr>
+<tr><th id="202">202</th><td><i>/*</i></td></tr>
+<tr><th id="203">203</th><td><i> * If defined, use mremap(...MREMAP_FIXED...) for huge realloc().  This is</i></td></tr>
+<tr><th id="204">204</th><td><i> * disabled by default because it is Linux-specific and it will cause virtual</i></td></tr>
+<tr><th id="205">205</th><td><i> * memory map holes, much like munmap(2) does.</i></td></tr>
+<tr><th id="206">206</th><td><i> */</i></td></tr>
+<tr><th id="207">207</th><td><i>/* #undef JEMALLOC_MREMAP */</i></td></tr>
+<tr><th id="208">208</th><td></td></tr>
+<tr><th id="209">209</th><td><i>/* TLS is used to map arenas and magazine caches to threads. */</i></td></tr>
+<tr><th id="210">210</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_TLS" data-ref="_M/JEMALLOC_TLS">JEMALLOC_TLS</dfn></u> </td></tr>
+<tr><th id="211">211</th><td></td></tr>
+<tr><th id="212">212</th><td><i>/*</i></td></tr>
+<tr><th id="213">213</th><td><i> * JEMALLOC_IVSALLOC enables ivsalloc(), which verifies that pointers reside</i></td></tr>
+<tr><th id="214">214</th><td><i> * within jemalloc-owned chunks before dereferencing them.</i></td></tr>
+<tr><th id="215">215</th><td><i> */</i></td></tr>
+<tr><th id="216">216</th><td><i>/* #undef JEMALLOC_IVSALLOC */</i></td></tr>
+<tr><th id="217">217</th><td></td></tr>
+<tr><th id="218">218</th><td><i>/*</i></td></tr>
+<tr><th id="219">219</th><td><i> * Define overrides for non-standard allocator-related functions if they</i></td></tr>
+<tr><th id="220">220</th><td><i> * are present on the system.</i></td></tr>
+<tr><th id="221">221</th><td><i> */</i></td></tr>
+<tr><th id="222">222</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_OVERRIDE_MEMALIGN" data-ref="_M/JEMALLOC_OVERRIDE_MEMALIGN">JEMALLOC_OVERRIDE_MEMALIGN</dfn></u> </td></tr>
+<tr><th id="223">223</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_OVERRIDE_VALLOC" data-ref="_M/JEMALLOC_OVERRIDE_VALLOC">JEMALLOC_OVERRIDE_VALLOC</dfn></u> </td></tr>
+<tr><th id="224">224</th><td></td></tr>
+<tr><th id="225">225</th><td><i>/*</i></td></tr>
+<tr><th id="226">226</th><td><i> * At least Linux omits the "const" in:</i></td></tr>
+<tr><th id="227">227</th><td><i> *</i></td></tr>
+<tr><th id="228">228</th><td><i> *   size_t malloc_usable_size(const void *ptr);</i></td></tr>
+<tr><th id="229">229</th><td><i> *</i></td></tr>
+<tr><th id="230">230</th><td><i> * Match the operating system's prototype.</i></td></tr>
+<tr><th id="231">231</th><td><i> */</i></td></tr>
+<tr><th id="232">232</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_USABLE_SIZE_CONST" data-ref="_M/JEMALLOC_USABLE_SIZE_CONST">JEMALLOC_USABLE_SIZE_CONST</dfn></u> </td></tr>
+<tr><th id="233">233</th><td></td></tr>
+<tr><th id="234">234</th><td><i>/*</i></td></tr>
+<tr><th id="235">235</th><td><i> * Darwin (OS X) uses zones to work around Mach-O symbol override shortcomings.</i></td></tr>
+<tr><th id="236">236</th><td><i> */</i></td></tr>
+<tr><th id="237">237</th><td><i>/* #undef JEMALLOC_ZONE */</i></td></tr>
+<tr><th id="238">238</th><td><i>/* #undef JEMALLOC_ZONE_VERSION */</i></td></tr>
+<tr><th id="239">239</th><td></td></tr>
+<tr><th id="240">240</th><td><i>/*</i></td></tr>
+<tr><th id="241">241</th><td><i> * Methods for purging unused pages differ between operating systems.</i></td></tr>
+<tr><th id="242">242</th><td><i> *</i></td></tr>
+<tr><th id="243">243</th><td><i> *   madvise(..., MADV_DONTNEED) : On Linux, this immediately discards pages,</i></td></tr>
+<tr><th id="244">244</th><td><i> *                                 such that new pages will be demand-zeroed if</i></td></tr>
+<tr><th id="245">245</th><td><i> *                                 the address region is later touched.</i></td></tr>
+<tr><th id="246">246</th><td><i> *   madvise(..., MADV_FREE) : On FreeBSD and Darwin, this marks pages as being</i></td></tr>
+<tr><th id="247">247</th><td><i> *                             unused, such that they will be discarded rather</i></td></tr>
+<tr><th id="248">248</th><td><i> *                             than swapped out.</i></td></tr>
+<tr><th id="249">249</th><td><i> */</i></td></tr>
+<tr><th id="250">250</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_PURGE_MADVISE_DONTNEED" data-ref="_M/JEMALLOC_PURGE_MADVISE_DONTNEED">JEMALLOC_PURGE_MADVISE_DONTNEED</dfn></u> </td></tr>
+<tr><th id="251">251</th><td><i>/* #undef JEMALLOC_PURGE_MADVISE_FREE */</i></td></tr>
+<tr><th id="252">252</th><td></td></tr>
+<tr><th id="253">253</th><td><i>/*</i></td></tr>
+<tr><th id="254">254</th><td><i> * Define if operating system has alloca.h header.</i></td></tr>
+<tr><th id="255">255</th><td><i> */</i></td></tr>
+<tr><th id="256">256</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_HAS_ALLOCA_H" data-ref="_M/JEMALLOC_HAS_ALLOCA_H">JEMALLOC_HAS_ALLOCA_H</dfn></u></td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td><i>/* sizeof(void *) == 2^LG_SIZEOF_PTR. */</i></td></tr>
+<tr><th id="259">259</th><td><u>#define <dfn class="macro" id="_M/LG_SIZEOF_PTR" data-ref="_M/LG_SIZEOF_PTR">LG_SIZEOF_PTR</dfn> 3</u></td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td><i>/* sizeof(int) == 2^LG_SIZEOF_INT. */</i></td></tr>
+<tr><th id="262">262</th><td><u>#define <dfn class="macro" id="_M/LG_SIZEOF_INT" data-ref="_M/LG_SIZEOF_INT">LG_SIZEOF_INT</dfn> 2</u></td></tr>
+<tr><th id="263">263</th><td></td></tr>
+<tr><th id="264">264</th><td><i>/* sizeof(long) == 2^LG_SIZEOF_LONG. */</i></td></tr>
+<tr><th id="265">265</th><td><u>#define <dfn class="macro" id="_M/LG_SIZEOF_LONG" data-ref="_M/LG_SIZEOF_LONG">LG_SIZEOF_LONG</dfn> 3</u></td></tr>
+<tr><th id="266">266</th><td></td></tr>
+<tr><th id="267">267</th><td><i>/* sizeof(intmax_t) == 2^LG_SIZEOF_INTMAX_T. */</i></td></tr>
+<tr><th id="268">268</th><td><u>#define <dfn class="macro" id="_M/LG_SIZEOF_INTMAX_T" data-ref="_M/LG_SIZEOF_INTMAX_T">LG_SIZEOF_INTMAX_T</dfn> 3</u></td></tr>
+<tr><th id="269">269</th><td></td></tr>
+<tr><th id="270">270</th><td><i>/* C99 restrict keyword supported. */</i></td></tr>
+<tr><th id="271">271</th><td><u>#define <dfn class="macro" id="_M/JEMALLOC_HAS_RESTRICT" data-ref="_M/JEMALLOC_HAS_RESTRICT">JEMALLOC_HAS_RESTRICT</dfn></u></td></tr>
+<tr><th id="272">272</th><td></td></tr>
+<tr><th id="273">273</th><td><i>/* JEMALLOC_CODE_COVERAGE enables test code coverage analysis. */</i></td></tr>
+<tr><th id="274">274</th><td><u>#undef <span class="macro" data-ref="_M/JEMALLOC_CODE_COVERAGE">JEMALLOC_CODE_COVERAGE</span></u></td></tr>
+<tr><th id="275">275</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../dep/jemalloc/src/arena.c.html'>TrinityCore6.x/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

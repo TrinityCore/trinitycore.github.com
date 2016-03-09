@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<title>CharacterDatabaseCleaner.h [TrinityCore3.3.5/src/server/game/Tools/CharacterDatabaseCleaner.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Tools/CharacterDatabaseCleaner.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Tools</a>/CharacterDatabaseCleaner.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2010 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/CHARACTERDATABASECLEANER_H">CHARACTERDATABASECLEANER_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/CHARACTERDATABASECLEANER_H" data-ref="_M/CHARACTERDATABASECLEANER_H">CHARACTERDATABASECLEANER_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><b>namespace</b> <span class="namespace">CharacterDatabaseCleaner</span></td></tr>
+<tr><th id="23">23</th><td>{</td></tr>
+<tr><th id="24">24</th><td>    <b>enum</b> <dfn class="type def" id="CharacterDatabaseCleaner::CleaningFlags" title='CharacterDatabaseCleaner::CleaningFlags' data-ref="CharacterDatabaseCleaner::CleaningFlags" >CleaningFlags</dfn></td></tr>
+<tr><th id="25">25</th><td>    {</td></tr>
+<tr><th id="26">26</th><td>        <dfn class="enum" id="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_ACHIEVEMENT_PROGRESS" title='CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_ACHIEVEMENT_PROGRESS' data-ref="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_ACHIEVEMENT_PROGRESS" >CLEANING_FLAG_ACHIEVEMENT_PROGRESS</dfn>  = <var>0x1</var>,</td></tr>
+<tr><th id="27">27</th><td>        <dfn class="enum" id="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_SKILLS" title='CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_SKILLS' data-ref="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_SKILLS" >CLEANING_FLAG_SKILLS</dfn>                = <var>0x2</var>,</td></tr>
+<tr><th id="28">28</th><td>        <dfn class="enum" id="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_SPELLS" title='CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_SPELLS' data-ref="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_SPELLS" >CLEANING_FLAG_SPELLS</dfn>                = <var>0x4</var>,</td></tr>
+<tr><th id="29">29</th><td>        <dfn class="enum" id="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_TALENTS" title='CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_TALENTS' data-ref="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_TALENTS" >CLEANING_FLAG_TALENTS</dfn>               = <var>0x8</var>,</td></tr>
+<tr><th id="30">30</th><td>        <dfn class="enum" id="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_QUESTSTATUS" title='CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_QUESTSTATUS' data-ref="CharacterDatabaseCleaner::CleaningFlags::CLEANING_FLAG_QUESTSTATUS" >CLEANING_FLAG_QUESTSTATUS</dfn>           = <var>0x10</var></td></tr>
+<tr><th id="31">31</th><td>    };</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>    <em>void</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner13CleanDatabaseEv" title='CharacterDatabaseCleaner::CleanDatabase' data-ref="_ZN24CharacterDatabaseCleaner13CleanDatabaseEv" >CleanDatabase</dfn>();</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>    <em>void</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner11CheckUniqueEPKcS1_PFbjE" title='CharacterDatabaseCleaner::CheckUnique' data-ref="_ZN24CharacterDatabaseCleaner11CheckUniqueEPKcS1_PFbjE" >CheckUnique</dfn>(<em>const</em> <em>char</em>* <dfn class="local col1 decl" id="1column" title='column' data-type='const char *' data-ref="1column" >column</dfn>, <em>const</em> <em>char</em>* <dfn class="local col2 decl" id="2table" title='table' data-type='const char *' data-ref="2table" >table</dfn>, <em>bool</em> (*<dfn class="local col3 decl" id="3check" title='check' data-type='bool (*)(uint32)' data-ref="3check" >check</dfn>)(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>));</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <em>bool</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner24AchievementProgressCheckEj" title='CharacterDatabaseCleaner::AchievementProgressCheck' data-ref="_ZN24CharacterDatabaseCleaner24AchievementProgressCheckEj" >AchievementProgressCheck</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col4 decl" id="4criteria" title='criteria' data-type='uint32' data-ref="4criteria" >criteria</dfn>);</td></tr>
+<tr><th id="38">38</th><td>    <em>bool</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner10SkillCheckEj" title='CharacterDatabaseCleaner::SkillCheck' data-ref="_ZN24CharacterDatabaseCleaner10SkillCheckEj" >SkillCheck</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="5skill" title='skill' data-type='uint32' data-ref="5skill" >skill</dfn>);</td></tr>
+<tr><th id="39">39</th><td>    <em>bool</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner10SpellCheckEj" title='CharacterDatabaseCleaner::SpellCheck' data-ref="_ZN24CharacterDatabaseCleaner10SpellCheckEj" >SpellCheck</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="6spell_id" title='spell_id' data-type='uint32' data-ref="6spell_id" >spell_id</dfn>);</td></tr>
+<tr><th id="40">40</th><td>    <em>bool</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner11TalentCheckEj" title='CharacterDatabaseCleaner::TalentCheck' data-ref="_ZN24CharacterDatabaseCleaner11TalentCheckEj" >TalentCheck</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="7talent_id" title='talent_id' data-type='uint32' data-ref="7talent_id" >talent_id</dfn>);</td></tr>
+<tr><th id="41">41</th><td></td></tr>
+<tr><th id="42">42</th><td>    <em>void</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner33CleanCharacterAchievementProgressEv" title='CharacterDatabaseCleaner::CleanCharacterAchievementProgress' data-ref="_ZN24CharacterDatabaseCleaner33CleanCharacterAchievementProgressEv" >CleanCharacterAchievementProgress</dfn>();</td></tr>
+<tr><th id="43">43</th><td>    <em>void</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner20CleanCharacterSkillsEv" title='CharacterDatabaseCleaner::CleanCharacterSkills' data-ref="_ZN24CharacterDatabaseCleaner20CleanCharacterSkillsEv" >CleanCharacterSkills</dfn>();</td></tr>
+<tr><th id="44">44</th><td>    <em>void</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner19CleanCharacterSpellEv" title='CharacterDatabaseCleaner::CleanCharacterSpell' data-ref="_ZN24CharacterDatabaseCleaner19CleanCharacterSpellEv" >CleanCharacterSpell</dfn>();</td></tr>
+<tr><th id="45">45</th><td>    <em>void</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner20CleanCharacterTalentEv" title='CharacterDatabaseCleaner::CleanCharacterTalent' data-ref="_ZN24CharacterDatabaseCleaner20CleanCharacterTalentEv" >CleanCharacterTalent</dfn>();</td></tr>
+<tr><th id="46">46</th><td>    <em>void</em> <dfn class="decl" id="_ZN24CharacterDatabaseCleaner25CleanCharacterQuestStatusEv" title='CharacterDatabaseCleaner::CleanCharacterQuestStatus' data-ref="_ZN24CharacterDatabaseCleaner25CleanCharacterQuestStatusEv" >CleanCharacterQuestStatus</dfn>();</td></tr>
+<tr><th id="47">47</th><td>}</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Entities/Player/Player.cpp.html'>TrinityCore3.3.5/src/server/game/Entities/Player/Player.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+<title>traits.hpp [include/boost/move/traits.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/move/traits.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>move</a>/traits.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//////////////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="2">2</th><td><i>//</i></td></tr>
+<tr><th id="3">3</th><td><i>// (C) Copyright Ion Gaztanaga 2009-2012.</i></td></tr>
+<tr><th id="4">4</th><td><i>// Distributed under the Boost Software License, Version 1.0.</i></td></tr>
+<tr><th id="5">5</th><td><i>// (See accompanying file LICENSE_1_0.txt or copy at</i></td></tr>
+<tr><th id="6">6</th><td><i>// <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt)</i></td></tr>
+<tr><th id="7">7</th><td><i>//</i></td></tr>
+<tr><th id="8">8</th><td><i>// See <a href="http://www.boost.org/libs/move">http://www.boost.org/libs/move</a> for documentation.</i></td></tr>
+<tr><th id="9">9</th><td><i>//</i></td></tr>
+<tr><th id="10">10</th><td><i>//////////////////////////////////////////////////////////////////////////////</i></td></tr>
+<tr><th id="11">11</th><td><i></i></td></tr>
+<tr><th id="12">12</th><td><i>//! \file</i></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">ifndef</span> <span class="macro" data-ref="_M/BOOST_MOVE_MOVE_TRAITS_HPP">BOOST_MOVE_MOVE_TRAITS_HPP</span></u></td></tr>
+<tr><th id="15">15</th><td><u>#define <dfn class="macro" id="_M/BOOST_MOVE_MOVE_TRAITS_HPP" data-ref="_M/BOOST_MOVE_MOVE_TRAITS_HPP">BOOST_MOVE_MOVE_TRAITS_HPP</dfn></u></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u>#include <a href="detail/config_begin.hpp.html">&lt;boost/move/detail/config_begin.hpp&gt;</a></u></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../type_traits/has_trivial_destructor.hpp.html">&lt;boost/type_traits/has_trivial_destructor.hpp&gt;</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="detail/meta_utils.hpp.html">&lt;boost/move/detail/meta_utils.hpp&gt;</a></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#<span data-ppcond="21">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="core.hpp.html">&lt;boost/move/core.hpp&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#<span data-ppcond="21">endif</span></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><i class="doc">//! If this trait yields to true</i></td></tr>
+<tr><th id="28">28</th><td><i class="doc">//! (<span class="tag">&lt;i&gt;</span>has_trivial_destructor_after_move &amp;lt;T&amp;gt;::value == true<span class="tag">&lt;/i&gt;</span>)</i></td></tr>
+<tr><th id="29">29</th><td><i class="doc">//! means that if T is used as argument of a move construction/assignment,</i></td></tr>
+<tr><th id="30">30</th><td><i class="doc">//! there is no need to call T's destructor.</i></td></tr>
+<tr><th id="31">31</th><td><i class="doc">//! This optimization tipically is used to improve containers' performance.</i></td></tr>
+<tr><th id="32">32</th><td><i class="doc">//!</i></td></tr>
+<tr><th id="33">33</th><td><i class="doc">//! By default this trait is true if the type has trivial destructor,</i></td></tr>
+<tr><th id="34">34</th><td><i class="doc">//! every class should specialize this trait if it wants to improve performance</i></td></tr>
+<tr><th id="35">35</th><td><i class="doc">//! when inserted in containers.</i></td></tr>
+<tr><th id="36">36</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="37">37</th><td><b>struct</b> <dfn class="type def" id="boost::has_trivial_destructor_after_move" title='boost::has_trivial_destructor_after_move' data-ref="boost::has_trivial_destructor_after_move" >has_trivial_destructor_after_move</dfn></td></tr>
+<tr><th id="38">38</th><td>   : <span class="namespace">::boost::</span><a class="type" href="../type_traits/has_trivial_destructor.hpp.html#36" title='boost::has_trivial_destructor' data-ref="boost::has_trivial_destructor" >has_trivial_destructor</a>&lt;T&gt;</td></tr>
+<tr><th id="39">39</th><td>{};</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><i class="doc">//! By default this traits returns false. Classes with non-throwing move constructor</i></td></tr>
+<tr><th id="42">42</th><td><i class="doc">//! and assignment can specialize this trait to obtain some performance improvements.</i></td></tr>
+<tr><th id="43">43</th><td><b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="44">44</th><td><b>struct</b> <dfn class="type def" id="boost::has_nothrow_move" title='boost::has_nothrow_move' data-ref="boost::has_nothrow_move" >has_nothrow_move</dfn></td></tr>
+<tr><th id="45">45</th><td>   : <b>public</b> <span class="namespace">::boost::move_detail::</span><a class="type" href="detail/meta_utils.hpp.html#boost::move_detail::integral_constant" title='boost::move_detail::integral_constant' data-ref="boost::move_detail::integral_constant" >integral_constant</a>&lt;<em>bool</em>, <b>false</b>&gt;</td></tr>
+<tr><th id="46">46</th><td>{};</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><b>namespace</b> <span class="namespace">move_detail</span> {</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><i>// Code from Jeffrey Lee Hellrung, many thanks</i></td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td><u>#<span data-ppcond="52">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="53">53</th><td>   <b>template</b>&lt; <b>class</b> T&gt; <b>struct</b> <dfn class="type def" id="boost::move_detail::forward_type" title='boost::move_detail::forward_type' data-ref="boost::move_detail::forward_type" >forward_type</dfn> { <b>typedef</b> T <dfn class="typedef" id="boost::move_detail::forward_type::type" title='boost::move_detail::forward_type::type' data-type='T' data-ref="boost::move_detail::forward_type::type" >type</dfn>; };</td></tr>
+<tr><th id="54">54</th><td><u>#<span data-ppcond="52">else</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="55">55</th><td>   <b>template</b>&lt; <b>class</b> T&gt;</td></tr>
+<tr><th id="56">56</th><td>   <b>struct</b> forward_type</td></tr>
+<tr><th id="57">57</th><td>   { <b>typedef</b> <em>const</em> T &amp;type; };</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>   <b>template</b>&lt; <b>class</b> T&gt;</td></tr>
+<tr><th id="60">60</th><td>   <b>struct</b> forward_type&lt; boost::rv&lt;T&gt; &gt;</td></tr>
+<tr><th id="61">61</th><td>   { <b>typedef</b> T type; };</td></tr>
+<tr><th id="62">62</th><td><u>#<span data-ppcond="52">endif</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> <dfn class="type def" id="boost::move_detail::is_rvalue_reference" title='boost::move_detail::is_rvalue_reference' data-ref="boost::move_detail::is_rvalue_reference" >is_rvalue_reference</dfn> : <span class="namespace">::boost::move_detail::</span><a class="type" href="detail/meta_utils.hpp.html#boost::move_detail::integral_constant" title='boost::move_detail::integral_constant' data-ref="boost::move_detail::integral_constant" >integral_constant</a>&lt;<em>bool</em>, <b>false</b>&gt; { };</td></tr>
+<tr><th id="65">65</th><td><u>#<span data-ppcond="65">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="66">66</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> <dfn class="type def" id="boost::move_detail::is_rvalue_reference" title='boost::move_detail::is_rvalue_reference' data-ref="boost::move_detail::is_rvalue_reference" >is_rvalue_reference</dfn>&lt; T&amp;&amp; &gt; : <span class="namespace">::boost::move_detail::</span><a class="type" href="detail/meta_utils.hpp.html#boost::move_detail::integral_constant" title='boost::move_detail::integral_constant' data-ref="boost::move_detail::integral_constant" >integral_constant</a>&lt;<em>bool</em>, <b>true</b>&gt; { };</td></tr>
+<tr><th id="67">67</th><td><u>#<span data-ppcond="65">else</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="68">68</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> is_rvalue_reference&lt; boost::rv&lt;T&gt;&amp; &gt;</td></tr>
+<tr><th id="69">69</th><td>      :  ::boost::move_detail::integral_constant&lt;<em>bool</em>, <b>true</b>&gt;</td></tr>
+<tr><th id="70">70</th><td>   {};</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> is_rvalue_reference&lt; <em>const</em> boost::rv&lt;T&gt;&amp; &gt;</td></tr>
+<tr><th id="73">73</th><td>      : ::boost::move_detail::integral_constant&lt;<em>bool</em>, <b>true</b>&gt;</td></tr>
+<tr><th id="74">74</th><td>   {};</td></tr>
+<tr><th id="75">75</th><td><u>#<span data-ppcond="65">endif</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><u>#<span data-ppcond="77">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="78">78</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> <dfn class="type def" id="boost::move_detail::add_rvalue_reference" title='boost::move_detail::add_rvalue_reference' data-ref="boost::move_detail::add_rvalue_reference" >add_rvalue_reference</dfn> { <b>typedef</b> T&amp;&amp; <dfn class="typedef" id="boost::move_detail::add_rvalue_reference::type" title='boost::move_detail::add_rvalue_reference::type' data-type='T &amp;&amp;' data-ref="boost::move_detail::add_rvalue_reference::type" >type</dfn>; };</td></tr>
+<tr><th id="79">79</th><td><u>#<span data-ppcond="77">else</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="80">80</th><td>   <b>namespace</b> detail_add_rvalue_reference</td></tr>
+<tr><th id="81">81</th><td>   {</td></tr>
+<tr><th id="82">82</th><td>      <b>template</b>&lt; <b>class</b> T</td></tr>
+<tr><th id="83">83</th><td>              , <em>bool</em> emulation = ::boost::has_move_emulation_enabled&lt;T&gt;::value</td></tr>
+<tr><th id="84">84</th><td>              , <em>bool</em> rv        = ::boost::move_detail::is_rv&lt;T&gt;::value  &gt;</td></tr>
+<tr><th id="85">85</th><td>      <b>struct</b> add_rvalue_reference_impl { <b>typedef</b> T type; };</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>      <b>template</b>&lt; <b>class</b> T, <em>bool</em> emulation&gt;</td></tr>
+<tr><th id="88">88</th><td>      <b>struct</b> add_rvalue_reference_impl&lt; T, emulation, <b>true</b> &gt; { <b>typedef</b> T &amp; type; };</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>      <b>template</b>&lt; <b>class</b> T, <em>bool</em> rv &gt;</td></tr>
+<tr><th id="91">91</th><td>      <b>struct</b> add_rvalue_reference_impl&lt; T, <b>true</b>, rv &gt; { <b>typedef</b> ::boost::rv&lt;T&gt;&amp; type; };</td></tr>
+<tr><th id="92">92</th><td>   } <i>// namespace detail_add_rvalue_reference</i></td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td>   <b>template</b>&lt; <b>class</b> T &gt;</td></tr>
+<tr><th id="95">95</th><td>   <b>struct</b> add_rvalue_reference</td></tr>
+<tr><th id="96">96</th><td>      : detail_add_rvalue_reference::add_rvalue_reference_impl&lt;T&gt;</td></tr>
+<tr><th id="97">97</th><td>   { };</td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td>   <b>template</b>&lt; <b>class</b> T &gt;</td></tr>
+<tr><th id="100">100</th><td>   <b>struct</b> add_rvalue_reference&lt;T &amp;&gt;</td></tr>
+<tr><th id="101">101</th><td>   {  <b>typedef</b> T &amp; type; };</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td><u>#<span data-ppcond="77">endif</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td><b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> <dfn class="type def" id="boost::move_detail::remove_rvalue_reference" title='boost::move_detail::remove_rvalue_reference' data-ref="boost::move_detail::remove_rvalue_reference" >remove_rvalue_reference</dfn> { <b>typedef</b> T <dfn class="typedef" id="boost::move_detail::remove_rvalue_reference::type" title='boost::move_detail::remove_rvalue_reference::type' data-type='T' data-ref="boost::move_detail::remove_rvalue_reference::type" >type</dfn>; };</td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td><u>#<span data-ppcond="107">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_RVALUE_REFERENCES">BOOST_NO_CXX11_RVALUE_REFERENCES</span></u></td></tr>
+<tr><th id="108">108</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> <dfn class="type def" id="boost::move_detail::remove_rvalue_reference" title='boost::move_detail::remove_rvalue_reference' data-ref="boost::move_detail::remove_rvalue_reference" >remove_rvalue_reference</dfn>&lt; T&amp;&amp; &gt;                  { <b>typedef</b> T <dfn class="typedef" id="boost::move_detail::remove_rvalue_reference{type-parameter-0-0&amp;&amp;}::type" title='boost::move_detail::remove_rvalue_reference&lt;type-parameter-0-0 &amp;&amp;&gt;::type' data-type='T' data-ref="boost::move_detail::remove_rvalue_reference{type-parameter-0-0&amp;&amp;}::type" >type</dfn>; };</td></tr>
+<tr><th id="109">109</th><td><u>#<span data-ppcond="107">else</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="110">110</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; rv&lt;T&gt; &gt;                { <b>typedef</b> T type; };</td></tr>
+<tr><th id="111">111</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; <em>const</em> rv&lt;T&gt; &gt;          { <b>typedef</b> T type; };</td></tr>
+<tr><th id="112">112</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; <em>volatile</em> rv&lt;T&gt; &gt;       { <b>typedef</b> T type; };</td></tr>
+<tr><th id="113">113</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; <em>const</em> <em>volatile</em> rv&lt;T&gt; &gt; { <b>typedef</b> T type; };</td></tr>
+<tr><th id="114">114</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; rv&lt;T&gt;&amp; &gt;               { <b>typedef</b> T type; };</td></tr>
+<tr><th id="115">115</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; <em>const</em> rv&lt;T&gt;&amp; &gt;         { <b>typedef</b> T type; };</td></tr>
+<tr><th id="116">116</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; <em>volatile</em> rv&lt;T&gt;&amp; &gt;      { <b>typedef</b> T type; };</td></tr>
+<tr><th id="117">117</th><td>   <b>template</b>&lt; <b>class</b> T &gt; <b>struct</b> remove_rvalue_reference&lt; <em>const</em> <em>volatile</em> rv&lt;T&gt;&amp; &gt;{ <b>typedef</b> T type; };</td></tr>
+<tr><th id="118">118</th><td><u>#<span data-ppcond="107">endif</span> // #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES</u></td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td><b>template</b> &lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="121">121</th><td><b>typename</b> <span class="namespace">boost::move_detail::</span><a class="type" href="#boost::move_detail::add_rvalue_reference" title='boost::move_detail::add_rvalue_reference' data-ref="boost::move_detail::add_rvalue_reference" >add_rvalue_reference</a>&lt;T&gt;::type <dfn class="decl" id="_ZN5boost11move_detail7declvalEv" title='boost::move_detail::declval' data-ref="_ZN5boost11move_detail7declvalEv" >declval</dfn>();</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td>}  <i>//move_detail {</i></td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td><i>// Ideas from Boost.Move review, Jeffrey Lee Hellrung:</i></td></tr>
+<tr><th id="126">126</th><td><i>//</i></td></tr>
+<tr><th id="127">127</th><td><i>//- TypeTraits metafunctions is_lvalue_reference, add_lvalue_reference, and remove_lvalue_reference ?</i></td></tr>
+<tr><th id="128">128</th><td><i>//  Perhaps add_reference and remove_reference can be modified so that they behave wrt emulated rvalue</i></td></tr>
+<tr><th id="129">129</th><td><i>//  references the same as wrt real rvalue references, i.e., add_reference&lt; rv&lt;T&gt;&amp; &gt; -&gt; T&amp; rather than</i></td></tr>
+<tr><th id="130">130</th><td><i>//  rv&lt;T&gt;&amp; (since T&amp;&amp; &amp; -&gt; T&amp;).</i></td></tr>
+<tr><th id="131">131</th><td><i>//</i></td></tr>
+<tr><th id="132">132</th><td><i>//- Add'l TypeTraits has_[trivial_]move_{constructor,assign}...?</i></td></tr>
+<tr><th id="133">133</th><td><i>//</i></td></tr>
+<tr><th id="134">134</th><td><i>//- An as_lvalue(T&amp; x) function, which amounts to an identity operation in C++0x, but strips emulated</i></td></tr>
+<tr><th id="135">135</th><td><i>//  rvalue references in C++03.  This may be necessary to prevent "accidental moves".</i></td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td></td></tr>
+<tr><th id="138">138</th><td>}  <i>//namespace boost {</i></td></tr>
+<tr><th id="139">139</th><td></td></tr>
+<tr><th id="140">140</th><td><u>#include <a href="detail/config_end.hpp.html">&lt;boost/move/detail/config_end.hpp&gt;</a></u></td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="14">endif</span> //#ifndef BOOST_MOVE_MOVE_TRAITS_HPP</u></td></tr>
+<tr><th id="143">143</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,631 @@
+<!doctype html>
+<html>
+<head>
+<title>prof.h [TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/prof.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/prof.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/prof.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><b>typedef</b> <b>struct</b> <a class="type" href="prof.h.html#prof_bt_s" title='prof_bt_s' data-ref="prof_bt_s" id="prof_bt_s" ><a class="type" href="prof.h.html#prof_bt_s" title='prof_bt_s' data-ref="prof_bt_s" >prof_bt_s</a></a> <dfn class="typedef" id="prof_bt_t" title='prof_bt_t' data-type='struct prof_bt_s' data-ref="prof_bt_t" >prof_bt_t</dfn>;</td></tr>
+<tr><th id="5">5</th><td><b>typedef</b> <b>struct</b> <a class="type" href="prof.h.html#prof_cnt_s" title='prof_cnt_s' data-ref="prof_cnt_s" id="prof_cnt_s" ><a class="type" href="prof.h.html#prof_cnt_s" title='prof_cnt_s' data-ref="prof_cnt_s" >prof_cnt_s</a></a> <dfn class="typedef" id="prof_cnt_t" title='prof_cnt_t' data-type='struct prof_cnt_s' data-ref="prof_cnt_t" >prof_cnt_t</dfn>;</td></tr>
+<tr><th id="6">6</th><td><b>typedef</b> <b>struct</b> <a class="type" href="prof.h.html#prof_thr_cnt_s" title='prof_thr_cnt_s' data-ref="prof_thr_cnt_s" id="prof_thr_cnt_s" ><a class="type" href="prof.h.html#prof_thr_cnt_s" title='prof_thr_cnt_s' data-ref="prof_thr_cnt_s" >prof_thr_cnt_s</a></a> <dfn class="typedef" id="prof_thr_cnt_t" title='prof_thr_cnt_t' data-type='struct prof_thr_cnt_s' data-ref="prof_thr_cnt_t" >prof_thr_cnt_t</dfn>;</td></tr>
+<tr><th id="7">7</th><td><b>typedef</b> <b>struct</b> <a class="type" href="prof.h.html#prof_ctx_s" title='prof_ctx_s' data-ref="prof_ctx_s" id="prof_ctx_s" ><a class="type" href="prof.h.html#prof_ctx_s" title='prof_ctx_s' data-ref="prof_ctx_s" >prof_ctx_s</a></a> <dfn class="typedef" id="prof_ctx_t" title='prof_ctx_t' data-type='struct prof_ctx_s' data-ref="prof_ctx_t" >prof_ctx_t</dfn>;</td></tr>
+<tr><th id="8">8</th><td><b>typedef</b> <b>struct</b> <a class="type" href="prof.h.html#prof_tdata_s" title='prof_tdata_s' data-ref="prof_tdata_s" id="prof_tdata_s" ><a class="type" href="prof.h.html#prof_tdata_s" title='prof_tdata_s' data-ref="prof_tdata_s" >prof_tdata_s</a></a> <dfn class="typedef" id="prof_tdata_t" title='prof_tdata_t' data-type='struct prof_tdata_s' data-ref="prof_tdata_t" >prof_tdata_t</dfn>;</td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><i>/* Option defaults. */</i></td></tr>
+<tr><th id="11">11</th><td><u>#<span data-ppcond="11">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_PROF">JEMALLOC_PROF</span></u></td></tr>
+<tr><th id="12">12</th><td><u>#  define PROF_PREFIX_DEFAULT		"jeprof"</u></td></tr>
+<tr><th id="13">13</th><td><u>#<span data-ppcond="11">else</span></u></td></tr>
+<tr><th id="14">14</th><td><u>#  define <dfn class="macro" id="_M/PROF_PREFIX_DEFAULT" data-ref="_M/PROF_PREFIX_DEFAULT">PROF_PREFIX_DEFAULT</dfn>		""</u></td></tr>
+<tr><th id="15">15</th><td><u>#<span data-ppcond="11">endif</span></u></td></tr>
+<tr><th id="16">16</th><td><u>#define	<dfn class="macro" id="_M/LG_PROF_SAMPLE_DEFAULT" data-ref="_M/LG_PROF_SAMPLE_DEFAULT">LG_PROF_SAMPLE_DEFAULT</dfn>		19</u></td></tr>
+<tr><th id="17">17</th><td><u>#define	<dfn class="macro" id="_M/LG_PROF_INTERVAL_DEFAULT" data-ref="_M/LG_PROF_INTERVAL_DEFAULT">LG_PROF_INTERVAL_DEFAULT</dfn>	-1</u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i>/*</i></td></tr>
+<tr><th id="20">20</th><td><i> * Hard limit on stack backtrace depth.  The version of prof_backtrace() that</i></td></tr>
+<tr><th id="21">21</th><td><i> * is based on __builtin_return_address() necessarily has a hard-coded number</i></td></tr>
+<tr><th id="22">22</th><td><i> * of backtrace frame handlers, and should be kept in sync with this setting.</i></td></tr>
+<tr><th id="23">23</th><td><i> */</i></td></tr>
+<tr><th id="24">24</th><td><u>#define	<dfn class="macro" id="_M/PROF_BT_MAX" data-ref="_M/PROF_BT_MAX">PROF_BT_MAX</dfn>			128</u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>/* Maximum number of backtraces to store in each per thread LRU cache. */</i></td></tr>
+<tr><th id="27">27</th><td><u>#define	<dfn class="macro" id="_M/PROF_TCMAX" data-ref="_M/PROF_TCMAX">PROF_TCMAX</dfn>			1024</u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><i>/* Initial hash table size. */</i></td></tr>
+<tr><th id="30">30</th><td><u>#define	<dfn class="macro" id="_M/PROF_CKH_MINITEMS" data-ref="_M/PROF_CKH_MINITEMS">PROF_CKH_MINITEMS</dfn>		64</u></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td><i>/* Size of memory buffer to use when writing dump files. */</i></td></tr>
+<tr><th id="33">33</th><td><u>#define	<dfn class="macro" id="_M/PROF_DUMP_BUFSIZE" data-ref="_M/PROF_DUMP_BUFSIZE">PROF_DUMP_BUFSIZE</dfn>		65536</u></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><i>/* Size of stack-allocated buffer used by prof_printf(). */</i></td></tr>
+<tr><th id="36">36</th><td><u>#define	<dfn class="macro" id="_M/PROF_PRINTF_BUFSIZE" data-ref="_M/PROF_PRINTF_BUFSIZE">PROF_PRINTF_BUFSIZE</dfn>		128</u></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><i>/*</i></td></tr>
+<tr><th id="39">39</th><td><i> * Number of mutexes shared among all ctx's.  No space is allocated for these</i></td></tr>
+<tr><th id="40">40</th><td><i> * unless profiling is enabled, so it's okay to over-provision.</i></td></tr>
+<tr><th id="41">41</th><td><i> */</i></td></tr>
+<tr><th id="42">42</th><td><u>#define	<dfn class="macro" id="_M/PROF_NCTX_LOCKS" data-ref="_M/PROF_NCTX_LOCKS">PROF_NCTX_LOCKS</dfn>			1024</u></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><i>/*</i></td></tr>
+<tr><th id="45">45</th><td><i> * prof_tdata pointers close to NULL are used to encode state information that</i></td></tr>
+<tr><th id="46">46</th><td><i> * is used for cleaning up during thread shutdown.</i></td></tr>
+<tr><th id="47">47</th><td><i> */</i></td></tr>
+<tr><th id="48">48</th><td><u>#define	<dfn class="macro" id="_M/PROF_TDATA_STATE_REINCARNATED" data-ref="_M/PROF_TDATA_STATE_REINCARNATED">PROF_TDATA_STATE_REINCARNATED</dfn>	((prof_tdata_t *)(uintptr_t)1)</u></td></tr>
+<tr><th id="49">49</th><td><u>#define	<dfn class="macro" id="_M/PROF_TDATA_STATE_PURGATORY" data-ref="_M/PROF_TDATA_STATE_PURGATORY">PROF_TDATA_STATE_PURGATORY</dfn>	((prof_tdata_t *)(uintptr_t)2)</u></td></tr>
+<tr><th id="50">50</th><td><u>#define	<dfn class="macro" id="_M/PROF_TDATA_STATE_MAX" data-ref="_M/PROF_TDATA_STATE_MAX">PROF_TDATA_STATE_MAX</dfn>		PROF_TDATA_STATE_PURGATORY</u></td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="53">53</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="54">54</th><td><u>#<span data-ppcond="54">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td><b>struct</b> prof_bt_s {</td></tr>
+<tr><th id="57">57</th><td>	<i>/* Backtrace, stored as len program counters. */</i></td></tr>
+<tr><th id="58">58</th><td>	<em>void</em>		**vec;</td></tr>
+<tr><th id="59">59</th><td>	<em>unsigned</em>	len;</td></tr>
+<tr><th id="60">60</th><td>};</td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><u>#ifdef JEMALLOC_PROF_LIBGCC</u></td></tr>
+<tr><th id="63">63</th><td><i>/* Data structure passed to libgcc _Unwind_Backtrace() callback functions. */</i></td></tr>
+<tr><th id="64">64</th><td><b>typedef</b> <b>struct</b> {</td></tr>
+<tr><th id="65">65</th><td>	prof_bt_t	*bt;</td></tr>
+<tr><th id="66">66</th><td>	<em>unsigned</em>	nignore;</td></tr>
+<tr><th id="67">67</th><td>	<em>unsigned</em>	max;</td></tr>
+<tr><th id="68">68</th><td>} prof_unwind_data_t;</td></tr>
+<tr><th id="69">69</th><td><u>#endif</u></td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td><b>struct</b> prof_cnt_s {</td></tr>
+<tr><th id="72">72</th><td>	<i>/*</i></td></tr>
+<tr><th id="73">73</th><td><i>	 * Profiling counters.  An allocation/deallocation pair can operate on</i></td></tr>
+<tr><th id="74">74</th><td><i>	 * different prof_thr_cnt_t objects that are linked into the same</i></td></tr>
+<tr><th id="75">75</th><td><i>	 * prof_ctx_t cnts_ql, so it is possible for the cur* counters to go</i></td></tr>
+<tr><th id="76">76</th><td><i>	 * negative.  In principle it is possible for the *bytes counters to</i></td></tr>
+<tr><th id="77">77</th><td><i>	 * overflow/underflow, but a general solution would require something</i></td></tr>
+<tr><th id="78">78</th><td><i>	 * like 128-bit counters; this implementation doesn't bother to solve</i></td></tr>
+<tr><th id="79">79</th><td><i>	 * that problem.</i></td></tr>
+<tr><th id="80">80</th><td><i>	 */</i></td></tr>
+<tr><th id="81">81</th><td>	int64_t		curobjs;</td></tr>
+<tr><th id="82">82</th><td>	int64_t		curbytes;</td></tr>
+<tr><th id="83">83</th><td>	uint64_t	accumobjs;</td></tr>
+<tr><th id="84">84</th><td>	uint64_t	accumbytes;</td></tr>
+<tr><th id="85">85</th><td>};</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td><b>struct</b> prof_thr_cnt_s {</td></tr>
+<tr><th id="88">88</th><td>	<i>/* Linkage into prof_ctx_t's cnts_ql. */</i></td></tr>
+<tr><th id="89">89</th><td>	ql_elm(prof_thr_cnt_t)	cnts_link;</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>	<i>/* Linkage into thread's LRU. */</i></td></tr>
+<tr><th id="92">92</th><td>	ql_elm(prof_thr_cnt_t)	lru_link;</td></tr>
+<tr><th id="93">93</th><td></td></tr>
+<tr><th id="94">94</th><td>	<i>/*</i></td></tr>
+<tr><th id="95">95</th><td><i>	 * Associated context.  If a thread frees an object that it did not</i></td></tr>
+<tr><th id="96">96</th><td><i>	 * allocate, it is possible that the context is not cached in the</i></td></tr>
+<tr><th id="97">97</th><td><i>	 * thread's hash table, in which case it must be able to look up the</i></td></tr>
+<tr><th id="98">98</th><td><i>	 * context, insert a new prof_thr_cnt_t into the thread's hash table,</i></td></tr>
+<tr><th id="99">99</th><td><i>	 * and link it into the prof_ctx_t's cnts_ql.</i></td></tr>
+<tr><th id="100">100</th><td><i>	 */</i></td></tr>
+<tr><th id="101">101</th><td>	prof_ctx_t		*ctx;</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>	<i>/*</i></td></tr>
+<tr><th id="104">104</th><td><i>	 * Threads use memory barriers to update the counters.  Since there is</i></td></tr>
+<tr><th id="105">105</th><td><i>	 * only ever one writer, the only challenge is for the reader to get a</i></td></tr>
+<tr><th id="106">106</th><td><i>	 * consistent read of the counters.</i></td></tr>
+<tr><th id="107">107</th><td><i>	 *</i></td></tr>
+<tr><th id="108">108</th><td><i>	 * The writer uses this series of operations:</i></td></tr>
+<tr><th id="109">109</th><td><i>	 *</i></td></tr>
+<tr><th id="110">110</th><td><i>	 * 1) Increment epoch to an odd number.</i></td></tr>
+<tr><th id="111">111</th><td><i>	 * 2) Update counters.</i></td></tr>
+<tr><th id="112">112</th><td><i>	 * 3) Increment epoch to an even number.</i></td></tr>
+<tr><th id="113">113</th><td><i>	 *</i></td></tr>
+<tr><th id="114">114</th><td><i>	 * The reader must assure 1) that the epoch is even while it reads the</i></td></tr>
+<tr><th id="115">115</th><td><i>	 * counters, and 2) that the epoch doesn't change between the time it</i></td></tr>
+<tr><th id="116">116</th><td><i>	 * starts and finishes reading the counters.</i></td></tr>
+<tr><th id="117">117</th><td><i>	 */</i></td></tr>
+<tr><th id="118">118</th><td>	<em>unsigned</em>		epoch;</td></tr>
+<tr><th id="119">119</th><td></td></tr>
+<tr><th id="120">120</th><td>	<i>/* Profiling counters. */</i></td></tr>
+<tr><th id="121">121</th><td>	prof_cnt_t		cnts;</td></tr>
+<tr><th id="122">122</th><td>};</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td><b>struct</b> prof_ctx_s {</td></tr>
+<tr><th id="125">125</th><td>	<i>/* Associated backtrace. */</i></td></tr>
+<tr><th id="126">126</th><td>	prof_bt_t		*bt;</td></tr>
+<tr><th id="127">127</th><td></td></tr>
+<tr><th id="128">128</th><td>	<i>/* Protects nlimbo, cnt_merged, and cnts_ql. */</i></td></tr>
+<tr><th id="129">129</th><td>	malloc_mutex_t		*lock;</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>	<i>/*</i></td></tr>
+<tr><th id="132">132</th><td><i>	 * Number of threads that currently cause this ctx to be in a state of</i></td></tr>
+<tr><th id="133">133</th><td><i>	 * limbo due to one of:</i></td></tr>
+<tr><th id="134">134</th><td><i>	 *   - Initializing per thread counters associated with this ctx.</i></td></tr>
+<tr><th id="135">135</th><td><i>	 *   - Preparing to destroy this ctx.</i></td></tr>
+<tr><th id="136">136</th><td><i>	 *   - Dumping a heap profile that includes this ctx.</i></td></tr>
+<tr><th id="137">137</th><td><i>	 * nlimbo must be 1 (single destroyer) in order to safely destroy the</i></td></tr>
+<tr><th id="138">138</th><td><i>	 * ctx.</i></td></tr>
+<tr><th id="139">139</th><td><i>	 */</i></td></tr>
+<tr><th id="140">140</th><td>	<em>unsigned</em>		nlimbo;</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td>	<i>/* Temporary storage for summation during dump. */</i></td></tr>
+<tr><th id="143">143</th><td>	prof_cnt_t		cnt_summed;</td></tr>
+<tr><th id="144">144</th><td></td></tr>
+<tr><th id="145">145</th><td>	<i>/* When threads exit, they merge their stats into cnt_merged. */</i></td></tr>
+<tr><th id="146">146</th><td>	prof_cnt_t		cnt_merged;</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td>	<i>/*</i></td></tr>
+<tr><th id="149">149</th><td><i>	 * List of profile counters, one for each thread that has allocated in</i></td></tr>
+<tr><th id="150">150</th><td><i>	 * this context.</i></td></tr>
+<tr><th id="151">151</th><td><i>	 */</i></td></tr>
+<tr><th id="152">152</th><td>	ql_head(prof_thr_cnt_t)	cnts_ql;</td></tr>
+<tr><th id="153">153</th><td></td></tr>
+<tr><th id="154">154</th><td>	<i>/* Linkage for list of contexts to be dumped. */</i></td></tr>
+<tr><th id="155">155</th><td>	ql_elm(prof_ctx_t)	dump_link;</td></tr>
+<tr><th id="156">156</th><td>};</td></tr>
+<tr><th id="157">157</th><td><b>typedef</b> ql_head(prof_ctx_t) prof_ctx_list_t;</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td><b>struct</b> prof_tdata_s {</td></tr>
+<tr><th id="160">160</th><td>	<i>/*</i></td></tr>
+<tr><th id="161">161</th><td><i>	 * Hash of (prof_bt_t *)--&gt;(prof_thr_cnt_t *).  Each thread keeps a</i></td></tr>
+<tr><th id="162">162</th><td><i>	 * cache of backtraces, with associated thread-specific prof_thr_cnt_t</i></td></tr>
+<tr><th id="163">163</th><td><i>	 * objects.  Other threads may read the prof_thr_cnt_t contents, but no</i></td></tr>
+<tr><th id="164">164</th><td><i>	 * others will ever write them.</i></td></tr>
+<tr><th id="165">165</th><td><i>	 *</i></td></tr>
+<tr><th id="166">166</th><td><i>	 * Upon thread exit, the thread must merge all the prof_thr_cnt_t</i></td></tr>
+<tr><th id="167">167</th><td><i>	 * counter data into the associated prof_ctx_t objects, and unlink/free</i></td></tr>
+<tr><th id="168">168</th><td><i>	 * the prof_thr_cnt_t objects.</i></td></tr>
+<tr><th id="169">169</th><td><i>	 */</i></td></tr>
+<tr><th id="170">170</th><td>	ckh_t			bt2cnt;</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>	<i>/* LRU for contents of bt2cnt. */</i></td></tr>
+<tr><th id="173">173</th><td>	ql_head(prof_thr_cnt_t)	lru_ql;</td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td>	<i>/* Backtrace vector, used for calls to prof_backtrace(). */</i></td></tr>
+<tr><th id="176">176</th><td>	<em>void</em>			**vec;</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td>	<i>/* Sampling state. */</i></td></tr>
+<tr><th id="179">179</th><td>	uint64_t		prng_state;</td></tr>
+<tr><th id="180">180</th><td>	uint64_t		threshold;</td></tr>
+<tr><th id="181">181</th><td>	uint64_t		accum;</td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td>	<i>/* State used to avoid dumping while operating on prof internals. */</i></td></tr>
+<tr><th id="184">184</th><td>	bool			enq;</td></tr>
+<tr><th id="185">185</th><td>	bool			enq_idump;</td></tr>
+<tr><th id="186">186</th><td>	bool			enq_gdump;</td></tr>
+<tr><th id="187">187</th><td>};</td></tr>
+<tr><th id="188">188</th><td></td></tr>
+<tr><th id="189">189</th><td><u>#<span data-ppcond="54">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="190">190</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="191">191</th><td><u>#<span data-ppcond="191">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td><b>extern</b> bool	opt_prof;</td></tr>
+<tr><th id="194">194</th><td><i>/*</i></td></tr>
+<tr><th id="195">195</th><td><i> * Even if opt_prof is true, sampling can be temporarily disabled by setting</i></td></tr>
+<tr><th id="196">196</th><td><i> * opt_prof_active to false.  No locking is used when updating opt_prof_active,</i></td></tr>
+<tr><th id="197">197</th><td><i> * so there are no guarantees regarding how long it will take for all threads</i></td></tr>
+<tr><th id="198">198</th><td><i> * to notice state changes.</i></td></tr>
+<tr><th id="199">199</th><td><i> */</i></td></tr>
+<tr><th id="200">200</th><td><b>extern</b> bool	opt_prof_active;</td></tr>
+<tr><th id="201">201</th><td><b>extern</b> size_t	opt_lg_prof_sample;   <i>/* Mean bytes between samples. */</i></td></tr>
+<tr><th id="202">202</th><td><b>extern</b> ssize_t	opt_lg_prof_interval; <i>/* lg(prof_interval). */</i></td></tr>
+<tr><th id="203">203</th><td><b>extern</b> bool	opt_prof_gdump;       <i>/* High-water memory dumping. */</i></td></tr>
+<tr><th id="204">204</th><td><b>extern</b> bool	opt_prof_final;       <i>/* Final profile dumping. */</i></td></tr>
+<tr><th id="205">205</th><td><b>extern</b> bool	opt_prof_leak;        <i>/* Dump leak summary at exit. */</i></td></tr>
+<tr><th id="206">206</th><td><b>extern</b> bool	opt_prof_accum;       <i>/* Report cumulative bytes. */</i></td></tr>
+<tr><th id="207">207</th><td><b>extern</b> <em>char</em>	opt_prof_prefix[</td></tr>
+<tr><th id="208">208</th><td>    <i>/* Minimize memory bloat for non-prof builds. */</i></td></tr>
+<tr><th id="209">209</th><td><u>#ifdef JEMALLOC_PROF</u></td></tr>
+<tr><th id="210">210</th><td>    PATH_MAX +</td></tr>
+<tr><th id="211">211</th><td><u>#endif</u></td></tr>
+<tr><th id="212">212</th><td>    <var>1</var>];</td></tr>
+<tr><th id="213">213</th><td></td></tr>
+<tr><th id="214">214</th><td><i>/*</i></td></tr>
+<tr><th id="215">215</th><td><i> * Profile dump interval, measured in bytes allocated.  Each arena triggers a</i></td></tr>
+<tr><th id="216">216</th><td><i> * profile dump when it reaches this threshold.  The effect is that the</i></td></tr>
+<tr><th id="217">217</th><td><i> * interval between profile dumps averages prof_interval, though the actual</i></td></tr>
+<tr><th id="218">218</th><td><i> * interval between dumps will tend to be sporadic, and the interval will be a</i></td></tr>
+<tr><th id="219">219</th><td><i> * maximum of approximately (prof_interval * narenas).</i></td></tr>
+<tr><th id="220">220</th><td><i> */</i></td></tr>
+<tr><th id="221">221</th><td><b>extern</b> uint64_t	prof_interval;</td></tr>
+<tr><th id="222">222</th><td></td></tr>
+<tr><th id="223">223</th><td><i>/*</i></td></tr>
+<tr><th id="224">224</th><td><i> * If true, promote small sampled objects to large objects, since small run</i></td></tr>
+<tr><th id="225">225</th><td><i> * headers do not have embedded profile context pointers.</i></td></tr>
+<tr><th id="226">226</th><td><i> */</i></td></tr>
+<tr><th id="227">227</th><td><b>extern</b> bool	prof_promote;</td></tr>
+<tr><th id="228">228</th><td></td></tr>
+<tr><th id="229">229</th><td><em>void</em>	bt_init(prof_bt_t *bt, <em>void</em> **vec);</td></tr>
+<tr><th id="230">230</th><td><em>void</em>	prof_backtrace(prof_bt_t *bt, <em>unsigned</em> nignore);</td></tr>
+<tr><th id="231">231</th><td>prof_thr_cnt_t	*prof_lookup(prof_bt_t *bt);</td></tr>
+<tr><th id="232">232</th><td><u>#ifdef JEMALLOC_JET</u></td></tr>
+<tr><th id="233">233</th><td>size_t	prof_bt_count(<em>void</em>);</td></tr>
+<tr><th id="234">234</th><td><b>typedef</b> <em>int</em> (prof_dump_open_t)(bool, <em>const</em> <em>char</em> *);</td></tr>
+<tr><th id="235">235</th><td><b>extern</b> prof_dump_open_t *prof_dump_open;</td></tr>
+<tr><th id="236">236</th><td><u>#endif</u></td></tr>
+<tr><th id="237">237</th><td><em>void</em>	prof_idump(<em>void</em>);</td></tr>
+<tr><th id="238">238</th><td>bool	prof_mdump(<em>const</em> <em>char</em> *filename);</td></tr>
+<tr><th id="239">239</th><td><em>void</em>	prof_gdump(<em>void</em>);</td></tr>
+<tr><th id="240">240</th><td>prof_tdata_t	*prof_tdata_init(<em>void</em>);</td></tr>
+<tr><th id="241">241</th><td><em>void</em>	prof_tdata_cleanup(<em>void</em> *arg);</td></tr>
+<tr><th id="242">242</th><td><em>void</em>	prof_boot0(<em>void</em>);</td></tr>
+<tr><th id="243">243</th><td><em>void</em>	prof_boot1(<em>void</em>);</td></tr>
+<tr><th id="244">244</th><td>bool	prof_boot2(<em>void</em>);</td></tr>
+<tr><th id="245">245</th><td><em>void</em>	prof_prefork(<em>void</em>);</td></tr>
+<tr><th id="246">246</th><td><em>void</em>	prof_postfork_parent(<em>void</em>);</td></tr>
+<tr><th id="247">247</th><td><em>void</em>	prof_postfork_child(<em>void</em>);</td></tr>
+<tr><th id="248">248</th><td></td></tr>
+<tr><th id="249">249</th><td><u>#<span data-ppcond="191">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="250">250</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="251">251</th><td><u>#<span data-ppcond="251">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="252">252</th><td></td></tr>
+<tr><th id="253">253</th><td><u>#define	PROF_ALLOC_PREP(nignore, size, ret) do {			\</u></td></tr>
+<tr><th id="254">254</th><td><u>	prof_tdata_t *prof_tdata;					\</u></td></tr>
+<tr><th id="255">255</th><td><u>	prof_bt_t bt;							\</u></td></tr>
+<tr><th id="256">256</th><td><u>									\</u></td></tr>
+<tr><th id="257">257</th><td><u>	assert(size == s2u(size));					\</u></td></tr>
+<tr><th id="258">258</th><td><u>									\</u></td></tr>
+<tr><th id="259">259</th><td><u>	prof_tdata = prof_tdata_get(true);				\</u></td></tr>
+<tr><th id="260">260</th><td><u>	if ((uintptr_t)prof_tdata &lt;= (uintptr_t)PROF_TDATA_STATE_MAX) {	\</u></td></tr>
+<tr><th id="261">261</th><td><u>		if (prof_tdata != NULL)					\</u></td></tr>
+<tr><th id="262">262</th><td><u>			ret = (prof_thr_cnt_t *)(uintptr_t)1U;		\</u></td></tr>
+<tr><th id="263">263</th><td><u>		else							\</u></td></tr>
+<tr><th id="264">264</th><td><u>			ret = NULL;					\</u></td></tr>
+<tr><th id="265">265</th><td><u>		break;							\</u></td></tr>
+<tr><th id="266">266</th><td><u>	}								\</u></td></tr>
+<tr><th id="267">267</th><td><u>									\</u></td></tr>
+<tr><th id="268">268</th><td><u>	if (opt_prof_active == false) {					\</u></td></tr>
+<tr><th id="269">269</th><td><u>		/* Sampling is currently inactive, so avoid sampling. */\</u></td></tr>
+<tr><th id="270">270</th><td><u>		ret = (prof_thr_cnt_t *)(uintptr_t)1U;			\</u></td></tr>
+<tr><th id="271">271</th><td><u>	} else if (opt_lg_prof_sample == 0) {				\</u></td></tr>
+<tr><th id="272">272</th><td><u>		/* Don't bother with sampling logic, since sampling   */\</u></td></tr>
+<tr><th id="273">273</th><td><u>		/* interval is 1.                                     */\</u></td></tr>
+<tr><th id="274">274</th><td><u>		bt_init(&amp;bt, prof_tdata-&gt;vec);				\</u></td></tr>
+<tr><th id="275">275</th><td><u>		prof_backtrace(&amp;bt, nignore);				\</u></td></tr>
+<tr><th id="276">276</th><td><u>		ret = prof_lookup(&amp;bt);					\</u></td></tr>
+<tr><th id="277">277</th><td><u>	} else {							\</u></td></tr>
+<tr><th id="278">278</th><td><u>		if (prof_tdata-&gt;threshold == 0) {			\</u></td></tr>
+<tr><th id="279">279</th><td><u>			/* Initialize.  Seed the prng differently for */\</u></td></tr>
+<tr><th id="280">280</th><td><u>			/* each thread.                               */\</u></td></tr>
+<tr><th id="281">281</th><td><u>			prof_tdata-&gt;prng_state =			\</u></td></tr>
+<tr><th id="282">282</th><td><u>			    (uint64_t)(uintptr_t)&amp;size;			\</u></td></tr>
+<tr><th id="283">283</th><td><u>			prof_sample_threshold_update(prof_tdata);	\</u></td></tr>
+<tr><th id="284">284</th><td><u>		}							\</u></td></tr>
+<tr><th id="285">285</th><td><u>									\</u></td></tr>
+<tr><th id="286">286</th><td><u>		/* Determine whether to capture a backtrace based on  */\</u></td></tr>
+<tr><th id="287">287</th><td><u>		/* whether size is enough for prof_accum to reach     */\</u></td></tr>
+<tr><th id="288">288</th><td><u>		/* prof_tdata-&gt;threshold.  However, delay updating    */\</u></td></tr>
+<tr><th id="289">289</th><td><u>		/* these variables until prof_{m,re}alloc(), because  */\</u></td></tr>
+<tr><th id="290">290</th><td><u>		/* we don't know for sure that the allocation will    */\</u></td></tr>
+<tr><th id="291">291</th><td><u>		/* succeed.                                           */\</u></td></tr>
+<tr><th id="292">292</th><td><u>		/*                                                    */\</u></td></tr>
+<tr><th id="293">293</th><td><u>		/* Use subtraction rather than addition to avoid      */\</u></td></tr>
+<tr><th id="294">294</th><td><u>		/* potential integer overflow.                        */\</u></td></tr>
+<tr><th id="295">295</th><td><u>		if (size &gt;= prof_tdata-&gt;threshold -			\</u></td></tr>
+<tr><th id="296">296</th><td><u>		    prof_tdata-&gt;accum) {				\</u></td></tr>
+<tr><th id="297">297</th><td><u>			bt_init(&amp;bt, prof_tdata-&gt;vec);			\</u></td></tr>
+<tr><th id="298">298</th><td><u>			prof_backtrace(&amp;bt, nignore);			\</u></td></tr>
+<tr><th id="299">299</th><td><u>			ret = prof_lookup(&amp;bt);				\</u></td></tr>
+<tr><th id="300">300</th><td><u>		} else							\</u></td></tr>
+<tr><th id="301">301</th><td><u>			ret = (prof_thr_cnt_t *)(uintptr_t)1U;		\</u></td></tr>
+<tr><th id="302">302</th><td><u>	}								\</u></td></tr>
+<tr><th id="303">303</th><td><u>} while (0)</u></td></tr>
+<tr><th id="304">304</th><td></td></tr>
+<tr><th id="305">305</th><td><u>#ifndef JEMALLOC_ENABLE_INLINE</u></td></tr>
+<tr><th id="306">306</th><td>malloc_tsd_protos(JEMALLOC_ATTR(unused), prof_tdata, prof_tdata_t *)</td></tr>
+<tr><th id="307">307</th><td></td></tr>
+<tr><th id="308">308</th><td>prof_tdata_t	*prof_tdata_get(bool create);</td></tr>
+<tr><th id="309">309</th><td><em>void</em>	prof_sample_threshold_update(prof_tdata_t *prof_tdata);</td></tr>
+<tr><th id="310">310</th><td>prof_ctx_t	*prof_ctx_get(<em>const</em> <em>void</em> *ptr);</td></tr>
+<tr><th id="311">311</th><td><em>void</em>	prof_ctx_set(<em>const</em> <em>void</em> *ptr, size_t usize, prof_ctx_t *ctx);</td></tr>
+<tr><th id="312">312</th><td>bool	prof_sample_accum_update(size_t size);</td></tr>
+<tr><th id="313">313</th><td><em>void</em>	prof_malloc(<em>const</em> <em>void</em> *ptr, size_t usize, prof_thr_cnt_t *cnt);</td></tr>
+<tr><th id="314">314</th><td><em>void</em>	prof_realloc(<em>const</em> <em>void</em> *ptr, size_t usize, prof_thr_cnt_t *cnt,</td></tr>
+<tr><th id="315">315</th><td>    size_t old_usize, prof_ctx_t *old_ctx);</td></tr>
+<tr><th id="316">316</th><td><em>void</em>	prof_free(<em>const</em> <em>void</em> *ptr, size_t size);</td></tr>
+<tr><th id="317">317</th><td><u>#endif</u></td></tr>
+<tr><th id="318">318</th><td></td></tr>
+<tr><th id="319">319</th><td><u>#if (defined(JEMALLOC_ENABLE_INLINE) || defined(JEMALLOC_PROF_C_))</u></td></tr>
+<tr><th id="320">320</th><td><i>/* Thread-specific backtrace cache, used to reduce bt2ctx contention. */</i></td></tr>
+<tr><th id="321">321</th><td>malloc_tsd_externs(prof_tdata, prof_tdata_t *)</td></tr>
+<tr><th id="322">322</th><td>malloc_tsd_funcs(JEMALLOC_INLINE, prof_tdata, prof_tdata_t *, NULL,</td></tr>
+<tr><th id="323">323</th><td>    prof_tdata_cleanup)</td></tr>
+<tr><th id="324">324</th><td></td></tr>
+<tr><th id="325">325</th><td>JEMALLOC_INLINE prof_tdata_t *</td></tr>
+<tr><th id="326">326</th><td>prof_tdata_get(bool create)</td></tr>
+<tr><th id="327">327</th><td>{</td></tr>
+<tr><th id="328">328</th><td>	prof_tdata_t *prof_tdata;</td></tr>
+<tr><th id="329">329</th><td></td></tr>
+<tr><th id="330">330</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="331">331</th><td></td></tr>
+<tr><th id="332">332</th><td>	prof_tdata = *prof_tdata_tsd_get();</td></tr>
+<tr><th id="333">333</th><td>	<b>if</b> (create &amp;&amp; prof_tdata == NULL)</td></tr>
+<tr><th id="334">334</th><td>		prof_tdata = prof_tdata_init();</td></tr>
+<tr><th id="335">335</th><td></td></tr>
+<tr><th id="336">336</th><td>	<b>return</b> (prof_tdata);</td></tr>
+<tr><th id="337">337</th><td>}</td></tr>
+<tr><th id="338">338</th><td></td></tr>
+<tr><th id="339">339</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="340">340</th><td>prof_sample_threshold_update(prof_tdata_t *prof_tdata)</td></tr>
+<tr><th id="341">341</th><td>{</td></tr>
+<tr><th id="342">342</th><td>	<i>/*</i></td></tr>
+<tr><th id="343">343</th><td><i>	 * The body of this function is compiled out unless heap profiling is</i></td></tr>
+<tr><th id="344">344</th><td><i>	 * enabled, so that it is possible to compile jemalloc with floating</i></td></tr>
+<tr><th id="345">345</th><td><i>	 * point support completely disabled.  Avoiding floating point code is</i></td></tr>
+<tr><th id="346">346</th><td><i>	 * important on memory-constrained systems, but it also enables a</i></td></tr>
+<tr><th id="347">347</th><td><i>	 * workaround for versions of glibc that don't properly save/restore</i></td></tr>
+<tr><th id="348">348</th><td><i>	 * floating point registers during dynamic lazy symbol loading (which</i></td></tr>
+<tr><th id="349">349</th><td><i>	 * internally calls into whatever malloc implementation happens to be</i></td></tr>
+<tr><th id="350">350</th><td><i>	 * integrated into the application).  Note that some compilers (e.g.</i></td></tr>
+<tr><th id="351">351</th><td><i>	 * gcc 4.8) may use floating point registers for fast memory moves, so</i></td></tr>
+<tr><th id="352">352</th><td><i>	 * jemalloc must be compiled with such optimizations disabled (e.g.</i></td></tr>
+<tr><th id="353">353</th><td><i>	 * -mno-sse) in order for the workaround to be complete.</i></td></tr>
+<tr><th id="354">354</th><td><i>	 */</i></td></tr>
+<tr><th id="355">355</th><td><u>#ifdef JEMALLOC_PROF</u></td></tr>
+<tr><th id="356">356</th><td>	uint64_t r;</td></tr>
+<tr><th id="357">357</th><td>	<em>double</em> u;</td></tr>
+<tr><th id="358">358</th><td></td></tr>
+<tr><th id="359">359</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="360">360</th><td></td></tr>
+<tr><th id="361">361</th><td>	<i>/*</i></td></tr>
+<tr><th id="362">362</th><td><i>	 * Compute sample threshold as a geometrically distributed random</i></td></tr>
+<tr><th id="363">363</th><td><i>	 * variable with mean (2^opt_lg_prof_sample).</i></td></tr>
+<tr><th id="364">364</th><td><i>	 *</i></td></tr>
+<tr><th id="365">365</th><td><i>	 *                         __        __</i></td></tr>
+<tr><th id="366">366</th><td><i>	 *                         |  log(u)  |                     1</i></td></tr>
+<tr><th id="367">367</th><td><i>	 * prof_tdata-&gt;threshold = | -------- |, where p = -------------------</i></td></tr>
+<tr><th id="368">368</th><td><i>	 *                         | log(1-p) |             opt_lg_prof_sample</i></td></tr>
+<tr><th id="369">369</th><td><i>	 *                                                 2</i></td></tr>
+<tr><th id="370">370</th><td><i>	 *</i></td></tr>
+<tr><th id="371">371</th><td><i>	 * For more information on the math, see:</i></td></tr>
+<tr><th id="372">372</th><td><i>	 *</i></td></tr>
+<tr><th id="373">373</th><td><i>	 *   Non-Uniform Random Variate Generation</i></td></tr>
+<tr><th id="374">374</th><td><i>	 *   Luc Devroye</i></td></tr>
+<tr><th id="375">375</th><td><i>	 *   Springer-Verlag, New York, 1986</i></td></tr>
+<tr><th id="376">376</th><td><i>	 *   pp 500</i></td></tr>
+<tr><th id="377">377</th><td><i>	 *   (<a href="http://luc.devroye.org/rnbookindex.html">http://luc.devroye.org/rnbookindex.html</a>)</i></td></tr>
+<tr><th id="378">378</th><td><i>	 */</i></td></tr>
+<tr><th id="379">379</th><td>	prng64(r, <var>53</var>, prof_tdata-&gt;prng_state,</td></tr>
+<tr><th id="380">380</th><td>	    UINT64_C(<var>6364136223846793005</var>), UINT64_C(<var>1442695040888963407</var>));</td></tr>
+<tr><th id="381">381</th><td>	u = (<em>double</em>)r * (<var>1.0</var>/<var>9007199254740992.0L</var>);</td></tr>
+<tr><th id="382">382</th><td>	prof_tdata-&gt;threshold = (uint64_t)(log(u) /</td></tr>
+<tr><th id="383">383</th><td>	    log(<var>1.0</var> - (<var>1.0</var> / (<em>double</em>)((uint64_t)<var>1U</var> &lt;&lt; opt_lg_prof_sample))))</td></tr>
+<tr><th id="384">384</th><td>	    + (uint64_t)<var>1U</var>;</td></tr>
+<tr><th id="385">385</th><td><u>#endif</u></td></tr>
+<tr><th id="386">386</th><td>}</td></tr>
+<tr><th id="387">387</th><td></td></tr>
+<tr><th id="388">388</th><td>JEMALLOC_INLINE prof_ctx_t *</td></tr>
+<tr><th id="389">389</th><td>prof_ctx_get(<em>const</em> <em>void</em> *ptr)</td></tr>
+<tr><th id="390">390</th><td>{</td></tr>
+<tr><th id="391">391</th><td>	prof_ctx_t *ret;</td></tr>
+<tr><th id="392">392</th><td>	arena_chunk_t *chunk;</td></tr>
+<tr><th id="393">393</th><td></td></tr>
+<tr><th id="394">394</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="395">395</th><td>	assert(ptr != NULL);</td></tr>
+<tr><th id="396">396</th><td></td></tr>
+<tr><th id="397">397</th><td>	chunk = (arena_chunk_t *)CHUNK_ADDR2BASE(ptr);</td></tr>
+<tr><th id="398">398</th><td>	<b>if</b> (chunk != ptr) {</td></tr>
+<tr><th id="399">399</th><td>		<i>/* Region. */</i></td></tr>
+<tr><th id="400">400</th><td>		ret = arena_prof_ctx_get(ptr);</td></tr>
+<tr><th id="401">401</th><td>	} <b>else</b></td></tr>
+<tr><th id="402">402</th><td>		ret = huge_prof_ctx_get(ptr);</td></tr>
+<tr><th id="403">403</th><td></td></tr>
+<tr><th id="404">404</th><td>	<b>return</b> (ret);</td></tr>
+<tr><th id="405">405</th><td>}</td></tr>
+<tr><th id="406">406</th><td></td></tr>
+<tr><th id="407">407</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="408">408</th><td>prof_ctx_set(<em>const</em> <em>void</em> *ptr, size_t usize, prof_ctx_t *ctx)</td></tr>
+<tr><th id="409">409</th><td>{</td></tr>
+<tr><th id="410">410</th><td>	arena_chunk_t *chunk;</td></tr>
+<tr><th id="411">411</th><td></td></tr>
+<tr><th id="412">412</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="413">413</th><td>	assert(ptr != NULL);</td></tr>
+<tr><th id="414">414</th><td></td></tr>
+<tr><th id="415">415</th><td>	chunk = (arena_chunk_t *)CHUNK_ADDR2BASE(ptr);</td></tr>
+<tr><th id="416">416</th><td>	<b>if</b> (chunk != ptr) {</td></tr>
+<tr><th id="417">417</th><td>		<i>/* Region. */</i></td></tr>
+<tr><th id="418">418</th><td>		arena_prof_ctx_set(ptr, usize, ctx);</td></tr>
+<tr><th id="419">419</th><td>	} <b>else</b></td></tr>
+<tr><th id="420">420</th><td>		huge_prof_ctx_set(ptr, ctx);</td></tr>
+<tr><th id="421">421</th><td>}</td></tr>
+<tr><th id="422">422</th><td></td></tr>
+<tr><th id="423">423</th><td>JEMALLOC_INLINE bool</td></tr>
+<tr><th id="424">424</th><td>prof_sample_accum_update(size_t size)</td></tr>
+<tr><th id="425">425</th><td>{</td></tr>
+<tr><th id="426">426</th><td>	prof_tdata_t *prof_tdata;</td></tr>
+<tr><th id="427">427</th><td></td></tr>
+<tr><th id="428">428</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="429">429</th><td>	<i>/* Sampling logic is unnecessary if the interval is 1. */</i></td></tr>
+<tr><th id="430">430</th><td>	assert(opt_lg_prof_sample != <var>0</var>);</td></tr>
+<tr><th id="431">431</th><td></td></tr>
+<tr><th id="432">432</th><td>	prof_tdata = prof_tdata_get(false);</td></tr>
+<tr><th id="433">433</th><td>	<b>if</b> ((uintptr_t)prof_tdata &lt;= (uintptr_t)PROF_TDATA_STATE_MAX)</td></tr>
+<tr><th id="434">434</th><td>		<b>return</b> (true);</td></tr>
+<tr><th id="435">435</th><td></td></tr>
+<tr><th id="436">436</th><td>	<i>/* Take care to avoid integer overflow. */</i></td></tr>
+<tr><th id="437">437</th><td>	<b>if</b> (size &gt;= prof_tdata-&gt;threshold - prof_tdata-&gt;accum) {</td></tr>
+<tr><th id="438">438</th><td>		prof_tdata-&gt;accum -= (prof_tdata-&gt;threshold - size);</td></tr>
+<tr><th id="439">439</th><td>		<i>/* Compute new sample threshold. */</i></td></tr>
+<tr><th id="440">440</th><td>		prof_sample_threshold_update(prof_tdata);</td></tr>
+<tr><th id="441">441</th><td>		<b>while</b> (prof_tdata-&gt;accum &gt;= prof_tdata-&gt;threshold) {</td></tr>
+<tr><th id="442">442</th><td>			prof_tdata-&gt;accum -= prof_tdata-&gt;threshold;</td></tr>
+<tr><th id="443">443</th><td>			prof_sample_threshold_update(prof_tdata);</td></tr>
+<tr><th id="444">444</th><td>		}</td></tr>
+<tr><th id="445">445</th><td>		<b>return</b> (false);</td></tr>
+<tr><th id="446">446</th><td>	} <b>else</b> {</td></tr>
+<tr><th id="447">447</th><td>		prof_tdata-&gt;accum += size;</td></tr>
+<tr><th id="448">448</th><td>		<b>return</b> (true);</td></tr>
+<tr><th id="449">449</th><td>	}</td></tr>
+<tr><th id="450">450</th><td>}</td></tr>
+<tr><th id="451">451</th><td></td></tr>
+<tr><th id="452">452</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="453">453</th><td>prof_malloc(<em>const</em> <em>void</em> *ptr, size_t usize, prof_thr_cnt_t *cnt)</td></tr>
+<tr><th id="454">454</th><td>{</td></tr>
+<tr><th id="455">455</th><td></td></tr>
+<tr><th id="456">456</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="457">457</th><td>	assert(ptr != NULL);</td></tr>
+<tr><th id="458">458</th><td>	assert(usize == isalloc(ptr, true));</td></tr>
+<tr><th id="459">459</th><td></td></tr>
+<tr><th id="460">460</th><td>	<b>if</b> (opt_lg_prof_sample != <var>0</var>) {</td></tr>
+<tr><th id="461">461</th><td>		<b>if</b> (prof_sample_accum_update(usize)) {</td></tr>
+<tr><th id="462">462</th><td>			<i>/*</i></td></tr>
+<tr><th id="463">463</th><td><i>			 * Don't sample.  For malloc()-like allocation, it is</i></td></tr>
+<tr><th id="464">464</th><td><i>			 * always possible to tell in advance how large an</i></td></tr>
+<tr><th id="465">465</th><td><i>			 * object's usable size will be, so there should never</i></td></tr>
+<tr><th id="466">466</th><td><i>			 * be a difference between the usize passed to</i></td></tr>
+<tr><th id="467">467</th><td><i>			 * PROF_ALLOC_PREP() and prof_malloc().</i></td></tr>
+<tr><th id="468">468</th><td><i>			 */</i></td></tr>
+<tr><th id="469">469</th><td>			assert((uintptr_t)cnt == (uintptr_t)<var>1U</var>);</td></tr>
+<tr><th id="470">470</th><td>		}</td></tr>
+<tr><th id="471">471</th><td>	}</td></tr>
+<tr><th id="472">472</th><td></td></tr>
+<tr><th id="473">473</th><td>	<b>if</b> ((uintptr_t)cnt &gt; (uintptr_t)<var>1U</var>) {</td></tr>
+<tr><th id="474">474</th><td>		prof_ctx_set(ptr, usize, cnt-&gt;ctx);</td></tr>
+<tr><th id="475">475</th><td></td></tr>
+<tr><th id="476">476</th><td>		cnt-&gt;epoch++;</td></tr>
+<tr><th id="477">477</th><td>		<i>/*********/</i></td></tr>
+<tr><th id="478">478</th><td>		mb_write();</td></tr>
+<tr><th id="479">479</th><td>		<i>/*********/</i></td></tr>
+<tr><th id="480">480</th><td>		cnt-&gt;cnts.curobjs++;</td></tr>
+<tr><th id="481">481</th><td>		cnt-&gt;cnts.curbytes += usize;</td></tr>
+<tr><th id="482">482</th><td>		<b>if</b> (opt_prof_accum) {</td></tr>
+<tr><th id="483">483</th><td>			cnt-&gt;cnts.accumobjs++;</td></tr>
+<tr><th id="484">484</th><td>			cnt-&gt;cnts.accumbytes += usize;</td></tr>
+<tr><th id="485">485</th><td>		}</td></tr>
+<tr><th id="486">486</th><td>		<i>/*********/</i></td></tr>
+<tr><th id="487">487</th><td>		mb_write();</td></tr>
+<tr><th id="488">488</th><td>		<i>/*********/</i></td></tr>
+<tr><th id="489">489</th><td>		cnt-&gt;epoch++;</td></tr>
+<tr><th id="490">490</th><td>		<i>/*********/</i></td></tr>
+<tr><th id="491">491</th><td>		mb_write();</td></tr>
+<tr><th id="492">492</th><td>		<i>/*********/</i></td></tr>
+<tr><th id="493">493</th><td>	} <b>else</b></td></tr>
+<tr><th id="494">494</th><td>		prof_ctx_set(ptr, usize, (prof_ctx_t *)(uintptr_t)<var>1U</var>);</td></tr>
+<tr><th id="495">495</th><td>}</td></tr>
+<tr><th id="496">496</th><td></td></tr>
+<tr><th id="497">497</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="498">498</th><td>prof_realloc(<em>const</em> <em>void</em> *ptr, size_t usize, prof_thr_cnt_t *cnt,</td></tr>
+<tr><th id="499">499</th><td>    size_t old_usize, prof_ctx_t *old_ctx)</td></tr>
+<tr><th id="500">500</th><td>{</td></tr>
+<tr><th id="501">501</th><td>	prof_thr_cnt_t *told_cnt;</td></tr>
+<tr><th id="502">502</th><td></td></tr>
+<tr><th id="503">503</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="504">504</th><td>	assert(ptr != NULL || (uintptr_t)cnt &lt;= (uintptr_t)<var>1U</var>);</td></tr>
+<tr><th id="505">505</th><td></td></tr>
+<tr><th id="506">506</th><td>	<b>if</b> (ptr != NULL) {</td></tr>
+<tr><th id="507">507</th><td>		assert(usize == isalloc(ptr, true));</td></tr>
+<tr><th id="508">508</th><td>		<b>if</b> (opt_lg_prof_sample != <var>0</var>) {</td></tr>
+<tr><th id="509">509</th><td>			<b>if</b> (prof_sample_accum_update(usize)) {</td></tr>
+<tr><th id="510">510</th><td>				<i>/*</i></td></tr>
+<tr><th id="511">511</th><td><i>				 * Don't sample.  The usize passed to</i></td></tr>
+<tr><th id="512">512</th><td><i>				 * PROF_ALLOC_PREP() was larger than what</i></td></tr>
+<tr><th id="513">513</th><td><i>				 * actually got allocated, so a backtrace was</i></td></tr>
+<tr><th id="514">514</th><td><i>				 * captured for this allocation, even though</i></td></tr>
+<tr><th id="515">515</th><td><i>				 * its actual usize was insufficient to cross</i></td></tr>
+<tr><th id="516">516</th><td><i>				 * the sample threshold.</i></td></tr>
+<tr><th id="517">517</th><td><i>				 */</i></td></tr>
+<tr><th id="518">518</th><td>				cnt = (prof_thr_cnt_t *)(uintptr_t)<var>1U</var>;</td></tr>
+<tr><th id="519">519</th><td>			}</td></tr>
+<tr><th id="520">520</th><td>		}</td></tr>
+<tr><th id="521">521</th><td>	}</td></tr>
+<tr><th id="522">522</th><td></td></tr>
+<tr><th id="523">523</th><td>	<b>if</b> ((uintptr_t)old_ctx &gt; (uintptr_t)<var>1U</var>) {</td></tr>
+<tr><th id="524">524</th><td>		told_cnt = prof_lookup(old_ctx-&gt;bt);</td></tr>
+<tr><th id="525">525</th><td>		<b>if</b> (told_cnt == NULL) {</td></tr>
+<tr><th id="526">526</th><td>			<i>/*</i></td></tr>
+<tr><th id="527">527</th><td><i>			 * It's too late to propagate OOM for this realloc(),</i></td></tr>
+<tr><th id="528">528</th><td><i>			 * so operate directly on old_cnt-&gt;ctx-&gt;cnt_merged.</i></td></tr>
+<tr><th id="529">529</th><td><i>			 */</i></td></tr>
+<tr><th id="530">530</th><td>			malloc_mutex_lock(old_ctx-&gt;lock);</td></tr>
+<tr><th id="531">531</th><td>			old_ctx-&gt;cnt_merged.curobjs--;</td></tr>
+<tr><th id="532">532</th><td>			old_ctx-&gt;cnt_merged.curbytes -= old_usize;</td></tr>
+<tr><th id="533">533</th><td>			malloc_mutex_unlock(old_ctx-&gt;lock);</td></tr>
+<tr><th id="534">534</th><td>			told_cnt = (prof_thr_cnt_t *)(uintptr_t)<var>1U</var>;</td></tr>
+<tr><th id="535">535</th><td>		}</td></tr>
+<tr><th id="536">536</th><td>	} <b>else</b></td></tr>
+<tr><th id="537">537</th><td>		told_cnt = (prof_thr_cnt_t *)(uintptr_t)<var>1U</var>;</td></tr>
+<tr><th id="538">538</th><td></td></tr>
+<tr><th id="539">539</th><td>	<b>if</b> ((uintptr_t)told_cnt &gt; (uintptr_t)<var>1U</var>)</td></tr>
+<tr><th id="540">540</th><td>		told_cnt-&gt;epoch++;</td></tr>
+<tr><th id="541">541</th><td>	<b>if</b> ((uintptr_t)cnt &gt; (uintptr_t)<var>1U</var>) {</td></tr>
+<tr><th id="542">542</th><td>		prof_ctx_set(ptr, usize, cnt-&gt;ctx);</td></tr>
+<tr><th id="543">543</th><td>		cnt-&gt;epoch++;</td></tr>
+<tr><th id="544">544</th><td>	} <b>else</b> <b>if</b> (ptr != NULL)</td></tr>
+<tr><th id="545">545</th><td>		prof_ctx_set(ptr, usize, (prof_ctx_t *)(uintptr_t)<var>1U</var>);</td></tr>
+<tr><th id="546">546</th><td>	<i>/*********/</i></td></tr>
+<tr><th id="547">547</th><td>	mb_write();</td></tr>
+<tr><th id="548">548</th><td>	<i>/*********/</i></td></tr>
+<tr><th id="549">549</th><td>	<b>if</b> ((uintptr_t)told_cnt &gt; (uintptr_t)<var>1U</var>) {</td></tr>
+<tr><th id="550">550</th><td>		told_cnt-&gt;cnts.curobjs--;</td></tr>
+<tr><th id="551">551</th><td>		told_cnt-&gt;cnts.curbytes -= old_usize;</td></tr>
+<tr><th id="552">552</th><td>	}</td></tr>
+<tr><th id="553">553</th><td>	<b>if</b> ((uintptr_t)cnt &gt; (uintptr_t)<var>1U</var>) {</td></tr>
+<tr><th id="554">554</th><td>		cnt-&gt;cnts.curobjs++;</td></tr>
+<tr><th id="555">555</th><td>		cnt-&gt;cnts.curbytes += usize;</td></tr>
+<tr><th id="556">556</th><td>		<b>if</b> (opt_prof_accum) {</td></tr>
+<tr><th id="557">557</th><td>			cnt-&gt;cnts.accumobjs++;</td></tr>
+<tr><th id="558">558</th><td>			cnt-&gt;cnts.accumbytes += usize;</td></tr>
+<tr><th id="559">559</th><td>		}</td></tr>
+<tr><th id="560">560</th><td>	}</td></tr>
+<tr><th id="561">561</th><td>	<i>/*********/</i></td></tr>
+<tr><th id="562">562</th><td>	mb_write();</td></tr>
+<tr><th id="563">563</th><td>	<i>/*********/</i></td></tr>
+<tr><th id="564">564</th><td>	<b>if</b> ((uintptr_t)told_cnt &gt; (uintptr_t)<var>1U</var>)</td></tr>
+<tr><th id="565">565</th><td>		told_cnt-&gt;epoch++;</td></tr>
+<tr><th id="566">566</th><td>	<b>if</b> ((uintptr_t)cnt &gt; (uintptr_t)<var>1U</var>)</td></tr>
+<tr><th id="567">567</th><td>		cnt-&gt;epoch++;</td></tr>
+<tr><th id="568">568</th><td>	<i>/*********/</i></td></tr>
+<tr><th id="569">569</th><td>	mb_write(); <i>/* Not strictly necessary. */</i></td></tr>
+<tr><th id="570">570</th><td>}</td></tr>
+<tr><th id="571">571</th><td></td></tr>
+<tr><th id="572">572</th><td>JEMALLOC_INLINE <em>void</em></td></tr>
+<tr><th id="573">573</th><td>prof_free(<em>const</em> <em>void</em> *ptr, size_t size)</td></tr>
+<tr><th id="574">574</th><td>{</td></tr>
+<tr><th id="575">575</th><td>	prof_ctx_t *ctx = prof_ctx_get(ptr);</td></tr>
+<tr><th id="576">576</th><td></td></tr>
+<tr><th id="577">577</th><td>	cassert(config_prof);</td></tr>
+<tr><th id="578">578</th><td></td></tr>
+<tr><th id="579">579</th><td>	<b>if</b> ((uintptr_t)ctx &gt; (uintptr_t)<var>1</var>) {</td></tr>
+<tr><th id="580">580</th><td>		prof_thr_cnt_t *tcnt;</td></tr>
+<tr><th id="581">581</th><td>		assert(size == isalloc(ptr, true));</td></tr>
+<tr><th id="582">582</th><td>		tcnt = prof_lookup(ctx-&gt;bt);</td></tr>
+<tr><th id="583">583</th><td></td></tr>
+<tr><th id="584">584</th><td>		<b>if</b> (tcnt != NULL) {</td></tr>
+<tr><th id="585">585</th><td>			tcnt-&gt;epoch++;</td></tr>
+<tr><th id="586">586</th><td>			<i>/*********/</i></td></tr>
+<tr><th id="587">587</th><td>			mb_write();</td></tr>
+<tr><th id="588">588</th><td>			<i>/*********/</i></td></tr>
+<tr><th id="589">589</th><td>			tcnt-&gt;cnts.curobjs--;</td></tr>
+<tr><th id="590">590</th><td>			tcnt-&gt;cnts.curbytes -= size;</td></tr>
+<tr><th id="591">591</th><td>			<i>/*********/</i></td></tr>
+<tr><th id="592">592</th><td>			mb_write();</td></tr>
+<tr><th id="593">593</th><td>			<i>/*********/</i></td></tr>
+<tr><th id="594">594</th><td>			tcnt-&gt;epoch++;</td></tr>
+<tr><th id="595">595</th><td>			<i>/*********/</i></td></tr>
+<tr><th id="596">596</th><td>			mb_write();</td></tr>
+<tr><th id="597">597</th><td>			<i>/*********/</i></td></tr>
+<tr><th id="598">598</th><td>		} <b>else</b> {</td></tr>
+<tr><th id="599">599</th><td>			<i>/*</i></td></tr>
+<tr><th id="600">600</th><td><i>			 * OOM during free() cannot be propagated, so operate</i></td></tr>
+<tr><th id="601">601</th><td><i>			 * directly on cnt-&gt;ctx-&gt;cnt_merged.</i></td></tr>
+<tr><th id="602">602</th><td><i>			 */</i></td></tr>
+<tr><th id="603">603</th><td>			malloc_mutex_lock(ctx-&gt;lock);</td></tr>
+<tr><th id="604">604</th><td>			ctx-&gt;cnt_merged.curobjs--;</td></tr>
+<tr><th id="605">605</th><td>			ctx-&gt;cnt_merged.curbytes -= size;</td></tr>
+<tr><th id="606">606</th><td>			malloc_mutex_unlock(ctx-&gt;lock);</td></tr>
+<tr><th id="607">607</th><td>		}</td></tr>
+<tr><th id="608">608</th><td>	}</td></tr>
+<tr><th id="609">609</th><td>}</td></tr>
+<tr><th id="610">610</th><td><u>#endif</u></td></tr>
+<tr><th id="611">611</th><td></td></tr>
+<tr><th id="612">612</th><td><u>#<span data-ppcond="251">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="613">613</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="614">614</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore6.x/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

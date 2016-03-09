@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<title>AuthHandler.cpp [TrinityCore3.3.5/src/server/game/Handlers/AuthHandler.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Handlers/AuthHandler.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Handlers</a>/AuthHandler.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#include <a href="../Server/Protocol/Opcodes.h.html">"Opcodes.h"</a></u></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="../Server/WorldSession.h.html">"WorldSession.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="../../shared/Packets/WorldPacket.h.html">"WorldPacket.h"</a></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession16SendAuthResponseEhbj" title='WorldSession::SendAuthResponse' data-ref="_ZN12WorldSession16SendAuthResponseEhbj" >SendAuthResponse</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col1 decl" id="1code" title='code' data-type='uint8' data-ref="1code" >code</dfn>, <em>bool</em> <dfn class="local col2 decl" id="2shortForm" title='shortForm' data-type='bool' data-ref="2shortForm" >shortForm</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3queuePos" title='queuePos' data-type='uint32' data-ref="3queuePos" >queuePos</dfn>)</td></tr>
+<tr><th id="23">23</th><td>{</td></tr>
+<tr><th id="24">24</th><td>    <a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a> <dfn class="local col4 decl" id="4packet" title='packet' data-type='WorldPacket' data-ref="4packet" >packet</dfn><a class="ref" href="../../shared/Packets/WorldPacket.h.html#_ZN11WorldPacketC1Etm" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1Etm" id="_ZN11WorldPacketC1Etm" >(</a><a class="enum" href="../Server/Protocol/Opcodes.h.html#Opcodes::SMSG_AUTH_RESPONSE" title='Opcodes::SMSG_AUTH_RESPONSE' data-ref="Opcodes::SMSG_AUTH_RESPONSE" id="Opcodes::SMSG_AUTH_RESPONSE" >SMSG_AUTH_RESPONSE</a>, <var>1</var> + <var>4</var> + <var>1</var> + <var>4</var> + <var>1</var> + (<a class="local col2 ref" href="#2shortForm" title='shortForm' data-ref="2shortForm" >shortForm</a> ? <var>0</var> : (<var>4</var> + <var>1</var>)));</td></tr>
+<tr><th id="25">25</th><td>    <a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEh" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEh" id="_ZN10ByteBufferlsEh" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>(<a class="local col1 ref" href="#1code" title='code' data-ref="1code" >code</a>);</td></tr>
+<tr><th id="26">26</th><td>    <a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEj" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEj" id="_ZN10ByteBufferlsEj" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<var>0</var>);                                   <i>// BillingTimeRemaining</i></td></tr>
+<tr><th id="27">27</th><td>    <a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEh" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEh" id="_ZN10ByteBufferlsEh" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>(<var>0</var>);                                    <i>// BillingPlanFlags</i></td></tr>
+<tr><th id="28">28</th><td>    <a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEj" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEj" id="_ZN10ByteBufferlsEj" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<var>0</var>);                                   <i>// BillingTimeRested</i></td></tr>
+<tr><th id="29">29</th><td>    <a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEh" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEh" id="_ZN10ByteBufferlsEh" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>(<a class="member" href="../Server/WorldSession.h.html#_ZNK12WorldSession9ExpansionEv" title='WorldSession::Expansion' data-ref="_ZNK12WorldSession9ExpansionEv" id="_ZNK12WorldSession9ExpansionEv" >Expansion</a>());                          <i>// 0 - normal, 1 - TBC, 2 - WOTLK, must be set in database manually for each account</i></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>    <b>if</b> (!<a class="local col2 ref" href="#2shortForm" title='shortForm' data-ref="2shortForm" >shortForm</a>)</td></tr>
+<tr><th id="32">32</th><td>    {</td></tr>
+<tr><th id="33">33</th><td>        <a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEj" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEj" id="_ZN10ByteBufferlsEj" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="local col3 ref" href="#3queuePos" title='queuePos' data-ref="3queuePos" >queuePos</a>);                             <i>// Queue position</i></td></tr>
+<tr><th id="34">34</th><td>        <a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEh" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEh" id="_ZN10ByteBufferlsEh" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>(<var>0</var>);                                     <i>// Realm has a free character migration - bool</i></td></tr>
+<tr><th id="35">35</th><td>    }</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <a class="member" href="../Server/WorldSession.h.html#_ZN12WorldSession10SendPacketEP11WorldPacket" title='WorldSession::SendPacket' data-ref="_ZN12WorldSession10SendPacketEP11WorldPacket" id="_ZN12WorldSession10SendPacketEP11WorldPacket" >SendPacket</a>(&amp;<a class="local col4 ref" href="#4packet" title='packet' data-ref="4packet" >packet</a>);</td></tr>
+<tr><th id="38">38</th><td>}</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><em>void</em> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>::<dfn class="decl def" id="_ZN12WorldSession22SendClientCacheVersionEj" title='WorldSession::SendClientCacheVersion' data-ref="_ZN12WorldSession22SendClientCacheVersionEj" >SendClientCacheVersion</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="5version" title='version' data-type='uint32' data-ref="5version" >version</dfn>)</td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>    <a class="type" href="../../shared/Packets/WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a> <dfn class="local col6 decl" id="6data" title='data' data-type='WorldPacket' data-ref="6data" >data</dfn><a class="ref" href="../../shared/Packets/WorldPacket.h.html#_ZN11WorldPacketC1Etm" title='WorldPacket::WorldPacket' data-ref="_ZN11WorldPacketC1Etm" id="_ZN11WorldPacketC1Etm" >(</a><a class="enum" href="../Server/Protocol/Opcodes.h.html#Opcodes::SMSG_CLIENTCACHE_VERSION" title='Opcodes::SMSG_CLIENTCACHE_VERSION' data-ref="Opcodes::SMSG_CLIENTCACHE_VERSION" id="Opcodes::SMSG_CLIENTCACHE_VERSION" >SMSG_CLIENTCACHE_VERSION</a>, <var>4</var>);</td></tr>
+<tr><th id="43">43</th><td>    <a class="local col6 ref" href="#6data" title='data' data-ref="6data" >data</a> <a class="ref" href="../../shared/Packets/ByteBuffer.h.html#_ZN10ByteBufferlsEj" title='ByteBuffer::operator&lt;&lt;' data-ref="_ZN10ByteBufferlsEj" id="_ZN10ByteBufferlsEj" >&lt;&lt;</a> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>(<a class="local col5 ref" href="#5version" title='version' data-ref="5version" >version</a>);</td></tr>
+<tr><th id="44">44</th><td>    <a class="member" href="../Server/WorldSession.h.html#_ZN12WorldSession10SendPacketEP11WorldPacket" title='WorldSession::SendPacket' data-ref="_ZN12WorldSession10SendPacketEP11WorldPacket" id="_ZN12WorldSession10SendPacketEP11WorldPacket" >SendPacket</a>(&amp;<a class="local col6 ref" href="#6data" title='data' data-ref="6data" >data</a>);</td></tr>
+<tr><th id="45">45</th><td>}</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<title>TypeList.h [TrinityCore3.3.5/src/server/shared/Dynamic/TypeList.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/shared/Dynamic/TypeList.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>shared</a>/<a href='./'>Dynamic</a>/TypeList.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_TYPELIST_H">TRINITY_TYPELIST_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_TYPELIST_H" data-ref="_M/TRINITY_TYPELIST_H">TRINITY_TYPELIST_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><i>/*</i></td></tr>
+<tr><th id="23">23</th><td><i>  @struct TypeList</i></td></tr>
+<tr><th id="24">24</th><td><i>  TypeList is the most simple but yet the most powerfull class of all.  It holds</i></td></tr>
+<tr><th id="25">25</th><td><i>  at compile time the different type of objects in a linked list.</i></td></tr>
+<tr><th id="26">26</th><td><i> */</i></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>class</b> <dfn class="type" id="TypeNull" title='TypeNull' data-ref="TypeNull" >TypeNull</dfn>;</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>template</b>&lt;<b>typename</b> HEAD, <b>typename</b> TAIL&gt;</td></tr>
+<tr><th id="31">31</th><td><b>struct</b> <dfn class="type def" id="TypeList" title='TypeList' data-ref="TypeList" >TypeList</dfn></td></tr>
+<tr><th id="32">32</th><td>{</td></tr>
+<tr><th id="33">33</th><td>    <b>typedef</b> HEAD <dfn class="typedef" id="TypeList::Head" title='TypeList::Head' data-type='HEAD' data-ref="TypeList::Head" >Head</dfn>;</td></tr>
+<tr><th id="34">34</th><td>    <b>typedef</b> TAIL <dfn class="typedef" id="TypeList::Tail" title='TypeList::Tail' data-type='TAIL' data-ref="TypeList::Tail" >Tail</dfn>;</td></tr>
+<tr><th id="35">35</th><td>};</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><i>// enough for now.. can be expand at any point in time as needed</i></td></tr>
+<tr><th id="38">38</th><td><u>#define <dfn class="macro" id="_M/TYPELIST_1" data-ref="_M/TYPELIST_1">TYPELIST_1</dfn>(T1)                  TypeList&lt;T1, TypeNull&gt;</u></td></tr>
+<tr><th id="39">39</th><td><u>#define <dfn class="macro" id="_M/TYPELIST_2" data-ref="_M/TYPELIST_2">TYPELIST_2</dfn>(T1, T2)              TypeList&lt;T1, TYPELIST_1(T2) &gt;</u></td></tr>
+<tr><th id="40">40</th><td><u>#define <dfn class="macro" id="_M/TYPELIST_3" data-ref="_M/TYPELIST_3">TYPELIST_3</dfn>(T1, T2, T3)          TypeList&lt;T1, TYPELIST_2(T2, T3) &gt;</u></td></tr>
+<tr><th id="41">41</th><td><u>#define <dfn class="macro" id="_M/TYPELIST_4" data-ref="_M/TYPELIST_4">TYPELIST_4</dfn>(T1, T2, T3, T4)      TypeList&lt;T1, TYPELIST_3(T2, T3, T4) &gt;</u></td></tr>
+<tr><th id="42">42</th><td><u>#define <dfn class="macro" id="_M/TYPELIST_5" data-ref="_M/TYPELIST_5">TYPELIST_5</dfn>(T1, T2, T3, T4, T5)  TypeList&lt;T1, TYPELIST_4(T2, T3, T4, T5) &gt;</u></td></tr>
+<tr><th id="43">43</th><td><u>#define <dfn class="macro" id="_M/TYPELIST_6" data-ref="_M/TYPELIST_6">TYPELIST_6</dfn>(T1, T2, T3, T4, T5, T6)  TypeList&lt;T1, TYPELIST_5(T2, T3, T4, T5, T6) &gt;</u></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../game/AI/CoreAI/CombatAI.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

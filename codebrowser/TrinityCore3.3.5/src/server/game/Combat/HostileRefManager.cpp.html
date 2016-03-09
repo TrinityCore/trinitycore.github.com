@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+<title>HostileRefManager.cpp [TrinityCore3.3.5/src/server/game/Combat/HostileRefManager.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Combat/HostileRefManager.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Combat</a>/HostileRefManager.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="HostileRefManager.h.html">"HostileRefManager.h"</a></u></td></tr>
+<tr><th id="20">20</th><td><u>#include <a href="ThreatManager.h.html">"ThreatManager.h"</a></u></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../Entities/Unit/Unit.h.html">"Unit.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../DataStores/DBCStructure.h.html">"DBCStructure.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../Spells/SpellInfo.h.html">"SpellInfo.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="virtual decl def" id="_ZN17HostileRefManagerD1Ev" title='HostileRefManager::~HostileRefManager' data-ref="_ZN17HostileRefManagerD1Ev" >~HostileRefManager</dfn>()</td></tr>
+<tr><th id="26">26</th><td>{</td></tr>
+<tr><th id="27">27</th><td>    <a class="member" href="#_ZN17HostileRefManager16deleteReferencesEv" title='HostileRefManager::deleteReferences' data-ref="_ZN17HostileRefManager16deleteReferencesEv" >deleteReferences</a>();</td></tr>
+<tr><th id="28">28</th><td>}</td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><i>//=================================================</i></td></tr>
+<tr><th id="31">31</th><td><i>// send threat to all my hateres for the victim</i></td></tr>
+<tr><th id="32">32</th><td><i>// The victim is hated than by them as well</i></td></tr>
+<tr><th id="33">33</th><td><i>// use for buffs and healing threat functionality</i></td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager12threatAssistEP4UnitfPK9SpellInfo" title='HostileRefManager::threatAssist' data-ref="_ZN17HostileRefManager12threatAssistEP4UnitfPK9SpellInfo" >threatAssist</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col1 decl" id="1victim" title='victim' data-type='Unit *' data-ref="1victim" >victim</dfn>, <em>float</em> <dfn class="local col2 decl" id="2baseThreat" title='baseThreat' data-type='float' data-ref="2baseThreat" >baseThreat</dfn>, <a class="type" href="../Spells/SpellInfo.h.html#SpellInfo" title='SpellInfo' data-ref="SpellInfo" >SpellInfo</a> <em>const</em>* <dfn class="local col3 decl" id="3threatSpell" title='threatSpell' data-type='const SpellInfo *' data-ref="3threatSpell" >threatSpell</dfn>)</td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td>    <b>if</b> (<a class="member" href="../../shared/Dynamic/LinkedList.h.html#_ZNK14LinkedListHead7getSizeEv" title='LinkedListHead::getSize' data-ref="_ZNK14LinkedListHead7getSizeEv" id="_ZNK14LinkedListHead7getSizeEv" >getSize</a>() == <var>0</var>)</td></tr>
+<tr><th id="38">38</th><td>        <b>return</b>;</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col4 decl" id="4ref" title='ref' data-type='HostileReference *' data-ref="4ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="41">41</th><td>    <em>float</em> <dfn class="local col5 decl" id="5threat" title='threat' data-type='float' data-ref="5threat" >threat</dfn> = <a class="type" href="ThreatManager.h.html#ThreatCalcHelper" title='ThreatCalcHelper' data-ref="ThreatCalcHelper" >ThreatCalcHelper</a>::<a class="ref" href="ThreatManager.h.html#_ZN16ThreatCalcHelper10calcThreatEP4UnitS1_f15SpellSchoolMaskPK9SpellInfo" title='ThreatCalcHelper::calcThreat' data-ref="_ZN16ThreatCalcHelper10calcThreatEP4UnitS1_f15SpellSchoolMaskPK9SpellInfo" id="_ZN16ThreatCalcHelper10calcThreatEP4UnitS1_f15SpellSchoolMaskPK9SpellInfo" >calcThreat</a>(<a class="local col1 ref" href="#1victim" title='victim' data-ref="1victim" >victim</a>, <a class="member" href="HostileRefManager.h.html#HostileRefManager::iOwner" title='HostileRefManager::iOwner' data-ref="HostileRefManager::iOwner" id="HostileRefManager::iOwner" >iOwner</a>, <a class="local col2 ref" href="#2baseThreat" title='baseThreat' data-ref="2baseThreat" >baseThreat</a>, (<a class="local col3 ref" href="#3threatSpell" title='threatSpell' data-ref="3threatSpell" >threatSpell</a> ? <a class="local col3 ref" href="#3threatSpell" title='threatSpell' data-ref="3threatSpell" >threatSpell</a>-&gt;<a class="ref" href="../Spells/SpellInfo.h.html#_ZNK9SpellInfo13GetSchoolMaskEv" title='SpellInfo::GetSchoolMask' data-ref="_ZNK9SpellInfo13GetSchoolMaskEv" id="_ZNK9SpellInfo13GetSchoolMaskEv" >GetSchoolMask</a>() : <a class="enum" href="../Miscellaneous/SharedDefines.h.html#SpellSchoolMask::SPELL_SCHOOL_MASK_NORMAL" title='SpellSchoolMask::SPELL_SCHOOL_MASK_NORMAL' data-ref="SpellSchoolMask::SPELL_SCHOOL_MASK_NORMAL" id="SpellSchoolMask::SPELL_SCHOOL_MASK_NORMAL" >SPELL_SCHOOL_MASK_NORMAL</a>), <a class="local col3 ref" href="#3threatSpell" title='threatSpell' data-ref="3threatSpell" >threatSpell</a>);</td></tr>
+<tr><th id="42">42</th><td>    <a class="local col5 ref" href="#5threat" title='threat' data-ref="5threat" >threat</a> /= <a class="member" href="../../shared/Dynamic/LinkedList.h.html#_ZNK14LinkedListHead7getSizeEv" title='LinkedListHead::getSize' data-ref="_ZNK14LinkedListHead7getSizeEv" id="_ZNK14LinkedListHead7getSizeEv" >getSize</a>();</td></tr>
+<tr><th id="43">43</th><td>    <b>while</b> (<a class="local col4 ref" href="#4ref" title='ref' data-ref="4ref" >ref</a>)</td></tr>
+<tr><th id="44">44</th><td>    {</td></tr>
+<tr><th id="45">45</th><td>        <b>if</b> (<a class="type" href="ThreatManager.h.html#ThreatCalcHelper" title='ThreatCalcHelper' data-ref="ThreatCalcHelper" >ThreatCalcHelper</a>::<a class="ref" href="ThreatManager.h.html#_ZN16ThreatCalcHelper14isValidProcessEP4UnitS1_PK9SpellInfo" title='ThreatCalcHelper::isValidProcess' data-ref="_ZN16ThreatCalcHelper14isValidProcessEP4UnitS1_PK9SpellInfo" id="_ZN16ThreatCalcHelper14isValidProcessEP4UnitS1_PK9SpellInfo" >isValidProcess</a>(<a class="local col1 ref" href="#1victim" title='victim' data-ref="1victim" >victim</a>, <a class="local col4 ref" href="#4ref" title='ref' data-ref="4ref" >ref</a>-&gt;<a class="ref" href="../../shared/Dynamic/LinkedReference/Reference.h.html#_ZNK9Reference9GetSourceEv" title='Reference::GetSource' data-ref="_ZNK9Reference9GetSourceEv" id="_ZNK9Reference9GetSourceEv" >GetSource</a>()-&gt;<a class="ref" href="ThreatManager.h.html#_ZNK13ThreatManager8GetOwnerEv" title='ThreatManager::GetOwner' data-ref="_ZNK13ThreatManager8GetOwnerEv" id="_ZNK13ThreatManager8GetOwnerEv" >GetOwner</a>(), <a class="local col3 ref" href="#3threatSpell" title='threatSpell' data-ref="3threatSpell" >threatSpell</a>))</td></tr>
+<tr><th id="46">46</th><td>            <a class="local col4 ref" href="#4ref" title='ref' data-ref="4ref" >ref</a>-&gt;<a class="ref" href="../../shared/Dynamic/LinkedReference/Reference.h.html#_ZNK9Reference9GetSourceEv" title='Reference::GetSource' data-ref="_ZNK9Reference9GetSourceEv" id="_ZNK9Reference9GetSourceEv" >GetSource</a>()-&gt;<a class="ref" href="ThreatManager.h.html#_ZN13ThreatManager11doAddThreatEP4Unitf" title='ThreatManager::doAddThreat' data-ref="_ZN13ThreatManager11doAddThreatEP4Unitf" id="_ZN13ThreatManager11doAddThreatEP4Unitf" >doAddThreat</a>(<a class="local col1 ref" href="#1victim" title='victim' data-ref="1victim" >victim</a>, <a class="local col5 ref" href="#5threat" title='threat' data-ref="5threat" >threat</a>);</td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td>        <a class="local col4 ref" href="#4ref" title='ref' data-ref="4ref" >ref</a> = <a class="local col4 ref" href="#4ref" title='ref' data-ref="4ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="49">49</th><td>    }</td></tr>
+<tr><th id="50">50</th><td>}</td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td><i>//=================================================</i></td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager13addTempThreatEfb" title='HostileRefManager::addTempThreat' data-ref="_ZN17HostileRefManager13addTempThreatEfb" >addTempThreat</dfn>(<em>float</em> <dfn class="local col6 decl" id="6threat" title='threat' data-type='float' data-ref="6threat" >threat</dfn>, <em>bool</em> <dfn class="local col7 decl" id="7apply" title='apply' data-type='bool' data-ref="7apply" >apply</dfn>)</td></tr>
+<tr><th id="55">55</th><td>{</td></tr>
+<tr><th id="56">56</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col8 decl" id="8ref" title='ref' data-type='HostileReference *' data-ref="8ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <b>while</b> (<a class="local col8 ref" href="#8ref" title='ref' data-ref="8ref" >ref</a>)</td></tr>
+<tr><th id="59">59</th><td>    {</td></tr>
+<tr><th id="60">60</th><td>        <b>if</b> (<a class="local col7 ref" href="#7apply" title='apply' data-ref="7apply" >apply</a>)</td></tr>
+<tr><th id="61">61</th><td>        {</td></tr>
+<tr><th id="62">62</th><td>            <b>if</b> (<a class="local col8 ref" href="#8ref" title='ref' data-ref="8ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference21getTempThreatModifierEv" title='HostileReference::getTempThreatModifier' data-ref="_ZN16HostileReference21getTempThreatModifierEv" id="_ZN16HostileReference21getTempThreatModifierEv" >getTempThreatModifier</a>() == <var>0.0f</var>)</td></tr>
+<tr><th id="63">63</th><td>                <a class="local col8 ref" href="#8ref" title='ref' data-ref="8ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference13addTempThreatEf" title='HostileReference::addTempThreat' data-ref="_ZN16HostileReference13addTempThreatEf" id="_ZN16HostileReference13addTempThreatEf" >addTempThreat</a>(<a class="local col6 ref" href="#6threat" title='threat' data-ref="6threat" >threat</a>);</td></tr>
+<tr><th id="64">64</th><td>        }</td></tr>
+<tr><th id="65">65</th><td>        <b>else</b></td></tr>
+<tr><th id="66">66</th><td>            <a class="local col8 ref" href="#8ref" title='ref' data-ref="8ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference15resetTempThreatEv" title='HostileReference::resetTempThreat' data-ref="_ZN16HostileReference15resetTempThreatEv" id="_ZN16HostileReference15resetTempThreatEv" >resetTempThreat</a>();</td></tr>
+<tr><th id="67">67</th><td></td></tr>
+<tr><th id="68">68</th><td>        <a class="local col8 ref" href="#8ref" title='ref' data-ref="8ref" >ref</a> = <a class="local col8 ref" href="#8ref" title='ref' data-ref="8ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="69">69</th><td>    }</td></tr>
+<tr><th id="70">70</th><td>}</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><i>//=================================================</i></td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager16addThreatPercentEi" title='HostileRefManager::addThreatPercent' data-ref="_ZN17HostileRefManager16addThreatPercentEi" >addThreatPercent</dfn>(<a class="typedef" href="../../../common/Define.h.html#int32" title='int32' data-type='int32_t' data-ref="int32" >int32</a> <dfn class="local col9 decl" id="9percent" title='percent' data-type='int32' data-ref="9percent" >percent</dfn>)</td></tr>
+<tr><th id="75">75</th><td>{</td></tr>
+<tr><th id="76">76</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col0 decl" id="10ref" title='ref' data-type='HostileReference *' data-ref="10ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="77">77</th><td>    <b>while</b> (<a class="local col0 ref" href="#10ref" title='ref' data-ref="10ref" >ref</a>)</td></tr>
+<tr><th id="78">78</th><td>    {</td></tr>
+<tr><th id="79">79</th><td>        <a class="local col0 ref" href="#10ref" title='ref' data-ref="10ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference16addThreatPercentEi" title='HostileReference::addThreatPercent' data-ref="_ZN16HostileReference16addThreatPercentEi" id="_ZN16HostileReference16addThreatPercentEi" >addThreatPercent</a>(<a class="local col9 ref" href="#9percent" title='percent' data-ref="9percent" >percent</a>);</td></tr>
+<tr><th id="80">80</th><td>        <a class="local col0 ref" href="#10ref" title='ref' data-ref="10ref" >ref</a> = <a class="local col0 ref" href="#10ref" title='ref' data-ref="10ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="81">81</th><td>    }</td></tr>
+<tr><th id="82">82</th><td>}</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td><i>//=================================================</i></td></tr>
+<tr><th id="85">85</th><td><i>// The online / offline status is given to the method. The calculation has to be done before</i></td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager21setOnlineOfflineStateEb" title='HostileRefManager::setOnlineOfflineState' data-ref="_ZN17HostileRefManager21setOnlineOfflineStateEb" >setOnlineOfflineState</dfn>(<em>bool</em> <dfn class="local col1 decl" id="11isOnline" title='isOnline' data-type='bool' data-ref="11isOnline" >isOnline</dfn>)</td></tr>
+<tr><th id="88">88</th><td>{</td></tr>
+<tr><th id="89">89</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col2 decl" id="12ref" title='ref' data-type='HostileReference *' data-ref="12ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="90">90</th><td>    <b>while</b> (<a class="local col2 ref" href="#12ref" title='ref' data-ref="12ref" >ref</a>)</td></tr>
+<tr><th id="91">91</th><td>    {</td></tr>
+<tr><th id="92">92</th><td>        <a class="local col2 ref" href="#12ref" title='ref' data-ref="12ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference21setOnlineOfflineStateEb" title='HostileReference::setOnlineOfflineState' data-ref="_ZN16HostileReference21setOnlineOfflineStateEb" id="_ZN16HostileReference21setOnlineOfflineStateEb" >setOnlineOfflineState</a>(<a class="local col1 ref" href="#11isOnline" title='isOnline' data-ref="11isOnline" >isOnline</a>);</td></tr>
+<tr><th id="93">93</th><td>        <a class="local col2 ref" href="#12ref" title='ref' data-ref="12ref" >ref</a> = <a class="local col2 ref" href="#12ref" title='ref' data-ref="12ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="94">94</th><td>    }</td></tr>
+<tr><th id="95">95</th><td>}</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td><i>//=================================================</i></td></tr>
+<tr><th id="98">98</th><td><i>// The online / offline status is calculated and set</i></td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager18updateThreatTablesEv" title='HostileRefManager::updateThreatTables' data-ref="_ZN17HostileRefManager18updateThreatTablesEv" >updateThreatTables</dfn>()</td></tr>
+<tr><th id="101">101</th><td>{</td></tr>
+<tr><th id="102">102</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col3 decl" id="13ref" title='ref' data-type='HostileReference *' data-ref="13ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="103">103</th><td>    <b>while</b> (<a class="local col3 ref" href="#13ref" title='ref' data-ref="13ref" >ref</a>)</td></tr>
+<tr><th id="104">104</th><td>    {</td></tr>
+<tr><th id="105">105</th><td>        <a class="local col3 ref" href="#13ref" title='ref' data-ref="13ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference18updateOnlineStatusEv" title='HostileReference::updateOnlineStatus' data-ref="_ZN16HostileReference18updateOnlineStatusEv" id="_ZN16HostileReference18updateOnlineStatusEv" >updateOnlineStatus</a>();</td></tr>
+<tr><th id="106">106</th><td>        <a class="local col3 ref" href="#13ref" title='ref' data-ref="13ref" >ref</a> = <a class="local col3 ref" href="#13ref" title='ref' data-ref="13ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="107">107</th><td>    }</td></tr>
+<tr><th id="108">108</th><td>}</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td><i>//=================================================</i></td></tr>
+<tr><th id="111">111</th><td><i>// The references are not needed anymore</i></td></tr>
+<tr><th id="112">112</th><td><i>// tell the source to remove them from the list and free the mem</i></td></tr>
+<tr><th id="113">113</th><td></td></tr>
+<tr><th id="114">114</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager16deleteReferencesEv" title='HostileRefManager::deleteReferences' data-ref="_ZN17HostileRefManager16deleteReferencesEv" >deleteReferences</dfn>()</td></tr>
+<tr><th id="115">115</th><td>{</td></tr>
+<tr><th id="116">116</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col4 decl" id="14ref" title='ref' data-type='HostileReference *' data-ref="14ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="117">117</th><td>    <b>while</b> (<a class="local col4 ref" href="#14ref" title='ref' data-ref="14ref" >ref</a>)</td></tr>
+<tr><th id="118">118</th><td>    {</td></tr>
+<tr><th id="119">119</th><td>        <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col5 decl" id="15nextRef" title='nextRef' data-type='HostileReference *' data-ref="15nextRef" >nextRef</dfn> = <a class="local col4 ref" href="#14ref" title='ref' data-ref="14ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="120">120</th><td>        <a class="local col4 ref" href="#14ref" title='ref' data-ref="14ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference15removeReferenceEv" title='HostileReference::removeReference' data-ref="_ZN16HostileReference15removeReferenceEv" id="_ZN16HostileReference15removeReferenceEv" >removeReference</a>();</td></tr>
+<tr><th id="121">121</th><td>        <b>delete</b> <a class="local col4 ref" href="#14ref" title='ref' data-ref="14ref" >ref</a>;</td></tr>
+<tr><th id="122">122</th><td>        <a class="local col4 ref" href="#14ref" title='ref' data-ref="14ref" >ref</a> = <a class="local col5 ref" href="#15nextRef" title='nextRef' data-ref="15nextRef" >nextRef</a>;</td></tr>
+<tr><th id="123">123</th><td>    }</td></tr>
+<tr><th id="124">124</th><td>}</td></tr>
+<tr><th id="125">125</th><td></td></tr>
+<tr><th id="126">126</th><td><i>//=================================================</i></td></tr>
+<tr><th id="127">127</th><td><i>// delete one reference, defined by faction</i></td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager26deleteReferencesForFactionEj" title='HostileRefManager::deleteReferencesForFaction' data-ref="_ZN17HostileRefManager26deleteReferencesForFactionEj" >deleteReferencesForFaction</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="16faction" title='faction' data-type='uint32' data-ref="16faction" >faction</dfn>)</td></tr>
+<tr><th id="130">130</th><td>{</td></tr>
+<tr><th id="131">131</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col7 decl" id="17ref" title='ref' data-type='HostileReference *' data-ref="17ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="132">132</th><td>    <b>while</b> (<a class="local col7 ref" href="#17ref" title='ref' data-ref="17ref" >ref</a>)</td></tr>
+<tr><th id="133">133</th><td>    {</td></tr>
+<tr><th id="134">134</th><td>        <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col8 decl" id="18nextRef" title='nextRef' data-type='HostileReference *' data-ref="18nextRef" >nextRef</dfn> = <a class="local col7 ref" href="#17ref" title='ref' data-ref="17ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="135">135</th><td>        <b>if</b> (<a class="local col7 ref" href="#17ref" title='ref' data-ref="17ref" >ref</a>-&gt;<a class="ref" href="../../shared/Dynamic/LinkedReference/Reference.h.html#_ZNK9Reference9GetSourceEv" title='Reference::GetSource' data-ref="_ZNK9Reference9GetSourceEv" id="_ZNK9Reference9GetSourceEv" >GetSource</a>()-&gt;<a class="ref" href="ThreatManager.h.html#_ZNK13ThreatManager8GetOwnerEv" title='ThreatManager::GetOwner' data-ref="_ZNK13ThreatManager8GetOwnerEv" id="_ZNK13ThreatManager8GetOwnerEv" >GetOwner</a>()-&gt;<a class="ref" href="../Entities/Unit/Unit.h.html#_ZNK4Unit23GetFactionTemplateEntryEv" title='Unit::GetFactionTemplateEntry' data-ref="_ZNK4Unit23GetFactionTemplateEntryEv" id="_ZNK4Unit23GetFactionTemplateEntryEv" >GetFactionTemplateEntry</a>()-&gt;<a class="ref" href="../DataStores/DBCStructure.h.html#FactionTemplateEntry::faction" title='FactionTemplateEntry::faction' data-ref="FactionTemplateEntry::faction" id="FactionTemplateEntry::faction" >faction</a> == <a class="local col6 ref" href="#16faction" title='faction' data-ref="16faction" >faction</a>)</td></tr>
+<tr><th id="136">136</th><td>        {</td></tr>
+<tr><th id="137">137</th><td>            <a class="local col7 ref" href="#17ref" title='ref' data-ref="17ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference15removeReferenceEv" title='HostileReference::removeReference' data-ref="_ZN16HostileReference15removeReferenceEv" id="_ZN16HostileReference15removeReferenceEv" >removeReference</a>();</td></tr>
+<tr><th id="138">138</th><td>            <b>delete</b> <a class="local col7 ref" href="#17ref" title='ref' data-ref="17ref" >ref</a>;</td></tr>
+<tr><th id="139">139</th><td>        }</td></tr>
+<tr><th id="140">140</th><td>        <a class="local col7 ref" href="#17ref" title='ref' data-ref="17ref" >ref</a> = <a class="local col8 ref" href="#18nextRef" title='nextRef' data-ref="18nextRef" >nextRef</a>;</td></tr>
+<tr><th id="141">141</th><td>    }</td></tr>
+<tr><th id="142">142</th><td>}</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td><i>//=================================================</i></td></tr>
+<tr><th id="145">145</th><td><i>// delete one reference, defined by Unit</i></td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager15deleteReferenceEP4Unit" title='HostileRefManager::deleteReference' data-ref="_ZN17HostileRefManager15deleteReferenceEP4Unit" >deleteReference</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col9 decl" id="19creature" title='creature' data-type='Unit *' data-ref="19creature" >creature</dfn>)</td></tr>
+<tr><th id="148">148</th><td>{</td></tr>
+<tr><th id="149">149</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col0 decl" id="20ref" title='ref' data-type='HostileReference *' data-ref="20ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="150">150</th><td>    <b>while</b> (<a class="local col0 ref" href="#20ref" title='ref' data-ref="20ref" >ref</a>)</td></tr>
+<tr><th id="151">151</th><td>    {</td></tr>
+<tr><th id="152">152</th><td>        <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col1 decl" id="21nextRef" title='nextRef' data-type='HostileReference *' data-ref="21nextRef" >nextRef</dfn> = <a class="local col0 ref" href="#20ref" title='ref' data-ref="20ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="153">153</th><td>        <b>if</b> (<a class="local col0 ref" href="#20ref" title='ref' data-ref="20ref" >ref</a>-&gt;<a class="ref" href="../../shared/Dynamic/LinkedReference/Reference.h.html#_ZNK9Reference9GetSourceEv" title='Reference::GetSource' data-ref="_ZNK9Reference9GetSourceEv" id="_ZNK9Reference9GetSourceEv" >GetSource</a>()-&gt;<a class="ref" href="ThreatManager.h.html#_ZNK13ThreatManager8GetOwnerEv" title='ThreatManager::GetOwner' data-ref="_ZNK13ThreatManager8GetOwnerEv" id="_ZNK13ThreatManager8GetOwnerEv" >GetOwner</a>() == <a class="local col9 ref" href="#19creature" title='creature' data-ref="19creature" >creature</a>)</td></tr>
+<tr><th id="154">154</th><td>        {</td></tr>
+<tr><th id="155">155</th><td>            <a class="local col0 ref" href="#20ref" title='ref' data-ref="20ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference15removeReferenceEv" title='HostileReference::removeReference' data-ref="_ZN16HostileReference15removeReferenceEv" id="_ZN16HostileReference15removeReferenceEv" >removeReference</a>();</td></tr>
+<tr><th id="156">156</th><td>            <b>delete</b> <a class="local col0 ref" href="#20ref" title='ref' data-ref="20ref" >ref</a>;</td></tr>
+<tr><th id="157">157</th><td>            <b>break</b>;</td></tr>
+<tr><th id="158">158</th><td>        }</td></tr>
+<tr><th id="159">159</th><td>        <a class="local col0 ref" href="#20ref" title='ref' data-ref="20ref" >ref</a> = <a class="local col1 ref" href="#21nextRef" title='nextRef' data-ref="21nextRef" >nextRef</a>;</td></tr>
+<tr><th id="160">160</th><td>    }</td></tr>
+<tr><th id="161">161</th><td>}</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td><i>//=================================================</i></td></tr>
+<tr><th id="164">164</th><td><i>// set state for one reference, defined by Unit</i></td></tr>
+<tr><th id="165">165</th><td></td></tr>
+<tr><th id="166">166</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager21setOnlineOfflineStateEP4Unitb" title='HostileRefManager::setOnlineOfflineState' data-ref="_ZN17HostileRefManager21setOnlineOfflineStateEP4Unitb" >setOnlineOfflineState</dfn>(<a class="type" href="../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col2 decl" id="22creature" title='creature' data-type='Unit *' data-ref="22creature" >creature</dfn>, <em>bool</em> <dfn class="local col3 decl" id="23isOnline" title='isOnline' data-type='bool' data-ref="23isOnline" >isOnline</dfn>)</td></tr>
+<tr><th id="167">167</th><td>{</td></tr>
+<tr><th id="168">168</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col4 decl" id="24ref" title='ref' data-type='HostileReference *' data-ref="24ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="169">169</th><td>    <b>while</b> (<a class="local col4 ref" href="#24ref" title='ref' data-ref="24ref" >ref</a>)</td></tr>
+<tr><th id="170">170</th><td>    {</td></tr>
+<tr><th id="171">171</th><td>        <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col5 decl" id="25nextRef" title='nextRef' data-type='HostileReference *' data-ref="25nextRef" >nextRef</dfn> = <a class="local col4 ref" href="#24ref" title='ref' data-ref="24ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="172">172</th><td>        <b>if</b> (<a class="local col4 ref" href="#24ref" title='ref' data-ref="24ref" >ref</a>-&gt;<a class="ref" href="../../shared/Dynamic/LinkedReference/Reference.h.html#_ZNK9Reference9GetSourceEv" title='Reference::GetSource' data-ref="_ZNK9Reference9GetSourceEv" id="_ZNK9Reference9GetSourceEv" >GetSource</a>()-&gt;<a class="ref" href="ThreatManager.h.html#_ZNK13ThreatManager8GetOwnerEv" title='ThreatManager::GetOwner' data-ref="_ZNK13ThreatManager8GetOwnerEv" id="_ZNK13ThreatManager8GetOwnerEv" >GetOwner</a>() == <a class="local col2 ref" href="#22creature" title='creature' data-ref="22creature" >creature</a>)</td></tr>
+<tr><th id="173">173</th><td>        {</td></tr>
+<tr><th id="174">174</th><td>            <a class="local col4 ref" href="#24ref" title='ref' data-ref="24ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference21setOnlineOfflineStateEb" title='HostileReference::setOnlineOfflineState' data-ref="_ZN16HostileReference21setOnlineOfflineStateEb" id="_ZN16HostileReference21setOnlineOfflineStateEb" >setOnlineOfflineState</a>(<a class="local col3 ref" href="#23isOnline" title='isOnline' data-ref="23isOnline" >isOnline</a>);</td></tr>
+<tr><th id="175">175</th><td>            <b>break</b>;</td></tr>
+<tr><th id="176">176</th><td>        }</td></tr>
+<tr><th id="177">177</th><td>        <a class="local col4 ref" href="#24ref" title='ref' data-ref="24ref" >ref</a> = <a class="local col5 ref" href="#25nextRef" title='nextRef' data-ref="25nextRef" >nextRef</a>;</td></tr>
+<tr><th id="178">178</th><td>    }</td></tr>
+<tr><th id="179">179</th><td>}</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td><i>//=================================================</i></td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td><em>void</em> <a class="type" href="HostileRefManager.h.html#HostileRefManager" title='HostileRefManager' data-ref="HostileRefManager" >HostileRefManager</a>::<dfn class="decl def" id="_ZN17HostileRefManager16UpdateVisibilityEv" title='HostileRefManager::UpdateVisibility' data-ref="_ZN17HostileRefManager16UpdateVisibilityEv" >UpdateVisibility</dfn>()</td></tr>
+<tr><th id="184">184</th><td>{</td></tr>
+<tr><th id="185">185</th><td>    <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col6 decl" id="26ref" title='ref' data-type='HostileReference *' data-ref="26ref" >ref</dfn> = <a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8getFirstEv" title='HostileRefManager::getFirst' data-ref="_ZN17HostileRefManager8getFirstEv" id="_ZN17HostileRefManager8getFirstEv" >getFirst</a>();</td></tr>
+<tr><th id="186">186</th><td>    <b>while</b> (<a class="local col6 ref" href="#26ref" title='ref' data-ref="26ref" >ref</a>)</td></tr>
+<tr><th id="187">187</th><td>    {</td></tr>
+<tr><th id="188">188</th><td>        <a class="type" href="ThreatManager.h.html#HostileReference" title='HostileReference' data-ref="HostileReference" >HostileReference</a>* <dfn class="local col7 decl" id="27nextRef" title='nextRef' data-type='HostileReference *' data-ref="27nextRef" >nextRef</dfn> = <a class="local col6 ref" href="#26ref" title='ref' data-ref="26ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="189">189</th><td>        <b>if</b> (!<a class="local col6 ref" href="#26ref" title='ref' data-ref="26ref" >ref</a>-&gt;<a class="ref" href="../../shared/Dynamic/LinkedReference/Reference.h.html#_ZNK9Reference9GetSourceEv" title='Reference::GetSource' data-ref="_ZNK9Reference9GetSourceEv" id="_ZNK9Reference9GetSourceEv" >GetSource</a>()-&gt;<a class="ref" href="ThreatManager.h.html#_ZNK13ThreatManager8GetOwnerEv" title='ThreatManager::GetOwner' data-ref="_ZNK13ThreatManager8GetOwnerEv" id="_ZNK13ThreatManager8GetOwnerEv" >GetOwner</a>()-&gt;<a class="ref" href="../Entities/Object/Object.h.html#_ZNK11WorldObject14CanSeeOrDetectEPKS_bbb" title='WorldObject::CanSeeOrDetect' data-ref="_ZNK11WorldObject14CanSeeOrDetectEPKS_bbb" id="_ZNK11WorldObject14CanSeeOrDetectEPKS_bbb" >CanSeeOrDetect</a>(<a class="member" href="HostileRefManager.h.html#_ZN17HostileRefManager8GetOwnerEv" title='HostileRefManager::GetOwner' data-ref="_ZN17HostileRefManager8GetOwnerEv" id="_ZN17HostileRefManager8GetOwnerEv" >GetOwner</a>()))</td></tr>
+<tr><th id="190">190</th><td>        {</td></tr>
+<tr><th id="191">191</th><td>            <a class="local col7 ref" href="#27nextRef" title='nextRef' data-ref="27nextRef" >nextRef</a> = <a class="local col6 ref" href="#26ref" title='ref' data-ref="26ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference4nextEv" title='HostileReference::next' data-ref="_ZN16HostileReference4nextEv" id="_ZN16HostileReference4nextEv" >next</a>();</td></tr>
+<tr><th id="192">192</th><td>            <a class="local col6 ref" href="#26ref" title='ref' data-ref="26ref" >ref</a>-&gt;<a class="ref" href="ThreatManager.h.html#_ZN16HostileReference15removeReferenceEv" title='HostileReference::removeReference' data-ref="_ZN16HostileReference15removeReferenceEv" id="_ZN16HostileReference15removeReferenceEv" >removeReference</a>();</td></tr>
+<tr><th id="193">193</th><td>            <b>delete</b> <a class="local col6 ref" href="#26ref" title='ref' data-ref="26ref" >ref</a>;</td></tr>
+<tr><th id="194">194</th><td>        }</td></tr>
+<tr><th id="195">195</th><td>        <a class="local col6 ref" href="#26ref" title='ref' data-ref="26ref" >ref</a> = <a class="local col7 ref" href="#27nextRef" title='nextRef' data-ref="27nextRef" >nextRef</a>;</td></tr>
+<tr><th id="196">196</th><td>    }</td></tr>
+<tr><th id="197">197</th><td>}</td></tr>
+<tr><th id="198">198</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

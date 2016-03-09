@@ -1,0 +1,317 @@
+<!doctype html>
+<html>
+<head>
+<title>HotfixDatabase.h [TrinityCore6.x/src/server/database/Database/Implementation/HotfixDatabase.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/database/Database/Implementation/HotfixDatabase.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>database</a>/<a href='..'>Database</a>/<a href='./'>Implementation</a>/HotfixDatabase.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/_HOTFIXDATABASE_H">_HOTFIXDATABASE_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/_HOTFIXDATABASE_H" data-ref="_M/_HOTFIXDATABASE_H">_HOTFIXDATABASE_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../DatabaseWorkerPool.h.html">"DatabaseWorkerPool.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../MySQLConnection.h.html">"MySQLConnection.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><b>enum</b> <dfn class="type def" id="HotfixDatabaseStatements" title='HotfixDatabaseStatements' data-ref="HotfixDatabaseStatements" >HotfixDatabaseStatements</dfn></td></tr>
+<tr><th id="25">25</th><td>{</td></tr>
+<tr><th id="26">26</th><td>    <i>/*  Naming standard for defines:</i></td></tr>
+<tr><th id="27">27</th><td><i>        {DB}_{SEL/INS/UPD/DEL/REP}_{Summary of data changed}</i></td></tr>
+<tr><th id="28">28</th><td><i>        When updating more than one field, consider looking at the calling function</i></td></tr>
+<tr><th id="29">29</th><td><i>        name for a suiting suffix.</i></td></tr>
+<tr><th id="30">30</th><td><i>    */</i></td></tr>
+<tr><th id="31">31</th><td></td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ACHIEVEMENT" title='HotfixDatabaseStatements::HOTFIX_SEL_ACHIEVEMENT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ACHIEVEMENT" >HOTFIX_SEL_ACHIEVEMENT</dfn>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ACHIEVEMENT_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_ACHIEVEMENT_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ACHIEVEMENT_LOCALE" >HOTFIX_SEL_ACHIEVEMENT_LOCALE</dfn>,</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_AREA_GROUP_MEMBER" title='HotfixDatabaseStatements::HOTFIX_SEL_AREA_GROUP_MEMBER' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_AREA_GROUP_MEMBER" >HOTFIX_SEL_AREA_GROUP_MEMBER</dfn>,</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_AUCTION_HOUSE" title='HotfixDatabaseStatements::HOTFIX_SEL_AUCTION_HOUSE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_AUCTION_HOUSE" >HOTFIX_SEL_AUCTION_HOUSE</dfn>,</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_AUCTION_HOUSE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_AUCTION_HOUSE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_AUCTION_HOUSE_LOCALE" >HOTFIX_SEL_AUCTION_HOUSE_LOCALE</dfn>,</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BARBER_SHOP_STYLE" title='HotfixDatabaseStatements::HOTFIX_SEL_BARBER_SHOP_STYLE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BARBER_SHOP_STYLE" >HOTFIX_SEL_BARBER_SHOP_STYLE</dfn>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BARBER_SHOP_STYLE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_BARBER_SHOP_STYLE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BARBER_SHOP_STYLE_LOCALE" >HOTFIX_SEL_BARBER_SHOP_STYLE_LOCALE</dfn>,</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_BREED_QUALITY" title='HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_BREED_QUALITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_BREED_QUALITY" >HOTFIX_SEL_BATTLE_PET_BREED_QUALITY</dfn>,</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_BREED_STATE" title='HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_BREED_STATE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_BREED_STATE" >HOTFIX_SEL_BATTLE_PET_BREED_STATE</dfn>,</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES" title='HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES" >HOTFIX_SEL_BATTLE_PET_SPECIES</dfn>,</td></tr>
+<tr><th id="48">48</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES_LOCALE" >HOTFIX_SEL_BATTLE_PET_SPECIES_LOCALE</dfn>,</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES_STATE" title='HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES_STATE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BATTLE_PET_SPECIES_STATE" >HOTFIX_SEL_BATTLE_PET_SPECIES_STATE</dfn>,</td></tr>
+<tr><th id="51">51</th><td></td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BROADCAST_TEXT" title='HotfixDatabaseStatements::HOTFIX_SEL_BROADCAST_TEXT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BROADCAST_TEXT" >HOTFIX_SEL_BROADCAST_TEXT</dfn>,</td></tr>
+<tr><th id="53">53</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_BROADCAST_TEXT_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_BROADCAST_TEXT_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_BROADCAST_TEXT_LOCALE" >HOTFIX_SEL_BROADCAST_TEXT_LOCALE</dfn>,</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CHAR_START_OUTFIT" title='HotfixDatabaseStatements::HOTFIX_SEL_CHAR_START_OUTFIT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CHAR_START_OUTFIT" >HOTFIX_SEL_CHAR_START_OUTFIT</dfn>,</td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CHR_CLASSES_X_POWER_TYPES" title='HotfixDatabaseStatements::HOTFIX_SEL_CHR_CLASSES_X_POWER_TYPES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CHR_CLASSES_X_POWER_TYPES" >HOTFIX_SEL_CHR_CLASSES_X_POWER_TYPES</dfn>,</td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CINEMATIC_SEQUENCES" title='HotfixDatabaseStatements::HOTFIX_SEL_CINEMATIC_SEQUENCES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CINEMATIC_SEQUENCES" >HOTFIX_SEL_CINEMATIC_SEQUENCES</dfn>,</td></tr>
+<tr><th id="60">60</th><td></td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_DISPLAY_INFO" title='HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_DISPLAY_INFO' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_DISPLAY_INFO" >HOTFIX_SEL_CREATURE_DISPLAY_INFO</dfn>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_DISPLAY_INFO_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_DISPLAY_INFO_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_DISPLAY_INFO_LOCALE" >HOTFIX_SEL_CREATURE_DISPLAY_INFO_LOCALE</dfn>,</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_TYPE" title='HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_TYPE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_TYPE" >HOTFIX_SEL_CREATURE_TYPE</dfn>,</td></tr>
+<tr><th id="65">65</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_TYPE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_TYPE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CREATURE_TYPE_LOCALE" >HOTFIX_SEL_CREATURE_TYPE_LOCALE</dfn>,</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA" title='HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA" >HOTFIX_SEL_CRITERIA</dfn>,</td></tr>
+<tr><th id="68">68</th><td></td></tr>
+<tr><th id="69">69</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA_TREE" title='HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA_TREE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA_TREE" >HOTFIX_SEL_CRITERIA_TREE</dfn>,</td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA_TREE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA_TREE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CRITERIA_TREE_LOCALE" >HOTFIX_SEL_CRITERIA_TREE_LOCALE</dfn>,</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CURRENCY_TYPES" title='HotfixDatabaseStatements::HOTFIX_SEL_CURRENCY_TYPES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CURRENCY_TYPES" >HOTFIX_SEL_CURRENCY_TYPES</dfn>,</td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CURRENCY_TYPES_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_CURRENCY_TYPES_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CURRENCY_TYPES_LOCALE" >HOTFIX_SEL_CURRENCY_TYPES_LOCALE</dfn>,</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_CURVE_POINT" title='HotfixDatabaseStatements::HOTFIX_SEL_CURVE_POINT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_CURVE_POINT" >HOTFIX_SEL_CURVE_POINT</dfn>,</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_DESTRUCTIBLE_MODEL_DATA" title='HotfixDatabaseStatements::HOTFIX_SEL_DESTRUCTIBLE_MODEL_DATA' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_DESTRUCTIBLE_MODEL_DATA" >HOTFIX_SEL_DESTRUCTIBLE_MODEL_DATA</dfn>,</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_DURABILITY_QUALITY" title='HotfixDatabaseStatements::HOTFIX_SEL_DURABILITY_QUALITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_DURABILITY_QUALITY" >HOTFIX_SEL_DURABILITY_QUALITY</dfn>,</td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GAMEOBJECTS" title='HotfixDatabaseStatements::HOTFIX_SEL_GAMEOBJECTS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GAMEOBJECTS" >HOTFIX_SEL_GAMEOBJECTS</dfn>,</td></tr>
+<tr><th id="82">82</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GAMEOBJECTS_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GAMEOBJECTS_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GAMEOBJECTS_LOCALE" >HOTFIX_SEL_GAMEOBJECTS_LOCALE</dfn>,</td></tr>
+<tr><th id="83">83</th><td></td></tr>
+<tr><th id="84">84</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GAME_TABLES" title='HotfixDatabaseStatements::HOTFIX_SEL_GAME_TABLES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GAME_TABLES" >HOTFIX_SEL_GAME_TABLES</dfn>,</td></tr>
+<tr><th id="85">85</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GAME_TABLES_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GAME_TABLES_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GAME_TABLES_LOCALE" >HOTFIX_SEL_GAME_TABLES_LOCALE</dfn>,</td></tr>
+<tr><th id="86">86</th><td></td></tr>
+<tr><th id="87">87</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_ABILITY" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_ABILITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_ABILITY" >HOTFIX_SEL_GARR_ABILITY</dfn>,</td></tr>
+<tr><th id="88">88</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_ABILITY_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_ABILITY_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_ABILITY_LOCALE" >HOTFIX_SEL_GARR_ABILITY_LOCALE</dfn>,</td></tr>
+<tr><th id="89">89</th><td></td></tr>
+<tr><th id="90">90</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING" >HOTFIX_SEL_GARR_BUILDING</dfn>,</td></tr>
+<tr><th id="91">91</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING_LOCALE" >HOTFIX_SEL_GARR_BUILDING_LOCALE</dfn>,</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING_PLOT_INST" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING_PLOT_INST' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_BUILDING_PLOT_INST" >HOTFIX_SEL_GARR_BUILDING_PLOT_INST</dfn>,</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_CLASS_SPEC" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_CLASS_SPEC' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_CLASS_SPEC" >HOTFIX_SEL_GARR_CLASS_SPEC</dfn>,</td></tr>
+<tr><th id="96">96</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_CLASS_SPEC_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_CLASS_SPEC_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_CLASS_SPEC_LOCALE" >HOTFIX_SEL_GARR_CLASS_SPEC_LOCALE</dfn>,</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER" >HOTFIX_SEL_GARR_FOLLOWER</dfn>,</td></tr>
+<tr><th id="99">99</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER_LOCALE" >HOTFIX_SEL_GARR_FOLLOWER_LOCALE</dfn>,</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER_X_ABILITY" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER_X_ABILITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_FOLLOWER_X_ABILITY" >HOTFIX_SEL_GARR_FOLLOWER_X_ABILITY</dfn>,</td></tr>
+<tr><th id="102">102</th><td></td></tr>
+<tr><th id="103">103</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT" >HOTFIX_SEL_GARR_PLOT</dfn>,</td></tr>
+<tr><th id="104">104</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_LOCALE" >HOTFIX_SEL_GARR_PLOT_LOCALE</dfn>,</td></tr>
+<tr><th id="105">105</th><td></td></tr>
+<tr><th id="106">106</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_BUILDING" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_BUILDING' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_BUILDING" >HOTFIX_SEL_GARR_PLOT_BUILDING</dfn>,</td></tr>
+<tr><th id="107">107</th><td></td></tr>
+<tr><th id="108">108</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_INSTANCE" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_INSTANCE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_INSTANCE" >HOTFIX_SEL_GARR_PLOT_INSTANCE</dfn>,</td></tr>
+<tr><th id="109">109</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_INSTANCE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_INSTANCE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_PLOT_INSTANCE_LOCALE" >HOTFIX_SEL_GARR_PLOT_INSTANCE_LOCALE</dfn>,</td></tr>
+<tr><th id="110">110</th><td></td></tr>
+<tr><th id="111">111</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_SITE_LEVEL" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_SITE_LEVEL' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_SITE_LEVEL" >HOTFIX_SEL_GARR_SITE_LEVEL</dfn>,</td></tr>
+<tr><th id="112">112</th><td></td></tr>
+<tr><th id="113">113</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GARR_SITE_LEVEL_PLOT_INST" title='HotfixDatabaseStatements::HOTFIX_SEL_GARR_SITE_LEVEL_PLOT_INST' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GARR_SITE_LEVEL_PLOT_INST" >HOTFIX_SEL_GARR_SITE_LEVEL_PLOT_INST</dfn>,</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GLYPH_SLOT" title='HotfixDatabaseStatements::HOTFIX_SEL_GLYPH_SLOT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GLYPH_SLOT" >HOTFIX_SEL_GLYPH_SLOT</dfn>,</td></tr>
+<tr><th id="116">116</th><td></td></tr>
+<tr><th id="117">117</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_GUILD_PERK_SPELLS" title='HotfixDatabaseStatements::HOTFIX_SEL_GUILD_PERK_SPELLS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_GUILD_PERK_SPELLS" >HOTFIX_SEL_GUILD_PERK_SPELLS</dfn>,</td></tr>
+<tr><th id="118">118</th><td></td></tr>
+<tr><th id="119">119</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_HEIRLOOM" title='HotfixDatabaseStatements::HOTFIX_SEL_HEIRLOOM' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_HEIRLOOM" >HOTFIX_SEL_HEIRLOOM</dfn>,</td></tr>
+<tr><th id="120">120</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_HEIRLOOM_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_HEIRLOOM_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_HEIRLOOM_LOCALE" >HOTFIX_SEL_HEIRLOOM_LOCALE</dfn>,</td></tr>
+<tr><th id="121">121</th><td></td></tr>
+<tr><th id="122">122</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_HOLIDAYS" title='HotfixDatabaseStatements::HOTFIX_SEL_HOLIDAYS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_HOLIDAYS" >HOTFIX_SEL_HOLIDAYS</dfn>,</td></tr>
+<tr><th id="123">123</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_HOLIDAYS_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_HOLIDAYS_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_HOLIDAYS_LOCALE" >HOTFIX_SEL_HOLIDAYS_LOCALE</dfn>,</td></tr>
+<tr><th id="124">124</th><td></td></tr>
+<tr><th id="125">125</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_ARMOR" title='HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_ARMOR' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_ARMOR" >HOTFIX_SEL_IMPORT_PRICE_ARMOR</dfn>,</td></tr>
+<tr><th id="126">126</th><td></td></tr>
+<tr><th id="127">127</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_QUALITY" title='HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_QUALITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_QUALITY" >HOTFIX_SEL_IMPORT_PRICE_QUALITY</dfn>,</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_SHIELD" title='HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_SHIELD' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_SHIELD" >HOTFIX_SEL_IMPORT_PRICE_SHIELD</dfn>,</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_WEAPON" title='HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_WEAPON' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_IMPORT_PRICE_WEAPON" >HOTFIX_SEL_IMPORT_PRICE_WEAPON</dfn>,</td></tr>
+<tr><th id="132">132</th><td></td></tr>
+<tr><th id="133">133</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_APPEARANCE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_APPEARANCE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_APPEARANCE" >HOTFIX_SEL_ITEM_APPEARANCE</dfn>,</td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_BONUS" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_BONUS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_BONUS" >HOTFIX_SEL_ITEM_BONUS</dfn>,</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_BONUS_TREE_NODE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_BONUS_TREE_NODE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_BONUS_TREE_NODE" >HOTFIX_SEL_ITEM_BONUS_TREE_NODE</dfn>,</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CLASS" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CLASS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CLASS" >HOTFIX_SEL_ITEM_CLASS</dfn>,</td></tr>
+<tr><th id="140">140</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CLASS_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CLASS_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CLASS_LOCALE" >HOTFIX_SEL_ITEM_CLASS_LOCALE</dfn>,</td></tr>
+<tr><th id="141">141</th><td></td></tr>
+<tr><th id="142">142</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CURRENCY_COST" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CURRENCY_COST' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_CURRENCY_COST" >HOTFIX_SEL_ITEM_CURRENCY_COST</dfn>,</td></tr>
+<tr><th id="143">143</th><td></td></tr>
+<tr><th id="144">144</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_DISENCHANT_LOOT" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_DISENCHANT_LOOT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_DISENCHANT_LOOT" >HOTFIX_SEL_ITEM_DISENCHANT_LOOT</dfn>,</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_EFFECT" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_EFFECT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_EFFECT" >HOTFIX_SEL_ITEM_EFFECT</dfn>,</td></tr>
+<tr><th id="147">147</th><td></td></tr>
+<tr><th id="148">148</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM" >HOTFIX_SEL_ITEM</dfn>,</td></tr>
+<tr><th id="149">149</th><td></td></tr>
+<tr><th id="150">150</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_EXTENDED_COST" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_EXTENDED_COST' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_EXTENDED_COST" >HOTFIX_SEL_ITEM_EXTENDED_COST</dfn>,</td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_LIMIT_CATEGORY" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_LIMIT_CATEGORY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_LIMIT_CATEGORY" >HOTFIX_SEL_ITEM_LIMIT_CATEGORY</dfn>,</td></tr>
+<tr><th id="153">153</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_LIMIT_CATEGORY_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_LIMIT_CATEGORY_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_LIMIT_CATEGORY_LOCALE" >HOTFIX_SEL_ITEM_LIMIT_CATEGORY_LOCALE</dfn>,</td></tr>
+<tr><th id="154">154</th><td></td></tr>
+<tr><th id="155">155</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_MODIFIED_APPEARANCE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_MODIFIED_APPEARANCE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_MODIFIED_APPEARANCE" >HOTFIX_SEL_ITEM_MODIFIED_APPEARANCE</dfn>,</td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_PRICE_BASE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_PRICE_BASE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_PRICE_BASE" >HOTFIX_SEL_ITEM_PRICE_BASE</dfn>,</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_PROPERTIES" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_PROPERTIES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_PROPERTIES" >HOTFIX_SEL_ITEM_RANDOM_PROPERTIES</dfn>,</td></tr>
+<tr><th id="160">160</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_PROPERTIES_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_PROPERTIES_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_PROPERTIES_LOCALE" >HOTFIX_SEL_ITEM_RANDOM_PROPERTIES_LOCALE</dfn>,</td></tr>
+<tr><th id="161">161</th><td></td></tr>
+<tr><th id="162">162</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_SUFFIX" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_SUFFIX' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_SUFFIX" >HOTFIX_SEL_ITEM_RANDOM_SUFFIX</dfn>,</td></tr>
+<tr><th id="163">163</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_SUFFIX_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_SUFFIX_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_RANDOM_SUFFIX_LOCALE" >HOTFIX_SEL_ITEM_RANDOM_SUFFIX_LOCALE</dfn>,</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPARSE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPARSE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPARSE" >HOTFIX_SEL_ITEM_SPARSE</dfn>,</td></tr>
+<tr><th id="166">166</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPARSE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPARSE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPARSE_LOCALE" >HOTFIX_SEL_ITEM_SPARSE_LOCALE</dfn>,</td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPEC" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPEC' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPEC" >HOTFIX_SEL_ITEM_SPEC</dfn>,</td></tr>
+<tr><th id="169">169</th><td></td></tr>
+<tr><th id="170">170</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPEC_OVERRIDE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPEC_OVERRIDE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_SPEC_OVERRIDE" >HOTFIX_SEL_ITEM_SPEC_OVERRIDE</dfn>,</td></tr>
+<tr><th id="171">171</th><td></td></tr>
+<tr><th id="172">172</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_TO_BATTLE_PET_SPECIES" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_TO_BATTLE_PET_SPECIES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_TO_BATTLE_PET_SPECIES" >HOTFIX_SEL_ITEM_TO_BATTLE_PET_SPECIES</dfn>,</td></tr>
+<tr><th id="173">173</th><td></td></tr>
+<tr><th id="174">174</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_X_BONUS_TREE" title='HotfixDatabaseStatements::HOTFIX_SEL_ITEM_X_BONUS_TREE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_ITEM_X_BONUS_TREE" >HOTFIX_SEL_ITEM_X_BONUS_TREE</dfn>,</td></tr>
+<tr><th id="175">175</th><td></td></tr>
+<tr><th id="176">176</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_KEY_CHAIN" title='HotfixDatabaseStatements::HOTFIX_SEL_KEY_CHAIN' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_KEY_CHAIN" >HOTFIX_SEL_KEY_CHAIN</dfn>,</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_MAIL_TEMPLATE" title='HotfixDatabaseStatements::HOTFIX_SEL_MAIL_TEMPLATE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_MAIL_TEMPLATE" >HOTFIX_SEL_MAIL_TEMPLATE</dfn>,</td></tr>
+<tr><th id="179">179</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_MAIL_TEMPLATE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_MAIL_TEMPLATE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_MAIL_TEMPLATE_LOCALE" >HOTFIX_SEL_MAIL_TEMPLATE_LOCALE</dfn>,</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_MODIFIER_TREE" title='HotfixDatabaseStatements::HOTFIX_SEL_MODIFIER_TREE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_MODIFIER_TREE" >HOTFIX_SEL_MODIFIER_TREE</dfn>,</td></tr>
+<tr><th id="182">182</th><td></td></tr>
+<tr><th id="183">183</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT" title='HotfixDatabaseStatements::HOTFIX_SEL_MOUNT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT" >HOTFIX_SEL_MOUNT</dfn>,</td></tr>
+<tr><th id="184">184</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_LOCALE" >HOTFIX_SEL_MOUNT_LOCALE</dfn>,</td></tr>
+<tr><th id="185">185</th><td></td></tr>
+<tr><th id="186">186</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_CAPABILITY" title='HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_CAPABILITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_CAPABILITY" >HOTFIX_SEL_MOUNT_CAPABILITY</dfn>,</td></tr>
+<tr><th id="187">187</th><td></td></tr>
+<tr><th id="188">188</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_TYPE_X_CAPABILITY" title='HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_TYPE_X_CAPABILITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_MOUNT_TYPE_X_CAPABILITY" >HOTFIX_SEL_MOUNT_TYPE_X_CAPABILITY</dfn>,</td></tr>
+<tr><th id="189">189</th><td></td></tr>
+<tr><th id="190">190</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_NAME_GEN" title='HotfixDatabaseStatements::HOTFIX_SEL_NAME_GEN' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_NAME_GEN" >HOTFIX_SEL_NAME_GEN</dfn>,</td></tr>
+<tr><th id="191">191</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_NAME_GEN_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_NAME_GEN_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_NAME_GEN_LOCALE" >HOTFIX_SEL_NAME_GEN_LOCALE</dfn>,</td></tr>
+<tr><th id="192">192</th><td></td></tr>
+<tr><th id="193">193</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_NAMES_PROFANITY" title='HotfixDatabaseStatements::HOTFIX_SEL_NAMES_PROFANITY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_NAMES_PROFANITY" >HOTFIX_SEL_NAMES_PROFANITY</dfn>,</td></tr>
+<tr><th id="194">194</th><td></td></tr>
+<tr><th id="195">195</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_NAMES_RESERVED" title='HotfixDatabaseStatements::HOTFIX_SEL_NAMES_RESERVED' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_NAMES_RESERVED" >HOTFIX_SEL_NAMES_RESERVED</dfn>,</td></tr>
+<tr><th id="196">196</th><td></td></tr>
+<tr><th id="197">197</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_NAMES_RESERVED_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_NAMES_RESERVED_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_NAMES_RESERVED_LOCALE" >HOTFIX_SEL_NAMES_RESERVED_LOCALE</dfn>,</td></tr>
+<tr><th id="198">198</th><td></td></tr>
+<tr><th id="199">199</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_OVERRIDE_SPELL_DATA" title='HotfixDatabaseStatements::HOTFIX_SEL_OVERRIDE_SPELL_DATA' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_OVERRIDE_SPELL_DATA" >HOTFIX_SEL_OVERRIDE_SPELL_DATA</dfn>,</td></tr>
+<tr><th id="200">200</th><td></td></tr>
+<tr><th id="201">201</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_PHASE_X_PHASE_GROUP" title='HotfixDatabaseStatements::HOTFIX_SEL_PHASE_X_PHASE_GROUP' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_PHASE_X_PHASE_GROUP" >HOTFIX_SEL_PHASE_X_PHASE_GROUP</dfn>,</td></tr>
+<tr><th id="202">202</th><td></td></tr>
+<tr><th id="203">203</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_PLAYER_CONDITION" title='HotfixDatabaseStatements::HOTFIX_SEL_PLAYER_CONDITION' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_PLAYER_CONDITION" >HOTFIX_SEL_PLAYER_CONDITION</dfn>,</td></tr>
+<tr><th id="204">204</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_PLAYER_CONDITION_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_PLAYER_CONDITION_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_PLAYER_CONDITION_LOCALE" >HOTFIX_SEL_PLAYER_CONDITION_LOCALE</dfn>,</td></tr>
+<tr><th id="205">205</th><td></td></tr>
+<tr><th id="206">206</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_MONEY_REWARD" title='HotfixDatabaseStatements::HOTFIX_SEL_QUEST_MONEY_REWARD' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_MONEY_REWARD" >HOTFIX_SEL_QUEST_MONEY_REWARD</dfn>,</td></tr>
+<tr><th id="207">207</th><td></td></tr>
+<tr><th id="208">208</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_PACKAGE_ITEM" title='HotfixDatabaseStatements::HOTFIX_SEL_QUEST_PACKAGE_ITEM' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_PACKAGE_ITEM" >HOTFIX_SEL_QUEST_PACKAGE_ITEM</dfn>,</td></tr>
+<tr><th id="209">209</th><td></td></tr>
+<tr><th id="210">210</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_SORT" title='HotfixDatabaseStatements::HOTFIX_SEL_QUEST_SORT' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_SORT" >HOTFIX_SEL_QUEST_SORT</dfn>,</td></tr>
+<tr><th id="211">211</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_SORT_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_QUEST_SORT_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_SORT_LOCALE" >HOTFIX_SEL_QUEST_SORT_LOCALE</dfn>,</td></tr>
+<tr><th id="212">212</th><td></td></tr>
+<tr><th id="213">213</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_V2" title='HotfixDatabaseStatements::HOTFIX_SEL_QUEST_V2' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_V2" >HOTFIX_SEL_QUEST_V2</dfn>,</td></tr>
+<tr><th id="214">214</th><td></td></tr>
+<tr><th id="215">215</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_XP" title='HotfixDatabaseStatements::HOTFIX_SEL_QUEST_XP' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_QUEST_XP" >HOTFIX_SEL_QUEST_XP</dfn>,</td></tr>
+<tr><th id="216">216</th><td></td></tr>
+<tr><th id="217">217</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SCALING_STAT_DISTRIBUTION" title='HotfixDatabaseStatements::HOTFIX_SEL_SCALING_STAT_DISTRIBUTION' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SCALING_STAT_DISTRIBUTION" >HOTFIX_SEL_SCALING_STAT_DISTRIBUTION</dfn>,</td></tr>
+<tr><th id="218">218</th><td></td></tr>
+<tr><th id="219">219</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SOUND_ENTRIES" title='HotfixDatabaseStatements::HOTFIX_SEL_SOUND_ENTRIES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SOUND_ENTRIES" >HOTFIX_SEL_SOUND_ENTRIES</dfn>,</td></tr>
+<tr><th id="220">220</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SOUND_ENTRIES_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_SOUND_ENTRIES_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SOUND_ENTRIES_LOCALE" >HOTFIX_SEL_SOUND_ENTRIES_LOCALE</dfn>,</td></tr>
+<tr><th id="221">221</th><td></td></tr>
+<tr><th id="222">222</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPECIALIZATION_SPELLS" title='HotfixDatabaseStatements::HOTFIX_SEL_SPECIALIZATION_SPELLS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPECIALIZATION_SPELLS" >HOTFIX_SEL_SPECIALIZATION_SPELLS</dfn>,</td></tr>
+<tr><th id="223">223</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPECIALIZATION_SPELLS_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_SPECIALIZATION_SPELLS_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPECIALIZATION_SPELLS_LOCALE" >HOTFIX_SEL_SPECIALIZATION_SPELLS_LOCALE</dfn>,</td></tr>
+<tr><th id="224">224</th><td></td></tr>
+<tr><th id="225">225</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_AURA_RESTRICTIONS" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_AURA_RESTRICTIONS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_AURA_RESTRICTIONS" >HOTFIX_SEL_SPELL_AURA_RESTRICTIONS</dfn>,</td></tr>
+<tr><th id="226">226</th><td></td></tr>
+<tr><th id="227">227</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CASTING_REQUIREMENTS" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CASTING_REQUIREMENTS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CASTING_REQUIREMENTS" >HOTFIX_SEL_SPELL_CASTING_REQUIREMENTS</dfn>,</td></tr>
+<tr><th id="228">228</th><td></td></tr>
+<tr><th id="229">229</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CAST_TIMES" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CAST_TIMES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CAST_TIMES" >HOTFIX_SEL_SPELL_CAST_TIMES</dfn>,</td></tr>
+<tr><th id="230">230</th><td></td></tr>
+<tr><th id="231">231</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CLASS_OPTIONS" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CLASS_OPTIONS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_CLASS_OPTIONS" >HOTFIX_SEL_SPELL_CLASS_OPTIONS</dfn>,</td></tr>
+<tr><th id="232">232</th><td></td></tr>
+<tr><th id="233">233</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_DURATION" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_DURATION' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_DURATION" >HOTFIX_SEL_SPELL_DURATION</dfn>,</td></tr>
+<tr><th id="234">234</th><td></td></tr>
+<tr><th id="235">235</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_ITEM_ENCHANTMENT_CONDITION" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_ITEM_ENCHANTMENT_CONDITION' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_ITEM_ENCHANTMENT_CONDITION" >HOTFIX_SEL_SPELL_ITEM_ENCHANTMENT_CONDITION</dfn>,</td></tr>
+<tr><th id="236">236</th><td></td></tr>
+<tr><th id="237">237</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_LEARN_SPELL" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_LEARN_SPELL' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_LEARN_SPELL" >HOTFIX_SEL_SPELL_LEARN_SPELL</dfn>,</td></tr>
+<tr><th id="238">238</th><td></td></tr>
+<tr><th id="239">239</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_MISC" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_MISC' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_MISC" >HOTFIX_SEL_SPELL_MISC</dfn>,</td></tr>
+<tr><th id="240">240</th><td></td></tr>
+<tr><th id="241">241</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_POWER" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_POWER' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_POWER" >HOTFIX_SEL_SPELL_POWER</dfn>,</td></tr>
+<tr><th id="242">242</th><td></td></tr>
+<tr><th id="243">243</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_POWER_DIFFICULTY" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_POWER_DIFFICULTY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_POWER_DIFFICULTY" >HOTFIX_SEL_SPELL_POWER_DIFFICULTY</dfn>,</td></tr>
+<tr><th id="244">244</th><td></td></tr>
+<tr><th id="245">245</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RADIUS" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RADIUS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RADIUS" >HOTFIX_SEL_SPELL_RADIUS</dfn>,</td></tr>
+<tr><th id="246">246</th><td></td></tr>
+<tr><th id="247">247</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RANGE" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RANGE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RANGE" >HOTFIX_SEL_SPELL_RANGE</dfn>,</td></tr>
+<tr><th id="248">248</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RANGE_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RANGE_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RANGE_LOCALE" >HOTFIX_SEL_SPELL_RANGE_LOCALE</dfn>,</td></tr>
+<tr><th id="249">249</th><td></td></tr>
+<tr><th id="250">250</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_REAGENTS" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_REAGENTS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_REAGENTS" >HOTFIX_SEL_SPELL_REAGENTS</dfn>,</td></tr>
+<tr><th id="251">251</th><td></td></tr>
+<tr><th id="252">252</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RUNE_COST" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RUNE_COST' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_RUNE_COST" >HOTFIX_SEL_SPELL_RUNE_COST</dfn>,</td></tr>
+<tr><th id="253">253</th><td></td></tr>
+<tr><th id="254">254</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_TOTEMS" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_TOTEMS' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_TOTEMS" >HOTFIX_SEL_SPELL_TOTEMS</dfn>,</td></tr>
+<tr><th id="255">255</th><td></td></tr>
+<tr><th id="256">256</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_X_SPELL_VISUAL" title='HotfixDatabaseStatements::HOTFIX_SEL_SPELL_X_SPELL_VISUAL' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_SPELL_X_SPELL_VISUAL" >HOTFIX_SEL_SPELL_X_SPELL_VISUAL</dfn>,</td></tr>
+<tr><th id="257">257</th><td></td></tr>
+<tr><th id="258">258</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_NODES" title='HotfixDatabaseStatements::HOTFIX_SEL_TAXI_NODES' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_NODES" >HOTFIX_SEL_TAXI_NODES</dfn>,</td></tr>
+<tr><th id="259">259</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_NODES_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_TAXI_NODES_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_NODES_LOCALE" >HOTFIX_SEL_TAXI_NODES_LOCALE</dfn>,</td></tr>
+<tr><th id="260">260</th><td></td></tr>
+<tr><th id="261">261</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_PATH" title='HotfixDatabaseStatements::HOTFIX_SEL_TAXI_PATH' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_PATH" >HOTFIX_SEL_TAXI_PATH</dfn>,</td></tr>
+<tr><th id="262">262</th><td></td></tr>
+<tr><th id="263">263</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_PATH_NODE" title='HotfixDatabaseStatements::HOTFIX_SEL_TAXI_PATH_NODE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TAXI_PATH_NODE" >HOTFIX_SEL_TAXI_PATH_NODE</dfn>,</td></tr>
+<tr><th id="264">264</th><td></td></tr>
+<tr><th id="265">265</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TOTEM_CATEGORY" title='HotfixDatabaseStatements::HOTFIX_SEL_TOTEM_CATEGORY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TOTEM_CATEGORY" >HOTFIX_SEL_TOTEM_CATEGORY</dfn>,</td></tr>
+<tr><th id="266">266</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TOTEM_CATEGORY_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_TOTEM_CATEGORY_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TOTEM_CATEGORY_LOCALE" >HOTFIX_SEL_TOTEM_CATEGORY_LOCALE</dfn>,</td></tr>
+<tr><th id="267">267</th><td></td></tr>
+<tr><th id="268">268</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TOY" title='HotfixDatabaseStatements::HOTFIX_SEL_TOY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TOY" >HOTFIX_SEL_TOY</dfn>,</td></tr>
+<tr><th id="269">269</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TOY_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_TOY_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TOY_LOCALE" >HOTFIX_SEL_TOY_LOCALE</dfn>,</td></tr>
+<tr><th id="270">270</th><td></td></tr>
+<tr><th id="271">271</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TRANSPORT_ANIMATION" title='HotfixDatabaseStatements::HOTFIX_SEL_TRANSPORT_ANIMATION' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TRANSPORT_ANIMATION" >HOTFIX_SEL_TRANSPORT_ANIMATION</dfn>,</td></tr>
+<tr><th id="272">272</th><td></td></tr>
+<tr><th id="273">273</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_TRANSPORT_ROTATION" title='HotfixDatabaseStatements::HOTFIX_SEL_TRANSPORT_ROTATION' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_TRANSPORT_ROTATION" >HOTFIX_SEL_TRANSPORT_ROTATION</dfn>,</td></tr>
+<tr><th id="274">274</th><td></td></tr>
+<tr><th id="275">275</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_UNIT_POWER_BAR" title='HotfixDatabaseStatements::HOTFIX_SEL_UNIT_POWER_BAR' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_UNIT_POWER_BAR" >HOTFIX_SEL_UNIT_POWER_BAR</dfn>,</td></tr>
+<tr><th id="276">276</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_UNIT_POWER_BAR_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_UNIT_POWER_BAR_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_UNIT_POWER_BAR_LOCALE" >HOTFIX_SEL_UNIT_POWER_BAR_LOCALE</dfn>,</td></tr>
+<tr><th id="277">277</th><td></td></tr>
+<tr><th id="278">278</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_WORLD_MAP_OVERLAY" title='HotfixDatabaseStatements::HOTFIX_SEL_WORLD_MAP_OVERLAY' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_WORLD_MAP_OVERLAY" >HOTFIX_SEL_WORLD_MAP_OVERLAY</dfn>,</td></tr>
+<tr><th id="279">279</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::HOTFIX_SEL_WORLD_MAP_OVERLAY_LOCALE" title='HotfixDatabaseStatements::HOTFIX_SEL_WORLD_MAP_OVERLAY_LOCALE' data-ref="HotfixDatabaseStatements::HOTFIX_SEL_WORLD_MAP_OVERLAY_LOCALE" >HOTFIX_SEL_WORLD_MAP_OVERLAY_LOCALE</dfn>,</td></tr>
+<tr><th id="280">280</th><td></td></tr>
+<tr><th id="281">281</th><td>    <dfn class="enum" id="HotfixDatabaseStatements::MAX_HOTFIXDATABASE_STATEMENTS" title='HotfixDatabaseStatements::MAX_HOTFIXDATABASE_STATEMENTS' data-ref="HotfixDatabaseStatements::MAX_HOTFIXDATABASE_STATEMENTS" >MAX_HOTFIXDATABASE_STATEMENTS</dfn></td></tr>
+<tr><th id="282">282</th><td>};</td></tr>
+<tr><th id="283">283</th><td></td></tr>
+<tr><th id="284">284</th><td><b>class</b> <dfn class="type def" id="HotfixDatabaseConnection" title='HotfixDatabaseConnection' data-ref="HotfixDatabaseConnection" >HotfixDatabaseConnection</dfn> : <b>public</b> <a class="type" href="../MySQLConnection.h.html#MySQLConnection" title='MySQLConnection' data-ref="MySQLConnection" >MySQLConnection</a></td></tr>
+<tr><th id="285">285</th><td>{</td></tr>
+<tr><th id="286">286</th><td><b>public</b>:</td></tr>
+<tr><th id="287">287</th><td>    <b>typedef</b> <a class="type" href="#HotfixDatabaseStatements" title='HotfixDatabaseStatements' data-ref="HotfixDatabaseStatements" >HotfixDatabaseStatements</a> <dfn class="typedef" id="HotfixDatabaseConnection::Statements" title='HotfixDatabaseConnection::Statements' data-type='HotfixDatabaseStatements' data-ref="HotfixDatabaseConnection::Statements" >Statements</dfn>;</td></tr>
+<tr><th id="288">288</th><td></td></tr>
+<tr><th id="289">289</th><td>    <i>//- Constructors for sync and async connections</i></td></tr>
+<tr><th id="290">290</th><td>    <dfn class="decl def" id="_ZN24HotfixDatabaseConnectionC1ER19MySQLConnectionInfo" title='HotfixDatabaseConnection::HotfixDatabaseConnection' data-ref="_ZN24HotfixDatabaseConnectionC1ER19MySQLConnectionInfo" >HotfixDatabaseConnection</dfn>(<a class="type" href="../MySQLConnection.h.html#MySQLConnectionInfo" title='MySQLConnectionInfo' data-ref="MySQLConnectionInfo" >MySQLConnectionInfo</a>&amp; <dfn class="local col4 decl" id="524connInfo" title='connInfo' data-type='MySQLConnectionInfo &amp;' data-ref="524connInfo" >connInfo</dfn>) : <a class="type" href="../MySQLConnection.h.html#MySQLConnection" title='MySQLConnection' data-ref="MySQLConnection" >MySQLConnection</a><a class="ref" href="../MySQLConnection.h.html#_ZN15MySQLConnectionC1ER19MySQLConnectionInfo" title='MySQLConnection::MySQLConnection' data-ref="_ZN15MySQLConnectionC1ER19MySQLConnectionInfo" id="_ZN15MySQLConnectionC1ER19MySQLConnectionInfo" >(</a><a class="local col4 ref" href="#524connInfo" title='connInfo' data-ref="524connInfo" >connInfo</a>) { }</td></tr>
+<tr><th id="291">291</th><td>    <dfn class="decl def" id="_ZN24HotfixDatabaseConnectionC1EP21ProducerConsumerQueueIP12SQLOperationER19MySQLConnectionInfo" title='HotfixDatabaseConnection::HotfixDatabaseConnection' data-ref="_ZN24HotfixDatabaseConnectionC1EP21ProducerConsumerQueueIP12SQLOperationER19MySQLConnectionInfo" >HotfixDatabaseConnection</dfn>(<a class="type" href="../../../../common/Threading/ProducerConsumerQueue.h.html#ProducerConsumerQueue" title='ProducerConsumerQueue' data-ref="ProducerConsumerQueue" >ProducerConsumerQueue</a>&lt;<a class="type" href="../SQLOperation.h.html#SQLOperation" title='SQLOperation' data-ref="SQLOperation" >SQLOperation</a>*&gt;* <dfn class="local col5 decl" id="525q" title='q' data-type='ProducerConsumerQueue&lt;SQLOperation *&gt; *' data-ref="525q" >q</dfn>, <a class="type" href="../MySQLConnection.h.html#MySQLConnectionInfo" title='MySQLConnectionInfo' data-ref="MySQLConnectionInfo" >MySQLConnectionInfo</a>&amp; <dfn class="local col6 decl" id="526connInfo" title='connInfo' data-type='MySQLConnectionInfo &amp;' data-ref="526connInfo" >connInfo</dfn>) : <a class="type" href="../MySQLConnection.h.html#MySQLConnection" title='MySQLConnection' data-ref="MySQLConnection" >MySQLConnection</a><a class="ref" href="../MySQLConnection.h.html#_ZN15MySQLConnectionC1EP21ProducerConsumerQueueIP12SQLOperationER19MySQLConnectionInfo" title='MySQLConnection::MySQLConnection' data-ref="_ZN15MySQLConnectionC1EP21ProducerConsumerQueueIP12SQLOperationER19MySQLConnectionInfo" id="_ZN15MySQLConnectionC1EP21ProducerConsumerQueueIP12SQLOperationER19MySQLConnectionInfo" >(</a><a class="local col5 ref" href="#525q" title='q' data-ref="525q" >q</a>, <a class="local col6 ref" href="#526connInfo" title='connInfo' data-ref="526connInfo" >connInfo</a>) { }</td></tr>
+<tr><th id="292">292</th><td></td></tr>
+<tr><th id="293">293</th><td>    <i>//- Loads database type specific prepared statements</i></td></tr>
+<tr><th id="294">294</th><td>    <em>void</em> <dfn class="virtual decl" id="_ZN24HotfixDatabaseConnection19DoPrepareStatementsEv" title='HotfixDatabaseConnection::DoPrepareStatements' data-ref="_ZN24HotfixDatabaseConnection19DoPrepareStatementsEv" >DoPrepareStatements</dfn>() override;</td></tr>
+<tr><th id="295">295</th><td>};</td></tr>
+<tr><th id="296">296</th><td></td></tr>
+<tr><th id="297">297</th><td><b>typedef</b> <a class="type" href="../Transaction.h.html#DatabaseWorkerPool" title='DatabaseWorkerPool' data-ref="DatabaseWorkerPool" >DatabaseWorkerPool</a>&lt;<a class="type" href="#HotfixDatabaseConnection" title='HotfixDatabaseConnection' data-ref="HotfixDatabaseConnection" >HotfixDatabaseConnection</a>&gt; <dfn class="typedef" id="HotfixDatabaseWorkerPool" title='HotfixDatabaseWorkerPool' data-type='DatabaseWorkerPool&lt;HotfixDatabaseConnection&gt;' data-ref="HotfixDatabaseWorkerPool" >HotfixDatabaseWorkerPool</dfn>;</td></tr>
+<tr><th id="298">298</th><td></td></tr>
+<tr><th id="299">299</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="300">300</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../bnetserver/Main.cpp.html'>TrinityCore6.x/src/server/bnetserver/Main.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

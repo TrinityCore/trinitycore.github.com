@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+<title>jemalloc.h [TrinityCore3.3.5/dep/jemalloc/include/jemalloc/jemalloc.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/jemalloc/include/jemalloc/jemalloc.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>dep</a>/<a href='../..'>jemalloc</a>/<a href='..'>include</a>/<a href='./'>jemalloc</a>/jemalloc.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><u>#<span data-ppcond="1">ifndef</span> <span class="macro" data-ref="_M/JEMALLOC_H_">JEMALLOC_H_</span></u></td></tr>
+<tr><th id="2">2</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_H_" data-ref="_M/JEMALLOC_H_">JEMALLOC_H_</dfn></u></td></tr>
+<tr><th id="3">3</th><td><u>#<span data-ppcond="3">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="4">4</th><td><b>extern</b> <q>"C"</q> {</td></tr>
+<tr><th id="5">5</th><td><u>#<span data-ppcond="3">endif</span></u></td></tr>
+<tr><th id="6">6</th><td></td></tr>
+<tr><th id="7">7</th><td><u>#include &lt;limits.h&gt;</u></td></tr>
+<tr><th id="8">8</th><td><u>#include <a href="../../../../../include/strings.h.html">&lt;strings.h&gt;</a></u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_VERSION" data-ref="_M/JEMALLOC_VERSION">JEMALLOC_VERSION</dfn> "3.6.0-0-g46c0af68bd248b04df75e4f92d5fb804c3d75340"</u></td></tr>
+<tr><th id="11">11</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_VERSION_MAJOR" data-ref="_M/JEMALLOC_VERSION_MAJOR">JEMALLOC_VERSION_MAJOR</dfn> 3</u></td></tr>
+<tr><th id="12">12</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_VERSION_MINOR" data-ref="_M/JEMALLOC_VERSION_MINOR">JEMALLOC_VERSION_MINOR</dfn> 6</u></td></tr>
+<tr><th id="13">13</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_VERSION_BUGFIX" data-ref="_M/JEMALLOC_VERSION_BUGFIX">JEMALLOC_VERSION_BUGFIX</dfn> 0</u></td></tr>
+<tr><th id="14">14</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_VERSION_NREV" data-ref="_M/JEMALLOC_VERSION_NREV">JEMALLOC_VERSION_NREV</dfn> 0</u></td></tr>
+<tr><th id="15">15</th><td><u>#define	<dfn class="macro" id="_M/JEMALLOC_VERSION_GID" data-ref="_M/JEMALLOC_VERSION_GID">JEMALLOC_VERSION_GID</dfn> "46c0af68bd248b04df75e4f92d5fb804c3d75340"</u></td></tr>
+<tr><th id="16">16</th><td></td></tr>
+<tr><th id="17">17</th><td><u>#  define <dfn class="macro" id="_M/MALLOCX_LG_ALIGN" data-ref="_M/MALLOCX_LG_ALIGN">MALLOCX_LG_ALIGN</dfn>(la)	(la)</u></td></tr>
+<tr><th id="18">18</th><td><u>#  <span data-ppcond="18">if</span> <a class="macro" href="../../../../build/jemalloc_defs.h.html#259" title="3" data-ref="_M/LG_SIZEOF_PTR">LG_SIZEOF_PTR</a> == 2</u></td></tr>
+<tr><th id="19">19</th><td><u>#    define MALLOCX_ALIGN(a)	(ffs(a)-1)</u></td></tr>
+<tr><th id="20">20</th><td><u>#  <span data-ppcond="18">else</span></u></td></tr>
+<tr><th id="21">21</th><td><u>#    define <dfn class="macro" id="_M/MALLOCX_ALIGN" data-ref="_M/MALLOCX_ALIGN">MALLOCX_ALIGN</dfn>(a)						\</u></td></tr>
+<tr><th id="22">22</th><td><u>	 ((a &lt; (size_t)INT_MAX) ? ffs(a)-1 : ffs(a&gt;&gt;32)+31)</u></td></tr>
+<tr><th id="23">23</th><td><u>#  <span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="24">24</th><td><u>#  define <dfn class="macro" id="_M/MALLOCX_ZERO" data-ref="_M/MALLOCX_ZERO">MALLOCX_ZERO</dfn>	((int)0x40)</u></td></tr>
+<tr><th id="25">25</th><td><i>/* Bias arena index bits so that 0 encodes "MALLOCX_ARENA() unspecified". */</i></td></tr>
+<tr><th id="26">26</th><td><u>#  define <dfn class="macro" id="_M/MALLOCX_ARENA" data-ref="_M/MALLOCX_ARENA">MALLOCX_ARENA</dfn>(a)	((int)(((a)+1) &lt;&lt; 8))</u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><u>#<span data-ppcond="28">ifdef</span> <a class="macro" href="../../../../build/jemalloc_defs.h.html#178" data-ref="_M/JEMALLOC_EXPERIMENTAL">JEMALLOC_EXPERIMENTAL</a></u></td></tr>
+<tr><th id="29">29</th><td><u>#  define <dfn class="macro" id="_M/ALLOCM_LG_ALIGN" data-ref="_M/ALLOCM_LG_ALIGN">ALLOCM_LG_ALIGN</dfn>(la)	(la)</u></td></tr>
+<tr><th id="30">30</th><td><u>#  <span data-ppcond="30">if</span> <a class="macro" href="../../../../build/jemalloc_defs.h.html#259" title="3" data-ref="_M/LG_SIZEOF_PTR">LG_SIZEOF_PTR</a> == 2</u></td></tr>
+<tr><th id="31">31</th><td><u>#    define ALLOCM_ALIGN(a)	(ffs(a)-1)</u></td></tr>
+<tr><th id="32">32</th><td><u>#  <span data-ppcond="30">else</span></u></td></tr>
+<tr><th id="33">33</th><td><u>#    define <dfn class="macro" id="_M/ALLOCM_ALIGN" data-ref="_M/ALLOCM_ALIGN">ALLOCM_ALIGN</dfn>(a)						\</u></td></tr>
+<tr><th id="34">34</th><td><u>	 ((a &lt; (size_t)INT_MAX) ? ffs(a)-1 : ffs(a&gt;&gt;32)+31)</u></td></tr>
+<tr><th id="35">35</th><td><u>#  <span data-ppcond="30">endif</span></u></td></tr>
+<tr><th id="36">36</th><td><u>#  define <dfn class="macro" id="_M/ALLOCM_ZERO" data-ref="_M/ALLOCM_ZERO">ALLOCM_ZERO</dfn>	((int)0x40)</u></td></tr>
+<tr><th id="37">37</th><td><u>#  define <dfn class="macro" id="_M/ALLOCM_NO_MOVE" data-ref="_M/ALLOCM_NO_MOVE">ALLOCM_NO_MOVE</dfn>	((int)0x80)</u></td></tr>
+<tr><th id="38">38</th><td><i>/* Bias arena index bits so that 0 encodes "ALLOCM_ARENA() unspecified". */</i></td></tr>
+<tr><th id="39">39</th><td><u>#  define <dfn class="macro" id="_M/ALLOCM_ARENA" data-ref="_M/ALLOCM_ARENA">ALLOCM_ARENA</dfn>(a)	((int)(((a)+1) &lt;&lt; 8))</u></td></tr>
+<tr><th id="40">40</th><td><u>#  define <dfn class="macro" id="_M/ALLOCM_SUCCESS" data-ref="_M/ALLOCM_SUCCESS">ALLOCM_SUCCESS</dfn>	0</u></td></tr>
+<tr><th id="41">41</th><td><u>#  define <dfn class="macro" id="_M/ALLOCM_ERR_OOM" data-ref="_M/ALLOCM_ERR_OOM">ALLOCM_ERR_OOM</dfn>	1</u></td></tr>
+<tr><th id="42">42</th><td><u>#  define <dfn class="macro" id="_M/ALLOCM_ERR_NOT_MOVED" data-ref="_M/ALLOCM_ERR_NOT_MOVED">ALLOCM_ERR_NOT_MOVED</dfn>	2</u></td></tr>
+<tr><th id="43">43</th><td><u>#<span data-ppcond="28">endif</span></u></td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><i>/*</i></td></tr>
+<tr><th id="46">46</th><td><i> * The je_ prefix on the following public symbol declarations is an artifact</i></td></tr>
+<tr><th id="47">47</th><td><i> * of namespace management, and should be omitted in application code unless</i></td></tr>
+<tr><th id="48">48</th><td><i> * JEMALLOC_NO_DEMANGLE is defined (see jemalloc_mangle.h).</i></td></tr>
+<tr><th id="49">49</th><td><i> */</i></td></tr>
+<tr><th id="50">50</th><td><b>extern</b> <a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>const</em> <em>char</em>	*<a class="macro" href="../../../../build/jemalloc_defs.h.html#15" title="malloc_conf" data-ref="_M/je_malloc_conf">je_malloc_conf</a>;</td></tr>
+<tr><th id="51">51</th><td><b>extern</b> <a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>		(*<a class="macro" href="../../../../build/jemalloc_defs.h.html#16" title="malloc_message" data-ref="_M/je_malloc_message">je_malloc_message</a>)(<em>void</em> *<dfn class="local col1 decl" id="141cbopaque" title='cbopaque' data-type='void *' data-ref="141cbopaque" >cbopaque</dfn>,</td></tr>
+<tr><th id="52">52</th><td>    <em>const</em> <em>char</em> *<dfn class="local col2 decl" id="142s" title='s' data-type='const char *' data-ref="142s" >s</dfn>);</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	*<a class="macro" href="../../../../build/jemalloc_defs.h.html#17" title="malloc" data-ref="_M/je_malloc">je_malloc</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="143size" title='size' data-type='size_t' data-ref="143size" >size</dfn>) <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((malloc))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(malloc);</td></tr>
+<tr><th id="55">55</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	*<a class="macro" href="../../../../build/jemalloc_defs.h.html#18" title="calloc" data-ref="_M/je_calloc">je_calloc</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="144num" title='num' data-type='size_t' data-ref="144num" >num</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="145size" title='size' data-type='size_t' data-ref="145size" >size</dfn>)</td></tr>
+<tr><th id="56">56</th><td>    <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((malloc))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(malloc);</td></tr>
+<tr><th id="57">57</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#19" title="posix_memalign" data-ref="_M/je_posix_memalign">je_posix_memalign</a>(<em>void</em> **<dfn class="local col6 decl" id="146memptr" title='memptr' data-type='void **' data-ref="146memptr" >memptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="147alignment" title='alignment' data-type='size_t' data-ref="147alignment" >alignment</dfn>,</td></tr>
+<tr><th id="58">58</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="148size" title='size' data-type='size_t' data-ref="148size" >size</dfn>) <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((nonnull(1)))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(nonnull(<var>1</var>));</td></tr>
+<tr><th id="59">59</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	*<a class="macro" href="../../../../build/jemalloc_defs.h.html#20" title="aligned_alloc" data-ref="_M/je_aligned_alloc">je_aligned_alloc</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="149alignment" title='alignment' data-type='size_t' data-ref="149alignment" >alignment</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="150size" title='size' data-type='size_t' data-ref="150size" >size</dfn>)</td></tr>
+<tr><th id="60">60</th><td>    <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((malloc))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(malloc);</td></tr>
+<tr><th id="61">61</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	*<a class="macro" href="../../../../build/jemalloc_defs.h.html#21" title="realloc" data-ref="_M/je_realloc">je_realloc</a>(<em>void</em> *<dfn class="local col1 decl" id="151ptr" title='ptr' data-type='void *' data-ref="151ptr" >ptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="152size" title='size' data-type='size_t' data-ref="152size" >size</dfn>);</td></tr>
+<tr><th id="62">62</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#22" title="free" data-ref="_M/je_free">je_free</a>(<em>void</em> *<dfn class="local col3 decl" id="153ptr" title='ptr' data-type='void *' data-ref="153ptr" >ptr</dfn>);</td></tr>
+<tr><th id="63">63</th><td></td></tr>
+<tr><th id="64">64</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	*<dfn class="decl" id="je_mallocx" title='je_mallocx' data-ref="je_mallocx" >je_mallocx</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col4 decl" id="154size" title='size' data-type='size_t' data-ref="154size" >size</dfn>, <em>int</em> <dfn class="local col5 decl" id="155flags" title='flags' data-type='int' data-ref="155flags" >flags</dfn>);</td></tr>
+<tr><th id="65">65</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	*<dfn class="decl" id="je_rallocx" title='je_rallocx' data-ref="je_rallocx" >je_rallocx</dfn>(<em>void</em> *<dfn class="local col6 decl" id="156ptr" title='ptr' data-type='void *' data-ref="156ptr" >ptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="157size" title='size' data-type='size_t' data-ref="157size" >size</dfn>, <em>int</em> <dfn class="local col8 decl" id="158flags" title='flags' data-type='int' data-ref="158flags" >flags</dfn>);</td></tr>
+<tr><th id="66">66</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>	<dfn class="decl" id="je_xallocx" title='je_xallocx' data-ref="je_xallocx" >je_xallocx</dfn>(<em>void</em> *<dfn class="local col9 decl" id="159ptr" title='ptr' data-type='void *' data-ref="159ptr" >ptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col0 decl" id="160size" title='size' data-type='size_t' data-ref="160size" >size</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col1 decl" id="161extra" title='extra' data-type='size_t' data-ref="161extra" >extra</dfn>,</td></tr>
+<tr><th id="67">67</th><td>    <em>int</em> <dfn class="local col2 decl" id="162flags" title='flags' data-type='int' data-ref="162flags" >flags</dfn>);</td></tr>
+<tr><th id="68">68</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>	<dfn class="decl" id="je_sallocx" title='je_sallocx' data-ref="je_sallocx" >je_sallocx</dfn>(<em>const</em> <em>void</em> *<dfn class="local col3 decl" id="163ptr" title='ptr' data-type='const void *' data-ref="163ptr" >ptr</dfn>, <em>int</em> <dfn class="local col4 decl" id="164flags" title='flags' data-type='int' data-ref="164flags" >flags</dfn>);</td></tr>
+<tr><th id="69">69</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	<dfn class="decl" id="je_dallocx" title='je_dallocx' data-ref="je_dallocx" >je_dallocx</dfn>(<em>void</em> *<dfn class="local col5 decl" id="165ptr" title='ptr' data-type='void *' data-ref="165ptr" >ptr</dfn>, <em>int</em> <dfn class="local col6 decl" id="166flags" title='flags' data-type='int' data-ref="166flags" >flags</dfn>);</td></tr>
+<tr><th id="70">70</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>	<dfn class="decl" id="je_nallocx" title='je_nallocx' data-ref="je_nallocx" >je_nallocx</dfn>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="167size" title='size' data-type='size_t' data-ref="167size" >size</dfn>, <em>int</em> <dfn class="local col8 decl" id="168flags" title='flags' data-type='int' data-ref="168flags" >flags</dfn>);</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#25" title="mallctl" data-ref="_M/je_mallctl">je_mallctl</a>(<em>const</em> <em>char</em> *<dfn class="local col9 decl" id="169name" title='name' data-type='const char *' data-ref="169name" >name</dfn>, <em>void</em> *<dfn class="local col0 decl" id="170oldp" title='oldp' data-type='void *' data-ref="170oldp" >oldp</dfn>,</td></tr>
+<tr><th id="73">73</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col1 decl" id="171oldlenp" title='oldlenp' data-type='size_t *' data-ref="171oldlenp" >oldlenp</dfn>, <em>void</em> *<dfn class="local col2 decl" id="172newp" title='newp' data-type='void *' data-ref="172newp" >newp</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col3 decl" id="173newlen" title='newlen' data-type='size_t' data-ref="173newlen" >newlen</dfn>);</td></tr>
+<tr><th id="74">74</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#26" title="mallctlnametomib" data-ref="_M/je_mallctlnametomib">je_mallctlnametomib</a>(<em>const</em> <em>char</em> *<dfn class="local col4 decl" id="174name" title='name' data-type='const char *' data-ref="174name" >name</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col5 decl" id="175mibp" title='mibp' data-type='size_t *' data-ref="175mibp" >mibp</dfn>,</td></tr>
+<tr><th id="75">75</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col6 decl" id="176miblenp" title='miblenp' data-type='size_t *' data-ref="176miblenp" >miblenp</dfn>);</td></tr>
+<tr><th id="76">76</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#27" title="mallctlbymib" data-ref="_M/je_mallctlbymib">je_mallctlbymib</a>(<em>const</em> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col7 decl" id="177mib" title='mib' data-type='const size_t *' data-ref="177mib" >mib</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="178miblen" title='miblen' data-type='size_t' data-ref="178miblen" >miblen</dfn>,</td></tr>
+<tr><th id="77">77</th><td>    <em>void</em> *<dfn class="local col9 decl" id="179oldp" title='oldp' data-type='void *' data-ref="179oldp" >oldp</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col0 decl" id="180oldlenp" title='oldlenp' data-type='size_t *' data-ref="180oldlenp" >oldlenp</dfn>, <em>void</em> *<dfn class="local col1 decl" id="181newp" title='newp' data-type='void *' data-ref="181newp" >newp</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="182newlen" title='newlen' data-type='size_t' data-ref="182newlen" >newlen</dfn>);</td></tr>
+<tr><th id="78">78</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#24" title="malloc_stats_print" data-ref="_M/je_malloc_stats_print">je_malloc_stats_print</a>(<em>void</em> (*<dfn class="local col3 decl" id="183write_cb" title='write_cb' data-type='void (*)(void *, const char *)' data-ref="183write_cb" >write_cb</dfn>)(<em>void</em> *,</td></tr>
+<tr><th id="79">79</th><td>    <em>const</em> <em>char</em> *), <em>void</em> *<dfn class="local col4 decl" id="184je_cbopaque" title='je_cbopaque' data-type='void *' data-ref="184je_cbopaque" >je_cbopaque</dfn>, <em>const</em> <em>char</em> *<dfn class="local col5 decl" id="185opts" title='opts' data-type='const char *' data-ref="185opts" >opts</dfn>);</td></tr>
+<tr><th id="80">80</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#23" title="malloc_usable_size" data-ref="_M/je_malloc_usable_size">je_malloc_usable_size</a>(</td></tr>
+<tr><th id="81">81</th><td>    <a class="macro" href="../../../../build/jemalloc_defs.h.html#232" title="" data-ref="_M/JEMALLOC_USABLE_SIZE_CONST">JEMALLOC_USABLE_SIZE_CONST</a> <em>void</em> *<dfn class="local col6 decl" id="186ptr" title='ptr' data-type='void *' data-ref="186ptr" >ptr</dfn>);</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td><u>#<span data-ppcond="83">ifdef</span> <a class="macro" href="../../../../build/jemalloc_defs.h.html#222" data-ref="_M/JEMALLOC_OVERRIDE_MEMALIGN">JEMALLOC_OVERRIDE_MEMALIGN</a></u></td></tr>
+<tr><th id="84">84</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em> *	<a class="macro" href="../../../../build/jemalloc_defs.h.html#28" title="memalign" data-ref="_M/je_memalign">je_memalign</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="187alignment" title='alignment' data-type='size_t' data-ref="187alignment" >alignment</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col8 decl" id="188size" title='size' data-type='size_t' data-ref="188size" >size</dfn>)</td></tr>
+<tr><th id="85">85</th><td>    <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((malloc))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(malloc);</td></tr>
+<tr><th id="86">86</th><td><u>#<span data-ppcond="83">endif</span></u></td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><u>#<span data-ppcond="88">ifdef</span> <a class="macro" href="../../../../build/jemalloc_defs.h.html#223" data-ref="_M/JEMALLOC_OVERRIDE_VALLOC">JEMALLOC_OVERRIDE_VALLOC</a></u></td></tr>
+<tr><th id="89">89</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>void</em> *	<a class="macro" href="../../../../build/jemalloc_defs.h.html#29" title="valloc" data-ref="_M/je_valloc">je_valloc</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col9 decl" id="189size" title='size' data-type='size_t' data-ref="189size" >size</dfn>) <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((malloc))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(malloc);</td></tr>
+<tr><th id="90">90</th><td><u>#<span data-ppcond="88">endif</span></u></td></tr>
+<tr><th id="91">91</th><td></td></tr>
+<tr><th id="92">92</th><td><u>#<span data-ppcond="92">ifdef</span> <a class="macro" href="../../../../build/jemalloc_defs.h.html#178" data-ref="_M/JEMALLOC_EXPERIMENTAL">JEMALLOC_EXPERIMENTAL</a></u></td></tr>
+<tr><th id="93">93</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#30" title="allocm" data-ref="_M/je_allocm">je_allocm</a>(<em>void</em> **<dfn class="local col0 decl" id="190ptr" title='ptr' data-type='void **' data-ref="190ptr" >ptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col1 decl" id="191rsize" title='rsize' data-type='size_t *' data-ref="191rsize" >rsize</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col2 decl" id="192size" title='size' data-type='size_t' data-ref="192size" >size</dfn>,</td></tr>
+<tr><th id="94">94</th><td>    <em>int</em> <dfn class="local col3 decl" id="193flags" title='flags' data-type='int' data-ref="193flags" >flags</dfn>) <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((nonnull(1)))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(nonnull(<var>1</var>));</td></tr>
+<tr><th id="95">95</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#31" title="rallocm" data-ref="_M/je_rallocm">je_rallocm</a>(<em>void</em> **<dfn class="local col4 decl" id="194ptr" title='ptr' data-type='void **' data-ref="194ptr" >ptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col5 decl" id="195rsize" title='rsize' data-type='size_t *' data-ref="195rsize" >rsize</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col6 decl" id="196size" title='size' data-type='size_t' data-ref="196size" >size</dfn>,</td></tr>
+<tr><th id="96">96</th><td>    <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col7 decl" id="197extra" title='extra' data-type='size_t' data-ref="197extra" >extra</dfn>, <em>int</em> <dfn class="local col8 decl" id="198flags" title='flags' data-type='int' data-ref="198flags" >flags</dfn>) <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((nonnull(1)))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(nonnull(<var>1</var>));</td></tr>
+<tr><th id="97">97</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#32" title="sallocm" data-ref="_M/je_sallocm">je_sallocm</a>(<em>const</em> <em>void</em> *<dfn class="local col9 decl" id="199ptr" title='ptr' data-type='const void *' data-ref="199ptr" >ptr</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col0 decl" id="200rsize" title='rsize' data-type='size_t *' data-ref="200rsize" >rsize</dfn>, <em>int</em> <dfn class="local col1 decl" id="201flags" title='flags' data-type='int' data-ref="201flags" >flags</dfn>)</td></tr>
+<tr><th id="98">98</th><td>    <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((nonnull(1)))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(nonnull(<var>1</var>));</td></tr>
+<tr><th id="99">99</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#33" title="dallocm" data-ref="_M/je_dallocm">je_dallocm</a>(<em>void</em> *<dfn class="local col2 decl" id="202ptr" title='ptr' data-type='void *' data-ref="202ptr" >ptr</dfn>, <em>int</em> <dfn class="local col3 decl" id="203flags" title='flags' data-type='int' data-ref="203flags" >flags</dfn>)</td></tr>
+<tr><th id="100">100</th><td>    <a class="macro" href="../../../../build/jemalloc_defs.h.html#108" title="__attribute__((nonnull(1)))" data-ref="_M/JEMALLOC_ATTR">JEMALLOC_ATTR</a>(nonnull(<var>1</var>));</td></tr>
+<tr><th id="101">101</th><td><a class="macro" href="../../../../build/jemalloc_defs.h.html#109" title="__attribute__((visibility(&quot;default&quot;)))" data-ref="_M/JEMALLOC_EXPORT">JEMALLOC_EXPORT</a> <em>int</em>	<a class="macro" href="../../../../build/jemalloc_defs.h.html#34" title="nallocm" data-ref="_M/je_nallocm">je_nallocm</a>(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> *<dfn class="local col4 decl" id="204rsize" title='rsize' data-type='size_t *' data-ref="204rsize" >rsize</dfn>, <span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span> <dfn class="local col5 decl" id="205size" title='size' data-type='size_t' data-ref="205size" >size</dfn>, <em>int</em> <dfn class="local col6 decl" id="206flags" title='flags' data-type='int' data-ref="206flags" >flags</dfn>);</td></tr>
+<tr><th id="102">102</th><td><u>#<span data-ppcond="92">endif</span></u></td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td><i>/*</i></td></tr>
+<tr><th id="105">105</th><td><i> * By default application code must explicitly refer to mangled symbol names,</i></td></tr>
+<tr><th id="106">106</th><td><i> * so that it is possible to use jemalloc in conjunction with another allocator</i></td></tr>
+<tr><th id="107">107</th><td><i> * in the same application.  Define JEMALLOC_MANGLE in order to cause automatic</i></td></tr>
+<tr><th id="108">108</th><td><i> * name mangling that matches the API prefixing that happened as a result of</i></td></tr>
+<tr><th id="109">109</th><td><i> * --with-mangling and/or --with-jemalloc-prefix configuration settings.</i></td></tr>
+<tr><th id="110">110</th><td><i> */</i></td></tr>
+<tr><th id="111">111</th><td><u>#<span data-ppcond="111">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_MANGLE">JEMALLOC_MANGLE</span></u></td></tr>
+<tr><th id="112">112</th><td><u>#  ifndef JEMALLOC_NO_DEMANGLE</u></td></tr>
+<tr><th id="113">113</th><td><u>#    define JEMALLOC_NO_DEMANGLE</u></td></tr>
+<tr><th id="114">114</th><td><u>#  endif</u></td></tr>
+<tr><th id="115">115</th><td><u>#  define malloc_conf je_malloc_conf</u></td></tr>
+<tr><th id="116">116</th><td><u>#  define malloc_message je_malloc_message</u></td></tr>
+<tr><th id="117">117</th><td><u>#  define malloc je_malloc</u></td></tr>
+<tr><th id="118">118</th><td><u>#  define calloc je_calloc</u></td></tr>
+<tr><th id="119">119</th><td><u>#  define posix_memalign je_posix_memalign</u></td></tr>
+<tr><th id="120">120</th><td><u>#  define aligned_alloc je_aligned_alloc</u></td></tr>
+<tr><th id="121">121</th><td><u>#  define realloc je_realloc</u></td></tr>
+<tr><th id="122">122</th><td><u>#  define free je_free</u></td></tr>
+<tr><th id="123">123</th><td><u>#  define mallocx je_mallocx</u></td></tr>
+<tr><th id="124">124</th><td><u>#  define rallocx je_rallocx</u></td></tr>
+<tr><th id="125">125</th><td><u>#  define xallocx je_xallocx</u></td></tr>
+<tr><th id="126">126</th><td><u>#  define sallocx je_sallocx</u></td></tr>
+<tr><th id="127">127</th><td><u>#  define dallocx je_dallocx</u></td></tr>
+<tr><th id="128">128</th><td><u>#  define nallocx je_nallocx</u></td></tr>
+<tr><th id="129">129</th><td><u>#  define mallctl je_mallctl</u></td></tr>
+<tr><th id="130">130</th><td><u>#  define mallctlnametomib je_mallctlnametomib</u></td></tr>
+<tr><th id="131">131</th><td><u>#  define mallctlbymib je_mallctlbymib</u></td></tr>
+<tr><th id="132">132</th><td><u>#  define malloc_stats_print je_malloc_stats_print</u></td></tr>
+<tr><th id="133">133</th><td><u>#  define malloc_usable_size je_malloc_usable_size</u></td></tr>
+<tr><th id="134">134</th><td><u>#  define memalign je_memalign</u></td></tr>
+<tr><th id="135">135</th><td><u>#  define valloc je_valloc</u></td></tr>
+<tr><th id="136">136</th><td><u>#  define allocm je_allocm</u></td></tr>
+<tr><th id="137">137</th><td><u>#  define dallocm je_dallocm</u></td></tr>
+<tr><th id="138">138</th><td><u>#  define nallocm je_nallocm</u></td></tr>
+<tr><th id="139">139</th><td><u>#  define rallocm je_rallocm</u></td></tr>
+<tr><th id="140">140</th><td><u>#  define sallocm je_sallocm</u></td></tr>
+<tr><th id="141">141</th><td><u>#<span data-ppcond="111">endif</span></u></td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><i>/*</i></td></tr>
+<tr><th id="144">144</th><td><i> * The je_* macros can be used as stable alternative names for the</i></td></tr>
+<tr><th id="145">145</th><td><i> * public jemalloc API if JEMALLOC_NO_DEMANGLE is defined.  This is primarily</i></td></tr>
+<tr><th id="146">146</th><td><i> * meant for use in jemalloc itself, but it can be used by application code to</i></td></tr>
+<tr><th id="147">147</th><td><i> * provide isolation from the name mangling specified via --with-mangling</i></td></tr>
+<tr><th id="148">148</th><td><i> * and/or --with-jemalloc-prefix.</i></td></tr>
+<tr><th id="149">149</th><td><i> */</i></td></tr>
+<tr><th id="150">150</th><td><u>#<span data-ppcond="150">ifndef</span> <a class="macro" href="internal/jemalloc_internal.h.html#68" data-ref="_M/JEMALLOC_NO_DEMANGLE">JEMALLOC_NO_DEMANGLE</a></u></td></tr>
+<tr><th id="151">151</th><td><u>#  undef je_malloc_conf</u></td></tr>
+<tr><th id="152">152</th><td><u>#  undef je_malloc_message</u></td></tr>
+<tr><th id="153">153</th><td><u>#  undef je_malloc</u></td></tr>
+<tr><th id="154">154</th><td><u>#  undef je_calloc</u></td></tr>
+<tr><th id="155">155</th><td><u>#  undef je_posix_memalign</u></td></tr>
+<tr><th id="156">156</th><td><u>#  undef je_aligned_alloc</u></td></tr>
+<tr><th id="157">157</th><td><u>#  undef je_realloc</u></td></tr>
+<tr><th id="158">158</th><td><u>#  undef je_free</u></td></tr>
+<tr><th id="159">159</th><td><u>#  undef je_mallocx</u></td></tr>
+<tr><th id="160">160</th><td><u>#  undef je_rallocx</u></td></tr>
+<tr><th id="161">161</th><td><u>#  undef je_xallocx</u></td></tr>
+<tr><th id="162">162</th><td><u>#  undef je_sallocx</u></td></tr>
+<tr><th id="163">163</th><td><u>#  undef je_dallocx</u></td></tr>
+<tr><th id="164">164</th><td><u>#  undef je_nallocx</u></td></tr>
+<tr><th id="165">165</th><td><u>#  undef je_mallctl</u></td></tr>
+<tr><th id="166">166</th><td><u>#  undef je_mallctlnametomib</u></td></tr>
+<tr><th id="167">167</th><td><u>#  undef je_mallctlbymib</u></td></tr>
+<tr><th id="168">168</th><td><u>#  undef je_malloc_stats_print</u></td></tr>
+<tr><th id="169">169</th><td><u>#  undef je_malloc_usable_size</u></td></tr>
+<tr><th id="170">170</th><td><u>#  undef je_memalign</u></td></tr>
+<tr><th id="171">171</th><td><u>#  undef je_valloc</u></td></tr>
+<tr><th id="172">172</th><td><u>#  undef je_allocm</u></td></tr>
+<tr><th id="173">173</th><td><u>#  undef je_dallocm</u></td></tr>
+<tr><th id="174">174</th><td><u>#  undef je_nallocm</u></td></tr>
+<tr><th id="175">175</th><td><u>#  undef je_rallocm</u></td></tr>
+<tr><th id="176">176</th><td><u>#  undef je_sallocm</u></td></tr>
+<tr><th id="177">177</th><td><u>#<span data-ppcond="150">endif</span></u></td></tr>
+<tr><th id="178">178</th><td></td></tr>
+<tr><th id="179">179</th><td><u>#<span data-ppcond="179">ifdef</span> <span class="macro" data-ref="_M/__cplusplus">__cplusplus</span></u></td></tr>
+<tr><th id="180">180</th><td>};</td></tr>
+<tr><th id="181">181</th><td><u>#<span data-ppcond="179">endif</span></u></td></tr>
+<tr><th id="182">182</th><td><u>#<span data-ppcond="1">endif</span> /* JEMALLOC_H_ */</u></td></tr>
+<tr><th id="183">183</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../src/arena.c.html'>TrinityCore3.3.5/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

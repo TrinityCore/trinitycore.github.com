@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<title>qr.h [TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/qr.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/dep/jemalloc/include/jemalloc/internal/qr.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/qr.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/* Ring definitions. */</i></td></tr>
+<tr><th id="2">2</th><td><u>#define	<dfn class="macro" id="_M/qr" data-ref="_M/qr">qr</dfn>(a_type)							\</u></td></tr>
+<tr><th id="3">3</th><td><u>struct {								\</u></td></tr>
+<tr><th id="4">4</th><td><u>	a_type	*qre_next;						\</u></td></tr>
+<tr><th id="5">5</th><td><u>	a_type	*qre_prev;						\</u></td></tr>
+<tr><th id="6">6</th><td><u>}</u></td></tr>
+<tr><th id="7">7</th><td></td></tr>
+<tr><th id="8">8</th><td><i>/* Ring functions. */</i></td></tr>
+<tr><th id="9">9</th><td><u>#define	<dfn class="macro" id="_M/qr_new" data-ref="_M/qr_new">qr_new</dfn>(a_qr, a_field) do {					\</u></td></tr>
+<tr><th id="10">10</th><td><u>	(a_qr)-&gt;a_field.qre_next = (a_qr);				\</u></td></tr>
+<tr><th id="11">11</th><td><u>	(a_qr)-&gt;a_field.qre_prev = (a_qr);				\</u></td></tr>
+<tr><th id="12">12</th><td><u>} while (0)</u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#define	<dfn class="macro" id="_M/qr_next" data-ref="_M/qr_next">qr_next</dfn>(a_qr, a_field) ((a_qr)-&gt;a_field.qre_next)</u></td></tr>
+<tr><th id="15">15</th><td></td></tr>
+<tr><th id="16">16</th><td><u>#define	<dfn class="macro" id="_M/qr_prev" data-ref="_M/qr_prev">qr_prev</dfn>(a_qr, a_field) ((a_qr)-&gt;a_field.qre_prev)</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#define	<dfn class="macro" id="_M/qr_before_insert" data-ref="_M/qr_before_insert">qr_before_insert</dfn>(a_qrelm, a_qr, a_field) do {			\</u></td></tr>
+<tr><th id="19">19</th><td><u>	(a_qr)-&gt;a_field.qre_prev = (a_qrelm)-&gt;a_field.qre_prev;		\</u></td></tr>
+<tr><th id="20">20</th><td><u>	(a_qr)-&gt;a_field.qre_next = (a_qrelm);				\</u></td></tr>
+<tr><th id="21">21</th><td><u>	(a_qr)-&gt;a_field.qre_prev-&gt;a_field.qre_next = (a_qr);		\</u></td></tr>
+<tr><th id="22">22</th><td><u>	(a_qrelm)-&gt;a_field.qre_prev = (a_qr);				\</u></td></tr>
+<tr><th id="23">23</th><td><u>} while (0)</u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><u>#define	<dfn class="macro" id="_M/qr_after_insert" data-ref="_M/qr_after_insert">qr_after_insert</dfn>(a_qrelm, a_qr, a_field)				\</u></td></tr>
+<tr><th id="26">26</th><td><u>    do									\</u></td></tr>
+<tr><th id="27">27</th><td><u>    {									\</u></td></tr>
+<tr><th id="28">28</th><td><u>	(a_qr)-&gt;a_field.qre_next = (a_qrelm)-&gt;a_field.qre_next;		\</u></td></tr>
+<tr><th id="29">29</th><td><u>	(a_qr)-&gt;a_field.qre_prev = (a_qrelm);				\</u></td></tr>
+<tr><th id="30">30</th><td><u>	(a_qr)-&gt;a_field.qre_next-&gt;a_field.qre_prev = (a_qr);		\</u></td></tr>
+<tr><th id="31">31</th><td><u>	(a_qrelm)-&gt;a_field.qre_next = (a_qr);				\</u></td></tr>
+<tr><th id="32">32</th><td><u>    } while (0)</u></td></tr>
+<tr><th id="33">33</th><td></td></tr>
+<tr><th id="34">34</th><td><u>#define	<dfn class="macro" id="_M/qr_meld" data-ref="_M/qr_meld">qr_meld</dfn>(a_qr_a, a_qr_b, a_field) do {				\</u></td></tr>
+<tr><th id="35">35</th><td><u>	void *t;							\</u></td></tr>
+<tr><th id="36">36</th><td><u>	(a_qr_a)-&gt;a_field.qre_prev-&gt;a_field.qre_next = (a_qr_b);	\</u></td></tr>
+<tr><th id="37">37</th><td><u>	(a_qr_b)-&gt;a_field.qre_prev-&gt;a_field.qre_next = (a_qr_a);	\</u></td></tr>
+<tr><th id="38">38</th><td><u>	t = (a_qr_a)-&gt;a_field.qre_prev;					\</u></td></tr>
+<tr><th id="39">39</th><td><u>	(a_qr_a)-&gt;a_field.qre_prev = (a_qr_b)-&gt;a_field.qre_prev;	\</u></td></tr>
+<tr><th id="40">40</th><td><u>	(a_qr_b)-&gt;a_field.qre_prev = t;					\</u></td></tr>
+<tr><th id="41">41</th><td><u>} while (0)</u></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td><i>/* qr_meld() and qr_split() are functionally equivalent, so there's no need to</i></td></tr>
+<tr><th id="44">44</th><td><i> * have two copies of the code. */</i></td></tr>
+<tr><th id="45">45</th><td><u>#define	<dfn class="macro" id="_M/qr_split" data-ref="_M/qr_split">qr_split</dfn>(a_qr_a, a_qr_b, a_field)				\</u></td></tr>
+<tr><th id="46">46</th><td><u>	qr_meld((a_qr_a), (a_qr_b), a_field)</u></td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><u>#define	<dfn class="macro" id="_M/qr_remove" data-ref="_M/qr_remove">qr_remove</dfn>(a_qr, a_field) do {					\</u></td></tr>
+<tr><th id="49">49</th><td><u>	(a_qr)-&gt;a_field.qre_prev-&gt;a_field.qre_next			\</u></td></tr>
+<tr><th id="50">50</th><td><u>	    = (a_qr)-&gt;a_field.qre_next;					\</u></td></tr>
+<tr><th id="51">51</th><td><u>	(a_qr)-&gt;a_field.qre_next-&gt;a_field.qre_prev			\</u></td></tr>
+<tr><th id="52">52</th><td><u>	    = (a_qr)-&gt;a_field.qre_prev;					\</u></td></tr>
+<tr><th id="53">53</th><td><u>	(a_qr)-&gt;a_field.qre_next = (a_qr);				\</u></td></tr>
+<tr><th id="54">54</th><td><u>	(a_qr)-&gt;a_field.qre_prev = (a_qr);				\</u></td></tr>
+<tr><th id="55">55</th><td><u>} while (0)</u></td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><u>#define	<dfn class="macro" id="_M/qr_foreach" data-ref="_M/qr_foreach">qr_foreach</dfn>(var, a_qr, a_field)					\</u></td></tr>
+<tr><th id="58">58</th><td><u>	for ((var) = (a_qr);						\</u></td></tr>
+<tr><th id="59">59</th><td><u>	    (var) != NULL;						\</u></td></tr>
+<tr><th id="60">60</th><td><u>	    (var) = (((var)-&gt;a_field.qre_next != (a_qr))		\</u></td></tr>
+<tr><th id="61">61</th><td><u>	    ? (var)-&gt;a_field.qre_next : NULL))</u></td></tr>
+<tr><th id="62">62</th><td></td></tr>
+<tr><th id="63">63</th><td><u>#define	<dfn class="macro" id="_M/qr_reverse_foreach" data-ref="_M/qr_reverse_foreach">qr_reverse_foreach</dfn>(var, a_qr, a_field)				\</u></td></tr>
+<tr><th id="64">64</th><td><u>	for ((var) = ((a_qr) != NULL) ? qr_prev(a_qr, a_field) : NULL;	\</u></td></tr>
+<tr><th id="65">65</th><td><u>	    (var) != NULL;						\</u></td></tr>
+<tr><th id="66">66</th><td><u>	    (var) = (((var) != (a_qr))					\</u></td></tr>
+<tr><th id="67">67</th><td><u>	    ? (var)-&gt;a_field.qre_prev : NULL))</u></td></tr>
+<tr><th id="68">68</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore3.3.5/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

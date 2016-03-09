@@ -1,0 +1,371 @@
+<dec f='TrinityCore3.3.5/src/server/game/AI/ScriptedAI/ScriptedEscortAI.h' l='77' type='void npc_escortAI::AddWaypoint(uint32 id, float x, float y, float z, uint32 waitTime = 0)'/>
+<def f='TrinityCore3.3.5/src/server/game/AI/ScriptedAI/ScriptedEscortAI.cpp' l='385' type='void npc_escortAI::AddWaypoint(uint32 id, float x, float y, float z, uint32 waitTime = 0)'/>
+<doc f='TrinityCore3.3.5/src/server/game/AI/ScriptedAI/ScriptedEscortAI.cpp' l='366'>/*
+void npc_escortAI::OnPossess(bool apply)
+{
+    // We got possessed in the middle of being escorted, store the point
+    // where we left off to come back to when possess is removed
+    if (HasEscortState(STATE_ESCORT_ESCORTING))
+    {
+        if (apply)
+            me-&gt;GetPosition(LastPos.x, LastPos.y, LastPos.z);
+        else
+        {
+            Returning = true;
+            me-&gt;GetMotionMaster()-&gt;MovementExpired();
+            me-&gt;GetMotionMaster()-&gt;MovePoint(WP_LAST_POINT, LastPos.x, LastPos.y, LastPos.z);
+        }
+    }
+}
+*/</doc>
+<doc f='TrinityCore3.3.5/src/server/game/AI/ScriptedAI/ScriptedEscortAI.h' l='76'>// EscortAI functions</doc>
+<doc f='TrinityCore3.3.5/src/server/game/AI/ScriptedAI/ScriptedEscortAI.h' l='77'>// waitTime is in ms</doc>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1131' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1132' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1133' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1134' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1135' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1136' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1137' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1138' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1139' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1140' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1141' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1142' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1146' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1147' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1148' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1149' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1150' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1154' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1155' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1156' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1157' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1158' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='126' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='127' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='128' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='129' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='130' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='131' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='132' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='133' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='131' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='132' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='133' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='134' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='135' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='136' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='137' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='138' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='126' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='127' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='128' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='129' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='130' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='131' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='132' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='133' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='121' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='122' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='123' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='124' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='125' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='126' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='127' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='128' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjalAI.cpp' l='621' u='c' c='_ZN7hyjalAI7RetreatEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjalAI.cpp' l='622' u='c' c='_ZN7hyjalAI7RetreatEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjalAI.cpp' l='636' u='c' c='_ZN7hyjalAI7RetreatEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='217' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='221' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='222' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='223' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='224' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='225' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='226' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='227' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='229' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='230' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='231' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='232' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='233' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='234' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='235' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='236' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='243' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='244' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='245' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='246' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='247' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='248' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='249' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='251' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='252' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='253' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='254' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='255' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='256' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='257' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='258' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='266' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='277' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='281' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='282' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='289' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='290' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='291' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='298' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='299' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='300' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='301' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='308' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='309' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='310' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='317' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='318' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='319' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='326' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='327' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='328' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='329' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='330' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='331' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='339' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='352' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='356' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='357' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='358' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='359' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='366' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='367' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='368' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='369' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='377' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='387' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='389' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='502' u='c' c='_ZN18npc_giant_infernal20npc_giant_infernalAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='598' u='c' c='_ZN15npc_abomination17npc_abominationAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='604' u='c' c='_ZN15npc_abomination17npc_abominationAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='698' u='c' c='_ZN9npc_ghoul11npc_ghoulAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='704' u='c' c='_ZN9npc_ghoul11npc_ghoulAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='820' u='c' c='_ZN15npc_necromancer17npc_necromancerAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='826' u='c' c='_ZN15npc_necromancer17npc_necromancerAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='913' u='c' c='_ZN11npc_banshee13npc_bansheeAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='919' u='c' c='_ZN11npc_banshee13npc_bansheeAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1009' u='c' c='_ZN15npc_crypt_fiend17npc_crypt_fiendAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1015' u='c' c='_ZN15npc_crypt_fiend17npc_crypt_fiendAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1095' u='c' c='_ZN15npc_fel_stalker17npc_fel_stalkerAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1101' u='c' c='_ZN15npc_fel_stalker17npc_fel_stalkerAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1200' u='c' c='_ZN14npc_frost_wyrm16npc_frost_wyrmAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1207' u='c' c='_ZN14npc_frost_wyrm16npc_frost_wyrmAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1317' u='c' c='_ZN12npc_gargoyle14npc_gargoyleAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1322' u='c' c='_ZN12npc_gargoyle14npc_gargoyleAI8UpdateAIEj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Kalimdor/zone_moonglade.cpp' l='324' u='c' c='_ZN18npc_clintar_spirit20npc_clintar_spiritAI10StartEventEP6Player'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/ChamberOfAspects/RubySanctum/boss_general_zarithrian.cpp' l='250' u='c' c='_ZN20npc_onyx_flamecaller22npc_onyx_flamecallerAI12AddWaypointsEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/ChamberOfAspects/RubySanctum/boss_general_zarithrian.cpp' l='255' u='c' c='_ZN20npc_onyx_flamecaller22npc_onyx_flamecallerAI12AddWaypointsEv'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='546' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='549' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='552' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='560' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='563' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='566' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='574' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='577' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='580' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='190' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='191' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='192' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='193' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='197' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='198' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='199' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='203' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='204' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='205' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Northrend/VioletHold/violet_hold.cpp' l='901' u='c' c='_ZN19violet_hold_trashAI7SetDataEjj'/>
+<dec f='TrinityCore6.x/src/server/game/AI/ScriptedAI/ScriptedEscortAI.h' l='77' type='void npc_escortAI::AddWaypoint(uint32 id, float x, float y, float z, uint32 waitTime = 0)'/>
+<def f='TrinityCore6.x/src/server/game/AI/ScriptedAI/ScriptedEscortAI.cpp' l='385' type='void npc_escortAI::AddWaypoint(uint32 id, float x, float y, float z, uint32 waitTime = 0)'/>
+<doc f='TrinityCore6.x/src/server/game/AI/ScriptedAI/ScriptedEscortAI.cpp' l='366'>/*
+void npc_escortAI::OnPossess(bool apply)
+{
+    // We got possessed in the middle of being escorted, store the point
+    // where we left off to come back to when possess is removed
+    if (HasEscortState(STATE_ESCORT_ESCORTING))
+    {
+        if (apply)
+            me-&gt;GetPosition(LastPos.x, LastPos.y, LastPos.z);
+        else
+        {
+            Returning = true;
+            me-&gt;GetMotionMaster()-&gt;MovementExpired();
+            me-&gt;GetMotionMaster()-&gt;MovePoint(WP_LAST_POINT, LastPos.x, LastPos.y, LastPos.z);
+        }
+    }
+}
+*/</doc>
+<doc f='TrinityCore6.x/src/server/game/AI/ScriptedAI/ScriptedEscortAI.h' l='76'>// EscortAI functions</doc>
+<doc f='TrinityCore6.x/src/server/game/AI/ScriptedAI/ScriptedEscortAI.h' l='77'>// waitTime is in ms</doc>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1132' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1133' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1134' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1135' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1136' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1137' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1138' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1139' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1140' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1141' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1142' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1143' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1147' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1148' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1149' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1150' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1151' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1155' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1156' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1157' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1158' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/EasternKingdoms/ScarletEnclave/chapter1.cpp' l='1159' u='c' c='_ZN17npc_scarlet_miner19npc_scarlet_minerAI12InitWaypointEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='126' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='127' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='128' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='129' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='130' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='131' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='132' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_anetheron.cpp' l='133' u='c' c='_ZN14boss_anetheron16boss_anetheronAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='131' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='132' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='133' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='134' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='135' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='136' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='137' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_azgalor.cpp' l='138' u='c' c='_ZN12boss_azgalor14boss_azgalorAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='126' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='127' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='128' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='129' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='130' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='131' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='132' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_kazrogal.cpp' l='133' u='c' c='_ZN13boss_kazrogal15boss_kazrogalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='121' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='122' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='123' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='124' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='125' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='126' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='127' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/boss_rage_winterchill.cpp' l='128' u='c' c='_ZN21boss_rage_winterchill23boss_rage_winterchillAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjalAI.cpp' l='621' u='c' c='_ZN7hyjalAI7RetreatEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjalAI.cpp' l='622' u='c' c='_ZN7hyjalAI7RetreatEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjalAI.cpp' l='636' u='c' c='_ZN7hyjalAI7RetreatEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='217' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='221' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='222' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='223' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='224' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='225' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='226' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='227' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='229' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='230' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='231' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='232' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='233' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='234' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='235' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='236' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='243' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='244' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='245' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='246' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='247' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='248' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='249' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='251' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='252' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='253' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='254' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='255' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='256' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='257' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='258' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='266' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='277' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='281' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='282' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='289' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='290' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='291' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='298' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='299' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='300' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='301' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='308' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='309' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='310' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='317' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='318' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='319' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='326' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='327' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='328' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='329' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='330' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='331' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='339' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='352' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='356' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='357' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='358' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='359' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='366' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='367' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='368' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='369' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='377' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='387' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='389' u='c' c='_ZN13hyjal_trashAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='502' u='c' c='_ZN18npc_giant_infernal20npc_giant_infernalAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='598' u='c' c='_ZN15npc_abomination17npc_abominationAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='604' u='c' c='_ZN15npc_abomination17npc_abominationAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='698' u='c' c='_ZN9npc_ghoul11npc_ghoulAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='704' u='c' c='_ZN9npc_ghoul11npc_ghoulAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='820' u='c' c='_ZN15npc_necromancer17npc_necromancerAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='826' u='c' c='_ZN15npc_necromancer17npc_necromancerAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='913' u='c' c='_ZN11npc_banshee13npc_bansheeAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='919' u='c' c='_ZN11npc_banshee13npc_bansheeAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1009' u='c' c='_ZN15npc_crypt_fiend17npc_crypt_fiendAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1015' u='c' c='_ZN15npc_crypt_fiend17npc_crypt_fiendAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1095' u='c' c='_ZN15npc_fel_stalker17npc_fel_stalkerAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1101' u='c' c='_ZN15npc_fel_stalker17npc_fel_stalkerAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1200' u='c' c='_ZN14npc_frost_wyrm16npc_frost_wyrmAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1207' u='c' c='_ZN14npc_frost_wyrm16npc_frost_wyrmAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1317' u='c' c='_ZN12npc_gargoyle14npc_gargoyleAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Kalimdor/CavernsOfTime/BattleForMountHyjal/hyjal_trash.cpp' l='1322' u='c' c='_ZN12npc_gargoyle14npc_gargoyleAI8UpdateAIEj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/ChamberOfAspects/RubySanctum/boss_general_zarithrian.cpp' l='257' u='c' c='_ZN20npc_onyx_flamecaller22npc_onyx_flamecallerAI12AddWaypointsEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/ChamberOfAspects/RubySanctum/boss_general_zarithrian.cpp' l='262' u='c' c='_ZN20npc_onyx_flamecaller22npc_onyx_flamecallerAI12AddWaypointsEv'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='546' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='549' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='552' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='560' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='563' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='566' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='574' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='577' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_argent_challenge.cpp' l='580' u='c' c='_ZN18npc_argent_soldier20npc_argent_soldierAI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='190' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='191' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='192' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='193' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='197' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='198' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='199' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='203' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='204' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/CrusadersColiseum/TrialOfTheChampion/boss_grand_champions.cpp' l='205' u='c' c='_ZN22generic_vehicleAI_toc524generic_vehicleAI_toc5AI7SetDataEjj'/>
+<use f='TrinityCore6.x/src/server/scripts/Northrend/VioletHold/violet_hold.cpp' l='901' u='c' c='_ZN19violet_hold_trashAI7SetDataEjj'/>

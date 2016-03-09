@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+<title>OutdoorPvPTF.h [TrinityCore6.x/src/server/scripts/OutdoorPvP/OutdoorPvPTF.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/OutdoorPvP/OutdoorPvPTF.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>scripts</a>/<a href='./'>OutdoorPvP</a>/OutdoorPvPTF.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/OUTDOOR_PVP_TF_">OUTDOOR_PVP_TF_</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/OUTDOOR_PVP_TF_" data-ref="_M/OUTDOOR_PVP_TF_">OUTDOOR_PVP_TF_</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../game/OutdoorPvP/OutdoorPvP.h.html">"OutdoorPvP.h"</a></u></td></tr>
+<tr><th id="22">22</th><td></td></tr>
+<tr><th id="23">23</th><td><b>enum</b> <dfn class="type def" id="DefenseMessages" title='DefenseMessages' data-ref="DefenseMessages" >DefenseMessages</dfn></td></tr>
+<tr><th id="24">24</th><td>{</td></tr>
+<tr><th id="25">25</th><td>    <dfn class="enum" id="DefenseMessages::TEXT_BONE_WASTES_TAKEN_ALLIANCE" title='DefenseMessages::TEXT_BONE_WASTES_TAKEN_ALLIANCE' data-ref="DefenseMessages::TEXT_BONE_WASTES_TAKEN_ALLIANCE" >TEXT_BONE_WASTES_TAKEN_ALLIANCE</dfn>     = <var>16120</var>, <i>// (NYI) '|cffffff00The Alliance has taken control of The Bone Wastes!|r'</i></td></tr>
+<tr><th id="26">26</th><td>    <dfn class="enum" id="DefenseMessages::TEXT_BONE_WASTES_TAKEN_HORDE" title='DefenseMessages::TEXT_BONE_WASTES_TAKEN_HORDE' data-ref="DefenseMessages::TEXT_BONE_WASTES_TAKEN_HORDE" >TEXT_BONE_WASTES_TAKEN_HORDE</dfn>        = <var>16119</var>, <i>// (NYI) '|cffffff00The Horde has taken control of The Bone Wastes!|r'</i></td></tr>
+<tr><th id="27">27</th><td>    <dfn class="enum" id="DefenseMessages::TEXT_SPIRIT_TOWER_TAKEN_ALLIANCE" title='DefenseMessages::TEXT_SPIRIT_TOWER_TAKEN_ALLIANCE' data-ref="DefenseMessages::TEXT_SPIRIT_TOWER_TAKEN_ALLIANCE" >TEXT_SPIRIT_TOWER_TAKEN_ALLIANCE</dfn>    = <var>18285</var>, <i>// '|cffffff00The Alliance has taken control of a Spirit Tower!|r'</i></td></tr>
+<tr><th id="28">28</th><td>    <dfn class="enum" id="DefenseMessages::TEXT_SPIRIT_TOWER_TAKEN_HORDE" title='DefenseMessages::TEXT_SPIRIT_TOWER_TAKEN_HORDE' data-ref="DefenseMessages::TEXT_SPIRIT_TOWER_TAKEN_HORDE" >TEXT_SPIRIT_TOWER_TAKEN_HORDE</dfn>       = <var>18286</var>, <i>// '|cffffff00The Horde has taken control of a Spirit Tower!|r'</i></td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="DefenseMessages::TEXT_SPIRIT_TOWER_LOSE_ALLIANCE" title='DefenseMessages::TEXT_SPIRIT_TOWER_LOSE_ALLIANCE' data-ref="DefenseMessages::TEXT_SPIRIT_TOWER_LOSE_ALLIANCE" >TEXT_SPIRIT_TOWER_LOSE_ALLIANCE</dfn>     = <var>18288</var>, <i>// '|cffffff00The Alliance has lost control of a Spirit Tower!|r'</i></td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="DefenseMessages::TEXT_SPIRIT_TOWER_LOSE_HORDE" title='DefenseMessages::TEXT_SPIRIT_TOWER_LOSE_HORDE' data-ref="DefenseMessages::TEXT_SPIRIT_TOWER_LOSE_HORDE" >TEXT_SPIRIT_TOWER_LOSE_HORDE</dfn>        = <var>18287</var>  <i>// '|cffffff00The Horde has lost control of a Spirit Tower!|r'</i></td></tr>
+<tr><th id="31">31</th><td>};</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl def" id="_ZL24OutdoorPvPTFBuffZonesNum" title='OutdoorPvPTFBuffZonesNum' data-ref="_ZL24OutdoorPvPTFBuffZonesNum" >OutdoorPvPTFBuffZonesNum</dfn> = <var>5</var>;</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZL21OutdoorPvPTFBuffZones" title='OutdoorPvPTFBuffZones' data-ref="_ZL21OutdoorPvPTFBuffZones" >OutdoorPvPTFBuffZones</dfn>[<a class="ref" href="#_ZL24OutdoorPvPTFBuffZonesNum" title='OutdoorPvPTFBuffZonesNum' data-ref="_ZL24OutdoorPvPTFBuffZonesNum" >OutdoorPvPTFBuffZonesNum</a>] =</td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td>    <var>3519</var> <i>/*Terokkar Forest*/</i>,</td></tr>
+<tr><th id="38">38</th><td>    <var>3791</var> <i>/*Sethekk Halls*/</i>,</td></tr>
+<tr><th id="39">39</th><td>    <var>3789</var> <i>/*Shadow Labyrinth*/</i>,</td></tr>
+<tr><th id="40">40</th><td>    <var>3792</var> <i>/*Mana-Tombs*/</i>,</td></tr>
+<tr><th id="41">41</th><td>    <var>3790</var> <i>/*Auchenai Crypts*/</i></td></tr>
+<tr><th id="42">42</th><td>};</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><i>// locked for 6 hours after capture</i></td></tr>
+<tr><th id="45">45</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZL12TF_LOCK_TIME" title='TF_LOCK_TIME' data-ref="_ZL12TF_LOCK_TIME" >TF_LOCK_TIME</dfn> = <var>3600</var> * <var>6</var> * <var>1000</var>;</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><i>// update lock timer every 1/4 minute (overkill, but this way it's sure the timer won't "jump" 2 minutes at once.)</i></td></tr>
+<tr><th id="48">48</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZL19TF_LOCK_TIME_UPDATE" title='TF_LOCK_TIME_UPDATE' data-ref="_ZL19TF_LOCK_TIME_UPDATE" >TF_LOCK_TIME_UPDATE</dfn> = <var>15000</var>;</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><i>// blessing of auchindoun</i></td></tr>
+<tr><th id="51">51</th><td><u>#define <dfn class="macro" id="_M/TF_CAPTURE_BUFF" data-ref="_M/TF_CAPTURE_BUFF">TF_CAPTURE_BUFF</dfn> 33377</u></td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZL13TF_ALLY_QUEST" title='TF_ALLY_QUEST' data-ref="_ZL13TF_ALLY_QUEST" >TF_ALLY_QUEST</dfn> = <var>11505</var>;</td></tr>
+<tr><th id="54">54</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZL14TF_HORDE_QUEST" title='TF_HORDE_QUEST' data-ref="_ZL14TF_HORDE_QUEST" >TF_HORDE_QUEST</dfn> = <var>11506</var>;</td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td><b>enum</b> <dfn class="type def" id="OutdoorPvPTF_TowerType" title='OutdoorPvPTF_TowerType' data-ref="OutdoorPvPTF_TowerType" >OutdoorPvPTF_TowerType</dfn></td></tr>
+<tr><th id="57">57</th><td>{</td></tr>
+<tr><th id="58">58</th><td>    <dfn class="enum" id="OutdoorPvPTF_TowerType::TF_TOWER_NW" title='OutdoorPvPTF_TowerType::TF_TOWER_NW' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_NW" >TF_TOWER_NW</dfn> = <var>0</var>,</td></tr>
+<tr><th id="59">59</th><td>    <dfn class="enum" id="OutdoorPvPTF_TowerType::TF_TOWER_N" title='OutdoorPvPTF_TowerType::TF_TOWER_N' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_N" >TF_TOWER_N</dfn>,</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="OutdoorPvPTF_TowerType::TF_TOWER_NE" title='OutdoorPvPTF_TowerType::TF_TOWER_NE' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_NE" >TF_TOWER_NE</dfn>,</td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="OutdoorPvPTF_TowerType::TF_TOWER_SE" title='OutdoorPvPTF_TowerType::TF_TOWER_SE' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_SE" >TF_TOWER_SE</dfn>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="OutdoorPvPTF_TowerType::TF_TOWER_S" title='OutdoorPvPTF_TowerType::TF_TOWER_S' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_S" >TF_TOWER_S</dfn>,</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="enum" id="OutdoorPvPTF_TowerType::TF_TOWER_NUM" title='OutdoorPvPTF_TowerType::TF_TOWER_NUM' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_NUM" >TF_TOWER_NUM</dfn></td></tr>
+<tr><th id="64">64</th><td>};</td></tr>
+<tr><th id="65">65</th><td></td></tr>
+<tr><th id="66">66</th><td><em>const</em> <a class="type" href="../../game/OutdoorPvP/OutdoorPvP.h.html#go_type" title='go_type' data-ref="go_type" >go_type</a> <dfn class="decl def" id="_ZL15TFCapturePoints" title='TFCapturePoints' data-ref="_ZL15TFCapturePoints" >TFCapturePoints</dfn>[<a class="enum" href="#OutdoorPvPTF_TowerType::TF_TOWER_NUM" title='OutdoorPvPTF_TowerType::TF_TOWER_NUM' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_NUM" >TF_TOWER_NUM</a>] =</td></tr>
+<tr><th id="67">67</th><td>{</td></tr>
+<tr><th id="68">68</th><td>    {<var>183104</var>, <var>530</var>, -<var>3081.65f</var>, <var>5335.03f</var>, <var>17.1853f</var>, -<var>2.14675f</var>, <var>0.0f</var>, <var>0.0f</var>, <var>0.878817f</var>, -<var>0.477159f</var>},</td></tr>
+<tr><th id="69">69</th><td>    {<var>183411</var>, <var>530</var>, -<var>2939.9f</var>, <var>4788.73f</var>, <var>18.987f</var>, <var>2.77507f</var>, <var>0.0f</var>, <var>0.0f</var>, <var>0.983255f</var>, <var>0.182236f</var>},</td></tr>
+<tr><th id="70">70</th><td>    {<var>183412</var>, <var>530</var>, -<var>3174.94f</var>, <var>4440.97f</var>, <var>16.2281f</var>, <var>1.86750f</var>, <var>0.0f</var>, <var>0.0f</var>, <var>0.803857f</var>, <var>0.594823f</var>},</td></tr>
+<tr><th id="71">71</th><td>    {<var>183413</var>, <var>530</var>, -<var>3603.31f</var>, <var>4529.15f</var>, <var>20.9077f</var>, <var>0.994838f</var>, <var>0.0f</var>, <var>0.0f</var>, <var>0.477159f</var>, <var>0.878817f</var>},</td></tr>
+<tr><th id="72">72</th><td>    {<var>183414</var>, <var>530</var>, -<var>3812.37f</var>, <var>4899.3f</var>, <var>17.7249f</var>, <var>0.087266f</var>, <var>0.0f</var>, <var>0.0f</var>, <var>0.043619f</var>, <var>0.999048f</var>}</td></tr>
+<tr><th id="73">73</th><td>};</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><b>struct</b> <dfn class="type def" id="tf_tower_world_state" title='tf_tower_world_state' data-ref="tf_tower_world_state" >tf_tower_world_state</dfn></td></tr>
+<tr><th id="76">76</th><td>{</td></tr>
+<tr><th id="77">77</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="tf_tower_world_state::n" title='tf_tower_world_state::n' data-ref="tf_tower_world_state::n" >n</dfn>;</td></tr>
+<tr><th id="78">78</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="tf_tower_world_state::h" title='tf_tower_world_state::h' data-ref="tf_tower_world_state::h" >h</dfn>;</td></tr>
+<tr><th id="79">79</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="tf_tower_world_state::a" title='tf_tower_world_state::a' data-ref="tf_tower_world_state::a" >a</dfn>;</td></tr>
+<tr><th id="80">80</th><td>};</td></tr>
+<tr><th id="81">81</th><td></td></tr>
+<tr><th id="82">82</th><td><em>const</em> <a class="type" href="#tf_tower_world_state" title='tf_tower_world_state' data-ref="tf_tower_world_state" >tf_tower_world_state</a> <dfn class="decl def" id="_ZL18TFTowerWorldStates" title='TFTowerWorldStates' data-ref="_ZL18TFTowerWorldStates" >TFTowerWorldStates</dfn>[<a class="enum" href="#OutdoorPvPTF_TowerType::TF_TOWER_NUM" title='OutdoorPvPTF_TowerType::TF_TOWER_NUM' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_NUM" >TF_TOWER_NUM</a>] =</td></tr>
+<tr><th id="83">83</th><td>{</td></tr>
+<tr><th id="84">84</th><td>    {<var>0xa79</var>, <var>0xa7a</var>, <var>0xa7b</var>},</td></tr>
+<tr><th id="85">85</th><td>    {<var>0xa7e</var>, <var>0xa7d</var>, <var>0xa7c</var>},</td></tr>
+<tr><th id="86">86</th><td>    {<var>0xa82</var>, <var>0xa81</var>, <var>0xa80</var>},</td></tr>
+<tr><th id="87">87</th><td>    {<var>0xa88</var>, <var>0xa87</var>, <var>0xa86</var>},</td></tr>
+<tr><th id="88">88</th><td>    {<var>0xa85</var>, <var>0xa84</var>, <var>0xa83</var>}</td></tr>
+<tr><th id="89">89</th><td>};</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZL24TFTowerPlayerEnterEvents" title='TFTowerPlayerEnterEvents' data-ref="_ZL24TFTowerPlayerEnterEvents" >TFTowerPlayerEnterEvents</dfn>[<a class="enum" href="#OutdoorPvPTF_TowerType::TF_TOWER_NUM" title='OutdoorPvPTF_TowerType::TF_TOWER_NUM' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_NUM" >TF_TOWER_NUM</a>] =</td></tr>
+<tr><th id="92">92</th><td>{</td></tr>
+<tr><th id="93">93</th><td>    <var>12226</var>,</td></tr>
+<tr><th id="94">94</th><td>    <var>12497</var>,</td></tr>
+<tr><th id="95">95</th><td>    <var>12486</var>,</td></tr>
+<tr><th id="96">96</th><td>    <var>12499</var>,</td></tr>
+<tr><th id="97">97</th><td>    <var>12501</var></td></tr>
+<tr><th id="98">98</th><td>};</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td><em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl def" id="_ZL24TFTowerPlayerLeaveEvents" title='TFTowerPlayerLeaveEvents' data-ref="_ZL24TFTowerPlayerLeaveEvents" >TFTowerPlayerLeaveEvents</dfn>[<a class="enum" href="#OutdoorPvPTF_TowerType::TF_TOWER_NUM" title='OutdoorPvPTF_TowerType::TF_TOWER_NUM' data-ref="OutdoorPvPTF_TowerType::TF_TOWER_NUM" >TF_TOWER_NUM</a>] =</td></tr>
+<tr><th id="101">101</th><td>{</td></tr>
+<tr><th id="102">102</th><td>    <var>12225</var>,</td></tr>
+<tr><th id="103">103</th><td>    <var>12496</var>,</td></tr>
+<tr><th id="104">104</th><td>    <var>12487</var>,</td></tr>
+<tr><th id="105">105</th><td>    <var>12498</var>,</td></tr>
+<tr><th id="106">106</th><td>    <var>12500</var></td></tr>
+<tr><th id="107">107</th><td>};</td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><b>enum</b> <dfn class="type def" id="TFWorldStates" title='TFWorldStates' data-ref="TFWorldStates" >TFWorldStates</dfn></td></tr>
+<tr><th id="110">110</th><td>{</td></tr>
+<tr><th id="111">111</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_TOWER_COUNT_H" title='TFWorldStates::TF_UI_TOWER_COUNT_H' data-ref="TFWorldStates::TF_UI_TOWER_COUNT_H" >TF_UI_TOWER_COUNT_H</dfn> = <var>0xa3e</var>,</td></tr>
+<tr><th id="112">112</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_TOWER_COUNT_A" title='TFWorldStates::TF_UI_TOWER_COUNT_A' data-ref="TFWorldStates::TF_UI_TOWER_COUNT_A" >TF_UI_TOWER_COUNT_A</dfn> = <var>0xa3d</var>,</td></tr>
+<tr><th id="113">113</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_TOWERS_CONTROLLED_DISPLAY" title='TFWorldStates::TF_UI_TOWERS_CONTROLLED_DISPLAY' data-ref="TFWorldStates::TF_UI_TOWERS_CONTROLLED_DISPLAY" >TF_UI_TOWERS_CONTROLLED_DISPLAY</dfn> = <var>0xa3c</var>,</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_LOCKED_TIME_MINUTES_FIRST_DIGIT" title='TFWorldStates::TF_UI_LOCKED_TIME_MINUTES_FIRST_DIGIT' data-ref="TFWorldStates::TF_UI_LOCKED_TIME_MINUTES_FIRST_DIGIT" >TF_UI_LOCKED_TIME_MINUTES_FIRST_DIGIT</dfn> = <var>0x9d0</var>,</td></tr>
+<tr><th id="116">116</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_LOCKED_TIME_MINUTES_SECOND_DIGIT" title='TFWorldStates::TF_UI_LOCKED_TIME_MINUTES_SECOND_DIGIT' data-ref="TFWorldStates::TF_UI_LOCKED_TIME_MINUTES_SECOND_DIGIT" >TF_UI_LOCKED_TIME_MINUTES_SECOND_DIGIT</dfn> = <var>0x9ce</var>,</td></tr>
+<tr><th id="117">117</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_LOCKED_TIME_HOURS" title='TFWorldStates::TF_UI_LOCKED_TIME_HOURS' data-ref="TFWorldStates::TF_UI_LOCKED_TIME_HOURS" >TF_UI_LOCKED_TIME_HOURS</dfn> = <var>0x9cd</var>,</td></tr>
+<tr><th id="118">118</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_LOCKED_DISPLAY_NEUTRAL" title='TFWorldStates::TF_UI_LOCKED_DISPLAY_NEUTRAL' data-ref="TFWorldStates::TF_UI_LOCKED_DISPLAY_NEUTRAL" >TF_UI_LOCKED_DISPLAY_NEUTRAL</dfn> = <var>0x9cc</var>,</td></tr>
+<tr><th id="119">119</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_LOCKED_DISPLAY_HORDE" title='TFWorldStates::TF_UI_LOCKED_DISPLAY_HORDE' data-ref="TFWorldStates::TF_UI_LOCKED_DISPLAY_HORDE" >TF_UI_LOCKED_DISPLAY_HORDE</dfn> = <var>0xad0</var>,</td></tr>
+<tr><th id="120">120</th><td>    <dfn class="enum" id="TFWorldStates::TF_UI_LOCKED_DISPLAY_ALLIANCE" title='TFWorldStates::TF_UI_LOCKED_DISPLAY_ALLIANCE' data-ref="TFWorldStates::TF_UI_LOCKED_DISPLAY_ALLIANCE" >TF_UI_LOCKED_DISPLAY_ALLIANCE</dfn> = <var>0xacf</var></td></tr>
+<tr><th id="121">121</th><td>};</td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><b>enum</b> <dfn class="type def" id="TFTowerStates" title='TFTowerStates' data-ref="TFTowerStates" >TFTowerStates</dfn></td></tr>
+<tr><th id="124">124</th><td>{</td></tr>
+<tr><th id="125">125</th><td>    <dfn class="enum" id="TFTowerStates::TF_TOWERSTATE_N" title='TFTowerStates::TF_TOWERSTATE_N' data-ref="TFTowerStates::TF_TOWERSTATE_N" >TF_TOWERSTATE_N</dfn> = <var>1</var>,</td></tr>
+<tr><th id="126">126</th><td>    <dfn class="enum" id="TFTowerStates::TF_TOWERSTATE_H" title='TFTowerStates::TF_TOWERSTATE_H' data-ref="TFTowerStates::TF_TOWERSTATE_H" >TF_TOWERSTATE_H</dfn> = <var>2</var>,</td></tr>
+<tr><th id="127">127</th><td>    <dfn class="enum" id="TFTowerStates::TF_TOWERSTATE_A" title='TFTowerStates::TF_TOWERSTATE_A' data-ref="TFTowerStates::TF_TOWERSTATE_A" >TF_TOWERSTATE_A</dfn> = <var>4</var></td></tr>
+<tr><th id="128">128</th><td>};</td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td><b>class</b> <dfn class="type def" id="OPvPCapturePointTF" title='OPvPCapturePointTF' data-ref="OPvPCapturePointTF" >OPvPCapturePointTF</dfn> : <b>public</b> <a class="type" href="../../game/OutdoorPvP/OutdoorPvP.h.html#OPvPCapturePoint" title='OPvPCapturePoint' data-ref="OPvPCapturePoint" >OPvPCapturePoint</a></td></tr>
+<tr><th id="131">131</th><td>{</td></tr>
+<tr><th id="132">132</th><td>    <b>public</b>:</td></tr>
+<tr><th id="133">133</th><td>        <a class="decl" href="OutdoorPvPTF.cpp.html#_ZN18OPvPCapturePointTFC1EP10OutdoorPvP22OutdoorPvPTF_TowerType" title='OPvPCapturePointTF::OPvPCapturePointTF' data-ref="_ZN18OPvPCapturePointTFC1EP10OutdoorPvP22OutdoorPvPTF_TowerType" id="_ZN18OPvPCapturePointTFC1EP10OutdoorPvP22OutdoorPvPTF_TowerType" >OPvPCapturePointTF</a>(<a class="type" href="../../game/OutdoorPvP/OutdoorPvP.h.html#OutdoorPvP" title='OutdoorPvP' data-ref="OutdoorPvP" >OutdoorPvP</a>* <dfn class="local col1 decl" id="1pvp" title='pvp' data-type='OutdoorPvP *' data-ref="1pvp" >pvp</dfn>, <a class="type" href="#OutdoorPvPTF_TowerType" title='OutdoorPvPTF_TowerType' data-ref="OutdoorPvPTF_TowerType" >OutdoorPvPTF_TowerType</a> <dfn class="local col2 decl" id="2type" title='type' data-type='OutdoorPvPTF_TowerType' data-ref="2type" >type</dfn>);</td></tr>
+<tr><th id="134">134</th><td></td></tr>
+<tr><th id="135">135</th><td>        <em>bool</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN18OPvPCapturePointTF6UpdateEj" title='OPvPCapturePointTF::Update' data-ref="_ZN18OPvPCapturePointTF6UpdateEj" id="_ZN18OPvPCapturePointTF6UpdateEj" >Update</a>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3diff" title='diff' data-type='uint32' data-ref="3diff" >diff</dfn>) override;</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td>        <em>void</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN18OPvPCapturePointTF11ChangeStateEv" title='OPvPCapturePointTF::ChangeState' data-ref="_ZN18OPvPCapturePointTF11ChangeStateEv" id="_ZN18OPvPCapturePointTF11ChangeStateEv" >ChangeState</a>() override;</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td>        <em>void</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN18OPvPCapturePointTF22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" title='OPvPCapturePointTF::FillInitialWorldStates' data-ref="_ZN18OPvPCapturePointTF22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" id="_ZN18OPvPCapturePointTF22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" >FillInitialWorldStates</a>(<span class="namespace">WorldPackets::WorldState::</span><a class="type" href="../../game/Server/Packets/WorldStatePackets.h.html#WorldPackets::WorldState::InitWorldStates" title='WorldPackets::WorldState::InitWorldStates' data-ref="WorldPackets::WorldState::InitWorldStates" >InitWorldStates</a>&amp; <dfn class="local col4 decl" id="4packet" title='packet' data-type='WorldPackets::WorldState::InitWorldStates &amp;' data-ref="4packet" >packet</dfn>) override;</td></tr>
+<tr><th id="140">140</th><td></td></tr>
+<tr><th id="141">141</th><td>        <em>void</em> <a class="decl" href="OutdoorPvPTF.cpp.html#_ZN18OPvPCapturePointTF16UpdateTowerStateEv" title='OPvPCapturePointTF::UpdateTowerState' data-ref="_ZN18OPvPCapturePointTF16UpdateTowerStateEv" id="_ZN18OPvPCapturePointTF16UpdateTowerStateEv" >UpdateTowerState</a>();</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="144">144</th><td>        <a class="type" href="#OutdoorPvPTF_TowerType" title='OutdoorPvPTF_TowerType' data-ref="OutdoorPvPTF_TowerType" >OutdoorPvPTF_TowerType</a> <dfn class="decl" id="OPvPCapturePointTF::m_TowerType" title='OPvPCapturePointTF::m_TowerType' data-ref="OPvPCapturePointTF::m_TowerType" >m_TowerType</dfn>;</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="OPvPCapturePointTF::m_TowerState" title='OPvPCapturePointTF::m_TowerState' data-ref="OPvPCapturePointTF::m_TowerState" >m_TowerState</dfn>;</td></tr>
+<tr><th id="147">147</th><td>};</td></tr>
+<tr><th id="148">148</th><td></td></tr>
+<tr><th id="149">149</th><td><b>class</b> <dfn class="type def" id="OutdoorPvPTF" title='OutdoorPvPTF' data-ref="OutdoorPvPTF" >OutdoorPvPTF</dfn> : <b>public</b> <a class="type" href="../../game/OutdoorPvP/OutdoorPvP.h.html#OutdoorPvP" title='OutdoorPvP' data-ref="OutdoorPvP" >OutdoorPvP</a></td></tr>
+<tr><th id="150">150</th><td>{</td></tr>
+<tr><th id="151">151</th><td>    <b>public</b>:</td></tr>
+<tr><th id="152">152</th><td>        <a class="decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTFC1Ev" title='OutdoorPvPTF::OutdoorPvPTF' data-ref="_ZN12OutdoorPvPTFC1Ev" id="_ZN12OutdoorPvPTFC1Ev" >OutdoorPvPTF</a>();</td></tr>
+<tr><th id="153">153</th><td></td></tr>
+<tr><th id="154">154</th><td>        <em>bool</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF15SetupOutdoorPvPEv" title='OutdoorPvPTF::SetupOutdoorPvP' data-ref="_ZN12OutdoorPvPTF15SetupOutdoorPvPEv" id="_ZN12OutdoorPvPTF15SetupOutdoorPvPEv" >SetupOutdoorPvP</a>() override;</td></tr>
+<tr><th id="155">155</th><td></td></tr>
+<tr><th id="156">156</th><td>        <em>void</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF21HandlePlayerEnterZoneEP6Playerj" title='OutdoorPvPTF::HandlePlayerEnterZone' data-ref="_ZN12OutdoorPvPTF21HandlePlayerEnterZoneEP6Playerj" id="_ZN12OutdoorPvPTF21HandlePlayerEnterZoneEP6Playerj" >HandlePlayerEnterZone</a>(<a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col5 decl" id="5player" title='player' data-type='Player *' data-ref="5player" >player</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="6zone" title='zone' data-type='uint32' data-ref="6zone" >zone</dfn>) override;</td></tr>
+<tr><th id="157">157</th><td>        <em>void</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF21HandlePlayerLeaveZoneEP6Playerj" title='OutdoorPvPTF::HandlePlayerLeaveZone' data-ref="_ZN12OutdoorPvPTF21HandlePlayerLeaveZoneEP6Playerj" id="_ZN12OutdoorPvPTF21HandlePlayerLeaveZoneEP6Playerj" >HandlePlayerLeaveZone</a>(<a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col7 decl" id="7player" title='player' data-type='Player *' data-ref="7player" >player</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="8zone" title='zone' data-type='uint32' data-ref="8zone" >zone</dfn>) override;</td></tr>
+<tr><th id="158">158</th><td></td></tr>
+<tr><th id="159">159</th><td>        <em>bool</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF6UpdateEj" title='OutdoorPvPTF::Update' data-ref="_ZN12OutdoorPvPTF6UpdateEj" id="_ZN12OutdoorPvPTF6UpdateEj" >Update</a>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="9diff" title='diff' data-type='uint32' data-ref="9diff" >diff</dfn>) override;</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>        <em>void</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" title='OutdoorPvPTF::FillInitialWorldStates' data-ref="_ZN12OutdoorPvPTF22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" id="_ZN12OutdoorPvPTF22FillInitialWorldStatesERN12WorldPackets10WorldState15InitWorldStatesE" >FillInitialWorldStates</a>(<span class="namespace">WorldPackets::WorldState::</span><a class="type" href="../../game/Server/Packets/WorldStatePackets.h.html#WorldPackets::WorldState::InitWorldStates" title='WorldPackets::WorldState::InitWorldStates' data-ref="WorldPackets::WorldState::InitWorldStates" >InitWorldStates</a>&amp; <dfn class="local col0 decl" id="10packet" title='packet' data-type='WorldPackets::WorldState::InitWorldStates &amp;' data-ref="10packet" >packet</dfn>) override;</td></tr>
+<tr><th id="162">162</th><td></td></tr>
+<tr><th id="163">163</th><td>        <em>void</em> <a class="virtual decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF21SendRemoveWorldStatesEP6Player" title='OutdoorPvPTF::SendRemoveWorldStates' data-ref="_ZN12OutdoorPvPTF21SendRemoveWorldStatesEP6Player" id="_ZN12OutdoorPvPTF21SendRemoveWorldStatesEP6Player" >SendRemoveWorldStates</a>(<a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col1 decl" id="11player" title='player' data-type='Player *' data-ref="11player" >player</dfn>) override;</td></tr>
+<tr><th id="164">164</th><td></td></tr>
+<tr><th id="165">165</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <a class="decl" href="OutdoorPvPTF.cpp.html#_ZNK12OutdoorPvPTF27GetAllianceTowersControlledEv" title='OutdoorPvPTF::GetAllianceTowersControlled' data-ref="_ZNK12OutdoorPvPTF27GetAllianceTowersControlledEv" id="_ZNK12OutdoorPvPTF27GetAllianceTowersControlledEv" >GetAllianceTowersControlled</a>() <em>const</em>;</td></tr>
+<tr><th id="166">166</th><td>        <em>void</em> <a class="decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF27SetAllianceTowersControlledEj" title='OutdoorPvPTF::SetAllianceTowersControlled' data-ref="_ZN12OutdoorPvPTF27SetAllianceTowersControlledEj" id="_ZN12OutdoorPvPTF27SetAllianceTowersControlledEj" >SetAllianceTowersControlled</a>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="12count" title='count' data-type='uint32' data-ref="12count" >count</dfn>);</td></tr>
+<tr><th id="167">167</th><td></td></tr>
+<tr><th id="168">168</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <a class="decl" href="OutdoorPvPTF.cpp.html#_ZNK12OutdoorPvPTF24GetHordeTowersControlledEv" title='OutdoorPvPTF::GetHordeTowersControlled' data-ref="_ZNK12OutdoorPvPTF24GetHordeTowersControlledEv" id="_ZNK12OutdoorPvPTF24GetHordeTowersControlledEv" >GetHordeTowersControlled</a>() <em>const</em>;</td></tr>
+<tr><th id="169">169</th><td>        <em>void</em> <a class="decl" href="OutdoorPvPTF.cpp.html#_ZN12OutdoorPvPTF24SetHordeTowersControlledEj" title='OutdoorPvPTF::SetHordeTowersControlled' data-ref="_ZN12OutdoorPvPTF24SetHordeTowersControlledEj" id="_ZN12OutdoorPvPTF24SetHordeTowersControlledEj" >SetHordeTowersControlled</a>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="13count" title='count' data-type='uint32' data-ref="13count" >count</dfn>);</td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td>        <em>bool</em> <a class="decl" href="OutdoorPvPTF.cpp.html#_ZNK12OutdoorPvPTF8IsLockedEv" title='OutdoorPvPTF::IsLocked' data-ref="_ZNK12OutdoorPvPTF8IsLockedEv" id="_ZNK12OutdoorPvPTF8IsLockedEv" >IsLocked</a>() <em>const</em>;</td></tr>
+<tr><th id="172">172</th><td></td></tr>
+<tr><th id="173">173</th><td>    <b>private</b>:</td></tr>
+<tr><th id="174">174</th><td>        <em>bool</em> <dfn class="decl" id="OutdoorPvPTF::m_IsLocked" title='OutdoorPvPTF::m_IsLocked' data-ref="OutdoorPvPTF::m_IsLocked" >m_IsLocked</dfn>;</td></tr>
+<tr><th id="175">175</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="OutdoorPvPTF::m_LockTimer" title='OutdoorPvPTF::m_LockTimer' data-ref="OutdoorPvPTF::m_LockTimer" >m_LockTimer</dfn>;</td></tr>
+<tr><th id="176">176</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="OutdoorPvPTF::m_LockTimerUpdate" title='OutdoorPvPTF::m_LockTimerUpdate' data-ref="OutdoorPvPTF::m_LockTimerUpdate" >m_LockTimerUpdate</dfn>;</td></tr>
+<tr><th id="177">177</th><td></td></tr>
+<tr><th id="178">178</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="OutdoorPvPTF::m_AllianceTowersControlled" title='OutdoorPvPTF::m_AllianceTowersControlled' data-ref="OutdoorPvPTF::m_AllianceTowersControlled" >m_AllianceTowersControlled</dfn>;</td></tr>
+<tr><th id="179">179</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="OutdoorPvPTF::m_HordeTowersControlled" title='OutdoorPvPTF::m_HordeTowersControlled' data-ref="OutdoorPvPTF::m_HordeTowersControlled" >m_HordeTowersControlled</dfn>;</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+<tr><th id="181">181</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" ><a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" ><a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a></a></a> <dfn class="decl" id="OutdoorPvPTF::hours_left" title='OutdoorPvPTF::hours_left' data-ref="OutdoorPvPTF::hours_left" >hours_left</dfn>, <dfn class="decl" id="OutdoorPvPTF::second_digit" title='OutdoorPvPTF::second_digit' data-ref="OutdoorPvPTF::second_digit" >second_digit</dfn>, <dfn class="decl" id="OutdoorPvPTF::first_digit" title='OutdoorPvPTF::first_digit' data-ref="OutdoorPvPTF::first_digit" >first_digit</dfn>;</td></tr>
+<tr><th id="182">182</th><td>};</td></tr>
+<tr><th id="183">183</th><td></td></tr>
+<tr><th id="184">184</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="185">185</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='OutdoorPvPTF.cpp.html'>TrinityCore6.x/src/server/scripts/OutdoorPvP/OutdoorPvPTF.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<title>ScriptedGossip.h [TrinityCore6.x/src/server/game/AI/ScriptedAI/ScriptedGossip.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/AI/ScriptedAI/ScriptedGossip.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>AI</a>/<a href='./'>ScriptedAI</a>/ScriptedGossip.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2006-2009 ScriptDev2 &lt;<a href="https://scriptdev">https://scriptdev</a>2.svn.sourceforge.net/&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/SC_GOSSIP_H">SC_GOSSIP_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/SC_GOSSIP_H" data-ref="_M/SC_GOSSIP_H">SC_GOSSIP_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../Entities/Creature/GossipDef.h.html">"GossipDef.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../Quests/QuestDef.h.html">"QuestDef.h"</a></u></td></tr>
+<tr><th id="24">24</th><td></td></tr>
+<tr><th id="25">25</th><td><i>// Gossip Item Text</i></td></tr>
+<tr><th id="26">26</th><td><u>#define <dfn class="macro" id="_M/GOSSIP_TEXT_BROWSE_GOODS" data-ref="_M/GOSSIP_TEXT_BROWSE_GOODS">GOSSIP_TEXT_BROWSE_GOODS</dfn>        "I'd like to browse your goods."</u></td></tr>
+<tr><th id="27">27</th><td><u>#define <dfn class="macro" id="_M/GOSSIP_TEXT_TRAIN" data-ref="_M/GOSSIP_TEXT_TRAIN">GOSSIP_TEXT_TRAIN</dfn>               "Train me!"</u></td></tr>
+<tr><th id="28">28</th><td></td></tr>
+<tr><th id="29">29</th><td><b>enum</b> <dfn class="type def" id="eTradeskill" title='eTradeskill' data-ref="eTradeskill" >eTradeskill</dfn></td></tr>
+<tr><th id="30">30</th><td>{</td></tr>
+<tr><th id="31">31</th><td>    <i>// Skill defines</i></td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_ALCHEMY" title='eTradeskill::TRADESKILL_ALCHEMY' data-ref="eTradeskill::TRADESKILL_ALCHEMY" >TRADESKILL_ALCHEMY</dfn>                  = <var>1</var>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_BLACKSMITHING" title='eTradeskill::TRADESKILL_BLACKSMITHING' data-ref="eTradeskill::TRADESKILL_BLACKSMITHING" >TRADESKILL_BLACKSMITHING</dfn>            = <var>2</var>,</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_COOKING" title='eTradeskill::TRADESKILL_COOKING' data-ref="eTradeskill::TRADESKILL_COOKING" >TRADESKILL_COOKING</dfn>                  = <var>3</var>,</td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_ENCHANTING" title='eTradeskill::TRADESKILL_ENCHANTING' data-ref="eTradeskill::TRADESKILL_ENCHANTING" >TRADESKILL_ENCHANTING</dfn>               = <var>4</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_ENGINEERING" title='eTradeskill::TRADESKILL_ENGINEERING' data-ref="eTradeskill::TRADESKILL_ENGINEERING" >TRADESKILL_ENGINEERING</dfn>              = <var>5</var>,</td></tr>
+<tr><th id="37">37</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_FIRSTAID" title='eTradeskill::TRADESKILL_FIRSTAID' data-ref="eTradeskill::TRADESKILL_FIRSTAID" >TRADESKILL_FIRSTAID</dfn>                 = <var>6</var>,</td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_HERBALISM" title='eTradeskill::TRADESKILL_HERBALISM' data-ref="eTradeskill::TRADESKILL_HERBALISM" >TRADESKILL_HERBALISM</dfn>                = <var>7</var>,</td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEATHERWORKING" title='eTradeskill::TRADESKILL_LEATHERWORKING' data-ref="eTradeskill::TRADESKILL_LEATHERWORKING" >TRADESKILL_LEATHERWORKING</dfn>           = <var>8</var>,</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_POISONS" title='eTradeskill::TRADESKILL_POISONS' data-ref="eTradeskill::TRADESKILL_POISONS" >TRADESKILL_POISONS</dfn>                  = <var>9</var>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_TAILORING" title='eTradeskill::TRADESKILL_TAILORING' data-ref="eTradeskill::TRADESKILL_TAILORING" >TRADESKILL_TAILORING</dfn>                = <var>10</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_MINING" title='eTradeskill::TRADESKILL_MINING' data-ref="eTradeskill::TRADESKILL_MINING" >TRADESKILL_MINING</dfn>                   = <var>11</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_FISHING" title='eTradeskill::TRADESKILL_FISHING' data-ref="eTradeskill::TRADESKILL_FISHING" >TRADESKILL_FISHING</dfn>                  = <var>12</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_SKINNING" title='eTradeskill::TRADESKILL_SKINNING' data-ref="eTradeskill::TRADESKILL_SKINNING" >TRADESKILL_SKINNING</dfn>                 = <var>13</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_JEWLCRAFTING" title='eTradeskill::TRADESKILL_JEWLCRAFTING' data-ref="eTradeskill::TRADESKILL_JEWLCRAFTING" >TRADESKILL_JEWLCRAFTING</dfn>             = <var>14</var>,</td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_INSCRIPTION" title='eTradeskill::TRADESKILL_INSCRIPTION' data-ref="eTradeskill::TRADESKILL_INSCRIPTION" >TRADESKILL_INSCRIPTION</dfn>              = <var>15</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_ARCHAEOLOGY" title='eTradeskill::TRADESKILL_ARCHAEOLOGY' data-ref="eTradeskill::TRADESKILL_ARCHAEOLOGY" >TRADESKILL_ARCHAEOLOGY</dfn>              = <var>16</var>,</td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_NONE" title='eTradeskill::TRADESKILL_LEVEL_NONE' data-ref="eTradeskill::TRADESKILL_LEVEL_NONE" >TRADESKILL_LEVEL_NONE</dfn>               = <var>0</var>,</td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_APPRENTICE" title='eTradeskill::TRADESKILL_LEVEL_APPRENTICE' data-ref="eTradeskill::TRADESKILL_LEVEL_APPRENTICE" >TRADESKILL_LEVEL_APPRENTICE</dfn>         = <var>1</var>,</td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_JOURNEYMAN" title='eTradeskill::TRADESKILL_LEVEL_JOURNEYMAN' data-ref="eTradeskill::TRADESKILL_LEVEL_JOURNEYMAN" >TRADESKILL_LEVEL_JOURNEYMAN</dfn>         = <var>2</var>,</td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_EXPERT" title='eTradeskill::TRADESKILL_LEVEL_EXPERT' data-ref="eTradeskill::TRADESKILL_LEVEL_EXPERT" >TRADESKILL_LEVEL_EXPERT</dfn>             = <var>3</var>,</td></tr>
+<tr><th id="53">53</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_ARTISAN" title='eTradeskill::TRADESKILL_LEVEL_ARTISAN' data-ref="eTradeskill::TRADESKILL_LEVEL_ARTISAN" >TRADESKILL_LEVEL_ARTISAN</dfn>            = <var>4</var>,</td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_MASTER" title='eTradeskill::TRADESKILL_LEVEL_MASTER' data-ref="eTradeskill::TRADESKILL_LEVEL_MASTER" >TRADESKILL_LEVEL_MASTER</dfn>             = <var>5</var>,</td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_GRAND_MASTER" title='eTradeskill::TRADESKILL_LEVEL_GRAND_MASTER' data-ref="eTradeskill::TRADESKILL_LEVEL_GRAND_MASTER" >TRADESKILL_LEVEL_GRAND_MASTER</dfn>       = <var>6</var>,</td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="eTradeskill::TRADESKILL_LEVEL_ILLUSTRIOUS" title='eTradeskill::TRADESKILL_LEVEL_ILLUSTRIOUS' data-ref="eTradeskill::TRADESKILL_LEVEL_ILLUSTRIOUS" >TRADESKILL_LEVEL_ILLUSTRIOUS</dfn>        = <var>7</var>,</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td>    <i>// Gossip defines</i></td></tr>
+<tr><th id="59">59</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_TRADE" title='eTradeskill::GOSSIP_ACTION_TRADE' data-ref="eTradeskill::GOSSIP_ACTION_TRADE" >GOSSIP_ACTION_TRADE</dfn>                 = <var>1</var>,</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_TRAIN" title='eTradeskill::GOSSIP_ACTION_TRAIN' data-ref="eTradeskill::GOSSIP_ACTION_TRAIN" >GOSSIP_ACTION_TRAIN</dfn>                 = <var>2</var>,</td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_TAXI" title='eTradeskill::GOSSIP_ACTION_TAXI' data-ref="eTradeskill::GOSSIP_ACTION_TAXI" >GOSSIP_ACTION_TAXI</dfn>                  = <var>3</var>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_GUILD" title='eTradeskill::GOSSIP_ACTION_GUILD' data-ref="eTradeskill::GOSSIP_ACTION_GUILD" >GOSSIP_ACTION_GUILD</dfn>                 = <var>4</var>,</td></tr>
+<tr><th id="63">63</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_BATTLE" title='eTradeskill::GOSSIP_ACTION_BATTLE' data-ref="eTradeskill::GOSSIP_ACTION_BATTLE" >GOSSIP_ACTION_BATTLE</dfn>                = <var>5</var>,</td></tr>
+<tr><th id="64">64</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_BANK" title='eTradeskill::GOSSIP_ACTION_BANK' data-ref="eTradeskill::GOSSIP_ACTION_BANK" >GOSSIP_ACTION_BANK</dfn>                  = <var>6</var>,</td></tr>
+<tr><th id="65">65</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_INN" title='eTradeskill::GOSSIP_ACTION_INN' data-ref="eTradeskill::GOSSIP_ACTION_INN" >GOSSIP_ACTION_INN</dfn>                   = <var>7</var>,</td></tr>
+<tr><th id="66">66</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_HEAL" title='eTradeskill::GOSSIP_ACTION_HEAL' data-ref="eTradeskill::GOSSIP_ACTION_HEAL" >GOSSIP_ACTION_HEAL</dfn>                  = <var>8</var>,</td></tr>
+<tr><th id="67">67</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_TABARD" title='eTradeskill::GOSSIP_ACTION_TABARD' data-ref="eTradeskill::GOSSIP_ACTION_TABARD" >GOSSIP_ACTION_TABARD</dfn>                = <var>9</var>,</td></tr>
+<tr><th id="68">68</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_AUCTION" title='eTradeskill::GOSSIP_ACTION_AUCTION' data-ref="eTradeskill::GOSSIP_ACTION_AUCTION" >GOSSIP_ACTION_AUCTION</dfn>               = <var>10</var>,</td></tr>
+<tr><th id="69">69</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_INN_INFO" title='eTradeskill::GOSSIP_ACTION_INN_INFO' data-ref="eTradeskill::GOSSIP_ACTION_INN_INFO" >GOSSIP_ACTION_INN_INFO</dfn>              = <var>11</var>,</td></tr>
+<tr><th id="70">70</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_UNLEARN" title='eTradeskill::GOSSIP_ACTION_UNLEARN' data-ref="eTradeskill::GOSSIP_ACTION_UNLEARN" >GOSSIP_ACTION_UNLEARN</dfn>               = <var>12</var>,</td></tr>
+<tr><th id="71">71</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_ACTION_INFO_DEF" title='eTradeskill::GOSSIP_ACTION_INFO_DEF' data-ref="eTradeskill::GOSSIP_ACTION_INFO_DEF" >GOSSIP_ACTION_INFO_DEF</dfn>              = <var>1000</var>,</td></tr>
+<tr><th id="72">72</th><td></td></tr>
+<tr><th id="73">73</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_MAIN" title='eTradeskill::GOSSIP_SENDER_MAIN' data-ref="eTradeskill::GOSSIP_SENDER_MAIN" >GOSSIP_SENDER_MAIN</dfn>                  = <var>1</var>,</td></tr>
+<tr><th id="74">74</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_INN_INFO" title='eTradeskill::GOSSIP_SENDER_INN_INFO' data-ref="eTradeskill::GOSSIP_SENDER_INN_INFO" >GOSSIP_SENDER_INN_INFO</dfn>              = <var>2</var>,</td></tr>
+<tr><th id="75">75</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_INFO" title='eTradeskill::GOSSIP_SENDER_INFO' data-ref="eTradeskill::GOSSIP_SENDER_INFO" >GOSSIP_SENDER_INFO</dfn>                  = <var>3</var>,</td></tr>
+<tr><th id="76">76</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_SEC_PROFTRAIN" title='eTradeskill::GOSSIP_SENDER_SEC_PROFTRAIN' data-ref="eTradeskill::GOSSIP_SENDER_SEC_PROFTRAIN" >GOSSIP_SENDER_SEC_PROFTRAIN</dfn>         = <var>4</var>,</td></tr>
+<tr><th id="77">77</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_SEC_CLASSTRAIN" title='eTradeskill::GOSSIP_SENDER_SEC_CLASSTRAIN' data-ref="eTradeskill::GOSSIP_SENDER_SEC_CLASSTRAIN" >GOSSIP_SENDER_SEC_CLASSTRAIN</dfn>        = <var>5</var>,</td></tr>
+<tr><th id="78">78</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_SEC_BATTLEINFO" title='eTradeskill::GOSSIP_SENDER_SEC_BATTLEINFO' data-ref="eTradeskill::GOSSIP_SENDER_SEC_BATTLEINFO" >GOSSIP_SENDER_SEC_BATTLEINFO</dfn>        = <var>6</var>,</td></tr>
+<tr><th id="79">79</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_SEC_BANK" title='eTradeskill::GOSSIP_SENDER_SEC_BANK' data-ref="eTradeskill::GOSSIP_SENDER_SEC_BANK" >GOSSIP_SENDER_SEC_BANK</dfn>              = <var>7</var>,</td></tr>
+<tr><th id="80">80</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_SEC_INN" title='eTradeskill::GOSSIP_SENDER_SEC_INN' data-ref="eTradeskill::GOSSIP_SENDER_SEC_INN" >GOSSIP_SENDER_SEC_INN</dfn>               = <var>8</var>,</td></tr>
+<tr><th id="81">81</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_SEC_MAILBOX" title='eTradeskill::GOSSIP_SENDER_SEC_MAILBOX' data-ref="eTradeskill::GOSSIP_SENDER_SEC_MAILBOX" >GOSSIP_SENDER_SEC_MAILBOX</dfn>           = <var>9</var>,</td></tr>
+<tr><th id="82">82</th><td>    <dfn class="enum" id="eTradeskill::GOSSIP_SENDER_SEC_STABLEMASTER" title='eTradeskill::GOSSIP_SENDER_SEC_STABLEMASTER' data-ref="eTradeskill::GOSSIP_SENDER_SEC_STABLEMASTER" >GOSSIP_SENDER_SEC_STABLEMASTER</dfn>      = <var>10</var></td></tr>
+<tr><th id="83">83</th><td>};</td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><i>// Defined fuctions to use with player.</i></td></tr>
+<tr><th id="86">86</th><td><i></i></td></tr>
+<tr><th id="87">87</th><td><i>// This fuction add's a menu item,</i></td></tr>
+<tr><th id="88">88</th><td><i>// a - Icon Id</i></td></tr>
+<tr><th id="89">89</th><td><i>// b - Text</i></td></tr>
+<tr><th id="90">90</th><td><i>// c - Sender(this is to identify the current Menu with this item)</i></td></tr>
+<tr><th id="91">91</th><td><i>// d - Action (identifys this Menu Item)</i></td></tr>
+<tr><th id="92">92</th><td><i>// e - Text to be displayed in pop up box</i></td></tr>
+<tr><th id="93">93</th><td><i>// f - Money value in pop up box</i></td></tr>
+<tr><th id="94">94</th><td><i>// g - Coded</i></td></tr>
+<tr><th id="95">95</th><td><i>// h - Menu ID from DB</i></td></tr>
+<tr><th id="96">96</th><td><i>// i - Menu item ID from DB</i></td></tr>
+<tr><th id="97">97</th><td><u>#define <dfn class="macro" id="_M/ADD_GOSSIP_ITEM" data-ref="_M/ADD_GOSSIP_ITEM">ADD_GOSSIP_ITEM</dfn>(a, b, c, d)   PlayerTalkClass-&gt;GetGossipMenu().AddMenuItem(-1, a, b, c, d, "", 0)</u></td></tr>
+<tr><th id="98">98</th><td><u>#define <dfn class="macro" id="_M/ADD_GOSSIP_ITEM_DB" data-ref="_M/ADD_GOSSIP_ITEM_DB">ADD_GOSSIP_ITEM_DB</dfn>(h, i, c, d)   PlayerTalkClass-&gt;GetGossipMenu().AddMenuItem(h, i, c, d)</u></td></tr>
+<tr><th id="99">99</th><td><u>#define <dfn class="macro" id="_M/ADD_GOSSIP_ITEM_EXTENDED" data-ref="_M/ADD_GOSSIP_ITEM_EXTENDED">ADD_GOSSIP_ITEM_EXTENDED</dfn>(a, b, c, d, e, f, g)   PlayerTalkClass-&gt;GetGossipMenu().AddMenuItem(-1, a, b, c, d, e, f, g)</u></td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><i>// This fuction Sends the current menu to show to client, a - NPCTEXTID(uint32), b - npc guid(uint64)</i></td></tr>
+<tr><th id="102">102</th><td><u>#define <dfn class="macro" id="_M/SEND_GOSSIP_MENU" data-ref="_M/SEND_GOSSIP_MENU">SEND_GOSSIP_MENU</dfn>(a, b)      PlayerTalkClass-&gt;SendGossipMenu(a, b)</u></td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td><i>// Closes the Menu</i></td></tr>
+<tr><th id="105">105</th><td><u>#define <dfn class="macro" id="_M/CLOSE_GOSSIP_MENU" data-ref="_M/CLOSE_GOSSIP_MENU">CLOSE_GOSSIP_MENU</dfn>()        PlayerTalkClass-&gt;SendCloseGossip()</u></td></tr>
+<tr><th id="106">106</th><td></td></tr>
+<tr><th id="107">107</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="108">108</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../SmartScripts/SmartScript.cpp.html'>TrinityCore6.x/src/server/game/AI/SmartScripts/SmartScript.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

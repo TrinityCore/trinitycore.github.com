@@ -1,0 +1,40 @@
+<dec f='TrinityCore3.3.5/src/server/game/World/World.h' l='754' type='const CharacterInfo * World::GetCharacterInfo(const ObjectGuid &amp; guid) const'/>
+<use f='TrinityCore3.3.5/src/server/game/Entities/Corpse/Corpse.cpp' l='183' u='c' c='_ZNK6Corpse9IsExpiredEl'/>
+<use f='TrinityCore3.3.5/src/server/game/Entities/Player/Player.cpp' l='4205' u='c' c='_ZN6Player12DeleteFromDBE10ObjectGuidjbb'/>
+<use f='TrinityCore3.3.5/src/server/game/Globals/ObjectMgr.cpp' l='2222' u='c' c='_ZNK9ObjectMgr24GetPlayerAccountIdByGUIDE10ObjectGuid'/>
+<use f='TrinityCore3.3.5/src/server/game/Handlers/CharacterHandler.cpp' l='1596' u='c' c='_ZN12WorldSession29HandleCharFactionOrRaceChangeER11WorldPacket'/>
+<use f='TrinityCore3.3.5/src/server/game/Handlers/QueryHandler.cpp' l='34' u='c' c='_ZN12WorldSession19SendNameQueryOpcodeE10ObjectGuid'/>
+<def f='TrinityCore3.3.5/src/server/game/World/World.cpp' l='3187' type='const CharacterInfo * World::GetCharacterInfo(const ObjectGuid &amp; guid) const'/>
+<use f='TrinityCore3.3.5/src/server/scripts/Commands/cs_arena.cpp' l='276' u='c' c='_ZN19arena_commandscript25HandleArenaCaptainCommandEP11ChatHandlerPKc'/>
+<dec f='TrinityCore6.x/src/server/game/World/World.h' l='775' type='const CharacterInfo * World::GetCharacterInfo(const ObjectGuid &amp; guid) const'/>
+<use f='TrinityCore6.x/src/server/game/Battlegrounds/ArenaTeam.cpp' l='105' u='c' c='_ZN9ArenaTeam9AddMemberE10ObjectGuid'/>
+<use f='TrinityCore6.x/src/server/game/Entities/Corpse/Corpse.cpp' l='192' u='c' c='_ZNK6Corpse9IsExpiredEl'/>
+<use f='TrinityCore6.x/src/server/game/Entities/Player/Player.cpp' l='3770' u='c' c='_ZN6Player12DeleteFromDBE10ObjectGuidjbb'/>
+<use f='TrinityCore6.x/src/server/game/Globals/ObjectMgr.cpp' l='2260' u='c' c='_ZN9ObjectMgr19GetPlayerNameByGUIDERK10ObjectGuidRSs'/>
+<use f='TrinityCore6.x/src/server/game/Globals/ObjectMgr.cpp' l='2278' u='c' c='_ZN9ObjectMgr27GetPlayerNameAndClassByGUIDERK10ObjectGuidRSsRh'/>
+<use f='TrinityCore6.x/src/server/game/Globals/ObjectMgr.cpp' l='2290' u='c' c='_ZN9ObjectMgr19GetPlayerTeamByGUIDERK10ObjectGuid'/>
+<use f='TrinityCore6.x/src/server/game/Globals/ObjectMgr.cpp' l='2298' u='c' c='_ZN9ObjectMgr24GetPlayerAccountIdByGUIDERK10ObjectGuid'/>
+<use f='TrinityCore6.x/src/server/game/Handlers/CharacterHandler.cpp' l='1743' u='c' c='_ZN12WorldSession37HandleCharRaceOrFactionChangeCallbackESt10shared_ptrI17PreparedResultSetEPN12WorldPackets9Character27CharRaceOrFactionChangeInfoE'/>
+<use f='TrinityCore6.x/src/server/game/Handlers/GuildFinderHandler.cpp' l='183' u='c' c='_ZN12WorldSession28HandleGuildFinderGetRecruitsERN12WorldPackets11GuildFinder18LFGuildGetRecruitsE'/>
+<use f='TrinityCore6.x/src/server/game/Server/Packets/QueryPackets.cpp' l='118' u='c' c='_ZN12WorldPackets5Query20PlayerGuidLookupData10InitializeERK10ObjectGuidPK6Player'/>
+<def f='TrinityCore6.x/src/server/game/World/World.cpp' l='3372' type='const CharacterInfo * World::GetCharacterInfo(const ObjectGuid &amp; guid) const'/>
+<doc f='TrinityCore6.x/src/server/game/World/World.cpp' l='3351'>/**
+ * @brief Loads several pieces of information on server startup with the GUID
+ * There is no further database query necessary.
+ * These are a number of methods that work into the calling function.
+ *
+ * @param guid Requires a guid to call
+ * @return Name, Sex, Race, Class and Level of player character
+ * Example Usage:
+ * @code
+ *    CharacterInfo const* characterInfo = sWorld-&gt;GetCharacterInfo(GUID);
+ *    if (!nameData)
+ *        return;
+ *
+ *    std::string playerName = characterInfo-&gt;Name;
+ *    uint8 playerGender = characterInfo-&gt;Sex;
+ *    uint8 playerRace = characterInfo-&gt;Race;
+ *    uint8 playerClass = characterInfo-&gt;Class;
+ *    uint8 playerLevel = characterInfo-&gt;Level;
+ * @endcode
+ */</doc>

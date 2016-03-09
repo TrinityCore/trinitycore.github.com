@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<title>CombatAI.h [TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore3.3.5</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>AI</a>/<a href='./'>CoreAI</a>/CombatAI.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/TRINITY_COMBATAI_H">TRINITY_COMBATAI_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/TRINITY_COMBATAI_H" data-ref="_M/TRINITY_COMBATAI_H">TRINITY_COMBATAI_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../CreatureAI.h.html">"CreatureAI.h"</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../CreatureAIImpl.h.html">"CreatureAIImpl.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../Conditions/ConditionMgr.h.html">"ConditionMgr.h"</a></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>class</b> <a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" id="Creature" >Creature</a>;</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>class</b> <dfn class="type def" id="AggressorAI" title='AggressorAI' data-ref="AggressorAI" >AggressorAI</dfn> : <b>public</b> <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <b>public</b>:</td></tr>
+<tr><th id="31">31</th><td>        <b>explicit</b> <dfn class="decl def" id="_ZN11AggressorAIC1EP8Creature" title='AggressorAI::AggressorAI' data-ref="_ZN11AggressorAIC1EP8Creature" >AggressorAI</dfn>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col7 decl" id="3167c" title='c' data-type='Creature *' data-ref="3167c" >c</dfn>) : <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a><a class="ref" href="../CreatureAI.h.html#_ZN10CreatureAIC1EP8Creature" title='CreatureAI::CreatureAI' data-ref="_ZN10CreatureAIC1EP8Creature" id="_ZN10CreatureAIC1EP8Creature" >(</a><a class="local col7 ref" href="#3167c" title='c' data-ref="3167c" >c</a>) { }</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN11AggressorAI8UpdateAIEj" title='AggressorAI::UpdateAI' data-ref="_ZN11AggressorAI8UpdateAIEj" id="_ZN11AggressorAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>) override;</td></tr>
+<tr><th id="34">34</th><td>        <em>static</em> <em>int</em> <a class="decl" href="CombatAI.cpp.html#_ZN11AggressorAI11PermissibleEPK8Creature" title='AggressorAI::Permissible' data-ref="_ZN11AggressorAI11PermissibleEPK8Creature" id="_ZN11AggressorAI11PermissibleEPK8Creature" >Permissible</a>(<em>const</em> <a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>*);</td></tr>
+<tr><th id="35">35</th><td>};</td></tr>
+<tr><th id="36">36</th><td></td></tr>
+<tr><th id="37">37</th><td><b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../../include/c++/4.9/bits/stl_vector.h.html#std::vector" title='std::vector' data-ref="std::vector" >vector</a>&lt;<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&gt; <dfn class="typedef" id="SpellVct" title='SpellVct' data-type='std::vector&lt;uint32&gt;' data-ref="SpellVct" >SpellVct</dfn>;</td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td><b>class</b> <dfn class="type def" id="CombatAI" title='CombatAI' data-ref="CombatAI" >CombatAI</dfn> : <b>public</b> <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a></td></tr>
+<tr><th id="40">40</th><td>{</td></tr>
+<tr><th id="41">41</th><td>    <b>public</b>:</td></tr>
+<tr><th id="42">42</th><td>        <b>explicit</b> <dfn class="decl def" id="_ZN8CombatAIC1EP8Creature" title='CombatAI::CombatAI' data-ref="_ZN8CombatAIC1EP8Creature" >CombatAI</dfn>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col8 decl" id="3168c" title='c' data-type='Creature *' data-ref="3168c" >c</dfn>) : <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a><a class="ref" href="../CreatureAI.h.html#_ZN10CreatureAIC1EP8Creature" title='CreatureAI::CreatureAI' data-ref="_ZN10CreatureAIC1EP8Creature" id="_ZN10CreatureAIC1EP8Creature" >(</a><a class="local col8 ref" href="#3168c" title='c' data-ref="3168c" >c</a>) { }</td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CombatAI12InitializeAIEv" title='CombatAI::InitializeAI' data-ref="_ZN8CombatAI12InitializeAIEv" id="_ZN8CombatAI12InitializeAIEv" >InitializeAI</a>() override;</td></tr>
+<tr><th id="45">45</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CombatAI5ResetEv" title='CombatAI::Reset' data-ref="_ZN8CombatAI5ResetEv" id="_ZN8CombatAI5ResetEv" >Reset</a>() override;</td></tr>
+<tr><th id="46">46</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CombatAI11EnterCombatEP4Unit" title='CombatAI::EnterCombat' data-ref="_ZN8CombatAI11EnterCombatEP4Unit" id="_ZN8CombatAI11EnterCombatEP4Unit" >EnterCombat</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col9 decl" id="3169who" title='who' data-type='Unit *' data-ref="3169who" >who</dfn>) override;</td></tr>
+<tr><th id="47">47</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CombatAI8JustDiedEP4Unit" title='CombatAI::JustDied' data-ref="_ZN8CombatAI8JustDiedEP4Unit" id="_ZN8CombatAI8JustDiedEP4Unit" >JustDied</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col0 decl" id="3170killer" title='killer' data-type='Unit *' data-ref="3170killer" >killer</dfn>) override;</td></tr>
+<tr><th id="48">48</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CombatAI8UpdateAIEj" title='CombatAI::UpdateAI' data-ref="_ZN8CombatAI8UpdateAIEj" id="_ZN8CombatAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col1 decl" id="3171diff" title='diff' data-type='uint32' data-ref="3171diff" >diff</dfn>) override;</td></tr>
+<tr><th id="49">49</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CombatAI16SpellInterruptedEjj" title='CombatAI::SpellInterrupted' data-ref="_ZN8CombatAI16SpellInterruptedEjj" id="_ZN8CombatAI16SpellInterruptedEjj" >SpellInterrupted</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col2 decl" id="3172spellId" title='spellId' data-type='uint32' data-ref="3172spellId" >spellId</dfn>, <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3173unTimeMs" title='unTimeMs' data-type='uint32' data-ref="3173unTimeMs" >unTimeMs</dfn>) override;</td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>        <em>static</em> <em>int</em> <dfn class="decl def" id="_ZN8CombatAI11PermissibleEPK8Creature" title='CombatAI::Permissible' data-ref="_ZN8CombatAI11PermissibleEPK8Creature" >Permissible</dfn>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a> <em>const</em>* <i>/*creature*/</i>) { <b>return</b> <a class="enum" href="../CreatureAI.h.html#Permitions::PERMIT_BASE_NO" title='Permitions::PERMIT_BASE_NO' data-ref="Permitions::PERMIT_BASE_NO" id="Permitions::PERMIT_BASE_NO" >PERMIT_BASE_NO</a>; }</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+<tr><th id="53">53</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="54">54</th><td>        <a class="type" href="../../../../common/Utilities/EventMap.h.html#EventMap" title='EventMap' data-ref="EventMap" >EventMap</a> <dfn class="decl" id="CombatAI::events" title='CombatAI::events' data-ref="CombatAI::events" >events</dfn>;</td></tr>
+<tr><th id="55">55</th><td>        <a class="typedef" href="#SpellVct" title='SpellVct' data-type='std::vector&lt;uint32&gt;' data-ref="SpellVct" >SpellVct</a> <dfn class="decl" id="CombatAI::spells" title='CombatAI::spells' data-ref="CombatAI::spells" >spells</dfn>;</td></tr>
+<tr><th id="56">56</th><td>};</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><b>class</b> <dfn class="type def" id="CasterAI" title='CasterAI' data-ref="CasterAI" >CasterAI</dfn> : <b>public</b> <a class="type" href="#CombatAI" title='CombatAI' data-ref="CombatAI" >CombatAI</a></td></tr>
+<tr><th id="59">59</th><td>{</td></tr>
+<tr><th id="60">60</th><td>    <b>public</b>:</td></tr>
+<tr><th id="61">61</th><td>        <b>explicit</b> <dfn class="decl def" id="_ZN8CasterAIC1EP8Creature" title='CasterAI::CasterAI' data-ref="_ZN8CasterAIC1EP8Creature" >CasterAI</dfn>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col4 decl" id="3174c" title='c' data-type='Creature *' data-ref="3174c" >c</dfn>) : <a class="type" href="#CombatAI" title='CombatAI' data-ref="CombatAI" >CombatAI</a><a class="ref" href="#_ZN8CombatAIC1EP8Creature" title='CombatAI::CombatAI' data-ref="_ZN8CombatAIC1EP8Creature" >(</a><a class="local col4 ref" href="#3174c" title='c' data-ref="3174c" >c</a>) { <a class="member" href="#CasterAI::m_attackDist" title='CasterAI::m_attackDist' data-ref="CasterAI::m_attackDist" >m_attackDist</a> = <a class="macro" href="../../Entities/Object/Object.h.html#48" title="(5.0f - 2.0f * 2)" data-ref="_M/MELEE_RANGE">MELEE_RANGE</a>; }</td></tr>
+<tr><th id="62">62</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CasterAI12InitializeAIEv" title='CasterAI::InitializeAI' data-ref="_ZN8CasterAI12InitializeAIEv" id="_ZN8CasterAI12InitializeAIEv" >InitializeAI</a>() override;</td></tr>
+<tr><th id="63">63</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN8CasterAI11AttackStartEP4Unit" title='CasterAI::AttackStart' data-ref="_ZN8CasterAI11AttackStartEP4Unit" >AttackStart</dfn>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col5 decl" id="3175victim" title='victim' data-type='Unit *' data-ref="3175victim" >victim</dfn>) override { <a class="member" href="UnitAI.h.html#_ZN6UnitAI17AttackStartCasterEP4Unitf" title='UnitAI::AttackStartCaster' data-ref="_ZN6UnitAI17AttackStartCasterEP4Unitf" id="_ZN6UnitAI17AttackStartCasterEP4Unitf" >AttackStartCaster</a>(<a class="local col5 ref" href="#3175victim" title='victim' data-ref="3175victim" >victim</a>, <a class="member" href="#CasterAI::m_attackDist" title='CasterAI::m_attackDist' data-ref="CasterAI::m_attackDist" >m_attackDist</a>); }</td></tr>
+<tr><th id="64">64</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CasterAI8UpdateAIEj" title='CasterAI::UpdateAI' data-ref="_ZN8CasterAI8UpdateAIEj" id="_ZN8CasterAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="3176diff" title='diff' data-type='uint32' data-ref="3176diff" >diff</dfn>) override;</td></tr>
+<tr><th id="65">65</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8CasterAI11EnterCombatEP4Unit" title='CasterAI::EnterCombat' data-ref="_ZN8CasterAI11EnterCombatEP4Unit" id="_ZN8CasterAI11EnterCombatEP4Unit" >EnterCombat</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override;</td></tr>
+<tr><th id="66">66</th><td>    <b>private</b>:</td></tr>
+<tr><th id="67">67</th><td>        <em>float</em> <dfn class="decl" id="CasterAI::m_attackDist" title='CasterAI::m_attackDist' data-ref="CasterAI::m_attackDist" >m_attackDist</dfn>;</td></tr>
+<tr><th id="68">68</th><td>};</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><b>struct</b> <dfn class="type def" id="ArcherAI" title='ArcherAI' data-ref="ArcherAI" >ArcherAI</dfn> : <b>public</b> <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a></td></tr>
+<tr><th id="71">71</th><td>{</td></tr>
+<tr><th id="72">72</th><td>    <b>public</b>:</td></tr>
+<tr><th id="73">73</th><td>        <b>explicit</b> <a class="decl" href="CombatAI.cpp.html#_ZN8ArcherAIC1EP8Creature" title='ArcherAI::ArcherAI' data-ref="_ZN8ArcherAIC1EP8Creature" id="_ZN8ArcherAIC1EP8Creature" >ArcherAI</a>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col7 decl" id="3177c" title='c' data-type='Creature *' data-ref="3177c" >c</dfn>);</td></tr>
+<tr><th id="74">74</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8ArcherAI11AttackStartEP4Unit" title='ArcherAI::AttackStart' data-ref="_ZN8ArcherAI11AttackStartEP4Unit" id="_ZN8ArcherAI11AttackStartEP4Unit" >AttackStart</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col8 decl" id="3178who" title='who' data-type='Unit *' data-ref="3178who" >who</dfn>) override;</td></tr>
+<tr><th id="75">75</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8ArcherAI8UpdateAIEj" title='ArcherAI::UpdateAI' data-ref="_ZN8ArcherAI8UpdateAIEj" id="_ZN8ArcherAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="3179diff" title='diff' data-type='uint32' data-ref="3179diff" >diff</dfn>) override;</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td>        <em>static</em> <em>int</em> <dfn class="decl def" id="_ZN8ArcherAI11PermissibleEPK8Creature" title='ArcherAI::Permissible' data-ref="_ZN8ArcherAI11PermissibleEPK8Creature" >Permissible</dfn>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a> <em>const</em>* <i>/*creature*/</i>) { <b>return</b> <a class="enum" href="../CreatureAI.h.html#Permitions::PERMIT_BASE_NO" title='Permitions::PERMIT_BASE_NO' data-ref="Permitions::PERMIT_BASE_NO" id="Permitions::PERMIT_BASE_NO" >PERMIT_BASE_NO</a>; }</td></tr>
+<tr><th id="78">78</th><td></td></tr>
+<tr><th id="79">79</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="80">80</th><td>        <em>float</em> <dfn class="decl" id="ArcherAI::m_minRange" title='ArcherAI::m_minRange' data-ref="ArcherAI::m_minRange" >m_minRange</dfn>;</td></tr>
+<tr><th id="81">81</th><td>};</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td><b>struct</b> <dfn class="type def" id="TurretAI" title='TurretAI' data-ref="TurretAI" >TurretAI</dfn> : <b>public</b> <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a></td></tr>
+<tr><th id="84">84</th><td>{</td></tr>
+<tr><th id="85">85</th><td>    <b>public</b>:</td></tr>
+<tr><th id="86">86</th><td>        <b>explicit</b> <a class="decl" href="CombatAI.cpp.html#_ZN8TurretAIC1EP8Creature" title='TurretAI::TurretAI' data-ref="_ZN8TurretAIC1EP8Creature" id="_ZN8TurretAIC1EP8Creature" >TurretAI</a>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col0 decl" id="3180c" title='c' data-type='Creature *' data-ref="3180c" >c</dfn>);</td></tr>
+<tr><th id="87">87</th><td>        <em>bool</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZNK8TurretAI11CanAIAttackEPK4Unit" title='TurretAI::CanAIAttack' data-ref="_ZNK8TurretAI11CanAIAttackEPK4Unit" id="_ZNK8TurretAI11CanAIAttackEPK4Unit" >CanAIAttack</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a> <em>const</em>* <dfn class="local col1 decl" id="3181who" title='who' data-type='const Unit *' data-ref="3181who" >who</dfn>) <em>const</em> override;</td></tr>
+<tr><th id="88">88</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8TurretAI11AttackStartEP4Unit" title='TurretAI::AttackStart' data-ref="_ZN8TurretAI11AttackStartEP4Unit" id="_ZN8TurretAI11AttackStartEP4Unit" >AttackStart</a>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col2 decl" id="3182who" title='who' data-type='Unit *' data-ref="3182who" >who</dfn>) override;</td></tr>
+<tr><th id="89">89</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN8TurretAI8UpdateAIEj" title='TurretAI::UpdateAI' data-ref="_ZN8TurretAI8UpdateAIEj" id="_ZN8TurretAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3183diff" title='diff' data-type='uint32' data-ref="3183diff" >diff</dfn>) override;</td></tr>
+<tr><th id="90">90</th><td></td></tr>
+<tr><th id="91">91</th><td>        <em>static</em> <em>int</em> <dfn class="decl def" id="_ZN8TurretAI11PermissibleEPK8Creature" title='TurretAI::Permissible' data-ref="_ZN8TurretAI11PermissibleEPK8Creature" >Permissible</dfn>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a> <em>const</em>* <i>/*creature*/</i>) { <b>return</b> <a class="enum" href="../CreatureAI.h.html#Permitions::PERMIT_BASE_NO" title='Permitions::PERMIT_BASE_NO' data-ref="Permitions::PERMIT_BASE_NO" id="Permitions::PERMIT_BASE_NO" >PERMIT_BASE_NO</a>; }</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="94">94</th><td>        <em>float</em> <dfn class="decl" id="TurretAI::m_minRange" title='TurretAI::m_minRange' data-ref="TurretAI::m_minRange" >m_minRange</dfn>;</td></tr>
+<tr><th id="95">95</th><td>};</td></tr>
+<tr><th id="96">96</th><td></td></tr>
+<tr><th id="97">97</th><td><u>#define <dfn class="macro" id="_M/VEHICLE_CONDITION_CHECK_TIME" data-ref="_M/VEHICLE_CONDITION_CHECK_TIME">VEHICLE_CONDITION_CHECK_TIME</dfn> 1000</u></td></tr>
+<tr><th id="98">98</th><td><u>#define <dfn class="macro" id="_M/VEHICLE_DISMISS_TIME" data-ref="_M/VEHICLE_DISMISS_TIME">VEHICLE_DISMISS_TIME</dfn> 5000</u></td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td><b>struct</b> <dfn class="type def" id="VehicleAI" title='VehicleAI' data-ref="VehicleAI" >VehicleAI</dfn> : <b>public</b> <a class="type" href="../CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a></td></tr>
+<tr><th id="101">101</th><td>{</td></tr>
+<tr><th id="102">102</th><td>    <b>public</b>:</td></tr>
+<tr><th id="103">103</th><td>        <b>explicit</b> <a class="decl" href="CombatAI.cpp.html#_ZN9VehicleAIC1EP8Creature" title='VehicleAI::VehicleAI' data-ref="_ZN9VehicleAIC1EP8Creature" id="_ZN9VehicleAIC1EP8Creature" >VehicleAI</a>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col4 decl" id="3184creature" title='creature' data-type='Creature *' data-ref="3184creature" >creature</dfn>);</td></tr>
+<tr><th id="104">104</th><td></td></tr>
+<tr><th id="105">105</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN9VehicleAI8UpdateAIEj" title='VehicleAI::UpdateAI' data-ref="_ZN9VehicleAI8UpdateAIEj" id="_ZN9VehicleAI8UpdateAIEj" >UpdateAI</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col5 decl" id="3185diff" title='diff' data-type='uint32' data-ref="3185diff" >diff</dfn>) override;</td></tr>
+<tr><th id="106">106</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN9VehicleAI17MoveInLineOfSightEP4Unit" title='VehicleAI::MoveInLineOfSight' data-ref="_ZN9VehicleAI17MoveInLineOfSightEP4Unit" >MoveInLineOfSight</dfn>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>*) override { }</td></tr>
+<tr><th id="107">107</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN9VehicleAI11AttackStartEP4Unit" title='VehicleAI::AttackStart' data-ref="_ZN9VehicleAI11AttackStartEP4Unit" >AttackStart</dfn>(<a class="type" href="../../Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>*) override { }</td></tr>
+<tr><th id="108">108</th><td>        <em>void</em> <a class="virtual decl" href="CombatAI.cpp.html#_ZN9VehicleAI9OnCharmedEb" title='VehicleAI::OnCharmed' data-ref="_ZN9VehicleAI9OnCharmedEb" id="_ZN9VehicleAI9OnCharmedEb" >OnCharmed</a>(<em>bool</em> <dfn class="local col6 decl" id="3186apply" title='apply' data-type='bool' data-ref="3186apply" >apply</dfn>) override;</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>        <em>static</em> <em>int</em> <dfn class="decl def" id="_ZN9VehicleAI11PermissibleEPK8Creature" title='VehicleAI::Permissible' data-ref="_ZN9VehicleAI11PermissibleEPK8Creature" >Permissible</dfn>(<a class="type" href="../../Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a> <em>const</em>* <i>/*creature*/</i>) { <b>return</b> <a class="enum" href="../CreatureAI.h.html#Permitions::PERMIT_BASE_NO" title='Permitions::PERMIT_BASE_NO' data-ref="Permitions::PERMIT_BASE_NO" id="Permitions::PERMIT_BASE_NO" >PERMIT_BASE_NO</a>; }</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>    <b>private</b>:</td></tr>
+<tr><th id="113">113</th><td>        <em>void</em> <a class="decl" href="CombatAI.cpp.html#_ZN9VehicleAI14LoadConditionsEv" title='VehicleAI::LoadConditions' data-ref="_ZN9VehicleAI14LoadConditionsEv" id="_ZN9VehicleAI14LoadConditionsEv" >LoadConditions</a>();</td></tr>
+<tr><th id="114">114</th><td>        <em>void</em> <a class="decl" href="CombatAI.cpp.html#_ZN9VehicleAI15CheckConditionsEj" title='VehicleAI::CheckConditions' data-ref="_ZN9VehicleAI15CheckConditionsEj" id="_ZN9VehicleAI15CheckConditionsEj" >CheckConditions</a>(<a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col7 decl" id="3187diff" title='diff' data-type='uint32' data-ref="3187diff" >diff</dfn>);</td></tr>
+<tr><th id="115">115</th><td>        <em>bool</em> <dfn class="decl" id="VehicleAI::m_HasConditions" title='VehicleAI::m_HasConditions' data-ref="VehicleAI::m_HasConditions" >m_HasConditions</dfn>;</td></tr>
+<tr><th id="116">116</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="VehicleAI::m_ConditionsTimer" title='VehicleAI::m_ConditionsTimer' data-ref="VehicleAI::m_ConditionsTimer" >m_ConditionsTimer</dfn>;</td></tr>
+<tr><th id="117">117</th><td>        <em>bool</em> <dfn class="decl" id="VehicleAI::m_DoDismiss" title='VehicleAI::m_DoDismiss' data-ref="VehicleAI::m_DoDismiss" >m_DoDismiss</dfn>;</td></tr>
+<tr><th id="118">118</th><td>        <a class="typedef" href="../../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="VehicleAI::m_DismissTimer" title='VehicleAI::m_DismissTimer' data-ref="VehicleAI::m_DismissTimer" >m_DismissTimer</dfn>;</td></tr>
+<tr><th id="119">119</th><td>};</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="122">122</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='CombatAI.cpp.html'>TrinityCore3.3.5/src/server/game/AI/CoreAI/CombatAI.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

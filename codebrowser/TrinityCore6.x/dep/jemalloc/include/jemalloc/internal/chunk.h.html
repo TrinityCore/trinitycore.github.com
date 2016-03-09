@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<title>chunk.h [TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/chunk.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/chunk.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/chunk.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="2">2</th><td><u>#<span data-ppcond="2">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="3">3</th><td></td></tr>
+<tr><th id="4">4</th><td><i>/*</i></td></tr>
+<tr><th id="5">5</th><td><i> * Size and alignment of memory chunks that are allocated by the OS's virtual</i></td></tr>
+<tr><th id="6">6</th><td><i> * memory system.</i></td></tr>
+<tr><th id="7">7</th><td><i> */</i></td></tr>
+<tr><th id="8">8</th><td><u>#define	<dfn class="macro" id="_M/LG_CHUNK_DEFAULT" data-ref="_M/LG_CHUNK_DEFAULT">LG_CHUNK_DEFAULT</dfn>	22</u></td></tr>
+<tr><th id="9">9</th><td></td></tr>
+<tr><th id="10">10</th><td><i>/* Return the chunk address for allocation address a. */</i></td></tr>
+<tr><th id="11">11</th><td><u>#define	<dfn class="macro" id="_M/CHUNK_ADDR2BASE" data-ref="_M/CHUNK_ADDR2BASE">CHUNK_ADDR2BASE</dfn>(a)						\</u></td></tr>
+<tr><th id="12">12</th><td><u>	((void *)((uintptr_t)(a) &amp; ~chunksize_mask))</u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><i>/* Return the chunk offset of address a. */</i></td></tr>
+<tr><th id="15">15</th><td><u>#define	<dfn class="macro" id="_M/CHUNK_ADDR2OFFSET" data-ref="_M/CHUNK_ADDR2OFFSET">CHUNK_ADDR2OFFSET</dfn>(a)						\</u></td></tr>
+<tr><th id="16">16</th><td><u>	((size_t)((uintptr_t)(a) &amp; chunksize_mask))</u></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><i>/* Return the smallest chunk multiple that is &gt;= s. */</i></td></tr>
+<tr><th id="19">19</th><td><u>#define	<dfn class="macro" id="_M/CHUNK_CEILING" data-ref="_M/CHUNK_CEILING">CHUNK_CEILING</dfn>(s)						\</u></td></tr>
+<tr><th id="20">20</th><td><u>	(((s) + chunksize_mask) &amp; ~chunksize_mask)</u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="2">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="23">23</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="24">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><u>#<span data-ppcond="24">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="27">27</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="28">28</th><td><u>#<span data-ppcond="28">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="29">29</th><td></td></tr>
+<tr><th id="30">30</th><td><b>extern</b> size_t		opt_lg_chunk;</td></tr>
+<tr><th id="31">31</th><td><b>extern</b> <em>const</em> <em>char</em>	*opt_dss;</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><i>/* Protects stats_chunks; currently not used for any other purpose. */</i></td></tr>
+<tr><th id="34">34</th><td><b>extern</b> malloc_mutex_t	chunks_mtx;</td></tr>
+<tr><th id="35">35</th><td><i>/* Chunk statistics. */</i></td></tr>
+<tr><th id="36">36</th><td><b>extern</b> chunk_stats_t	stats_chunks;</td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td><b>extern</b> rtree_t		*chunks_rtree;</td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><b>extern</b> size_t		chunksize;</td></tr>
+<tr><th id="41">41</th><td><b>extern</b> size_t		chunksize_mask; <i>/* (chunksize - 1). */</i></td></tr>
+<tr><th id="42">42</th><td><b>extern</b> size_t		chunk_npages;</td></tr>
+<tr><th id="43">43</th><td><b>extern</b> size_t		map_bias; <i>/* Number of arena chunk header pages. */</i></td></tr>
+<tr><th id="44">44</th><td><b>extern</b> size_t		arena_maxclass; <i>/* Max size class for arenas. */</i></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><em>void</em>	*chunk_alloc(size_t size, size_t alignment, bool base, bool *zero,</td></tr>
+<tr><th id="47">47</th><td>    dss_prec_t dss_prec);</td></tr>
+<tr><th id="48">48</th><td><em>void</em>	chunk_unmap(<em>void</em> *chunk, size_t size);</td></tr>
+<tr><th id="49">49</th><td><em>void</em>	chunk_dealloc(<em>void</em> *chunk, size_t size, bool unmap);</td></tr>
+<tr><th id="50">50</th><td>bool	chunk_boot(<em>void</em>);</td></tr>
+<tr><th id="51">51</th><td><em>void</em>	chunk_prefork(<em>void</em>);</td></tr>
+<tr><th id="52">52</th><td><em>void</em>	chunk_postfork_parent(<em>void</em>);</td></tr>
+<tr><th id="53">53</th><td><em>void</em>	chunk_postfork_child(<em>void</em>);</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><u>#<span data-ppcond="28">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="56">56</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="57">57</th><td><u>#<span data-ppcond="57">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="58">58</th><td></td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="57">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="60">60</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><u>#include <a href="chunk_dss.h.html">"jemalloc/internal/chunk_dss.h"</a></u></td></tr>
+<tr><th id="63">63</th><td><u>#include <a href="chunk_mmap.h.html">"jemalloc/internal/chunk_mmap.h"</a></u></td></tr>
+<tr><th id="64">64</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore6.x/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

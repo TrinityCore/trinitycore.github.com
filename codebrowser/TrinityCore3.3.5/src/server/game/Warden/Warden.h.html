@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+<title>Warden.h [TrinityCore3.3.5/src/server/game/Warden/Warden.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Warden/Warden.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Warden</a>/Warden.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2011 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/_WARDEN_BASE_H">_WARDEN_BASE_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/_WARDEN_BASE_H" data-ref="_M/_WARDEN_BASE_H">_WARDEN_BASE_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../../include/c++/4.9/map.html">&lt;map&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../common/Cryptography/ARC4.h.html">"Cryptography/ARC4.h"</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../common/Cryptography/BigNumber.h.html">"Cryptography/BigNumber.h"</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../shared/Packets/ByteBuffer.h.html">"ByteBuffer.h"</a></u></td></tr>
+<tr><th id="26">26</th><td><u>#include <a href="WardenCheckMgr.h.html">"WardenCheckMgr.h"</a></u></td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><b>enum</b> <dfn class="type def" id="WardenOpcodes" title='WardenOpcodes' data-ref="WardenOpcodes" >WardenOpcodes</dfn></td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <i>// Client-&gt;Server</i></td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_CMSG_MODULE_MISSING" title='WardenOpcodes::WARDEN_CMSG_MODULE_MISSING' data-ref="WardenOpcodes::WARDEN_CMSG_MODULE_MISSING" >WARDEN_CMSG_MODULE_MISSING</dfn>                  = <var>0</var>,</td></tr>
+<tr><th id="32">32</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_CMSG_MODULE_OK" title='WardenOpcodes::WARDEN_CMSG_MODULE_OK' data-ref="WardenOpcodes::WARDEN_CMSG_MODULE_OK" >WARDEN_CMSG_MODULE_OK</dfn>                       = <var>1</var>,</td></tr>
+<tr><th id="33">33</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_CMSG_CHEAT_CHECKS_RESULT" title='WardenOpcodes::WARDEN_CMSG_CHEAT_CHECKS_RESULT' data-ref="WardenOpcodes::WARDEN_CMSG_CHEAT_CHECKS_RESULT" >WARDEN_CMSG_CHEAT_CHECKS_RESULT</dfn>             = <var>2</var>,</td></tr>
+<tr><th id="34">34</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_CMSG_MEM_CHECKS_RESULT" title='WardenOpcodes::WARDEN_CMSG_MEM_CHECKS_RESULT' data-ref="WardenOpcodes::WARDEN_CMSG_MEM_CHECKS_RESULT" >WARDEN_CMSG_MEM_CHECKS_RESULT</dfn>               = <var>3</var>,        <i>// only sent if MEM_CHECK bytes doesn't match</i></td></tr>
+<tr><th id="35">35</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_CMSG_HASH_RESULT" title='WardenOpcodes::WARDEN_CMSG_HASH_RESULT' data-ref="WardenOpcodes::WARDEN_CMSG_HASH_RESULT" >WARDEN_CMSG_HASH_RESULT</dfn>                     = <var>4</var>,</td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_CMSG_MODULE_FAILED" title='WardenOpcodes::WARDEN_CMSG_MODULE_FAILED' data-ref="WardenOpcodes::WARDEN_CMSG_MODULE_FAILED" >WARDEN_CMSG_MODULE_FAILED</dfn>                   = <var>5</var>,        <i>// this is sent when client failed to load uploaded module due to cache fail</i></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>    <i>// Server-&gt;Client</i></td></tr>
+<tr><th id="39">39</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_SMSG_MODULE_USE" title='WardenOpcodes::WARDEN_SMSG_MODULE_USE' data-ref="WardenOpcodes::WARDEN_SMSG_MODULE_USE" >WARDEN_SMSG_MODULE_USE</dfn>                      = <var>0</var>,</td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_SMSG_MODULE_CACHE" title='WardenOpcodes::WARDEN_SMSG_MODULE_CACHE' data-ref="WardenOpcodes::WARDEN_SMSG_MODULE_CACHE" >WARDEN_SMSG_MODULE_CACHE</dfn>                    = <var>1</var>,</td></tr>
+<tr><th id="41">41</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_SMSG_CHEAT_CHECKS_REQUEST" title='WardenOpcodes::WARDEN_SMSG_CHEAT_CHECKS_REQUEST' data-ref="WardenOpcodes::WARDEN_SMSG_CHEAT_CHECKS_REQUEST" >WARDEN_SMSG_CHEAT_CHECKS_REQUEST</dfn>            = <var>2</var>,</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_SMSG_MODULE_INITIALIZE" title='WardenOpcodes::WARDEN_SMSG_MODULE_INITIALIZE' data-ref="WardenOpcodes::WARDEN_SMSG_MODULE_INITIALIZE" >WARDEN_SMSG_MODULE_INITIALIZE</dfn>               = <var>3</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_SMSG_MEM_CHECKS_REQUEST" title='WardenOpcodes::WARDEN_SMSG_MEM_CHECKS_REQUEST' data-ref="WardenOpcodes::WARDEN_SMSG_MEM_CHECKS_REQUEST" >WARDEN_SMSG_MEM_CHECKS_REQUEST</dfn>              = <var>4</var>,        <i>// byte len; while (!EOF) { byte unk(1); byte index(++); string module(can be 0); int offset; byte len; byte[] bytes_to_compare[len]; }</i></td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="WardenOpcodes::WARDEN_SMSG_HASH_REQUEST" title='WardenOpcodes::WARDEN_SMSG_HASH_REQUEST' data-ref="WardenOpcodes::WARDEN_SMSG_HASH_REQUEST" >WARDEN_SMSG_HASH_REQUEST</dfn>                    = <var>5</var></td></tr>
+<tr><th id="45">45</th><td>};</td></tr>
+<tr><th id="46">46</th><td></td></tr>
+<tr><th id="47">47</th><td><b>enum</b> <dfn class="type def" id="WardenCheckType" title='WardenCheckType' data-ref="WardenCheckType" >WardenCheckType</dfn></td></tr>
+<tr><th id="48">48</th><td>{</td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="WardenCheckType::MEM_CHECK" title='WardenCheckType::MEM_CHECK' data-ref="WardenCheckType::MEM_CHECK" >MEM_CHECK</dfn>               = <var>0xF3</var>, <i>// 243: byte moduleNameIndex + uint Offset + byte Len (check to ensure memory isn't modified)</i></td></tr>
+<tr><th id="50">50</th><td>    <dfn class="enum" id="WardenCheckType::PAGE_CHECK_A" title='WardenCheckType::PAGE_CHECK_A' data-ref="WardenCheckType::PAGE_CHECK_A" >PAGE_CHECK_A</dfn>            = <var>0xB2</var>, <i>// 178: uint Seed + byte[20] SHA1 + uint Addr + byte Len (scans all pages for specified hash)</i></td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="WardenCheckType::PAGE_CHECK_B" title='WardenCheckType::PAGE_CHECK_B' data-ref="WardenCheckType::PAGE_CHECK_B" >PAGE_CHECK_B</dfn>            = <var>0xBF</var>, <i>// 191: uint Seed + byte[20] SHA1 + uint Addr + byte Len (scans only pages starts with MZ+PE headers for specified hash)</i></td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="WardenCheckType::MPQ_CHECK" title='WardenCheckType::MPQ_CHECK' data-ref="WardenCheckType::MPQ_CHECK" >MPQ_CHECK</dfn>               = <var>0x98</var>, <i>// 152: byte fileNameIndex (check to ensure MPQ file isn't modified)</i></td></tr>
+<tr><th id="53">53</th><td>    <dfn class="enum" id="WardenCheckType::LUA_STR_CHECK" title='WardenCheckType::LUA_STR_CHECK' data-ref="WardenCheckType::LUA_STR_CHECK" >LUA_STR_CHECK</dfn>           = <var>0x8B</var>, <i>// 139: byte luaNameIndex (check to ensure LUA string isn't used)</i></td></tr>
+<tr><th id="54">54</th><td>    <dfn class="enum" id="WardenCheckType::DRIVER_CHECK" title='WardenCheckType::DRIVER_CHECK' data-ref="WardenCheckType::DRIVER_CHECK" >DRIVER_CHECK</dfn>            = <var>0x71</var>, <i>// 113: uint Seed + byte[20] SHA1 + byte driverNameIndex (check to ensure driver isn't loaded)</i></td></tr>
+<tr><th id="55">55</th><td>    <dfn class="enum" id="WardenCheckType::TIMING_CHECK" title='WardenCheckType::TIMING_CHECK' data-ref="WardenCheckType::TIMING_CHECK" >TIMING_CHECK</dfn>            = <var>0x57</var>, <i>//  87: empty (check to ensure GetTickCount() isn't detoured)</i></td></tr>
+<tr><th id="56">56</th><td>    <dfn class="enum" id="WardenCheckType::PROC_CHECK" title='WardenCheckType::PROC_CHECK' data-ref="WardenCheckType::PROC_CHECK" >PROC_CHECK</dfn>              = <var>0x7E</var>, <i>// 126: uint Seed + byte[20] SHA1 + byte moluleNameIndex + byte procNameIndex + uint Offset + byte Len (check to ensure proc isn't detoured)</i></td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="WardenCheckType::MODULE_CHECK" title='WardenCheckType::MODULE_CHECK' data-ref="WardenCheckType::MODULE_CHECK" >MODULE_CHECK</dfn>            = <var>0xD9</var>  <i>// 217: uint Seed + byte[20] SHA1 (check to ensure module isn't injected)</i></td></tr>
+<tr><th id="58">58</th><td>};</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td><u>#pragma pack(push, 1)</u></td></tr>
+<tr><th id="61">61</th><td></td></tr>
+<tr><th id="62">62</th><td><b>struct</b> <dfn class="type def" id="WardenModuleUse" title='WardenModuleUse' data-ref="WardenModuleUse" >WardenModuleUse</dfn></td></tr>
+<tr><th id="63">63</th><td>{</td></tr>
+<tr><th id="64">64</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="WardenModuleUse::Command" title='WardenModuleUse::Command' data-ref="WardenModuleUse::Command" >Command</dfn>;</td></tr>
+<tr><th id="65">65</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="WardenModuleUse::ModuleId" title='WardenModuleUse::ModuleId' data-ref="WardenModuleUse::ModuleId" >ModuleId</dfn>[<var>16</var>];</td></tr>
+<tr><th id="66">66</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="WardenModuleUse::ModuleKey" title='WardenModuleUse::ModuleKey' data-ref="WardenModuleUse::ModuleKey" >ModuleKey</dfn>[<var>16</var>];</td></tr>
+<tr><th id="67">67</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="WardenModuleUse::Size" title='WardenModuleUse::Size' data-ref="WardenModuleUse::Size" >Size</dfn>;</td></tr>
+<tr><th id="68">68</th><td>};</td></tr>
+<tr><th id="69">69</th><td></td></tr>
+<tr><th id="70">70</th><td><b>struct</b> <dfn class="type def" id="WardenModuleTransfer" title='WardenModuleTransfer' data-ref="WardenModuleTransfer" >WardenModuleTransfer</dfn></td></tr>
+<tr><th id="71">71</th><td>{</td></tr>
+<tr><th id="72">72</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="WardenModuleTransfer::Command" title='WardenModuleTransfer::Command' data-ref="WardenModuleTransfer::Command" >Command</dfn>;</td></tr>
+<tr><th id="73">73</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="decl" id="WardenModuleTransfer::DataSize" title='WardenModuleTransfer::DataSize' data-ref="WardenModuleTransfer::DataSize" >DataSize</dfn>;</td></tr>
+<tr><th id="74">74</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="WardenModuleTransfer::Data" title='WardenModuleTransfer::Data' data-ref="WardenModuleTransfer::Data" >Data</dfn>[<var>500</var>];</td></tr>
+<tr><th id="75">75</th><td>};</td></tr>
+<tr><th id="76">76</th><td></td></tr>
+<tr><th id="77">77</th><td><b>struct</b> <dfn class="type def" id="WardenHashRequest" title='WardenHashRequest' data-ref="WardenHashRequest" >WardenHashRequest</dfn></td></tr>
+<tr><th id="78">78</th><td>{</td></tr>
+<tr><th id="79">79</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="WardenHashRequest::Command" title='WardenHashRequest::Command' data-ref="WardenHashRequest::Command" >Command</dfn>;</td></tr>
+<tr><th id="80">80</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="WardenHashRequest::Seed" title='WardenHashRequest::Seed' data-ref="WardenHashRequest::Seed" >Seed</dfn>[<var>16</var>];</td></tr>
+<tr><th id="81">81</th><td>};</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td><u>#pragma pack(pop)</u></td></tr>
+<tr><th id="84">84</th><td></td></tr>
+<tr><th id="85">85</th><td><b>struct</b> <dfn class="type def" id="ClientWardenModule" title='ClientWardenModule' data-ref="ClientWardenModule" >ClientWardenModule</dfn></td></tr>
+<tr><th id="86">86</th><td>{</td></tr>
+<tr><th id="87">87</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="ClientWardenModule::Id" title='ClientWardenModule::Id' data-ref="ClientWardenModule::Id" >Id</dfn>[<var>16</var>];</td></tr>
+<tr><th id="88">88</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="ClientWardenModule::Key" title='ClientWardenModule::Key' data-ref="ClientWardenModule::Key" >Key</dfn>[<var>16</var>];</td></tr>
+<tr><th id="89">89</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="ClientWardenModule::CompressedSize" title='ClientWardenModule::CompressedSize' data-ref="ClientWardenModule::CompressedSize" >CompressedSize</dfn>;</td></tr>
+<tr><th id="90">90</th><td>    <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>* <dfn class="decl" id="ClientWardenModule::CompressedData" title='ClientWardenModule::CompressedData' data-ref="ClientWardenModule::CompressedData" >CompressedData</dfn>;</td></tr>
+<tr><th id="91">91</th><td>};</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><b>class</b> <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" id="WorldSession" >WorldSession</a>;</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td><b>class</b> <dfn class="type def" id="Warden" title='Warden' data-ref="Warden" >Warden</dfn></td></tr>
+<tr><th id="96">96</th><td>{</td></tr>
+<tr><th id="97">97</th><td>    <b>friend</b> <b>class</b> <a class="type" href="WardenWin.h.html#WardenWin" title='WardenWin' data-ref="WardenWin" >WardenWin</a>;</td></tr>
+<tr><th id="98">98</th><td>    <b>friend</b> <b>class</b> <a class="type" href="WardenMac.h.html#WardenMac" title='WardenMac' data-ref="WardenMac" >WardenMac</a>;</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>    <b>public</b>:</td></tr>
+<tr><th id="101">101</th><td>        <dfn class="decl" id="_ZN6WardenC1Ev" title='Warden::Warden' data-ref="_ZN6WardenC1Ev" >Warden</dfn>();</td></tr>
+<tr><th id="102">102</th><td>        <b>virtual</b> <dfn class="virtual decl" id="_ZN6WardenD1Ev" title='Warden::~Warden' data-ref="_ZN6WardenD1Ev" >~Warden</dfn>();</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Warden4InitEP12WorldSessionP9BigNumber" title='Warden::Init' data-ref="_ZN6Warden4InitEP12WorldSessionP9BigNumber" >Init</dfn>(<a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>* <dfn class="local col1 decl" id="31session" title='session' data-type='WorldSession *' data-ref="31session" >session</dfn>, <a class="type" href="../../../common/Cryptography/BigNumber.h.html#BigNumber" title='BigNumber' data-ref="BigNumber" >BigNumber</a>* <dfn class="local col2 decl" id="32k" title='k' data-type='BigNumber *' data-ref="32k" >k</dfn>) = <var>0</var>;</td></tr>
+<tr><th id="105">105</th><td>        <b>virtual</b> <a class="type" href="#ClientWardenModule" title='ClientWardenModule' data-ref="ClientWardenModule" >ClientWardenModule</a>* <dfn class="virtual decl" id="_ZN6Warden18GetModuleForClientEv" title='Warden::GetModuleForClient' data-ref="_ZN6Warden18GetModuleForClientEv" >GetModuleForClient</dfn>() = <var>0</var>;</td></tr>
+<tr><th id="106">106</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Warden16InitializeModuleEv" title='Warden::InitializeModule' data-ref="_ZN6Warden16InitializeModuleEv" >InitializeModule</dfn>() = <var>0</var>;</td></tr>
+<tr><th id="107">107</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Warden11RequestHashEv" title='Warden::RequestHash' data-ref="_ZN6Warden11RequestHashEv" >RequestHash</dfn>() = <var>0</var>;</td></tr>
+<tr><th id="108">108</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Warden16HandleHashResultER10ByteBuffer" title='Warden::HandleHashResult' data-ref="_ZN6Warden16HandleHashResultER10ByteBuffer" >HandleHashResult</dfn>(<a class="type" href="../../shared/Packets/ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a> &amp;<dfn class="local col3 decl" id="33buff" title='buff' data-type='ByteBuffer &amp;' data-ref="33buff" >buff</dfn>) = <var>0</var>;</td></tr>
+<tr><th id="109">109</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Warden11RequestDataEv" title='Warden::RequestData' data-ref="_ZN6Warden11RequestDataEv" >RequestData</dfn>() = <var>0</var>;</td></tr>
+<tr><th id="110">110</th><td>        <b>virtual</b> <em>void</em> <dfn class="virtual decl" id="_ZN6Warden10HandleDataER10ByteBuffer" title='Warden::HandleData' data-ref="_ZN6Warden10HandleDataER10ByteBuffer" >HandleData</dfn>(<a class="type" href="../../shared/Packets/ByteBuffer.h.html#ByteBuffer" title='ByteBuffer' data-ref="ByteBuffer" >ByteBuffer</a> &amp;<dfn class="local col4 decl" id="34buff" title='buff' data-type='ByteBuffer &amp;' data-ref="34buff" >buff</dfn>) = <var>0</var>;</td></tr>
+<tr><th id="111">111</th><td></td></tr>
+<tr><th id="112">112</th><td>        <em>void</em> <dfn class="decl" id="_ZN6Warden18SendModuleToClientEv" title='Warden::SendModuleToClient' data-ref="_ZN6Warden18SendModuleToClientEv" >SendModuleToClient</dfn>();</td></tr>
+<tr><th id="113">113</th><td>        <em>void</em> <dfn class="decl" id="_ZN6Warden13RequestModuleEv" title='Warden::RequestModule' data-ref="_ZN6Warden13RequestModuleEv" >RequestModule</dfn>();</td></tr>
+<tr><th id="114">114</th><td>        <em>void</em> <dfn class="decl" id="_ZN6Warden6UpdateEv" title='Warden::Update' data-ref="_ZN6Warden6UpdateEv" >Update</dfn>();</td></tr>
+<tr><th id="115">115</th><td>        <em>void</em> <dfn class="decl" id="_ZN6Warden11DecryptDataEPhj" title='Warden::DecryptData' data-ref="_ZN6Warden11DecryptDataEPhj" >DecryptData</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>* <dfn class="local col5 decl" id="35buffer" title='buffer' data-type='uint8 *' data-ref="35buffer" >buffer</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="36length" title='length' data-type='uint32' data-ref="36length" >length</dfn>);</td></tr>
+<tr><th id="116">116</th><td>        <em>void</em> <dfn class="decl" id="_ZN6Warden11EncryptDataEPhj" title='Warden::EncryptData' data-ref="_ZN6Warden11EncryptDataEPhj" >EncryptData</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a>* <dfn class="local col7 decl" id="37buffer" title='buffer' data-type='uint8 *' data-ref="37buffer" >buffer</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col8 decl" id="38length" title='length' data-type='uint32' data-ref="38length" >length</dfn>);</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>        <em>static</em> <em>bool</em> <dfn class="decl" id="_ZN6Warden15IsValidCheckSumEjPKht" title='Warden::IsValidCheckSum' data-ref="_ZN6Warden15IsValidCheckSumEjPKht" >IsValidCheckSum</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col9 decl" id="39checksum" title='checksum' data-type='uint32' data-ref="39checksum" >checksum</dfn>, <em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col0 decl" id="40data" title='data' data-type='const uint8 *' data-ref="40data" >data</dfn>, <em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="local col1 decl" id="41length" title='length' data-type='const uint16' data-ref="41length" >length</dfn>);</td></tr>
+<tr><th id="119">119</th><td>        <em>static</em> <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="_ZN6Warden13BuildChecksumEPKhj" title='Warden::BuildChecksum' data-ref="_ZN6Warden13BuildChecksumEPKhj" >BuildChecksum</dfn>(<em>const</em> <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col2 decl" id="42data" title='data' data-type='const uint8 *' data-ref="42data" >data</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="43length" title='length' data-type='uint32' data-ref="43length" >length</dfn>);</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>        <i>// If no check is passed, the default action from config is executed</i></td></tr>
+<tr><th id="122">122</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN6Warden7PenaltyEP11WardenCheck" title='Warden::Penalty' data-ref="_ZN6Warden7PenaltyEP11WardenCheck" >Penalty</dfn>(<a class="type" href="WardenCheckMgr.h.html#WardenCheck" title='WardenCheck' data-ref="WardenCheck" >WardenCheck</a>* <dfn class="local col4 decl" id="44check" title='check' data-type='WardenCheck *' data-ref="44check" >check</dfn> = <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="123">123</th><td></td></tr>
+<tr><th id="124">124</th><td>    <b>private</b>:</td></tr>
+<tr><th id="125">125</th><td>        <a class="type" href="../Server/WorldSession.h.html#WorldSession" title='WorldSession' data-ref="WorldSession" >WorldSession</a>* <dfn class="decl" id="Warden::_session" title='Warden::_session' data-ref="Warden::_session" >_session</dfn>;</td></tr>
+<tr><th id="126">126</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="Warden::_inputKey" title='Warden::_inputKey' data-ref="Warden::_inputKey" >_inputKey</dfn>[<var>16</var>];</td></tr>
+<tr><th id="127">127</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="Warden::_outputKey" title='Warden::_outputKey' data-ref="Warden::_outputKey" >_outputKey</dfn>[<var>16</var>];</td></tr>
+<tr><th id="128">128</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="decl" id="Warden::_seed" title='Warden::_seed' data-ref="Warden::_seed" >_seed</dfn>[<var>16</var>];</td></tr>
+<tr><th id="129">129</th><td>        <a class="type" href="../../../common/Cryptography/ARC4.h.html#ARC4" title='ARC4' data-ref="ARC4" >ARC4</a> <dfn class="decl" id="Warden::_inputCrypto" title='Warden::_inputCrypto' data-ref="Warden::_inputCrypto" >_inputCrypto</dfn>;</td></tr>
+<tr><th id="130">130</th><td>        <a class="type" href="../../../common/Cryptography/ARC4.h.html#ARC4" title='ARC4' data-ref="ARC4" >ARC4</a> <dfn class="decl" id="Warden::_outputCrypto" title='Warden::_outputCrypto' data-ref="Warden::_outputCrypto" >_outputCrypto</dfn>;</td></tr>
+<tr><th id="131">131</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="Warden::_checkTimer" title='Warden::_checkTimer' data-ref="Warden::_checkTimer" >_checkTimer</dfn>;                          <i>// Timer for sending check requests</i></td></tr>
+<tr><th id="132">132</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="Warden::_clientResponseTimer" title='Warden::_clientResponseTimer' data-ref="Warden::_clientResponseTimer" >_clientResponseTimer</dfn>;                 <i>// Timer for client response delay</i></td></tr>
+<tr><th id="133">133</th><td>        <em>bool</em> <dfn class="decl" id="Warden::_dataSent" title='Warden::_dataSent' data-ref="Warden::_dataSent" >_dataSent</dfn>;</td></tr>
+<tr><th id="134">134</th><td>        <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="decl" id="Warden::_previousTimestamp" title='Warden::_previousTimestamp' data-ref="Warden::_previousTimestamp" >_previousTimestamp</dfn>;</td></tr>
+<tr><th id="135">135</th><td>        <a class="type" href="#ClientWardenModule" title='ClientWardenModule' data-ref="ClientWardenModule" >ClientWardenModule</a>* <dfn class="decl" id="Warden::_module" title='Warden::_module' data-ref="Warden::_module" >_module</dfn>;</td></tr>
+<tr><th id="136">136</th><td>        <em>bool</em> <dfn class="decl" id="Warden::_initialized" title='Warden::_initialized' data-ref="Warden::_initialized" >_initialized</dfn>;</td></tr>
+<tr><th id="137">137</th><td>};</td></tr>
+<tr><th id="138">138</th><td></td></tr>
+<tr><th id="139">139</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="140">140</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Server/WorldSession.cpp.html'>TrinityCore3.3.5/src/server/game/Server/WorldSession.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

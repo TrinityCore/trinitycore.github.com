@@ -1,0 +1,14 @@
+<def f='include/mysql/mysql_time.h' l='48'/>
+<size>40</size>
+<doc f='include/mysql/mysql_time.h' l='36'>/*
+  Structure which is used to represent datetime values inside MySQL.
+
+  We assume that values in this structure are normalized, i.e. year &lt;= 9999,
+  month &lt;= 12, day &lt;= 31, hour &lt;= 23, hour &lt;= 59, hour &lt;= 59. Many functions
+  in server such as my_system_gmt_sec() or make_time() family of functions
+  rely on this (actually now usage of make_*() family relies on a bit weaker
+  restriction). Also functions that produce MYSQL_TIME as result ensure this.
+  There is one exception to this rule though if this structure holds time
+  value (time_type == MYSQL_TIMESTAMP_TIME) days and hour member can hold
+  bigger values.
+*/</doc>

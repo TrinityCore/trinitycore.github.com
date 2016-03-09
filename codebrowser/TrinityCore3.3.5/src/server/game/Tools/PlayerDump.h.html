@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<title>PlayerDump.h [TrinityCore3.3.5/src/server/game/Tools/PlayerDump.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/server/game/Tools/PlayerDump.h'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore3.3.5</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>game</a>/<a href='./'>Tools</a>/PlayerDump.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="19">ifndef</span> <span class="macro" data-ref="_M/_PLAYER_DUMP_H">_PLAYER_DUMP_H</span></u></td></tr>
+<tr><th id="20">20</th><td><u>#define <dfn class="macro" id="_M/_PLAYER_DUMP_H" data-ref="_M/_PLAYER_DUMP_H">_PLAYER_DUMP_H</dfn></u></td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="../../../../../include/c++/4.9/string.html">&lt;string&gt;</a></u></td></tr>
+<tr><th id="23">23</th><td><u>#include <a href="../../../../../include/c++/4.9/map.html">&lt;map&gt;</a></u></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../../include/c++/4.9/set.html">&lt;set&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../Entities/Object/ObjectGuid.h.html">"ObjectGuid.h"</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>enum</b> <dfn class="type def" id="DumpTableType" title='DumpTableType' data-ref="DumpTableType" >DumpTableType</dfn></td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="DumpTableType::DTT_CHARACTER" title='DumpTableType::DTT_CHARACTER' data-ref="DumpTableType::DTT_CHARACTER" >DTT_CHARACTER</dfn>,      <i>//                                  // characters</i></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td>    <dfn class="enum" id="DumpTableType::DTT_CHAR_TABLE" title='DumpTableType::DTT_CHAR_TABLE' data-ref="DumpTableType::DTT_CHAR_TABLE" >DTT_CHAR_TABLE</dfn>,     <i>//                                  // character_achievement, character_achievement_progress,</i></td></tr>
+<tr><th id="32">32</th><td>                                                            <i>// character_action, character_aura, character_homebind,</i></td></tr>
+<tr><th id="33">33</th><td><i>                                                            // character_queststatus, character_queststatus_rewarded, character_reputation,</i></td></tr>
+<tr><th id="34">34</th><td><i>                                                            // character_spell, character_spell_cooldown, character_ticket, character_talent</i></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td>    <dfn class="enum" id="DumpTableType::DTT_EQSET_TABLE" title='DumpTableType::DTT_EQSET_TABLE' data-ref="DumpTableType::DTT_EQSET_TABLE" >DTT_EQSET_TABLE</dfn>,    <i>// &lt;- guid                          // character_equipmentsets</i></td></tr>
+<tr><th id="37">37</th><td></td></tr>
+<tr><th id="38">38</th><td>    <dfn class="enum" id="DumpTableType::DTT_INVENTORY" title='DumpTableType::DTT_INVENTORY' data-ref="DumpTableType::DTT_INVENTORY" >DTT_INVENTORY</dfn>,      <i>//    -&gt; item guids collection      // character_inventory</i></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td>    <dfn class="enum" id="DumpTableType::DTT_MAIL" title='DumpTableType::DTT_MAIL' data-ref="DumpTableType::DTT_MAIL" >DTT_MAIL</dfn>,           <i>//    -&gt; mail ids collection        // mail</i></td></tr>
+<tr><th id="41">41</th><td>                        <i>//    -&gt; item_text</i></td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="DumpTableType::DTT_MAIL_ITEM" title='DumpTableType::DTT_MAIL_ITEM' data-ref="DumpTableType::DTT_MAIL_ITEM" >DTT_MAIL_ITEM</dfn>,      <i>// &lt;- mail ids                      // mail_items</i></td></tr>
+<tr><th id="44">44</th><td>                        <i>//    -&gt; item guids collection</i></td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="DumpTableType::DTT_ITEM" title='DumpTableType::DTT_ITEM' data-ref="DumpTableType::DTT_ITEM" >DTT_ITEM</dfn>,           <i>// &lt;- item guids                    // item_instance</i></td></tr>
+<tr><th id="47">47</th><td>                        <i>//    -&gt; item_text</i></td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td>    <dfn class="enum" id="DumpTableType::DTT_ITEM_GIFT" title='DumpTableType::DTT_ITEM_GIFT' data-ref="DumpTableType::DTT_ITEM_GIFT" >DTT_ITEM_GIFT</dfn>,      <i>// &lt;- item guids                    // character_gifts</i></td></tr>
+<tr><th id="50">50</th><td></td></tr>
+<tr><th id="51">51</th><td>    <dfn class="enum" id="DumpTableType::DTT_PET" title='DumpTableType::DTT_PET' data-ref="DumpTableType::DTT_PET" >DTT_PET</dfn>,            <i>//    -&gt; pet guids collection       // character_pet</i></td></tr>
+<tr><th id="52">52</th><td>    <dfn class="enum" id="DumpTableType::DTT_PET_TABLE" title='DumpTableType::DTT_PET_TABLE' data-ref="DumpTableType::DTT_PET_TABLE" >DTT_PET_TABLE</dfn>       <i>// &lt;- pet guids                     // pet_aura, pet_spell, pet_spell_cooldown</i></td></tr>
+<tr><th id="53">53</th><td>};</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td><b>enum</b> <dfn class="type def" id="DumpReturn" title='DumpReturn' data-ref="DumpReturn" >DumpReturn</dfn></td></tr>
+<tr><th id="56">56</th><td>{</td></tr>
+<tr><th id="57">57</th><td>    <dfn class="enum" id="DumpReturn::DUMP_SUCCESS" title='DumpReturn::DUMP_SUCCESS' data-ref="DumpReturn::DUMP_SUCCESS" >DUMP_SUCCESS</dfn>,</td></tr>
+<tr><th id="58">58</th><td>    <dfn class="enum" id="DumpReturn::DUMP_FILE_OPEN_ERROR" title='DumpReturn::DUMP_FILE_OPEN_ERROR' data-ref="DumpReturn::DUMP_FILE_OPEN_ERROR" >DUMP_FILE_OPEN_ERROR</dfn>,</td></tr>
+<tr><th id="59">59</th><td>    <dfn class="enum" id="DumpReturn::DUMP_TOO_MANY_CHARS" title='DumpReturn::DUMP_TOO_MANY_CHARS' data-ref="DumpReturn::DUMP_TOO_MANY_CHARS" >DUMP_TOO_MANY_CHARS</dfn>,</td></tr>
+<tr><th id="60">60</th><td>    <dfn class="enum" id="DumpReturn::DUMP_UNEXPECTED_END" title='DumpReturn::DUMP_UNEXPECTED_END' data-ref="DumpReturn::DUMP_UNEXPECTED_END" >DUMP_UNEXPECTED_END</dfn>,</td></tr>
+<tr><th id="61">61</th><td>    <dfn class="enum" id="DumpReturn::DUMP_FILE_BROKEN" title='DumpReturn::DUMP_FILE_BROKEN' data-ref="DumpReturn::DUMP_FILE_BROKEN" >DUMP_FILE_BROKEN</dfn>,</td></tr>
+<tr><th id="62">62</th><td>    <dfn class="enum" id="DumpReturn::DUMP_CHARACTER_DELETED" title='DumpReturn::DUMP_CHARACTER_DELETED' data-ref="DumpReturn::DUMP_CHARACTER_DELETED" >DUMP_CHARACTER_DELETED</dfn></td></tr>
+<tr><th id="63">63</th><td>};</td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><b>class</b> <dfn class="type def" id="PlayerDump" title='PlayerDump' data-ref="PlayerDump" >PlayerDump</dfn></td></tr>
+<tr><th id="66">66</th><td>{</td></tr>
+<tr><th id="67">67</th><td>    <b>public</b>:</td></tr>
+<tr><th id="68">68</th><td>        <b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_set.h.html#std::set" title='std::set' data-ref="std::set" >set</a>&lt;<a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a>&gt; <dfn class="typedef" id="PlayerDump::DumpGuidSet" title='PlayerDump::DumpGuidSet' data-type='std::set&lt;ObjectGuid::LowType&gt;' data-ref="PlayerDump::DumpGuidSet" >DumpGuidSet</dfn>;</td></tr>
+<tr><th id="69">69</th><td>        <b>typedef</b> <span class="namespace">std::</span><a class="type" href="../../../../../include/c++/4.9/bits/stl_map.h.html#std::map" title='std::map' data-ref="std::map" >map</a>&lt;<a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a>, <a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a>&gt; <dfn class="typedef" id="PlayerDump::DumpGuidMap" title='PlayerDump::DumpGuidMap' data-type='std::map&lt;ObjectGuid::LowType, ObjectGuid::LowType&gt;' data-ref="PlayerDump::DumpGuidMap" >DumpGuidMap</dfn>;</td></tr>
+<tr><th id="70">70</th><td></td></tr>
+<tr><th id="71">71</th><td>    <b>protected</b>:</td></tr>
+<tr><th id="72">72</th><td>        <dfn class="decl def" id="_ZN10PlayerDumpC1Ev" title='PlayerDump::PlayerDump' data-ref="_ZN10PlayerDumpC1Ev" >PlayerDump</dfn>() { }</td></tr>
+<tr><th id="73">73</th><td>};</td></tr>
+<tr><th id="74">74</th><td></td></tr>
+<tr><th id="75">75</th><td><b>class</b> <dfn class="type def" id="PlayerDumpWriter" title='PlayerDumpWriter' data-ref="PlayerDumpWriter" >PlayerDumpWriter</dfn> : <b>public</b> <a class="type" href="#PlayerDump" title='PlayerDump' data-ref="PlayerDump" >PlayerDump</a></td></tr>
+<tr><th id="76">76</th><td>{</td></tr>
+<tr><th id="77">77</th><td>    <b>public</b>:</td></tr>
+<tr><th id="78">78</th><td>        <dfn class="decl def" id="_ZN16PlayerDumpWriterC1Ev" title='PlayerDumpWriter::PlayerDumpWriter' data-ref="_ZN16PlayerDumpWriterC1Ev" >PlayerDumpWriter</dfn>() { }</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>        <em>bool</em> <dfn class="decl" id="_ZN16PlayerDumpWriter7GetDumpEjRSs" title='PlayerDumpWriter::GetDump' data-ref="_ZN16PlayerDumpWriter7GetDumpEjRSs" >GetDump</dfn>(<a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col1 decl" id="1guid" title='guid' data-type='ObjectGuid::LowType' data-ref="1guid" >guid</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col2 decl" id="2dump" title='dump' data-type='std::string &amp;' data-ref="2dump" >dump</dfn>);</td></tr>
+<tr><th id="81">81</th><td>        <a class="type" href="#DumpReturn" title='DumpReturn' data-ref="DumpReturn" >DumpReturn</a> <dfn class="decl" id="_ZN16PlayerDumpWriter9WriteDumpERKSsj" title='PlayerDumpWriter::WriteDump' data-ref="_ZN16PlayerDumpWriter9WriteDumpERKSsj" >WriteDump</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col3 decl" id="3file" title='file' data-type='const std::string &amp;' data-ref="3file" >file</dfn>, <a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col4 decl" id="4guid" title='guid' data-type='ObjectGuid::LowType' data-ref="4guid" >guid</dfn>);</td></tr>
+<tr><th id="82">82</th><td></td></tr>
+<tr><th id="83">83</th><td>    <b>private</b>:</td></tr>
+<tr><th id="84">84</th><td>        <em>bool</em> <dfn class="decl" id="_ZN16PlayerDumpWriter9DumpTableERSsjPKcS2_13DumpTableType" title='PlayerDumpWriter::DumpTable' data-ref="_ZN16PlayerDumpWriter9DumpTableERSsjPKcS2_13DumpTableType" >DumpTable</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a>&amp; <dfn class="local col5 decl" id="5dump" title='dump' data-type='std::string &amp;' data-ref="5dump" >dump</dfn>, <a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col6 decl" id="6guid" title='guid' data-type='ObjectGuid::LowType' data-ref="6guid" >guid</dfn>, <em>char</em> <em>const</em>* <dfn class="local col7 decl" id="7tableFrom" title='tableFrom' data-type='const char *' data-ref="7tableFrom" >tableFrom</dfn>, <em>char</em> <em>const</em>* <dfn class="local col8 decl" id="8tableTo" title='tableTo' data-type='const char *' data-ref="8tableTo" >tableTo</dfn>, <a class="type" href="#DumpTableType" title='DumpTableType' data-ref="DumpTableType" >DumpTableType</a> <dfn class="local col9 decl" id="9type" title='type' data-type='DumpTableType' data-ref="9type" >type</dfn>);</td></tr>
+<tr><th id="85">85</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN16PlayerDumpWriter16GenerateWhereStrEPKcRKSt3setIjSt4lessIjESaIjEERSt23_Rb_tree_const_iteratorIjE" title='PlayerDumpWriter::GenerateWhereStr' data-ref="_ZN16PlayerDumpWriter16GenerateWhereStrEPKcRKSt3setIjSt4lessIjESaIjEERSt23_Rb_tree_const_iteratorIjE" >GenerateWhereStr</dfn>(<em>char</em> <em>const</em>* <dfn class="local col0 decl" id="10field" title='field' data-type='const char *' data-ref="10field" >field</dfn>, <a class="typedef" href="#PlayerDump::DumpGuidSet" title='PlayerDump::DumpGuidSet' data-type='std::set&lt;ObjectGuid::LowType&gt;' data-ref="PlayerDump::DumpGuidSet" >DumpGuidSet</a> <em>const</em>&amp; <dfn class="local col1 decl" id="11guids" title='guids' data-type='const DumpGuidSet &amp;' data-ref="11guids" >guids</dfn>, <a class="typedef" href="#PlayerDump::DumpGuidSet" title='PlayerDump::DumpGuidSet' data-type='std::set&lt;ObjectGuid::LowType&gt;' data-ref="PlayerDump::DumpGuidSet" >DumpGuidSet</a>::<a class="typedef" href="../../../../../include/c++/4.9/bits/stl_set.h.html#std::set{unsignedint,std::less{unsignedint},std::allocator{unsignedint}}::const_iterator" title='std::set&lt;unsigned int, std::less&lt;unsigned int&gt;, std::allocator&lt;unsigned int&gt; &gt;::const_iterator' data-type='typename _Rep_type::const_iterator' data-ref="std::set{unsignedint,std::less{unsignedint},std::allocator{unsignedint}}::const_iterator" >const_iterator</a>&amp; <dfn class="local col2 decl" id="12itr" title='itr' data-type='DumpGuidSet::const_iterator &amp;' data-ref="12itr" >itr</dfn>);</td></tr>
+<tr><th id="86">86</th><td>        <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="decl" id="_ZN16PlayerDumpWriter16GenerateWhereStrEPKcj" title='PlayerDumpWriter::GenerateWhereStr' data-ref="_ZN16PlayerDumpWriter16GenerateWhereStrEPKcj" >GenerateWhereStr</dfn>(<em>char</em> <em>const</em>* <dfn class="local col3 decl" id="13field" title='field' data-type='const char *' data-ref="13field" >field</dfn>, <a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col4 decl" id="14guid" title='guid' data-type='ObjectGuid::LowType' data-ref="14guid" >guid</dfn>);</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td>        <a class="typedef" href="#PlayerDump::DumpGuidSet" title='PlayerDump::DumpGuidSet' data-type='std::set&lt;ObjectGuid::LowType&gt;' data-ref="PlayerDump::DumpGuidSet" >DumpGuidSet</a> <dfn class="decl" id="PlayerDumpWriter::pets" title='PlayerDumpWriter::pets' data-ref="PlayerDumpWriter::pets" >pets</dfn>;</td></tr>
+<tr><th id="89">89</th><td>        <a class="typedef" href="#PlayerDump::DumpGuidSet" title='PlayerDump::DumpGuidSet' data-type='std::set&lt;ObjectGuid::LowType&gt;' data-ref="PlayerDump::DumpGuidSet" >DumpGuidSet</a> <dfn class="decl" id="PlayerDumpWriter::mails" title='PlayerDumpWriter::mails' data-ref="PlayerDumpWriter::mails" >mails</dfn>;</td></tr>
+<tr><th id="90">90</th><td>        <a class="typedef" href="#PlayerDump::DumpGuidSet" title='PlayerDump::DumpGuidSet' data-type='std::set&lt;ObjectGuid::LowType&gt;' data-ref="PlayerDump::DumpGuidSet" >DumpGuidSet</a> <dfn class="decl" id="PlayerDumpWriter::items" title='PlayerDumpWriter::items' data-ref="PlayerDumpWriter::items" >items</dfn>;</td></tr>
+<tr><th id="91">91</th><td>};</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td><b>class</b> <dfn class="type def" id="PlayerDumpReader" title='PlayerDumpReader' data-ref="PlayerDumpReader" >PlayerDumpReader</dfn> : <b>public</b> <a class="type" href="#PlayerDump" title='PlayerDump' data-ref="PlayerDump" >PlayerDump</a></td></tr>
+<tr><th id="94">94</th><td>{</td></tr>
+<tr><th id="95">95</th><td>    <b>public</b>:</td></tr>
+<tr><th id="96">96</th><td>        <dfn class="decl def" id="_ZN16PlayerDumpReaderC1Ev" title='PlayerDumpReader::PlayerDumpReader' data-ref="_ZN16PlayerDumpReaderC1Ev" >PlayerDumpReader</dfn>() { }</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>        <a class="type" href="#DumpReturn" title='DumpReturn' data-ref="DumpReturn" >DumpReturn</a> <dfn class="decl" id="_ZN16PlayerDumpReader8LoadDumpERKSsjSsj" title='PlayerDumpReader::LoadDump' data-ref="_ZN16PlayerDumpReader8LoadDumpERKSsjSsj" >LoadDump</dfn>(<span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <em>const</em>&amp; <dfn class="local col5 decl" id="15file" title='file' data-type='const std::string &amp;' data-ref="15file" >file</dfn>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col6 decl" id="16account" title='account' data-type='uint32' data-ref="16account" >account</dfn>, <span class="namespace">std::</span><a class="typedef" href="../../../../../include/c++/4.9/bits/stringfwd.h.html#std::string" title='std::string' data-type='basic_string&lt;char&gt;' data-ref="std::string" >string</a> <dfn class="local col7 decl" id="17name" title='name' data-type='std::string' data-ref="17name" >name</dfn>, <a class="type" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid" title='ObjectGuid' data-ref="ObjectGuid" >ObjectGuid</a>::<a class="typedef" href="../Entities/Object/ObjectGuid.h.html#ObjectGuid::LowType" title='ObjectGuid::LowType' data-type='uint32' data-ref="ObjectGuid::LowType" >LowType</a> <dfn class="local col8 decl" id="18guid" title='guid' data-type='ObjectGuid::LowType' data-ref="18guid" >guid</dfn>);</td></tr>
+<tr><th id="99">99</th><td>};</td></tr>
+<tr><th id="100">100</th><td></td></tr>
+<tr><th id="101">101</th><td><u>#<span data-ppcond="19">endif</span></u></td></tr>
+<tr><th id="102">102</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../Handlers/CharacterHandler.cpp.html'>TrinityCore3.3.5/src/server/game/Handlers/CharacterHandler.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

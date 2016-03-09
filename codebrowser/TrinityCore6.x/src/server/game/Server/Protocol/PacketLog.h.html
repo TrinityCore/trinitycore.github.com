@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<title>PacketLog.h [TrinityCore6.x/src/server/game/Server/Protocol/PacketLog.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/game/Server/Protocol/PacketLog.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>src</a>/<a href='../../..'>server</a>/<a href='../..'>game</a>/<a href='..'>Server</a>/<a href='./'>Protocol</a>/PacketLog.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> *</i></td></tr>
+<tr><th id="4">4</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="5">5</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="6">6</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="7">7</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="8">8</th><td><i> *</i></td></tr>
+<tr><th id="9">9</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="10">10</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="11">11</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="12">12</th><td><i> * more details.</i></td></tr>
+<tr><th id="13">13</th><td><i> *</i></td></tr>
+<tr><th id="14">14</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="15">15</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td></td></tr>
+<tr><th id="18">18</th><td><u>#<span data-ppcond="18">ifndef</span> <span class="macro" data-ref="_M/TRINITY_PACKETLOG_H">TRINITY_PACKETLOG_H</span></u></td></tr>
+<tr><th id="19">19</th><td><u>#define <dfn class="macro" id="_M/TRINITY_PACKETLOG_H" data-ref="_M/TRINITY_PACKETLOG_H">TRINITY_PACKETLOG_H</dfn></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><u>#include <a href="../../../../common/Common.h.html">"Common.h"</a></u></td></tr>
+<tr><th id="22">22</th><td><u>#include <a href="Opcodes.h.html">"Opcodes.h"</a></u></td></tr>
+<tr><th id="23">23</th><td></td></tr>
+<tr><th id="24">24</th><td><u>#include <a href="../../../../../../include/boost/asio/ip/address.hpp.html">&lt;boost/asio/ip/address.hpp&gt;</a></u></td></tr>
+<tr><th id="25">25</th><td><u>#include <a href="../../../../../../include/c++/4.9/mutex.html">&lt;mutex&gt;</a></u></td></tr>
+<tr><th id="26">26</th><td></td></tr>
+<tr><th id="27">27</th><td><b>enum</b> <dfn class="type def" id="Direction" title='Direction' data-ref="Direction" >Direction</dfn></td></tr>
+<tr><th id="28">28</th><td>{</td></tr>
+<tr><th id="29">29</th><td>    <dfn class="enum" id="Direction::CLIENT_TO_SERVER" title='Direction::CLIENT_TO_SERVER' data-ref="Direction::CLIENT_TO_SERVER" >CLIENT_TO_SERVER</dfn>,</td></tr>
+<tr><th id="30">30</th><td>    <dfn class="enum" id="Direction::SERVER_TO_CLIENT" title='Direction::SERVER_TO_CLIENT' data-ref="Direction::SERVER_TO_CLIENT" >SERVER_TO_CLIENT</dfn></td></tr>
+<tr><th id="31">31</th><td>};</td></tr>
+<tr><th id="32">32</th><td></td></tr>
+<tr><th id="33">33</th><td><b>class</b> <a class="type" href="../WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" id="WorldPacket" >WorldPacket</a>;</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><b>class</b> <dfn class="type def" id="PacketLog" title='PacketLog' data-ref="PacketLog" >PacketLog</dfn></td></tr>
+<tr><th id="36">36</th><td>{</td></tr>
+<tr><th id="37">37</th><td>    <b>private</b>:</td></tr>
+<tr><th id="38">38</th><td>        <a class="decl" href="PacketLog.cpp.html#_ZN9PacketLogC1Ev" title='PacketLog::PacketLog' data-ref="_ZN9PacketLogC1Ev" id="_ZN9PacketLogC1Ev" >PacketLog</a>();</td></tr>
+<tr><th id="39">39</th><td>        <a class="decl" href="PacketLog.cpp.html#_ZN9PacketLogD1Ev" title='PacketLog::~PacketLog' data-ref="_ZN9PacketLogD1Ev" id="_ZN9PacketLogD1Ev" >~PacketLog</a>();</td></tr>
+<tr><th id="40">40</th><td>        <span class="namespace">std::</span><a class="type" href="../../../../../../include/c++/4.9/mutex.html#std::mutex" title='std::mutex' data-ref="std::mutex" >mutex</a> <dfn class="decl" id="PacketLog::_logPacketLock" title='PacketLog::_logPacketLock' data-ref="PacketLog::_logPacketLock" >_logPacketLock</dfn>;</td></tr>
+<tr><th id="41">41</th><td>        <span class="namespace">std::</span><a class="type" href="../../../../../../include/c++/4.9/mutex.html#std::once_flag" title='std::once_flag' data-ref="std::once_flag" >once_flag</a> <dfn class="decl" id="PacketLog::_initializeFlag" title='PacketLog::_initializeFlag' data-ref="PacketLog::_initializeFlag" >_initializeFlag</dfn>;</td></tr>
+<tr><th id="42">42</th><td></td></tr>
+<tr><th id="43">43</th><td>    <b>public</b>:</td></tr>
+<tr><th id="44">44</th><td>        <em>static</em> <a class="type" href="#PacketLog" title='PacketLog' data-ref="PacketLog" >PacketLog</a>* <dfn class="decl def" id="_ZN9PacketLog8instanceEv" title='PacketLog::instance' data-ref="_ZN9PacketLog8instanceEv" >instance</dfn>()</td></tr>
+<tr><th id="45">45</th><td>        {</td></tr>
+<tr><th id="46">46</th><td>            <em>static</em> <a class="type" href="#PacketLog" title='PacketLog' data-ref="PacketLog" >PacketLog</a> <dfn class="local col1 decl" id="1instance" title='instance' data-type='PacketLog' data-ref="1instance" >instance</dfn>;</td></tr>
+<tr><th id="47">47</th><td>            <b>return</b> &amp;<a class="local col1 ref" href="#1instance" title='instance' data-ref="1instance" >instance</a>;</td></tr>
+<tr><th id="48">48</th><td>        }</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td>        <em>void</em> <a class="decl" href="PacketLog.cpp.html#_ZN9PacketLog10InitializeEv" title='PacketLog::Initialize' data-ref="_ZN9PacketLog10InitializeEv" id="_ZN9PacketLog10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="51">51</th><td>        <em>bool</em> <dfn class="decl def" id="_ZNK9PacketLog12CanLogPacketEv" title='PacketLog::CanLogPacket' data-ref="_ZNK9PacketLog12CanLogPacketEv" >CanLogPacket</dfn>() <em>const</em> { <b>return</b> (<a class="member" href="#PacketLog::_file" title='PacketLog::_file' data-ref="PacketLog::_file" >_file</a> != <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>); }</td></tr>
+<tr><th id="52">52</th><td>        <em>void</em> <a class="decl" href="PacketLog.cpp.html#_ZN9PacketLog9LogPacketERK11WorldPacket9DirectionRKN5boost4asio2ip7addressEt14ConnectionType" title='PacketLog::LogPacket' data-ref="_ZN9PacketLog9LogPacketERK11WorldPacket9DirectionRKN5boost4asio2ip7addressEt14ConnectionType" id="_ZN9PacketLog9LogPacketERK11WorldPacket9DirectionRKN5boost4asio2ip7addressEt14ConnectionType" >LogPacket</a>(<a class="type" href="../WorldPacket.h.html#WorldPacket" title='WorldPacket' data-ref="WorldPacket" >WorldPacket</a> <em>const</em>&amp; <dfn class="local col2 decl" id="2packet" title='packet' data-type='const WorldPacket &amp;' data-ref="2packet" >packet</dfn>, <a class="type" href="#Direction" title='Direction' data-ref="Direction" >Direction</a> <dfn class="local col3 decl" id="3direction" title='direction' data-type='Direction' data-ref="3direction" >direction</dfn>, <span class="namespace">boost::asio::ip::</span><a class="type" href="../../../../../../include/boost/asio/ip/address.hpp.html#boost::asio::ip::address" title='boost::asio::ip::address' data-ref="boost::asio::ip::address" >address</a> <em>const</em>&amp; <dfn class="local col4 decl" id="4addr" title='addr' data-type='const boost::asio::ip::address &amp;' data-ref="4addr" >addr</dfn>, <a class="typedef" href="../../../../common/Define.h.html#uint16" title='uint16' data-type='uint16_t' data-ref="uint16" >uint16</a> <dfn class="local col5 decl" id="5port" title='port' data-type='uint16' data-ref="5port" >port</dfn>, <a class="type" href="Opcodes.h.html#ConnectionType" title='ConnectionType' data-ref="ConnectionType" >ConnectionType</a> <dfn class="local col6 decl" id="6connectionType" title='connectionType' data-type='ConnectionType' data-ref="6connectionType" >connectionType</dfn>);</td></tr>
+<tr><th id="53">53</th><td></td></tr>
+<tr><th id="54">54</th><td>    <b>private</b>:</td></tr>
+<tr><th id="55">55</th><td>        <a class="typedef" href="../../../../../../include/stdio.h.html#FILE" title='FILE' data-type='struct _IO_FILE' data-ref="FILE" >FILE</a>* <dfn class="decl" id="PacketLog::_file" title='PacketLog::_file' data-ref="PacketLog::_file" >_file</dfn>;</td></tr>
+<tr><th id="56">56</th><td>};</td></tr>
+<tr><th id="57">57</th><td></td></tr>
+<tr><th id="58">58</th><td><u>#define <dfn class="macro" id="_M/sPacketLog" data-ref="_M/sPacketLog">sPacketLog</dfn> PacketLog::instance()</u></td></tr>
+<tr><th id="59">59</th><td><u>#<span data-ppcond="18">endif</span></u></td></tr>
+<tr><th id="60">60</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='PacketLog.cpp.html'>TrinityCore6.x/src/server/game/Server/Protocol/PacketLog.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

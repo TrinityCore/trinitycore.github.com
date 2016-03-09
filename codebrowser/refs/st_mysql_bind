@@ -1,0 +1,64 @@
+<def f='include/mysql/mysql.h' l='549'/>
+<size>112</size>
+<doc f='include/mysql/mysql.h' l='486'>/*
+  This structure is used to define bind information, and
+  internally by the client library.
+  Public members with their descriptions are listed below
+  (conventionally `On input&apos; refers to the binds given to
+  mysql_stmt_bind_param, `On output&apos; refers to the binds given
+  to mysql_stmt_bind_result):
+
+  buffer_type    - One of the MYSQL_* types, used to describe
+                   the host language type of buffer.
+                   On output: if column type is different from
+                   buffer_type, column value is automatically converted
+                   to buffer_type before it is stored in the buffer.
+  buffer         - On input: points to the buffer with input data.
+                   On output: points to the buffer capable to store
+                   output data.
+                   The type of memory pointed by buffer must correspond
+                   to buffer_type. See the correspondence table in
+                   the comment to mysql_stmt_bind_param.
+
+  The two above members are mandatory for any kind of bind.
+
+  buffer_length  - the length of the buffer. You don&apos;t have to set
+                   it for any fixed length buffer: float, double,
+                   int, etc. It must be set however for variable-length
+                   types, such as BLOBs or STRINGs.
+
+  length         - On input: in case when lengths of input values
+                   are different for each execute, you can set this to
+                   point at a variable containining value length. This
+                   way the value length can be different in each execute.
+                   If length is not NULL, buffer_length is not used.
+                   Note, length can even point at buffer_length if
+                   you keep bind structures around while fetching:
+                   this way you can change buffer_length before
+                   each execution, everything will work ok.
+                   On output: if length is set, mysql_stmt_fetch will
+                   write column length into it.
+
+  is_null        - On input: points to a boolean variable that should
+                   be set to TRUE for NULL values.
+                   This member is useful only if your data may be
+                   NULL in some but not all cases.
+                   If your data is never NULL, is_null should be set to 0.
+                   If your data is always NULL, set buffer_type
+                   to MYSQL_TYPE_NULL, and is_null will not be used.
+
+  is_unsigned    - On input: used to signify that values provided for one
+                   of numeric types are unsigned.
+                   On output describes signedness of the output buffer.
+                   If, taking into account is_unsigned flag, column data
+                   is out of range of the output buffer, data for this column
+                   is regarded truncated. Note that this has no correspondence
+                   to the sign of result set column, if you need to find it out
+                   use mysql_stmt_result_metadata.
+  error          - where to write a truncation error if it is present.
+                   possible error value is:
+                   0  no truncation
+                   1  value is out of range or buffer is too small
+
+  Please note that MYSQL_BIND also has internals members.
+*/</doc>

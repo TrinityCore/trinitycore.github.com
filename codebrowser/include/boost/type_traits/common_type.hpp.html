@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+<title>common_type.hpp [include/boost/type_traits/common_type.hpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'include/boost/type_traits/common_type.hpp'; var root_path = '../../..'; var data_path = '../../../../data';</script>
+<script src='../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../..'>include</a>/<a href='..'>boost</a>/<a href='./'>type_traits</a>/common_type.hpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>//  common_type.hpp  ---------------------------------------------------------//</i></td></tr>
+<tr><th id="2">2</th><td><i></i></td></tr>
+<tr><th id="3">3</th><td><i>//  Copyright 2008 Howard Hinnant</i></td></tr>
+<tr><th id="4">4</th><td><i>//  Copyright 2008 Beman Dawes</i></td></tr>
+<tr><th id="5">5</th><td><i></i></td></tr>
+<tr><th id="6">6</th><td><i>//  Distributed under the Boost Software License, Version 1.0.</i></td></tr>
+<tr><th id="7">7</th><td><i>//  See <a href="http://www.boost.org/LICENSE_">http://www.boost.org/LICENSE_</a>1_0.txt</i></td></tr>
+<tr><th id="8">8</th><td></td></tr>
+<tr><th id="9">9</th><td><u>#<span data-ppcond="9">ifndef</span> <span class="macro" data-ref="_M/BOOST_TYPE_TRAITS_COMMON_TYPE_HPP">BOOST_TYPE_TRAITS_COMMON_TYPE_HPP</span></u></td></tr>
+<tr><th id="10">10</th><td><u>#define <dfn class="macro" id="_M/BOOST_TYPE_TRAITS_COMMON_TYPE_HPP" data-ref="_M/BOOST_TYPE_TRAITS_COMMON_TYPE_HPP">BOOST_TYPE_TRAITS_COMMON_TYPE_HPP</dfn></u></td></tr>
+<tr><th id="11">11</th><td></td></tr>
+<tr><th id="12">12</th><td><u>#include <a href="../config.hpp.html">&lt;boost/config.hpp&gt;</a></u></td></tr>
+<tr><th id="13">13</th><td></td></tr>
+<tr><th id="14">14</th><td><u>#<span data-ppcond="14">if</span> defined(<span class="macro" data-ref="_M/__SUNPRO_CC">__SUNPRO_CC</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_COMMON_TYPE_DONT_USE_TYPEOF">BOOST_COMMON_TYPE_DONT_USE_TYPEOF</span>)</u></td></tr>
+<tr><th id="15">15</th><td><u>#  define BOOST_COMMON_TYPE_DONT_USE_TYPEOF</u></td></tr>
+<tr><th id="16">16</th><td><u>#<span data-ppcond="14">endif</span></u></td></tr>
+<tr><th id="17">17</th><td><u>#<span data-ppcond="17">if</span> defined(<span class="macro" data-ref="_M/__IBMCPP__">__IBMCPP__</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_COMMON_TYPE_DONT_USE_TYPEOF">BOOST_COMMON_TYPE_DONT_USE_TYPEOF</span>)</u></td></tr>
+<tr><th id="18">18</th><td><u>#  define BOOST_COMMON_TYPE_DONT_USE_TYPEOF</u></td></tr>
+<tr><th id="19">19</th><td><u>#<span data-ppcond="17">endif</span></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><i>//----------------------------------------------------------------------------//</i></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="22">if</span> defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_COMMON_TYPE_ARITY">BOOST_COMMON_TYPE_ARITY</span>)</u></td></tr>
+<tr><th id="23">23</th><td><u>#define BOOST_COMMON_TYPE_ARITY 3</u></td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="22">endif</span></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>//----------------------------------------------------------------------------//</i></td></tr>
+<tr><th id="27">27</th><td><u>#<span data-ppcond="27">if</span> defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_DECLTYPE">BOOST_NO_CXX11_DECLTYPE</span>) &amp;&amp; !defined(<span class="macro" data-ref="_M/BOOST_COMMON_TYPE_DONT_USE_TYPEOF">BOOST_COMMON_TYPE_DONT_USE_TYPEOF</span>)</u></td></tr>
+<tr><th id="28">28</th><td><u>#include &lt;boost/typeof/typeof.hpp&gt;   // boost wonders never cease!</u></td></tr>
+<tr><th id="29">29</th><td><u>#<span data-ppcond="27">endif</span></u></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><i>//----------------------------------------------------------------------------//</i></td></tr>
+<tr><th id="32">32</th><td><u>#<span data-ppcond="32">ifndef</span> <span class="macro" data-ref="_M/BOOST_NO_CXX11_STATIC_ASSERT">BOOST_NO_CXX11_STATIC_ASSERT</span></u></td></tr>
+<tr><th id="33">33</th><td><u>#define <dfn class="macro" id="_M/BOOST_COMMON_TYPE_STATIC_ASSERT" data-ref="_M/BOOST_COMMON_TYPE_STATIC_ASSERT">BOOST_COMMON_TYPE_STATIC_ASSERT</dfn>(CND, MSG, TYPES) static_assert(CND,MSG)</u></td></tr>
+<tr><th id="34">34</th><td><u>#<span data-ppcond="32">elif</span> defined(BOOST_COMMON_TYPE_USES_MPL_ASSERT)</u></td></tr>
+<tr><th id="35">35</th><td><u>#include &lt;boost/mpl/assert.hpp&gt;</u></td></tr>
+<tr><th id="36">36</th><td><u>#include &lt;boost/mpl/bool.hpp&gt;</u></td></tr>
+<tr><th id="37">37</th><td><u>#define BOOST_COMMON_TYPE_STATIC_ASSERT(CND, MSG, TYPES)                                 \</u></td></tr>
+<tr><th id="38">38</th><td><u>    BOOST_MPL_ASSERT_MSG(boost::mpl::bool_&lt; (CND) &gt;::type::value, MSG, TYPES)</u></td></tr>
+<tr><th id="39">39</th><td><u>#else</u></td></tr>
+<tr><th id="40">40</th><td><u>#include &lt;boost/static_assert.hpp&gt;</u></td></tr>
+<tr><th id="41">41</th><td><u>#define BOOST_COMMON_TYPE_STATIC_ASSERT(CND, MSG, TYPES) BOOST_STATIC_ASSERT(CND)</u></td></tr>
+<tr><th id="42">42</th><td><u>#<span data-ppcond="32">endif</span></u></td></tr>
+<tr><th id="43">43</th><td></td></tr>
+<tr><th id="44">44</th><td><u>#<span data-ppcond="44">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_STATIC_ASSERT">BOOST_NO_CXX11_STATIC_ASSERT</span>) || !defined(<span class="macro" data-ref="_M/BOOST_COMMON_TYPE_USES_MPL_ASSERT">BOOST_COMMON_TYPE_USES_MPL_ASSERT</span>)</u></td></tr>
+<tr><th id="45">45</th><td><u>#define <dfn class="macro" id="_M/BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE" data-ref="_M/BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE">BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE</dfn> "must be complete type"</u></td></tr>
+<tr><th id="46">46</th><td><u>#<span data-ppcond="44">endif</span></u></td></tr>
+<tr><th id="47">47</th><td></td></tr>
+<tr><th id="48">48</th><td><u>#<span data-ppcond="48">if</span> defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_DECLTYPE">BOOST_NO_CXX11_DECLTYPE</span>) &amp;&amp; defined(<span class="macro" data-ref="_M/BOOST_COMMON_TYPE_DONT_USE_TYPEOF">BOOST_COMMON_TYPE_DONT_USE_TYPEOF</span>)</u></td></tr>
+<tr><th id="49">49</th><td><u>#include &lt;boost/type_traits/detail/common_type_imp.hpp&gt;</u></td></tr>
+<tr><th id="50">50</th><td><u>#include &lt;boost/type_traits/remove_cv.hpp&gt;</u></td></tr>
+<tr><th id="51">51</th><td><u>#<span data-ppcond="48">endif</span></u></td></tr>
+<tr><th id="52">52</th><td><u>#include <a href="../mpl/if.hpp.html">&lt;boost/mpl/if.hpp&gt;</a></u></td></tr>
+<tr><th id="53">53</th><td><u>#include <a href="../utility/declval.hpp.html">&lt;boost/utility/declval.hpp&gt;</a></u></td></tr>
+<tr><th id="54">54</th><td><u>#include <a href="add_rvalue_reference.hpp.html">&lt;boost/type_traits/add_rvalue_reference.hpp&gt;</a></u></td></tr>
+<tr><th id="55">55</th><td></td></tr>
+<tr><th id="56">56</th><td><i>//----------------------------------------------------------------------------//</i></td></tr>
+<tr><th id="57">57</th><td><i>//                                                                            //</i></td></tr>
+<tr><th id="58">58</th><td><i>//                           C++03 implementation of                          //</i></td></tr>
+<tr><th id="59">59</th><td><i>//             20.9.7.6 Other transformations [meta.trans.other]              //</i></td></tr>
+<tr><th id="60">60</th><td><i>//                          Written by Howard Hinnant                         //</i></td></tr>
+<tr><th id="61">61</th><td><i>//      Adapted for Boost by Beman Dawes, Vicente Botet and  Jeffrey Hellrung //</i></td></tr>
+<tr><th id="62">62</th><td><i>//                                                                            //</i></td></tr>
+<tr><th id="63">63</th><td><i>//----------------------------------------------------------------------------//</i></td></tr>
+<tr><th id="64">64</th><td></td></tr>
+<tr><th id="65">65</th><td><b>namespace</b> <span class="namespace">boost</span> {</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td><i>// prototype</i></td></tr>
+<tr><th id="68">68</th><td><u>#<span data-ppcond="68">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="69">69</th><td>    <b>template</b>&lt;<b>typename</b>... T&gt;</td></tr>
+<tr><th id="70">70</th><td>    <b>struct</b> <dfn class="type" id="boost::common_type" title='boost::common_type' data-ref="boost::common_type" >common_type</dfn>;</td></tr>
+<tr><th id="71">71</th><td><u>#<span data-ppcond="68">else</span> // or no specialization</u></td></tr>
+<tr><th id="72">72</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> U = <em>void</em>, <b>class</b> V = <em>void</em>&gt;</td></tr>
+<tr><th id="73">73</th><td>    <b>struct</b> common_type</td></tr>
+<tr><th id="74">74</th><td>    {</td></tr>
+<tr><th id="75">75</th><td>    <b>public</b>:</td></tr>
+<tr><th id="76">76</th><td>        <b>typedef</b> <b>typename</b> common_type&lt;<b>typename</b> common_type&lt;T, U&gt;::type, V&gt;::type type;</td></tr>
+<tr><th id="77">77</th><td>    };</td></tr>
+<tr><th id="78">78</th><td><u>#<span data-ppcond="68">endif</span></u></td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td></td></tr>
+<tr><th id="81">81</th><td><i>// 1 arg</i></td></tr>
+<tr><th id="82">82</th><td>    <b>template</b>&lt;<b>typename</b> T&gt;</td></tr>
+<tr><th id="83">83</th><td><u>#<span data-ppcond="83">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="84">84</th><td>    <b>struct</b> <dfn class="type def" id="boost::common_type" title='boost::common_type' data-ref="boost::common_type" >common_type</dfn>&lt;T&gt;</td></tr>
+<tr><th id="85">85</th><td><u>#<span data-ppcond="83">else</span></u></td></tr>
+<tr><th id="86">86</th><td>    <b>struct</b> common_type&lt;T, <em>void</em>, <em>void</em>&gt;</td></tr>
+<tr><th id="87">87</th><td></td></tr>
+<tr><th id="88">88</th><td><u>#<span data-ppcond="83">endif</span></u></td></tr>
+<tr><th id="89">89</th><td>    {</td></tr>
+<tr><th id="90">90</th><td>        <a class="macro" href="#33" title="static_assert(sizeof(T) &gt; 0,&quot;must be complete type&quot;)" data-ref="_M/BOOST_COMMON_TYPE_STATIC_ASSERT">BOOST_COMMON_TYPE_STATIC_ASSERT</a>(<b>sizeof</b>(T) &gt; <var>0</var>, <a class="macro" href="#45" title="&quot;must be complete type&quot;" data-ref="_M/BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE">BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE</a>, (T));</td></tr>
+<tr><th id="91">91</th><td>    <b>public</b>:</td></tr>
+<tr><th id="92">92</th><td>        <b>typedef</b> T <dfn class="typedef" id="boost::common_type{type-parameter-0-0}::type" title='boost::common_type&lt;type-parameter-0-0&gt;::type' data-type='T' data-ref="boost::common_type{type-parameter-0-0}::type" >type</dfn>;</td></tr>
+<tr><th id="93">93</th><td>    };</td></tr>
+<tr><th id="94">94</th><td></td></tr>
+<tr><th id="95">95</th><td><i>// 2 args</i></td></tr>
+<tr><th id="96">96</th><td><b>namespace</b> <span class="namespace">type_traits_detail</span> {</td></tr>
+<tr><th id="97">97</th><td></td></tr>
+<tr><th id="98">98</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> U&gt;</td></tr>
+<tr><th id="99">99</th><td>    <b>struct</b> <dfn class="type def" id="boost::type_traits_detail::common_type_2" title='boost::type_traits_detail::common_type_2' data-ref="boost::type_traits_detail::common_type_2" >common_type_2</dfn></td></tr>
+<tr><th id="100">100</th><td>    {</td></tr>
+<tr><th id="101">101</th><td>    <b>private</b>:</td></tr>
+<tr><th id="102">102</th><td>        <a class="macro" href="#33" title="static_assert(sizeof(T) &gt; 0,&quot;must be complete type&quot;)" data-ref="_M/BOOST_COMMON_TYPE_STATIC_ASSERT">BOOST_COMMON_TYPE_STATIC_ASSERT</a>(<b>sizeof</b>(T) &gt; <var>0</var>, <a class="macro" href="#45" title="&quot;must be complete type&quot;" data-ref="_M/BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE">BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE</a>, (T));</td></tr>
+<tr><th id="103">103</th><td>        <a class="macro" href="#33" title="static_assert(sizeof(U) &gt; 0,&quot;must be complete type&quot;)" data-ref="_M/BOOST_COMMON_TYPE_STATIC_ASSERT">BOOST_COMMON_TYPE_STATIC_ASSERT</a>(<b>sizeof</b>(U) &gt; <var>0</var>, <a class="macro" href="#45" title="&quot;must be complete type&quot;" data-ref="_M/BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE">BOOST_COMMON_TYPE_MUST_BE_A_COMPLE_TYPE</a>, (U));</td></tr>
+<tr><th id="104">104</th><td>        <em>static</em> <em>bool</em> <dfn class="decl" id="_ZN5boost18type_traits_detail13common_type_212declval_boolEv" title='boost::type_traits_detail::common_type_2::declval_bool' data-ref="_ZN5boost18type_traits_detail13common_type_212declval_boolEv" >declval_bool</dfn>();  <i>// workaround gcc bug; not required by std</i></td></tr>
+<tr><th id="105">105</th><td>        <em>static</em> <b>typename</b> <a class="type" href="add_rvalue_reference.hpp.html#59" title='boost::add_rvalue_reference' data-ref="boost::add_rvalue_reference" >add_rvalue_reference</a>&lt;T&gt;::type <dfn class="decl" id="_ZN5boost18type_traits_detail13common_type_29declval_TEv" title='boost::type_traits_detail::common_type_2::declval_T' data-ref="_ZN5boost18type_traits_detail13common_type_29declval_TEv" >declval_T</dfn>();  <i>// workaround gcc bug; not required by std</i></td></tr>
+<tr><th id="106">106</th><td>        <em>static</em> <b>typename</b> <a class="type" href="add_rvalue_reference.hpp.html#59" title='boost::add_rvalue_reference' data-ref="boost::add_rvalue_reference" >add_rvalue_reference</a>&lt;U&gt;::type <dfn class="decl" id="_ZN5boost18type_traits_detail13common_type_29declval_UEv" title='boost::type_traits_detail::common_type_2::declval_U' data-ref="_ZN5boost18type_traits_detail13common_type_29declval_UEv" >declval_U</dfn>();  <i>// workaround gcc bug; not required by std</i></td></tr>
+<tr><th id="107">107</th><td>        <em>static</em> <b>typename</b> <a class="type" href="add_rvalue_reference.hpp.html#59" title='boost::add_rvalue_reference' data-ref="boost::add_rvalue_reference" >add_rvalue_reference</a>&lt;<em>bool</em>&gt;::<a class="typedef" href="add_rvalue_reference.hpp.html#59" title='boost::add_rvalue_reference&lt;bool&gt;::type' data-type='typename boost::type_traits_detail::add_rvalue_reference_imp&lt;bool&gt;::type' data-ref="boost::add_rvalue_reference{bool}::type" >type</a> <dfn class="decl" id="_ZN5boost18type_traits_detail13common_type_29declval_bEv" title='boost::type_traits_detail::common_type_2::declval_b' data-ref="_ZN5boost18type_traits_detail13common_type_29declval_bEv" >declval_b</dfn>();  </td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><u>#<span data-ppcond="109">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_DECLTYPE">BOOST_NO_CXX11_DECLTYPE</span>)</u></td></tr>
+<tr><th id="110">110</th><td>    <b>public</b>:</td></tr>
+<tr><th id="111">111</th><td>        <b>typedef</b> <b>decltype</b>(<a class="ref" href="../utility/declval.hpp.html#_ZN5boost7declvalEv" title='boost::declval' data-ref="_ZN5boost7declvalEv" id="_ZN5boost7declvalEv" >declval</a>&lt;<em>bool</em>&gt;() ? declval&lt;T&gt;() : declval&lt;U&gt;()) <dfn class="typedef" id="boost::type_traits_detail::common_type_2::type" title='boost::type_traits_detail::common_type_2::type' data-type='decltype(declval&lt;bool&gt;() ? declval&lt;T&gt;() : declval&lt;U&gt;())' data-ref="boost::type_traits_detail::common_type_2::type" >type</dfn>;</td></tr>
+<tr><th id="112">112</th><td><u>#<span data-ppcond="109">elif</span> defined(BOOST_COMMON_TYPE_DONT_USE_TYPEOF)</u></td></tr>
+<tr><th id="113">113</th><td>    <b>public</b>:</td></tr>
+<tr><th id="114">114</th><td>    <b>typedef</b> <b>typename</b> detail_type_traits_common_type::common_type_impl&lt;</td></tr>
+<tr><th id="115">115</th><td>          <b>typename</b> remove_cv&lt;T&gt;::type,</td></tr>
+<tr><th id="116">116</th><td>          <b>typename</b> remove_cv&lt;U&gt;::type</td></tr>
+<tr><th id="117">117</th><td>      &gt;::type type;</td></tr>
+<tr><th id="118">118</th><td><u>#else</u></td></tr>
+<tr><th id="119">119</th><td>    <b>public</b>:</td></tr>
+<tr><th id="120">120</th><td>        <b>typedef</b> BOOST_TYPEOF_TPL(declval_b() ? declval_T() : declval_U()) type;</td></tr>
+<tr><th id="121">121</th><td><u>#<span data-ppcond="109">endif</span></u></td></tr>
+<tr><th id="122">122</th><td></td></tr>
+<tr><th id="123">123</th><td><u>#<span data-ppcond="123">if</span> defined(<span class="macro" data-ref="_M/__GNUC__">__GNUC__</span>) &amp;&amp; <span class="macro" title="4" data-ref="_M/__GNUC__">__GNUC__</span> == 3 &amp;&amp; (<span class="macro" title="2" data-ref="_M/__GNUC_MINOR__">__GNUC_MINOR__</span> == 2 || <span class="macro" title="2" data-ref="_M/__GNUC_MINOR__">__GNUC_MINOR__</span> == 3)</u></td></tr>
+<tr><th id="124">124</th><td>    <b>public</b>:</td></tr>
+<tr><th id="125">125</th><td>        <em>void</em> public_dummy_function_just_to_silence_warning();</td></tr>
+<tr><th id="126">126</th><td><u>#<span data-ppcond="123">endif</span></u></td></tr>
+<tr><th id="127">127</th><td>    };</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>    <b>template</b> &lt;<b>class</b> T&gt;</td></tr>
+<tr><th id="130">130</th><td>    <b>struct</b> <dfn class="type def" id="boost::type_traits_detail::common_type_2" title='boost::type_traits_detail::common_type_2' data-ref="boost::type_traits_detail::common_type_2" >common_type_2</dfn>&lt;T, T&gt;</td></tr>
+<tr><th id="131">131</th><td>    {</td></tr>
+<tr><th id="132">132</th><td>        <b>typedef</b> T <dfn class="typedef" id="boost::type_traits_detail::common_type_2{type-parameter-0-0,type-parameter-0-0}::type" title='boost::type_traits_detail::common_type_2&lt;type-parameter-0-0, type-parameter-0-0&gt;::type' data-type='T' data-ref="boost::type_traits_detail::common_type_2{type-parameter-0-0,type-parameter-0-0}::type" >type</dfn>;</td></tr>
+<tr><th id="133">133</th><td>    };</td></tr>
+<tr><th id="134">134</th><td>    }</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td><u>#<span data-ppcond="136">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="137">137</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> U&gt;</td></tr>
+<tr><th id="138">138</th><td>    <b>struct</b> <dfn class="type def" id="boost::common_type" title='boost::common_type' data-ref="boost::common_type" >common_type</dfn>&lt;T, U&gt;</td></tr>
+<tr><th id="139">139</th><td><u>#<span data-ppcond="136">else</span></u></td></tr>
+<tr><th id="140">140</th><td>    <b>template</b> &lt;<b>class</b> T, <b>class</b> U&gt;</td></tr>
+<tr><th id="141">141</th><td>    <b>struct</b> common_type&lt;T, U, <em>void</em>&gt;</td></tr>
+<tr><th id="142">142</th><td><u>#<span data-ppcond="136">endif</span></u></td></tr>
+<tr><th id="143">143</th><td>    : <b>public</b> <span class="namespace">type_traits_detail::</span><a class="type" href="#boost::type_traits_detail::common_type_2" title='boost::type_traits_detail::common_type_2' data-ref="boost::type_traits_detail::common_type_2" >common_type_2</a>&lt;T,U&gt;</td></tr>
+<tr><th id="144">144</th><td>    { };</td></tr>
+<tr><th id="145">145</th><td></td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td><i>// 3 or more args</i></td></tr>
+<tr><th id="148">148</th><td><u>#<span data-ppcond="148">if</span> !defined(<span class="macro" data-ref="_M/BOOST_NO_CXX11_VARIADIC_TEMPLATES">BOOST_NO_CXX11_VARIADIC_TEMPLATES</span>)</u></td></tr>
+<tr><th id="149">149</th><td>    <b>template</b>&lt;<b>typename</b> T, <b>typename</b> U, <b>typename</b>... V&gt;</td></tr>
+<tr><th id="150">150</th><td>    <b>struct</b> <dfn class="type def" id="boost::common_type" title='boost::common_type' data-ref="boost::common_type" >common_type</dfn>&lt;T, U, V...&gt; {</td></tr>
+<tr><th id="151">151</th><td>    <b>public</b>:</td></tr>
+<tr><th id="152">152</th><td>        <b>typedef</b> <b>typename</b> <a class="type" href="#boost::common_type" title='boost::common_type' data-ref="boost::common_type" >common_type</a>&lt;<b>typename</b> <a class="type" href="#boost::common_type" title='boost::common_type' data-ref="boost::common_type" >common_type</a>&lt;T, U&gt;::type, V...&gt;::type <dfn class="typedef" id="boost::common_type{type-parameter-0-0,type-parameter-0-1,type-parameter-0-2...}::type" title='boost::common_type&lt;type-parameter-0-0, type-parameter-0-1, type-parameter-0-2...&gt;::type' data-type='typename common_type&lt;typename common_type&lt;T, U&gt;::type, V...&gt;::type' data-ref="boost::common_type{type-parameter-0-0,type-parameter-0-1,type-parameter-0-2...}::type" >type</dfn>;</td></tr>
+<tr><th id="153">153</th><td>    };</td></tr>
+<tr><th id="154">154</th><td><u>#<span data-ppcond="148">endif</span></u></td></tr>
+<tr><th id="155">155</th><td>}  <i>// namespace boost</i></td></tr>
+<tr><th id="156">156</th><td></td></tr>
+<tr><th id="157">157</th><td><u>#<span data-ppcond="9">endif</span>  // BOOST_TYPE_TRAITS_COMMON_TYPE_HPP</u></td></tr>
+<tr><th id="158">158</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp.html'>TrinityCore3.3.5/src/server/database/Updater/DBUpdater.cpp</a><br/>Generated on <em>2016-Mar-09</em> from project include<br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

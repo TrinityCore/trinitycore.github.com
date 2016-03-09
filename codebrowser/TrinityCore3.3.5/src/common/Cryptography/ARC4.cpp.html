@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<title>ARC4.cpp [TrinityCore3.3.5/src/common/Cryptography/ARC4.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore3.3.5/src/common/Cryptography/ARC4.cpp'; var root_path = '../../../..'; var data_path = '../../../../../data';</script>
+<script src='../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../..'>TrinityCore3.3.5</a>/<a href='../..'>src</a>/<a href='..'>common</a>/<a href='./'>Cryptography</a>/ARC4.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2005-2009 MaNGOS &lt;<a href="http://getmangos.com/">http://getmangos.com/</a>&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><u>#include <a href="ARC4.h.html">"ARC4.h"</a></u></td></tr>
+<tr><th id="20">20</th><td></td></tr>
+<tr><th id="21">21</th><td><a class="type" href="ARC4.h.html#ARC4" title='ARC4' data-ref="ARC4" >ARC4</a>::<dfn class="decl def" id="_ZN4ARC4C1Eh" title='ARC4::ARC4' data-ref="_ZN4ARC4C1Eh" >ARC4</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col8 decl" id="2218len" title='len' data-type='uint8' data-ref="2218len" >len</dfn>) : <a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a><a class="ref" href="../../../../include/openssl/evp.h.html#_ZN17evp_cipher_ctx_stC1Ev" title='evp_cipher_ctx_st::evp_cipher_ctx_st' data-ref="_ZN17evp_cipher_ctx_stC1Ev" id="_ZN17evp_cipher_ctx_stC1Ev" >(</a>)</td></tr>
+<tr><th id="22">22</th><td>{</td></tr>
+<tr><th id="23">23</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_CIPHER_CTX_init" title='EVP_CIPHER_CTX_init' data-ref="EVP_CIPHER_CTX_init" id="EVP_CIPHER_CTX_init" >EVP_CIPHER_CTX_init</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>);</td></tr>
+<tr><th id="24">24</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_EncryptInit_ex" title='EVP_EncryptInit_ex' data-ref="EVP_EncryptInit_ex" id="EVP_EncryptInit_ex" >EVP_EncryptInit_ex</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_rc4" title='EVP_rc4' data-ref="EVP_rc4" id="EVP_rc4" >EVP_rc4</a>(), <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="25">25</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_CIPHER_CTX_set_key_length" title='EVP_CIPHER_CTX_set_key_length' data-ref="EVP_CIPHER_CTX_set_key_length" id="EVP_CIPHER_CTX_set_key_length" >EVP_CIPHER_CTX_set_key_length</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <a class="local col8 ref" href="#2218len" title='len' data-ref="2218len" >len</a>);</td></tr>
+<tr><th id="26">26</th><td>}</td></tr>
+<tr><th id="27">27</th><td></td></tr>
+<tr><th id="28">28</th><td><a class="type" href="ARC4.h.html#ARC4" title='ARC4' data-ref="ARC4" >ARC4</a>::<dfn class="decl def" id="_ZN4ARC4C1EPhh" title='ARC4::ARC4' data-ref="_ZN4ARC4C1EPhh" >ARC4</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col9 decl" id="2219seed" title='seed' data-type='uint8 *' data-ref="2219seed" >seed</dfn>, <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col0 decl" id="2220len" title='len' data-type='uint8' data-ref="2220len" >len</dfn>) : <a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a><a class="ref" href="../../../../include/openssl/evp.h.html#_ZN17evp_cipher_ctx_stC1Ev" title='evp_cipher_ctx_st::evp_cipher_ctx_st' data-ref="_ZN17evp_cipher_ctx_stC1Ev" id="_ZN17evp_cipher_ctx_stC1Ev" >(</a>)</td></tr>
+<tr><th id="29">29</th><td>{</td></tr>
+<tr><th id="30">30</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_CIPHER_CTX_init" title='EVP_CIPHER_CTX_init' data-ref="EVP_CIPHER_CTX_init" id="EVP_CIPHER_CTX_init" >EVP_CIPHER_CTX_init</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>);</td></tr>
+<tr><th id="31">31</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_EncryptInit_ex" title='EVP_EncryptInit_ex' data-ref="EVP_EncryptInit_ex" id="EVP_EncryptInit_ex" >EVP_EncryptInit_ex</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_rc4" title='EVP_rc4' data-ref="EVP_rc4" id="EVP_rc4" >EVP_rc4</a>(), <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="32">32</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_CIPHER_CTX_set_key_length" title='EVP_CIPHER_CTX_set_key_length' data-ref="EVP_CIPHER_CTX_set_key_length" id="EVP_CIPHER_CTX_set_key_length" >EVP_CIPHER_CTX_set_key_length</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <a class="local col0 ref" href="#2220len" title='len' data-ref="2220len" >len</a>);</td></tr>
+<tr><th id="33">33</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_EncryptInit_ex" title='EVP_EncryptInit_ex' data-ref="EVP_EncryptInit_ex" id="EVP_EncryptInit_ex" >EVP_EncryptInit_ex</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <a class="local col9 ref" href="#2219seed" title='seed' data-ref="2219seed" >seed</a>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="34">34</th><td>}</td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><a class="type" href="ARC4.h.html#ARC4" title='ARC4' data-ref="ARC4" >ARC4</a>::<dfn class="decl def" id="_ZN4ARC4D1Ev" title='ARC4::~ARC4' data-ref="_ZN4ARC4D1Ev" >~ARC4</dfn>()</td></tr>
+<tr><th id="37">37</th><td>{</td></tr>
+<tr><th id="38">38</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_CIPHER_CTX_cleanup" title='EVP_CIPHER_CTX_cleanup' data-ref="EVP_CIPHER_CTX_cleanup" id="EVP_CIPHER_CTX_cleanup" >EVP_CIPHER_CTX_cleanup</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>);</td></tr>
+<tr><th id="39">39</th><td>}</td></tr>
+<tr><th id="40">40</th><td></td></tr>
+<tr><th id="41">41</th><td><em>void</em> <a class="type" href="ARC4.h.html#ARC4" title='ARC4' data-ref="ARC4" >ARC4</a>::<dfn class="decl def" id="_ZN4ARC44InitEPh" title='ARC4::Init' data-ref="_ZN4ARC44InitEPh" >Init</dfn>(<a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col1 decl" id="2221seed" title='seed' data-type='uint8 *' data-ref="2221seed" >seed</dfn>)</td></tr>
+<tr><th id="42">42</th><td>{</td></tr>
+<tr><th id="43">43</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_EncryptInit_ex" title='EVP_EncryptInit_ex' data-ref="EVP_EncryptInit_ex" id="EVP_EncryptInit_ex" >EVP_EncryptInit_ex</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>, <a class="local col1 ref" href="#2221seed" title='seed' data-ref="2221seed" >seed</a>, <span class="macro" title="__null" data-ref="_M/NULL">NULL</span>);</td></tr>
+<tr><th id="44">44</th><td>}</td></tr>
+<tr><th id="45">45</th><td></td></tr>
+<tr><th id="46">46</th><td><em>void</em> <a class="type" href="ARC4.h.html#ARC4" title='ARC4' data-ref="ARC4" >ARC4</a>::<dfn class="decl def" id="_ZN4ARC410UpdateDataEiPh" title='ARC4::UpdateData' data-ref="_ZN4ARC410UpdateDataEiPh" >UpdateData</dfn>(<em>int</em> <dfn class="local col2 decl" id="2222len" title='len' data-type='int' data-ref="2222len" >len</dfn>, <a class="typedef" href="../Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> *<dfn class="local col3 decl" id="2223data" title='data' data-type='uint8 *' data-ref="2223data" >data</dfn>)</td></tr>
+<tr><th id="47">47</th><td>{</td></tr>
+<tr><th id="48">48</th><td>    <em>int</em> <dfn class="local col4 decl" id="2224outlen" title='outlen' data-type='int' data-ref="2224outlen" >outlen</dfn> = <var>0</var>;</td></tr>
+<tr><th id="49">49</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_EncryptUpdate" title='EVP_EncryptUpdate' data-ref="EVP_EncryptUpdate" id="EVP_EncryptUpdate" >EVP_EncryptUpdate</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <a class="local col3 ref" href="#2223data" title='data' data-ref="2223data" >data</a>, &amp;<a class="local col4 ref" href="#2224outlen" title='outlen' data-ref="2224outlen" >outlen</a>, <a class="local col3 ref" href="#2223data" title='data' data-ref="2223data" >data</a>, <a class="local col2 ref" href="#2222len" title='len' data-ref="2222len" >len</a>);</td></tr>
+<tr><th id="50">50</th><td>    <a class="ref" href="../../../../include/openssl/evp.h.html#EVP_EncryptFinal_ex" title='EVP_EncryptFinal_ex' data-ref="EVP_EncryptFinal_ex" id="EVP_EncryptFinal_ex" >EVP_EncryptFinal_ex</a>(&amp;<a class="member" href="ARC4.h.html#ARC4::m_ctx" title='ARC4::m_ctx' data-ref="ARC4::m_ctx" id="ARC4::m_ctx" >m_ctx</a>, <a class="local col3 ref" href="#2223data" title='data' data-ref="2223data" >data</a>, &amp;<a class="local col4 ref" href="#2224outlen" title='outlen' data-ref="2224outlen" >outlen</a>);</td></tr>
+<tr><th id="51">51</th><td>}</td></tr>
+<tr><th id="52">52</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore3.3.5 revision <em>3.3.5</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

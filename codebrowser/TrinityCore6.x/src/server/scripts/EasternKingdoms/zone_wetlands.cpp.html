@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+<title>zone_wetlands.cpp [TrinityCore6.x/src/server/scripts/EasternKingdoms/zone_wetlands.cpp] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/src/server/scripts/EasternKingdoms/zone_wetlands.cpp'; var root_path = '../../../../..'; var data_path = '../../../../../../data';</script>
+<script src='../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../..'>TrinityCore6.x</a>/<a href='../../..'>src</a>/<a href='../..'>server</a>/<a href='..'>scripts</a>/<a href='./'>EasternKingdoms</a>/zone_wetlands.cpp</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * Copyright (C) 2008-2016 TrinityCore &lt;<a href="http://www.trinitycore.org/">http://www.trinitycore.org/</a>&gt;</i></td></tr>
+<tr><th id="3">3</th><td><i> * Copyright (C) 2006-2009 ScriptDev2 &lt;<a href="https://scriptdev">https://scriptdev</a>2.svn.sourceforge.net/&gt;</i></td></tr>
+<tr><th id="4">4</th><td><i> *</i></td></tr>
+<tr><th id="5">5</th><td><i> * This program is free software; you can redistribute it and/or modify it</i></td></tr>
+<tr><th id="6">6</th><td><i> * under the terms of the GNU General Public License as published by the</i></td></tr>
+<tr><th id="7">7</th><td><i> * Free Software Foundation; either version 2 of the License, or (at your</i></td></tr>
+<tr><th id="8">8</th><td><i> * option) any later version.</i></td></tr>
+<tr><th id="9">9</th><td><i> *</i></td></tr>
+<tr><th id="10">10</th><td><i> * This program is distributed in the hope that it will be useful, but WITHOUT</i></td></tr>
+<tr><th id="11">11</th><td><i> * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or</i></td></tr>
+<tr><th id="12">12</th><td><i> * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for</i></td></tr>
+<tr><th id="13">13</th><td><i> * more details.</i></td></tr>
+<tr><th id="14">14</th><td><i> *</i></td></tr>
+<tr><th id="15">15</th><td><i> * You should have received a copy of the GNU General Public License along</i></td></tr>
+<tr><th id="16">16</th><td><i> * with this program. If not, see &lt;<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>&gt;.</i></td></tr>
+<tr><th id="17">17</th><td><i> */</i></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><i>/* ScriptData</i></td></tr>
+<tr><th id="20">20</th><td><i>SDName: Wetlands</i></td></tr>
+<tr><th id="21">21</th><td><i>SD%Complete: 80</i></td></tr>
+<tr><th id="22">22</th><td><i>SDComment: Quest support: 1249</i></td></tr>
+<tr><th id="23">23</th><td><i>SDCategory: Wetlands</i></td></tr>
+<tr><th id="24">24</th><td><i>EndScriptData */</i></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><i>/* ContentData</i></td></tr>
+<tr><th id="27">27</th><td><i>npc_mikhail</i></td></tr>
+<tr><th id="28">28</th><td><i>npc_tapoke_slim_jahn</i></td></tr>
+<tr><th id="29">29</th><td><i>EndContentData */</i></td></tr>
+<tr><th id="30">30</th><td></td></tr>
+<tr><th id="31">31</th><td><u>#include <a href="../../game/Scripting/ScriptMgr.h.html">"ScriptMgr.h"</a></u></td></tr>
+<tr><th id="32">32</th><td><u>#include <a href="../../game/AI/ScriptedAI/ScriptedCreature.h.html">"ScriptedCreature.h"</a></u></td></tr>
+<tr><th id="33">33</th><td><u>#include <a href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html">"ScriptedEscortAI.h"</a></u></td></tr>
+<tr><th id="34">34</th><td><u>#include <a href="../../game/Entities/Player/Player.h.html">"Player.h"</a></u></td></tr>
+<tr><th id="35">35</th><td></td></tr>
+<tr><th id="36">36</th><td><i>/*######</i></td></tr>
+<tr><th id="37">37</th><td><i>## npc_tapoke_slim_jahn</i></td></tr>
+<tr><th id="38">38</th><td><i>######*/</i></td></tr>
+<tr><th id="39">39</th><td></td></tr>
+<tr><th id="40">40</th><td><b>enum</b> <dfn class="type def" id="TapokeSlim" title='TapokeSlim' data-ref="TapokeSlim" >TapokeSlim</dfn></td></tr>
+<tr><th id="41">41</th><td>{</td></tr>
+<tr><th id="42">42</th><td>    <dfn class="enum" id="TapokeSlim::QUEST_MISSING_DIPLO_PT11" title='TapokeSlim::QUEST_MISSING_DIPLO_PT11' data-ref="TapokeSlim::QUEST_MISSING_DIPLO_PT11" >QUEST_MISSING_DIPLO_PT11</dfn>    = <var>1249</var>,</td></tr>
+<tr><th id="43">43</th><td>    <dfn class="enum" id="TapokeSlim::FACTION_ENEMY" title='TapokeSlim::FACTION_ENEMY' data-ref="TapokeSlim::FACTION_ENEMY" >FACTION_ENEMY</dfn>               = <var>168</var>,</td></tr>
+<tr><th id="44">44</th><td>    <dfn class="enum" id="TapokeSlim::SPELL_STEALTH" title='TapokeSlim::SPELL_STEALTH' data-ref="TapokeSlim::SPELL_STEALTH" >SPELL_STEALTH</dfn>               = <var>1785</var>,</td></tr>
+<tr><th id="45">45</th><td>    <dfn class="enum" id="TapokeSlim::SPELL_CALL_FRIENDS" title='TapokeSlim::SPELL_CALL_FRIENDS' data-ref="TapokeSlim::SPELL_CALL_FRIENDS" >SPELL_CALL_FRIENDS</dfn>          = <var>16457</var>,                    <i>//summons 1x friend</i></td></tr>
+<tr><th id="46">46</th><td>    <dfn class="enum" id="TapokeSlim::NPC_SLIMS_FRIEND" title='TapokeSlim::NPC_SLIMS_FRIEND' data-ref="TapokeSlim::NPC_SLIMS_FRIEND" >NPC_SLIMS_FRIEND</dfn>            = <var>4971</var>,</td></tr>
+<tr><th id="47">47</th><td>    <dfn class="enum" id="TapokeSlim::NPC_TAPOKE_SLIM_JAHN" title='TapokeSlim::NPC_TAPOKE_SLIM_JAHN' data-ref="TapokeSlim::NPC_TAPOKE_SLIM_JAHN" >NPC_TAPOKE_SLIM_JAHN</dfn>        = <var>4962</var></td></tr>
+<tr><th id="48">48</th><td>};</td></tr>
+<tr><th id="49">49</th><td></td></tr>
+<tr><th id="50">50</th><td><b>class</b> <dfn class="type def" id="npc_tapoke_slim_jahn" title='npc_tapoke_slim_jahn' data-ref="npc_tapoke_slim_jahn" >npc_tapoke_slim_jahn</dfn> : <b>public</b> <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="51">51</th><td>{</td></tr>
+<tr><th id="52">52</th><td><b>public</b>:</td></tr>
+<tr><th id="53">53</th><td>    <dfn class="tu decl def" id="_ZN20npc_tapoke_slim_jahnC1Ev" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahn' data-type='void npc_tapoke_slim_jahn::npc_tapoke_slim_jahn()' data-ref="_ZN20npc_tapoke_slim_jahnC1Ev" >npc_tapoke_slim_jahn</dfn>() : <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"npc_tapoke_slim_jahn"</q>) { }</td></tr>
+<tr><th id="54">54</th><td></td></tr>
+<tr><th id="55">55</th><td>    <a class="type" href="../../game/AI/CreatureAI.h.html#CreatureAI" title='CreatureAI' data-ref="CreatureAI" >CreatureAI</a>* <dfn class="virtual decl def" id="_ZNK20npc_tapoke_slim_jahn5GetAIEP8Creature" title='npc_tapoke_slim_jahn::GetAI' data-ref="_ZNK20npc_tapoke_slim_jahn5GetAIEP8Creature" >GetAI</dfn>(<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="1creature" title='creature' data-type='Creature *' data-ref="1creature" >creature</dfn>) <em>const</em> override</td></tr>
+<tr><th id="56">56</th><td>    {</td></tr>
+<tr><th id="57">57</th><td>        <b>return</b> <b>new</b> <a class="tu type" href="#npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" >npc_tapoke_slim_jahnAI</a><a class="tu ref" href="#_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAIC1EP8Creature" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::npc_tapoke_slim_jahnAI' data-use='c' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAIC1EP8Creature" >(</a><a class="local col1 ref" href="#1creature" title='creature' data-ref="1creature" >creature</a>);</td></tr>
+<tr><th id="58">58</th><td>    }</td></tr>
+<tr><th id="59">59</th><td></td></tr>
+<tr><th id="60">60</th><td>    <b>struct</b> <dfn class="tu type def" id="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" >npc_tapoke_slim_jahnAI</dfn> : <b>public</b> <a class="type" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a></td></tr>
+<tr><th id="61">61</th><td>    {</td></tr>
+<tr><th id="62">62</th><td>        <dfn class="tu decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAIC1EP8Creature" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::npc_tapoke_slim_jahnAI' data-type='void npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::npc_tapoke_slim_jahnAI(Creature * creature)' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAIC1EP8Creature" >npc_tapoke_slim_jahnAI</dfn>(<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col2 decl" id="2creature" title='creature' data-type='Creature *' data-ref="2creature" >creature</dfn>) : <a class="type" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#npc_escortAI" title='npc_escortAI' data-ref="npc_escortAI" >npc_escortAI</a><a class="ref" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAIC1EP8Creature" title='npc_escortAI::npc_escortAI' data-ref="_ZN12npc_escortAIC1EP8Creature" id="_ZN12npc_escortAIC1EP8Creature" >(</a><a class="local col2 ref" href="#2creature" title='creature' data-ref="2creature" >creature</a>)</td></tr>
+<tr><th id="63">63</th><td>        {</td></tr>
+<tr><th id="64">64</th><td>            <a class="tu member" href="#_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10InitializeEv" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::Initialize' data-use='c' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="65">65</th><td>        }</td></tr>
+<tr><th id="66">66</th><td></td></tr>
+<tr><th id="67">67</th><td>        <em>void</em> <dfn class="tu decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10InitializeEv" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::Initialize' data-type='void npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::Initialize()' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10InitializeEv" >Initialize</dfn>()</td></tr>
+<tr><th id="68">68</th><td>        {</td></tr>
+<tr><th id="69">69</th><td>            <a class="tu member" href="#npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned' data-use='w' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" >IsFriendSummoned</a> = <b>false</b>;</td></tr>
+<tr><th id="70">70</th><td>        }</td></tr>
+<tr><th id="71">71</th><td></td></tr>
+<tr><th id="72">72</th><td>        <em>bool</em> <dfn class="tu decl" id="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned' data-type='bool' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" >IsFriendSummoned</dfn>;</td></tr>
+<tr><th id="73">73</th><td></td></tr>
+<tr><th id="74">74</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI5ResetEv" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::Reset' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI5ResetEv" >Reset</dfn>() override</td></tr>
+<tr><th id="75">75</th><td>        {</td></tr>
+<tr><th id="76">76</th><td>            <b>if</b> (!<a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI14HasEscortStateEj" title='npc_escortAI::HasEscortState' data-ref="_ZN12npc_escortAI14HasEscortStateEj" id="_ZN12npc_escortAI14HasEscortStateEj" >HasEscortState</a>(<a class="enum" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#eEscortState::STATE_ESCORT_ESCORTING" title='eEscortState::STATE_ESCORT_ESCORTING' data-ref="eEscortState::STATE_ESCORT_ESCORTING" id="eEscortState::STATE_ESCORT_ESCORTING" >STATE_ESCORT_ESCORTING</a>))</td></tr>
+<tr><th id="77">77</th><td>                <a class="tu member" href="#_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10InitializeEv" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::Initialize' data-use='c' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10InitializeEv" >Initialize</a>();</td></tr>
+<tr><th id="78">78</th><td>        }</td></tr>
+<tr><th id="79">79</th><td></td></tr>
+<tr><th id="80">80</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI15WaypointReachedEj" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::WaypointReached' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI15WaypointReachedEj" >WaypointReached</dfn>(<a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a> <dfn class="local col3 decl" id="3waypointId" title='waypointId' data-type='uint32' data-ref="3waypointId" >waypointId</dfn>) override</td></tr>
+<tr><th id="81">81</th><td>        {</td></tr>
+<tr><th id="82">82</th><td>            <b>switch</b> (<a class="local col3 ref" href="#3waypointId" title='waypointId' data-ref="3waypointId" >waypointId</a>)</td></tr>
+<tr><th id="83">83</th><td>            {</td></tr>
+<tr><th id="84">84</th><td>                <b>case</b> <var>2</var>:</td></tr>
+<tr><th id="85">85</th><td>                    <b>if</b> (<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit14HasStealthAuraEv" title='Unit::HasStealthAura' data-ref="_ZNK4Unit14HasStealthAuraEv" id="_ZNK4Unit14HasStealthAuraEv" >HasStealthAura</a>())</td></tr>
+<tr><th id="86">86</th><td>                        <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit17RemoveAurasByTypeE8AuraType10ObjectGuidP4Aurabb" title='Unit::RemoveAurasByType' data-ref="_ZN4Unit17RemoveAurasByTypeE8AuraType10ObjectGuidP4Aurabb" id="_ZN4Unit17RemoveAurasByTypeE8AuraType10ObjectGuidP4Aurabb" >RemoveAurasByType</a>(<a class="enum" href="../../game/Spells/Auras/SpellAuraDefines.h.html#AuraType::SPELL_AURA_MOD_STEALTH" title='AuraType::SPELL_AURA_MOD_STEALTH' data-ref="AuraType::SPELL_AURA_MOD_STEALTH" id="AuraType::SPELL_AURA_MOD_STEALTH" >SPELL_AURA_MOD_STEALTH</a>);</td></tr>
+<tr><th id="87">87</th><td>                    <a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI6SetRunEb" title='npc_escortAI::SetRun' data-ref="_ZN12npc_escortAI6SetRunEb" id="_ZN12npc_escortAI6SetRunEb" >SetRun</a>();</td></tr>
+<tr><th id="88">88</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit10setFactionEj" title='Unit::setFaction' data-ref="_ZN4Unit10setFactionEj" id="_ZN4Unit10setFactionEj" >setFaction</a>(<a class="enum" href="#TapokeSlim::FACTION_ENEMY" title='TapokeSlim::FACTION_ENEMY' data-ref="TapokeSlim::FACTION_ENEMY" >FACTION_ENEMY</a>);</td></tr>
+<tr><th id="89">89</th><td>                    <b>break</b>;</td></tr>
+<tr><th id="90">90</th><td>            }</td></tr>
+<tr><th id="91">91</th><td>        }</td></tr>
+<tr><th id="92">92</th><td></td></tr>
+<tr><th id="93">93</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI11EnterCombatEP4Unit" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::EnterCombat' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI11EnterCombatEP4Unit" >EnterCombat</dfn>(<a class="type" href="../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*who*/</i>) override</td></tr>
+<tr><th id="94">94</th><td>        {</td></tr>
+<tr><th id="95">95</th><td>            <b>if</b> (<a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI14HasEscortStateEj" title='npc_escortAI::HasEscortState' data-ref="_ZN12npc_escortAI14HasEscortStateEj" id="_ZN12npc_escortAI14HasEscortStateEj" >HasEscortState</a>(<a class="enum" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#eEscortState::STATE_ESCORT_ESCORTING" title='eEscortState::STATE_ESCORT_ESCORTING' data-ref="eEscortState::STATE_ESCORT_ESCORTING" id="eEscortState::STATE_ESCORT_ESCORTING" >STATE_ESCORT_ESCORTING</a>) &amp;&amp; !<a class="tu member" href="#npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned' data-use='r' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" >IsFriendSummoned</a> &amp;&amp; <a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI18GetPlayerForEscortEv" title='npc_escortAI::GetPlayerForEscort' data-ref="_ZN12npc_escortAI18GetPlayerForEscortEv" id="_ZN12npc_escortAI18GetPlayerForEscortEv" >GetPlayerForEscort</a>())</td></tr>
+<tr><th id="96">96</th><td>            {</td></tr>
+<tr><th id="97">97</th><td>                <b>for</b> (<a class="typedef" href="../../../common/Define.h.html#uint8" title='uint8' data-type='uint8_t' data-ref="uint8" >uint8</a> <dfn class="local col4 decl" id="4i" title='i' data-type='uint8' data-ref="4i" >i</dfn> = <var>0</var>; <a class="local col4 ref" href="#4i" title='i' data-ref="4i" >i</a> &lt; <var>3</var>; ++<a class="local col4 ref" href="#4i" title='i' data-ref="4i" >i</a>)</td></tr>
+<tr><th id="98">98</th><td>                    <a class="member" href="../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI6DoCastEP4Unitjb" title='UnitAI::DoCast' data-ref="_ZN6UnitAI6DoCastEP4Unitjb" id="_ZN6UnitAI6DoCastEP4Unitjb" >DoCast</a>(<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>, <a class="enum" href="#TapokeSlim::SPELL_CALL_FRIENDS" title='TapokeSlim::SPELL_CALL_FRIENDS' data-ref="TapokeSlim::SPELL_CALL_FRIENDS" >SPELL_CALL_FRIENDS</a>, <b>true</b>);</td></tr>
+<tr><th id="99">99</th><td></td></tr>
+<tr><th id="100">100</th><td>                <a class="tu member" href="#npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned' data-use='w' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::IsFriendSummoned" >IsFriendSummoned</a> = <b>true</b>;</td></tr>
+<tr><th id="101">101</th><td>            }</td></tr>
+<tr><th id="102">102</th><td>        }</td></tr>
+<tr><th id="103">103</th><td></td></tr>
+<tr><th id="104">104</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI12JustSummonedEP8Creature" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::JustSummoned' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI12JustSummonedEP8Creature" >JustSummoned</dfn>(<a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col5 decl" id="5summoned" title='summoned' data-type='Creature *' data-ref="5summoned" >summoned</dfn>) override</td></tr>
+<tr><th id="105">105</th><td>        {</td></tr>
+<tr><th id="106">106</th><td>            <b>if</b> (<a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col6 decl" id="6player" title='player' data-type='Player *' data-ref="6player" ><a class="local col6 ref" href="#6player" title='player' data-ref="6player" >player</a></dfn> = <a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI18GetPlayerForEscortEv" title='npc_escortAI::GetPlayerForEscort' data-ref="_ZN12npc_escortAI18GetPlayerForEscortEv" id="_ZN12npc_escortAI18GetPlayerForEscortEv" >GetPlayerForEscort</a>())</td></tr>
+<tr><th id="107">107</th><td>                <a class="local col5 ref" href="#5summoned" title='summoned' data-ref="5summoned" >summoned</a>-&gt;<a class="ref" href="../../game/Entities/Creature/Creature.h.html#_ZNK8Creature2AIEv" title='Creature::AI' data-ref="_ZNK8Creature2AIEv" id="_ZNK8Creature2AIEv" >AI</a>()-&gt;<a class="virtual member" href="../../game/AI/CoreAI/UnitAI.h.html#_ZN6UnitAI11AttackStartEP4Unit" title='UnitAI::AttackStart' data-ref="_ZN6UnitAI11AttackStartEP4Unit" id="_ZN6UnitAI11AttackStartEP4Unit" >AttackStart</a>(<a class="local col6 ref" href="#6player" title='player' data-ref="6player" >player</a>);</td></tr>
+<tr><th id="108">108</th><td>        }</td></tr>
+<tr><th id="109">109</th><td></td></tr>
+<tr><th id="110">110</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10AttackedByEP4Unit" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::AttackedBy' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI10AttackedByEP4Unit" >AttackedBy</dfn>(<a class="type" href="../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <dfn class="local col7 decl" id="7pAttacker" title='pAttacker' data-type='Unit *' data-ref="7pAttacker" >pAttacker</dfn>) override</td></tr>
+<tr><th id="111">111</th><td>        {</td></tr>
+<tr><th id="112">112</th><td>            <b>if</b> (<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit9GetVictimEv" title='Unit::GetVictim' data-ref="_ZNK4Unit9GetVictimEv" id="_ZNK4Unit9GetVictimEv" >GetVictim</a>())</td></tr>
+<tr><th id="113">113</th><td>                <b>return</b>;</td></tr>
+<tr><th id="114">114</th><td></td></tr>
+<tr><th id="115">115</th><td>            <b>if</b> (<a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit12IsFriendlyToEPKS_" title='Unit::IsFriendlyTo' data-ref="_ZNK4Unit12IsFriendlyToEPKS_" id="_ZNK4Unit12IsFriendlyToEPKS_" >IsFriendlyTo</a>(<a class="local col7 ref" href="#7pAttacker" title='pAttacker' data-ref="7pAttacker" >pAttacker</a>))</td></tr>
+<tr><th id="116">116</th><td>                <b>return</b>;</td></tr>
+<tr><th id="117">117</th><td></td></tr>
+<tr><th id="118">118</th><td>            <a class="virtual member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI11AttackStartEP4Unit" title='npc_escortAI::AttackStart' data-ref="_ZN12npc_escortAI11AttackStartEP4Unit" id="_ZN12npc_escortAI11AttackStartEP4Unit" >AttackStart</a>(<a class="local col7 ref" href="#7pAttacker" title='pAttacker' data-ref="7pAttacker" >pAttacker</a>);</td></tr>
+<tr><th id="119">119</th><td>        }</td></tr>
+<tr><th id="120">120</th><td></td></tr>
+<tr><th id="121">121</th><td>        <em>void</em> <dfn class="virtual decl def" id="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI11DamageTakenEP4UnitRj" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI::DamageTaken' data-ref="_ZN20npc_tapoke_slim_jahn22npc_tapoke_slim_jahnAI11DamageTakenEP4UnitRj" >DamageTaken</dfn>(<a class="type" href="../../game/Entities/Unit/Unit.h.html#Unit" title='Unit' data-ref="Unit" >Unit</a>* <i>/*pDoneBy*/</i>, <a class="typedef" href="../../../common/Define.h.html#uint32" title='uint32' data-type='uint32_t' data-ref="uint32" >uint32</a>&amp; <dfn class="local col8 decl" id="8uiDamage" title='uiDamage' data-type='uint32 &amp;' data-ref="8uiDamage" >uiDamage</dfn>) override</td></tr>
+<tr><th id="122">122</th><td>        {</td></tr>
+<tr><th id="123">123</th><td>            <b>if</b> (<a class="member" href="../../game/AI/ScriptedAI/ScriptedCreature.h.html#_ZNK10ScriptedAI14HealthBelowPctEj" title='ScriptedAI::HealthBelowPct' data-ref="_ZNK10ScriptedAI14HealthBelowPctEj" id="_ZNK10ScriptedAI14HealthBelowPctEj" >HealthBelowPct</a>(<var>20</var>))</td></tr>
+<tr><th id="124">124</th><td>            {</td></tr>
+<tr><th id="125">125</th><td>                <b>if</b> (<a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col9 decl" id="9player" title='player' data-type='Player *' data-ref="9player" ><a class="local col9 ref" href="#9player" title='player' data-ref="9player" >player</a></dfn> = <a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI18GetPlayerForEscortEv" title='npc_escortAI::GetPlayerForEscort' data-ref="_ZN12npc_escortAI18GetPlayerForEscortEv" id="_ZN12npc_escortAI18GetPlayerForEscortEv" >GetPlayerForEscort</a>())</td></tr>
+<tr><th id="126">126</th><td>                {</td></tr>
+<tr><th id="127">127</th><td>                    <a class="local col9 ref" href="#9player" title='player' data-ref="9player" >player</a>-&gt;<a class="ref" href="../../game/Entities/Player/Player.h.html#_ZN6Player17GroupEventHappensEjPK11WorldObject" title='Player::GroupEventHappens' data-ref="_ZN6Player17GroupEventHappensEjPK11WorldObject" id="_ZN6Player17GroupEventHappensEjPK11WorldObject" >GroupEventHappens</a>(<a class="enum" href="#TapokeSlim::QUEST_MISSING_DIPLO_PT11" title='TapokeSlim::QUEST_MISSING_DIPLO_PT11' data-ref="TapokeSlim::QUEST_MISSING_DIPLO_PT11" >QUEST_MISSING_DIPLO_PT11</a>, <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>);</td></tr>
+<tr><th id="128">128</th><td></td></tr>
+<tr><th id="129">129</th><td>                    <a class="local col8 ref" href="#8uiDamage" title='uiDamage' data-ref="8uiDamage" >uiDamage</a> = <var>0</var>;</td></tr>
+<tr><th id="130">130</th><td></td></tr>
+<tr><th id="131">131</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit14RestoreFactionEv" title='Unit::RestoreFaction' data-ref="_ZN4Unit14RestoreFactionEv" id="_ZN4Unit14RestoreFactionEv" >RestoreFaction</a>();</td></tr>
+<tr><th id="132">132</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit14RemoveAllAurasEv" title='Unit::RemoveAllAuras' data-ref="_ZN4Unit14RemoveAllAurasEv" id="_ZN4Unit14RemoveAllAurasEv" >RemoveAllAuras</a>();</td></tr>
+<tr><th id="133">133</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit16DeleteThreatListEv" title='Unit::DeleteThreatList' data-ref="_ZN4Unit16DeleteThreatListEv" id="_ZN4Unit16DeleteThreatListEv" >DeleteThreatList</a>();</td></tr>
+<tr><th id="134">134</th><td>                    <a class="member" href="../../game/AI/CreatureAI.h.html#CreatureAI::me" title='CreatureAI::me' data-ref="CreatureAI::me" id="CreatureAI::me" >me</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit10CombatStopEb" title='Unit::CombatStop' data-ref="_ZN4Unit10CombatStopEb" id="_ZN4Unit10CombatStopEb" >CombatStop</a>(<b>true</b>);</td></tr>
+<tr><th id="135">135</th><td></td></tr>
+<tr><th id="136">136</th><td>                    <a class="member" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI6SetRunEb" title='npc_escortAI::SetRun' data-ref="_ZN12npc_escortAI6SetRunEb" id="_ZN12npc_escortAI6SetRunEb" >SetRun</a>(<b>false</b>);</td></tr>
+<tr><th id="137">137</th><td>                }</td></tr>
+<tr><th id="138">138</th><td>            }</td></tr>
+<tr><th id="139">139</th><td>        }</td></tr>
+<tr><th id="140">140</th><td>    };</td></tr>
+<tr><th id="141">141</th><td>};</td></tr>
+<tr><th id="142">142</th><td></td></tr>
+<tr><th id="143">143</th><td><i>/*######</i></td></tr>
+<tr><th id="144">144</th><td><i>## npc_mikhail</i></td></tr>
+<tr><th id="145">145</th><td><i>######*/</i></td></tr>
+<tr><th id="146">146</th><td></td></tr>
+<tr><th id="147">147</th><td><b>class</b> <dfn class="type def" id="npc_mikhail" title='npc_mikhail' data-ref="npc_mikhail" >npc_mikhail</dfn> : <b>public</b> <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a></td></tr>
+<tr><th id="148">148</th><td>{</td></tr>
+<tr><th id="149">149</th><td><b>public</b>:</td></tr>
+<tr><th id="150">150</th><td>    <dfn class="tu decl def" id="_ZN11npc_mikhailC1Ev" title='npc_mikhail::npc_mikhail' data-type='void npc_mikhail::npc_mikhail()' data-ref="_ZN11npc_mikhailC1Ev" >npc_mikhail</dfn>() : <a class="type" href="../../game/Scripting/ScriptMgr.h.html#CreatureScript" title='CreatureScript' data-ref="CreatureScript" >CreatureScript</a><a class="ref" href="../../game/Scripting/ScriptMgr.h.html#_ZN14CreatureScriptC1EPKc" title='CreatureScript::CreatureScript' data-ref="_ZN14CreatureScriptC1EPKc" id="_ZN14CreatureScriptC1EPKc" >(</a><q>"npc_mikhail"</q>) { }</td></tr>
+<tr><th id="151">151</th><td></td></tr>
+<tr><th id="152">152</th><td>    <em>bool</em> <dfn class="virtual decl def" id="_ZN11npc_mikhail13OnQuestAcceptEP6PlayerP8CreaturePK5Quest" title='npc_mikhail::OnQuestAccept' data-ref="_ZN11npc_mikhail13OnQuestAcceptEP6PlayerP8CreaturePK5Quest" >OnQuestAccept</dfn>(<a class="type" href="../../game/Entities/Player/Player.h.html#Player" title='Player' data-ref="Player" >Player</a>* <dfn class="local col0 decl" id="10player" title='player' data-type='Player *' data-ref="10player" >player</dfn>, <a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col1 decl" id="11creature" title='creature' data-type='Creature *' data-ref="11creature" >creature</dfn>, <em>const</em> <a class="type" href="../../game/Quests/QuestDef.h.html#Quest" title='Quest' data-ref="Quest" >Quest</a>* <dfn class="local col2 decl" id="12quest" title='quest' data-type='const Quest *' data-ref="12quest" >quest</dfn>) override</td></tr>
+<tr><th id="153">153</th><td>    {</td></tr>
+<tr><th id="154">154</th><td>        <b>if</b> (<a class="local col2 ref" href="#12quest" title='quest' data-ref="12quest" >quest</a>-&gt;<a class="ref" href="../../game/Quests/QuestDef.h.html#_ZNK5Quest10GetQuestIdEv" title='Quest::GetQuestId' data-ref="_ZNK5Quest10GetQuestIdEv" id="_ZNK5Quest10GetQuestIdEv" >GetQuestId</a>() == <a class="enum" href="#TapokeSlim::QUEST_MISSING_DIPLO_PT11" title='TapokeSlim::QUEST_MISSING_DIPLO_PT11' data-ref="TapokeSlim::QUEST_MISSING_DIPLO_PT11" >QUEST_MISSING_DIPLO_PT11</a>)</td></tr>
+<tr><th id="155">155</th><td>        {</td></tr>
+<tr><th id="156">156</th><td>            <a class="type" href="../../game/Entities/Creature/Creature.h.html#Creature" title='Creature' data-ref="Creature" >Creature</a>* <dfn class="local col3 decl" id="13pSlim" title='pSlim' data-type='Creature *' data-ref="13pSlim" >pSlim</dfn> = <a class="local col1 ref" href="#11creature" title='creature' data-ref="11creature" >creature</a>-&gt;<a class="ref" href="../../game/Entities/Object/Object.h.html#_ZNK11WorldObject19FindNearestCreatureEjfb" title='WorldObject::FindNearestCreature' data-ref="_ZNK11WorldObject19FindNearestCreatureEjfb" id="_ZNK11WorldObject19FindNearestCreatureEjfb" >FindNearestCreature</a>(<a class="enum" href="#TapokeSlim::NPC_TAPOKE_SLIM_JAHN" title='TapokeSlim::NPC_TAPOKE_SLIM_JAHN' data-ref="TapokeSlim::NPC_TAPOKE_SLIM_JAHN" >NPC_TAPOKE_SLIM_JAHN</a>, <var>25.0f</var>);</td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td>            <b>if</b> (!<a class="local col3 ref" href="#13pSlim" title='pSlim' data-ref="13pSlim" >pSlim</a>)</td></tr>
+<tr><th id="159">159</th><td>                <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="160">160</th><td></td></tr>
+<tr><th id="161">161</th><td>            <b>if</b> (!<a class="local col3 ref" href="#13pSlim" title='pSlim' data-ref="13pSlim" >pSlim</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZNK4Unit14HasStealthAuraEv" title='Unit::HasStealthAura' data-ref="_ZNK4Unit14HasStealthAuraEv" id="_ZNK4Unit14HasStealthAuraEv" >HasStealthAura</a>())</td></tr>
+<tr><th id="162">162</th><td>                <a class="local col3 ref" href="#13pSlim" title='pSlim' data-ref="13pSlim" >pSlim</a>-&gt;<a class="ref" href="../../game/Entities/Unit/Unit.h.html#_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" title='Unit::CastSpell' data-ref="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" id="_ZN4Unit9CastSpellEPS_jbP4ItemPK10AuraEffect10ObjectGuid" >CastSpell</a>(<a class="local col3 ref" href="#13pSlim" title='pSlim' data-ref="13pSlim" >pSlim</a>, <a class="enum" href="#TapokeSlim::SPELL_STEALTH" title='TapokeSlim::SPELL_STEALTH' data-ref="TapokeSlim::SPELL_STEALTH" >SPELL_STEALTH</a>, <b>true</b>);</td></tr>
+<tr><th id="163">163</th><td></td></tr>
+<tr><th id="164">164</th><td>            <b>if</b> (<a class="type" href="#npc_tapoke_slim_jahn" title='npc_tapoke_slim_jahn' data-ref="npc_tapoke_slim_jahn" >npc_tapoke_slim_jahn</a>::<a class="tu type" href="#npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" >npc_tapoke_slim_jahnAI</a>* <dfn class="local col4 decl" id="14pEscortAI" title='pEscortAI' data-type='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI *' data-ref="14pEscortAI" ><a class="local col4 ref" href="#14pEscortAI" title='pEscortAI' data-ref="14pEscortAI" >pEscortAI</a></dfn> = <a class="macro" href="../../game/AI/ScriptedAI/ScriptedCreature.h.html#28" title="(dynamic_cast&lt;npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI*&gt;(pSlim-&gt;AI()))" data-ref="_M/CAST_AI">CAST_AI</a>(<a class="type" href="#npc_tapoke_slim_jahn" title='npc_tapoke_slim_jahn' data-ref="npc_tapoke_slim_jahn" >npc_tapoke_slim_jahn</a>::<a class="tu type" href="#npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI' data-ref="npc_tapoke_slim_jahn::npc_tapoke_slim_jahnAI" >npc_tapoke_slim_jahnAI</a>, <a class="local col3 ref" href="#13pSlim" title='pSlim' data-ref="13pSlim" >pSlim</a>-&gt;<a class="ref" href="../../game/Entities/Creature/Creature.h.html#_ZNK8Creature2AIEv" title='Creature::AI' data-ref="_ZNK8Creature2AIEv" id="_ZNK8Creature2AIEv" >AI</a>()))</td></tr>
+<tr><th id="165">165</th><td>                <a class="local col4 ref" href="#14pEscortAI" title='pEscortAI' data-ref="14pEscortAI" >pEscortAI</a>-&gt;<a class="ref" href="../../game/AI/ScriptedAI/ScriptedEscortAI.h.html#_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" title='npc_escortAI::Start' data-ref="_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" id="_ZN12npc_escortAI5StartEbb10ObjectGuidPK5Questbbb" >Start</a>(<b>false</b>, <b>false</b>, <a class="local col0 ref" href="#10player" title='player' data-ref="10player" >player</a>-&gt;<a class="ref" href="../../game/Entities/Object/Object.h.html#_ZNK6Object7GetGUIDEv" title='Object::GetGUID' data-ref="_ZNK6Object7GetGUIDEv" id="_ZNK6Object7GetGUIDEv" >GetGUID</a>(), <a class="local col2 ref" href="#12quest" title='quest' data-ref="12quest" >quest</a>);</td></tr>
+<tr><th id="166">166</th><td>        }</td></tr>
+<tr><th id="167">167</th><td>        <b>return</b> <b>false</b>;</td></tr>
+<tr><th id="168">168</th><td>    }</td></tr>
+<tr><th id="169">169</th><td>};</td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td><i>/*######</i></td></tr>
+<tr><th id="172">172</th><td><i>## AddSC</i></td></tr>
+<tr><th id="173">173</th><td><i>######*/</i></td></tr>
+<tr><th id="174">174</th><td></td></tr>
+<tr><th id="175">175</th><td><em>void</em> <dfn class="decl def" id="_Z14AddSC_wetlandsv" title='AddSC_wetlands' data-ref="_Z14AddSC_wetlandsv" >AddSC_wetlands</dfn>()</td></tr>
+<tr><th id="176">176</th><td>{</td></tr>
+<tr><th id="177">177</th><td>    <b>new</b> <a class="type" href="#npc_tapoke_slim_jahn" title='npc_tapoke_slim_jahn' data-ref="npc_tapoke_slim_jahn" >npc_tapoke_slim_jahn</a><a class="tu ref" href="#_ZN20npc_tapoke_slim_jahnC1Ev" title='npc_tapoke_slim_jahn::npc_tapoke_slim_jahn' data-use='c' data-ref="_ZN20npc_tapoke_slim_jahnC1Ev" >(</a>);</td></tr>
+<tr><th id="178">178</th><td>    <b>new</b> <a class="type" href="#npc_mikhail" title='npc_mikhail' data-ref="npc_mikhail" >npc_mikhail</a><a class="tu ref" href="#_ZN11npc_mikhailC1Ev" title='npc_mikhail::npc_mikhail' data-use='c' data-ref="_ZN11npc_mikhailC1Ev" >(</a>);</td></tr>
+<tr><th id="179">179</th><td>}</td></tr>
+<tr><th id="180">180</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>

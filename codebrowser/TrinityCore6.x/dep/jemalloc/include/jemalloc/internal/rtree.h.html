@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+<head>
+<title>rtree.h [TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/rtree.h] - Woboq Code Browser</title>
+<link rel="stylesheet" href="../../../../../../../data/kdevelop.css" title="KDevelop"/>
+<link rel="alternate stylesheet" href="../../../../../../../data/qtcreator.css" title="QtCreator"/>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../../../../../../data/jquery/jquery-ui.min.js"></script>
+<script>var file = 'TrinityCore6.x/dep/jemalloc/include/jemalloc/internal/rtree.h'; var root_path = '../../../../../..'; var data_path = '../../../../../../../data';</script>
+<script src='../../../../../../../data/codebrowser.js'></script>
+</head>
+<body><div id='header'><h1 id='breadcrumb'><span>Source code of </span><a href='../../../../..'>TrinityCore6.x</a>/<a href='../../../..'>dep</a>/<a href='../../..'>jemalloc</a>/<a href='../..'>include</a>/<a href='..'>jemalloc</a>/<a href='./'>internal</a>/rtree.h</h1></div>
+<hr/><div id='content'><table class="code">
+<tr><th id="1">1</th><td><i>/*</i></td></tr>
+<tr><th id="2">2</th><td><i> * This radix tree implementation is tailored to the singular purpose of</i></td></tr>
+<tr><th id="3">3</th><td><i> * tracking which chunks are currently owned by jemalloc.  This functionality</i></td></tr>
+<tr><th id="4">4</th><td><i> * is mandatory for OS X, where jemalloc must be able to respond to object</i></td></tr>
+<tr><th id="5">5</th><td><i> * ownership queries.</i></td></tr>
+<tr><th id="6">6</th><td><i> *</i></td></tr>
+<tr><th id="7">7</th><td><i> *******************************************************************************</i></td></tr>
+<tr><th id="8">8</th><td><i> */</i></td></tr>
+<tr><th id="9">9</th><td><u>#<span data-ppcond="9">ifdef</span> <a class="macro" href="jemalloc_internal.h.html#225" data-ref="_M/JEMALLOC_H_TYPES">JEMALLOC_H_TYPES</a></u></td></tr>
+<tr><th id="10">10</th><td></td></tr>
+<tr><th id="11">11</th><td><b>typedef</b> <b>struct</b> <a class="type" href="rtree.h.html#rtree_s" title='rtree_s' data-ref="rtree_s" id="rtree_s" ><a class="type" href="rtree.h.html#rtree_s" title='rtree_s' data-ref="rtree_s" >rtree_s</a></a> <dfn class="typedef" id="rtree_t" title='rtree_t' data-type='struct rtree_s' data-ref="rtree_t" >rtree_t</dfn>;</td></tr>
+<tr><th id="12">12</th><td></td></tr>
+<tr><th id="13">13</th><td><i>/*</i></td></tr>
+<tr><th id="14">14</th><td><i> * Size of each radix tree node (must be a power of 2).  This impacts tree</i></td></tr>
+<tr><th id="15">15</th><td><i> * depth.</i></td></tr>
+<tr><th id="16">16</th><td><i> */</i></td></tr>
+<tr><th id="17">17</th><td><u>#define	<dfn class="macro" id="_M/RTREE_NODESIZE" data-ref="_M/RTREE_NODESIZE">RTREE_NODESIZE</dfn> (1U &lt;&lt; 16)</u></td></tr>
+<tr><th id="18">18</th><td></td></tr>
+<tr><th id="19">19</th><td><b>typedef</b> <em>void</em> *(<dfn class="typedef" id="rtree_alloc_t" title='rtree_alloc_t' data-type='void *(size_t)' data-ref="rtree_alloc_t" >rtree_alloc_t</dfn>)(<span class='typedef' title='size_t' data-type='unsigned long' data-ref="size_t" >size_t</span>);</td></tr>
+<tr><th id="20">20</th><td><b>typedef</b> <em>void</em> (<dfn class="typedef" id="rtree_dalloc_t" title='rtree_dalloc_t' data-type='void (void *)' data-ref="rtree_dalloc_t" >rtree_dalloc_t</dfn>)(<em>void</em> *);</td></tr>
+<tr><th id="21">21</th><td></td></tr>
+<tr><th id="22">22</th><td><u>#<span data-ppcond="9">endif</span> /* JEMALLOC_H_TYPES */</u></td></tr>
+<tr><th id="23">23</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="24">24</th><td><u>#<span data-ppcond="24">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_STRUCTS">JEMALLOC_H_STRUCTS</span></u></td></tr>
+<tr><th id="25">25</th><td></td></tr>
+<tr><th id="26">26</th><td><b>struct</b> rtree_s {</td></tr>
+<tr><th id="27">27</th><td>	rtree_alloc_t	*alloc;</td></tr>
+<tr><th id="28">28</th><td>	rtree_dalloc_t	*dalloc;</td></tr>
+<tr><th id="29">29</th><td>	malloc_mutex_t	mutex;</td></tr>
+<tr><th id="30">30</th><td>	<em>void</em>		**root;</td></tr>
+<tr><th id="31">31</th><td>	<em>unsigned</em>	height;</td></tr>
+<tr><th id="32">32</th><td>	<em>unsigned</em>	level2bits[<var>1</var>]; <i>/* Dynamically sized. */</i></td></tr>
+<tr><th id="33">33</th><td>};</td></tr>
+<tr><th id="34">34</th><td></td></tr>
+<tr><th id="35">35</th><td><u>#<span data-ppcond="24">endif</span> /* JEMALLOC_H_STRUCTS */</u></td></tr>
+<tr><th id="36">36</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="37">37</th><td><u>#<span data-ppcond="37">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_EXTERNS">JEMALLOC_H_EXTERNS</span></u></td></tr>
+<tr><th id="38">38</th><td></td></tr>
+<tr><th id="39">39</th><td>rtree_t	*rtree_new(<em>unsigned</em> bits, rtree_alloc_t *alloc, rtree_dalloc_t *dalloc);</td></tr>
+<tr><th id="40">40</th><td><em>void</em>	rtree_delete(rtree_t *rtree);</td></tr>
+<tr><th id="41">41</th><td><em>void</em>	rtree_prefork(rtree_t *rtree);</td></tr>
+<tr><th id="42">42</th><td><em>void</em>	rtree_postfork_parent(rtree_t *rtree);</td></tr>
+<tr><th id="43">43</th><td><em>void</em>	rtree_postfork_child(rtree_t *rtree);</td></tr>
+<tr><th id="44">44</th><td></td></tr>
+<tr><th id="45">45</th><td><u>#<span data-ppcond="37">endif</span> /* JEMALLOC_H_EXTERNS */</u></td></tr>
+<tr><th id="46">46</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="47">47</th><td><u>#<span data-ppcond="47">ifdef</span> <span class="macro" data-ref="_M/JEMALLOC_H_INLINES">JEMALLOC_H_INLINES</span></u></td></tr>
+<tr><th id="48">48</th><td></td></tr>
+<tr><th id="49">49</th><td><u>#ifndef JEMALLOC_ENABLE_INLINE</u></td></tr>
+<tr><th id="50">50</th><td><u>#ifdef JEMALLOC_DEBUG</u></td></tr>
+<tr><th id="51">51</th><td>uint8_t rtree_get_locked(rtree_t *rtree, uintptr_t key);</td></tr>
+<tr><th id="52">52</th><td><u>#endif</u></td></tr>
+<tr><th id="53">53</th><td>uint8_t	rtree_get(rtree_t *rtree, uintptr_t key);</td></tr>
+<tr><th id="54">54</th><td>bool	rtree_set(rtree_t *rtree, uintptr_t key, uint8_t val);</td></tr>
+<tr><th id="55">55</th><td><u>#endif</u></td></tr>
+<tr><th id="56">56</th><td></td></tr>
+<tr><th id="57">57</th><td><u>#if (defined(JEMALLOC_ENABLE_INLINE) || defined(JEMALLOC_RTREE_C_))</u></td></tr>
+<tr><th id="58">58</th><td><u>#define	RTREE_GET_GENERATE(f)						\</u></td></tr>
+<tr><th id="59">59</th><td><u>/* The least significant bits of the key are ignored. */		\</u></td></tr>
+<tr><th id="60">60</th><td><u>JEMALLOC_INLINE uint8_t							\</u></td></tr>
+<tr><th id="61">61</th><td><u>f(rtree_t *rtree, uintptr_t key)					\</u></td></tr>
+<tr><th id="62">62</th><td><u>{									\</u></td></tr>
+<tr><th id="63">63</th><td><u>	uint8_t ret;							\</u></td></tr>
+<tr><th id="64">64</th><td><u>	uintptr_t subkey;						\</u></td></tr>
+<tr><th id="65">65</th><td><u>	unsigned i, lshift, height, bits;				\</u></td></tr>
+<tr><th id="66">66</th><td><u>	void **node, **child;						\</u></td></tr>
+<tr><th id="67">67</th><td><u>									\</u></td></tr>
+<tr><th id="68">68</th><td><u>	RTREE_LOCK(&amp;rtree-&gt;mutex);					\</u></td></tr>
+<tr><th id="69">69</th><td><u>	for (i = lshift = 0, height = rtree-&gt;height, node = rtree-&gt;root;\</u></td></tr>
+<tr><th id="70">70</th><td><u>	    i &lt; height - 1;						\</u></td></tr>
+<tr><th id="71">71</th><td><u>	    i++, lshift += bits, node = child) {			\</u></td></tr>
+<tr><th id="72">72</th><td><u>		bits = rtree-&gt;level2bits[i];				\</u></td></tr>
+<tr><th id="73">73</th><td><u>		subkey = (key &lt;&lt; lshift) &gt;&gt; ((ZU(1) &lt;&lt; (LG_SIZEOF_PTR +	\</u></td></tr>
+<tr><th id="74">74</th><td><u>		    3)) - bits);					\</u></td></tr>
+<tr><th id="75">75</th><td><u>		child = (void**)node[subkey];				\</u></td></tr>
+<tr><th id="76">76</th><td><u>		if (child == NULL) {					\</u></td></tr>
+<tr><th id="77">77</th><td><u>			RTREE_UNLOCK(&amp;rtree-&gt;mutex);			\</u></td></tr>
+<tr><th id="78">78</th><td><u>			return (0);					\</u></td></tr>
+<tr><th id="79">79</th><td><u>		}							\</u></td></tr>
+<tr><th id="80">80</th><td><u>	}								\</u></td></tr>
+<tr><th id="81">81</th><td><u>									\</u></td></tr>
+<tr><th id="82">82</th><td><u>	/*								\</u></td></tr>
+<tr><th id="83">83</th><td><u>	 * node is a leaf, so it contains values rather than node	\</u></td></tr>
+<tr><th id="84">84</th><td><u>	 * pointers.							\</u></td></tr>
+<tr><th id="85">85</th><td><u>	 */								\</u></td></tr>
+<tr><th id="86">86</th><td><u>	bits = rtree-&gt;level2bits[i];					\</u></td></tr>
+<tr><th id="87">87</th><td><u>	subkey = (key &lt;&lt; lshift) &gt;&gt; ((ZU(1) &lt;&lt; (LG_SIZEOF_PTR+3)) -	\</u></td></tr>
+<tr><th id="88">88</th><td><u>	    bits);							\</u></td></tr>
+<tr><th id="89">89</th><td><u>	{								\</u></td></tr>
+<tr><th id="90">90</th><td><u>		uint8_t *leaf = (uint8_t *)node;			\</u></td></tr>
+<tr><th id="91">91</th><td><u>		ret = leaf[subkey];					\</u></td></tr>
+<tr><th id="92">92</th><td><u>	}								\</u></td></tr>
+<tr><th id="93">93</th><td><u>	RTREE_UNLOCK(&amp;rtree-&gt;mutex);					\</u></td></tr>
+<tr><th id="94">94</th><td><u>									\</u></td></tr>
+<tr><th id="95">95</th><td><u>	RTREE_GET_VALIDATE						\</u></td></tr>
+<tr><th id="96">96</th><td><u>	return (ret);							\</u></td></tr>
+<tr><th id="97">97</th><td><u>}</u></td></tr>
+<tr><th id="98">98</th><td></td></tr>
+<tr><th id="99">99</th><td><u>#ifdef JEMALLOC_DEBUG</u></td></tr>
+<tr><th id="100">100</th><td><u>#  define RTREE_LOCK(l)		malloc_mutex_lock(l)</u></td></tr>
+<tr><th id="101">101</th><td><u>#  define RTREE_UNLOCK(l)	malloc_mutex_unlock(l)</u></td></tr>
+<tr><th id="102">102</th><td><u>#  define RTREE_GET_VALIDATE</u></td></tr>
+<tr><th id="103">103</th><td>RTREE_GET_GENERATE(rtree_get_locked)</td></tr>
+<tr><th id="104">104</th><td><u>#  undef RTREE_LOCK</u></td></tr>
+<tr><th id="105">105</th><td><u>#  undef RTREE_UNLOCK</u></td></tr>
+<tr><th id="106">106</th><td><u>#  undef RTREE_GET_VALIDATE</u></td></tr>
+<tr><th id="107">107</th><td><u>#endif</u></td></tr>
+<tr><th id="108">108</th><td></td></tr>
+<tr><th id="109">109</th><td><u>#define	RTREE_LOCK(l)</u></td></tr>
+<tr><th id="110">110</th><td><u>#define	RTREE_UNLOCK(l)</u></td></tr>
+<tr><th id="111">111</th><td><u>#ifdef JEMALLOC_DEBUG</u></td></tr>
+<tr><th id="112">112</th><td>   <i>/*</i></td></tr>
+<tr><th id="113">113</th><td><i>    * Suppose that it were possible for a jemalloc-allocated chunk to be</i></td></tr>
+<tr><th id="114">114</th><td><i>    * munmap()ped, followed by a different allocator in another thread re-using</i></td></tr>
+<tr><th id="115">115</th><td><i>    * overlapping virtual memory, all without invalidating the cached rtree</i></td></tr>
+<tr><th id="116">116</th><td><i>    * value.  The result would be a false positive (the rtree would claim that</i></td></tr>
+<tr><th id="117">117</th><td><i>    * jemalloc owns memory that it had actually discarded).  This scenario</i></td></tr>
+<tr><th id="118">118</th><td><i>    * seems impossible, but the following assertion is a prudent sanity check.</i></td></tr>
+<tr><th id="119">119</th><td><i>    */</i></td></tr>
+<tr><th id="120">120</th><td><u>#  define RTREE_GET_VALIDATE						\</u></td></tr>
+<tr><th id="121">121</th><td><u>	assert(rtree_get_locked(rtree, key) == ret);</u></td></tr>
+<tr><th id="122">122</th><td><u>#else</u></td></tr>
+<tr><th id="123">123</th><td><u>#  define RTREE_GET_VALIDATE</u></td></tr>
+<tr><th id="124">124</th><td><u>#endif</u></td></tr>
+<tr><th id="125">125</th><td>RTREE_GET_GENERATE(rtree_get)</td></tr>
+<tr><th id="126">126</th><td><u>#undef RTREE_LOCK</u></td></tr>
+<tr><th id="127">127</th><td><u>#undef RTREE_UNLOCK</u></td></tr>
+<tr><th id="128">128</th><td><u>#undef RTREE_GET_VALIDATE</u></td></tr>
+<tr><th id="129">129</th><td></td></tr>
+<tr><th id="130">130</th><td>JEMALLOC_INLINE bool</td></tr>
+<tr><th id="131">131</th><td>rtree_set(rtree_t *rtree, uintptr_t key, uint8_t val)</td></tr>
+<tr><th id="132">132</th><td>{</td></tr>
+<tr><th id="133">133</th><td>	uintptr_t subkey;</td></tr>
+<tr><th id="134">134</th><td>	<em>unsigned</em> i, lshift, height, bits;</td></tr>
+<tr><th id="135">135</th><td>	<em>void</em> **node, **child;</td></tr>
+<tr><th id="136">136</th><td></td></tr>
+<tr><th id="137">137</th><td>	malloc_mutex_lock(&amp;rtree-&gt;mutex);</td></tr>
+<tr><th id="138">138</th><td>	<b>for</b> (i = lshift = <var>0</var>, height = rtree-&gt;height, node = rtree-&gt;root;</td></tr>
+<tr><th id="139">139</th><td>	    i &lt; height - <var>1</var>;</td></tr>
+<tr><th id="140">140</th><td>	    i++, lshift += bits, node = child) {</td></tr>
+<tr><th id="141">141</th><td>		bits = rtree-&gt;level2bits[i];</td></tr>
+<tr><th id="142">142</th><td>		subkey = (key &lt;&lt; lshift) &gt;&gt; ((ZU(<var>1</var>) &lt;&lt; (LG_SIZEOF_PTR+<var>3</var>)) -</td></tr>
+<tr><th id="143">143</th><td>		    bits);</td></tr>
+<tr><th id="144">144</th><td>		child = (<em>void</em>**)node[subkey];</td></tr>
+<tr><th id="145">145</th><td>		<b>if</b> (child == NULL) {</td></tr>
+<tr><th id="146">146</th><td>			size_t size = ((i + <var>1</var> &lt; height - <var>1</var>) ? <b>sizeof</b>(<em>void</em> *)</td></tr>
+<tr><th id="147">147</th><td>			    : (<b>sizeof</b>(uint8_t))) &lt;&lt; rtree-&gt;level2bits[i+<var>1</var>];</td></tr>
+<tr><th id="148">148</th><td>			child = (<em>void</em>**)rtree-&gt;alloc(size);</td></tr>
+<tr><th id="149">149</th><td>			<b>if</b> (child == NULL) {</td></tr>
+<tr><th id="150">150</th><td>				malloc_mutex_unlock(&amp;rtree-&gt;mutex);</td></tr>
+<tr><th id="151">151</th><td>				<b>return</b> (true);</td></tr>
+<tr><th id="152">152</th><td>			}</td></tr>
+<tr><th id="153">153</th><td>			memset(child, <var>0</var>, size);</td></tr>
+<tr><th id="154">154</th><td>			node[subkey] = child;</td></tr>
+<tr><th id="155">155</th><td>		}</td></tr>
+<tr><th id="156">156</th><td>	}</td></tr>
+<tr><th id="157">157</th><td></td></tr>
+<tr><th id="158">158</th><td>	<i>/* node is a leaf, so it contains values rather than node pointers. */</i></td></tr>
+<tr><th id="159">159</th><td>	bits = rtree-&gt;level2bits[i];</td></tr>
+<tr><th id="160">160</th><td>	subkey = (key &lt;&lt; lshift) &gt;&gt; ((ZU(<var>1</var>) &lt;&lt; (LG_SIZEOF_PTR+<var>3</var>)) - bits);</td></tr>
+<tr><th id="161">161</th><td>	{</td></tr>
+<tr><th id="162">162</th><td>		uint8_t *leaf = (uint8_t *)node;</td></tr>
+<tr><th id="163">163</th><td>		leaf[subkey] = val;</td></tr>
+<tr><th id="164">164</th><td>	}</td></tr>
+<tr><th id="165">165</th><td>	malloc_mutex_unlock(&amp;rtree-&gt;mutex);</td></tr>
+<tr><th id="166">166</th><td></td></tr>
+<tr><th id="167">167</th><td>	<b>return</b> (false);</td></tr>
+<tr><th id="168">168</th><td>}</td></tr>
+<tr><th id="169">169</th><td><u>#endif</u></td></tr>
+<tr><th id="170">170</th><td></td></tr>
+<tr><th id="171">171</th><td><u>#<span data-ppcond="47">endif</span> /* JEMALLOC_H_INLINES */</u></td></tr>
+<tr><th id="172">172</th><td><i>/******************************************************************************/</i></td></tr>
+<tr><th id="173">173</th><td></td></tr>
+</table><hr/><p id='footer'>
+Generated while processing <a href='../../../src/arena.c.html'>TrinityCore6.x/dep/jemalloc/src/arena.c</a><br/>Generated on <em>2016-Mar-09</em> from project TrinityCore6.x revision <em>6.x</em><br />Powered by <a href='https://woboq.com'><img alt='Woboq' src='https://code.woboq.org/woboq-16.png' width='41' height='16' /></a> <a href='https://code.woboq.org'>Code Browser</a> 1.8
+</p>
+</div></body></html>
